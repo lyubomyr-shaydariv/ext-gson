@@ -44,7 +44,7 @@ public final class TypeAdapters {
 	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
 	 *              or {@link InstanceCreator}.
 	 *
-	 * @return An instance ready to be registered in  {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
+	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
 	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
 	 * @see #tryGetTypeAdapterOf(Class)
@@ -73,7 +73,7 @@ public final class TypeAdapters {
 	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
 	 *              or {@link InstanceCreator}.
 	 *
-	 * @return An instance ready to be registered in  {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
+	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
 	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
 	 * @see #tryGetTypeHierarchyAdapterOf(Class)
@@ -92,6 +92,8 @@ public final class TypeAdapters {
 	/**
 	 * Checked exceptions-free alternative of {@link #getTypeAdapterOf(Class)}.
 	 *
+	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
+	 *
 	 * @see #getTypeAdapterOf(Class)
 	 * @since 0-SNAPSHOT
 	 */
@@ -106,6 +108,8 @@ public final class TypeAdapters {
 
 	/**
 	 * Checked exceptions-free alternative of {@link #getTypeHierarchyAdapterOf(Class)}.
+	 *
+	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
 	 * @see #getTypeAdapterOf(Class)
 	 * @since 0-SNAPSHOT
