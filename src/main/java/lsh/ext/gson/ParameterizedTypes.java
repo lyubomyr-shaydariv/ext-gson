@@ -1,7 +1,9 @@
 package lsh.ext.gson;
 
+import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +20,40 @@ import static java.util.Objects.hash;
  */
 public final class ParameterizedTypes {
 
+	private static final Type[] emptyTypeArray = new Type[0];
+
 	private ParameterizedTypes() {
+	}
+
+	/**
+	 * Resolves type arguments for the given type if possible.
+	 *
+	 * @param type Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned.
+	 *             If {@code type} is just {@link GenericDeclaration}, then the given type is considered raw, and each element of the returning array is
+	 *             {@code Object.class}.
+	 *
+	 * @return An array where each element is a {@link Type} instance or {@code Object.class} but never {@code null}, otherwise an empty array if no type
+	 * parameters are available.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static Type[] resolveTypeArguments(final Type type) {
+		if ( type instanceof ParameterizedType ) {
+			final ParameterizedType parameterizedType = (ParameterizedType) type;
+			return parameterizedType.getActualTypeArguments();
+		}
+		if ( type instanceof GenericDeclaration ) {
+			final GenericDeclaration genericDeclaration = (GenericDeclaration) type;
+			final TypeVariable<?>[] typeParameters = genericDeclaration.getTypeParameters();
+			if ( typeParameters.length != 0 ) {
+				final Type[] rawTypeArguments = new Type[typeParameters.length];
+				for ( int i = 0; i < typeParameters.length; i++ ) {
+					rawTypeArguments[i] = Object.class;
+				}
+				return rawTypeArguments;
+			}
+		}
+		return emptyTypeArray;
 	}
 
 	/**
@@ -106,8 +141,6 @@ public final class ParameterizedTypes {
 		public final int hashCode() {
 			return hash(rawType, actualTypeArguments);
 		}
-
-		private static final Type[] emptyTypeArray = new Type[0];
 
 	}
 

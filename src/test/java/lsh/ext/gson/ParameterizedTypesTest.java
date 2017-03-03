@@ -1,5 +1,6 @@
 package lsh.ext.gson;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,11 +10,28 @@ import org.junit.Test;
 import static lsh.ext.gson.MoreMatchers.isParameterizedType;
 import static lsh.ext.gson.ParameterizedTypes.listType;
 import static lsh.ext.gson.ParameterizedTypes.mapType;
+import static lsh.ext.gson.ParameterizedTypes.resolveTypeArguments;
 import static lsh.ext.gson.ParameterizedTypes.setType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class ParameterizedTypesTest {
+
+	@Test
+	public void testResolveTypeArgumentsForRawTypes() {
+		assertThat(resolveTypeArguments(List.class), is(new Type[]{ Object.class }));
+	}
+
+	@Test
+	public void testResolveTypeArgumentsForParameterizedTypes() {
+		assertThat(resolveTypeArguments(listType(String.class)), is(new Type[]{ String.class }));
+		assertThat(resolveTypeArguments(mapType(Integer.class, Float.class)), is(new Type[]{ Integer.class, Float.class }));
+	}
+
+	@Test
+	public void testResolveTypeArgumentsForNonGenericType() {
+		assertThat(resolveTypeArguments(String.class), is(new Type[]{}));
+	}
 
 	@Test
 	public void testListType() {
