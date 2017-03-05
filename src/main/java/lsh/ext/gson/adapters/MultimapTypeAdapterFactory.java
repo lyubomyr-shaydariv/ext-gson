@@ -34,8 +34,8 @@ public final class MultimapTypeAdapterFactory
 	@Override
 	protected TypeAdapter<Multimap<String, Object>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 		final Type type = typeToken.getType();
-		final Type[] typeArguments = resolveTypeArguments(type);
-		final Type valueType = typeArguments[1];
+		final Type[][] typeArguments = resolveTypeArguments(type);
+		final Type valueType = typeArguments[1][0];
 		return getMultimapTypeAdapter(gson, valueType);
 	}
 

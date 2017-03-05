@@ -20,7 +20,8 @@ import static java.util.Objects.hash;
  */
 public final class ParameterizedTypes {
 
-	private static final Type[] emptyTypeArray = new Type[0];
+	private static final Type[] emptyType1dArray = {};
+	private static final Type[][] emptyType2dArray = {};
 
 	private ParameterizedTypes() {
 	}
@@ -29,31 +30,38 @@ public final class ParameterizedTypes {
 	 * Resolves type arguments for the given type if possible.
 	 *
 	 * @param type Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned.
-	 *             If {@code type} is just {@link GenericDeclaration}, then the given type is considered raw, and each element of the returning array is
-	 *             {@code Object.class}.
+	 *             If {@code type} is just {@link GenericDeclaration}, type bounds are extracted.
 	 *
-	 * @return An array where each element is a {@link Type} instance or {@code Object.class} but never {@code null}, otherwise an empty array if no type
-	 * parameters are available.
+	 * @return A two-dimensional array where each element is an array of a {@link Type} instance or {@code Object.class} but never {@code null}, otherwise an
+	 * empty array if no type parameters are available.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static Type[] resolveTypeArguments(final Type type) {
+	public static Type[][] resolveTypeArguments(final Type type) {
 		if ( type instanceof ParameterizedType ) {
 			final ParameterizedType parameterizedType = (ParameterizedType) type;
-			return parameterizedType.getActualTypeArguments();
+			final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+			final int length = actualTypeArguments.length;
+			final Type[][] resultTypeArguments = new Type[length][];
+			for ( int i = 0; i < length; i++ ) {
+				resultTypeArguments[i] = new Type[]{ actualTypeArguments[i] };
+			}
+			return resultTypeArguments;
 		}
 		if ( type instanceof GenericDeclaration ) {
 			final GenericDeclaration genericDeclaration = (GenericDeclaration) type;
 			final TypeVariable<?>[] typeParameters = genericDeclaration.getTypeParameters();
-			if ( typeParameters.length != 0 ) {
-				final Type[] rawTypeArguments = new Type[typeParameters.length];
-				for ( int i = 0; i < typeParameters.length; i++ ) {
-					rawTypeArguments[i] = Object.class;
+			final int length = typeParameters.length;
+			if ( length != 0 ) {
+				final Type[][] resultTypeParameters = new Type[length][];
+				for ( int i = 0; i < length; i++ ) {
+					final TypeVariable<?> typeParameter = typeParameters[i];
+					resultTypeParameters[i] = typeParameter.getBounds();
 				}
-				return rawTypeArguments;
+				return resultTypeParameters;
 			}
 		}
-		return emptyTypeArray;
+		return emptyType2dArray;
 	}
 
 	/**
@@ -116,7 +124,7 @@ public final class ParameterizedTypes {
 		public final Type[] getActualTypeArguments() {
 			return actualTypeArguments.length != 0
 					? actualTypeArguments.clone()
-					: emptyTypeArray;
+					: emptyType1dArray;
 		}
 
 		@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
 
 import static lsh.ext.gson.MoreMatchers.isParameterizedType;
@@ -17,20 +18,28 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class ParameterizedTypesTest {
 
+	private static final Type[] emptyTypeArray = new Type[0];
+
 	@Test
 	public void testResolveTypeArgumentsForRawTypes() {
-		assertThat(resolveTypeArguments(List.class), is(new Type[]{ Object.class }));
+		assertThat(resolveTypeArguments(List.class), is(new Type[][]{ new Type[]{ Object.class } }));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForParameterizedTypes() {
-		assertThat(resolveTypeArguments(listType(String.class)), is(new Type[]{ String.class }));
-		assertThat(resolveTypeArguments(mapType(Integer.class, Float.class)), is(new Type[]{ Integer.class, Float.class }));
+		assertThat(resolveTypeArguments(listType(String.class)), is(new Type[][]{ new Type[]{ String.class } }));
+		assertThat(resolveTypeArguments(mapType(Integer.class, Float.class)), is(new Type[][]{ new Type[]{ Integer.class }, new Type[]{ Float.class } }));
+	}
+
+	@Test
+	public void testResolveTypeArgumentsForParameterizedTypesWithBounds() {
+		assertThat(resolveTypeArguments(GenericClassWithSomeBounds.class), is(new Type[][]{ new Type[]{ Number.class }, new Type[]{ CharSequence.class, new TypeToken<List<?>>() {
+		}.getType() } }));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForNonGenericType() {
-		assertThat(resolveTypeArguments(String.class), is(new Type[]{}));
+		assertThat(resolveTypeArguments(String.class), is(emptyTypeArray));
 	}
 
 	@Test
@@ -55,6 +64,9 @@ public final class ParameterizedTypesTest {
 		assertThat(mapType(Void.class, Object.class), isParameterizedType(Map.class, Void.class, Object.class));
 		assertThat(mapType(Object.class, String.class), isParameterizedType(Map.class, Object.class, String.class));
 		assertThat(mapType(String.class, Void.class), is(mapType(String.class, Void.class)));
+	}
+
+	private static final class GenericClassWithSomeBounds<N extends Number, CS extends CharSequence & List<?>> {
 	}
 
 }
