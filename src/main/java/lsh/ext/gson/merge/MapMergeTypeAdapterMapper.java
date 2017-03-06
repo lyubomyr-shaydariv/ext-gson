@@ -18,6 +18,8 @@ import com.google.gson.reflect.TypeToken;
 import static java.util.Collections.singletonMap;
 
 /**
+ * TODO
+ *
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT
  */
