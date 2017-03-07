@@ -13,6 +13,13 @@ import com.google.gson.stream.JsonWriter;
 
 import static com.google.gson.stream.JsonToken.END_OBJECT;
 
+/**
+ * Represents a type adapter for {@link Multimap} from Google Guava. Multimaps are deserilized to {@link ArrayListMultimap}.
+ *
+ * @author Lyubomyr Shaydariv
+ * @see MultimapTypeAdapterFactory
+ * @since 0-SNAPSHOT
+ */
 public final class MultimapTypeAdapter<V>
 		extends TypeAdapter<Multimap<String, V>> {
 
@@ -24,6 +31,14 @@ public final class MultimapTypeAdapter<V>
 		this.valueType = valueType;
 	}
 
+	/**
+	 * Returns a {@link Multimap} type adapter.
+	 *
+	 * @param gson      Gson instance
+	 * @param valueType Multimap value type
+	 *
+	 * @return Type adapter instance
+	 */
 	public static <V> TypeAdapter<Multimap<String, V>> getMultimapTypeAdapter(final Gson gson, final Type valueType) {
 		return new MultimapTypeAdapter<>(gson, valueType);
 	}

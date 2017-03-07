@@ -13,6 +13,13 @@ import lsh.ext.gson.AbstractBoundTypeAdapterFactory;
 import static lsh.ext.gson.ParameterizedTypes.resolveTypeArguments;
 import static lsh.ext.gson.adapters.MultimapTypeAdapter.getMultimapTypeAdapter;
 
+/**
+ * Represents a type adapter factory for {@link Multimap} from Google Guava.
+ *
+ * @author Lyubomyr Shaydariv
+ * @see MultimapTypeAdapter
+ * @since 0-SNAPSHOT
+ */
 public final class MultimapTypeAdapterFactory
 		extends AbstractBoundTypeAdapterFactory<Multimap<String, Object>> {
 
@@ -21,6 +28,9 @@ public final class MultimapTypeAdapterFactory
 	private MultimapTypeAdapterFactory() {
 	}
 
+	/**
+	 * @return An instance of {@link MultimapTypeAdapterFactory}.
+	 */
 	public static TypeAdapterFactory getMultimapTypeAdapterFactory() {
 		return multimapTypeAdapterFactory;
 	}
