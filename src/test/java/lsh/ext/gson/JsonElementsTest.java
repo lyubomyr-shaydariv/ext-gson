@@ -26,6 +26,7 @@ import static lsh.ext.gson.MoreMatchers.refersFirst;
 import static lsh.ext.gson.MoreMatchers.refersNone;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -56,6 +57,12 @@ public final class JsonElementsTest {
 	public void testJsonPrimitiveForBooleans() {
 		assertThat(jsonPrimitive(TRUE), is(new JsonPrimitive(true)));
 		assertThat(jsonPrimitive(FALSE), is(new JsonPrimitive(false)));
+	}
+
+	@Test
+	public void testJsonPrimitiveForBooleansIsFlyweight() {
+		assertThat(jsonPrimitive(true), sameInstance(jsonPrimitive(TRUE)));
+		assertThat(jsonPrimitive(FALSE), sameInstance(jsonPrimitive(false)));
 	}
 
 	@Test(expected = NullPointerException.class)

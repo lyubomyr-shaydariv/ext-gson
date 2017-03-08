@@ -21,6 +21,9 @@ import static lsh.ext.gson.JsonObjectMergePredicates.alwaysReplaceLeft;
  */
 public final class JsonElements {
 
+	private static final JsonPrimitive falsePrimitive = new JsonPrimitive(false);
+	private static final JsonPrimitive truePrimitive = new JsonPrimitive(true);
+
 	private JsonElements() {
 	}
 
@@ -46,8 +49,12 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
+	@SuppressWarnings("ConstantConditions")
 	public static JsonPrimitive jsonPrimitive(@Nonnull final Boolean b) {
-		return new JsonPrimitive(b);
+		final boolean hasValue = b != null;
+		return hasValue
+				? b ? truePrimitive : falsePrimitive
+				: new JsonPrimitive(b); // Propagate the default behavior
 	}
 
 	/**
