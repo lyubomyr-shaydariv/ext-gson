@@ -12,8 +12,10 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 import static lsh.ext.gson.JsonElements.jsonArray;
+import static lsh.ext.gson.JsonElements.jsonArrayWith;
 import static lsh.ext.gson.JsonElements.jsonNull;
 import static lsh.ext.gson.JsonElements.jsonObject;
+import static lsh.ext.gson.JsonElements.jsonObjectWith;
 import static lsh.ext.gson.JsonElements.jsonPrimitive;
 import static lsh.ext.gson.JsonElements.mergeIntoLeft;
 import static lsh.ext.gson.JsonElements.mergeIntoNew;
@@ -208,6 +210,24 @@ public final class JsonElementsTest {
 	}
 
 	@Test
+	public void testJsonObjectWith() {
+		final JsonObject actual = jsonObjectWith()
+				.add(K1, "whatever")
+				.add(K2, 'c')
+				.add(K3, 100)
+				.add(K4, false)
+				.add(K5, new JsonObject())
+				.getJsonObject();
+		final JsonObject expected = new JsonObject();
+		expected.addProperty(K1, "whatever");
+		expected.addProperty(K2, 'c');
+		expected.addProperty(K3, 100);
+		expected.addProperty(K4, false);
+		expected.add(K5, new JsonObject());
+		assertThat(actual, is(expected));
+	}
+
+	@Test
 	public void testJsonArray() {
 		assertThat(
 				jsonArray(),
@@ -324,6 +344,27 @@ public final class JsonElementsTest {
 				jsonArray(null, null, null, null, null, null, null, null, null, null),
 				is(stringJsonArray(null, null, null, null, null, null, null, null, null, null))
 		);
+	}
+
+
+	@Test
+	public void testJsonArrayWith() {
+		final JsonArray actual = jsonArrayWith()
+				.add('c')
+				.add(true)
+				.add(new JsonObject())
+				.add(1000)
+				.add("whatever")
+				.addAll(jsonArray(jsonPrimitive(K1), jsonPrimitive(K2)))
+				.getJsonArray();
+		final JsonArray expected = new JsonArray();
+		expected.add('c');
+		expected.add(true);
+		expected.add(new JsonObject());
+		expected.add(1000);
+		expected.add("whatever");
+		expected.addAll(jsonArray(jsonPrimitive(K1), jsonPrimitive(K2)));
+		assertThat(actual, is(expected));
 	}
 
 	@Test

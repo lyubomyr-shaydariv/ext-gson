@@ -240,6 +240,15 @@ public final class JsonElements {
 	}
 
 	/**
+	 * @return An accumulator instance to accumulate {@link JsonObject} instances.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static JsonObjectAccumulator jsonObjectWith() {
+		return new JsonObjectAccumulator();
+	}
+
+	/**
 	 * Creates a new JSON array: {@code []}.
 	 *
 	 * @return An empty JSON array.
@@ -566,6 +575,15 @@ public final class JsonElements {
 	}
 
 	/**
+	 * @return An accumulator instance to accumulate {@link JsonArray} instances.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static JsonArrayAccumulator jsonArrayWith() {
+		return new JsonArrayAccumulator();
+	}
+
+	/**
 	 * Merges two {@link JsonObject} objects, left and right, into a new {@link JsonObject} object on common keys using the {@link JsonObjectMergePredicates#alwaysReplaceLeft()} strategy.
 	 *
 	 * @param left  Left
@@ -636,6 +654,213 @@ public final class JsonElements {
 			}
 		}
 		return left;
+	}
+
+	/**
+	 * Represents a {@link JsonObject} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates
+	 * a certain state with builder-like syntax.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static final class JsonObjectAccumulator {
+
+		private final JsonObject jsonObject = new JsonObject();
+
+		private JsonObjectAccumulator() {
+		}
+
+		/**
+		 * Adds a JSON element to the accumulated object.
+		 *
+		 * @param property    Property name.
+		 * @param jsonElement A JSON element.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonObjectAccumulator add(final String property, final JsonElement jsonElement) {
+			jsonObject.add(property, jsonElement);
+			return this;
+		}
+
+		/**
+		 * Adds a boolean to the accumulated object.
+		 *
+		 * @param property Property name.
+		 * @param b        A boolean value.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonObjectAccumulator add(final String property, final Boolean b) {
+			jsonObject.addProperty(property, b);
+			return this;
+		}
+
+		/**
+		 * Adds a single character to the accumulated object.
+		 *
+		 * @param property Property name.
+		 * @param c        A character value.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonObjectAccumulator add(final String property, final Character c) {
+			jsonObject.addProperty(property, c);
+			return this;
+		}
+
+		/**
+		 * Adds a numeric value to the accumulated object.
+		 *
+		 * @param property Property name.
+		 * @param n        A numeric value.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonObjectAccumulator add(final String property, final Number n) {
+			jsonObject.addProperty(property, n);
+			return this;
+		}
+
+		/**
+		 * Adds a string to the accumulated object.
+		 *
+		 * @param property Property name.
+		 * @param s        A string value.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonObjectAccumulator add(final String property, final String s) {
+			jsonObject.addProperty(property, s);
+			return this;
+		}
+
+		/**
+		 * @return The accumulated {@link JsonObject} instance.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonObject getJsonObject() {
+			return jsonObject;
+		}
+
+	}
+
+	/**
+	 * Represents a {@link JsonArray} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates
+	 * a certain state with builder-like syntax.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static final class JsonArrayAccumulator {
+
+		private final JsonArray jsonArray = new JsonArray();
+
+		private JsonArrayAccumulator() {
+		}
+
+		/**
+		 * Adds a JSON element to the accumulated array.
+		 *
+		 * @param jsonElement A JSON element.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonArrayAccumulator add(final JsonElement jsonElement) {
+			jsonArray.add(jsonElement);
+			return this;
+		}
+
+		/**
+		 * Adds a boolean to the accumulated array.
+		 *
+		 * @param b A boolean value.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonArrayAccumulator add(final Boolean b) {
+			jsonArray.add(b);
+			return this;
+		}
+
+		/**
+		 * Adds a single character to the accumulated array.
+		 *
+		 * @param c A character value.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonArrayAccumulator add(final Character c) {
+			jsonArray.add(c);
+			return this;
+		}
+
+		/**
+		 * Adds a numeric value to the accumulated array.
+		 *
+		 * @param n A numeric value.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonArrayAccumulator add(final Number n) {
+			jsonArray.add(n);
+			return this;
+		}
+
+		/**
+		 * Adds a string to the accumulated array.
+		 *
+		 * @param s A string value.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonArrayAccumulator add(final String s) {
+			jsonArray.add(s);
+			return this;
+		}
+
+		/**
+		 * Adds all elements from the given JSON array to the accumulated array.
+		 *
+		 * @param jsonArray A JSON array.
+		 *
+		 * @return Self.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonArrayAccumulator addAll(final JsonArray jsonArray) {
+			this.jsonArray.addAll(jsonArray);
+			return this;
+		}
+
+		/**
+		 * @return The accumulated {@link JsonArray} instance.
+		 *
+		 * @since 0-SNAPSHOT
+		 */
+		public JsonArray getJsonArray() {
+			return jsonArray;
+		}
+
 	}
 
 }
