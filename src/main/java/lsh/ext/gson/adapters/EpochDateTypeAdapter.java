@@ -11,26 +11,26 @@ import com.google.gson.stream.JsonWriter;
 import static com.google.gson.stream.JsonToken.NULL;
 
 /**
- * Represents the UNIX epoch to {@link Date} and vice versa type adapter.
+ * Represents the epoch to {@link Date} and vice versa type adapter.
  *
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT
  */
-public final class UnixEpochDateTypeAdapter
+public final class EpochDateTypeAdapter
 		extends TypeAdapter<Date> {
 
-	private static final TypeAdapter<Date> unixEpochDateTypeAdapter = new UnixEpochDateTypeAdapter();
+	private static final TypeAdapter<Date> epochDateTypeAdapter = new EpochDateTypeAdapter();
 
-	private UnixEpochDateTypeAdapter() {
+	private EpochDateTypeAdapter() {
 	}
 
 	/**
-	 * @return An instance of {@link UnixEpochDateTypeAdapter}.
+	 * @return An instance of {@link EpochDateTypeAdapter}.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapter<Date> getUnixEpochDateTypeAdapter() {
-		return unixEpochDateTypeAdapter;
+	public static TypeAdapter<Date> getEpochDateTypeAdapter() {
+		return epochDateTypeAdapter;
 	}
 
 	@Override
