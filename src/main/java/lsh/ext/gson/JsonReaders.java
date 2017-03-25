@@ -52,6 +52,52 @@ public final class JsonReaders {
 		return new EmptyStringFailFastJsonReader(reader);
 	}
 
+	/**
+	 * <p>Skips a token of any type for the given {@link JsonReader}. Unlike {@link JsonReader#skipValue()}, this method can also skip tokens such as:</p>
+	 *
+	 * <ul>
+	 * <li>{@link JsonToken#BEGIN_OBJECT} and {@link JsonToken#END_OBJECT}</li>
+	 * <li>{@link JsonToken#BEGIN_ARRAY} and {@link JsonToken#END_ARRAY}</li>
+	 * <li>{@link JsonToken#NAME}</li>
+	 * <li>{@link JsonToken#END_DOCUMENT} (ignored)</li>
+	 * </ul>
+	 *
+	 * @param reader Reader any token to read and skip from
+	 *
+	 * @see JsonReader#skipValue()
+	 * @since 0-SNAPSHOT
+	 */
+	public static void skipToken(final JsonReader reader)
+			throws IOException {
+		final JsonToken token = reader.peek();
+		switch ( token ) {
+		case BEGIN_ARRAY:
+			reader.beginArray();
+			break;
+		case END_ARRAY:
+			reader.endArray();
+			break;
+		case BEGIN_OBJECT:
+			reader.beginObject();
+			break;
+		case END_OBJECT:
+			reader.endObject();
+			break;
+		case NAME:
+			reader.nextName();
+			break;
+		case STRING:
+		case NUMBER:
+		case BOOLEAN:
+		case NULL:
+			reader.skipValue();
+			break;
+		case END_DOCUMENT:
+		default:
+			throw new AssertionError(token);
+		}
+	}
+
 	private static final class EmptyStringFailFastJsonReader
 			extends JsonReader {
 
