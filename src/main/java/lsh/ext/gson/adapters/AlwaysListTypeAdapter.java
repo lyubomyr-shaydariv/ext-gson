@@ -16,7 +16,7 @@ import com.google.gson.stream.MalformedJsonException;
  * @param <E> Element type
  *
  * @author Lyubomyr Shaydariv
- * @since 0.1-SNAPSHOT
+ * @since 0-SNAPSHOT
  */
 public final class AlwaysListTypeAdapter<E>
 		extends TypeAdapter<List<E>> {
@@ -33,7 +33,7 @@ public final class AlwaysListTypeAdapter<E>
 	 *
 	 * @return An instance of {@link AlwaysListTypeAdapter}.
 	 *
-	 * @since 0.1-SNAPSHOT
+	 * @since 0-SNAPSHOT
 	 */
 	public static <E> TypeAdapter<List<E>> getAlwaysListTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
 		return new AlwaysListTypeAdapter<>(elementTypeAdapter);
