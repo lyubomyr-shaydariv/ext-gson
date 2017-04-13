@@ -29,6 +29,7 @@ public final class Json {
 	 *
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
 	 *
+	 * @throws IOException A rethrown exception.
 	 * @since 0-SNAPSHOT
 	 */
 	public static boolean isJsonValid(final String json)
@@ -43,6 +44,7 @@ public final class Json {
 	 *
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
 	 *
+	 * @throws IOException A rethrown exception
 	 * @since 0-SNAPSHOT
 	 */
 	public static boolean isJsonValid(final Reader reader)
@@ -57,6 +59,7 @@ public final class Json {
 	 *
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
 	 *
+	 * @throws IOException A rethrown exception
 	 * @since 0-SNAPSHOT
 	 */
 	public static boolean isJsonValid(final JsonReader jsonReader)

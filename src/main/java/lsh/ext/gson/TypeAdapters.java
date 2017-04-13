@@ -43,10 +43,15 @@ public final class TypeAdapters {
 	 *
 	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
 	 *              or {@link InstanceCreator}.
+	 * @param <T>   Type the resolved type adapter should be cast to.
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
-	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
+	 * @throws IllegalArgumentException  If the given class instance does not meet its parameter expectations
+	 * @throws IllegalAccessException    A rethrown exception
+	 * @throws InstantiationException    A rethrown exception
+	 * @throws NoSuchMethodException     A rethrown exception
+	 * @throws InvocationTargetException A rethrown exception
 	 * @see #tryGetTypeAdapterOf(Class)
 	 * @since 0-SNAPSHOT
 	 */
@@ -72,10 +77,15 @@ public final class TypeAdapters {
 	 *
 	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
 	 *              or {@link InstanceCreator}.
+	 * @param <T>   Type the resolved type adapter should be cast to.
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
-	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
+	 * @throws IllegalArgumentException  If the given class instance does not meet its parameter expectations
+	 * @throws InvocationTargetException A rethrown exception
+	 * @throws NoSuchMethodException     A rethrown exception
+	 * @throws InstantiationException    A rethrown exception
+	 * @throws IllegalAccessException    A rethrown exception
 	 * @see #tryGetTypeHierarchyAdapterOf(Class)
 	 * @since 0-SNAPSHOT
 	 */
@@ -92,8 +102,13 @@ public final class TypeAdapters {
 	/**
 	 * Checked exceptions-free alternative of {@link #getTypeAdapterOf(Class)}.
 	 *
+	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
+	 *              or {@link InstanceCreator}.
+	 * @param <T>   Type the resolved type adapter should be cast to.
+	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
+	 * @throws RuntimeException An exception to wrap any checked exception occuring in {@link #getTypeAdapterOf(Class)}
 	 * @see #getTypeAdapterOf(Class)
 	 * @since 0-SNAPSHOT
 	 */
@@ -109,8 +124,13 @@ public final class TypeAdapters {
 	/**
 	 * Checked exceptions-free alternative of {@link #getTypeHierarchyAdapterOf(Class)}.
 	 *
+	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
+	 *              or {@link InstanceCreator}.
+	 * @param <T>   Type the resolved type adapter should be cast to.
+	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
+	 * @throws RuntimeException An exception to wrap any checked exception occuring in {@link #getTypeHierarchyAdapterOf(Class)}
 	 * @see #getTypeAdapterOf(Class)
 	 * @since 0-SNAPSHOT
 	 */

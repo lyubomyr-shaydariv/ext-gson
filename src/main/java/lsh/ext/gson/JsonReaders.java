@@ -64,6 +64,7 @@ public final class JsonReaders {
 	 *
 	 * @param reader Reader any token to read and skip from
 	 *
+	 * @throws IOException A rethrown exception
 	 * @see JsonReader#skipValue()
 	 * @since 0-SNAPSHOT
 	 */

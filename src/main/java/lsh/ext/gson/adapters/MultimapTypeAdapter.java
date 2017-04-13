@@ -36,6 +36,7 @@ public final class MultimapTypeAdapter<V>
 	 *
 	 * @param gson      Gson instance
 	 * @param valueType Multimap value type
+	 * @param <V>       Multimap value type parameter
 	 *
 	 * @return Type adapter instance
 	 *
