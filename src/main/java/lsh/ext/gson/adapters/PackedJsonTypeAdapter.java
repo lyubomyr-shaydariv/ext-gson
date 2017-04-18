@@ -51,6 +51,7 @@ import static lsh.ext.gson.JsonStreams.copyTo;
  * </p>
  *
  * @author Lyubomyr Shaydariv
+ * @see UnpackedJsonTypeAdapterFactory
  * @since 0-SNAPSHOT
  */
 public final class PackedJsonTypeAdapter
