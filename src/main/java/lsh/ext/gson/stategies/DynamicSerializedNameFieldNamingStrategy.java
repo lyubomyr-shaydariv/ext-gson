@@ -7,8 +7,7 @@ import com.google.gson.FieldNamingStrategy;
 import lsh.ext.gson.annotations.DynamicSerializedName;
 
 /**
- * Represents a field naming strategy where field names must be evaluated dynamically. If the backing {@link IFieldNamingResolver} returns {@code code}, the
- * name is resolved using {@link DynamicSerializedNameFieldNamingStrategy#defaultFieldNamingStrategy} that is currently set to {@link FieldNamingPolicy#IDENTITY}.
+ * Represents a field naming strategy where field names must be evaluated dynamically.
  *
  * @author Lyubomyr Shaydariv
  * @see DynamicSerializedName
@@ -17,32 +16,47 @@ import lsh.ext.gson.annotations.DynamicSerializedName;
 public final class DynamicSerializedNameFieldNamingStrategy
 		implements FieldNamingStrategy {
 
-	private static final FieldNamingStrategy defaultFieldNamingStrategy = FieldNamingPolicy.IDENTITY;
-
 	private final IFieldNamingResolver fieldNamingResolver;
+	private final FieldNamingStrategy fallbackFieldNamingStrategy;
 
-	private DynamicSerializedNameFieldNamingStrategy(final IFieldNamingResolver fieldNamingResolver) {
+	private DynamicSerializedNameFieldNamingStrategy(final IFieldNamingResolver fieldNamingResolver, final FieldNamingStrategy fallbackFieldNamingStrategy) {
 		this.fieldNamingResolver = fieldNamingResolver;
+		this.fallbackFieldNamingStrategy = fallbackFieldNamingStrategy;
 	}
 
 	/**
 	 * @param fieldNamingResolver A strategy to resolve JSON property names dynamically.
 	 *
 	 * @return A {@link DynamicSerializedNameFieldNamingStrategy} instance.
+	 *
+	 * @since 0-SNAPSHOT
 	 */
 	public static FieldNamingStrategy getDynamicSerializedNameFieldNamingStrategy(final IFieldNamingResolver fieldNamingResolver) {
-		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver);
+		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, FieldNamingPolicy.IDENTITY);
+	}
+
+	/**
+	 * @param fieldNamingResolver         A strategy to resolve JSON property names dynamically.
+	 * @param fallbackFieldNamingStrategy A strategy to be used if {@code fieldNamingResolver} returns {@code null}.
+	 *
+	 * @return A {@link DynamicSerializedNameFieldNamingStrategy} instance.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static FieldNamingStrategy getDynamicSerializedNameFieldNamingStrategy(final IFieldNamingResolver fieldNamingResolver,
+			final FieldNamingStrategy fallbackFieldNamingStrategy) {
+		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, fallbackFieldNamingStrategy);
 	}
 
 	@Override
 	public String translateName(final Field field) {
 		final DynamicSerializedName annotation = field.getAnnotation(DynamicSerializedName.class);
 		if ( annotation == null ) {
-			return defaultFieldNamingStrategy.translateName(field);
+			return fallbackFieldNamingStrategy.translateName(field);
 		}
 		final String resolvedName = fieldNamingResolver.resolveName(annotation.value());
 		if ( resolvedName == null ) {
-			return defaultFieldNamingStrategy.translateName(field);
+			return fallbackFieldNamingStrategy.translateName(field);
 		}
 		return resolvedName;
 	}
