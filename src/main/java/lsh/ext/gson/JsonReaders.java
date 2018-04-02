@@ -3,6 +3,7 @@ package lsh.ext.gson;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.NoSuchElementException;
 
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
@@ -66,6 +67,7 @@ public final class JsonReaders {
 	 *
 	 * @throws IOException A rethrown exception
 	 * @see JsonReader#skipValue()
+	 * @see #readValuedJsonToken(JsonReader)
 	 * @since 0-SNAPSHOT
 	 */
 	public static void skipToken(final JsonReader reader)
@@ -97,6 +99,133 @@ public final class JsonReaders {
 		default:
 			throw new AssertionError(token);
 		}
+	}
+
+	/**
+	 * @param jsonReader JSON reader
+	 *
+	 * @return A valued JSON token from the JSON reader
+	 *
+	 * @see #skipToken(JsonReader)
+	 * @see #readValuedJsonTokenRecursively(JsonReader)
+	 * @since 0-SNAPSHOT
+	 */
+	public static ValuedJsonToken<?> readValuedJsonToken(final JsonReader jsonReader)
+			throws IOException {
+		final JsonToken jsonToken = jsonReader.peek();
+		final ValuedJsonToken<?> valuedJsonToken;
+		switch ( jsonToken ) {
+		case BEGIN_ARRAY:
+			jsonReader.beginArray();
+			valuedJsonToken = ValuedJsonToken.arrayBegin();
+			break;
+		case END_ARRAY:
+			jsonReader.endArray();
+			valuedJsonToken = ValuedJsonToken.arrayEnd();
+			break;
+		case BEGIN_OBJECT:
+			jsonReader.beginObject();
+			valuedJsonToken = ValuedJsonToken.objectBegin();
+			break;
+		case END_OBJECT:
+			jsonReader.endObject();
+			valuedJsonToken = ValuedJsonToken.objectEnd();
+			break;
+		case NAME:
+			final String name = jsonReader.nextName();
+			valuedJsonToken = ValuedJsonToken.name(name);
+			break;
+		case STRING:
+			final String s = jsonReader.nextString();
+			valuedJsonToken = ValuedJsonToken.value(s);
+			break;
+		case NUMBER:
+			final double d = jsonReader.nextDouble();
+			valuedJsonToken = ValuedJsonToken.value(d);
+			break;
+		case BOOLEAN:
+			final boolean b = jsonReader.nextBoolean();
+			valuedJsonToken = ValuedJsonToken.value(b);
+			break;
+		case NULL:
+			jsonReader.nextNull();
+			valuedJsonToken = ValuedJsonToken.value();
+			break;
+		case END_DOCUMENT:
+			valuedJsonToken = ValuedJsonToken.documentEnd();
+			break;
+		default:
+			throw new AssertionError(jsonToken);
+		}
+		return valuedJsonToken;
+	}
+
+	/**
+	 * @param jsonReader JSON reader
+	 *
+	 * @return An iterator of a single value JSON tokens: either single primitives, either single object/arrays.
+	 *
+	 * @see #readValuedJsonToken(JsonReader)
+	 * @since 0-SNAPSHOT
+	 */
+	public static IAutoCloseableIterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(final JsonReader jsonReader) {
+		return new IAutoCloseableIterator<ValuedJsonToken<?>>() {
+			private int level;
+
+			@Override
+			public void close()
+					throws IOException {
+				jsonReader.close();
+			}
+
+			@Override
+			public boolean hasNext() {
+				if ( level < 0 ) {
+					return false;
+				}
+				try {
+					final JsonToken token = jsonReader.peek();
+					return token != JsonToken.END_DOCUMENT;
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
+			}
+
+			@Override
+			public ValuedJsonToken<?> next() {
+				try {
+					if ( level < 0 ) {
+						throw new NoSuchElementException();
+					}
+					final ValuedJsonToken<?> valuedJsonToken = readValuedJsonToken(jsonReader);
+					switch ( valuedJsonToken.getToken() ) {
+					case BEGIN_ARRAY:
+					case BEGIN_OBJECT:
+						level++;
+						break;
+					case END_ARRAY:
+					case END_OBJECT:
+						level--;
+						break;
+					case NAME:
+					case STRING:
+					case NUMBER:
+					case BOOLEAN:
+					case NULL:
+						break;
+					case END_DOCUMENT:
+					default:
+						throw new AssertionError(valuedJsonToken.getToken());
+					}
+					if ( level == 0 ) {
+						level = -1;
+					}
+					return valuedJsonToken;
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
+			}
+		};
 	}
 
 	private static final class EmptyStringFailFastJsonReader
