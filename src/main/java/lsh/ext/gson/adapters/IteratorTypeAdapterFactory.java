@@ -7,9 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-
-import static lsh.ext.gson.ParameterizedTypes.resolveTypeArguments;
-import static lsh.ext.gson.adapters.IteratorTypeAdapter.getIteratorTypeAdapter;
+import lsh.ext.gson.ParameterizedTypes;
 
 /**
  * Represents a type adapter factory for {@link Iterator} .
@@ -36,9 +34,9 @@ public final class IteratorTypeAdapterFactory
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		if ( Iterator.class.isAssignableFrom(typeToken.getRawType()) ) {
-			final Type[][] typeArguments = resolveTypeArguments(typeToken.getType());
+			final Type[][] typeArguments = ParameterizedTypes.resolveTypeArguments(typeToken.getType());
 			@SuppressWarnings("unchecked")
-			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) getIteratorTypeAdapter(typeArguments[0][0], gson);
+			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) IteratorTypeAdapter.getIteratorTypeAdapter(typeArguments[0][0], gson);
 			return castTypeAdapter;
 		}
 		return null;

@@ -6,34 +6,30 @@ import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static java.util.Objects.hash;
-
-import static lsh.ext.gson.adapters.JsonReaderIterator.getJsonReaderIterator;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class JsonReaderIteratorTest {
 
 	@Test
 	public void testSome() {
 		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
-		final Iterator<Object> unit = getJsonReaderIterator(FooBar.class, new Gson(), in);
-		assertThat(unit.hasNext(), is(true));
-		assertThat(unit.next(), is(new FooBar(1, 2)));
-		assertThat(unit.hasNext(), is(true));
-		assertThat(unit.next(), is(new FooBar(3, 4)));
-		assertThat(unit.hasNext(), is(true));
-		assertThat(unit.next(), is(new FooBar(5, 6)));
-		assertThat(unit.hasNext(), is(false));
+		final Iterator<Object> unit = JsonReaderIterator.getJsonReaderIterator(FooBar.class, new Gson(), in);
+		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
+		MatcherAssert.assertThat(unit.next(), CoreMatchers.is(new FooBar(1, 2)));
+		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
+		MatcherAssert.assertThat(unit.next(), CoreMatchers.is(new FooBar(3, 4)));
+		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
+		MatcherAssert.assertThat(unit.next(), CoreMatchers.is(new FooBar(5, 6)));
+		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
 	}
 
 	@Test
 	public void testEmpty() {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
-		final Iterator<Object> unit = getJsonReaderIterator(FooBar.class, new Gson(), in);
-		assertThat(unit.hasNext(), is(false));
+		final Iterator<Object> unit = JsonReaderIterator.getJsonReaderIterator(FooBar.class, new Gson(), in);
+		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
 	}
 
 	private static final class FooBar {
@@ -60,7 +56,7 @@ public final class JsonReaderIteratorTest {
 
 		@Override
 		public int hashCode() {
-			return hash(foo, bar);
+			return Objects.hash(foo, bar);
 		}
 
 	}

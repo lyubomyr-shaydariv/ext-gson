@@ -9,8 +9,7 @@ import java.io.Writer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
-import static lsh.ext.gson.JsonStreams.copyTo;
+import lsh.ext.gson.JsonStreams;
 
 /**
  * <p>
@@ -76,7 +75,7 @@ public final class PackedJsonTypeAdapter
 			throws IOException {
 		@SuppressWarnings("resource")
 		final Reader reader = new StringReader(json);
-		copyTo(new JsonReader(reader), out);
+		JsonStreams.copyTo(new JsonReader(reader), out);
 	}
 
 	@Override
@@ -84,7 +83,7 @@ public final class PackedJsonTypeAdapter
 			throws IOException {
 		@SuppressWarnings("resource")
 		final Writer writer = new StringWriter();
-		copyTo(in, new JsonWriter(writer));
+		JsonStreams.copyTo(in, new JsonWriter(writer));
 		return writer.toString();
 	}
 

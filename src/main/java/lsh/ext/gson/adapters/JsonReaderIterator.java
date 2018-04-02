@@ -8,9 +8,7 @@ import java.util.NoSuchElementException;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-
-import static com.google.gson.stream.JsonToken.BEGIN_ARRAY;
-import static com.google.gson.stream.JsonToken.END_ARRAY;
+import com.google.gson.stream.JsonToken;
 
 final class JsonReaderIterator<T>
 		implements Iterator<T>, Closeable {
@@ -42,13 +40,13 @@ final class JsonReaderIterator<T>
 			for ( ; ; ) {
 				switch ( state ) {
 				case BEFORE_ARRAY:
-					if ( in.peek() == BEGIN_ARRAY ) {
+					if ( in.peek() == JsonToken.BEGIN_ARRAY ) {
 						in.beginArray();
 						state = ReadingIteratorState.WITHIN_ARRAY;
 					}
 					continue;
 				case WITHIN_ARRAY:
-					if ( in.peek() == END_ARRAY ) {
+					if ( in.peek() == JsonToken.END_ARRAY ) {
 						in.endArray();
 						state = ReadingIteratorState.END_OF_STREAM;
 						continue;
@@ -85,13 +83,13 @@ final class JsonReaderIterator<T>
 				case BEFORE_ARRAY:
 					in.beginArray();
 					state = ReadingIteratorState.WITHIN_ARRAY;
-					if ( in.peek() == END_ARRAY ) {
+					if ( in.peek() == JsonToken.END_ARRAY ) {
 						state = ReadingIteratorState.END_OF_STREAM;
 					}
 					break;
 				case WITHIN_ARRAY:
 					element = gson.fromJson(in, elementType);
-					if ( in.peek() == END_ARRAY ) {
+					if ( in.peek() == JsonToken.END_ARRAY ) {
 						state = ReadingIteratorState.AFTER_ARRAY;
 					}
 					break loop;

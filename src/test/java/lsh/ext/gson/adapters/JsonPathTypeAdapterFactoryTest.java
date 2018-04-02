@@ -15,63 +15,59 @@ import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import com.jayway.jsonpath.spi.mapper.MappingProvider;
 import lsh.ext.gson.annotations.JsonPathExpression;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static lsh.ext.gson.adapters.JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory;
-import static lsh.ext.gson.adapters.JsonPathTypeAdapterFactory.getJsonPathTypeAdapterWithGlobalDefaults;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class JsonPathTypeAdapterFactoryTest {
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithDefaultConfiguration() {
-		final TypeAdapterFactory unit = getJsonPathTypeAdapterFactory();
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory();
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
 		final Wrapper wrapper = gson.fromJson("{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", Wrapper.class);
-		assertThat(wrapper.fooRef, is("Foo!"));
-		assertThat(wrapper.barRef, is("A"));
-		assertThat(wrapper.bazRef, is(ImmutableMap.of("k1", "v1")));
+		MatcherAssert.assertThat(wrapper.fooRef, CoreMatchers.is("Foo!"));
+		MatcherAssert.assertThat(wrapper.barRef, CoreMatchers.is("A"));
+		MatcherAssert.assertThat(wrapper.bazRef, CoreMatchers.is(ImmutableMap.of("k1", "v1")));
 	}
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithDefaultConfigurationAndNotExistingPaths() {
-		final TypeAdapterFactory unit = getJsonPathTypeAdapterFactory();
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory();
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
 		final WrapperWithNotExistingPath wrapper = gson.fromJson("{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", WrapperWithNotExistingPath.class);
-		assertThat(wrapper.fooRef, nullValue());
+		MatcherAssert.assertThat(wrapper.fooRef, CoreMatchers.nullValue());
 	}
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithConfiguration() {
-		final TypeAdapterFactory unit = getJsonPathTypeAdapterFactory(JsonPathTypeAdapterFactoryTest::getJsonPathConfiguration);
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory(JsonPathTypeAdapterFactoryTest::getJsonPathConfiguration);
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
 		final Wrapper wrapper = gson.fromJson("{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", Wrapper.class);
-		assertThat(wrapper.fooRef, is("Foo!"));
-		assertThat(wrapper.barRef, is("A"));
-		assertThat(wrapper.bazRef, is(ImmutableMap.of("k1", "v1")));
+		MatcherAssert.assertThat(wrapper.fooRef, CoreMatchers.is("Foo!"));
+		MatcherAssert.assertThat(wrapper.barRef, CoreMatchers.is("A"));
+		MatcherAssert.assertThat(wrapper.bazRef, CoreMatchers.is(ImmutableMap.of("k1", "v1")));
 	}
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithConfigurationAndNotExistingPaths() {
-		final TypeAdapterFactory unit = getJsonPathTypeAdapterFactory(JsonPathTypeAdapterFactoryTest::getJsonPathConfiguration);
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory(JsonPathTypeAdapterFactoryTest::getJsonPathConfiguration);
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
 		final WrapperWithNotExistingPath wrapper = gson.fromJson("{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", WrapperWithNotExistingPath.class);
-		assertThat(wrapper.fooRef, nullValue());
+		MatcherAssert.assertThat(wrapper.fooRef, CoreMatchers.nullValue());
 	}
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithGlobalDefaultsConfiguration() {
-		final TypeAdapterFactory unit = getJsonPathTypeAdapterWithGlobalDefaults();
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterWithGlobalDefaults();
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
@@ -79,14 +75,14 @@ public final class JsonPathTypeAdapterFactoryTest {
 		final MappingProvider gsonMappingProvider = new GsonMappingProvider(gson);
 		configureJsonPathGlobally(jsonProvider, gsonMappingProvider);
 		final Wrapper wrapper = gson.fromJson("{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", Wrapper.class);
-		assertThat(wrapper.fooRef, is("Foo!"));
-		assertThat(wrapper.barRef, is("A"));
-		assertThat(wrapper.bazRef, is(ImmutableMap.of("k1", "v1")));
+		MatcherAssert.assertThat(wrapper.fooRef, CoreMatchers.is("Foo!"));
+		MatcherAssert.assertThat(wrapper.barRef, CoreMatchers.is("A"));
+		MatcherAssert.assertThat(wrapper.bazRef, CoreMatchers.is(ImmutableMap.of("k1", "v1")));
 	}
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithGlobalDefaultsConfigurationAndNotExistingKeys() {
-		final TypeAdapterFactory unit = getJsonPathTypeAdapterWithGlobalDefaults();
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterWithGlobalDefaults();
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
@@ -94,7 +90,7 @@ public final class JsonPathTypeAdapterFactoryTest {
 		final MappingProvider gsonMappingProvider = new GsonMappingProvider(gson);
 		configureJsonPathGlobally(jsonProvider, gsonMappingProvider);
 		final WrapperWithNotExistingPath wrapper = gson.fromJson("{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", WrapperWithNotExistingPath.class);
-		assertThat(wrapper.fooRef, nullValue());
+		MatcherAssert.assertThat(wrapper.fooRef, CoreMatchers.nullValue());
 	}
 
 	private static Configuration getJsonPathConfiguration(final Gson gson) {

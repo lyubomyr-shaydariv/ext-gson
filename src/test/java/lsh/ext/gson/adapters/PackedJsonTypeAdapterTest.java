@@ -14,11 +14,9 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static lsh.ext.gson.adapters.PackedJsonTypeAdapter.getPackedJsonTypeAdapter;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 public final class PackedJsonTypeAdapterTest {
 
@@ -30,29 +28,29 @@ public final class PackedJsonTypeAdapterTest {
 	@Test
 	public void testRead()
 			throws IOException {
-		final TypeAdapter<String> unit = getPackedJsonTypeAdapter();
+		final TypeAdapter<String> unit = PackedJsonTypeAdapter.getPackedJsonTypeAdapter();
 		final Reader reader = new StringReader(INNER_JSON);
 		final JsonReader jsonReader = new JsonReader(reader);
 		final String innerJson = unit.read(jsonReader);
-		assertThat(innerJson, is(INNER_JSON));
+		MatcherAssert.assertThat(innerJson, CoreMatchers.is(INNER_JSON));
 	}
 
 	@Test
 	public void testWrite()
 			throws IOException {
-		final TypeAdapter<String> unit = getPackedJsonTypeAdapter();
+		final TypeAdapter<String> unit = PackedJsonTypeAdapter.getPackedJsonTypeAdapter();
 		final Writer writer = new StringWriter();
 		final JsonWriter jsonWriter = new JsonWriter(writer);
 		unit.write(jsonWriter, INNER_JSON);
 		final JsonElement innerJsonElement = gson.fromJson(writer.toString(), JsonElement.class);
-		assertThat(innerJsonElement, is(inner()));
+		MatcherAssert.assertThat(innerJsonElement, CoreMatchers.is(inner()));
 	}
 
 	@Test
 	public void testJsonAdapter() {
 		final Outer outer = gson.fromJson(OUTER_JSON, Outer.class);
-		assertThat(outer.id, is(1));
-		assertThat(outer.inner, is(INNER_JSON));
+		MatcherAssert.assertThat(outer.id, CoreMatchers.is(1));
+		MatcherAssert.assertThat(outer.inner, CoreMatchers.is(INNER_JSON));
 	}
 
 	private static final class Outer {

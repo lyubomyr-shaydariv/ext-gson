@@ -9,9 +9,8 @@ import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-
-import static com.google.gson.stream.JsonToken.END_OBJECT;
 
 /**
  * Represents a type adapter for {@link Multimap} from Google Guava. Multimaps are deserialized to {@link ArrayListMultimap}.
@@ -65,7 +64,7 @@ public final class MultimapTypeAdapter<V>
 			throws IOException {
 		final Multimap<String, V> multimap = ArrayListMultimap.create();
 		in.beginObject();
-		while ( in.peek() != END_OBJECT ) {
+		while ( in.peek() != JsonToken.END_OBJECT ) {
 			final String key = in.nextName();
 			final V value = gson.fromJson(in, valueType);
 			multimap.put(key, value);

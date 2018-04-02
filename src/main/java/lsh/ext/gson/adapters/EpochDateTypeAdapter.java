@@ -6,9 +6,8 @@ import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-
-import static com.google.gson.stream.JsonToken.NULL;
 
 /**
  * Represents the epoch to {@link Date} and vice versa type adapter.
@@ -37,7 +36,7 @@ public final class EpochDateTypeAdapter
 	@Nullable
 	public Date read(final JsonReader in)
 			throws IOException {
-		return in.peek() != NULL ? new Date(in.nextLong()) : null;
+		return in.peek() != JsonToken.NULL ? new Date(in.nextLong()) : null;
 	}
 
 	@Override

@@ -3,15 +3,14 @@ package lsh.ext.gson;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Collections;
 import javax.annotation.Nonnull;
 
 import com.google.gson.InstanceCreator;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
 
 /**
  * Provides miscellaneous {@link TypeAdapter} utility methods.
@@ -21,11 +20,11 @@ import static java.util.Collections.unmodifiableList;
  */
 public final class TypeAdapters {
 
-	private static final Iterable<Class<?>> supportedTypeAdapterClasses = unmodifiableList(asList(
+	private static final Iterable<Class<?>> supportedTypeAdapterClasses = Collections.unmodifiableList(Arrays.asList(
 			TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class, InstanceCreator.class
 	));
 
-	private static final Iterable<Class<?>> supportedTypeHierarchyAdapterClasses = unmodifiableList(asList(
+	private static final Iterable<Class<?>> supportedTypeHierarchyAdapterClasses = Collections.unmodifiableList(Arrays.asList(
 			TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class
 	));
 

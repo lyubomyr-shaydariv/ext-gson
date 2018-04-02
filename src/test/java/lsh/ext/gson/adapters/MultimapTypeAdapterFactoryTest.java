@@ -7,16 +7,14 @@ import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static lsh.ext.gson.adapters.MultimapTypeAdapterFactory.getMultimapTypeAdapterFactory;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class MultimapTypeAdapterFactoryTest {
 
 	private static final Gson gson = new GsonBuilder()
-			.registerTypeAdapterFactory(getMultimapTypeAdapterFactory())
+			.registerTypeAdapterFactory(MultimapTypeAdapterFactory.getMultimapTypeAdapterFactory())
 			.create();
 
 	private static final Type stringToObjectMultimapType = new TypeToken<Multimap<String, Object>>() {
@@ -27,13 +25,13 @@ public final class MultimapTypeAdapterFactoryTest {
 	@Test
 	public void testWrite() {
 		final String json = gson.toJson(createMultimap(), stringToObjectMultimapType);
-		assertThat(json, is(SIMPLE_MULTIMAP_JSON));
+		MatcherAssert.assertThat(json, CoreMatchers.is(SIMPLE_MULTIMAP_JSON));
 	}
 
 	@Test
 	public void testRead() {
 		final Multimap<String, Object> multimap = gson.fromJson(SIMPLE_MULTIMAP_JSON, stringToObjectMultimapType);
-		assertThat(multimap, is(createMultimap()));
+		MatcherAssert.assertThat(multimap, CoreMatchers.is(createMultimap()));
 	}
 
 	private static Multimap<String, Object> createMultimap() {

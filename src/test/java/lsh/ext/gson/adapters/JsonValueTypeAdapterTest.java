@@ -1,26 +1,22 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
+import javax.json.Json;
 import javax.json.JsonValue;
 
 import com.google.gson.TypeAdapter;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static javax.json.Json.createArrayBuilder;
-import static javax.json.Json.createObjectBuilder;
-
-import static lsh.ext.gson.adapters.JsonValueTypeAdapter.getJsonValueTypeAdapter;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class JsonValueTypeAdapterTest {
 
-	private static final JsonValue jsonValue = createObjectBuilder()
+	private static final JsonValue jsonValue = Json.createObjectBuilder()
 			.add("boolean", true)
 			.add("integer", 3)
 			.add("string", "foo")
 			.addNull("null")
-			.add("array", createArrayBuilder()
+			.add("array", Json.createArrayBuilder()
 					.add(false)
 					.add(2)
 					.add("bar")
@@ -32,15 +28,15 @@ public final class JsonValueTypeAdapterTest {
 
 	@Test
 	public void testWrite() {
-		final TypeAdapter<JsonValue> unit = getJsonValueTypeAdapter();
-		assertThat(unit.toJson(jsonValue), is(JSON_VALUE_JSON));
+		final TypeAdapter<JsonValue> unit = JsonValueTypeAdapter.getJsonValueTypeAdapter();
+		MatcherAssert.assertThat(unit.toJson(jsonValue), CoreMatchers.is(JSON_VALUE_JSON));
 	}
 
 	@Test
 	public void testRead()
 			throws IOException {
-		final TypeAdapter<JsonValue> unit = getJsonValueTypeAdapter();
-		assertThat(unit.fromJson(JSON_VALUE_JSON), is(jsonValue));
+		final TypeAdapter<JsonValue> unit = JsonValueTypeAdapter.getJsonValueTypeAdapter();
+		MatcherAssert.assertThat(unit.fromJson(JSON_VALUE_JSON), CoreMatchers.is(jsonValue));
 	}
 
 }

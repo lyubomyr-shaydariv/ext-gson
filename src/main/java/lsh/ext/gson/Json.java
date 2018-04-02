@@ -8,9 +8,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.MalformedJsonException;
 
-import static com.google.gson.stream.JsonToken.END_DOCUMENT;
-import static lsh.ext.gson.JsonReaders.skipToken;
-
 /**
  * Provides generic JSON methods.
  *
@@ -66,8 +63,8 @@ public final class Json {
 			throws IOException {
 		try {
 			JsonToken token;
-			while ( (token = jsonReader.peek()) != END_DOCUMENT && token != null ) {
-				skipToken(jsonReader);
+			while ( (token = jsonReader.peek()) != JsonToken.END_DOCUMENT && token != null ) {
+				JsonReaders.skipToken(jsonReader);
 			}
 			return true;
 		} catch ( final MalformedJsonException ignored ) {

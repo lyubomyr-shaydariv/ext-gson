@@ -12,11 +12,9 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static lsh.ext.gson.adapters.MultimapTypeAdapter.getMultimapTypeAdapter;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class MultimapTypeAdapterTest {
 
@@ -27,21 +25,21 @@ public final class MultimapTypeAdapterTest {
 	@Test
 	public void testWrite()
 			throws IOException {
-		final TypeAdapter<Multimap<String, Object>> unit = getMultimapTypeAdapter(gson, String.class);
+		final TypeAdapter<Multimap<String, Object>> unit = MultimapTypeAdapter.getMultimapTypeAdapter(gson, String.class);
 		final Writer writer = new StringWriter();
 		final JsonWriter jsonWriter = new JsonWriter(writer);
 		unit.write(jsonWriter, createMultimap());
-		assertThat(writer.toString(), is(SIMPLE_MULTIMAP_JSON));
+		MatcherAssert.assertThat(writer.toString(), CoreMatchers.is(SIMPLE_MULTIMAP_JSON));
 	}
 
 	@Test
 	public void testRead()
 			throws IOException {
-		final TypeAdapter<Multimap<String, Object>> unit = getMultimapTypeAdapter(gson, String.class);
+		final TypeAdapter<Multimap<String, Object>> unit = MultimapTypeAdapter.getMultimapTypeAdapter(gson, String.class);
 		final Reader reader = new StringReader(SIMPLE_MULTIMAP_JSON);
 		final JsonReader jsonReader = new JsonReader(reader);
 		final Multimap<String, Object> multimap = unit.read(jsonReader);
-		assertThat(multimap, is(createMultimap()));
+		MatcherAssert.assertThat(multimap, CoreMatchers.is(createMultimap()));
 	}
 
 	private static Multimap<String, Object> createMultimap() {

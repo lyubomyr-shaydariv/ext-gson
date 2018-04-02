@@ -6,13 +6,10 @@ import java.util.Arrays;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.sameInstance;
 
 final class MoreMatchers {
 
@@ -20,11 +17,11 @@ final class MoreMatchers {
 	}
 
 	static Matcher<Object> refersNone(final Object o1, final Object o2) {
-		return allOf(not(sameInstance(o1)), not(sameInstance(o2)));
+		return CoreMatchers.allOf(CoreMatchers.not(CoreMatchers.sameInstance(o1)), CoreMatchers.not(CoreMatchers.sameInstance(o2)));
 	}
 
 	static Matcher<Object> refersFirst(final Object o1, final Object o2) {
-		return allOf(sameInstance(o1), not(sameInstance(o2)));
+		return CoreMatchers.allOf(CoreMatchers.sameInstance(o1), CoreMatchers.not(CoreMatchers.sameInstance(o2)));
 	}
 
 	static Matcher<ParameterizedType> hasRawType(final Type rawType) {
@@ -56,7 +53,7 @@ final class MoreMatchers {
 	}
 
 	static Matcher<ParameterizedType> isParameterizedType(final Type rawType, final Type... actualTypeArguments) {
-		return allOf(hasRawType(rawType), hasActualTypeArguments(actualTypeArguments));
+		return CoreMatchers.allOf(hasRawType(rawType), hasActualTypeArguments(actualTypeArguments));
 	}
 
 	static Matcher<JsonObject> hasProperty(final String key, final JsonElement value) {

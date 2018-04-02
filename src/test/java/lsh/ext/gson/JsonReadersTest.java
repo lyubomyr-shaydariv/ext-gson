@@ -7,15 +7,10 @@ import java.io.StringReader;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
 import org.junit.Test;
-
-import static com.google.gson.stream.JsonToken.BEGIN_ARRAY;
-import static com.google.gson.stream.JsonToken.BEGIN_OBJECT;
-import static com.google.gson.stream.JsonToken.END_DOCUMENT;
-import static lsh.ext.gson.JsonReaders.getEmptyStringFailFastJsonReader;
-import static lsh.ext.gson.JsonReaders.skipToken;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 public final class JsonReadersTest {
 
@@ -28,15 +23,15 @@ public final class JsonReadersTest {
 
 	@Test(expected = JsonSyntaxException.class)
 	public void testGsonWithEmptyStringFailFastJsonReaderMustFailOnReadingAnEmptyString() {
-		gson.fromJson(getEmptyStringFailFastJsonReader(new StringReader("")), Void.class);
+		gson.fromJson(JsonReaders.getEmptyStringFailFastJsonReader(new StringReader("")), Void.class);
 	}
 
 	@Test
 	public void testSkipTokenForBeginArray()
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[]"));
-		assertThat(jsonReader.peek(), is(BEGIN_ARRAY));
-		skipToken(jsonReader);
+		Assert.assertThat(jsonReader.peek(), CoreMatchers.is(JsonToken.BEGIN_ARRAY));
+		JsonReaders.skipToken(jsonReader);
 		jsonReader.endArray();
 	}
 
@@ -45,16 +40,16 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[]"));
 		jsonReader.beginArray();
-		skipToken(jsonReader);
-		assertThat(jsonReader.peek(), is(END_DOCUMENT));
+		JsonReaders.skipToken(jsonReader);
+		Assert.assertThat(jsonReader.peek(), CoreMatchers.is(JsonToken.END_DOCUMENT));
 	}
 
 	@Test
 	public void testSkipTokenForBeginObject()
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("{}"));
-		assertThat(jsonReader.peek(), is(BEGIN_OBJECT));
-		skipToken(jsonReader);
+		Assert.assertThat(jsonReader.peek(), CoreMatchers.is(JsonToken.BEGIN_OBJECT));
+		JsonReaders.skipToken(jsonReader);
 		jsonReader.endObject();
 	}
 
@@ -63,8 +58,8 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("{}"));
 		jsonReader.beginObject();
-		skipToken(jsonReader);
-		assertThat(jsonReader.peek(), is(END_DOCUMENT));
+		JsonReaders.skipToken(jsonReader);
+		Assert.assertThat(jsonReader.peek(), CoreMatchers.is(JsonToken.END_DOCUMENT));
 	}
 
 	@Test
@@ -72,8 +67,8 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("{\"foo\":1}"));
 		jsonReader.beginObject();
-		skipToken(jsonReader);
-		assertThat(jsonReader.nextInt(), is(1));
+		JsonReaders.skipToken(jsonReader);
+		Assert.assertThat(jsonReader.nextInt(), CoreMatchers.is(1));
 		jsonReader.endObject();
 	}
 
@@ -82,9 +77,9 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[\"foo\",\"bar\",\"baz\"]"));
 		jsonReader.beginArray();
-		assertThat(jsonReader.nextString(), is("foo"));
-		skipToken(jsonReader);
-		assertThat(jsonReader.nextString(), is("baz"));
+		Assert.assertThat(jsonReader.nextString(), CoreMatchers.is("foo"));
+		JsonReaders.skipToken(jsonReader);
+		Assert.assertThat(jsonReader.nextString(), CoreMatchers.is("baz"));
 		jsonReader.endArray();
 	}
 
@@ -93,9 +88,9 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[1,2,3]"));
 		jsonReader.beginArray();
-		assertThat(jsonReader.nextInt(), is(1));
-		skipToken(jsonReader);
-		assertThat(jsonReader.nextInt(), is(3));
+		Assert.assertThat(jsonReader.nextInt(), CoreMatchers.is(1));
+		JsonReaders.skipToken(jsonReader);
+		Assert.assertThat(jsonReader.nextInt(), CoreMatchers.is(3));
 		jsonReader.endArray();
 	}
 
@@ -104,9 +99,9 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[false,true,true]"));
 		jsonReader.beginArray();
-		assertThat(jsonReader.nextBoolean(), is(false));
-		skipToken(jsonReader);
-		assertThat(jsonReader.nextBoolean(), is(true));
+		Assert.assertThat(jsonReader.nextBoolean(), CoreMatchers.is(false));
+		JsonReaders.skipToken(jsonReader);
+		Assert.assertThat(jsonReader.nextBoolean(), CoreMatchers.is(true));
 		jsonReader.endArray();
 	}
 
@@ -115,8 +110,8 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[null,true]"));
 		jsonReader.beginArray();
-		skipToken(jsonReader);
-		assertThat(jsonReader.nextBoolean(), is(true));
+		JsonReaders.skipToken(jsonReader);
+		Assert.assertThat(jsonReader.nextBoolean(), CoreMatchers.is(true));
 		jsonReader.endArray();
 	}
 
@@ -124,7 +119,7 @@ public final class JsonReadersTest {
 	public void testSkipTokenForEndOfDocument()
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader(""));
-		skipToken(jsonReader);
+		JsonReaders.skipToken(jsonReader);
 	}
 
 }

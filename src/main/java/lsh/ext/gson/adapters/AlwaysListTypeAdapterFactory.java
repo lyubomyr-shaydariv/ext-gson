@@ -9,9 +9,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractBoundTypeAdapterFactory;
-
-import static lsh.ext.gson.ParameterizedTypes.resolveTypeArguments;
-import static lsh.ext.gson.adapters.AlwaysListTypeAdapter.getAlwaysListTypeAdapter;
+import lsh.ext.gson.ParameterizedTypes;
 
 /**
  * Represents a type adapter factory for single values that can be converted to a list or keep an existing list of multiple elements.
@@ -44,10 +42,10 @@ public final class AlwaysListTypeAdapterFactory<E>
 	@Nonnull
 	@Override
 	protected TypeAdapter<List<E>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		final Type elementType = resolveTypeArguments(typeToken.getType())[0][0];
+		final Type elementType = ParameterizedTypes.resolveTypeArguments(typeToken.getType())[0][0];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
-		return getAlwaysListTypeAdapter(elementTypeAdapter);
+		return AlwaysListTypeAdapter.getAlwaysListTypeAdapter(elementTypeAdapter);
 	}
 
 }

@@ -11,8 +11,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.TypeAdapter;
 
-import static lsh.ext.gson.JsonObjectMergePredicates.alwaysReplaceLeft;
-
 /**
  * Provides miscellaneous {@link TypeAdapter} utility methods.
  *
@@ -601,7 +599,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right) {
-		return mergeIntoNew(left, right, alwaysReplaceLeft());
+		return mergeIntoNew(left, right, JsonObjectMergePredicates.alwaysReplaceLeft());
 	}
 
 	/**
@@ -636,7 +634,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right) {
-		return mergeIntoLeft(left, right, alwaysReplaceLeft());
+		return mergeIntoLeft(left, right, JsonObjectMergePredicates.alwaysReplaceLeft());
 	}
 
 	/**

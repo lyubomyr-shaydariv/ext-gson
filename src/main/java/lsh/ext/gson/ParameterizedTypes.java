@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static java.util.Objects.hash;
-
 /**
  * Provides miscellaneous {@link ParameterizedType} utility methods.
  *
@@ -147,7 +145,7 @@ public final class ParameterizedTypes {
 
 		@Override
 		public final int hashCode() {
-			return hash(rawType, actualTypeArguments);
+			return Objects.hash(rawType, actualTypeArguments);
 		}
 
 	}

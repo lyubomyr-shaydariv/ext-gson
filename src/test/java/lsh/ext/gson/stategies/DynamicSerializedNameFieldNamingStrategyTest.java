@@ -5,70 +5,67 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import lsh.ext.gson.annotations.DynamicSerializedName;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static lsh.ext.gson.stategies.DynamicSerializedNameFieldNamingStrategy.getDynamicSerializedNameFieldNamingStrategy;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import org.mockito.Mockito;
 
 public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	@Test
 	public void testTranslateNameForStaticMappings()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = getDynamicSerializedNameFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategyTest::resolve);
-		assertThat(unit.translateName(StaticFooBar.class.getDeclaredField("foo")), is("foo"));
-		assertThat(unit.translateName(StaticFooBar.class.getDeclaredField("bar")), is("bar"));
+		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getDynamicSerializedNameFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategyTest::resolve);
+		MatcherAssert.assertThat(unit.translateName(StaticFooBar.class.getDeclaredField("foo")), CoreMatchers.is("foo"));
+		MatcherAssert.assertThat(unit.translateName(StaticFooBar.class.getDeclaredField("bar")), CoreMatchers.is("bar"));
 	}
 
 	@Test
 	public void testTranslateNameForDynamicMappings()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = getDynamicSerializedNameFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategyTest::resolve);
-		assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("foo")), is("FOO1"));
-		assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("bar")), is("BAR2"));
+		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getDynamicSerializedNameFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategyTest::resolve);
+		MatcherAssert.assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("foo")), CoreMatchers.is("FOO1"));
+		MatcherAssert.assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("bar")), CoreMatchers.is("BAR2"));
 	}
 
 	@Test
 	public void testTranslateForDynamicMappingsIfNull()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = getDynamicSerializedNameFieldNamingStrategy(value -> null);
-		assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("foo")), is("foo"));
-		assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("bar")), is("bar"));
+		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getDynamicSerializedNameFieldNamingStrategy(value -> null);
+		MatcherAssert.assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("foo")), CoreMatchers.is("foo"));
+		MatcherAssert.assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("bar")), CoreMatchers.is("bar"));
 	}
 
 	@Test
 	public void testTranslateNameForStaticMappingsIntegration() {
 		final Gson gson = new GsonBuilder()
-				.setFieldNamingStrategy(getDynamicSerializedNameFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategyTest::resolve))
+				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getDynamicSerializedNameFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategyTest::resolve))
 				.create();
 		final StaticFooBar staticFooBar = gson.fromJson("{\"foo\":\"1\",\"bar\":\"2\"}", StaticFooBar.class);
-		assertThat(staticFooBar.foo, is("1"));
-		assertThat(staticFooBar.bar, is("2"));
+		MatcherAssert.assertThat(staticFooBar.foo, CoreMatchers.is("1"));
+		MatcherAssert.assertThat(staticFooBar.bar, CoreMatchers.is("2"));
 	}
 
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegration() {
 		final Gson gson = new GsonBuilder()
-				.setFieldNamingStrategy(getDynamicSerializedNameFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategyTest::resolve))
+				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getDynamicSerializedNameFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategyTest::resolve))
 				.create();
 		final DynamicFooBar dynamicFooBar = gson.fromJson("{\"FOO1\":\"1\",\"BAR2\":\"2\"}", DynamicFooBar.class);
-		assertThat(dynamicFooBar.foo, is("1"));
-		assertThat(dynamicFooBar.bar, is("2"));
+		MatcherAssert.assertThat(dynamicFooBar.foo, CoreMatchers.is("1"));
+		MatcherAssert.assertThat(dynamicFooBar.bar, CoreMatchers.is("2"));
 	}
 
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegrationWithSerializedNameThatHasHigherPriority() {
-		final IFieldNamingResolver mockNameResolver = mock(IFieldNamingResolver.class);
+		final IFieldNamingResolver mockNameResolver = Mockito.mock(IFieldNamingResolver.class);
 		final Gson gson = new GsonBuilder()
-				.setFieldNamingStrategy(getDynamicSerializedNameFieldNamingStrategy(mockNameResolver))
+				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getDynamicSerializedNameFieldNamingStrategy(mockNameResolver))
 				.create();
 		final MixedFooBar mixedFooBar = gson.fromJson("{\"staticFoo\":\"1\",\"staticBar\":\"2\"}", MixedFooBar.class);
-		assertThat(mixedFooBar.foo, is("1"));
-		assertThat(mixedFooBar.bar, is("2"));
-		verifyZeroInteractions(mockNameResolver);
+		MatcherAssert.assertThat(mixedFooBar.foo, CoreMatchers.is("1"));
+		MatcherAssert.assertThat(mixedFooBar.bar, CoreMatchers.is("2"));
+		Mockito.verifyZeroInteractions(mockNameResolver);
 	}
 
 	private static String resolve(final String value) {

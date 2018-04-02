@@ -18,8 +18,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
-
-import static lsh.ext.gson.Numbers.tryParseLongOrDouble;
+import lsh.ext.gson.Numbers;
 
 /**
  * <p>Represents a type adapter for {@code javax.json} JSON values. During the {@link #read(JsonReader)} execution, numeric values are parsed as {@code long}
@@ -189,7 +188,7 @@ public final class JsonValueTypeAdapter
 				throws IOException {
 			final String rawValue = in.nextString();
 			@Nullable
-			final Number number = tryParseLongOrDouble(rawValue);
+			final Number number = Numbers.tryParseLongOrDouble(rawValue);
 			if ( number == null ) {
 				throw new MalformedJsonException("Cannot parse " + rawValue);
 			}
@@ -277,7 +276,7 @@ public final class JsonValueTypeAdapter
 				case NUMBER:
 					final String rawValue = in.nextString();
 					@Nullable
-					final Number number = tryParseLongOrDouble(rawValue);
+					final Number number = Numbers.tryParseLongOrDouble(rawValue);
 					if ( number == null ) {
 						throw new MalformedJsonException("Cannot parse " + rawValue);
 					}
@@ -351,7 +350,7 @@ public final class JsonValueTypeAdapter
 				case NUMBER:
 					final String rawValue = in.nextString();
 					@Nullable
-					final Number number = tryParseLongOrDouble(rawValue);
+					final Number number = Numbers.tryParseLongOrDouble(rawValue);
 					if ( number == null ) {
 						throw new MalformedJsonException("Cannot parse " + rawValue);
 					}

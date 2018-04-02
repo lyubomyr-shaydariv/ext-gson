@@ -6,9 +6,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-import static java.lang.Double.parseDouble;
-import static java.lang.Long.parseLong;
-
 /**
  * Provides miscellaneous utility methods for JSON streams.
  *
@@ -117,7 +114,7 @@ public final class JsonStreams {
 
 	private static boolean tryParseLong(final String value, final long[] buffer) {
 		try {
-			buffer[0] = parseLong(value);
+			buffer[0] = Long.parseLong(value);
 			return true;
 		} catch ( final NumberFormatException ignored ) {
 			return false;
@@ -126,7 +123,7 @@ public final class JsonStreams {
 
 	private static boolean tryParseDouble(final String value, final double[] buffer) {
 		try {
-			buffer[0] = parseDouble(value);
+			buffer[0] = Double.parseDouble(value);
 			return true;
 		} catch ( final NumberFormatException ignored ) {
 			return false;

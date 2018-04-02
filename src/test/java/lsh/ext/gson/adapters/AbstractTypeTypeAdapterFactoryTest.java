@@ -3,30 +3,27 @@ package lsh.ext.gson.adapters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static lsh.ext.gson.adapters.AbstractTypeTypeAdapterFactory.getAbstractTypeTypeAdapterFactory;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class AbstractTypeTypeAdapterFactoryTest {
 
 	private static final Gson gson = new GsonBuilder()
-			.registerTypeAdapterFactory(getAbstractTypeTypeAdapterFactory("$T", "$V"))
+			.registerTypeAdapterFactory(AbstractTypeTypeAdapterFactory.getAbstractTypeTypeAdapterFactory("$T", "$V"))
 			.create();
 
 	@Test
 	public void testWrite() {
 		final Value foo = new Value(new Foo());
-		assertThat(gson.toJson(foo), is("{\"value\":{\"$T\":\"" + Foo.class.getTypeName() + "\",\"$V\":{}}}"));
+		MatcherAssert.assertThat(gson.toJson(foo), CoreMatchers.is("{\"value\":{\"$T\":\"" + Foo.class.getTypeName() + "\",\"$V\":{}}}"));
 	}
 
 	@Test
 	public void testRead() {
 		final String json = "{\"value\":{\"$T\":\"" + Bar.class.getTypeName() + "\",\"$V\":{}}}";
 		final Value value = gson.fromJson(json, Value.class);
-		assertThat(value.value, instanceOf(Bar.class));
+		MatcherAssert.assertThat(value.value, CoreMatchers.instanceOf(Bar.class));
 	}
 
 	@Test(expected = JsonSyntaxException.class)

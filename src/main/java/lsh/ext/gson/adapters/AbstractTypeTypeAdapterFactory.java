@@ -1,13 +1,11 @@
 package lsh.ext.gson.adapters;
 
+import java.lang.reflect.Modifier;
+
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-
-import static java.lang.reflect.Modifier.isAbstract;
-
-import static lsh.ext.gson.adapters.TypeAwareTypeAdapter.getTypeAwareTypeAdapter;
 
 /**
  * Represents a type adapter factory for {@code abstract} classes. {@link TypeAwareTypeAdapter} is used behind the scenes.
@@ -41,8 +39,8 @@ public final class AbstractTypeTypeAdapterFactory
 
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-		if ( isAbstract(typeToken.getRawType().getModifiers()) ) {
-			return getTypeAwareTypeAdapter(gson, typePropertyName, valuePropertyName);
+		if ( Modifier.isAbstract(typeToken.getRawType().getModifiers()) ) {
+			return TypeAwareTypeAdapter.getTypeAwareTypeAdapter(gson, typePropertyName, valuePropertyName);
 		}
 		return null;
 	}

@@ -8,11 +8,9 @@ import java.io.Writer;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import static lsh.ext.gson.JsonStreams.copyTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class JsonStreamsTest {
 
@@ -26,8 +24,8 @@ public final class JsonStreamsTest {
 		final Writer writer = new StringWriter();
 		final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON);
 		final JsonWriter jsonWriter = new JsonWriter(writer);
-		copyTo(jsonReader, jsonWriter);
-		assertThat(writer.toString(), is(NORMALIZED_JSON));
+		JsonStreams.copyTo(jsonReader, jsonWriter);
+		MatcherAssert.assertThat(writer.toString(), CoreMatchers.is(NORMALIZED_JSON));
 	}
 
 	@Test
@@ -36,8 +34,8 @@ public final class JsonStreamsTest {
 		final Writer writer = new StringWriter();
 		final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
 		final JsonWriter jsonWriter = new JsonWriter(writer);
-		copyTo(jsonReader, jsonWriter);
-		assertThat(writer.toString(), is(NORMALIZED_JSON));
+		JsonStreams.copyTo(jsonReader, jsonWriter);
+		MatcherAssert.assertThat(writer.toString(), CoreMatchers.is(NORMALIZED_JSON));
 	}
 
 	@Test
@@ -46,8 +44,8 @@ public final class JsonStreamsTest {
 		final Writer writer = new StringWriter();
 		final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON);
 		final JsonWriter jsonWriter = new JsonWriter(writer);
-		copyTo(jsonReader, jsonWriter, true);
-		assertThat(writer.toString(), is(NORMALIZED_JSON));
+		JsonStreams.copyTo(jsonReader, jsonWriter, true);
+		MatcherAssert.assertThat(writer.toString(), CoreMatchers.is(NORMALIZED_JSON));
 	}
 
 	@Test
@@ -56,8 +54,8 @@ public final class JsonStreamsTest {
 		final Writer writer = new StringWriter();
 		final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
 		final JsonWriter jsonWriter = new JsonWriter(writer);
-		copyTo(jsonReader, jsonWriter, true);
-		assertThat(writer.toString(), is(NORMALIZED_JSON));
+		JsonStreams.copyTo(jsonReader, jsonWriter, true);
+		MatcherAssert.assertThat(writer.toString(), CoreMatchers.is(NORMALIZED_JSON));
 	}
 
 	@Test(expected = MalformedJsonException.class)
@@ -66,7 +64,7 @@ public final class JsonStreamsTest {
 		final Writer writer = new StringWriter();
 		final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
 		final JsonWriter jsonWriter = new JsonWriter(writer);
-		copyTo(jsonReader, jsonWriter, false);
+		JsonStreams.copyTo(jsonReader, jsonWriter, false);
 	}
 
 	private static JsonReader newLenientJsonReader(final String json) {

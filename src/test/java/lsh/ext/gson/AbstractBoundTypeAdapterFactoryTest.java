@@ -12,11 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.junit.Test;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import org.mockito.Mockito;
 
 public final class AbstractBoundTypeAdapterFactoryTest {
 
@@ -28,32 +24,32 @@ public final class AbstractBoundTypeAdapterFactoryTest {
 	@Test
 	public void testCreateIfSupports() {
 		@SuppressWarnings("unchecked")
-		final Predicate<? super TypeToken<?>> mockTypeTokenPredicate = mock(Predicate.class);
-		when(mockTypeTokenPredicate.test(voidTypeToken)).thenReturn(true);
+		final Predicate<? super TypeToken<?>> mockTypeTokenPredicate = Mockito.mock(Predicate.class);
+		Mockito.when(mockTypeTokenPredicate.test(voidTypeToken)).thenReturn(true);
 		@SuppressWarnings("unchecked")
-		final BiFunction<? super Gson, ? super TypeToken<?>, TypeAdapter<Void>> mockTypeAdapterFactory = mock(BiFunction.class);
-		when(mockTypeAdapterFactory.apply(gson, voidTypeToken)).thenReturn(new VoidTypeAdapter());
+		final BiFunction<? super Gson, ? super TypeToken<?>, TypeAdapter<Void>> mockTypeAdapterFactory = Mockito.mock(BiFunction.class);
+		Mockito.when(mockTypeAdapterFactory.apply(gson, voidTypeToken)).thenReturn(new VoidTypeAdapter());
 		final TypeAdapterFactory unit = new VoidTypeAdapterFactory(mockTypeTokenPredicate, mockTypeAdapterFactory);
 		unit.create(gson, voidTypeToken);
-		verify(mockTypeTokenPredicate).test(voidTypeToken);
-		verify(mockTypeAdapterFactory).apply(gson, voidTypeToken);
-		verifyNoMoreInteractions(mockTypeTokenPredicate);
-		verifyNoMoreInteractions(mockTypeAdapterFactory);
+		Mockito.verify(mockTypeTokenPredicate).test(voidTypeToken);
+		Mockito.verify(mockTypeAdapterFactory).apply(gson, voidTypeToken);
+		Mockito.verifyNoMoreInteractions(mockTypeTokenPredicate);
+		Mockito.verifyNoMoreInteractions(mockTypeAdapterFactory);
 	}
 
 	@Test
 	public void testCreateIfDoesNotSupport() {
 		@SuppressWarnings("unchecked")
-		final Predicate<? super TypeToken<?>> mockTypeTokenPredicate = mock(Predicate.class);
-		when(mockTypeTokenPredicate.test(voidTypeToken)).thenReturn(false);
+		final Predicate<? super TypeToken<?>> mockTypeTokenPredicate = Mockito.mock(Predicate.class);
+		Mockito.when(mockTypeTokenPredicate.test(voidTypeToken)).thenReturn(false);
 		@SuppressWarnings("unchecked")
-		final BiFunction<? super Gson, ? super TypeToken<?>, TypeAdapter<Void>> mockTypeAdapterFactory = mock(BiFunction.class);
-		when(mockTypeAdapterFactory.apply(gson, voidTypeToken)).thenReturn(new VoidTypeAdapter());
+		final BiFunction<? super Gson, ? super TypeToken<?>, TypeAdapter<Void>> mockTypeAdapterFactory = Mockito.mock(BiFunction.class);
+		Mockito.when(mockTypeAdapterFactory.apply(gson, voidTypeToken)).thenReturn(new VoidTypeAdapter());
 		final TypeAdapterFactory unit = new VoidTypeAdapterFactory(mockTypeTokenPredicate, mockTypeAdapterFactory);
 		unit.create(gson, voidTypeToken);
-		verify(mockTypeTokenPredicate).test(voidTypeToken);
-		verifyNoMoreInteractions(mockTypeTokenPredicate);
-		verifyNoMoreInteractions(mockTypeAdapterFactory);
+		Mockito.verify(mockTypeTokenPredicate).test(voidTypeToken);
+		Mockito.verifyNoMoreInteractions(mockTypeTokenPredicate);
+		Mockito.verifyNoMoreInteractions(mockTypeAdapterFactory);
 	}
 
 	private static final class VoidTypeAdapterFactory

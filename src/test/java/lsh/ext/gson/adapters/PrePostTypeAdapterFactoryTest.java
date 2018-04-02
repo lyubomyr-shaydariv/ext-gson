@@ -7,19 +7,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
-
-import static java.util.Objects.hash;
-
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 public final class PrePostTypeAdapterFactoryTest {
 
 	@Test
 	public void testPreConstruct() {
 		@SuppressWarnings("unchecked")
-		final IPrePostProcessor<User> userProcessor = mock(IPrePostProcessor.class);
+		final IPrePostProcessor<User> userProcessor = Mockito.mock(IPrePostProcessor.class);
 		final IPrePostProcessorFactory<User> userProcessorFactory = new IPrePostProcessorFactory<User>() {
 			@Override
 			public boolean supports(final TypeToken<?> typeToken) {
@@ -35,13 +31,13 @@ public final class PrePostTypeAdapterFactoryTest {
 				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getPrePostTypeAdapterFactory(ImmutableList.of(userProcessorFactory)))
 				.create();
 		gson.toJson(new User("John", "Doe"));
-		verify(userProcessor).pre(eq(new User("John", "Doe")));
+		Mockito.verify(userProcessor).pre(Matchers.eq(new User("John", "Doe")));
 	}
 
 	@Test
 	public void testPostConstruct() {
 		@SuppressWarnings("unchecked")
-		final IPrePostProcessor<User> userProcessor = mock(IPrePostProcessor.class);
+		final IPrePostProcessor<User> userProcessor = Mockito.mock(IPrePostProcessor.class);
 		final IPrePostProcessorFactory<User> userProcessorFactory = new IPrePostProcessorFactory<User>() {
 			@Override
 			public boolean supports(final TypeToken<?> typeToken) {
@@ -57,7 +53,7 @@ public final class PrePostTypeAdapterFactoryTest {
 				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getPrePostTypeAdapterFactory(ImmutableList.of(userProcessorFactory)))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);
-		verify(userProcessor).post(eq(new User("John", "Doe")));
+		Mockito.verify(userProcessor).post(Matchers.eq(new User("John", "Doe")));
 	}
 
 	private static final class User {
@@ -85,7 +81,7 @@ public final class PrePostTypeAdapterFactoryTest {
 
 		@Override
 		public int hashCode() {
-			return hash(firstName, lastName);
+			return Objects.hash(firstName, lastName);
 		}
 
 	}

@@ -3,9 +3,6 @@ package lsh.ext.gson;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static java.lang.Double.parseDouble;
-import static java.lang.Long.parseLong;
-
 /**
  * Provides miscellaneous number utility methods.
  *
@@ -39,7 +36,7 @@ public final class Numbers {
 	@Nullable
 	private static Long tryParseLong(final String s) {
 		try {
-			return parseLong(s);
+			return Long.parseLong(s);
 		} catch ( final NumberFormatException ignored ) {
 			return null;
 		}
@@ -48,7 +45,7 @@ public final class Numbers {
 	@Nullable
 	private static Double tryParseDouble(final String s) {
 		try {
-			return parseDouble(s);
+			return Double.parseDouble(s);
 		} catch ( final NumberFormatException ignored ) {
 			return null;
 		}

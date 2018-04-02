@@ -9,8 +9,6 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import static lsh.ext.gson.adapters.JsonReaderIterator.getJsonReaderIterator;
-
 /**
  * <p>
  * Type adapter for {@link Iterator}. Iterators are supposed to read and write JSON arrays only.
@@ -60,7 +58,7 @@ public final class IteratorTypeAdapter<E>
 
 	@Override
 	public Iterator<E> read(final JsonReader in) {
-		return getJsonReaderIterator(elementType, gson, in);
+		return JsonReaderIterator.getJsonReaderIterator(elementType, gson, in);
 	}
 
 }

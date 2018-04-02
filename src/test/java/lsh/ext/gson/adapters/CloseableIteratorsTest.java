@@ -5,12 +5,7 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
-
-import static lsh.ext.gson.adapters.CloseableIterators.forEachAndTryClose;
-import static lsh.ext.gson.adapters.CloseableIterators.tryClose;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import org.mockito.Mockito;
 
 public final class CloseableIteratorsTest {
 
@@ -19,52 +14,52 @@ public final class CloseableIteratorsTest {
 			throws Exception {
 		final Iterator<String> iterator = ImmutableList.of("foo", "bar", "baz").iterator();
 		@SuppressWarnings("unchecked")
-		final Consumer<String> mockConsumer = mock(Consumer.class);
-		forEachAndTryClose(iterator, mockConsumer);
-		verify(mockConsumer).accept("foo");
-		verify(mockConsumer).accept("bar");
-		verify(mockConsumer).accept("baz");
-		verifyZeroInteractions(mockConsumer);
+		final Consumer<String> mockConsumer = Mockito.mock(Consumer.class);
+		CloseableIterators.forEachAndTryClose(iterator, mockConsumer);
+		Mockito.verify(mockConsumer).accept("foo");
+		Mockito.verify(mockConsumer).accept("bar");
+		Mockito.verify(mockConsumer).accept("baz");
+		Mockito.verifyZeroInteractions(mockConsumer);
 	}
 
 	@Test
 	@SuppressWarnings("resource")
 	public void testForEachAndTryCloseWhenIteratorIsAutoCloseable()
 			throws Exception {
-		final AutoCloseable mockAutoCloseable = mock(AutoCloseable.class);
+		final AutoCloseable mockAutoCloseable = Mockito.mock(AutoCloseable.class);
 		final AutoCloseableIterator<String> iterator = new AutoCloseableIterator<>(ImmutableList.of("foo", "bar", "baz").iterator(), mockAutoCloseable);
 		@SuppressWarnings("unchecked")
-		final Consumer<String> mockConsumer = mock(Consumer.class);
-		forEachAndTryClose(iterator, mockConsumer);
-		verify(mockConsumer).accept("foo");
-		verify(mockConsumer).accept("bar");
-		verify(mockConsumer).accept("baz");
-		verify(mockAutoCloseable).close();
-		verifyZeroInteractions(mockConsumer, mockAutoCloseable);
+		final Consumer<String> mockConsumer = Mockito.mock(Consumer.class);
+		CloseableIterators.forEachAndTryClose(iterator, mockConsumer);
+		Mockito.verify(mockConsumer).accept("foo");
+		Mockito.verify(mockConsumer).accept("bar");
+		Mockito.verify(mockConsumer).accept("baz");
+		Mockito.verify(mockAutoCloseable).close();
+		Mockito.verifyZeroInteractions(mockConsumer, mockAutoCloseable);
 	}
 
 	@Test
 	@SuppressWarnings("resource")
 	public void testTryClose()
 			throws Exception {
-		final AutoCloseable mockAutoCloseable = mock(AutoCloseable.class);
-		tryClose(mockAutoCloseable);
-		verify(mockAutoCloseable).close();
-		verifyZeroInteractions(mockAutoCloseable);
+		final AutoCloseable mockAutoCloseable = Mockito.mock(AutoCloseable.class);
+		CloseableIterators.tryClose(mockAutoCloseable);
+		Mockito.verify(mockAutoCloseable).close();
+		Mockito.verifyZeroInteractions(mockAutoCloseable);
 	}
 
 	@Test
 	public void testTryCloseNull()
 			throws Exception {
-		tryClose(null);
+		CloseableIterators.tryClose(null);
 	}
 
 	@Test
 	public void testTryToCloseNotAutoCloseable()
 			throws Exception {
-		final Runnable mockRunnable = mock(Runnable.class);
-		tryClose(mockRunnable);
-		verifyZeroInteractions(mockRunnable);
+		final Runnable mockRunnable = Mockito.mock(Runnable.class);
+		CloseableIterators.tryClose(mockRunnable);
+		Mockito.verifyZeroInteractions(mockRunnable);
 	}
 
 	private static final class AutoCloseableIterator<T>

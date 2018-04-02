@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.function.Function;
 
 import com.google.gson.Gson;
@@ -19,10 +20,6 @@ import com.jayway.jsonpath.PathNotFoundException;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lsh.ext.gson.annotations.JsonPathExpression;
-
-import static java.util.Collections.emptyList;
-
-import static com.jayway.jsonpath.JsonPath.compile;
 
 /**
  * <p>
@@ -206,7 +203,7 @@ public final class JsonPathTypeAdapterFactory
 		}
 
 		private static Collection<FieldInfo> of(final Class<?> clazz) {
-			Collection<FieldInfo> collection = emptyList();
+			Collection<FieldInfo> collection = Collections.emptyList();
 			for ( final Field field : clazz.getDeclaredFields() ) {
 				final JsonPathExpression jsonPathExpression = field.getAnnotation(JsonPathExpression.class);
 				if ( jsonPathExpression != null ) {
@@ -214,7 +211,7 @@ public final class JsonPathTypeAdapterFactory
 						collection = new ArrayList<>();
 					}
 					field.setAccessible(true);
-					collection.add(new FieldInfo(field, compile(jsonPathExpression.value())));
+					collection.add(new FieldInfo(field, JsonPath.compile(jsonPathExpression.value())));
 				}
 			}
 			return collection;
