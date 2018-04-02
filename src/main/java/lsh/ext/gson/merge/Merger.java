@@ -15,9 +15,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import static lsh.ext.gson.merge.MapMergeTypeAdapterMapper.getMapMergeTypeAdapterMapper;
-import static lsh.ext.gson.merge.ReflectiveMergeTypeAdapterMapper.getReflectiveMergeTypeAdapterMapper;
-
 /**
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT
@@ -42,8 +39,8 @@ public final class Merger
 	 */
 	public static IMerger getMerger(final Gson gson) {
 		final Collection<IMergeTypeAdapterMapper> mappers = new ArrayList<>();
-		mappers.add(getMapMergeTypeAdapterMapper());
-		mappers.add(getReflectiveMergeTypeAdapterMapper());
+		mappers.add(MapMergeTypeAdapterMapper.getMapMergeTypeAdapterMapper());
+		mappers.add(ReflectiveMergeTypeAdapterMapper.getReflectiveMergeTypeAdapterMapper());
 		return new Merger(gson, mappers);
 	}
 

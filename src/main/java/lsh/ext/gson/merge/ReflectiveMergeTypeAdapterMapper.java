@@ -1,5 +1,6 @@
 package lsh.ext.gson.merge;
 
+import java.util.Collections;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -13,8 +14,6 @@ import com.google.gson.internal.Excluder;
 import com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory;
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-
-import static java.util.Collections.singletonMap;
 
 /**
  * TODO
@@ -44,7 +43,7 @@ public final class ReflectiveMergeTypeAdapterMapper
 			@Nonnull final TypeToken<T> typeToken) {
 		if ( typeAdapter instanceof ReflectiveTypeAdapterFactory.Adapter ) {
 			final InstanceCreator<?> o = (InstanceCreator<Object>) type -> instance;
-			final ConstructorConstructor constructorConstructor = new ConstructorConstructor(singletonMap(typeToken.getType(), o));
+			final ConstructorConstructor constructorConstructor = new ConstructorConstructor(Collections.singletonMap(typeToken.getType(), o));
 			final FieldNamingStrategy fieldNamingPolicy = gson.fieldNamingStrategy();
 			final Excluder excluder = gson.excluder();
 			final JsonAdapterAnnotationTypeAdapterFactory jsonAdapterFactory = new JsonAdapterAnnotationTypeAdapterFactory(constructorConstructor);

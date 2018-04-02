@@ -2,6 +2,7 @@ package lsh.ext.gson.merge;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
@@ -14,8 +15,6 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.internal.ConstructorConstructor;
 import com.google.gson.internal.bind.MapTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-
-import static java.util.Collections.singletonMap;
 
 /**
  * TODO
@@ -65,7 +64,7 @@ public final class MapMergeTypeAdapterMapper
 			@Nonnull final TypeToken<T> typeToken) {
 		if ( typeAdapter.getClass().getEnclosingClass() == MapTypeAdapterFactory.class ) {
 			@SuppressWarnings("unchecked")
-			final Map<Type, InstanceCreator<?>> instanceCreators = singletonMap(typeToken.getType(), type -> new NullOnPutMap<>((Map<Object, Object>) instance));
+			final Map<Type, InstanceCreator<?>> instanceCreators = Collections.singletonMap(typeToken.getType(), type -> new NullOnPutMap<>((Map<Object, Object>) instance));
 			final ConstructorConstructor constructorConstructor = new ConstructorConstructor(instanceCreators);
 			final TypeAdapterFactory typeAdapterFactory = new MapTypeAdapterFactory(constructorConstructor, complexMapKeySerialization);
 			return typeAdapterFactory.create(gson, typeToken);
