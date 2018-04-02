@@ -3,6 +3,9 @@ package lsh.ext.gson;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -69,6 +72,72 @@ public final class MoreMatchers {
 				description.appendValue(key);
 				description.appendText(" with value ");
 				description.appendValue(value);
+			}
+		};
+	}
+
+	public static Matcher<Date> isDate(final int year, final int month, final int day) {
+		return new TypeSafeMatcher<Date>() {
+			@Override
+			@SuppressWarnings("deprecation")
+			protected boolean matchesSafely(final Date date) {
+				final TimeZone utcTimeZone = TimeZone.getTimeZone("UTC");
+				final Calendar calendar = Calendar.getInstance(utcTimeZone);
+				calendar.setTime(date);
+				return year == calendar.get(Calendar.YEAR)
+						&& month == calendar.get(Calendar.MONTH) + 1
+						&& day == calendar.get(Calendar.DAY_OF_MONTH);
+			}
+
+			@Override
+			public void describeTo(final Description description) {
+				description.appendValue(year);
+				description.appendText("-");
+				description.appendValue(month);
+				description.appendText("-");
+				description.appendValue(day);
+			}
+		};
+	}
+
+	public static Matcher<Date> isTime(final int hours, final int minutes, final int seconds) {
+		return new TypeSafeMatcher<Date>() {
+			@Override
+			@SuppressWarnings("deprecation")
+			protected boolean matchesSafely(final Date date) {
+				final TimeZone utcTimeZone = TimeZone.getTimeZone("UTC");
+				final Calendar calendar = Calendar.getInstance(utcTimeZone);
+				calendar.setTime(date);
+				return hours == calendar.get(Calendar.HOUR_OF_DAY)
+						&& minutes == calendar.get(Calendar.MINUTE)
+						&& seconds == calendar.get(Calendar.SECOND);
+			}
+
+			@Override
+			public void describeTo(final Description description) {
+				description.appendValue(hours);
+				description.appendText(":");
+				description.appendValue(minutes);
+				description.appendText(":");
+				description.appendValue(seconds);
+			}
+		};
+	}
+
+	public static Matcher<Date> isDateTime(final int year, final int month, final int day, final int hours, final int minutes, final int seconds) {
+		final Matcher<Date> isDate = isDate(year, month, day);
+		final Matcher<Date> isTime = isTime(hours, minutes, seconds);
+		return new TypeSafeMatcher<Date>() {
+			@Override
+			protected boolean matchesSafely(final Date date) {
+				return isDate.matches(date) && isTime.matches(date);
+			}
+
+			@Override
+			public void describeTo(final Description description) {
+				isDate.describeTo(description);
+				description.appendText(" ");
+				isTime.describeTo(description);
 			}
 		};
 	}

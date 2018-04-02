@@ -36,7 +36,7 @@ public final class EpochDateTypeAdapter
 	@Nullable
 	public Date read(final JsonReader in)
 			throws IOException {
-		return in.peek() != JsonToken.NULL ? new Date(in.nextLong()) : null;
+		return in.peek() != JsonToken.NULL ? new Date(in.nextLong() * 1000) : null;
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public final class EpochDateTypeAdapter
 		if ( value == null ) {
 			out.nullValue();
 		} else {
-			out.value(value.getTime());
+			out.value(value.getTime() / 1000);
 		}
 	}
 
