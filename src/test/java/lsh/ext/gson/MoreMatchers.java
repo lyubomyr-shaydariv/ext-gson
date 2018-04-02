@@ -11,20 +11,20 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-final class MoreMatchers {
+public final class MoreMatchers {
 
 	private MoreMatchers() {
 	}
 
-	static Matcher<Object> refersNone(final Object o1, final Object o2) {
+	public static Matcher<Object> refersNone(final Object o1, final Object o2) {
 		return CoreMatchers.allOf(CoreMatchers.not(CoreMatchers.sameInstance(o1)), CoreMatchers.not(CoreMatchers.sameInstance(o2)));
 	}
 
-	static Matcher<Object> refersFirst(final Object o1, final Object o2) {
+	public static Matcher<Object> refersFirst(final Object o1, final Object o2) {
 		return CoreMatchers.allOf(CoreMatchers.sameInstance(o1), CoreMatchers.not(CoreMatchers.sameInstance(o2)));
 	}
 
-	static Matcher<ParameterizedType> hasRawType(final Type rawType) {
+	public static Matcher<ParameterizedType> hasRawType(final Type rawType) {
 		return new TypeSafeMatcher<ParameterizedType>() {
 			@Override
 			protected boolean matchesSafely(final ParameterizedType type) {
@@ -38,7 +38,7 @@ final class MoreMatchers {
 		};
 	}
 
-	static Matcher<ParameterizedType> hasActualTypeArguments(final Type... actualTypeArguments) {
+	public static Matcher<ParameterizedType> hasActualTypeArguments(final Type... actualTypeArguments) {
 		return new TypeSafeMatcher<ParameterizedType>() {
 			@Override
 			protected boolean matchesSafely(final ParameterizedType type) {
@@ -52,11 +52,11 @@ final class MoreMatchers {
 		};
 	}
 
-	static Matcher<ParameterizedType> isParameterizedType(final Type rawType, final Type... actualTypeArguments) {
+	public static Matcher<ParameterizedType> isParameterizedType(final Type rawType, final Type... actualTypeArguments) {
 		return CoreMatchers.allOf(hasRawType(rawType), hasActualTypeArguments(actualTypeArguments));
 	}
 
-	static Matcher<JsonObject> hasProperty(final String key, final JsonElement value) {
+	public static Matcher<JsonObject> hasProperty(final String key, final JsonElement value) {
 		return new TypeSafeMatcher<JsonObject>() {
 			@Override
 			protected boolean matchesSafely(final JsonObject jsonObject) {
