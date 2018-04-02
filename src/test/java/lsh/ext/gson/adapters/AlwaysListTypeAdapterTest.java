@@ -80,7 +80,7 @@ public final class AlwaysListTypeAdapterTest {
 	}
 
 	private static <T> TypeAdapter<List<T>> createUnit(final TypeToken<T> typeToken) {
-		return AlwaysListTypeAdapter.getAlwaysListTypeAdapter(gson.getAdapter(typeToken));
+		return AlwaysListTypeAdapter.get(gson.getAdapter(typeToken));
 	}
 
 	private static <T> void doTest(final TypeAdapter<T> unit, final String json, final Matcher<? super T> valueMatcher)

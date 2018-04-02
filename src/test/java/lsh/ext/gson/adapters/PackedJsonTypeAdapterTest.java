@@ -28,7 +28,7 @@ public final class PackedJsonTypeAdapterTest {
 	@Test
 	public void testRead()
 			throws IOException {
-		final TypeAdapter<String> unit = PackedJsonTypeAdapter.getPackedJsonTypeAdapter();
+		final TypeAdapter<String> unit = PackedJsonTypeAdapter.get();
 		final Reader reader = new StringReader(INNER_JSON);
 		final JsonReader jsonReader = new JsonReader(reader);
 		final String innerJson = unit.read(jsonReader);
@@ -38,7 +38,7 @@ public final class PackedJsonTypeAdapterTest {
 	@Test
 	public void testWrite()
 			throws IOException {
-		final TypeAdapter<String> unit = PackedJsonTypeAdapter.getPackedJsonTypeAdapter();
+		final TypeAdapter<String> unit = PackedJsonTypeAdapter.get();
 		final Writer writer = new StringWriter();
 		final JsonWriter jsonWriter = new JsonWriter(writer);
 		unit.write(jsonWriter, INNER_JSON);

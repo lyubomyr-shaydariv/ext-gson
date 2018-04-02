@@ -51,10 +51,10 @@ public final class TypeAdapters {
 	 * @throws InstantiationException    A rethrown exception
 	 * @throws NoSuchMethodException     A rethrown exception
 	 * @throws InvocationTargetException A rethrown exception
-	 * @see #tryGetTypeAdapterOf(Class)
+	 * @see #tryOfConcrete(Class)
 	 * @since 0-SNAPSHOT
 	 */
-	public static <T> T getTypeAdapterOf(@Nonnull final Class<?> clazz)
+	public static <T> T ofConcrete(@Nonnull final Class<?> clazz)
 			throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, IllegalArgumentException {
 		if ( TypeAdapter.class.isAssignableFrom(clazz)
 				|| JsonSerializer.class.isAssignableFrom(clazz)
@@ -85,10 +85,10 @@ public final class TypeAdapters {
 	 * @throws NoSuchMethodException     A rethrown exception
 	 * @throws InstantiationException    A rethrown exception
 	 * @throws IllegalAccessException    A rethrown exception
-	 * @see #tryGetTypeHierarchyAdapterOf(Class)
+	 * @see #tryOfHierarchy(Class)
 	 * @since 0-SNAPSHOT
 	 */
-	public static <T> T getTypeHierarchyAdapterOf(final Class<?> clazz)
+	public static <T> T ofHierarchy(final Class<?> clazz)
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 		if ( TypeAdapter.class.isAssignableFrom(clazz)
 				|| JsonSerializer.class.isAssignableFrom(clazz)
@@ -99,7 +99,7 @@ public final class TypeAdapters {
 	}
 
 	/**
-	 * Checked exceptions-free alternative of {@link #getTypeAdapterOf(Class)}.
+	 * Checked exceptions-free alternative of {@link #ofConcrete(Class)}.
 	 *
 	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
 	 *              or {@link InstanceCreator}.
@@ -107,21 +107,21 @@ public final class TypeAdapters {
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
-	 * @throws RuntimeException An exception to wrap any checked exception occuring in {@link #getTypeAdapterOf(Class)}
-	 * @see #getTypeAdapterOf(Class)
+	 * @throws RuntimeException An exception to wrap any checked exception occuring in {@link #ofConcrete(Class)}
+	 * @see #ofConcrete(Class)
 	 * @since 0-SNAPSHOT
 	 */
-	public static <T> T tryGetTypeAdapterOf(@Nonnull final Class<?> clazz)
+	public static <T> T tryOfConcrete(@Nonnull final Class<?> clazz)
 			throws RuntimeException {
 		try {
-			return getTypeAdapterOf(clazz);
+			return ofConcrete(clazz);
 		} catch ( final IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex ) {
 			throw new RuntimeException(ex);
 		}
 	}
 
 	/**
-	 * Checked exceptions-free alternative of {@link #getTypeHierarchyAdapterOf(Class)}.
+	 * Checked exceptions-free alternative of {@link #ofHierarchy(Class)}.
 	 *
 	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
 	 *              or {@link InstanceCreator}.
@@ -129,14 +129,14 @@ public final class TypeAdapters {
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
-	 * @throws RuntimeException An exception to wrap any checked exception occuring in {@link #getTypeHierarchyAdapterOf(Class)}
-	 * @see #getTypeAdapterOf(Class)
+	 * @throws RuntimeException An exception to wrap any checked exception occuring in {@link #ofHierarchy(Class)}
+	 * @see #ofConcrete(Class)
 	 * @since 0-SNAPSHOT
 	 */
-	public static <T> T tryGetTypeHierarchyAdapterOf(@Nonnull final Class<?> clazz)
+	public static <T> T tryOfHierarchy(@Nonnull final Class<?> clazz)
 			throws RuntimeException {
 		try {
-			return getTypeAdapterOf(clazz);
+			return ofConcrete(clazz);
 		} catch ( final IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex ) {
 			throw new RuntimeException(ex);
 		}

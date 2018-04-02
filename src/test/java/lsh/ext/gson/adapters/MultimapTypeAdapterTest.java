@@ -25,7 +25,7 @@ public final class MultimapTypeAdapterTest {
 	@Test
 	public void testWrite()
 			throws IOException {
-		final TypeAdapter<Multimap<String, Object>> unit = MultimapTypeAdapter.getMultimapTypeAdapter(gson, String.class);
+		final TypeAdapter<Multimap<String, Object>> unit = MultimapTypeAdapter.get(gson, String.class);
 		final Writer writer = new StringWriter();
 		final JsonWriter jsonWriter = new JsonWriter(writer);
 		unit.write(jsonWriter, createMultimap());
@@ -35,7 +35,7 @@ public final class MultimapTypeAdapterTest {
 	@Test
 	public void testRead()
 			throws IOException {
-		final TypeAdapter<Multimap<String, Object>> unit = MultimapTypeAdapter.getMultimapTypeAdapter(gson, String.class);
+		final TypeAdapter<Multimap<String, Object>> unit = MultimapTypeAdapter.get(gson, String.class);
 		final Reader reader = new StringReader(SIMPLE_MULTIMAP_JSON);
 		final JsonReader jsonReader = new JsonReader(reader);
 		final Multimap<String, Object> multimap = unit.read(jsonReader);

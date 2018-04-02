@@ -30,7 +30,7 @@ public final class AlwaysListTypeAdapterFactoryTest {
 	};
 
 	private static final Gson gson = new Gson();
-	private static final TypeAdapterFactory unit = AlwaysListTypeAdapterFactory.getAlwaysListTypeAdapterFactory();
+	private static final TypeAdapterFactory unit = AlwaysListTypeAdapterFactory.get();
 
 	@Test
 	public void testNull()

@@ -31,7 +31,7 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static FieldNamingStrategy getDynamicSerializedNameFieldNamingStrategy(final IFieldNamingResolver fieldNamingResolver) {
+	public static FieldNamingStrategy get(final IFieldNamingResolver fieldNamingResolver) {
 		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, FieldNamingPolicy.IDENTITY);
 	}
 
@@ -43,7 +43,7 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static FieldNamingStrategy getDynamicSerializedNameFieldNamingStrategy(final IFieldNamingResolver fieldNamingResolver,
+	public static FieldNamingStrategy get(final IFieldNamingResolver fieldNamingResolver,
 			final FieldNamingStrategy fallbackFieldNamingStrategy) {
 		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, fallbackFieldNamingStrategy);
 	}

@@ -10,7 +10,7 @@ import org.junit.Test;
 public final class AbstractTypeTypeAdapterFactoryTest {
 
 	private static final Gson gson = new GsonBuilder()
-			.registerTypeAdapterFactory(AbstractTypeTypeAdapterFactory.getAbstractTypeTypeAdapterFactory("$T", "$V"))
+			.registerTypeAdapterFactory(AbstractTypeTypeAdapterFactory.get("$T", "$V"))
 			.create();
 
 	@Test

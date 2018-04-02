@@ -29,7 +29,7 @@ public final class MultimapTypeAdapterFactory
 	/**
 	 * @return An instance of {@link MultimapTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getMultimapTypeAdapterFactory() {
+	public static TypeAdapterFactory get() {
 		return multimapTypeAdapterFactory;
 	}
 
@@ -42,9 +42,9 @@ public final class MultimapTypeAdapterFactory
 	@Override
 	protected TypeAdapter<Multimap<String, Object>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 		final Type type = typeToken.getType();
-		final Type[][] typeArguments = ParameterizedTypes.resolveTypeArguments(type);
+		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(type);
 		final Type valueType = typeArguments[1][0];
-		return MultimapTypeAdapter.getMultimapTypeAdapter(gson, valueType);
+		return MultimapTypeAdapter.get(gson, valueType);
 	}
 
 }

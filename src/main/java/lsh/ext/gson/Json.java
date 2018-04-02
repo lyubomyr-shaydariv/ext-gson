@@ -29,9 +29,9 @@ public final class Json {
 	 * @throws IOException A rethrown exception.
 	 * @since 0-SNAPSHOT
 	 */
-	public static boolean isJsonValid(final String json)
+	public static boolean isValid(final String json)
 			throws IOException {
-		return isJsonValid(new StringReader(json));
+		return isValid(new StringReader(json));
 	}
 
 	/**
@@ -44,9 +44,9 @@ public final class Json {
 	 * @throws IOException A rethrown exception
 	 * @since 0-SNAPSHOT
 	 */
-	public static boolean isJsonValid(final Reader reader)
+	public static boolean isValid(final Reader reader)
 			throws IOException {
-		return isJsonValid(new JsonReader(reader));
+		return isValid(new JsonReader(reader));
 	}
 
 	/**
@@ -59,7 +59,7 @@ public final class Json {
 	 * @throws IOException A rethrown exception
 	 * @since 0-SNAPSHOT
 	 */
-	public static boolean isJsonValid(final JsonReader jsonReader)
+	public static boolean isValid(final JsonReader jsonReader)
 			throws IOException {
 		try {
 			JsonToken token;

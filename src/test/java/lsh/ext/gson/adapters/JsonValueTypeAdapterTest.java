@@ -28,14 +28,14 @@ public final class JsonValueTypeAdapterTest {
 
 	@Test
 	public void testWrite() {
-		final TypeAdapter<JsonValue> unit = JsonValueTypeAdapter.getJsonValueTypeAdapter();
+		final TypeAdapter<JsonValue> unit = JsonValueTypeAdapter.get();
 		MatcherAssert.assertThat(unit.toJson(jsonValue), CoreMatchers.is(JSON_VALUE_JSON));
 	}
 
 	@Test
 	public void testRead()
 			throws IOException {
-		final TypeAdapter<JsonValue> unit = JsonValueTypeAdapter.getJsonValueTypeAdapter();
+		final TypeAdapter<JsonValue> unit = JsonValueTypeAdapter.get();
 		MatcherAssert.assertThat(unit.fromJson(JSON_VALUE_JSON), CoreMatchers.is(jsonValue));
 	}
 

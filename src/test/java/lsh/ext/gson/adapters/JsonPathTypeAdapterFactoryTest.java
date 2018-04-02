@@ -23,7 +23,7 @@ public final class JsonPathTypeAdapterFactoryTest {
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithDefaultConfiguration() {
-		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory();
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.get();
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
@@ -35,7 +35,7 @@ public final class JsonPathTypeAdapterFactoryTest {
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithDefaultConfigurationAndNotExistingPaths() {
-		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory();
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.get();
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
@@ -45,7 +45,7 @@ public final class JsonPathTypeAdapterFactoryTest {
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithConfiguration() {
-		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory(JsonPathTypeAdapterFactoryTest::getJsonPathConfiguration);
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.get(JsonPathTypeAdapterFactoryTest::getJsonPathConfiguration);
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();
@@ -57,7 +57,7 @@ public final class JsonPathTypeAdapterFactoryTest {
 
 	@Test
 	public void testGetJsonPathTypeAdapterFactoryWithConfigurationAndNotExistingPaths() {
-		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.getJsonPathTypeAdapterFactory(JsonPathTypeAdapterFactoryTest::getJsonPathConfiguration);
+		final TypeAdapterFactory unit = JsonPathTypeAdapterFactory.get(JsonPathTypeAdapterFactoryTest::getJsonPathConfiguration);
 		final Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(unit)
 				.create();

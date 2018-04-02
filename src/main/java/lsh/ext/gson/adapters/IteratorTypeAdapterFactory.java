@@ -27,16 +27,16 @@ public final class IteratorTypeAdapterFactory
 	/**
 	 * @return An instance of {@link IteratorTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getIteratorTypeAdapterFactory() {
+	public static TypeAdapterFactory get() {
 		return iteratorTypeAdapterFactory;
 	}
 
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		if ( Iterator.class.isAssignableFrom(typeToken.getRawType()) ) {
-			final Type[][] typeArguments = ParameterizedTypes.resolveTypeArguments(typeToken.getType());
+			final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 			@SuppressWarnings("unchecked")
-			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) IteratorTypeAdapter.getIteratorTypeAdapter(typeArguments[0][0], gson);
+			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) IteratorTypeAdapter.get(typeArguments[0][0], gson);
 			return castTypeAdapter;
 		}
 		return null;

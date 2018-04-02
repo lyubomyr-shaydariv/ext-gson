@@ -66,7 +66,7 @@ public final class PackedJsonTypeAdapter
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapter<String> getPackedJsonTypeAdapter() {
+	public static TypeAdapter<String> get() {
 		return packedJsonTypeAdapter;
 	}
 

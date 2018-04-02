@@ -35,7 +35,7 @@ public final class AlwaysListTypeAdapter<E>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <E> TypeAdapter<List<E>> getAlwaysListTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<List<E>> get(final TypeAdapter<E> elementTypeAdapter) {
 		return new AlwaysListTypeAdapter<>(elementTypeAdapter);
 	}
 

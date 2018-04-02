@@ -16,7 +16,7 @@ public final class IteratorTypeAdapterTest {
 	@Test
 	public void testRead()
 			throws Exception {
-		final TypeAdapter<Iterator<Integer>> unit = IteratorTypeAdapter.getIteratorTypeAdapter(Integer.class, gson);
+		final TypeAdapter<Iterator<Integer>> unit = IteratorTypeAdapter.get(Integer.class, gson);
 		final Iterator<Integer> iterator = unit.fromJson("[1,2,4,8]");
 		MatcherAssert.assertThat(iterator instanceof AutoCloseable, CoreMatchers.is(true));
 		MatcherAssert.assertThat(iterator.hasNext(), CoreMatchers.is(true));
@@ -32,7 +32,7 @@ public final class IteratorTypeAdapterTest {
 
 	@Test
 	public void testWrite() {
-		final TypeAdapter<Iterator<Integer>> unit = IteratorTypeAdapter.getIteratorTypeAdapter(Integer.class, gson);
+		final TypeAdapter<Iterator<Integer>> unit = IteratorTypeAdapter.get(Integer.class, gson);
 		final Iterator<Integer> iterator = ImmutableList.of(1, 2, 4, 8).iterator();
 		final String json = unit.toJson(iterator);
 		MatcherAssert.assertThat(json, CoreMatchers.is("[1,2,4,8]"));

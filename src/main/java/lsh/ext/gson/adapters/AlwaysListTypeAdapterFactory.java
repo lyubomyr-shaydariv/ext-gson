@@ -30,7 +30,7 @@ public final class AlwaysListTypeAdapterFactory<E>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <E> TypeAdapterFactory getAlwaysListTypeAdapterFactory() {
+	public static <E> TypeAdapterFactory get() {
 		return new AlwaysListTypeAdapterFactory<E>();
 	}
 
@@ -42,10 +42,10 @@ public final class AlwaysListTypeAdapterFactory<E>
 	@Nonnull
 	@Override
 	protected TypeAdapter<List<E>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		final Type elementType = ParameterizedTypes.resolveTypeArguments(typeToken.getType())[0][0];
+		final Type elementType = ParameterizedTypes.getTypeArguments(typeToken.getType())[0][0];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
-		return AlwaysListTypeAdapter.getAlwaysListTypeAdapter(elementTypeAdapter);
+		return AlwaysListTypeAdapter.get(elementTypeAdapter);
 	}
 
 }

@@ -30,7 +30,7 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeAdapterOfTypeAdapter()
 			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-		final TypeAdapter<?> typeAdapter = TypeAdapters.getTypeAdapterOf(VoidTypeAdapter.class);
+		final TypeAdapter<?> typeAdapter = TypeAdapters.ofConcrete(VoidTypeAdapter.class);
 		MatcherAssert.assertThat(typeAdapter, CoreMatchers.instanceOf(TypeAdapter.class));
 		MatcherAssert.assertThat(typeAdapter, canBeRegisteredAsTypeAdapter());
 	}
@@ -38,7 +38,7 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeAdapterOfJsonSerializer()
 			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-		final JsonSerializer<?> jsonSerializer = TypeAdapters.getTypeAdapterOf(VoidJsonSerializer.class);
+		final JsonSerializer<?> jsonSerializer = TypeAdapters.ofConcrete(VoidJsonSerializer.class);
 		MatcherAssert.assertThat(jsonSerializer, CoreMatchers.instanceOf(JsonSerializer.class));
 		MatcherAssert.assertThat(jsonSerializer, canBeRegisteredAsTypeAdapter());
 	}
@@ -46,7 +46,7 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeAdapterOfJsonDeserializer()
 			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-		final JsonDeserializer<?> jsonDeserializer = TypeAdapters.getTypeAdapterOf(VoidJsonDeserializer.class);
+		final JsonDeserializer<?> jsonDeserializer = TypeAdapters.ofConcrete(VoidJsonDeserializer.class);
 		MatcherAssert.assertThat(jsonDeserializer, CoreMatchers.instanceOf(JsonDeserializer.class));
 		MatcherAssert.assertThat(jsonDeserializer, canBeRegisteredAsTypeAdapter());
 	}
@@ -54,7 +54,7 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeAdapterOfInstanceCreator()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		final InstanceCreator<?> instanceCreator = TypeAdapters.getTypeAdapterOf(VoidInstanceCreator.class);
+		final InstanceCreator<?> instanceCreator = TypeAdapters.ofConcrete(VoidInstanceCreator.class);
 		MatcherAssert.assertThat(instanceCreator, CoreMatchers.instanceOf(InstanceCreator.class));
 		MatcherAssert.assertThat(instanceCreator, canBeRegisteredAsTypeAdapter());
 	}
@@ -62,31 +62,31 @@ public final class TypeAdaptersTest {
 	@Test(expected = InvocationTargetException.class)
 	public void testGetTypeAdapterOfTypeAdapterWithInvocationTargetException()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.getTypeAdapterOf(VoidTypeAdapterWithInvocationTargetException.class);
+		TypeAdapters.ofConcrete(VoidTypeAdapterWithInvocationTargetException.class);
 	}
 
 	@Test(expected = NoSuchMethodException.class)
 	public void testGetTypeAdapterOfTypeAdapterWithNoSuchMethodException()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.getTypeAdapterOf(VoidTypeAdapterWithNoSuchMethodException.class);
+		TypeAdapters.ofConcrete(VoidTypeAdapterWithNoSuchMethodException.class);
 	}
 
 	@Test(expected = InstantiationException.class)
 	public void testGetTypeAdapterOfTypeAdapterWithInstantiationException()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.getTypeAdapterOf(VoidTypeAdapterWithInstantiationException.class);
+		TypeAdapters.ofConcrete(VoidTypeAdapterWithInstantiationException.class);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetTypeAdapterOfIllegalClass()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.getTypeAdapterOf(Object.class);
+		TypeAdapters.ofConcrete(Object.class);
 	}
 
 	@Test
 	public void testGetTypeHierarchyAdapterOfTypeAdapter()
 			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-		final TypeAdapter<?> typeAdapter = TypeAdapters.getTypeHierarchyAdapterOf(VoidTypeAdapter.class);
+		final TypeAdapter<?> typeAdapter = TypeAdapters.ofHierarchy(VoidTypeAdapter.class);
 		MatcherAssert.assertThat(typeAdapter, CoreMatchers.instanceOf(TypeAdapter.class));
 		MatcherAssert.assertThat(typeAdapter, canBeRegisteredAsTypeHierarchyAdapter());
 	}
@@ -94,7 +94,7 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeHierarchyAdapterOfJsonSerializer()
 			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-		final JsonSerializer<?> jsonSerializer = TypeAdapters.getTypeHierarchyAdapterOf(VoidJsonSerializer.class);
+		final JsonSerializer<?> jsonSerializer = TypeAdapters.ofHierarchy(VoidJsonSerializer.class);
 		MatcherAssert.assertThat(jsonSerializer, CoreMatchers.instanceOf(JsonSerializer.class));
 		MatcherAssert.assertThat(jsonSerializer, canBeRegisteredAsTypeHierarchyAdapter());
 	}
@@ -102,7 +102,7 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeHierarchyAdapterOfJsonDeserializer()
 			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-		final JsonDeserializer<?> jsonDeserializer = TypeAdapters.getTypeHierarchyAdapterOf(VoidJsonDeserializer.class);
+		final JsonDeserializer<?> jsonDeserializer = TypeAdapters.ofHierarchy(VoidJsonDeserializer.class);
 		MatcherAssert.assertThat(jsonDeserializer, CoreMatchers.instanceOf(JsonDeserializer.class));
 		MatcherAssert.assertThat(jsonDeserializer, canBeRegisteredAsTypeHierarchyAdapter());
 	}
@@ -110,13 +110,13 @@ public final class TypeAdaptersTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetTypeHierarchyAdapterOfInstanceCreator()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.getTypeHierarchyAdapterOf(VoidInstanceCreator.class);
+		TypeAdapters.ofHierarchy(VoidInstanceCreator.class);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetTypeHierarchyAdapterOfIllegalClass()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.getTypeHierarchyAdapterOf(Object.class);
+		TypeAdapters.ofHierarchy(Object.class);
 	}
 
 	private static <T> Matcher<T> canBeRegisteredAsTypeAdapter() {

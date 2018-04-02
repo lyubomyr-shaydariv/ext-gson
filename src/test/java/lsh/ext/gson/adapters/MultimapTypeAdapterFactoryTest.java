@@ -14,7 +14,7 @@ import org.junit.Test;
 public final class MultimapTypeAdapterFactoryTest {
 
 	private static final Gson gson = new GsonBuilder()
-			.registerTypeAdapterFactory(MultimapTypeAdapterFactory.getMultimapTypeAdapterFactory())
+			.registerTypeAdapterFactory(MultimapTypeAdapterFactory.get())
 			.create();
 
 	private static final Type stringToObjectMultimapType = new TypeToken<Multimap<String, Object>>() {

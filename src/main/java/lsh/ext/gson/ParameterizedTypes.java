@@ -35,7 +35,7 @@ public final class ParameterizedTypes {
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static Type[][] resolveTypeArguments(final Type type) {
+	public static Type[][] getTypeArguments(final Type type) {
 		if ( type instanceof ParameterizedType ) {
 			final ParameterizedType parameterizedType = (ParameterizedType) type;
 			final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
@@ -67,11 +67,11 @@ public final class ParameterizedTypes {
 	 *
 	 * @return Parameterized type for generic lists {@code List<E>}.
 	 *
-	 * @see #setType(Type)
-	 * @see #mapType(Type, Type)
+	 * @see #setOf(Type)
+	 * @see #mapOf(Type, Type)
 	 * @since 0-SNAPSHOT
 	 */
-	public static ParameterizedType listType(final Type elementType) {
+	public static ParameterizedType listOf(final Type elementType) {
 		return new ListParameterizedType(elementType);
 	}
 
@@ -80,11 +80,11 @@ public final class ParameterizedTypes {
 	 *
 	 * @return Parameterized type for generic sets {@code Set<E>}.
 	 *
-	 * @see #listType(Type)
-	 * @see #mapType(Type, Type)
+	 * @see #listOf(Type)
+	 * @see #mapOf(Type, Type)
 	 * @since 0-SNAPSHOT
 	 */
-	public static ParameterizedType setType(final Type elementType) {
+	public static ParameterizedType setOf(final Type elementType) {
 		return new SetParameterizedType(elementType);
 	}
 
@@ -94,11 +94,11 @@ public final class ParameterizedTypes {
 	 *
 	 * @return parameterized type for generic maps {@code Map<K, V>}.
 	 *
-	 * @see #listType(Type)
-	 * @see #setType(Type)
+	 * @see #listOf(Type)
+	 * @see #setOf(Type)
 	 * @since 0-SNAPSHOT
 	 */
-	public static ParameterizedType mapType(final Type keyType, final Type valueType) {
+	public static ParameterizedType mapOf(final Type keyType, final Type valueType) {
 		return new MapParameterizedType(keyType, valueType);
 	}
 

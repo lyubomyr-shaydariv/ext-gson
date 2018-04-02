@@ -41,7 +41,7 @@ public final class MultimapTypeAdapter<V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <V> TypeAdapter<Multimap<String, V>> getMultimapTypeAdapter(final Gson gson, final Type valueType) {
+	public static <V> TypeAdapter<Multimap<String, V>> get(final Gson gson, final Type valueType) {
 		return new MultimapTypeAdapter<>(gson, valueType);
 	}
 

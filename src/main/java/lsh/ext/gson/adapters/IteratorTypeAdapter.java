@@ -40,7 +40,7 @@ public final class IteratorTypeAdapter<E>
 	 *
 	 * @return An instance of {@link IteratorTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<Iterator<E>> getIteratorTypeAdapter(final Type elementType, final Gson gson) {
+	public static <E> TypeAdapter<Iterator<E>> get(final Type elementType, final Gson gson) {
 		return new IteratorTypeAdapter<>(elementType, gson);
 	}
 
@@ -58,7 +58,7 @@ public final class IteratorTypeAdapter<E>
 
 	@Override
 	public Iterator<E> read(final JsonReader in) {
-		return JsonReaderIterator.getJsonReaderIterator(elementType, gson, in);
+		return JsonReaderIterator.get(elementType, gson, in);
 	}
 
 }

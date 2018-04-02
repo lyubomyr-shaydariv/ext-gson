@@ -33,14 +33,14 @@ public final class AbstractTypeTypeAdapterFactory
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapterFactory getAbstractTypeTypeAdapterFactory(final String typePropertyName, final String valuePropertyName) {
+	public static TypeAdapterFactory get(final String typePropertyName, final String valuePropertyName) {
 		return new AbstractTypeTypeAdapterFactory(typePropertyName, valuePropertyName);
 	}
 
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		if ( Modifier.isAbstract(typeToken.getRawType().getModifiers()) ) {
-			return TypeAwareTypeAdapter.getTypeAwareTypeAdapter(gson, typePropertyName, valuePropertyName);
+			return TypeAwareTypeAdapter.get(gson, typePropertyName, valuePropertyName);
 		}
 		return null;
 	}

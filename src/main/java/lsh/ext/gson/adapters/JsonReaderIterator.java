@@ -25,7 +25,7 @@ final class JsonReaderIterator<T>
 		this.in = in;
 	}
 
-	static <T> Iterator<T> getJsonReaderIterator(final Type elementType, final Gson gson, final JsonReader in) {
+	static <T> Iterator<T> get(final Type elementType, final Gson gson, final JsonReader in) {
 		return new JsonReaderIterator<>(elementType, gson, in);
 	}
 

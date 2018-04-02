@@ -64,8 +64,8 @@ import lsh.ext.gson.annotations.JsonPathExpression;
  * <p>JSON path expressions that point to not existing paths are ignored.</p>
  *
  * @author Lyubomyr Shaydariv
- * @see #getJsonPathTypeAdapterFactory()
- * @see #getJsonPathTypeAdapterFactory(Function)
+ * @see #get()
+ * @see #get(Function)
  * @see #getJsonPathTypeAdapterWithGlobalDefaults()
  * @since 0-SNAPSHOT
  */
@@ -92,7 +92,7 @@ public final class JsonPathTypeAdapterFactory
 	 * @see Configuration.Defaults#mappingProvider()
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapterFactory getJsonPathTypeAdapterFactory() {
+	public static TypeAdapterFactory get() {
 		return jsonPathTypeAdapterFactory;
 	}
 
@@ -135,7 +135,7 @@ public final class JsonPathTypeAdapterFactory
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapterFactory getJsonPathTypeAdapterFactory(final Function<? super Gson, ? extends Configuration> configurationProvider) {
+	public static TypeAdapterFactory get(final Function<? super Gson, ? extends Configuration> configurationProvider) {
 		return new JsonPathTypeAdapterFactory(configurationProvider);
 	}
 

@@ -45,7 +45,7 @@ public final class JsonValueTypeAdapter
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapter<JsonValue> getJsonValueTypeAdapter() {
+	public static TypeAdapter<JsonValue> get() {
 		return jsonValueTypeAdapter;
 	}
 

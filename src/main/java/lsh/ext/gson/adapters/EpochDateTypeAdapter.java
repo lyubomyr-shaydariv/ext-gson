@@ -28,7 +28,7 @@ public final class EpochDateTypeAdapter
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapter<Date> getEpochDateTypeAdapter() {
+	public static TypeAdapter<Date> get() {
 		return epochDateTypeAdapter;
 	}
 

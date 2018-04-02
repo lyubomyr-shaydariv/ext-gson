@@ -33,7 +33,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonNull jsonNull() {
+	public static JsonNull from() {
 		return JsonNull.INSTANCE;
 	}
 
@@ -48,7 +48,7 @@ public final class JsonElements {
 	 */
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")
-	public static JsonPrimitive jsonPrimitive(@Nonnull final Boolean b) {
+	public static JsonPrimitive from(@Nonnull final Boolean b) {
 		final boolean hasValue = b != null;
 		return hasValue
 				? b ? truePrimitive : falsePrimitive
@@ -65,7 +65,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonPrimitive jsonPrimitive(@Nonnull final Number n) {
+	public static JsonPrimitive from(@Nonnull final Number n) {
 		return new JsonPrimitive(n);
 	}
 
@@ -79,7 +79,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonPrimitive jsonPrimitive(@Nonnull final String s) {
+	public static JsonPrimitive from(@Nonnull final String s) {
 		return new JsonPrimitive(s);
 	}
 
@@ -93,7 +93,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonPrimitive jsonPrimitive(@Nonnull final Character c) {
+	public static JsonPrimitive from(@Nonnull final Character c) {
 		return new JsonPrimitive(c);
 	}
 
@@ -105,7 +105,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonObject jsonObject() {
+	public static JsonObject object() {
 		return new JsonObject();
 	}
 
@@ -120,7 +120,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonObject jsonObject(
+	public static JsonObject object(
 			@Nonnull final String k1, @Nullable final JsonElement v1
 	) {
 		final JsonObject jsonObject = new JsonObject();
@@ -141,7 +141,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonObject jsonObject(
+	public static JsonObject object(
 			@Nonnull final String k1, @Nullable final JsonElement v1,
 			@Nonnull final String k2, @Nullable final JsonElement v2
 	) {
@@ -166,7 +166,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonObject jsonObject(
+	public static JsonObject object(
 			@Nonnull final String k1, @Nullable final JsonElement v1,
 			@Nonnull final String k2, @Nullable final JsonElement v2,
 			@Nonnull final String k3, @Nullable final JsonElement v3
@@ -195,7 +195,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonObject jsonObject(
+	public static JsonObject object(
 			@Nonnull final String k1, @Nullable final JsonElement v1,
 			@Nonnull final String k2, @Nullable final JsonElement v2,
 			@Nonnull final String k3, @Nullable final JsonElement v3,
@@ -228,7 +228,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonObject jsonObject(
+	public static JsonObject object(
 			@Nonnull final String k1, @Nullable final JsonElement v1,
 			@Nonnull final String k2, @Nullable final JsonElement v2,
 			@Nonnull final String k3, @Nullable final JsonElement v3,
@@ -249,7 +249,7 @@ public final class JsonElements {
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static JsonObjectAccumulator jsonObjectWith() {
+	public static JsonObjectAccumulator objectWith() {
 		return new JsonObjectAccumulator();
 	}
 
@@ -261,7 +261,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray() {
+	public static JsonArray array() {
 		return new JsonArray();
 	}
 
@@ -275,7 +275,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1
 	) {
 		final JsonArray jsonArray = new JsonArray();
@@ -294,7 +294,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2
 	) {
@@ -316,7 +316,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3
@@ -341,7 +341,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -369,7 +369,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -400,7 +400,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -434,7 +434,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -470,7 +470,7 @@ public final class JsonElements {
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			final JsonElement e1,
 			final JsonElement e2,
 			final JsonElement e3,
@@ -510,7 +510,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -553,7 +553,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray jsonArray(
+	public static JsonArray array(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -584,7 +584,7 @@ public final class JsonElements {
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static JsonArrayAccumulator jsonArrayWith() {
+	public static JsonArrayAccumulator arrayWith() {
 		return new JsonArrayAccumulator();
 	}
 
@@ -754,7 +754,7 @@ public final class JsonElements {
 		 *
 		 * @since 0-SNAPSHOT
 		 */
-		public JsonObject getJsonObject() {
+		public JsonObject get() {
 			return jsonObject;
 		}
 
@@ -862,7 +862,7 @@ public final class JsonElements {
 		 *
 		 * @since 0-SNAPSHOT
 		 */
-		public JsonArray getJsonArray() {
+		public JsonArray get() {
 			return jsonArray;
 		}
 

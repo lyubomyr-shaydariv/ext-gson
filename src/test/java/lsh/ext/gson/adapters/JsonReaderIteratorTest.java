@@ -15,7 +15,7 @@ public final class JsonReaderIteratorTest {
 	@Test
 	public void testSome() {
 		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
-		final Iterator<Object> unit = JsonReaderIterator.getJsonReaderIterator(FooBar.class, new Gson(), in);
+		final Iterator<Object> unit = JsonReaderIterator.get(FooBar.class, new Gson(), in);
 		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
 		MatcherAssert.assertThat(unit.next(), CoreMatchers.is(new FooBar(1, 2)));
 		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
@@ -28,7 +28,7 @@ public final class JsonReaderIteratorTest {
 	@Test
 	public void testEmpty() {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
-		final Iterator<Object> unit = JsonReaderIterator.getJsonReaderIterator(FooBar.class, new Gson(), in);
+		final Iterator<Object> unit = JsonReaderIterator.get(FooBar.class, new Gson(), in);
 		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
 	}
 

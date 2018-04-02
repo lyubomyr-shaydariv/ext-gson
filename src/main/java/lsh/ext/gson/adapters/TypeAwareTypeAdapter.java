@@ -48,7 +48,7 @@ public final class TypeAwareTypeAdapter<T>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <T> TypeAdapter<T> getTypeAwareTypeAdapter(final Gson gson, final String typePropertyName,
+	public static <T> TypeAdapter<T> get(final Gson gson, final String typePropertyName,
 			final String valuePropertyName) {
 		return new TypeAwareTypeAdapter<>(gson, typePropertyName, valuePropertyName);
 	}
