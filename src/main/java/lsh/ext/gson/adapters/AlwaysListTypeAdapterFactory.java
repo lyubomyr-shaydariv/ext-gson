@@ -20,18 +20,18 @@ import lsh.ext.gson.ParameterizedTypes;
 public final class AlwaysListTypeAdapterFactory<E>
 		extends AbstractBoundTypeAdapterFactory<List<E>> {
 
+	private static final TypeAdapterFactory alwaysListTypeAdapterFactory = new AlwaysListTypeAdapterFactory<>();
+
 	private AlwaysListTypeAdapterFactory() {
 	}
 
 	/**
-	 * @param <E> List element type
-	 *
 	 * @return An instance of {@link AlwaysListTypeAdapterFactory}.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <E> TypeAdapterFactory get() {
-		return new AlwaysListTypeAdapterFactory<E>();
+	public static TypeAdapterFactory get() {
+		return alwaysListTypeAdapterFactory;
 	}
 
 	@Override
