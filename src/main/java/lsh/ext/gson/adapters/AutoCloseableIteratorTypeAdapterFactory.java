@@ -13,19 +13,19 @@ import lsh.ext.gson.ParameterizedTypes;
  * Represents a type adapter factory for {@link Iterator} .
  *
  * @author Lyubomyr Shaydariv
- * @see IteratorTypeAdapter
+ * @see AutoCloseableIteratorTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class IteratorTypeAdapterFactory
+public final class AutoCloseableIteratorTypeAdapterFactory
 		implements TypeAdapterFactory {
 
-	private static final TypeAdapterFactory iteratorTypeAdapterFactory = new IteratorTypeAdapterFactory();
+	private static final TypeAdapterFactory iteratorTypeAdapterFactory = new AutoCloseableIteratorTypeAdapterFactory();
 
-	private IteratorTypeAdapterFactory() {
+	private AutoCloseableIteratorTypeAdapterFactory() {
 	}
 
 	/**
-	 * @return An instance of {@link IteratorTypeAdapterFactory}.
+	 * @return An instance of {@link AutoCloseableIteratorTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory get() {
 		return iteratorTypeAdapterFactory;
@@ -36,7 +36,7 @@ public final class IteratorTypeAdapterFactory
 		if ( Iterator.class.isAssignableFrom(typeToken.getRawType()) ) {
 			final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 			@SuppressWarnings("unchecked")
-			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) IteratorTypeAdapter.get(typeArguments[0][0], gson);
+			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) AutoCloseableIteratorTypeAdapter.get(typeArguments[0][0], gson);
 			return castTypeAdapter;
 		}
 		return null;

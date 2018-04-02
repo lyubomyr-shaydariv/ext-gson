@@ -1,17 +1,16 @@
 package lsh.ext.gson.adapters;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import lsh.ext.gson.IAutoCloseableIterator;
 
 final class JsonReaderIterator<T>
-		implements Iterator<T>, Closeable {
+		implements IAutoCloseableIterator<T> {
 
 	private final Type elementType;
 	private final Gson gson;
@@ -25,7 +24,7 @@ final class JsonReaderIterator<T>
 		this.in = in;
 	}
 
-	static <T> Iterator<T> get(final Type elementType, final Gson gson, final JsonReader in) {
+	static <T> IAutoCloseableIterator<T> get(final Type elementType, final Gson gson, final JsonReader in) {
 		return new JsonReaderIterator<>(elementType, gson, in);
 	}
 

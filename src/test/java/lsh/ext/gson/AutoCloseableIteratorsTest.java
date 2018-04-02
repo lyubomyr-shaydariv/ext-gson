@@ -1,13 +1,45 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson;
 
 import java.util.Iterator;
 import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableList;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public final class CloseableIteratorsTest {
+public final class AutoCloseableIteratorsTest {
+
+	@Test
+	@SuppressWarnings("resource")
+	public void testAsAutoCloseableForAutoCloseableIterator() {
+		final IAutoCloseableIterator<?> autoCloseableIterator = Mockito.mock(IAutoCloseableIterator.class);
+		MatcherAssert.assertThat(AutoCloseableIterators.asAutoCloseable(autoCloseableIterator), CoreMatchers.sameInstance(autoCloseableIterator));
+	}
+
+	@Test
+	@SuppressWarnings("resource")
+	public void testAsAutoCloseableDispatcherForAutoCloseableIterator() {
+		final Iterator<?> iterator = Mockito.mock(IAutoCloseableIterator.class);
+		MatcherAssert.assertThat(AutoCloseableIterators.asAutoCloseable(iterator), CoreMatchers.sameInstance(iterator));
+	}
+
+	@Test
+	@SuppressWarnings("resource")
+	public void testAsAutoCloseableDispatcherForIterator()
+			throws Exception {
+		final Iterator<?> iterator = Mockito.mock(Iterator.class);
+		final IAutoCloseableIterator<?> autoCloseableIterator = AutoCloseableIterators.asAutoCloseable(iterator);
+		MatcherAssert.assertThat(autoCloseableIterator, CoreMatchers.isA(Iterator.class));
+		MatcherAssert.assertThat(autoCloseableIterator, CoreMatchers.isA(AutoCloseable.class));
+		autoCloseableIterator.hasNext();
+		Mockito.verify(iterator).hasNext();
+		autoCloseableIterator.next();
+		Mockito.verify(iterator).next();
+		autoCloseableIterator.close();
+		Mockito.verifyNoMoreInteractions(iterator);
+	}
 
 	@Test
 	public void testForEachAndTryCloseWhenIteratorIsNotAutoCloseable()
@@ -15,7 +47,7 @@ public final class CloseableIteratorsTest {
 		final Iterator<String> iterator = ImmutableList.of("foo", "bar", "baz").iterator();
 		@SuppressWarnings("unchecked")
 		final Consumer<String> mockConsumer = Mockito.mock(Consumer.class);
-		CloseableIterators.forEachAndTryClose(iterator, mockConsumer);
+		AutoCloseableIterators.forEachAndTryClose(iterator, mockConsumer);
 		Mockito.verify(mockConsumer).accept("foo");
 		Mockito.verify(mockConsumer).accept("bar");
 		Mockito.verify(mockConsumer).accept("baz");
@@ -30,7 +62,7 @@ public final class CloseableIteratorsTest {
 		final AutoCloseableIterator<String> iterator = new AutoCloseableIterator<>(ImmutableList.of("foo", "bar", "baz").iterator(), mockAutoCloseable);
 		@SuppressWarnings("unchecked")
 		final Consumer<String> mockConsumer = Mockito.mock(Consumer.class);
-		CloseableIterators.forEachAndTryClose(iterator, mockConsumer);
+		AutoCloseableIterators.forEachAndTryClose(iterator, mockConsumer);
 		Mockito.verify(mockConsumer).accept("foo");
 		Mockito.verify(mockConsumer).accept("bar");
 		Mockito.verify(mockConsumer).accept("baz");
@@ -43,7 +75,7 @@ public final class CloseableIteratorsTest {
 	public void testTryClose()
 			throws Exception {
 		final AutoCloseable mockAutoCloseable = Mockito.mock(AutoCloseable.class);
-		CloseableIterators.tryClose(mockAutoCloseable);
+		AutoCloseableIterators.tryClose(mockAutoCloseable);
 		Mockito.verify(mockAutoCloseable).close();
 		Mockito.verifyZeroInteractions(mockAutoCloseable);
 	}
@@ -51,14 +83,14 @@ public final class CloseableIteratorsTest {
 	@Test
 	public void testTryCloseNull()
 			throws Exception {
-		CloseableIterators.tryClose(null);
+		AutoCloseableIterators.tryClose(null);
 	}
 
 	@Test
 	public void testTryToCloseNotAutoCloseable()
 			throws Exception {
 		final Runnable mockRunnable = Mockito.mock(Runnable.class);
-		CloseableIterators.tryClose(mockRunnable);
+		AutoCloseableIterators.tryClose(mockRunnable);
 		Mockito.verifyZeroInteractions(mockRunnable);
 	}
 
