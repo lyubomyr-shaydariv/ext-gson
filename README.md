@@ -3,6 +3,7 @@
 * [Jayway JsonPath 2.4.0](https://github.com/json-path/JsonPath)
 * [Google Guava 24.1 for JRE](https://github.com/google/guava)
 * [JSR 374 (JSON Processing) API](https://javaee.github.io/jsonp)
+* [JSR 374 (JSON Processing) Default Provider](https://javaee.github.io/jsonp)
 
 New libraries might be added someday.
 Maybe.
