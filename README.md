@@ -1,6 +1,6 @@
 `ext-gson` is a simple extension library for [Google Gson 2.8.2](https://github.com/google/gson) and later including a few extensions for the following libraries:
 
-* [Jayway JsonPath 2.2.0](https://github.com/json-path/JsonPath)
+* [Jayway JsonPath 2.4.0](https://github.com/json-path/JsonPath)
 * [Google Guava 24.1 for JRE](https://github.com/google/guava)
 
 New libraries might be added someday.
