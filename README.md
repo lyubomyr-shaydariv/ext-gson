@@ -32,3 +32,7 @@ Currently `ext-gson` supports:
   * `PackedJsonTypeAdapter` - a type adapter to "pack" and "unpack" JSON to and from string respectively; 
   * `ReadOnlyTypeAdapter` - a type adapter with disabled write operation;
   * `TypeAwareTypeAdapter` and `AbstractTypeTypeAdapterFactory` - a type adapter to keep abstract classes instances class names directly in JSON.
+
+### Development
+
+![Travis CI](https://travis-ci.org/lyubomyr-shaydariv/ext-gson.svg?branch=master)
