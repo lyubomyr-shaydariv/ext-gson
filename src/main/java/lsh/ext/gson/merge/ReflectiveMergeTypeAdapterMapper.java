@@ -44,16 +44,16 @@ public final class ReflectiveMergeTypeAdapterMapper
 	@SuppressWarnings("UnnecessarilyQualifiedInnerClassAccess")
 	public <T> TypeAdapter<T> map(@Nonnull final TypeAdapter<?> typeAdapter, final Object instance, @Nonnull final Gson gson,
 			@Nonnull final TypeToken<T> typeToken) {
-		if ( typeAdapter instanceof ReflectiveTypeAdapterFactory.Adapter ) {
-			final InstanceCreator<?> o = (InstanceCreator<Object>) type -> instance;
-			final ConstructorConstructor constructorConstructor = new ConstructorConstructor(Collections.singletonMap(typeToken.getType(), o));
-			final FieldNamingStrategy fieldNamingPolicy = gson.fieldNamingStrategy();
-			final Excluder excluder = gson.excluder();
-			final JsonAdapterAnnotationTypeAdapterFactory jsonAdapterFactory = new JsonAdapterAnnotationTypeAdapterFactory(constructorConstructor);
-			final TypeAdapterFactory typeAdapterFactory = new ReflectiveTypeAdapterFactory(constructorConstructor, fieldNamingPolicy, excluder, jsonAdapterFactory);
-			return typeAdapterFactory.create(gson, typeToken);
+		if ( !(typeAdapter instanceof ReflectiveTypeAdapterFactory.Adapter) ) {
+			return null;
 		}
-		return null;
+		final InstanceCreator<?> o = (InstanceCreator<Object>) type -> instance;
+		final ConstructorConstructor constructorConstructor = new ConstructorConstructor(Collections.singletonMap(typeToken.getType(), o));
+		final FieldNamingStrategy fieldNamingPolicy = gson.fieldNamingStrategy();
+		final Excluder excluder = gson.excluder();
+		final JsonAdapterAnnotationTypeAdapterFactory jsonAdapterFactory = new JsonAdapterAnnotationTypeAdapterFactory(constructorConstructor);
+		final TypeAdapterFactory typeAdapterFactory = new ReflectiveTypeAdapterFactory(constructorConstructor, fieldNamingPolicy, excluder, jsonAdapterFactory);
+		return typeAdapterFactory.create(gson, typeToken);
 	}
 
 }

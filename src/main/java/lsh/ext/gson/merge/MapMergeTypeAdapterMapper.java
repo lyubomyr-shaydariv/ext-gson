@@ -59,14 +59,14 @@ public final class MapMergeTypeAdapterMapper
 	@Override
 	public <T> TypeAdapter<T> map(@Nonnull final TypeAdapter<?> typeAdapter, final Object instance, @Nonnull final Gson gson,
 			@Nonnull final TypeToken<T> typeToken) {
-		if ( typeAdapter.getClass().getEnclosingClass() == MapTypeAdapterFactory.class ) {
-			@SuppressWarnings("unchecked")
-			final Map<Type, InstanceCreator<?>> instanceCreators = Collections.singletonMap(typeToken.getType(), type -> new NullOnPutMap<>((Map<Object, Object>) instance));
-			final ConstructorConstructor constructorConstructor = new ConstructorConstructor(instanceCreators);
-			final TypeAdapterFactory typeAdapterFactory = new MapTypeAdapterFactory(constructorConstructor, complexMapKeySerialization);
-			return typeAdapterFactory.create(gson, typeToken);
+		if ( typeAdapter.getClass().getEnclosingClass() != MapTypeAdapterFactory.class ) {
+			return null;
 		}
-		return null;
+		@SuppressWarnings("unchecked")
+		final Map<Type, InstanceCreator<?>> instanceCreators = Collections.singletonMap(typeToken.getType(), type -> new NullOnPutMap<>((Map<Object, Object>) instance));
+		final ConstructorConstructor constructorConstructor = new ConstructorConstructor(instanceCreators);
+		final TypeAdapterFactory typeAdapterFactory = new MapTypeAdapterFactory(constructorConstructor, complexMapKeySerialization);
+		return typeAdapterFactory.create(gson, typeToken);
 	}
 
 	private static final class NullOnPutMap<K, V>
