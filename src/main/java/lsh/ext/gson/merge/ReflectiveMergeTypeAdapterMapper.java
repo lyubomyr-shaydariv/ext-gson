@@ -32,7 +32,7 @@ public final class ReflectiveMergeTypeAdapterMapper
 	 *
 	 * @return TODO
 	 */
-	public static IMergeTypeAdapterMapper getReflectiveMergeTypeAdapterMapper() {
+	public static IMergeTypeAdapterMapper get() {
 		return new ReflectiveMergeTypeAdapterMapper();
 	}
 

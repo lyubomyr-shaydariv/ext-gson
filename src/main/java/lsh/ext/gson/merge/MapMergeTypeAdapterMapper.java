@@ -41,8 +41,8 @@ public final class MapMergeTypeAdapterMapper
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static IMergeTypeAdapterMapper getMapMergeTypeAdapterMapper() {
-		return getMapMergeTypeAdapterMapper(false);
+	public static IMergeTypeAdapterMapper get() {
+		return get(false);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public final class MapMergeTypeAdapterMapper
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static IMergeTypeAdapterMapper getMapMergeTypeAdapterMapper(final boolean complexMapKeySerialization) {
+	public static IMergeTypeAdapterMapper get(final boolean complexMapKeySerialization) {
 		return !complexMapKeySerialization ? mapMergeTypeAdapterMapper : mapMergeTypeAdapterMapperComplex;
 	}
 
