@@ -8,21 +8,23 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 
 /**
+ * Represents a strategy to create a special type adapter to use for merging objects.
+ *
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT
  */
 public interface IMergeTypeAdapterMapper {
 
 	/**
-	 * TODO
+	 * @param typeAdapter Type adapter to use.
+	 * @param instance    An object to map type adapter for.
+	 * @param gson        Gson instance
+	 * @param typeToken   Type token to describe type for the returned type adapter.
+	 * @param <T>         Type parameter of the type token.
 	 *
-	 * @param typeAdapter TODO
-	 * @param instance    TODO
-	 * @param gson        TODO
-	 * @param typeToken   TODO
-	 * @param <T>         TODO
+	 * @return A type adapter to map with.
 	 *
-	 * @return TODO
+	 * @since 0-SNAPSHOT
 	 */
 	@Nullable
 	<T> TypeAdapter<T> map(@Nonnull TypeAdapter<?> typeAdapter, Object instance, @Nonnull Gson gson, @Nonnull TypeToken<T> typeToken);

@@ -12,13 +12,13 @@ import com.google.gson.Gson;
 public interface IMerger {
 
 	/**
-	 * TODO
+	 * Merges the given object with a deserialized object.
 	 *
-	 * @param instance  TODO
-	 * @param extractor TODO
-	 * @param <T>       TODO
+	 * @param instance  Object to merge into
+	 * @param extractor A function to extract an object to merge into the given object
+	 * @param <T>       Object type
 	 *
-	 * @return TODO
+	 * @return A merged object.
 	 *
 	 * @since 0-SNAPSHOT
 	 */

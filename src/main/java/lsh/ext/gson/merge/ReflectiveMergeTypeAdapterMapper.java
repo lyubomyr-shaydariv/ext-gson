@@ -16,9 +16,10 @@ import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * TODO
+ * A merge type adapter mapper for objects serialized and deserialized using reflection.
  *
  * @author Lyubomyr Shaydariv
+ * @see ReflectiveTypeAdapterFactory
  * @since 0-SNAPSHOT
  */
 public final class ReflectiveMergeTypeAdapterMapper
@@ -30,9 +31,9 @@ public final class ReflectiveMergeTypeAdapterMapper
 	}
 
 	/**
-	 * TODO
+	 * @return An instance of {@link ReflectiveMergeTypeAdapterMapper}.
 	 *
-	 * @return TODO
+	 * @since 0-SNAPSHOT
 	 */
 	public static IMergeTypeAdapterMapper get() {
 		return reflectiveMergeTypeAdapterMapper;

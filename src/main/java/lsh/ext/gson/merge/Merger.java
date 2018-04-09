@@ -31,11 +31,9 @@ public final class Merger
 	}
 
 	/**
-	 * TODO
+	 * @param gson Gson instance
 	 *
-	 * @param gson TODO
-	 *
-	 * @return TODO
+	 * @return An instance of {@link Merger}.
 	 */
 	public static IMerger getMerger(final Gson gson) {
 		final Collection<IMergeTypeAdapterMapper> mappers = new ArrayList<>();
@@ -109,6 +107,7 @@ public final class Merger
 			mappedTypeAdapter.read(in);
 			return instanceToReturn;
 		}
+
 	}
 
 }

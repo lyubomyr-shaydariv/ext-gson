@@ -17,9 +17,10 @@ import com.google.gson.internal.bind.MapTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * TODO
+ * A merge type adapter mapper for {@link Map}.
  *
  * @author Lyubomyr Shaydariv
+ * @see MapTypeAdapterFactory
  * @since 0-SNAPSHOT
  */
 public final class MapMergeTypeAdapterMapper
@@ -35,9 +36,7 @@ public final class MapMergeTypeAdapterMapper
 	}
 
 	/**
-	 * TODO
-	 *
-	 * @return TODO
+	 * @return An instance of {@link MapMergeTypeAdapterMapper}.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -46,11 +45,9 @@ public final class MapMergeTypeAdapterMapper
 	}
 
 	/**
-	 * TODO
+	 * @param complexMapKeySerialization Specifies if {@link MapTypeAdapterFactory#complexMapKeySerialization} should be used.
 	 *
-	 * @param complexMapKeySerialization TODO
-	 *
-	 * @return TODO
+	 * @return An instance of {@link MapMergeTypeAdapterMapper}.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
