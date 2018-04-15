@@ -1,7 +1,6 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import javax.annotation.Nonnull;
@@ -28,94 +27,66 @@ import org.junit.Test;
 public final class TypeAdaptersTest {
 
 	@Test
-	public void testGetTypeAdapterOfTypeAdapter()
-			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testGetTypeAdapterOfTypeAdapter() {
 		final TypeAdapter<?> typeAdapter = TypeAdapters.ofConcrete(VoidTypeAdapter.class);
 		MatcherAssert.assertThat(typeAdapter, CoreMatchers.instanceOf(TypeAdapter.class));
 		MatcherAssert.assertThat(typeAdapter, canBeRegisteredAsTypeAdapter());
 	}
 
 	@Test
-	public void testGetTypeAdapterOfJsonSerializer()
-			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testGetTypeAdapterOfJsonSerializer() {
 		final JsonSerializer<?> jsonSerializer = TypeAdapters.ofConcrete(VoidJsonSerializer.class);
 		MatcherAssert.assertThat(jsonSerializer, CoreMatchers.instanceOf(JsonSerializer.class));
 		MatcherAssert.assertThat(jsonSerializer, canBeRegisteredAsTypeAdapter());
 	}
 
 	@Test
-	public void testGetTypeAdapterOfJsonDeserializer()
-			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testGetTypeAdapterOfJsonDeserializer() {
 		final JsonDeserializer<?> jsonDeserializer = TypeAdapters.ofConcrete(VoidJsonDeserializer.class);
 		MatcherAssert.assertThat(jsonDeserializer, CoreMatchers.instanceOf(JsonDeserializer.class));
 		MatcherAssert.assertThat(jsonDeserializer, canBeRegisteredAsTypeAdapter());
 	}
 
 	@Test
-	public void testGetTypeAdapterOfInstanceCreator()
-			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+	public void testGetTypeAdapterOfInstanceCreator() {
 		final InstanceCreator<?> instanceCreator = TypeAdapters.ofConcrete(VoidInstanceCreator.class);
 		MatcherAssert.assertThat(instanceCreator, CoreMatchers.instanceOf(InstanceCreator.class));
 		MatcherAssert.assertThat(instanceCreator, canBeRegisteredAsTypeAdapter());
 	}
 
-	@Test(expected = InvocationTargetException.class)
-	public void testGetTypeAdapterOfTypeAdapterWithInvocationTargetException()
-			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.ofConcrete(VoidTypeAdapterWithInvocationTargetException.class);
-	}
-
-	@Test(expected = NoSuchMethodException.class)
-	public void testGetTypeAdapterOfTypeAdapterWithNoSuchMethodException()
-			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.ofConcrete(VoidTypeAdapterWithNoSuchMethodException.class);
-	}
-
-	@Test(expected = InstantiationException.class)
-	public void testGetTypeAdapterOfTypeAdapterWithInstantiationException()
-			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		TypeAdapters.ofConcrete(VoidTypeAdapterWithInstantiationException.class);
-	}
-
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetTypeAdapterOfIllegalClass()
-			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+	public void testGetTypeAdapterOfIllegalClass() {
 		TypeAdapters.ofConcrete(Object.class);
 	}
 
 	@Test
-	public void testGetTypeHierarchyAdapterOfTypeAdapter()
-			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testGetTypeHierarchyAdapterOfTypeAdapter() {
 		final TypeAdapter<?> typeAdapter = TypeAdapters.ofHierarchy(VoidTypeAdapter.class);
 		MatcherAssert.assertThat(typeAdapter, CoreMatchers.instanceOf(TypeAdapter.class));
 		MatcherAssert.assertThat(typeAdapter, canBeRegisteredAsTypeHierarchyAdapter());
 	}
 
 	@Test
-	public void testGetTypeHierarchyAdapterOfJsonSerializer()
-			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testGetTypeHierarchyAdapterOfJsonSerializer() {
 		final JsonSerializer<?> jsonSerializer = TypeAdapters.ofHierarchy(VoidJsonSerializer.class);
 		MatcherAssert.assertThat(jsonSerializer, CoreMatchers.instanceOf(JsonSerializer.class));
 		MatcherAssert.assertThat(jsonSerializer, canBeRegisteredAsTypeHierarchyAdapter());
 	}
 
 	@Test
-	public void testGetTypeHierarchyAdapterOfJsonDeserializer()
-			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public void testGetTypeHierarchyAdapterOfJsonDeserializer() {
 		final JsonDeserializer<?> jsonDeserializer = TypeAdapters.ofHierarchy(VoidJsonDeserializer.class);
 		MatcherAssert.assertThat(jsonDeserializer, CoreMatchers.instanceOf(JsonDeserializer.class));
 		MatcherAssert.assertThat(jsonDeserializer, canBeRegisteredAsTypeHierarchyAdapter());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetTypeHierarchyAdapterOfInstanceCreator()
-			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+	public void testGetTypeHierarchyAdapterOfInstanceCreator() {
 		TypeAdapters.ofHierarchy(VoidInstanceCreator.class);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetTypeHierarchyAdapterOfIllegalClass()
-			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+	public void testGetTypeHierarchyAdapterOfIllegalClass() {
 		TypeAdapters.ofHierarchy(Object.class);
 	}
 
@@ -188,48 +159,6 @@ public final class TypeAdaptersTest {
 			return null;
 		}
 
-	}
-
-	private static final class VoidTypeAdapterWithInvocationTargetException
-			extends TypeAdapter<Void> {
-
-		private VoidTypeAdapterWithInvocationTargetException() {
-			throw new AssertionError();
-		}
-
-		@Override
-		public void write(final JsonWriter out, final Void value) {
-			throw new AssertionError();
-		}
-
-		@Override
-		public Void read(final JsonReader in) {
-			throw new AssertionError();
-		}
-
-	}
-
-	private static final class VoidTypeAdapterWithNoSuchMethodException
-			extends TypeAdapter<Void> {
-
-		private VoidTypeAdapterWithNoSuchMethodException(@SuppressWarnings("unused") final Void value) {
-			throw new AssertionError();
-		}
-
-		@Override
-		public void write(final JsonWriter out, final Void value) {
-			throw new AssertionError();
-		}
-
-		@Override
-		public Void read(final JsonReader in) {
-			throw new AssertionError();
-		}
-
-	}
-
-	private abstract static class VoidTypeAdapterWithInstantiationException
-			extends TypeAdapter<Void> {
 	}
 
 	private static final class VoidJsonSerializer

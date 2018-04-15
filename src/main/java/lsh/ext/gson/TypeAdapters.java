@@ -1,7 +1,5 @@
 package lsh.ext.gson;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,6 +9,9 @@ import com.google.gson.InstanceCreator;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
+import com.google.gson.internal.ConstructorConstructor;
+import com.google.gson.internal.ObjectConstructor;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * Provides miscellaneous {@link TypeAdapter} utility methods.
@@ -27,6 +28,8 @@ public final class TypeAdapters {
 	private static final Iterable<Class<?>> supportedTypeHierarchyAdapterClasses = Collections.unmodifiableList(Arrays.asList(
 			TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class
 	));
+
+	private static final ConstructorConstructor constructorConstructor = new ConstructorConstructor(Collections.emptyMap());
 
 	private TypeAdapters() {
 	}
@@ -46,23 +49,19 @@ public final class TypeAdapters {
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
-	 * @throws IllegalArgumentException  If the given class instance does not meet its parameter expectations
-	 * @throws IllegalAccessException    A rethrown exception
-	 * @throws InstantiationException    A rethrown exception
-	 * @throws NoSuchMethodException     A rethrown exception
-	 * @throws InvocationTargetException A rethrown exception
-	 * @see #tryOfConcrete(Class)
+	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
 	 * @since 0-SNAPSHOT
 	 */
+	@SuppressWarnings("OverlyComplexBooleanExpression")
 	public static <T> T ofConcrete(@Nonnull final Class<?> clazz)
-			throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, IllegalArgumentException {
-		if ( TypeAdapter.class.isAssignableFrom(clazz)
-				|| JsonSerializer.class.isAssignableFrom(clazz)
-				|| JsonDeserializer.class.isAssignableFrom(clazz)
-				|| InstanceCreator.class.isAssignableFrom(clazz) ) {
-			return newInstance(clazz);
+			throws IllegalArgumentException {
+		if ( !TypeAdapter.class.isAssignableFrom(clazz)
+				&& !JsonSerializer.class.isAssignableFrom(clazz)
+				&& !JsonDeserializer.class.isAssignableFrom(clazz)
+				&& !InstanceCreator.class.isAssignableFrom(clazz) ) {
+			throw new IllegalArgumentException(clazz + " is not one of the supported classes: " + supportedTypeAdapterClasses);
 		}
-		throw new IllegalArgumentException(clazz + " is not one of the supported classes: " + supportedTypeAdapterClasses);
+		return newInstance(clazz);
 	}
 
 	/**
@@ -80,75 +79,23 @@ public final class TypeAdapters {
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
-	 * @throws IllegalArgumentException  If the given class instance does not meet its parameter expectations
-	 * @throws InvocationTargetException A rethrown exception
-	 * @throws NoSuchMethodException     A rethrown exception
-	 * @throws InstantiationException    A rethrown exception
-	 * @throws IllegalAccessException    A rethrown exception
-	 * @see #tryOfHierarchy(Class)
+	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
 	 * @since 0-SNAPSHOT
 	 */
-	public static <T> T ofHierarchy(final Class<?> clazz)
-			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		if ( TypeAdapter.class.isAssignableFrom(clazz)
-				|| JsonSerializer.class.isAssignableFrom(clazz)
-				|| JsonDeserializer.class.isAssignableFrom(clazz) ) {
-			return newInstance(clazz);
+	@SuppressWarnings("OverlyComplexBooleanExpression")
+	public static <T> T ofHierarchy(final Class<?> clazz) {
+		if ( !TypeAdapter.class.isAssignableFrom(clazz)
+				&& !JsonSerializer.class.isAssignableFrom(clazz)
+				&& !JsonDeserializer.class.isAssignableFrom(clazz) ) {
+			throw new IllegalArgumentException(clazz + " is not one of the supported classes: " + supportedTypeHierarchyAdapterClasses);
 		}
-		throw new IllegalArgumentException(clazz + " is not one of the supported classes: " + supportedTypeHierarchyAdapterClasses);
+		return newInstance(clazz);
 	}
 
-	/**
-	 * Checked exceptions-free alternative of {@link #ofConcrete(Class)}.
-	 *
-	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
-	 *              or {@link InstanceCreator}.
-	 * @param <T>   Type the resolved type adapter should be cast to.
-	 *
-	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
-	 *
-	 * @throws RuntimeException An exception to wrap any checked exception occuring in {@link #ofConcrete(Class)}
-	 * @see #ofConcrete(Class)
-	 * @since 0-SNAPSHOT
-	 */
-	public static <T> T tryOfConcrete(@Nonnull final Class<?> clazz)
-			throws RuntimeException {
-		try {
-			return ofConcrete(clazz);
-		} catch ( final IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex ) {
-			throw new RuntimeException(ex);
-		}
-	}
-
-	/**
-	 * Checked exceptions-free alternative of {@link #ofHierarchy(Class)}.
-	 *
-	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
-	 *              or {@link InstanceCreator}.
-	 * @param <T>   Type the resolved type adapter should be cast to.
-	 *
-	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
-	 *
-	 * @throws RuntimeException An exception to wrap any checked exception occuring in {@link #ofHierarchy(Class)}
-	 * @see #ofConcrete(Class)
-	 * @since 0-SNAPSHOT
-	 */
-	public static <T> T tryOfHierarchy(@Nonnull final Class<?> clazz)
-			throws RuntimeException {
-		try {
-			return ofConcrete(clazz);
-		} catch ( final IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex ) {
-			throw new RuntimeException(ex);
-		}
-	}
-
-	private static <T> T newInstance(final Class<?> clazz)
-			throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		final Constructor<?> defaultConstructor = clazz.getDeclaredConstructor();
-		defaultConstructor.setAccessible(true);
+	private static <T> T newInstance(final Class<?> clazz) {
 		@SuppressWarnings("unchecked")
-		final T instance = (T) defaultConstructor.newInstance();
-		return instance;
+		final ObjectConstructor<T> objectConstructor = (ObjectConstructor<T>) constructorConstructor.get(TypeToken.get(clazz));
+		return objectConstructor.construct();
 	}
 
 }
