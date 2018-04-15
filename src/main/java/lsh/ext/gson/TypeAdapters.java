@@ -52,16 +52,14 @@ public final class TypeAdapters {
 	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
 	 * @since 0-SNAPSHOT
 	 */
-	@SuppressWarnings("OverlyComplexBooleanExpression")
 	public static <T> T ofConcrete(@Nonnull final Class<?> clazz)
 			throws IllegalArgumentException {
-		if ( !TypeAdapter.class.isAssignableFrom(clazz)
-				&& !JsonSerializer.class.isAssignableFrom(clazz)
-				&& !JsonDeserializer.class.isAssignableFrom(clazz)
-				&& !InstanceCreator.class.isAssignableFrom(clazz) ) {
-			throw new IllegalArgumentException(clazz + " is not one of the supported classes: " + supportedTypeAdapterClasses);
+		for ( final Class<?> expectedClass : supportedTypeAdapterClasses ) {
+			if ( expectedClass.isAssignableFrom(clazz) ) {
+				return newInstance(clazz);
+			}
 		}
-		return newInstance(clazz);
+		throw new IllegalArgumentException(clazz + " is not one of the supported classes: " + supportedTypeAdapterClasses);
 	}
 
 	/**
@@ -82,14 +80,14 @@ public final class TypeAdapters {
 	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
 	 * @since 0-SNAPSHOT
 	 */
-	@SuppressWarnings("OverlyComplexBooleanExpression")
-	public static <T> T ofHierarchy(final Class<?> clazz) {
-		if ( !TypeAdapter.class.isAssignableFrom(clazz)
-				&& !JsonSerializer.class.isAssignableFrom(clazz)
-				&& !JsonDeserializer.class.isAssignableFrom(clazz) ) {
-			throw new IllegalArgumentException(clazz + " is not one of the supported classes: " + supportedTypeHierarchyAdapterClasses);
+	public static <T> T ofHierarchy(final Class<?> clazz)
+			throws IllegalArgumentException {
+		for ( final Class<?> expectedClass : supportedTypeHierarchyAdapterClasses ) {
+			if ( expectedClass.isAssignableFrom(clazz) ) {
+				return newInstance(clazz);
+			}
 		}
-		return newInstance(clazz);
+		throw new IllegalArgumentException(clazz + " is not one of the supported classes: " + supportedTypeHierarchyAdapterClasses);
 	}
 
 	private static <T> T newInstance(final Class<?> clazz) {
