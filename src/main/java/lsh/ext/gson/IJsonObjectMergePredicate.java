@@ -13,7 +13,6 @@ import com.google.gson.JsonObject;
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT
  */
-@FunctionalInterface
 public interface IJsonObjectMergePredicate {
 
 	/**
