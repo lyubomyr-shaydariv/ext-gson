@@ -35,14 +35,19 @@ public final class MultimapTypeAdapterFactory
 
 	@Override
 	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		return Multimap.class.isAssignableFrom(typeToken.getRawType());
+		final boolean isAssignable = Multimap.class.isAssignableFrom(typeToken.getRawType());
+		if ( !isAssignable ) {
+			return false;
+		}
+		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
+		final Type keyType = typeArguments[0][0];
+		return String.class.equals(keyType);
 	}
 
 	@Nonnull
 	@Override
 	protected TypeAdapter<Multimap<String, Object>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		final Type type = typeToken.getType();
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(type);
+		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final Type valueType = typeArguments[1][0];
 		return MultimapTypeAdapter.get(gson, valueType);
 	}
