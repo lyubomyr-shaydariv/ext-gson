@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.adapters;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonWriter;
