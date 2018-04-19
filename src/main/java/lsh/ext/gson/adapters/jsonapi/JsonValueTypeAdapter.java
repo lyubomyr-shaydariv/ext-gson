@@ -118,7 +118,8 @@ public final class JsonValueTypeAdapter
 	private static final class JsonNullTypeAdapter
 			extends TypeAdapter<JsonValue> {
 
-		private static final TypeAdapter<JsonValue> instance = new JsonNullTypeAdapter().nullSafe();
+		private static final TypeAdapter<JsonValue> instance = new JsonNullTypeAdapter()
+				.nullSafe();
 
 		@Override
 		@SuppressWarnings("resource")
@@ -139,7 +140,8 @@ public final class JsonValueTypeAdapter
 	private static final class JsonBooleanTypeAdapter
 			extends TypeAdapter<JsonValue> {
 
-		private static final TypeAdapter<JsonValue> instance = new JsonBooleanTypeAdapter().nullSafe();
+		private static final TypeAdapter<JsonValue> instance = new JsonBooleanTypeAdapter()
+				.nullSafe();
 
 		@Override
 		@SuppressWarnings("resource")
@@ -158,9 +160,8 @@ public final class JsonValueTypeAdapter
 			case STRING:
 			case NUMBER:
 			case NULL:
-				throw new IllegalArgumentException("Not a boolean: " + valueType);
 			default:
-				throw new AssertionError(jsonBoolean.getValueType());
+				throw new AssertionError(valueType);
 			}
 		}
 
@@ -175,7 +176,8 @@ public final class JsonValueTypeAdapter
 	private static final class JsonNumberTypeAdapter
 			extends TypeAdapter<JsonNumber> {
 
-		private static final TypeAdapter<JsonNumber> instance = new JsonNumberTypeAdapter().nullSafe();
+		private static final TypeAdapter<JsonNumber> instance = new JsonNumberTypeAdapter()
+				.nullSafe();
 
 		@Override
 		@SuppressWarnings("resource")
@@ -200,7 +202,8 @@ public final class JsonValueTypeAdapter
 	private static final class JsonStringTypeAdapter
 			extends TypeAdapter<JsonString> {
 
-		private static final TypeAdapter<JsonString> instance = new JsonStringTypeAdapter().nullSafe();
+		private static final TypeAdapter<JsonString> instance = new JsonStringTypeAdapter()
+				.nullSafe();
 
 		@Override
 		@SuppressWarnings("resource")
@@ -220,7 +223,8 @@ public final class JsonValueTypeAdapter
 	private static final class JsonObjectTypeAdapter
 			extends TypeAdapter<JsonObject> {
 
-		private static final TypeAdapter<JsonObject> instance = new JsonObjectTypeAdapter().nullSafe();
+		private static final TypeAdapter<JsonObject> instance = new JsonObjectTypeAdapter()
+				.nullSafe();
 
 		@Override
 		@SuppressWarnings("resource")
@@ -285,7 +289,8 @@ public final class JsonValueTypeAdapter
 	private static final class JsonArrayTypeAdapter
 			extends TypeAdapter<JsonArray> {
 
-		private static final TypeAdapter<JsonArray> instance = new JsonArrayTypeAdapter().nullSafe();
+		private static final TypeAdapter<JsonArray> instance = new JsonArrayTypeAdapter()
+				.nullSafe();
 
 		@Override
 		@SuppressWarnings("resource")
