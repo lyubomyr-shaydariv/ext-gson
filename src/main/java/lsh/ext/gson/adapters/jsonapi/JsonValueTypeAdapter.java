@@ -1,6 +1,8 @@
 package lsh.ext.gson.adapters.jsonapi;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Map;
 import javax.annotation.Nullable;
 import javax.json.Json;
@@ -18,12 +20,12 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.google.gson.stream.MalformedJsonException;
-import lsh.ext.gson.Numbers;
+import lsh.ext.gson.INumberParser;
+import lsh.ext.gson.NumberParsers;
 
 /**
  * <p>Represents a type adapter for {@code javax.json} JSON values. During the {@link #read(JsonReader)} execution, numeric values are parsed as {@code long}
- * or {@code double} values using the {@link Numbers#tryParseDouble(String)} method.</p>
+ * or {@code double} values using the {@link NumberParsers#forIntegerOrLongOrBigDecimal()} parser.</p>
  *
  * @author Lyubomyr Shaydariv
  * @see JsonValue
@@ -37,6 +39,8 @@ public final class JsonValueTypeAdapter
 		extends TypeAdapter<JsonValue> {
 
 	private static final TypeAdapter<JsonValue> instance = new JsonValueTypeAdapter();
+
+	private static final INumberParser<? extends Number> jsonNumberCompliantNumberParser = NumberParsers.forIntegerOrLongOrBigDecimal();
 
 	private JsonValueTypeAdapter() {
 	}
@@ -341,20 +345,32 @@ public final class JsonValueTypeAdapter
 
 	}
 
-	private static JsonNumber parseJsonNumber(final JsonProvider jsonProvider, final String rawValue)
-			throws MalformedJsonException {
+	private static JsonNumber parseJsonNumber(final JsonProvider jsonProvider, final String rawValue) {
 		@Nullable
-		final Number number = Numbers.tryParseLongOrDouble(rawValue);
+		final Number number = jsonNumberCompliantNumberParser.parseNumber(rawValue);
+		return toJsonNumber(jsonProvider, number);
+	}
+
+	private static JsonNumber toJsonNumber(final JsonProvider jsonProvider, final Number number) {
 		if ( number == null ) {
-			throw new MalformedJsonException("Cannot parse " + rawValue);
+			throw new NullPointerException();
+		}
+		if ( number instanceof Byte || number instanceof Short || number instanceof Integer ) {
+			return jsonProvider.createValue(number.intValue());
 		}
 		if ( number instanceof Long ) {
-			return jsonProvider.createValue((Long) number);
+			return jsonProvider.createValue(number.longValue());
 		}
-		if ( number instanceof Double ) {
-			return jsonProvider.createValue((Double) number);
+		if ( number instanceof Float || number instanceof Double ) {
+			return jsonProvider.createValue(number.doubleValue());
 		}
-		throw new AssertionError(number.getClass());
+		if ( number instanceof BigInteger ) {
+			return jsonProvider.createValue((BigInteger) number);
+		}
+		if ( number instanceof BigDecimal ) {
+			return jsonProvider.createValue((BigDecimal) number);
+		}
+		throw new IllegalArgumentException("Cannot adapt " + number.getClass());
 	}
 
 }
