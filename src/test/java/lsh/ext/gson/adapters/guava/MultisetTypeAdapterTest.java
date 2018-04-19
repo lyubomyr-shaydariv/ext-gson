@@ -32,6 +32,12 @@ public final class MultisetTypeAdapterTest
 
 	@Nonnull
 	@Override
+	protected Object finalizeValue(@Nonnull final Multiset<String> value) {
+		return value;
+	}
+
+	@Nonnull
+	@Override
 	protected String getValueJson() {
 		return "[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]";
 	}

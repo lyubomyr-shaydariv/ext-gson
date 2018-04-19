@@ -30,6 +30,12 @@ public final class EpochDateTypeAdapterTest
 
 	@Nonnull
 	@Override
+	protected Object finalizeValue(@Nonnull final Date value) {
+		return value;
+	}
+
+	@Nonnull
+	@Override
 	protected String getValueJson() {
 		return "1488929283";
 	}

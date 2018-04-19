@@ -24,6 +24,9 @@ public abstract class AbstractTypeAdapterTest<T> {
 	protected abstract T getValue();
 
 	@Nonnull
+	protected abstract Object finalizeValue(@Nonnull T value);
+
+	@Nonnull
 	protected abstract String getValueJson();
 
 	@Test
@@ -31,7 +34,7 @@ public abstract class AbstractTypeAdapterTest<T> {
 			throws IOException {
 		final TypeAdapter<T> unit = createUnit(gson);
 		MatcherAssert.assertThat(unit.fromJson("null"), CoreMatchers.is(nullValue()));
-		MatcherAssert.assertThat(unit.fromJson(getValueJson()), CoreMatchers.is(getValue()));
+		MatcherAssert.assertThat(finalizeValue(unit.fromJson(getValueJson())), CoreMatchers.is(finalizeValue(getValue())));
 	}
 
 	@Test

@@ -31,6 +31,12 @@ public final class OptionalTypeAdapterTest
 
 	@Nonnull
 	@Override
+	protected Object finalizeValue(@Nonnull final Optional<String> value) {
+		return value;
+	}
+
+	@Nonnull
+	@Override
 	protected String getValueJson() {
 		return "\"foo\"";
 	}

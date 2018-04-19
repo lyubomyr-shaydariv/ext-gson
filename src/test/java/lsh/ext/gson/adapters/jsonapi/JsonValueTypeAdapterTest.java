@@ -43,6 +43,12 @@ public final class JsonValueTypeAdapterTest
 
 	@Nonnull
 	@Override
+	protected Object finalizeValue(@Nonnull final JsonValue value) {
+		return value;
+	}
+
+	@Nonnull
+	@Override
 	protected String getValueJson() {
 		return "{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}";
 	}

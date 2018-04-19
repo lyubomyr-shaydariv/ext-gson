@@ -32,6 +32,12 @@ public final class MultimapTypeAdapterTest
 
 	@Nonnull
 	@Override
+	protected Object finalizeValue(@Nonnull final Multimap<String, String> value) {
+		return value;
+	}
+
+	@Nonnull
+	@Override
 	protected String getValueJson() {
 		return "{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}";
 	}
