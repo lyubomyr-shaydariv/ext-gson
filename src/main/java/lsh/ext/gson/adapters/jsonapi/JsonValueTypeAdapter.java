@@ -176,8 +176,14 @@ public final class JsonValueTypeAdapter
 	private static final class JsonNumberTypeAdapter
 			extends TypeAdapter<JsonNumber> {
 
-		private static final TypeAdapter<JsonNumber> instance = new JsonNumberTypeAdapter()
+		private static final TypeAdapter<JsonNumber> instance = new JsonNumberTypeAdapter(JsonProvider.provider())
 				.nullSafe();
+
+		private final JsonProvider jsonProvider;
+
+		private JsonNumberTypeAdapter(final JsonProvider jsonProvider) {
+			this.jsonProvider = jsonProvider;
+		}
 
 		@Override
 		@SuppressWarnings("resource")
@@ -198,7 +204,7 @@ public final class JsonValueTypeAdapter
 		public JsonNumber read(final JsonReader in)
 				throws IOException {
 			final String rawValue = in.nextString();
-			return parseJsonNumber(JsonProvider.provider(), rawValue);
+			return parseJsonNumber(jsonProvider, rawValue);
 		}
 
 	}
@@ -206,8 +212,14 @@ public final class JsonValueTypeAdapter
 	private static final class JsonStringTypeAdapter
 			extends TypeAdapter<JsonString> {
 
-		private static final TypeAdapter<JsonString> instance = new JsonStringTypeAdapter()
+		private static final TypeAdapter<JsonString> instance = new JsonStringTypeAdapter(JsonProvider.provider())
 				.nullSafe();
+
+		private final JsonProvider jsonProvider;
+
+		private JsonStringTypeAdapter(final JsonProvider jsonProvider) {
+			this.jsonProvider = jsonProvider;
+		}
 
 		@Override
 		@SuppressWarnings("resource")
@@ -219,7 +231,7 @@ public final class JsonValueTypeAdapter
 		@Override
 		public JsonString read(final JsonReader in)
 				throws IOException {
-			return JsonProvider.provider().createValue(in.nextString());
+			return jsonProvider.createValue(in.nextString());
 		}
 
 	}
@@ -267,8 +279,7 @@ public final class JsonValueTypeAdapter
 					jsonObjectBuilder.add(key, in.nextString());
 					break;
 				case NUMBER:
-					final String rawValue = in.nextString();
-					jsonObjectBuilder.add(key, parseJsonNumber(JsonProvider.provider(), rawValue));
+					addToObject(jsonObjectBuilder, key, jsonNumberCompliantNumberParser.parseNumber(in.nextString()));
 					break;
 				case BOOLEAN:
 					jsonObjectBuilder.add(key, in.nextBoolean());
@@ -331,8 +342,7 @@ public final class JsonValueTypeAdapter
 					jsonArrayBuilder.add(in.nextString());
 					break;
 				case NUMBER:
-					final String rawValue = in.nextString();
-					jsonArrayBuilder.add(parseJsonNumber(JsonProvider.provider(), rawValue));
+					addToArray(jsonArrayBuilder, jsonNumberCompliantNumberParser.parseNumber(in.nextString()));
 					break;
 				case BOOLEAN:
 					jsonArrayBuilder.add(in.nextBoolean());
@@ -360,7 +370,8 @@ public final class JsonValueTypeAdapter
 		return toJsonNumber(jsonProvider, number);
 	}
 
-	private static JsonNumber toJsonNumber(final JsonProvider jsonProvider, final Number number) {
+	private static JsonNumber toJsonNumber(final JsonProvider jsonProvider, final Number number)
+			throws IllegalArgumentException {
 		if ( number == null ) {
 			throw new NullPointerException();
 		}
@@ -380,6 +391,44 @@ public final class JsonValueTypeAdapter
 			return jsonProvider.createValue((BigDecimal) number);
 		}
 		throw new IllegalArgumentException("Cannot adapt " + number.getClass());
+	}
+
+	private static void addToObject(final JsonObjectBuilder jsonObjectBuilder, final String key, final Number number)
+			throws IllegalArgumentException {
+		if ( number == null ) {
+			throw new NullPointerException();
+		} else if ( number instanceof Byte || number instanceof Short || number instanceof Integer ) {
+			jsonObjectBuilder.add(key, number.intValue());
+		} else if ( number instanceof Long ) {
+			jsonObjectBuilder.add(key, number.longValue());
+		} else if ( number instanceof Float || number instanceof Double ) {
+			jsonObjectBuilder.add(key, number.doubleValue());
+		} else if ( number instanceof BigInteger ) {
+			jsonObjectBuilder.add(key, (BigInteger) number);
+		} else if ( number instanceof BigDecimal ) {
+			jsonObjectBuilder.add(key, (BigDecimal) number);
+		} else {
+			throw new IllegalArgumentException("Cannot adapt " + number.getClass());
+		}
+	}
+
+	private static void addToArray(final JsonArrayBuilder jsonArrayBuilder, final Number number)
+			throws IllegalArgumentException {
+		if ( number == null ) {
+			throw new NullPointerException();
+		} else if ( number instanceof Byte || number instanceof Short || number instanceof Integer ) {
+			jsonArrayBuilder.add(number.intValue());
+		} else if ( number instanceof Long ) {
+			jsonArrayBuilder.add(number.longValue());
+		} else if ( number instanceof Float || number instanceof Double ) {
+			jsonArrayBuilder.add(number.doubleValue());
+		} else if ( number instanceof BigInteger ) {
+			jsonArrayBuilder.add((BigInteger) number);
+		} else if ( number instanceof BigDecimal ) {
+			jsonArrayBuilder.add((BigDecimal) number);
+		} else {
+			throw new IllegalArgumentException("Cannot adapt " + number.getClass());
+		}
 	}
 
 }
