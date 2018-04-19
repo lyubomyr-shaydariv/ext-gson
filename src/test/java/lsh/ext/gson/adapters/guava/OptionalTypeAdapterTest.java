@@ -1,33 +1,46 @@
 package lsh.ext.gson.adapters.guava;
 
-import java.io.IOException;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.adapters.AbstractOptionalTypeAdapterTest;
 
-public final class OptionalTypeAdapterTest {
+public final class OptionalTypeAdapterTest
+		extends AbstractOptionalTypeAdapterTest<Optional<String>, String> {
 
-	private static final Gson gson = new Gson();
+	private static final TypeToken<String> stringTypeToken = TypeToken.get(String.class);
 
-	private static final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(String.class);
-
-	@Test
-	public void testRead()
-			throws IOException {
-		final TypeAdapter<Optional<String>> unit = OptionalTypeAdapter.get(stringTypeAdapter);
-		MatcherAssert.assertThat(unit.fromJson("null"), CoreMatchers.is(Optional.absent()));
-		MatcherAssert.assertThat(unit.fromJson("\"foo\""), CoreMatchers.is(Optional.of("foo")));
+	@Nonnull
+	@Override
+	protected TypeToken<String> getTypeToken() {
+		return stringTypeToken;
 	}
 
-	@Test
-	public void testWrite() {
-		final TypeAdapter<Optional<String>> unit = OptionalTypeAdapter.get(stringTypeAdapter);
-		MatcherAssert.assertThat(unit.toJson(Optional.absent()), CoreMatchers.is("null"));
-		MatcherAssert.assertThat(unit.toJson(Optional.of("foo")), CoreMatchers.is("\"foo\""));
+	@Nonnull
+	@Override
+	protected TypeAdapter<Optional<String>> createUnit(@Nonnull final TypeAdapter<String> valueTypeAdapter) {
+		return OptionalTypeAdapter.get(valueTypeAdapter);
+	}
+
+	@Nonnull
+	@Override
+	protected Optional<String> wrap(@Nullable final String value) {
+		return Optional.fromNullable(value);
+	}
+
+	@Nonnull
+	@Override
+	protected String getSingleValue() {
+		return "foo";
+	}
+
+	@Nonnull
+	@Override
+	protected String getSingleValueJson() {
+		return "\"foo\"";
 	}
 
 }
