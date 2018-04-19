@@ -1,12 +1,11 @@
 package lsh.ext.gson.adapters.guava;
 
-import java.io.IOException;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import lsh.ext.gson.adapters.AbstractOptionalTypeAdapter;
 
 /**
  * Represents a type adapter for {@link Optional} from Google Guava.
@@ -16,12 +15,10 @@ import com.google.gson.stream.JsonWriter;
  * @since 0-SNAPSHOT
  */
 public final class OptionalTypeAdapter<T>
-		extends TypeAdapter<Optional<T>> {
-
-	private final TypeAdapter<T> valueTypeAdapter;
+		extends AbstractOptionalTypeAdapter<Optional<T>, T> {
 
 	private OptionalTypeAdapter(final TypeAdapter<T> valueTypeAdapter) {
-		this.valueTypeAdapter = valueTypeAdapter;
+		super(valueTypeAdapter);
 	}
 
 	/**
@@ -38,20 +35,15 @@ public final class OptionalTypeAdapter<T>
 		return new OptionalTypeAdapter<>(valueTypeAdapter);
 	}
 
+	@Nullable
 	@Override
-	@SuppressWarnings("resource")
-	public void write(final JsonWriter out, final Optional<T> optional)
-			throws IOException {
-		@Nullable
-		final T value = optional.orNull();
-		valueTypeAdapter.write(out, value);
+	protected T fromOptional(@Nonnull final Optional<T> optional) {
+		return optional.orNull();
 	}
 
 	@Override
-	public Optional<T> read(final JsonReader in)
-			throws IOException {
-		@Nullable
-		final T value = valueTypeAdapter.read(in);
+	@Nonnull
+	protected Optional<T> toOptional(@Nullable final T value) {
 		return Optional.fromNullable(value);
 	}
 
