@@ -32,7 +32,7 @@ public final class OptionalTypeAdapterFactory<T>
 
 	@Override
 	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		return Optional.class.isAssignableFrom(typeToken.getRawType());
+		return typeToken.getRawType() == Optional.class;
 	}
 
 	@Nonnull
