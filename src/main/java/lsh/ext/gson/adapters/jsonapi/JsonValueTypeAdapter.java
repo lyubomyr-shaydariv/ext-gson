@@ -134,8 +134,7 @@ public final class JsonValueTypeAdapter
 	private static final class JsonNullTypeAdapter
 			extends TypeAdapter<JsonValue> {
 
-		private static final TypeAdapter<JsonValue> instance = new JsonNullTypeAdapter()
-				.nullSafe();
+		private static final TypeAdapter<JsonValue> instance = new JsonNullTypeAdapter();
 
 		@Override
 		@SuppressWarnings("resource")
