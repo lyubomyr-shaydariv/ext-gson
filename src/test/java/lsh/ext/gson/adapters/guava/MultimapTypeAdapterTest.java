@@ -1,4 +1,4 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.adapters.guava;
 
 import java.io.IOException;
 import java.io.Reader;
