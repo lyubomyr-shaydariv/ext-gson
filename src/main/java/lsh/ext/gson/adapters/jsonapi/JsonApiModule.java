@@ -1,4 +1,4 @@
-package lsh.ext.gson.adapters.java8;
+package lsh.ext.gson.adapters.jsonapi;
 
 import javax.annotation.Nonnull;
 
@@ -7,17 +7,17 @@ import com.google.gson.TypeAdapterFactory;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 
-public final class Java8Module
+public final class JsonApiModule
 		extends AbstractModule {
 
-	private static final IModule instance = new Java8Module();
+	private static final IModule instance = new JsonApiModule();
 
 	private static final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
-			.add(OptionalTypeAdapterFactory.get())
+			.add(JsonValueTypeAdapterFactory.get())
 			.build();
 
-	private Java8Module() {
-		super("Java 8");
+	private JsonApiModule() {
+		super("Java JSON API");
 	}
 
 	public static IModule get() {
