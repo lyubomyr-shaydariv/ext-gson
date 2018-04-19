@@ -38,11 +38,20 @@ import lsh.ext.gson.NumberParsers;
 public final class JsonValueTypeAdapter
 		extends TypeAdapter<JsonValue> {
 
-	private static final TypeAdapter<JsonValue> instance = new JsonValueTypeAdapter();
+	private static final TypeAdapter<JsonValue> instance = get(JsonProvider.provider());
 
 	private static final INumberParser<? extends Number> jsonNumberCompliantNumberParser = NumberParsers.forIntegerOrLongOrBigDecimal();
 
-	private JsonValueTypeAdapter() {
+	private final TypeAdapter<JsonValue> jsonNullTypeAdapter = JsonNullTypeAdapter.instance;
+	private final TypeAdapter<JsonValue> jsonBooleanTypeAdapter = JsonBooleanTypeAdapter.instance;
+	private final TypeAdapter<JsonNumber> jsonNumberTypeAdapter;
+	private final TypeAdapter<JsonString> jsonStringTypeAdapter;
+	private final TypeAdapter<JsonObject> jsonObjectTypeAdapter = new JsonObjectTypeAdapter().nullSafe();
+	private final TypeAdapter<JsonArray> jsonArrayTypeAdapter = new JsonArrayTypeAdapter().nullSafe();
+
+	private JsonValueTypeAdapter(final TypeAdapter<JsonNumber> jsonNumberTypeAdapter, final TypeAdapter<JsonString> jsonStringTypeAdapter) {
+		this.jsonNumberTypeAdapter = jsonNumberTypeAdapter;
+		this.jsonStringTypeAdapter = jsonStringTypeAdapter;
 	}
 
 	/**
@@ -54,31 +63,38 @@ public final class JsonValueTypeAdapter
 		return instance;
 	}
 
+	/**
+	 * @return An instance of {@link JsonValueTypeAdapter}.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static TypeAdapter<JsonValue> get(final JsonProvider jsonProvider) {
+		return new JsonValueTypeAdapter(JsonNumberTypeAdapter.get(jsonProvider), JsonStringTypeAdapter.get(jsonProvider));
+	}
+
 	@Override
 	public void write(final JsonWriter out, final JsonValue jsonValue)
 			throws IOException {
 		final ValueType valueType = jsonValue.getValueType();
 		switch ( valueType ) {
 		case ARRAY:
-			JsonArrayTypeAdapter.instance.write(out, (JsonArray) jsonValue);
+			jsonArrayTypeAdapter.write(out, (JsonArray) jsonValue);
 			break;
 		case OBJECT:
-			JsonObjectTypeAdapter.instance.write(out, (JsonObject) jsonValue);
+			jsonObjectTypeAdapter.write(out, (JsonObject) jsonValue);
 			break;
 		case STRING:
-			JsonStringTypeAdapter.instance.write(out, (JsonString) jsonValue);
+			jsonStringTypeAdapter.write(out, (JsonString) jsonValue);
 			break;
 		case NUMBER:
-			JsonNumberTypeAdapter.instance.write(out, (JsonNumber) jsonValue);
+			jsonNumberTypeAdapter.write(out, (JsonNumber) jsonValue);
 			break;
 		case TRUE:
-			JsonBooleanTypeAdapter.instance.write(out, jsonValue);
-			break;
 		case FALSE:
-			JsonBooleanTypeAdapter.instance.write(out, jsonValue);
+			jsonBooleanTypeAdapter.write(out, jsonValue);
 			break;
 		case NULL:
-			JsonNullTypeAdapter.instance.write(out, jsonValue);
+			jsonNullTypeAdapter.write(out, jsonValue);
 			break;
 		default:
 			throw new AssertionError(valueType);
@@ -91,23 +107,23 @@ public final class JsonValueTypeAdapter
 		final JsonToken jsonToken = in.peek();
 		switch ( jsonToken ) {
 		case BEGIN_ARRAY:
-			return JsonArrayTypeAdapter.instance.read(in);
+			return jsonArrayTypeAdapter.read(in);
 		case END_ARRAY:
 			throw new AssertionError("Must never happen due to delegation to the array type adapter");
 		case BEGIN_OBJECT:
-			return JsonObjectTypeAdapter.instance.read(in);
+			return jsonObjectTypeAdapter.read(in);
 		case END_OBJECT:
 			throw new AssertionError("Must never happen due to delegation to the object type adapter");
 		case NAME:
 			throw new AssertionError("Must never happen");
 		case STRING:
-			return JsonStringTypeAdapter.instance.read(in);
+			return jsonStringTypeAdapter.read(in);
 		case NUMBER:
-			return JsonNumberTypeAdapter.instance.read(in);
+			return jsonNumberTypeAdapter.read(in);
 		case BOOLEAN:
-			return JsonBooleanTypeAdapter.instance.read(in);
+			return jsonBooleanTypeAdapter.read(in);
 		case NULL:
-			return JsonNullTypeAdapter.instance.read(in);
+			return jsonNullTypeAdapter.read(in);
 		case END_DOCUMENT:
 			throw new AssertionError("Must never happen");
 		default:
@@ -176,13 +192,15 @@ public final class JsonValueTypeAdapter
 	private static final class JsonNumberTypeAdapter
 			extends TypeAdapter<JsonNumber> {
 
-		private static final TypeAdapter<JsonNumber> instance = new JsonNumberTypeAdapter(JsonProvider.provider())
-				.nullSafe();
-
 		private final JsonProvider jsonProvider;
 
 		private JsonNumberTypeAdapter(final JsonProvider jsonProvider) {
 			this.jsonProvider = jsonProvider;
+		}
+
+		private static TypeAdapter<JsonNumber> get(final JsonProvider jsonProvider) {
+			return new JsonNumberTypeAdapter(jsonProvider)
+					.nullSafe();
 		}
 
 		@Override
@@ -212,13 +230,15 @@ public final class JsonValueTypeAdapter
 	private static final class JsonStringTypeAdapter
 			extends TypeAdapter<JsonString> {
 
-		private static final TypeAdapter<JsonString> instance = new JsonStringTypeAdapter(JsonProvider.provider())
-				.nullSafe();
-
 		private final JsonProvider jsonProvider;
 
 		private JsonStringTypeAdapter(final JsonProvider jsonProvider) {
 			this.jsonProvider = jsonProvider;
+		}
+
+		private static TypeAdapter<JsonString> get(final JsonProvider jsonProvider) {
+			return new JsonStringTypeAdapter(jsonProvider)
+					.nullSafe();
 		}
 
 		@Override
@@ -236,11 +256,11 @@ public final class JsonValueTypeAdapter
 
 	}
 
-	private static final class JsonObjectTypeAdapter
+	private final class JsonObjectTypeAdapter
 			extends TypeAdapter<JsonObject> {
 
-		private static final TypeAdapter<JsonObject> instance = new JsonObjectTypeAdapter()
-				.nullSafe();
+		private JsonObjectTypeAdapter() {
+		}
 
 		@Override
 		@SuppressWarnings("resource")
@@ -249,7 +269,7 @@ public final class JsonValueTypeAdapter
 			out.beginObject();
 			for ( final Map.Entry<String, JsonValue> e : jsonObject.entrySet() ) {
 				out.name(e.getKey());
-				JsonValueTypeAdapter.instance.write(out, e.getValue());
+				JsonValueTypeAdapter.this.write(out, e.getValue());
 			}
 			out.endObject();
 		}
@@ -264,12 +284,12 @@ public final class JsonValueTypeAdapter
 				final JsonToken token = in.peek();
 				switch ( token ) {
 				case BEGIN_ARRAY:
-					jsonObjectBuilder.add(key, JsonValueTypeAdapter.instance.read(in));
+					jsonObjectBuilder.add(key, JsonValueTypeAdapter.this.read(in));
 					break;
 				case END_ARRAY:
 					throw new AssertionError("Must never happen due to delegation to the array type adapter");
 				case BEGIN_OBJECT:
-					jsonObjectBuilder.add(key, JsonValueTypeAdapter.instance.read(in));
+					jsonObjectBuilder.add(key, JsonValueTypeAdapter.this.read(in));
 					break;
 				case END_OBJECT:
 					throw new AssertionError("Must never happen due to delegation to the object type adapter");
@@ -301,11 +321,11 @@ public final class JsonValueTypeAdapter
 
 	}
 
-	private static final class JsonArrayTypeAdapter
+	private final class JsonArrayTypeAdapter
 			extends TypeAdapter<JsonArray> {
 
-		private static final TypeAdapter<JsonArray> instance = new JsonArrayTypeAdapter()
-				.nullSafe();
+		private JsonArrayTypeAdapter() {
+		}
 
 		@Override
 		@SuppressWarnings("resource")
@@ -313,7 +333,7 @@ public final class JsonValueTypeAdapter
 				throws IOException {
 			out.beginArray();
 			for ( final JsonValue jsonValue : jsonArray ) {
-				JsonValueTypeAdapter.instance.write(out, jsonValue);
+				JsonValueTypeAdapter.this.write(out, jsonValue);
 			}
 			out.endArray();
 		}
@@ -327,12 +347,12 @@ public final class JsonValueTypeAdapter
 				final JsonToken token = in.peek();
 				switch ( token ) {
 				case BEGIN_ARRAY:
-					jsonArrayBuilder.add(JsonValueTypeAdapter.instance.read(in));
+					jsonArrayBuilder.add(JsonValueTypeAdapter.this.read(in));
 					break;
 				case END_ARRAY:
 					throw new AssertionError("Must never happen due to delegation to the array type adapter");
 				case BEGIN_OBJECT:
-					jsonArrayBuilder.add(JsonValueTypeAdapter.instance.read(in));
+					jsonArrayBuilder.add(JsonValueTypeAdapter.this.read(in));
 					break;
 				case END_OBJECT:
 					throw new AssertionError("Must never happen due to delegation to the object type adapter");
