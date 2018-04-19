@@ -19,7 +19,7 @@ import lsh.ext.gson.ParameterizedTypes;
 public final class AutoCloseableIteratorTypeAdapterFactory
 		implements TypeAdapterFactory {
 
-	private static final TypeAdapterFactory iteratorTypeAdapterFactory = new AutoCloseableIteratorTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new AutoCloseableIteratorTypeAdapterFactory();
 
 	private AutoCloseableIteratorTypeAdapterFactory() {
 	}
@@ -28,7 +28,7 @@ public final class AutoCloseableIteratorTypeAdapterFactory
 	 * @return An instance of {@link AutoCloseableIteratorTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory get() {
-		return iteratorTypeAdapterFactory;
+		return instance;
 	}
 
 	@Override

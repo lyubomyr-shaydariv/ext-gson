@@ -71,8 +71,8 @@ import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 public final class JsonPathTypeAdapterFactory
 		implements TypeAdapterFactory {
 
-	private static final TypeAdapterFactory jsonPathTypeAdapterFactory = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
-	private static final TypeAdapterFactory jsonPathTypeAdapterWithGlobalDefaults = new JsonPathTypeAdapterFactory(gson -> Configuration.defaultConfiguration());
+	private static final TypeAdapterFactory instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
+	private static final TypeAdapterFactory instanceWithGlobalDefaults = new JsonPathTypeAdapterFactory(gson -> Configuration.defaultConfiguration());
 
 	private final Function<? super Gson, ? extends Configuration> configurationProvider;
 
@@ -92,7 +92,7 @@ public final class JsonPathTypeAdapterFactory
 	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory get() {
-		return jsonPathTypeAdapterFactory;
+		return instance;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public final class JsonPathTypeAdapterFactory
 	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory getJsonPathTypeAdapterWithGlobalDefaults() {
-		return jsonPathTypeAdapterWithGlobalDefaults;
+		return instanceWithGlobalDefaults;
 	}
 
 	/**

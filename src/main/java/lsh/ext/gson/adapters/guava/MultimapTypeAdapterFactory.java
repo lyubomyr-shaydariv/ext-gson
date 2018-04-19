@@ -21,7 +21,7 @@ import lsh.ext.gson.ParameterizedTypes;
 public final class MultimapTypeAdapterFactory<V>
 		extends AbstractBoundTypeAdapterFactory<Multimap<String, V>> {
 
-	private static final TypeAdapterFactory multimapTypeAdapterFactory = new MultimapTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new MultimapTypeAdapterFactory();
 
 	private MultimapTypeAdapterFactory() {
 	}
@@ -30,7 +30,7 @@ public final class MultimapTypeAdapterFactory<V>
 	 * @return An instance of {@link MultimapTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory get() {
-		return multimapTypeAdapterFactory;
+		return instance;
 	}
 
 	@Override

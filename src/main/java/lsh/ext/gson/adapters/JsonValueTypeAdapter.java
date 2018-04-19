@@ -35,7 +35,7 @@ import lsh.ext.gson.Numbers;
 public final class JsonValueTypeAdapter
 		extends TypeAdapter<JsonValue> {
 
-	private static final TypeAdapter<JsonValue> jsonValueTypeAdapter = new JsonValueTypeAdapter();
+	private static final TypeAdapter<JsonValue> instance = new JsonValueTypeAdapter();
 
 	private JsonValueTypeAdapter() {
 	}
@@ -46,7 +46,7 @@ public final class JsonValueTypeAdapter
 	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapter<JsonValue> get() {
-		return jsonValueTypeAdapter;
+		return instance;
 	}
 
 	@Override
@@ -244,7 +244,7 @@ public final class JsonValueTypeAdapter
 			out.beginObject();
 			for ( final Entry<String, JsonValue> e : jsonObject.entrySet() ) {
 				out.name(e.getKey());
-				jsonValueTypeAdapter.write(out, e.getValue());
+				JsonValueTypeAdapter.instance.write(out, e.getValue());
 			}
 			out.endObject();
 		}
@@ -259,12 +259,12 @@ public final class JsonValueTypeAdapter
 				final JsonToken token = in.peek();
 				switch ( token ) {
 				case BEGIN_ARRAY:
-					jsonObjectBuilder.add(key, jsonValueTypeAdapter.read(in));
+					jsonObjectBuilder.add(key, JsonValueTypeAdapter.instance.read(in));
 					break;
 				case END_ARRAY:
 					throw new AssertionError("Must never happen due to delegation to the array type adapter");
 				case BEGIN_OBJECT:
-					jsonObjectBuilder.add(key, jsonValueTypeAdapter.read(in));
+					jsonObjectBuilder.add(key, JsonValueTypeAdapter.instance.read(in));
 					break;
 				case END_OBJECT:
 					throw new AssertionError("Must never happen due to delegation to the object type adapter");
@@ -319,7 +319,7 @@ public final class JsonValueTypeAdapter
 				throws IOException {
 			out.beginArray();
 			for ( final JsonValue jsonValue : jsonArray ) {
-				jsonValueTypeAdapter.write(out, jsonValue);
+				JsonValueTypeAdapter.instance.write(out, jsonValue);
 			}
 			out.endArray();
 		}
@@ -333,12 +333,12 @@ public final class JsonValueTypeAdapter
 				final JsonToken token = in.peek();
 				switch ( token ) {
 				case BEGIN_ARRAY:
-					jsonArrayBuilder.add(jsonValueTypeAdapter.read(in));
+					jsonArrayBuilder.add(JsonValueTypeAdapter.instance.read(in));
 					break;
 				case END_ARRAY:
 					throw new AssertionError("Must never happen due to delegation to the array type adapter");
 				case BEGIN_OBJECT:
-					jsonArrayBuilder.add(jsonValueTypeAdapter.read(in));
+					jsonArrayBuilder.add(JsonValueTypeAdapter.instance.read(in));
 					break;
 				case END_OBJECT:
 					throw new AssertionError("Must never happen due to delegation to the object type adapter");

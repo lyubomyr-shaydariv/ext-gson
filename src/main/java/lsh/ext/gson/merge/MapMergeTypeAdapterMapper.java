@@ -26,8 +26,8 @@ import com.google.gson.reflect.TypeToken;
 public final class MapMergeTypeAdapterMapper
 		implements IMergeTypeAdapterMapper {
 
-	private static final IMergeTypeAdapterMapper mapMergeTypeAdapterMapper = new MapMergeTypeAdapterMapper(false);
-	private static final IMergeTypeAdapterMapper mapMergeTypeAdapterMapperComplex = new MapMergeTypeAdapterMapper(true);
+	private static final IMergeTypeAdapterMapper instance = new MapMergeTypeAdapterMapper(false);
+	private static final IMergeTypeAdapterMapper instanceComplex = new MapMergeTypeAdapterMapper(true);
 
 	private final boolean complexMapKeySerialization;
 
@@ -52,7 +52,7 @@ public final class MapMergeTypeAdapterMapper
 	 * @since 0-SNAPSHOT
 	 */
 	public static IMergeTypeAdapterMapper get(final boolean complexMapKeySerialization) {
-		return !complexMapKeySerialization ? mapMergeTypeAdapterMapper : mapMergeTypeAdapterMapperComplex;
+		return !complexMapKeySerialization ? instance : instanceComplex;
 	}
 
 	@Nullable

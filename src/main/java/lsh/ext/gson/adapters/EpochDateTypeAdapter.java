@@ -18,7 +18,7 @@ import com.google.gson.stream.JsonWriter;
 public final class EpochDateTypeAdapter
 		extends TypeAdapter<Date> {
 
-	private static final TypeAdapter<Date> epochDateTypeAdapter = new EpochDateTypeAdapter();
+	private static final TypeAdapter<Date> instance = new EpochDateTypeAdapter();
 
 	private EpochDateTypeAdapter() {
 	}
@@ -29,7 +29,7 @@ public final class EpochDateTypeAdapter
 	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapter<Date> get() {
-		return epochDateTypeAdapter;
+		return instance;
 	}
 
 	@Override
