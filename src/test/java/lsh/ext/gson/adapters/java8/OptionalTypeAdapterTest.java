@@ -4,42 +4,34 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.adapters.AbstractOptionalTypeAdapterTest;
+import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 
 public final class OptionalTypeAdapterTest
-		extends AbstractOptionalTypeAdapterTest<Optional<String>, String> {
-
-	private static final TypeToken<String> stringTypeToken = TypeToken.get(String.class);
+		extends AbstractTypeAdapterTest<Optional<String>> {
 
 	@Nonnull
 	@Override
-	protected TypeToken<String> getTypeToken() {
-		return stringTypeToken;
+	protected TypeAdapter<Optional<String>> createUnit(@Nonnull final Gson gson) {
+		return OptionalTypeAdapter.get(gson.getAdapter(String.class));
+	}
+
+	@Nullable
+	@Override
+	protected Optional<String> nullValue() {
+		return Optional.empty();
 	}
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<Optional<String>> createUnit(@Nonnull final TypeAdapter<String> valueTypeAdapter) {
-		return OptionalTypeAdapter.get(valueTypeAdapter);
+	protected Optional<String> getValue() {
+		return Optional.of("foo");
 	}
 
 	@Nonnull
 	@Override
-	protected Optional<String> wrap(@Nullable final String value) {
-		return Optional.ofNullable(value);
-	}
-
-	@Nonnull
-	@Override
-	protected String getSingleValue() {
-		return "foo";
-	}
-
-	@Nonnull
-	@Override
-	protected String getSingleValueJson() {
+	protected String getValueJson() {
 		return "\"foo\"";
 	}
 

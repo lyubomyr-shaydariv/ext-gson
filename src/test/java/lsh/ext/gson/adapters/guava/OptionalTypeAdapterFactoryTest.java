@@ -3,39 +3,21 @@ package lsh.ext.gson.adapters.guava;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Optional;
-import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.adapters.AbstractOptionalTypeAdapterFactoryTest;
+import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
 
 public final class OptionalTypeAdapterFactoryTest
-		extends AbstractOptionalTypeAdapterFactoryTest<Optional<String>, String> {
-
-	private static final TypeToken<String> stringTypeToken = TypeToken.get(String.class);
-
-	private static final TypeToken<Optional<String>> optionalStringTypeToken = new TypeToken<Optional<String>>() {
-	};
-
-	private static final TypeToken<? extends TypeAdapter<Optional<String>>> optionalStringTypeAdapterToken = new TypeToken<OptionalTypeAdapter<String>>() {
-	};
+		extends AbstractTypeAdapterFactoryTest<Optional<String>> {
 
 	@Nonnull
 	@Override
-	protected TypeToken<String> getValueTypeToken() {
-		return stringTypeToken;
+	protected TypeToken<Optional<String>> getTypeToken() {
+		return new TypeToken<Optional<String>>() {
+		};
 	}
 
 	@Nonnull
-	@Override
-	protected TypeToken<Optional<String>> getOptionalTypeToken() {
-		return optionalStringTypeToken;
-	}
-
-	@Override
-	protected TypeToken<? extends TypeAdapter<Optional<String>>> getOptionalTypeAdapterTypeToken() {
-		return optionalStringTypeAdapterToken;
-	}
-
 	@Override
 	protected TypeAdapterFactory createUnit() {
 		return OptionalTypeAdapterFactory.get();
