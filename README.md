@@ -46,6 +46,7 @@ Currently `ext-gson` supports:
 
 * Specialized type adapters and factories:
   * `OptionalTypeAdapter` and `OptionalTypeAdapterFactory` - type adapter to support `com.google.common.base.Optional`;
+  * `MultisetTypeAdapter` and `MultisetTypeAdapterFactory` - type adapter to support `com.google.common.collect.Multiset`.
   * `MultimapTypeAdapter` and `MultimapTypeAdapterFactory` - type adapter to support `com.google.common.collect.Multimap`.
 
 ### Development
