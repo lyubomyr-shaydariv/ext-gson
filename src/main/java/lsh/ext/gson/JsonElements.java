@@ -9,10 +9,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.TypeAdapter;
 
 /**
- * Provides miscellaneous {@link TypeAdapter} utility methods.
+ * Provides miscellaneous {@link JsonElement} utility methods.
  *
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT

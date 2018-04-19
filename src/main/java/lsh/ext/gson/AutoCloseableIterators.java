@@ -3,15 +3,12 @@ package lsh.ext.gson;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
-import lsh.ext.gson.adapters.AutoCloseableIteratorTypeAdapter;
-import lsh.ext.gson.adapters.AutoCloseableIteratorTypeAdapterFactory;
-
 /**
  * Provides closeable iterators utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @see AutoCloseableIteratorTypeAdapter
- * @see AutoCloseableIteratorTypeAdapterFactory
+ * @see lsh.ext.gson.adapters.AutoCloseableIteratorTypeAdapter
+ * @see lsh.ext.gson.adapters.AutoCloseableIteratorTypeAdapterFactory
  * @since 0-SNAPSHOT
  */
 public final class AutoCloseableIterators {
