@@ -42,12 +42,9 @@ public final class OptionalTypeAdapter<T>
 	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final Optional<T> optional)
 			throws IOException {
-		if ( !optional.isPresent() ) {
-			out.nullValue();
-		} else {
-			final T value = optional.get();
-			valueTypeAdapter.write(out, value);
-		}
+		@Nullable
+		final T value = optional.orNull();
+		valueTypeAdapter.write(out, value);
 	}
 
 	@Override
