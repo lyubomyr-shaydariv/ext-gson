@@ -23,6 +23,7 @@ public final class Numbers {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nullable
+	@Deprecated
 	public static Number tryParseLongOrDouble(@Nonnull final String rawValue) {
 		final Long longValue = tryParseLong(rawValue);
 		if ( longValue == null ) {
