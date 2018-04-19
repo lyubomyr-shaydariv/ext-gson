@@ -39,10 +39,10 @@ public final class AbstractTypeTypeAdapterFactory
 
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-		if ( Modifier.isAbstract(typeToken.getRawType().getModifiers()) ) {
-			return TypeAwareTypeAdapter.get(gson, typePropertyName, valuePropertyName);
+		if ( !Modifier.isAbstract(typeToken.getRawType().getModifiers()) ) {
+			return null;
 		}
-		return null;
+		return TypeAwareTypeAdapter.get(gson, typePropertyName, valuePropertyName);
 	}
 
 }

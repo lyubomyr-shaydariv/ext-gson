@@ -35,8 +35,7 @@ public final class MultimapTypeAdapterFactory<V>
 
 	@Override
 	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		final boolean isAssignable = Multimap.class.isAssignableFrom(typeToken.getRawType());
-		if ( !isAssignable ) {
+		if ( !Multimap.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return false;
 		}
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());

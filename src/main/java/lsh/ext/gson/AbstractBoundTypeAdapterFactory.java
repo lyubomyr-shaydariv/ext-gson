@@ -59,13 +59,13 @@ public abstract class AbstractBoundTypeAdapterFactory<CT>
 
 	@Override
 	public final <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-		if ( isSupported(typeToken) ) {
-			final TypeAdapter<CT> typeAdapter = createTypeAdapter(gson, typeToken);
-			@SuppressWarnings("unchecked")
-			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) typeAdapter;
-			return castTypeAdapter;
+		if ( !isSupported(typeToken) ) {
+			return null;
 		}
-		return null;
+		final TypeAdapter<CT> typeAdapter = createTypeAdapter(gson, typeToken);
+		@SuppressWarnings("unchecked")
+		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) typeAdapter;
+		return castTypeAdapter;
 	}
 
 }

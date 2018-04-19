@@ -33,13 +33,13 @@ public final class AutoCloseableIteratorTypeAdapterFactory
 
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-		if ( Iterator.class.isAssignableFrom(typeToken.getRawType()) ) {
-			final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-			@SuppressWarnings("unchecked")
-			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) AutoCloseableIteratorTypeAdapter.get(typeArguments[0][0], gson);
-			return castTypeAdapter;
+		if ( !Iterator.class.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
 		}
-		return null;
+		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
+		@SuppressWarnings("unchecked")
+		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) AutoCloseableIteratorTypeAdapter.get(typeArguments[0][0], gson);
+		return castTypeAdapter;
 	}
 
 }
