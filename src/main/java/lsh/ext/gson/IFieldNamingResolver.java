@@ -1,4 +1,4 @@
-package lsh.ext.gson.stategies;
+package lsh.ext.gson;
 
 /**
  * A strategy to resolve a name by the given value.

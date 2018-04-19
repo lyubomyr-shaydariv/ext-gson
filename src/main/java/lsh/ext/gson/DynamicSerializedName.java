@@ -1,4 +1,4 @@
-package lsh.ext.gson.annotations;
+package lsh.ext.gson;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * <p>
  * A special annotation that defines an expression to be evaluate to resolve JSON property names. This annotation can work along with
- * {@link lsh.ext.gson.stategies.DynamicSerializedNameFieldNamingStrategy} only.
+ * {@link DynamicSerializedNameFieldNamingStrategy} only.
  * </p>
  *
  * <p>
@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
  * In this case the {@code User.username} JSON property name will be looked up by the {@code gson.names.user.username} key in system properties.
  *
  * @author Lyubomyr Shaydariv
- * @see lsh.ext.gson.stategies.DynamicSerializedNameFieldNamingStrategy
+ * @see DynamicSerializedNameFieldNamingStrategy
  * @see com.google.gson.annotations.SerializedName
  * @since 0-SNAPSHOT
  */
@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
 public @interface DynamicSerializedName {
 
 	/**
-	 * @return A string value to be resolved in {@link lsh.ext.gson.stategies.DynamicSerializedNameFieldNamingStrategy}.
+	 * @return A string value to be resolved in {@link DynamicSerializedNameFieldNamingStrategy}.
 	 *
 	 * @since 0-SNAPSHOT
 	 */

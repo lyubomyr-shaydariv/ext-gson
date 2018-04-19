@@ -1,10 +1,9 @@
-package lsh.ext.gson.stategies;
+package lsh.ext.gson;
 
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
-import lsh.ext.gson.annotations.DynamicSerializedName;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;

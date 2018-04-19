@@ -1,10 +1,9 @@
-package lsh.ext.gson.stategies;
+package lsh.ext.gson;
 
 import java.lang.reflect.Field;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.FieldNamingStrategy;
-import lsh.ext.gson.annotations.DynamicSerializedName;
 
 /**
  * Represents a field naming strategy where field names must be evaluated dynamically.
