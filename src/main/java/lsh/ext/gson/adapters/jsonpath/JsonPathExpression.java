@@ -1,4 +1,4 @@
-package lsh.ext.gson.annotations;
+package lsh.ext.gson.adapters.jsonpath;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Holds a {@link com.jayway.jsonpath.JsonPath} path.
  *
  * @author Lyubomyr Shaydariv
- * @see lsh.ext.gson.adapters.JsonPathTypeAdapterFactory
+ * @see JsonPathTypeAdapterFactory
  * @since 0-SNAPSHOT
  */
 @Retention(RetentionPolicy.RUNTIME)

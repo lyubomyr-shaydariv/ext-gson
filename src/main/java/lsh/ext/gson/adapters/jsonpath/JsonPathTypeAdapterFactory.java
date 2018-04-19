@@ -1,4 +1,4 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.adapters.jsonpath;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -19,7 +19,6 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
-import lsh.ext.gson.annotations.JsonPathExpression;
 
 /**
  * <p>

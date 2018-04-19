@@ -1,4 +1,4 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.adapters.jsonpath;
 
 import java.util.EnumSet;
 import java.util.Map;
@@ -14,7 +14,6 @@ import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import com.jayway.jsonpath.spi.mapper.MappingProvider;
-import lsh.ext.gson.annotations.JsonPathExpression;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
