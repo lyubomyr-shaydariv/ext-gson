@@ -31,12 +31,6 @@ public final class GuavaModuleTest
 
 	@Nonnull
 	@Override
-	protected Class<? extends IModule> getExpectedUnitClass() {
-		return GuavaModule.class;
-	}
-
-	@Nonnull
-	@Override
 	protected IModule createUnit() {
 		return GuavaModule.get();
 	}

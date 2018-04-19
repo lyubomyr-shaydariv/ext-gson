@@ -21,12 +21,6 @@ public final class JsonPathModuleTest
 
 	@Nonnull
 	@Override
-	protected Class<? extends IModule> getExpectedUnitClass() {
-		return JsonPathModule.class;
-	}
-
-	@Nonnull
-	@Override
 	protected IModule createUnit() {
 		return JsonPathModule.get();
 	}

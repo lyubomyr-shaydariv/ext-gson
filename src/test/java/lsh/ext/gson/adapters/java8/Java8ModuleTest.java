@@ -25,12 +25,6 @@ public final class Java8ModuleTest
 
 	@Nonnull
 	@Override
-	protected Class<? extends IModule> getExpectedUnitClass() {
-		return Java8Module.class;
-	}
-
-	@Nonnull
-	@Override
 	protected IModule createUnit() {
 		return Java8Module.get();
 	}

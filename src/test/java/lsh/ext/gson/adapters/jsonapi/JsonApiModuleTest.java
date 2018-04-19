@@ -25,12 +25,6 @@ public final class JsonApiModuleTest
 
 	@Nonnull
 	@Override
-	protected Class<? extends IModule> getExpectedUnitClass() {
-		return JsonApiModule.class;
-	}
-
-	@Nonnull
-	@Override
 	protected IModule createUnit() {
 		return JsonApiModule.get();
 	}

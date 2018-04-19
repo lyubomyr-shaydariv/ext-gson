@@ -30,16 +30,12 @@ public abstract class AbstractModuleTest {
 	protected abstract String getExpectedName();
 
 	@Nonnull
-	protected abstract Class<? extends IModule> getExpectedUnitClass();
-
-	@Nonnull
 	protected abstract Collection<TypeToken<?>> getSupportedTypeTokens();
 
 	@Test
 	public final void testGetName() {
 		final IModule unit = createUnit();
 		MatcherAssert.assertThat(unit.getName(), CoreMatchers.is(getExpectedName()));
-		MatcherAssert.assertThat(unit, CoreMatchers.instanceOf(getExpectedUnitClass()));
 	}
 
 	@Test
