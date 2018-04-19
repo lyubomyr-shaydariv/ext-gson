@@ -183,10 +183,14 @@ public final class JsonValueTypeAdapter
 		@SuppressWarnings("resource")
 		public void write(final JsonWriter out, final JsonNumber jsonNumber)
 				throws IOException {
-			if ( jsonNumber.isIntegral() ) {
-				out.value(jsonNumber.longValue());
-			} else {
-				out.value(jsonNumber.doubleValue());
+			try {
+				out.value(jsonNumber.intValueExact());
+			} catch ( final ArithmeticException exIntExact ) {
+				try {
+					out.value(jsonNumber.longValueExact());
+				} catch ( final ArithmeticException exLongExact ) {
+					out.value(jsonNumber.bigDecimalValue());
+				}
 			}
 		}
 
