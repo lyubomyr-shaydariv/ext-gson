@@ -1,7 +1,7 @@
 package lsh.ext.gson.adapters.guava;
 
 import java.io.IOException;
-import java.util.Map.Entry;
+import java.util.Map;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.ArrayListMultimap;
@@ -63,7 +63,7 @@ public final class MultimapTypeAdapter<V>
 	public void write(final JsonWriter out, final Multimap<String, V> multimap)
 			throws IOException {
 		out.beginObject();
-		for ( final Entry<String, V> e : multimap.entries() ) {
+		for ( final Map.Entry<String, V> e : multimap.entries() ) {
 			final String key = e.getKey();
 			final V value = e.getValue();
 			out.name(key);

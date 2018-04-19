@@ -1,7 +1,7 @@
 package lsh.ext.gson.adapters.jsonapi;
 
 import java.io.IOException;
-import java.util.Map.Entry;
+import java.util.Map;
 import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -242,7 +242,7 @@ public final class JsonValueTypeAdapter
 		public void write(final JsonWriter out, final JsonObject jsonObject)
 				throws IOException {
 			out.beginObject();
-			for ( final Entry<String, JsonValue> e : jsonObject.entrySet() ) {
+			for ( final Map.Entry<String, JsonValue> e : jsonObject.entrySet() ) {
 				out.name(e.getKey());
 				JsonValueTypeAdapter.instance.write(out, e.getValue());
 			}

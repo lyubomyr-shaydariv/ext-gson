@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;

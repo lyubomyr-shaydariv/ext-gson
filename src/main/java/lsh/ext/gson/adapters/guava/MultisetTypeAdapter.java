@@ -5,7 +5,6 @@ import java.io.IOException;
 import com.google.common.base.Supplier;
 import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multiset;
-import com.google.common.collect.Multiset.Entry;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -65,7 +64,7 @@ public final class MultisetTypeAdapter<E>
 	public void write(final JsonWriter out, final Multiset<E> multiset)
 			throws IOException {
 		out.beginArray();
-		for ( final Entry<E> e : multiset.entrySet() ) {
+		for ( final Multiset.Entry<E> e : multiset.entrySet() ) {
 			final E element = e.getElement();
 			final int count = e.getCount();
 			for ( int i = 0; i < count; i++ ) {

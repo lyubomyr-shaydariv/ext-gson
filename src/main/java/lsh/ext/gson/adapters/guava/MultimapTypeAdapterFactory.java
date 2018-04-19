@@ -8,8 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.adapters.AbstractBoundTypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
+import lsh.ext.gson.adapters.AbstractBoundTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Multimap} from Google Guava.

@@ -1,6 +1,6 @@
 package lsh.ext.gson;
 
-import java.util.Map.Entry;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -566,7 +566,7 @@ public final class JsonElements {
 	 */
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
 		final JsonObject merged = new JsonObject();
-		for ( final Entry<String, JsonElement> leftEntry : left.entrySet() ) {
+		for ( final Map.Entry<String, JsonElement> leftEntry : left.entrySet() ) {
 			merged.add(leftEntry.getKey(), leftEntry.getValue());
 		}
 		mergeIntoLeft(merged, right, predicate);
@@ -597,7 +597,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
-		for ( final Entry<String, JsonElement> rightEntry : right.entrySet() ) {
+		for ( final Map.Entry<String, JsonElement> rightEntry : right.entrySet() ) {
 			final String key = rightEntry.getKey();
 			final JsonElement leftValue = left.get(key);
 			final JsonElement rightValue = rightEntry.getValue();
