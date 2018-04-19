@@ -15,13 +15,13 @@ import com.google.gson.reflect.TypeToken;
  * @see TypeAwareTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class AbstractTypeTypeAdapterFactory<T>
+public final class AbstractClassTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<T> {
 
 	private final String typePropertyName;
 	private final String valuePropertyName;
 
-	private AbstractTypeTypeAdapterFactory(final String typePropertyName, final String valuePropertyName) {
+	private AbstractClassTypeAdapterFactory(final String typePropertyName, final String valuePropertyName) {
 		this.typePropertyName = typePropertyName;
 		this.valuePropertyName = valuePropertyName;
 	}
@@ -30,12 +30,12 @@ public final class AbstractTypeTypeAdapterFactory<T>
 	 * @param typePropertyName  Type property name
 	 * @param valuePropertyName Value property name
 	 *
-	 * @return An instance of {@link AbstractTypeTypeAdapterFactory}
+	 * @return An instance of {@link AbstractClassTypeAdapterFactory}
 	 *
 	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory get(final String typePropertyName, final String valuePropertyName) {
-		return new AbstractTypeTypeAdapterFactory(typePropertyName, valuePropertyName);
+		return new AbstractClassTypeAdapterFactory(typePropertyName, valuePropertyName);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import com.google.gson.stream.MalformedJsonException;
  * </pre>
  *
  * @author Lyubomyr Shaydariv
- * @see AbstractTypeTypeAdapterFactory
+ * @see AbstractClassTypeAdapterFactory
  * @since 0-SNAPSHOT
  */
 public final class TypeAwareTypeAdapter<T>

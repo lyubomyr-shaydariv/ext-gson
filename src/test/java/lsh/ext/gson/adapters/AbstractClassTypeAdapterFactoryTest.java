@@ -7,10 +7,10 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
-public final class AbstractTypeTypeAdapterFactoryTest {
+public final class AbstractClassTypeAdapterFactoryTest {
 
 	private static final Gson gson = new GsonBuilder()
-			.registerTypeAdapterFactory(AbstractTypeTypeAdapterFactory.get("$T", "$V"))
+			.registerTypeAdapterFactory(AbstractClassTypeAdapterFactory.get("$T", "$V"))
 			.create();
 
 	@Test
