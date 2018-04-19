@@ -41,7 +41,7 @@ public final class AlwaysListTypeAdapterFactory<E>
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<List<E>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<List<E>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 		final Type elementType = ParameterizedTypes.getTypeArguments(typeToken.getType())[0][0];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));

@@ -4,6 +4,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import javax.annotation.Nonnull;
 
 /**
  * <p>
@@ -46,6 +47,7 @@ public @interface DynamicSerializedName {
 	 *
 	 * @since 0-SNAPSHOT
 	 */
+	@Nonnull
 	String value();
 
 }

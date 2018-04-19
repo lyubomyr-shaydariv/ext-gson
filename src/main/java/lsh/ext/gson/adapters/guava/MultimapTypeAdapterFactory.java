@@ -45,7 +45,7 @@ public final class MultimapTypeAdapterFactory<V>
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<Multimap<String, V>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<Multimap<String, V>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final Type valueType = typeArguments[1][0];
 		@SuppressWarnings("unchecked")

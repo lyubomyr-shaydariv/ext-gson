@@ -55,7 +55,7 @@ public abstract class AbstractBoundTypeAdapterFactory<CT>
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	protected abstract TypeAdapter<CT> createTypeAdapter(final Gson gson, @Nonnull TypeToken<?> typeToken);
+	protected abstract TypeAdapter<CT> createTypeAdapter(@Nonnull final Gson gson, @Nonnull TypeToken<?> typeToken);
 
 	@Override
 	public final <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {

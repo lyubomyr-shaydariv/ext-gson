@@ -73,7 +73,7 @@ public final class AbstractBoundTypeAdapterFactoryTest {
 
 		@Nonnull
 		@Override
-		protected TypeAdapter<Void> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+		protected TypeAdapter<Void> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 			return typeAdapterFactory.apply(gson, typeToken);
 		}
 

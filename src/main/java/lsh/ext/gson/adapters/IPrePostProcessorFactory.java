@@ -1,5 +1,7 @@
 package lsh.ext.gson.adapters;
 
+import javax.annotation.Nonnull;
+
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -20,13 +22,14 @@ public interface IPrePostProcessorFactory<T> {
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	boolean supports(TypeToken<?> typeToken);
+	boolean supports(@Nonnull TypeToken<?> typeToken);
 
 	/**
 	 * @return A pre/post processor for the given type.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
+	@Nonnull
 	IPrePostProcessor<T> createProcessor();
 
 }
