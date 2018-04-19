@@ -1,4 +1,4 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.adapters.jsonapi;
 
 import java.io.IOException;
 import java.util.Map.Entry;
@@ -22,7 +22,7 @@ import lsh.ext.gson.Numbers;
 
 /**
  * <p>Represents a type adapter for {@code javax.json} JSON values. During the {@link #read(JsonReader)} execution, numeric values are parsed as {@code long}
- * or {@code double} values using the {@link lsh.ext.gson.Numbers#tryParseDouble(String)} method.</p>
+ * or {@code double} values using the {@link Numbers#tryParseDouble(String)} method.</p>
  *
  * @author Lyubomyr Shaydariv
  * @see JsonValue

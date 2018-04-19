@@ -1,4 +1,4 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.adapters.jsonapi;
 
 import java.io.IOException;
 import javax.json.Json;

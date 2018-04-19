@@ -37,6 +37,11 @@ Currently `ext-gson` supports:
 * Specialized type adapters and factories:
   * `OptionalTypeAdapter` and `OptionalTypeAdapterFactory` - type adapter to support `java.util.Optional`;
 
+#### Java JSON API
+
+* Specialized type adapters and factories:
+  * `JsonValueTypeAdapter` - type adapter to support `javax.json.JsonValue`.
+
 #### Google Guava
 
 * Specialized type adapters and factories:
