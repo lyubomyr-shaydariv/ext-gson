@@ -49,17 +49,14 @@ public final class TypeAwareTypeAdapter<T>
 	 * @since 0-SNAPSHOT
 	 */
 	public static <T> TypeAdapter<T> get(final Gson gson, final String typePropertyName, final String valuePropertyName) {
-		return new TypeAwareTypeAdapter<>(gson, typePropertyName, valuePropertyName);
+		return new TypeAwareTypeAdapter<T>(gson, typePropertyName, valuePropertyName)
+				.nullSafe();
 	}
 
 	@Override
 	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final Object value)
 			throws IOException {
-		if ( value == null ) {
-			out.nullValue();
-			return;
-		}
 		final Class<?> type = value.getClass();
 		out.beginObject();
 		out.name(typePropertyName);
@@ -75,7 +72,7 @@ public final class TypeAwareTypeAdapter<T>
 		final JsonToken token = in.peek();
 		switch ( token ) {
 		case NULL:
-			return null;
+			throw new AssertionError("Must never happen for null");
 		case BEGIN_OBJECT:
 			return parseObject(in);
 		case BEGIN_ARRAY:

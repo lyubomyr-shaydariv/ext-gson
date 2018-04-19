@@ -43,7 +43,8 @@ public final class AutoCloseableIteratorTypeAdapter<E>
 	 * @return An instance of {@link AutoCloseableIteratorTypeAdapter}.
 	 */
 	public static <E> TypeAdapter<IAutoCloseableIterator<E>> get(final Type elementType, final Gson gson) {
-		return new AutoCloseableIteratorTypeAdapter<>(elementType, gson);
+		return new AutoCloseableIteratorTypeAdapter<E>(elementType, gson)
+				.nullSafe();
 	}
 
 	@Override

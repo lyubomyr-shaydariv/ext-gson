@@ -36,32 +36,29 @@ public final class AlwaysListTypeAdapter<E>
 	 * @since 0-SNAPSHOT
 	 */
 	public static <E> TypeAdapter<List<E>> get(final TypeAdapter<E> elementTypeAdapter) {
-		return new AlwaysListTypeAdapter<>(elementTypeAdapter);
+		return new AlwaysListTypeAdapter<>(elementTypeAdapter)
+				.nullSafe();
 	}
 
 	@Override
 	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final List<E> list)
 			throws IOException {
-		if ( list == null ) {
-			out.nullValue();
-		} else {
-			switch ( list.size() ) {
-			case 0:
-				out.beginArray();
-				out.endArray();
-				break;
-			case 1:
-				elementTypeAdapter.write(out, list.iterator().next());
-				break;
-			default:
-				out.beginArray();
-				for ( final E element : list ) {
-					elementTypeAdapter.write(out, element);
-				}
-				out.endArray();
-				break;
+		switch ( list.size() ) {
+		case 0:
+			out.beginArray();
+			out.endArray();
+			break;
+		case 1:
+			elementTypeAdapter.write(out, list.iterator().next());
+			break;
+		default:
+			out.beginArray();
+			for ( final E element : list ) {
+				elementTypeAdapter.write(out, element);
 			}
+			out.endArray();
+			break;
 		}
 	}
 
@@ -85,7 +82,7 @@ public final class AlwaysListTypeAdapter<E>
 			list.add(elementTypeAdapter.read(in));
 			break;
 		case NULL:
-			return null;
+			throw new AssertionError("Must never happen for nulls");
 		case NAME:
 		case END_ARRAY:
 		case END_OBJECT:

@@ -2,11 +2,9 @@ package lsh.ext.gson.adapters;
 
 import java.io.IOException;
 import java.util.Date;
-import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 /**
@@ -18,7 +16,8 @@ import com.google.gson.stream.JsonWriter;
 public final class EpochDateTypeAdapter
 		extends TypeAdapter<Date> {
 
-	private static final TypeAdapter<Date> instance = new EpochDateTypeAdapter();
+	private static final TypeAdapter<Date> instance = new EpochDateTypeAdapter()
+			.nullSafe();
 
 	private EpochDateTypeAdapter() {
 	}
@@ -33,21 +32,16 @@ public final class EpochDateTypeAdapter
 	}
 
 	@Override
-	@Nullable
 	public Date read(final JsonReader in)
 			throws IOException {
-		return in.peek() != JsonToken.NULL ? new Date(in.nextLong() * 1000) : null;
+		return new Date(in.nextLong() * 1000);
 	}
 
 	@Override
 	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final Date value)
 			throws IOException {
-		if ( value == null ) {
-			out.nullValue();
-		} else {
-			out.value(value.getTime() / 1000);
-		}
+		out.value(value.getTime() / 1000);
 	}
 
 }

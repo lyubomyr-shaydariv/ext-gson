@@ -68,7 +68,8 @@ public final class PrePostTypeAdapterFactory
 		final TypeAdapter<T> delegateTypeAdapter = gson.getDelegateAdapter(this, typeToken);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Iterable<? extends IPrePostProcessor<? super T>> castProcessors = (Iterable) processors;
-		return new PrePostTypeAdapter<>(castProcessors, delegateTypeAdapter);
+		return new PrePostTypeAdapter<>(castProcessors, delegateTypeAdapter)
+				.nullSafe();
 	}
 
 	private static final class PrePostTypeAdapter<T>

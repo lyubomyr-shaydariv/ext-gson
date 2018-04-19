@@ -35,7 +35,8 @@ public final class MultimapTypeAdapter<V>
 	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<Multimap<String, V>> get(final TypeAdapter<V> valueTypeAdapter) {
-		return new MultimapTypeAdapter<>(valueTypeAdapter);
+		return new MultimapTypeAdapter<>(valueTypeAdapter)
+				.nullSafe();
 	}
 
 	@Override
