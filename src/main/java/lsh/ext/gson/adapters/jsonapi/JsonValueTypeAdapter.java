@@ -12,6 +12,7 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.json.JsonValue.ValueType;
+import javax.json.spi.JsonProvider;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -187,23 +188,7 @@ public final class JsonValueTypeAdapter
 		public JsonNumber read(final JsonReader in)
 				throws IOException {
 			final String rawValue = in.nextString();
-			@Nullable
-			final Number number = Numbers.tryParseLongOrDouble(rawValue);
-			if ( number == null ) {
-				throw new MalformedJsonException("Cannot parse " + rawValue);
-			}
-			// TODO is there a good way to instantiate a JsonNumber instance?
-			final JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-			if ( number instanceof Long ) {
-				jsonArrayBuilder.add(number.longValue());
-			} else if ( number instanceof Double ) {
-				jsonArrayBuilder.add(number.doubleValue());
-			} else {
-				throw new AssertionError("Unexpected: " + number.getClass());
-			}
-			return (JsonNumber) jsonArrayBuilder
-					.build()
-					.get(0);
+			return parseJsonNumber(JsonProvider.provider(), rawValue);
 		}
 
 	}
@@ -223,11 +208,7 @@ public final class JsonValueTypeAdapter
 		@Override
 		public JsonString read(final JsonReader in)
 				throws IOException {
-			// TODO is there a good way to instantiate a JsonString instance?
-			return (JsonString) Json.createArrayBuilder()
-					.add(in.nextString())
-					.build()
-					.get(0);
+			return JsonProvider.provider().createValue(in.nextString());
 		}
 
 	}
@@ -275,18 +256,7 @@ public final class JsonValueTypeAdapter
 					break;
 				case NUMBER:
 					final String rawValue = in.nextString();
-					@Nullable
-					final Number number = Numbers.tryParseLongOrDouble(rawValue);
-					if ( number == null ) {
-						throw new MalformedJsonException("Cannot parse " + rawValue);
-					}
-					if ( number instanceof Long ) {
-						jsonObjectBuilder.add(key, number.longValue());
-					} else if ( number instanceof Double ) {
-						jsonObjectBuilder.add(key, number.doubleValue());
-					} else {
-						throw new AssertionError("Unexpected: " + number.getClass());
-					}
+					jsonObjectBuilder.add(key, parseJsonNumber(JsonProvider.provider(), rawValue));
 					break;
 				case BOOLEAN:
 					jsonObjectBuilder.add(key, in.nextBoolean());
@@ -349,18 +319,7 @@ public final class JsonValueTypeAdapter
 					break;
 				case NUMBER:
 					final String rawValue = in.nextString();
-					@Nullable
-					final Number number = Numbers.tryParseLongOrDouble(rawValue);
-					if ( number == null ) {
-						throw new MalformedJsonException("Cannot parse " + rawValue);
-					}
-					if ( number instanceof Long ) {
-						jsonArrayBuilder.add(number.longValue());
-					} else if ( number instanceof Double ) {
-						jsonArrayBuilder.add(number.doubleValue());
-					} else {
-						throw new AssertionError("Unexpected: " + number.getClass());
-					}
+					jsonArrayBuilder.add(parseJsonNumber(JsonProvider.provider(), rawValue));
 					break;
 				case BOOLEAN:
 					jsonArrayBuilder.add(in.nextBoolean());
@@ -380,6 +339,22 @@ public final class JsonValueTypeAdapter
 			return jsonArrayBuilder.build();
 		}
 
+	}
+
+	private static JsonNumber parseJsonNumber(final JsonProvider jsonProvider, final String rawValue)
+			throws MalformedJsonException {
+		@Nullable
+		final Number number = Numbers.tryParseLongOrDouble(rawValue);
+		if ( number == null ) {
+			throw new MalformedJsonException("Cannot parse " + rawValue);
+		}
+		if ( number instanceof Long ) {
+			return jsonProvider.createValue((Long) number);
+		}
+		if ( number instanceof Double ) {
+			return jsonProvider.createValue((Double) number);
+		}
+		throw new AssertionError(number.getClass());
 	}
 
 }
