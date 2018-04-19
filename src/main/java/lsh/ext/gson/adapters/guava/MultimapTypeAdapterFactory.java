@@ -18,8 +18,8 @@ import lsh.ext.gson.ParameterizedTypes;
  * @see MultimapTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class MultimapTypeAdapterFactory
-		extends AbstractBoundTypeAdapterFactory<Multimap<String, Object>> {
+public final class MultimapTypeAdapterFactory<V>
+		extends AbstractBoundTypeAdapterFactory<Multimap<String, V>> {
 
 	private static final TypeAdapterFactory multimapTypeAdapterFactory = new MultimapTypeAdapterFactory();
 
@@ -46,10 +46,12 @@ public final class MultimapTypeAdapterFactory
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<Multimap<String, Object>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<Multimap<String, V>> createTypeAdapter(final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final Type valueType = typeArguments[1][0];
-		return MultimapTypeAdapter.get(gson, valueType);
+		@SuppressWarnings("unchecked")
+		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
+		return MultimapTypeAdapter.get(valueTypeAdapter);
 	}
 
 }

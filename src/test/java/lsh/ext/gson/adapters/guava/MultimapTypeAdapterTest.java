@@ -6,7 +6,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -20,35 +20,29 @@ public final class MultimapTypeAdapterTest {
 
 	private static final Gson gson = new Gson();
 
+	private static final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(String.class);
+
+	private static final Multimap<String, String> simpleMultimap = ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar");
 	private static final String SIMPLE_MULTIMAP_JSON = "{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}";
 
 	@Test
 	public void testWrite()
 			throws IOException {
-		final TypeAdapter<Multimap<String, Object>> unit = MultimapTypeAdapter.get(gson, String.class);
+		final TypeAdapter<Multimap<String, String>> unit = MultimapTypeAdapter.get(stringTypeAdapter);
 		final Writer writer = new StringWriter();
 		final JsonWriter jsonWriter = new JsonWriter(writer);
-		unit.write(jsonWriter, createMultimap());
+		unit.write(jsonWriter, simpleMultimap);
 		MatcherAssert.assertThat(writer.toString(), CoreMatchers.is(SIMPLE_MULTIMAP_JSON));
 	}
 
 	@Test
 	public void testRead()
 			throws IOException {
-		final TypeAdapter<Multimap<String, Object>> unit = MultimapTypeAdapter.get(gson, String.class);
+		final TypeAdapter<Multimap<String, String>> unit = MultimapTypeAdapter.get(stringTypeAdapter);
 		final Reader reader = new StringReader(SIMPLE_MULTIMAP_JSON);
 		final JsonReader jsonReader = new JsonReader(reader);
-		final Multimap<String, Object> multimap = unit.read(jsonReader);
-		MatcherAssert.assertThat(multimap, CoreMatchers.is(createMultimap()));
-	}
-
-	private static Multimap<String, Object> createMultimap() {
-		final Multimap<String, Object> multimap = ArrayListMultimap.create();
-		multimap.put("1", "foo");
-		multimap.put("1", "bar");
-		multimap.put("2", "foo");
-		multimap.put("2", "bar");
-		return multimap;
+		final Multimap<String, String> multimap = unit.read(jsonReader);
+		MatcherAssert.assertThat(multimap, CoreMatchers.is(simpleMultimap));
 	}
 
 }

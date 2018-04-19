@@ -1,12 +1,10 @@
 package lsh.ext.gson.adapters.guava;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Map.Entry;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -22,27 +20,24 @@ import com.google.gson.stream.JsonWriter;
 public final class MultimapTypeAdapter<V>
 		extends TypeAdapter<Multimap<String, V>> {
 
-	private final Gson gson;
-	private final Type valueType;
+	private final TypeAdapter<V> valueTypeAdapter;
 
-	private MultimapTypeAdapter(final Gson gson, final Type valueType) {
-		this.gson = gson;
-		this.valueType = valueType;
+	private MultimapTypeAdapter(final TypeAdapter<V> valueTypeAdapter) {
+		this.valueTypeAdapter = valueTypeAdapter;
 	}
 
 	/**
 	 * Returns a {@link Multimap} type adapter.
 	 *
-	 * @param gson      Gson instance
-	 * @param valueType Multimap value type
-	 * @param <V>       Multimap value type parameter
+	 * @param valueTypeAdapter Multimap value type adapter
+	 * @param <V>              Multimap value type parameter
 	 *
 	 * @return Type adapter instance
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <V> TypeAdapter<Multimap<String, V>> get(final Gson gson, final Type valueType) {
-		return new MultimapTypeAdapter<>(gson, valueType);
+	public static <V> TypeAdapter<Multimap<String, V>> get(final TypeAdapter<V> valueTypeAdapter) {
+		return new MultimapTypeAdapter<>(valueTypeAdapter);
 	}
 
 	@Override
@@ -54,7 +49,7 @@ public final class MultimapTypeAdapter<V>
 			final String key = e.getKey();
 			final V value = e.getValue();
 			out.name(key);
-			gson.toJson(value, valueType, out);
+			valueTypeAdapter.write(out, value);
 		}
 		out.endObject();
 	}
@@ -66,7 +61,7 @@ public final class MultimapTypeAdapter<V>
 		in.beginObject();
 		while ( in.peek() != JsonToken.END_OBJECT ) {
 			final String key = in.nextName();
-			final V value = gson.fromJson(in, valueType);
+			final V value = valueTypeAdapter.read(in);
 			multimap.put(key, value);
 		}
 		in.endObject();
