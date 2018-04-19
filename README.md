@@ -28,10 +28,15 @@ Currently `ext-gson` supports:
   * `EpochDateTypeAdapter` - UNIX epoch timestamps type adapter;
   * `IteratorTypeAdapter` and `IteratorTypeAdapterFactory` - type adapter to support `java.util.Iterator` allowing to stream elements;
   * `JsonPathTypeAdapterFactory` - type adapter factory to enable `@JsonPathExpression` support (requires JsonPath dependency);
-  * `MultimapTypeAdapter` and `MultimapTypeAdapterFactory` - type adapter to support Google Guava `Multimap`;
   * `PackedJsonTypeAdapter` - a type adapter to "pack" and "unpack" JSON to and from string respectively; 
   * `ReadOnlyTypeAdapter` - a type adapter with disabled write operation;
   * `TypeAwareTypeAdapter` and `AbstractTypeTypeAdapterFactory` - a type adapter to keep abstract classes instances class names directly in JSON.
+  
+#### Google Guava
+
+* Specialized type adapters and factories:
+  * `OptionalTypeAdapter` and `OptionalTypeAdapterFactory` - type adapter to support `com.google.common.base.Optional`;
+  * `MultimapTypeAdapter` and `MultimapTypeAdapterFactory` - type adapter to support `com.google.common.collect.Multimap`.
 
 ### Development
 
