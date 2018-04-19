@@ -14,7 +14,7 @@ import com.google.gson.stream.JsonWriter;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public final class AbstractBoundTypeAdapterFactoryTest {
+public final class AbstractTypeAdapterFactoryTest {
 
 	private static final TypeToken<?> voidTypeToken = new TypeToken<Void>() {
 	};
@@ -53,7 +53,7 @@ public final class AbstractBoundTypeAdapterFactoryTest {
 	}
 
 	private static final class VoidTypeAdapterFactory
-			extends AbstractBoundTypeAdapterFactory<Void> {
+			extends AbstractTypeAdapterFactory<Void> {
 
 		private final Predicate<? super TypeToken<?>> typeTokenPredicate;
 		private final BiFunction<? super Gson, ? super TypeToken<?>, ? extends TypeAdapter<Void>> typeAdapterFactory;

@@ -9,7 +9,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.ParameterizedTypes;
-import lsh.ext.gson.adapters.AbstractBoundTypeAdapterFactory;
+import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Multiset} from Google Guava.
@@ -21,7 +21,7 @@ import lsh.ext.gson.adapters.AbstractBoundTypeAdapterFactory;
  * @since 0-SNAPSHOT
  */
 public final class MultisetTypeAdapterFactory<E>
-		extends AbstractBoundTypeAdapterFactory<Multiset<E>> {
+		extends AbstractTypeAdapterFactory<Multiset<E>> {
 
 	private static final TypeAdapterFactory instance = new MultisetTypeAdapterFactory<>();
 

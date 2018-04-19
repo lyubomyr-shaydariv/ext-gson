@@ -34,7 +34,7 @@ import com.google.gson.reflect.TypeToken;
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT
  */
-public abstract class AbstractBoundTypeAdapterFactory<CT>
+public abstract class AbstractTypeAdapterFactory<CT>
 		implements TypeAdapterFactory {
 
 	/**

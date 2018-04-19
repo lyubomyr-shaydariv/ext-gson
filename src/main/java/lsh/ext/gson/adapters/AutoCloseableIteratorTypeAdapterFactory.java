@@ -18,7 +18,7 @@ import lsh.ext.gson.ParameterizedTypes;
  * @since 0-SNAPSHOT
  */
 public final class AutoCloseableIteratorTypeAdapterFactory<T>
-		extends AbstractBoundTypeAdapterFactory<T> {
+		extends AbstractTypeAdapterFactory<T> {
 
 	private static final TypeAdapterFactory instance = new AutoCloseableIteratorTypeAdapterFactory();
 

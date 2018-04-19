@@ -9,7 +9,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.ParameterizedTypes;
-import lsh.ext.gson.adapters.AbstractBoundTypeAdapterFactory;
+import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Multimap} from Google Guava.
@@ -19,7 +19,7 @@ import lsh.ext.gson.adapters.AbstractBoundTypeAdapterFactory;
  * @since 0-SNAPSHOT
  */
 public final class MultimapTypeAdapterFactory<V>
-		extends AbstractBoundTypeAdapterFactory<Multimap<String, V>> {
+		extends AbstractTypeAdapterFactory<Multimap<String, V>> {
 
 	private static final TypeAdapterFactory instance = new MultimapTypeAdapterFactory<>();
 

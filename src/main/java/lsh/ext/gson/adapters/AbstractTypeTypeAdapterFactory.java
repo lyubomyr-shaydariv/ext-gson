@@ -16,7 +16,7 @@ import com.google.gson.reflect.TypeToken;
  * @since 0-SNAPSHOT
  */
 public final class AbstractTypeTypeAdapterFactory<T>
-		extends AbstractBoundTypeAdapterFactory<T> {
+		extends AbstractTypeAdapterFactory<T> {
 
 	private final String typePropertyName;
 	private final String valuePropertyName;

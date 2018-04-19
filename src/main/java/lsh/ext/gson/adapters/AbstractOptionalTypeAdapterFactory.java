@@ -18,7 +18,7 @@ import lsh.ext.gson.ParameterizedTypes;
  * @since 0-SNAPSHOT
  */
 public abstract class AbstractOptionalTypeAdapterFactory<O, T>
-		extends AbstractBoundTypeAdapterFactory<O> {
+		extends AbstractTypeAdapterFactory<O> {
 
 	/**
 	 * @param valueTypeAdapter Value type adapter
