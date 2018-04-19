@@ -32,6 +32,11 @@ Currently `ext-gson` supports:
   * `ReadOnlyTypeAdapter` - a type adapter with disabled write operation;
   * `TypeAwareTypeAdapter` and `AbstractTypeTypeAdapterFactory` - a type adapter to keep abstract classes instances class names directly in JSON.
   
+#### Java 8
+
+* Specialized type adapters and factories:
+  * `OptionalTypeAdapter` and `OptionalTypeAdapterFactory` - type adapter to support `java.util.Optional`;
+
 #### Google Guava
 
 * Specialized type adapters and factories:
