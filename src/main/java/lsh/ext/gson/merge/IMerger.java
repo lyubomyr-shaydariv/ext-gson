@@ -12,13 +12,11 @@ import com.google.gson.Gson;
 public interface IMerger {
 
 	/**
-	 * Merges the given object with a deserialized object.
-	 *
 	 * @param instance  Object to merge into
 	 * @param extractor A function to extract an object to merge into the given object
 	 * @param <T>       Object type
 	 *
-	 * @return A merged object.
+	 * @return An instance of then given object merged with a deserialized instance.
 	 *
 	 * @since 0-SNAPSHOT
 	 */

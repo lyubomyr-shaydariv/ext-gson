@@ -14,8 +14,6 @@ import com.google.gson.reflect.TypeToken;
 public interface IPrePostProcessorFactory<T> {
 
 	/**
-	 * Checks if the given type token is supported by the factory.
-	 *
 	 * @param typeToken Type token.
 	 *
 	 * @return {@code true} if the factory can create a processor for the type represented by the given type token, otherwise {@code false}.

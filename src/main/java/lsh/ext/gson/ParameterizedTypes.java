@@ -25,8 +25,6 @@ public final class ParameterizedTypes {
 	}
 
 	/**
-	 * Resolves type arguments for the given type if possible.
-	 *
 	 * @param type Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned.
 	 *             If {@code type} is just {@link GenericDeclaration}, type bounds are extracted.
 	 *

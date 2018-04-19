@@ -20,12 +20,10 @@ public final class AutoCloseableIterators {
 	}
 
 	/**
-	 * Returns the iterator parameter being a more efficient overload for {@link #asAutoCloseable(Iterator)}.
-	 *
 	 * @param iterator Iterator
 	 * @param <E>      Iterator element type
 	 *
-	 * @return Self.
+	 * @return An iterator parameter being a more efficient overload for {@link #asAutoCloseable(Iterator)}.
 	 *
 	 * @see #asAutoCloseable(Iterator)
 	 */
@@ -34,8 +32,6 @@ public final class AutoCloseableIterators {
 	}
 
 	/**
-	 * Wraps the given iterator into an {@link IAutoCloseableIterator} or returns the given parameter if the iterator is {@link IAutoCloseableIterator} already.
-	 *
 	 * @param iterator Iterator
 	 * @param <E>      Iterator element type
 	 *

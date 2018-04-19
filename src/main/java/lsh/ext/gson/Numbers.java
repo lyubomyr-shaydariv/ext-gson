@@ -15,8 +15,6 @@ public final class Numbers {
 	}
 
 	/**
-	 * Tries to parse the given raw value as a number of {@link Long} or {@link Double}.
-	 *
 	 * @param rawValue Raw value to parse
 	 *
 	 * @return A {@link Long} value if the given {@code rawValue} can be parsed as a long value, or a {@link Double} value if the given {@code rawValue} can be

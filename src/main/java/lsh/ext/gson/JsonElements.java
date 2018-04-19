@@ -26,9 +26,7 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Represents a JSON {@code null}.
-	 *
-	 * @return {@link JsonNull#INSTANCE} singleton.
+	 * @return {@link JsonNull#INSTANCE}.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -38,11 +36,9 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Represents a JSON primitive value {@code true} or {@code false}.
-	 *
 	 * @param b A boolean value.
 	 *
-	 * @return A new JSON primitive.
+	 * @return A new JSON primitive value for {@code true} or {@code false}.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -56,11 +52,9 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Represents a JSON primitive numeric value.
-	 *
 	 * @param n A numeric value.
 	 *
-	 * @return A new JSON primitive.
+	 * @return A new JSON primitive for numbers.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -70,11 +64,9 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Represents a JSON primitive string value.
-	 *
 	 * @param s A string value.
 	 *
-	 * @return A new JSON primitive.
+	 * @return A new JSON primitive for strings.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -84,11 +76,9 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Represents a JSON primitive single character value.
-	 *
 	 * @param c A character value.
 	 *
-	 * @return A new JSON primitive.
+	 * @return A new JSON primitive for characters.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -98,9 +88,7 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON object: {@code {}}.
-	 *
-	 * @return An empty JSON object.
+	 * @return A new empty JSON object.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -110,12 +98,10 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON object: {@code {k1: v1}}.
-	 *
 	 * @param k1 Key 1 name.
 	 * @param v1 Value 1.
 	 *
-	 * @return A JSON object with one key-value pair.
+	 * @return A new JSON object with one key-value pair.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -129,14 +115,12 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON object: {@code {k1: v1, k2: v2}}.
-	 *
 	 * @param k1 Key 1 name.
 	 * @param v1 Value 1.
 	 * @param k2 Key 2 name.
 	 * @param v2 Value 2.
 	 *
-	 * @return A JSON object with two key-value pairs.
+	 * @return A new JSON object with two key-value pairs.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -152,8 +136,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON object: {@code {k1: v1, k2: v2, k3: v3}}.
-	 *
 	 * @param k1 Key 1 name.
 	 * @param v1 Value 1.
 	 * @param k2 Key 2 name.
@@ -161,7 +143,7 @@ public final class JsonElements {
 	 * @param k3 Key 3 name.
 	 * @param v3 Value 3.
 	 *
-	 * @return A JSON object with three key-value pairs.
+	 * @return A new JSON object with three key-value pairs.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -179,8 +161,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON object: {@code {k1: v1, k2: v2, k3: v3, k4: v4}}.
-	 *
 	 * @param k1 Key 1 name.
 	 * @param v1 Value 1.
 	 * @param k2 Key 2 name.
@@ -190,7 +170,7 @@ public final class JsonElements {
 	 * @param k4 Key 4 name.
 	 * @param v4 Value 4.
 	 *
-	 * @return A JSON object with four key-value pairs.
+	 * @return A new JSON object with four key-value pairs.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -210,8 +190,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON object: {@code {k1: v1, k2: v2, k3: v3, k4: v4, k5: v5}}.
-	 *
 	 * @param k1 Key 1 name.
 	 * @param v1 Value 1.
 	 * @param k2 Key 2 name.
@@ -223,7 +201,7 @@ public final class JsonElements {
 	 * @param k5 Key 5 name.
 	 * @param v5 Value 5.
 	 *
-	 * @return A JSON object with five key-value pairs.
+	 * @return A new JSON object with five key-value pairs.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -254,9 +232,7 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code []}.
-	 *
-	 * @return An empty JSON array.
+	 * @return A new empty JSON array.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -266,11 +242,9 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1]}.
-	 *
 	 * @param e1 Element 1.
 	 *
-	 * @return A JSON array with one element.
+	 * @return A new JSON array with one element.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -284,12 +258,10 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2]}.
-	 *
 	 * @param e1 Element 1.
 	 * @param e2 Element 2.
 	 *
-	 * @return A JSON array with two elements.
+	 * @return A new JSON array with two elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -305,13 +277,11 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2, e3]}.
-	 *
 	 * @param e1 Element 1.
 	 * @param e2 Element 2.
 	 * @param e3 Element 3.
 	 *
-	 * @return A JSON array with three elements.
+	 * @return A new JSON array with three elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -329,14 +299,12 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2, e3, e4]}.
-	 *
 	 * @param e1 Element 1.
 	 * @param e2 Element 2.
 	 * @param e3 Element 3.
 	 * @param e4 Element 4.
 	 *
-	 * @return A JSON array with four elements.
+	 * @return A new JSON array with four elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -356,15 +324,13 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2, e3, e4, e5]}.
-	 *
 	 * @param e1 Element 1.
 	 * @param e2 Element 2.
 	 * @param e3 Element 3.
 	 * @param e4 Element 4.
 	 * @param e5 Element 5.
 	 *
-	 * @return A JSON array with five elements.
+	 * @return A new JSON array with five elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -386,8 +352,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2, e3, e4, e5, e6]}.
-	 *
 	 * @param e1 Element 1.
 	 * @param e2 Element 2.
 	 * @param e3 Element 3.
@@ -395,7 +359,7 @@ public final class JsonElements {
 	 * @param e5 Element 5.
 	 * @param e6 Element 6.
 	 *
-	 * @return A JSON array with six elements.
+	 * @return A new JSON array with six elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -419,8 +383,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2, e3, e4, e5, e6, e7]}.
-	 *
 	 * @param e1 Element 1.
 	 * @param e2 Element 2.
 	 * @param e3 Element 3.
@@ -429,7 +391,7 @@ public final class JsonElements {
 	 * @param e6 Element 6.
 	 * @param e7 Element 7.
 	 *
-	 * @return A JSON array with seven elements.
+	 * @return A new JSON array with seven elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -455,8 +417,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2, e3, e4, e5, e6, e7, e8]}.
-	 *
 	 * @param e1 Element 1.
 	 * @param e2 Element 2.
 	 * @param e3 Element 3.
@@ -466,7 +426,7 @@ public final class JsonElements {
 	 * @param e7 Element 7.
 	 * @param e8 Element 8.
 	 *
-	 * @return A JSON array with eight elements.
+	 * @return A new JSON array with eight elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -493,8 +453,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2, e3, e4, e5, e6, e7, e8, e9]}.
-	 *
 	 * @param e1 Element 1.
 	 * @param e2 Element 2.
 	 * @param e3 Element 3.
@@ -505,7 +463,7 @@ public final class JsonElements {
 	 * @param e8 Element 8.
 	 * @param e9 Element 9.
 	 *
-	 * @return A JSON array with nine elements.
+	 * @return A new JSON array with nine elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -535,8 +493,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Creates a new JSON array: {@code [e1, e2, e3, e4, e5, e6, e7, e8, e9, e10]}.
-	 *
 	 * @param e1  Element 1.
 	 * @param e2  Element 2.
 	 * @param e3  Element 3.
@@ -548,7 +504,7 @@ public final class JsonElements {
 	 * @param e9  Element 9.
 	 * @param e10 Element 10.
 	 *
-	 * @return A JSON array with ten elements.
+	 * @return A new JSON array with ten elements.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
@@ -589,8 +545,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Merges two {@link JsonObject} objects, left and right, into a new {@link JsonObject} object on common keys using the {@link JsonObjectMergePredicates#alwaysReplaceLeft()} strategy.
-	 *
 	 * @param left  Left
 	 * @param right Right
 	 *
@@ -603,8 +557,6 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Merges two {@link JsonObject} objects, left and right, into a new {@link JsonObject} object on common keys.
-	 *
 	 * @param left      Left
 	 * @param right     Right
 	 * @param predicate Predicate
@@ -623,12 +575,10 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Merges the right {@link JsonObject} into the left {@link JsonObject} on common keys using the {@link JsonObjectMergePredicates#alwaysReplaceLeft()} strategy.
-	 *
 	 * @param left  Left
 	 * @param right Right
 	 *
-	 * @return The modified {@code left} parameter.
+	 * @return The {@code left} object with the {@code right} object merged into.
 	 *
 	 * @see #mergeIntoLeft(JsonObject, JsonObject, IJsonObjectMergePredicate)
 	 * @since 0-SNAPSHOT
@@ -638,13 +588,11 @@ public final class JsonElements {
 	}
 
 	/**
-	 * Merges the right {@link JsonObject} into the left {@link JsonObject} on common keys.
-	 *
 	 * @param left      Left
 	 * @param right     Right
 	 * @param predicate Predicate
 	 *
-	 * @return The modified {@code left} parameter.
+	 * @return The {@code left} object with the {@code right} object merged into.
 	 *
 	 * @see #mergeIntoLeft(JsonObject, JsonObject)
 	 * @since 0-SNAPSHOT
@@ -675,12 +623,10 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a JSON element to the accumulated object.
-		 *
 		 * @param property    Property name.
 		 * @param jsonElement A JSON element.
 		 *
-		 * @return Self.
+		 * @return Self with a new key/value pair.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -690,12 +636,10 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a boolean to the accumulated object.
-		 *
 		 * @param property Property name.
 		 * @param b        A boolean value.
 		 *
-		 * @return Self.
+		 * @return Self with a new key/value pair.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -705,12 +649,10 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a single character to the accumulated object.
-		 *
 		 * @param property Property name.
 		 * @param c        A character value.
 		 *
-		 * @return Self.
+		 * @return Self with a new key/value pair.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -720,12 +662,10 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a numeric value to the accumulated object.
-		 *
 		 * @param property Property name.
 		 * @param n        A numeric value.
 		 *
-		 * @return Self.
+		 * @return Self with a new key/value pair.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -735,12 +675,10 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a string to the accumulated object.
-		 *
 		 * @param property Property name.
 		 * @param s        A string value.
 		 *
-		 * @return Self.
+		 * @return Self with a new key/value pair.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -774,11 +712,9 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a JSON element to the accumulated array.
-		 *
 		 * @param jsonElement A JSON element.
 		 *
-		 * @return Self.
+		 * @return Self with the new element appended to the end of the array.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -788,11 +724,9 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a boolean to the accumulated array.
-		 *
 		 * @param b A boolean value.
 		 *
-		 * @return Self.
+		 * @return Self with the new element appended to the end of the array.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -802,11 +736,9 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a single character to the accumulated array.
-		 *
 		 * @param c A character value.
 		 *
-		 * @return Self.
+		 * @return Self with the new element appended to the end of the array.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -816,11 +748,9 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a numeric value to the accumulated array.
-		 *
 		 * @param n A numeric value.
 		 *
-		 * @return Self.
+		 * @return Self with the new element appended to the end of the array.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -830,11 +760,9 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds a string to the accumulated array.
-		 *
 		 * @param s A string value.
 		 *
-		 * @return Self.
+		 * @return Self with the new element appended to the end of the array.
 		 *
 		 * @since 0-SNAPSHOT
 		 */
@@ -844,11 +772,9 @@ public final class JsonElements {
 		}
 
 		/**
-		 * Adds all elements from the given JSON array to the accumulated array.
-		 *
 		 * @param jsonArray A JSON array.
 		 *
-		 * @return Self.
+		 * @return Self with all the new elements from the input array appended to the end of the array.
 		 *
 		 * @since 0-SNAPSHOT
 		 */

@@ -20,8 +20,6 @@ public final class Json {
 	}
 
 	/**
-	 * Checks if the given string represents a valid JSON.
-	 *
 	 * @param json JSON string
 	 *
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
@@ -35,8 +33,6 @@ public final class Json {
 	}
 
 	/**
-	 * Checks if the given reader represents a valid JSON.
-	 *
 	 * @param reader Reader
 	 *
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
@@ -50,8 +46,6 @@ public final class Json {
 	}
 
 	/**
-	 * Checks if the given JSON reader represents a valid JSON.
-	 *
 	 * @param jsonReader JSON reader
 	 *
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.

@@ -27,12 +27,10 @@ public final class MultimapTypeAdapter<V>
 	}
 
 	/**
-	 * Returns a {@link Multimap} type adapter.
-	 *
 	 * @param valueTypeAdapter Multimap value type adapter
 	 * @param <V>              Multimap value type parameter
 	 *
-	 * @return Type adapter instance
+	 * @return A {@link MultimapTypeAdapter} instance.
 	 *
 	 * @since 0-SNAPSHOT
 	 */

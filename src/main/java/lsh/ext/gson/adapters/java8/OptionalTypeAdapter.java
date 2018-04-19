@@ -22,12 +22,10 @@ public final class OptionalTypeAdapter<T>
 	}
 
 	/**
-	 * Returns an {@link Optional} type adapter.
-	 *
 	 * @param valueTypeAdapter {@link Optional} backed value type adapter
 	 * @param <T>              Optional type parameterization
 	 *
-	 * @return Type adapter instance
+	 * @return An {@link OptionalTypeAdapter} instance.
 	 *
 	 * @since 0-SNAPSHOT
 	 */
