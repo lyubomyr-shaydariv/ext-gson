@@ -18,13 +18,12 @@ public abstract class AbstractModule
 		implements IModule {
 
 	private final String name;
+	private final Iterable<? extends TypeAdapterFactory> typeAdapterFactories;
 
-	protected AbstractModule(final String name) {
+	protected AbstractModule(final String name, final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		this.name = name;
+		this.typeAdapterFactories = typeAdapterFactories;
 	}
-
-	@Nonnull
-	protected abstract Iterable<? extends TypeAdapterFactory> getTypeAdapterFactories();
 
 	@Nonnull
 	@Override
@@ -34,7 +33,7 @@ public abstract class AbstractModule
 
 	@Override
 	public final <T> TypeAdapter<T> create(@Nonnull final Gson gson, @Nonnull final TypeToken<T> typeToken) {
-		for ( final TypeAdapterFactory typeAdapterFactory : getTypeAdapterFactories() ) {
+		for ( final TypeAdapterFactory typeAdapterFactory : typeAdapterFactories ) {
 			@Nullable
 			final TypeAdapter<T> typeAdapter = typeAdapterFactory.create(gson, typeToken);
 			if ( typeAdapter != null ) {

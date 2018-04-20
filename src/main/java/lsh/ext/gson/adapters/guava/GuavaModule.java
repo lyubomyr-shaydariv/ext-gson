@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.guava;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Supplier;
@@ -17,11 +16,8 @@ public final class GuavaModule
 	private static final IModule instance = build()
 			.done();
 
-	private final Iterable<? extends TypeAdapterFactory> typeAdapterFactories;
-
 	private GuavaModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		super("Google Guava");
-		this.typeAdapterFactories = typeAdapterFactories;
+		super("Google Guava", typeAdapterFactories);
 	}
 
 	public static IModule get() {
@@ -30,12 +26,6 @@ public final class GuavaModule
 
 	public static Builder build() {
 		return new Builder();
-	}
-
-	@Nonnull
-	@Override
-	protected Iterable<? extends TypeAdapterFactory> getTypeAdapterFactories() {
-		return typeAdapterFactories;
 	}
 
 	public static final class Builder {

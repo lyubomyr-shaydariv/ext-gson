@@ -1,7 +1,5 @@
 package lsh.ext.gson.adapters.jsonapi;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.ImmutableList;
 import com.google.gson.TypeAdapterFactory;
 import lsh.ext.gson.adapters.AbstractModule;
@@ -13,11 +11,8 @@ public final class JsonApiModule
 	private static final IModule instance = build()
 			.done();
 
-	private final Iterable<? extends TypeAdapterFactory> typeAdapterFactories;
-
 	private JsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		super("Java JSON API");
-		this.typeAdapterFactories = typeAdapterFactories;
+		super("Java JSON API", typeAdapterFactories);
 	}
 
 	public static IModule get() {
@@ -26,12 +21,6 @@ public final class JsonApiModule
 
 	public static Builder build() {
 		return new Builder();
-	}
-
-	@Nonnull
-	@Override
-	protected Iterable<? extends TypeAdapterFactory> getTypeAdapterFactories() {
-		return typeAdapterFactories;
 	}
 
 	public static final class Builder {
