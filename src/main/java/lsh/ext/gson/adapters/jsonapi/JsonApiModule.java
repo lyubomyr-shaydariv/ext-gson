@@ -10,24 +10,42 @@ import lsh.ext.gson.adapters.IModule;
 public final class JsonApiModule
 		extends AbstractModule {
 
-	private static final IModule instance = new JsonApiModule();
+	private static final IModule instance = build()
+			.done();
 
-	private static final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
-			.add(JsonValueTypeAdapterFactory.get())
-			.build();
+	private final Iterable<? extends TypeAdapterFactory> typeAdapterFactories;
 
-	private JsonApiModule() {
+	private JsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Java JSON API");
+		this.typeAdapterFactories = typeAdapterFactories;
 	}
 
 	public static IModule get() {
 		return instance;
 	}
 
+	public static Builder build() {
+		return new Builder();
+	}
+
 	@Nonnull
 	@Override
 	protected Iterable<? extends TypeAdapterFactory> getTypeAdapterFactories() {
 		return typeAdapterFactories;
+	}
+
+	public static final class Builder {
+
+		private Builder() {
+		}
+
+		public IModule done() {
+			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
+					.add(JsonValueTypeAdapterFactory.get())
+					.build();
+			return new JsonApiModule(typeAdapterFactories);
+		}
+
 	}
 
 }
