@@ -13,8 +13,7 @@ public final class JsonApiModuleTest
 		extends AbstractModuleTest {
 
 	private static final Collection<TypeToken<?>> supportedTypeTokens = ImmutableList.of(
-			new TypeToken<JsonValue>() {
-			}
+			new TypeToken<JsonValue>() {}
 	);
 
 	@Nonnull

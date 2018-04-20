@@ -18,12 +18,9 @@ public final class MultisetTypeAdapterFactoryTest
 	@Parameterized.Parameters
 	public static Collection<TestWith> parameters() {
 		return ImmutableList.of(
-				testWith(new TypeToken<Multiset<String>>() {
-				}),
-				testWith(new TypeToken<Multiset<Object>>() {
-				}),
-				testWith(new TypeToken<Multiset<Integer>>() {
-				})
+				testWith(new TypeToken<Multiset<String>>() {}),
+				testWith(new TypeToken<Multiset<Object>>() {}),
+				testWith(new TypeToken<Multiset<Integer>>() {})
 		);
 	}
 

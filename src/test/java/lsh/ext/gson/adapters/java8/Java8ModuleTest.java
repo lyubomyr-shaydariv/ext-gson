@@ -13,8 +13,7 @@ public final class Java8ModuleTest
 		extends AbstractModuleTest {
 
 	private static final Collection<TypeToken<?>> supportedTypeTokens = ImmutableList.of(
-			new TypeToken<Optional<?>>() {
-			}
+			new TypeToken<Optional<?>>() {}
 	);
 
 	@Nonnull

@@ -17,17 +17,10 @@ import org.junit.Test;
 
 public final class AlwaysListTypeAdapterFactoryTest {
 
-	private static final TypeToken<List<Boolean>> booleanListTypeToken = new TypeToken<List<Boolean>>() {
-	};
-
-	private static final TypeToken<List<Integer>> integerListTypeToken = new TypeToken<List<Integer>>() {
-	};
-
-	private static final TypeToken<List<String>> stringListTypeToken = new TypeToken<List<String>>() {
-	};
-
-	private static final TypeToken<List<Map<String, Integer>>> stringToIntegerMapListTypeToken = new TypeToken<List<Map<String, Integer>>>() {
-	};
+	private static final TypeToken<List<Boolean>> booleanListTypeToken = new TypeToken<List<Boolean>>() {};
+	private static final TypeToken<List<Integer>> integerListTypeToken = new TypeToken<List<Integer>>() {};
+	private static final TypeToken<List<String>> stringListTypeToken = new TypeToken<List<String>>() {};
+	private static final TypeToken<List<Map<String, Integer>>> stringToIntegerMapListTypeToken = new TypeToken<List<Map<String, Integer>>>() {};
 
 	private static final Gson gson = new Gson();
 	private static final TypeAdapterFactory unit = AlwaysListTypeAdapterFactory.get();

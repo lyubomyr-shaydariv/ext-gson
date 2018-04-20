@@ -27,8 +27,7 @@ public final class ParameterizedTypesTest {
 
 	@Test
 	public void testResolveTypeArgumentsForParameterizedTypesWithBounds() {
-		MatcherAssert.assertThat(ParameterizedTypes.getTypeArguments(GenericClassWithSomeBounds.class), CoreMatchers.is(new Type[][]{ new Type[]{ Number.class }, new Type[]{ CharSequence.class, new TypeToken<List<?>>() {
-		}.getType() } }));
+		MatcherAssert.assertThat(ParameterizedTypes.getTypeArguments(GenericClassWithSomeBounds.class), CoreMatchers.is(new Type[][]{ new Type[]{ Number.class }, new Type[]{ CharSequence.class, new TypeToken<List<?>>() {}.getType() } }));
 	}
 
 	@Test

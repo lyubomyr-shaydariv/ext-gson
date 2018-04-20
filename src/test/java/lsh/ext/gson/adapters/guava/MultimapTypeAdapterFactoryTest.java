@@ -18,14 +18,9 @@ public final class MultimapTypeAdapterFactoryTest
 	@Parameterized.Parameters
 	public static Collection<TestWith> parameters() {
 		return ImmutableList.of(
-				testWith(new TypeToken<Multimap<String, String>>() {
-				}, new TypeToken<Multimap<Object, Integer>>() {
-				}),
-				testWith(new TypeToken<Multimap<String, Object>>() {
-				}, new TypeToken<Multimap<Integer, String>>() {
-				}),
-				testWith(new TypeToken<Multimap<String, Integer>>() {
-				})
+				testWith(new TypeToken<Multimap<String, String>>() {}, new TypeToken<Multimap<Object, Integer>>() {}),
+				testWith(new TypeToken<Multimap<String, Object>>() {}, new TypeToken<Multimap<Integer, String>>() {}),
+				testWith(new TypeToken<Multimap<String, Integer>>() {})
 		);
 	}
 

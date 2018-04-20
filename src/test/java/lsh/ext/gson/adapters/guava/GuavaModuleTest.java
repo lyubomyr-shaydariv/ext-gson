@@ -15,12 +15,9 @@ public final class GuavaModuleTest
 		extends AbstractModuleTest {
 
 	private static final Collection<TypeToken<?>> supportedTypeTokens = ImmutableList.of(
-			new TypeToken<Optional<?>>() {
-			},
-			new TypeToken<Multiset<?>>() {
-			},
-			new TypeToken<Multimap<String, ?>>() {
-			}
+			new TypeToken<Optional<?>>() {},
+			new TypeToken<Multiset<?>>() {},
+			new TypeToken<Multimap<String, ?>>() {}
 	);
 
 	@Nonnull

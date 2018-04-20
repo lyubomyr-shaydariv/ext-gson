@@ -18,12 +18,9 @@ public final class OptionalTypeAdapterFactoryTest
 	@Parameterized.Parameters
 	public static Collection<TestWith> parameters() {
 		return ImmutableList.of(
-				testWith(new TypeToken<Optional<String>>() {
-				}),
-				testWith(new TypeToken<Optional<Object>>() {
-				}),
-				testWith(new TypeToken<Optional<Integer>>() {
-				})
+				testWith(new TypeToken<Optional<String>>() {}),
+				testWith(new TypeToken<Optional<Object>>() {}),
+				testWith(new TypeToken<Optional<Integer>>() {})
 		);
 	}
 

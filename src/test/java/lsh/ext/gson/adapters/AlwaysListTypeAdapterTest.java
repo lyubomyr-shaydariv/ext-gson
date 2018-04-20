@@ -16,8 +16,7 @@ import org.junit.Test;
 
 public final class AlwaysListTypeAdapterTest {
 
-	private static final TypeToken<Map<String, Integer>> stringToIntegerMapTypeToken = new TypeToken<Map<String, Integer>>() {
-	};
+	private static final TypeToken<Map<String, Integer>> stringToIntegerMapTypeToken = new TypeToken<Map<String, Integer>>() {};
 
 	private static final Gson gson = new Gson();
 
