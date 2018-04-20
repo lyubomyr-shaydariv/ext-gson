@@ -1,44 +1,48 @@
 package lsh.ext.gson.adapters.guava;
 
+import java.lang.reflect.Type;
+import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public final class OptionalTypeAdapterTest
-		extends AbstractTypeAdapterTest<Optional<String>> {
+		extends AbstractTypeAdapterTest<Optional<?>> {
 
-	@Nonnull
-	@Override
-	protected TypeAdapter<Optional<String>> createUnit(@Nonnull final Gson gson) {
-		return OptionalTypeAdapter.get(gson.getAdapter(String.class));
+	@Parameterized.Parameters
+	public static Collection<TestWith<Optional<?>>> parameters() {
+		return ImmutableList.of(
+				testWith(
+						TypeToken.get(String.class),
+						Optional.of("foo"),
+						"\"foo\""
+				)
+		);
 	}
 
-	@Nullable
-	@Override
-	protected Optional<String> nullValue() {
-		return Optional.absent();
-	}
-
-	@Nonnull
-	@Override
-	protected Optional<String> getValue() {
-		return Optional.of("foo");
+	public OptionalTypeAdapterTest(final TestWith<? extends Optional<?>> testWith) {
+		super(Optional.absent(), testWith);
 	}
 
 	@Nonnull
 	@Override
-	protected Object finalizeValue(@Nonnull final Optional<String> value) {
+	protected TypeAdapter<? extends Optional<?>> createUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
+		return OptionalTypeAdapter.get(gson.getAdapter(typeToken));
+	}
+
+	@Nonnull
+	@Override
+	protected Object finalizeValue(@Nonnull final Optional<?> value) {
 		return value;
-	}
-
-	@Nonnull
-	@Override
-	protected String getValueJson() {
-		return "\"foo\"";
 	}
 
 }
