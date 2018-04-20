@@ -1,20 +1,34 @@
 package lsh.ext.gson.adapters.guava;
 
+import java.util.Collection;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public final class OptionalTypeAdapterFactoryTest
-		extends AbstractTypeAdapterFactoryTest<Optional<String>> {
+		extends AbstractTypeAdapterFactoryTest {
 
-	@Nonnull
-	@Override
-	protected TypeToken<Optional<String>> getTypeToken() {
-		return new TypeToken<Optional<String>>() {
-		};
+	@Parameterized.Parameters
+	public static Collection<TestWith> parameters() {
+		return ImmutableList.of(
+				testWith(new TypeToken<Optional<String>>() {
+				}),
+				testWith(new TypeToken<Optional<Object>>() {
+				}),
+				testWith(new TypeToken<Optional<Integer>>() {
+				})
+		);
+	}
+
+	public OptionalTypeAdapterFactoryTest(final TestWith testWith) {
+		super(testWith);
 	}
 
 	@Nonnull
