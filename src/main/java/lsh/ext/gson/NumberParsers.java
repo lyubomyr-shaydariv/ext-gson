@@ -198,6 +198,7 @@ public final class NumberParsers {
 
 		private final INumberParser<? extends Number>[] numberParsers;
 
+		@SafeVarargs
 		private FirstBestNumberParser(final INumberParser<? extends Number>... numberParsers) {
 			this.numberParsers = numberParsers;
 		}
