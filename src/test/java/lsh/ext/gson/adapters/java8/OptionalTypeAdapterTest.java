@@ -18,7 +18,7 @@ public final class OptionalTypeAdapterTest
 		extends AbstractTypeAdapterTest<Optional<?>> {
 
 	@Parameterized.Parameters
-	public static Collection<TestWith<Optional<?>>> parameters() {
+	public static Iterable<TestWith<Optional<?>>> parameters() {
 		return ImmutableList.of(
 				testWith(
 						TypeToken.get(String.class),

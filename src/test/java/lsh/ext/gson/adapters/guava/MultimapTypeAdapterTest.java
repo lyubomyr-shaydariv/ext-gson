@@ -19,7 +19,7 @@ public final class MultimapTypeAdapterTest
 		extends AbstractTypeAdapterTest<Multimap<String, ?>> {
 
 	@Parameterized.Parameters
-	public static Collection<TestWith<Multimap<String, ?>>> parameters() {
+	public static Iterable<TestWith<Multimap<String, ?>>> parameters() {
 		return ImmutableList.of(
 				testWith(
 						TypeToken.get(String.class),

@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.java8;
 
-import java.util.Collection;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 
@@ -16,11 +15,17 @@ public final class OptionalTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
 	@Parameterized.Parameters
-	public static Collection<TestWith> parameters() {
+	public static Iterable<TestWith> parameters() {
 		return ImmutableList.of(
-				testWith(new TypeToken<Optional<String>>() {}),
-				testWith(new TypeToken<Optional<Object>>() {}),
-				testWith(new TypeToken<Optional<Integer>>() {})
+				testWith(
+						new TypeToken<Optional<String>>() {}
+				),
+				testWith(
+						new TypeToken<Optional<Object>>() {}
+				),
+				testWith(
+						new TypeToken<Optional<Integer>>() {}
+				)
 		);
 	}
 

@@ -18,7 +18,7 @@ public final class EpochDateTypeAdapterTest
 		extends AbstractTypeAdapterTest<Date> {
 
 	@Parameterized.Parameters
-	public static Collection<TestWith<Date>> parameters() {
+	public static Iterable<TestWith<Date>> parameters() {
 		return ImmutableList.of(
 				testWith(
 						new Date(1488929283000L),

@@ -1,7 +1,5 @@
 package lsh.ext.gson.adapters.jsonapi;
 
-import java.lang.reflect.Type;
-import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.json.Json;
@@ -20,7 +18,7 @@ public final class JsonValueTypeAdapterTest
 		extends AbstractTypeAdapterTest<JsonValue> {
 
 	@Parameterized.Parameters
-	public static Collection<TestWith<JsonValue>> parameters() {
+	public static Iterable<TestWith<JsonValue>> parameters() {
 		return ImmutableList.of(
 				testWith(
 						Json.createObjectBuilder()

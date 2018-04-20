@@ -19,7 +19,7 @@ public final class AutoCloseableIteratorTypeAdapterTest
 
 	@Parameterized.Parameters
 	@SuppressWarnings("resource")
-	public static Collection<TestWith<IAutoCloseableIterator<?>>> parameters() {
+	public static Iterable<TestWith<IAutoCloseableIterator<?>>> parameters() {
 		return ImmutableList.of(
 				testWith(
 						TypeToken.get(Integer.class),

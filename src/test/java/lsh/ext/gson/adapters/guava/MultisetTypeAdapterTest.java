@@ -19,7 +19,7 @@ public final class MultisetTypeAdapterTest
 		extends AbstractTypeAdapterTest<Multiset<?>> {
 
 	@Parameterized.Parameters
-	public static Collection<TestWith<Multiset<?>>> parameters() {
+	public static Iterable<TestWith<Multiset<?>>> parameters() {
 		return ImmutableList.of(
 				testWith(
 						TypeToken.get(String.class),

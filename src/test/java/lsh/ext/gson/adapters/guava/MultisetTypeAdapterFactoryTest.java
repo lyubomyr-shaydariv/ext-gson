@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.guava;
 
-import java.util.Collection;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
@@ -16,11 +15,17 @@ public final class MultisetTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
 	@Parameterized.Parameters
-	public static Collection<TestWith> parameters() {
+	public static Iterable<TestWith> parameters() {
 		return ImmutableList.of(
-				testWith(new TypeToken<Multiset<String>>() {}),
-				testWith(new TypeToken<Multiset<Object>>() {}),
-				testWith(new TypeToken<Multiset<Integer>>() {})
+				testWith(
+						new TypeToken<Multiset<String>>() {}
+				),
+				testWith(
+						new TypeToken<Multiset<Object>>() {}
+				),
+				testWith(
+						new TypeToken<Multiset<Integer>>() {}
+				)
 		);
 	}
 

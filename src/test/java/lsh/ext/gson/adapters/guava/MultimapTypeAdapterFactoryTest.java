@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.guava;
 
-import java.util.Collection;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
@@ -16,11 +15,17 @@ public final class MultimapTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
 	@Parameterized.Parameters
-	public static Collection<TestWith> parameters() {
+	public static Iterable<TestWith> parameters() {
 		return ImmutableList.of(
-				testWith(new TypeToken<Multimap<String, String>>() {}, new TypeToken<Multimap<Object, Integer>>() {}),
-				testWith(new TypeToken<Multimap<String, Object>>() {}, new TypeToken<Multimap<Integer, String>>() {}),
-				testWith(new TypeToken<Multimap<String, Integer>>() {})
+				testWith(
+						new TypeToken<Multimap<String, String>>() {},
+						new TypeToken<Multimap<Object, Integer>>() {}),
+				testWith(
+						new TypeToken<Multimap<String, Object>>() {},
+						new TypeToken<Multimap<Integer, String>>() {}),
+				testWith(
+						new TypeToken<Multimap<String, Integer>>() {}
+				)
 		);
 	}
 
