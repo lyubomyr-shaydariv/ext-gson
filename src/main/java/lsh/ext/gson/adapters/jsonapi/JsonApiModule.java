@@ -1,6 +1,8 @@
 package lsh.ext.gson.adapters.jsonapi;
 
-import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
+import java.util.Collections;
+
 import com.google.gson.TypeAdapterFactory;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
@@ -29,9 +31,9 @@ public final class JsonApiModule
 		}
 
 		public IModule done() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
-					.add(JsonValueTypeAdapterFactory.get())
-					.build();
+			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Collections.unmodifiableList(Arrays.asList(
+					JsonValueTypeAdapterFactory.get()
+			));
 			return new JsonApiModule(typeAdapterFactories);
 		}
 
