@@ -1,7 +1,5 @@
 package lsh.ext.gson.adapters;
 
-import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Date;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
