@@ -141,7 +141,7 @@ public final class JsonPathTypeAdapterFactory
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		final TypeAdapter<T> delegateAdapter = gson.getDelegateAdapter(this, typeToken);
-		final Collection<FieldInfo> fieldInfos = FieldInfo.of(typeToken.getRawType());
+		final Collection<FieldInfo> fieldInfos = FieldInfo.of(typeToken.getRawType(), gson);
 		return fieldInfos.isEmpty()
 				? delegateAdapter
 				: new JsonPathTypeAdapter<>(gson, delegateAdapter, gson.getAdapter(JsonElement.class), fieldInfos, configurationProvider.apply(gson));
@@ -150,7 +150,6 @@ public final class JsonPathTypeAdapterFactory
 	private static final class JsonPathTypeAdapter<T>
 			extends TypeAdapter<T> {
 
-		private final Gson gson;
 		private final TypeAdapter<T> delegateAdapter;
 		private final TypeAdapter<JsonElement> jsonElementTypeAdapter;
 		private final Collection<FieldInfo> fieldInfos;
@@ -158,7 +157,6 @@ public final class JsonPathTypeAdapterFactory
 
 		private JsonPathTypeAdapter(final Gson gson, final TypeAdapter<T> delegateAdapter, final TypeAdapter<JsonElement> jsonElementTypeAdapter,
 				final Collection<FieldInfo> fieldInfos, final Configuration configuration) {
-			this.gson = gson;
 			this.delegateAdapter = delegateAdapter;
 			this.jsonElementTypeAdapter = jsonElementTypeAdapter;
 			this.fieldInfos = fieldInfos;
@@ -179,7 +177,7 @@ public final class JsonPathTypeAdapterFactory
 			for ( final FieldInfo fieldInfo : fieldInfos ) {
 				try {
 					final JsonElement innerJsonElement = fieldInfo.jsonPath.read(outerJsonElement, configuration);
-					final Object innerValue = gson.fromJson(innerJsonElement, fieldInfo.field.getType());
+					final Object innerValue = fieldInfo.typeAdapter.fromJsonTree(innerJsonElement);
 					fieldInfo.field.set(value, innerValue);
 				} catch ( final PathNotFoundException ignored ) {
 				} catch ( final IllegalAccessException ex ) {
@@ -195,13 +193,15 @@ public final class JsonPathTypeAdapterFactory
 
 		private final Field field;
 		private final JsonPath jsonPath;
+		private final TypeAdapter<?> typeAdapter;
 
-		private FieldInfo(final Field field, final JsonPath jsonPath) {
+		private FieldInfo(final Field field, final JsonPath jsonPath, final TypeAdapter<?> typeAdapter) {
 			this.field = field;
 			this.jsonPath = jsonPath;
+			this.typeAdapter = typeAdapter;
 		}
 
-		private static Collection<FieldInfo> of(final Class<?> clazz) {
+		private static Collection<FieldInfo> of(final Class<?> clazz, final Gson gson) {
 			Collection<FieldInfo> collection = Collections.emptyList();
 			for ( final Field field : clazz.getDeclaredFields() ) {
 				final JsonPathExpression jsonPathExpression = field.getAnnotation(JsonPathExpression.class);
@@ -210,7 +210,8 @@ public final class JsonPathTypeAdapterFactory
 						collection = new ArrayList<>();
 					}
 					field.setAccessible(true);
-					collection.add(new FieldInfo(field, JsonPath.compile(jsonPathExpression.value())));
+					final TypeAdapter<?> typeAdapter = gson.getAdapter(TypeToken.get(field.getType()));
+					collection.add(new FieldInfo(field, JsonPath.compile(jsonPathExpression.value()), typeAdapter));
 				}
 			}
 			return collection;
