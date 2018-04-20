@@ -35,7 +35,7 @@ public final class AutoCloseableIteratorTypeAdapterTest
 	@Override
 	protected TypeAdapter<? extends IAutoCloseableIterator<?>> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
 		assert typeToken != null;
-		return AutoCloseableIteratorTypeAdapter.get(typeToken.getType(), gson);
+		return AutoCloseableIteratorTypeAdapter.get(gson.getAdapter(typeToken));
 	}
 
 	@Nonnull

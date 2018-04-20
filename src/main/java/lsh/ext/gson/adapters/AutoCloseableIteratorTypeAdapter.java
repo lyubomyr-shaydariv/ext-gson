@@ -1,10 +1,8 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Iterator;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -27,23 +25,20 @@ import lsh.ext.gson.IAutoCloseableIterator;
 public final class AutoCloseableIteratorTypeAdapter<E>
 		extends TypeAdapter<IAutoCloseableIterator<E>> {
 
-	private final Type elementType;
-	private final Gson gson;
+	private final TypeAdapter<E> elementTypeAdapter;
 
-	private AutoCloseableIteratorTypeAdapter(final Type elementType, final Gson gson) {
-		this.elementType = elementType;
-		this.gson = gson;
+	private AutoCloseableIteratorTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
+		this.elementTypeAdapter = elementTypeAdapter;
 	}
 
 	/**
-	 * @param elementType Element type
-	 * @param gson        Gson instance
-	 * @param <E>         Iterator element type
+	 * @param elementTypeAdapter Element type adapter
+	 * @param <E>                Iterator element type
 	 *
 	 * @return An instance of {@link AutoCloseableIteratorTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<IAutoCloseableIterator<E>> get(final Type elementType, final Gson gson) {
-		return new AutoCloseableIteratorTypeAdapter<E>(elementType, gson)
+	public static <E> TypeAdapter<IAutoCloseableIterator<E>> get(final TypeAdapter<E> elementTypeAdapter) {
+		return new AutoCloseableIteratorTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
@@ -53,15 +48,15 @@ public final class AutoCloseableIteratorTypeAdapter<E>
 			throws IOException {
 		out.beginArray();
 		while ( iterator.hasNext() ) {
-			final E next = iterator.next();
-			gson.toJson(next, elementType, out);
+			final E element = iterator.next();
+			elementTypeAdapter.write(out, element);
 		}
 		out.endArray();
 	}
 
 	@Override
 	public IAutoCloseableIterator<E> read(final JsonReader in) {
-		return JsonReaderIterator.get(elementType, gson, in);
+		return JsonReaderIterator.get(elementTypeAdapter, in);
 	}
 
 }

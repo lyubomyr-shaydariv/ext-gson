@@ -1,31 +1,28 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.NoSuchElementException;
 
-import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import lsh.ext.gson.IAutoCloseableIterator;
 
-final class JsonReaderIterator<T>
-		implements IAutoCloseableIterator<T> {
+final class JsonReaderIterator<E>
+		implements IAutoCloseableIterator<E> {
 
-	private final Type elementType;
-	private final Gson gson;
+	private final TypeAdapter<E> elementTypeAdapter;
 	private final JsonReader in;
 
 	private ReadingIteratorState state = ReadingIteratorState.BEFORE_ARRAY;
 
-	private JsonReaderIterator(final Type elementType, final Gson gson, final JsonReader in) {
-		this.elementType = elementType;
-		this.gson = gson;
+	private JsonReaderIterator(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
+		this.elementTypeAdapter = elementTypeAdapter;
 		this.in = in;
 	}
 
-	static <T> IAutoCloseableIterator<T> get(final Type elementType, final Gson gson, final JsonReader in) {
-		return new JsonReaderIterator<>(elementType, gson, in);
+	static <E> IAutoCloseableIterator<E> get(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
+		return new JsonReaderIterator<>(elementTypeAdapter, in);
 	}
 
 	@Override
@@ -70,12 +67,12 @@ final class JsonReaderIterator<T>
 	}
 
 	@Override
-	public T next() {
+	public E next() {
 		try {
 			if ( !in.hasNext() || state == ReadingIteratorState.END_OF_STREAM ) {
 				throw new NoSuchElementException();
 			}
-			final T element;
+			final E element;
 			loop:
 			for ( ; ; ) {
 				switch ( state ) {
@@ -87,7 +84,7 @@ final class JsonReaderIterator<T>
 					}
 					break;
 				case WITHIN_ARRAY:
-					element = gson.fromJson(in, elementType);
+					element = elementTypeAdapter.read(in);
 					if ( in.peek() == JsonToken.END_ARRAY ) {
 						state = ReadingIteratorState.AFTER_ARRAY;
 					}

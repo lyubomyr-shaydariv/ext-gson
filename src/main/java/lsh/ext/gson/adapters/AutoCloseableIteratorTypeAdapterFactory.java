@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.ParameterizedTypes;
 
 /**
- * Represents a type adapter factory for {@link Iterator} .
+ * Represents a type adapter factory for {@link Iterator}.
  *
  * @author Lyubomyr Shaydariv
  * @see AutoCloseableIteratorTypeAdapter
@@ -20,7 +20,7 @@ import lsh.ext.gson.ParameterizedTypes;
 public final class AutoCloseableIteratorTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<T> {
 
-	private static final TypeAdapterFactory instance = new AutoCloseableIteratorTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new AutoCloseableIteratorTypeAdapterFactory<>();
 
 	private AutoCloseableIteratorTypeAdapterFactory() {
 	}
@@ -41,8 +41,9 @@ public final class AutoCloseableIteratorTypeAdapterFactory<T>
 	@Override
 	protected TypeAdapter<T> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
+		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0][0]));
 		@SuppressWarnings("unchecked")
-		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) AutoCloseableIteratorTypeAdapter.get(typeArguments[0][0], gson);
+		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) AutoCloseableIteratorTypeAdapter.get(elementTypeAdapter);
 		return castTypeAdapter;
 	}
 
