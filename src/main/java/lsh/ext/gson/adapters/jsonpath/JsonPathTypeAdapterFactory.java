@@ -65,7 +65,7 @@ import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
  * @author Lyubomyr Shaydariv
  * @see #get()
  * @see #get(Function)
- * @see #getJsonPathTypeAdapterWithGlobalDefaults()
+ * @see #getWithGlobalDefaults()
  * @since 0-SNAPSHOT
  */
 public final class JsonPathTypeAdapterFactory
@@ -123,7 +123,7 @@ public final class JsonPathTypeAdapterFactory
 	 * @see Configuration#setDefaults(Configuration.Defaults)
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapterFactory getJsonPathTypeAdapterWithGlobalDefaults() {
+	public static TypeAdapterFactory getWithGlobalDefaults() {
 		return instanceWithGlobalDefaults;
 	}
 

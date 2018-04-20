@@ -18,13 +18,11 @@ public final class MultisetTypeAdapterTest
 		extends AbstractTypeAdapterTest<Multiset<?>> {
 
 	@Parameterized.Parameters
-	public static Iterable<TestWith<Multiset<?>>> parameters() {
+	public static Iterable<TestWith<? extends Multiset<?>>> parameters() {
 		return ImmutableList.of(
-				testWith(
-						TypeToken.get(String.class),
-						ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz"),
-						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]"
-				)
+				parameterize(ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz"), "[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]")
+						.with(TypeToken.get(String.class))
+						.get()
 		);
 	}
 
@@ -34,7 +32,7 @@ public final class MultisetTypeAdapterTest
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<? extends Multiset<?>> createUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
+	protected TypeAdapter<? extends Multiset<?>> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
 		return MultisetTypeAdapter.get(gson.getAdapter(typeToken));
 	}
 

@@ -1,5 +1,6 @@
 package lsh.ext.gson.adapters;
 
+import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -18,23 +19,21 @@ public final class AutoCloseableIteratorTypeAdapterTest
 
 	@Parameterized.Parameters
 	@SuppressWarnings("resource")
-	public static Iterable<TestWith<IAutoCloseableIterator<?>>> parameters() {
+	public static Iterable<TestWith<? extends IAutoCloseableIterator<?>>> parameters() {
 		return ImmutableList.of(
-				testWith(
-						TypeToken.get(Integer.class),
-						() -> AutoCloseableIterators.asAutoCloseable(ImmutableList.of(1, 2, 4, 8).iterator()),
-						"[1,2,4,8]"
-				)
+				parameterize((Supplier<? extends IAutoCloseableIterator<Integer>>) () -> AutoCloseableIterators.asAutoCloseable(ImmutableList.of(1, 2, 4, 8).iterator()), "[1,2,4,8]")
+						.with(TypeToken.get(Integer.class))
+						.get()
 		);
 	}
 
-	public AutoCloseableIteratorTypeAdapterTest(final TestWith<IAutoCloseableIterator<?>> testWith) {
+	public AutoCloseableIteratorTypeAdapterTest(final TestWith<? extends IAutoCloseableIterator<?>> testWith) {
 		super(null, testWith);
 	}
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<? extends IAutoCloseableIterator<?>> createUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
+	protected TypeAdapter<? extends IAutoCloseableIterator<?>> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
 		assert typeToken != null;
 		return AutoCloseableIteratorTypeAdapter.get(typeToken.getType(), gson);
 	}

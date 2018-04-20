@@ -16,12 +16,10 @@ public final class EpochDateTypeAdapterTest
 		extends AbstractTypeAdapterTest<Date> {
 
 	@Parameterized.Parameters
-	public static Iterable<TestWith<Date>> parameters() {
+	public static Iterable<TestWith<? extends Date>> parameters() {
 		return ImmutableList.of(
-				testWith(
-						new Date(1488929283000L),
-						"1488929283"
-				)
+				parameterize(new Date(1488929283000L), "1488929283")
+						.get()
 		);
 	}
 
@@ -31,7 +29,7 @@ public final class EpochDateTypeAdapterTest
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<? extends Date> createUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
+	protected TypeAdapter<? extends Date> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
 		return EpochDateTypeAdapter.get();
 	}
 

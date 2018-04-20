@@ -30,7 +30,7 @@ public final class MultisetTypeAdapterFactoryTest
 	}
 
 	public MultisetTypeAdapterFactoryTest(final TestWith testWith) {
-		super(testWith);
+		super(false, testWith);
 	}
 
 	@Nonnull

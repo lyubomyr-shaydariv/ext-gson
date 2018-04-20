@@ -30,7 +30,7 @@ public final class OptionalTypeAdapterFactoryTest
 	}
 
 	public OptionalTypeAdapterFactoryTest(final TestWith testWith) {
-		super(testWith);
+		super(false, testWith);
 	}
 
 	@Nonnull

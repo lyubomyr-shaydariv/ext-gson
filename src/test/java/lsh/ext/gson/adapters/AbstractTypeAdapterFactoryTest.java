@@ -28,9 +28,11 @@ public abstract class AbstractTypeAdapterFactoryTest {
 
 	private static final TypeToken<Void> voidTypeToken = TypeToken.get(Void.class);
 
+	private final boolean supportsAll;
 	private final TestWith testWith;
 
-	protected AbstractTypeAdapterFactoryTest(final TestWith testWith) {
+	protected AbstractTypeAdapterFactoryTest(final boolean supportsAll, final TestWith testWith) {
+		this.supportsAll = supportsAll;
 		this.testWith = testWith;
 	}
 
@@ -54,9 +56,11 @@ public abstract class AbstractTypeAdapterFactoryTest {
 
 	@Test
 	public final void testCreateIfDoesNotSupport() {
-		final TypeAdapterFactory unit = createUnit();
-		final TypeAdapter<?> typeAdapter = unit.create(gson, testWith.unsupportedTypeToken);
-		MatcherAssert.assertThat(typeAdapter, CoreMatchers.nullValue());
+		if ( !supportsAll ) {
+			final TypeAdapterFactory unit = createUnit();
+			final TypeAdapter<?> typeAdapter = unit.create(gson, testWith.unsupportedTypeToken);
+			MatcherAssert.assertThat(typeAdapter, CoreMatchers.nullValue());
+		}
 	}
 
 }

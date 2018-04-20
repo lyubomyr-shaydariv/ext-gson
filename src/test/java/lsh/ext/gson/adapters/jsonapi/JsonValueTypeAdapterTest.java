@@ -18,23 +18,21 @@ public final class JsonValueTypeAdapterTest
 		extends AbstractTypeAdapterTest<JsonValue> {
 
 	@Parameterized.Parameters
-	public static Iterable<TestWith<JsonValue>> parameters() {
+	public static Iterable<TestWith<? extends JsonValue>> parameters() {
 		return ImmutableList.of(
-				testWith(
-						Json.createObjectBuilder()
-								.add("boolean", true)
-								.add("integer", 3)
-								.add("string", "foo")
-								.addNull("null")
-								.add("array", Json.createArrayBuilder()
-										.add(false)
-										.add(2)
-										.add("bar")
-										.addNull()
-										.build())
-								.build(),
-						"{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}"
-				)
+				parameterize(Json.createObjectBuilder()
+						.add("boolean", true)
+						.add("integer", 3)
+						.add("string", "foo")
+						.addNull("null")
+						.add("array", Json.createArrayBuilder()
+								.add(false)
+								.add(2)
+								.add("bar")
+								.addNull()
+								.build())
+						.build(), "{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}")
+						.get()
 		);
 	}
 
@@ -44,7 +42,7 @@ public final class JsonValueTypeAdapterTest
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<? extends JsonValue> createUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
+	protected TypeAdapter<? extends JsonValue> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
 		return JsonValueTypeAdapter.get();
 	}
 

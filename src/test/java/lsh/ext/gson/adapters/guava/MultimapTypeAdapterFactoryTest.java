@@ -30,7 +30,7 @@ public final class MultimapTypeAdapterFactoryTest
 	}
 
 	public MultimapTypeAdapterFactoryTest(final TestWith testWith) {
-		super(testWith);
+		super(false, testWith);
 	}
 
 	@Nonnull

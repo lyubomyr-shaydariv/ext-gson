@@ -23,7 +23,7 @@ public final class AlwaysListTypeAdapterFactoryTest
 	}
 
 	public AlwaysListTypeAdapterFactoryTest(final TestWith testWith) {
-		super(testWith);
+		super(false, testWith);
 	}
 
 	@Nonnull

@@ -17,13 +17,11 @@ public final class OptionalTypeAdapterTest
 		extends AbstractTypeAdapterTest<Optional<?>> {
 
 	@Parameterized.Parameters
-	public static Iterable<TestWith<Optional<?>>> parameters() {
+	public static Iterable<TestWith<? extends Optional<?>>> parameters() {
 		return ImmutableList.of(
-				testWith(
-						TypeToken.get(String.class),
-						Optional.of("foo"),
-						"\"foo\""
-				)
+				parameterize(Optional.of("foo"), "\"foo\"")
+						.with(TypeToken.get(String.class))
+						.get()
 		);
 	}
 
@@ -33,7 +31,7 @@ public final class OptionalTypeAdapterTest
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<? extends Optional<?>> createUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
+	protected TypeAdapter<? extends Optional<?>> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
 		return OptionalTypeAdapter.get(gson.getAdapter(typeToken));
 	}
 

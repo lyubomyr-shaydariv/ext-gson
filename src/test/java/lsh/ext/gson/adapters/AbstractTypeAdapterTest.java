@@ -1,6 +1,7 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,10 +15,7 @@ import org.junit.Test;
 
 public abstract class AbstractTypeAdapterTest<T> {
 
-	public static final class TestWith<T> {
-
-		@Nullable
-		private final TypeToken<?> typeToken;
+	protected static final class TestWith<T> {
 
 		@Nonnull
 		private final Supplier<? extends T> valueFactory;
@@ -25,10 +23,56 @@ public abstract class AbstractTypeAdapterTest<T> {
 		@Nonnull
 		private final String json;
 
-		private TestWith(@Nullable final TypeToken<?> typeToken, @Nonnull final Supplier<? extends T> valueFactory, @Nonnull final String json) {
-			this.typeToken = typeToken;
+		@Nullable
+		private final BiFunction<? super Gson, ? super TypeToken<?>, ? extends TypeAdapter<?>> unitFactory;
+
+		@Nullable
+		private final TypeToken<?> typeToken;
+
+		private TestWith(@Nonnull final Supplier<? extends T> valueFactory, @Nonnull final String json,
+				@Nullable final BiFunction<? super Gson, ? super TypeToken<?>, ? extends TypeAdapter<?>> unitFactory, @Nullable final TypeToken<?> typeToken) {
 			this.valueFactory = valueFactory;
 			this.json = json;
+			this.unitFactory = unitFactory;
+			this.typeToken = typeToken;
+		}
+
+		public static final class Builder<T>
+				implements Supplier<TestWith<T>> {
+
+			@Nonnull
+			private final Supplier<? extends T> valueFactory;
+
+			@Nonnull
+			private final String json;
+
+			@Nullable
+			private BiFunction<? super Gson, ? super TypeToken<?>, ? extends TypeAdapter<?>> unitFactory;
+
+			@Nullable
+			private TypeToken<?> typeToken;
+
+			private Builder(@Nonnull final Supplier<? extends T> valueFactory, @Nonnull final String json) {
+				this.valueFactory = valueFactory;
+				this.json = json;
+			}
+
+			public Builder<T> with(final TypeToken<?> typeToken) {
+				this.typeToken = typeToken;
+				return this;
+			}
+
+			@SuppressWarnings("unchecked")
+			public <U> Builder<T> with(final BiFunction<? super Gson, ? super TypeToken<U>, ? extends TypeAdapter<U>> unitFactory) {
+				this.unitFactory = (BiFunction<? super Gson, ? super TypeToken<?>, ? extends TypeAdapter<?>>) unitFactory;
+				return this;
+			}
+
+			@Override
+			public TestWith<T> get() {
+				return new TestWith<>(valueFactory, json, unitFactory, typeToken);
+			}
+
 		}
 
 	}
@@ -43,25 +87,16 @@ public abstract class AbstractTypeAdapterTest<T> {
 		this.testWith = testWith;
 	}
 
-	protected static <T> TestWith<T> testWith(@Nonnull final Supplier<? extends T> valueFactory, @Nonnull final String json) {
-		return new TestWith<>(null, valueFactory, json);
+	protected static <T> TestWith.Builder<T> parameterize(final T value, final String json) {
+		return new TestWith.Builder<T>(() -> value, json);
 	}
 
-	protected static <T> TestWith<T> testWith(@Nonnull final TypeToken<?> typeToken, @Nonnull final Supplier<? extends T> valueFactory,
-			@Nonnull final String json) {
-		return new TestWith<>(typeToken, valueFactory, json);
-	}
-
-	protected static <T> TestWith<T> testWith(@Nonnull final T value, @Nonnull final String json) {
-		return new TestWith<>(null, () -> value, json);
-	}
-
-	protected static <T> TestWith<T> testWith(@Nonnull final TypeToken<?> typeToken, @Nonnull final T value, @Nonnull final String json) {
-		return new TestWith<>(typeToken, () -> value, json);
+	protected static <T> TestWith.Builder<T> parameterize(final Supplier<? extends T> valueFactory, final String json) {
+		return new TestWith.Builder<T>(valueFactory, json);
 	}
 
 	@Nonnull
-	protected abstract TypeAdapter<? extends T> createUnit(@Nonnull Gson gson, @Nullable TypeToken<?> typeToken);
+	protected abstract TypeAdapter<? extends T> createDefaultUnit(@Nonnull Gson gson, @Nullable TypeToken<?> typeToken);
 
 	@Nonnull
 	protected abstract Object finalizeValue(@Nonnull T value);
@@ -69,29 +104,36 @@ public abstract class AbstractTypeAdapterTest<T> {
 	@Test
 	public final void testWrite()
 			throws IOException {
-		final TypeAdapter<? extends T> unit = createUnit(gson, testWith.typeToken);
+		final TypeAdapter<T> unit = createUnit(testWith, gson);
 		MatcherAssert.assertThat(finalizeValue(unit.fromJson(testWith.json)), CoreMatchers.is(finalizeValue(testWith.valueFactory.get())));
 	}
 
 	@Test
 	public final void testWriteNull()
 			throws IOException {
-		final TypeAdapter<? extends T> unit = createUnit(gson, testWith.typeToken);
+		final TypeAdapter<T> unit = createUnit(testWith, gson);
 		MatcherAssert.assertThat(unit.fromJson("null"), CoreMatchers.is(nullValue));
 	}
 
 	@Test
 	public final void testRead() {
-		@SuppressWarnings("unchecked")
-		final TypeAdapter<T> unit = (TypeAdapter<T>) createUnit(gson, testWith.typeToken);
+		final TypeAdapter<T> unit = createUnit(testWith, gson);
 		MatcherAssert.assertThat(unit.toJson(testWith.valueFactory.get()), CoreMatchers.is(testWith.json));
 	}
 
 	@Test
 	public final void testReadNull() {
-		@SuppressWarnings("unchecked")
-		final TypeAdapter<T> unit = (TypeAdapter<T>) createUnit(gson, testWith.typeToken);
+		final TypeAdapter<T> unit = createUnit(testWith, gson);
 		MatcherAssert.assertThat(unit.toJson(nullValue), CoreMatchers.is("null"));
+	}
+
+	private TypeAdapter<T> createUnit(final TestWith<? extends T> testWith, final Gson gson) {
+		final TypeAdapter<?> typeAdapter = testWith.unitFactory == null
+				? createDefaultUnit(gson, testWith.typeToken)
+				: testWith.unitFactory.apply(gson, testWith.typeToken);
+		@SuppressWarnings("unchecked")
+		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) typeAdapter;
+		return castTypeAdapter;
 	}
 
 }

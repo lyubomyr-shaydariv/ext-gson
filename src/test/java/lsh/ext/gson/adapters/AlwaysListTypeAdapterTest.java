@@ -20,46 +20,30 @@ public final class AlwaysListTypeAdapterTest
 	@Parameterized.Parameters
 	public static Iterable<TestWith<? extends List<?>>> parameters() {
 		return ImmutableList.of(
-				testWith(
-						new TypeToken<Map<String, Integer>>() {},
-						ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2)),
-						"{\"foo\":1,\"bar\":2}"
-				),
-				testWith(
-						TypeToken.get(String.class),
-						ImmutableList.of("foo"),
-						"\"foo\""
-				),
-				testWith(
-						TypeToken.get(Integer.class),
-						ImmutableList.of(39),
-						"39"
-				),
-				testWith(
-						TypeToken.get(Boolean.class),
-						ImmutableList.of(true),
-						"true"
-				),
-				testWith(
-						new TypeToken<Map<String, Integer>>() {},
-						ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4)),
-						"[{\"foo\":1,\"bar\":2},{\"bar\":3,\"qux\":4}]"
-				),
-				testWith(
-						TypeToken.get(String.class),
-						ImmutableList.of("foo", "bar", "baz"),
-						"[\"foo\",\"bar\",\"baz\"]"
-				),
-				testWith(
-						TypeToken.get(Integer.class),
-						ImmutableList.of(39, 42, 100),
-						"[39,42,100]"
-				),
-				testWith(
-						TypeToken.get(Boolean.class),
-						ImmutableList.of(true, false, true),
-						"[true,false,true]"
-				)
+				parameterize(ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2)), "{\"foo\":1,\"bar\":2}")
+						.with(new TypeToken<Map<String, Integer>>() {})
+						.get(),
+				parameterize(ImmutableList.of("foo"), "\"foo\"")
+						.with(TypeToken.get(String.class))
+						.get(),
+				parameterize(ImmutableList.of(39), "39")
+						.with(TypeToken.get(Integer.class))
+						.get(),
+				parameterize(ImmutableList.of(true), "true")
+						.with(TypeToken.get(Boolean.class))
+						.get(),
+				parameterize(ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4)), "[{\"foo\":1,\"bar\":2},{\"bar\":3,\"qux\":4}]")
+						.with(new TypeToken<Map<String, Integer>>() {})
+						.get(),
+				parameterize(ImmutableList.of("foo", "bar", "baz"), "[\"foo\",\"bar\",\"baz\"]")
+						.with(TypeToken.get(String.class))
+						.get(),
+				parameterize(ImmutableList.of(39, 42, 100), "[39,42,100]")
+						.with(TypeToken.get(Integer.class))
+						.get(),
+				parameterize(ImmutableList.of(true, false, true), "[true,false,true]")
+						.with(TypeToken.get(Boolean.class))
+						.get()
 		);
 	}
 
@@ -69,7 +53,7 @@ public final class AlwaysListTypeAdapterTest
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<? extends List<?>> createUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
+	protected TypeAdapter<? extends List<?>> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
 		return AlwaysListTypeAdapter.get(gson.getAdapter(typeToken));
 	}
 

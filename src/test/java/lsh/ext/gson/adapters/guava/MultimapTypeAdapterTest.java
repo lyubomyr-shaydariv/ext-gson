@@ -18,13 +18,11 @@ public final class MultimapTypeAdapterTest
 		extends AbstractTypeAdapterTest<Multimap<String, ?>> {
 
 	@Parameterized.Parameters
-	public static Iterable<TestWith<Multimap<String, ?>>> parameters() {
+	public static Iterable<TestWith<? extends Multimap<String, ?>>> parameters() {
 		return ImmutableList.of(
-				testWith(
-						TypeToken.get(String.class),
-						ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"),
-						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}"
-				)
+				parameterize(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"), "{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}")
+						.with(TypeToken.get(String.class))
+						.get()
 		);
 	}
 
@@ -34,7 +32,7 @@ public final class MultimapTypeAdapterTest
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<? extends Multimap<String, ?>> createUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
+	protected TypeAdapter<? extends Multimap<String, ?>> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
 		return MultimapTypeAdapter.get(gson.getAdapter(typeToken));
 	}
 
