@@ -3,26 +3,22 @@ package lsh.ext.gson.adapters;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
 import com.google.gson.annotations.JsonAdapter;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-public final class UnpackedJsonTypeAdapterFactoryTest {
+@RunWith(Parameterized.class)
+public final class UnpackedJsonTypeAdapterFactoryTest
+		extends AbstractSimpleTest {
 
-	private static final Gson gson = new Gson();
-
-	@Test
-	public void testRead() {
-		final Wrapper wrapper = gson.fromJson("{\"value\":\"[1,2,3]\"}", Wrapper.class);
-		MatcherAssert.assertThat(wrapper.value, CoreMatchers.is(ImmutableList.of(1, 2, 3)));
+	@Parameterized.Parameters
+	public static Iterable<TestWith<?>> parameters() {
+		return ImmutableList.of(
+		);
 	}
 
-	@Test
-	public void testWrite() {
-		final Wrapper wrapper = new Wrapper(ImmutableList.of(1, 2, 3));
-		MatcherAssert.assertThat(gson.toJson(wrapper), CoreMatchers.is("{\"value\":\"[1,2,3]\"}"));
+	public UnpackedJsonTypeAdapterFactoryTest(final TestWith<?> testWith) {
+		super(testWith);
 	}
 
 	private static final class Wrapper {
