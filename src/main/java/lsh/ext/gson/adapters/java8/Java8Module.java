@@ -32,7 +32,10 @@ public final class Java8Module
 		}
 
 		public IModule done() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(OptionalTypeAdapterFactory.get())
+			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
+					OptionalTypeAdapterFactory.get(),
+					StreamTypeAdapterFactory.get()
+			)
 					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
 			return new Java8Module(typeAdapterFactories);
 		}

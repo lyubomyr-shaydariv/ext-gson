@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import lsh.ext.gson.IAutoCloseableIterator;
 
-final class JsonReaderIterator<E>
+public final class JsonReaderIterator<E>
 		implements IAutoCloseableIterator<E> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
@@ -21,7 +21,7 @@ final class JsonReaderIterator<E>
 		this.in = in;
 	}
 
-	static <E> IAutoCloseableIterator<E> get(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
+	public static <E> IAutoCloseableIterator<E> get(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
 		return new JsonReaderIterator<>(elementTypeAdapter, in);
 	}
 

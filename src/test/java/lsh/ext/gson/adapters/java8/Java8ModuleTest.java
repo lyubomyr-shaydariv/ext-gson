@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters.java8;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
@@ -13,7 +14,8 @@ public final class Java8ModuleTest
 		extends AbstractModuleTest {
 
 	private static final Collection<TypeToken<?>> supportedTypeTokens = ImmutableList.of(
-			new TypeToken<Optional<?>>() {}
+			new TypeToken<Optional<?>>() {},
+			new TypeToken<Stream<?>>() {}
 	);
 
 	@Nonnull
