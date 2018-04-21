@@ -8,7 +8,7 @@ public final class CloseableEnumerations {
 	}
 
 	public static <E> ICloseableEnumeration<E> from(final ICloseableIterator<? extends E> iterator) {
-		return new CloseableEnumerationFromCloseableIterator(iterator);
+		return new CloseableEnumerationFromCloseableIterator<>(iterator);
 	}
 
 	private static final class CloseableEnumerationFromCloseableIterator<E>
@@ -33,7 +33,7 @@ public final class CloseableEnumerations {
 		@Override
 		public void close()
 				throws IOException {
-			iterator.close();
+			CloseableIterators.tryClose(iterator);
 		}
 
 	}
