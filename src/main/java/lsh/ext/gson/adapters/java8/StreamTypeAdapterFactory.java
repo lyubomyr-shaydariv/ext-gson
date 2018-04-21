@@ -1,29 +1,28 @@
 package lsh.ext.gson.adapters.java8;
 
-import java.lang.reflect.Type;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.ParameterizedTypes;
-import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
+import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Stream}.
+ *
+ * @param <E> Element type
  *
  * @author Lyubomyr Shaydariv
  * @see StreamTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class StreamTypeAdapterFactory<T>
-		extends AbstractTypeAdapterFactory<T> {
+public final class StreamTypeAdapterFactory<E>
+		extends AbstractCursorTypeAdapterFactory<E> {
 
 	private static final TypeAdapterFactory instance = new StreamTypeAdapterFactory<>();
 
 	private StreamTypeAdapterFactory() {
+		super(Stream.class);
 	}
 
 	/**
@@ -33,19 +32,10 @@ public final class StreamTypeAdapterFactory<T>
 		return instance;
 	}
 
-	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		return Stream.class.isAssignableFrom(typeToken.getRawType());
-	}
-
 	@Nonnull
 	@Override
-	protected TypeAdapter<T> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0][0]));
-		@SuppressWarnings("unchecked")
-		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) StreamTypeAdapter.get(elementTypeAdapter);
-		return castTypeAdapter;
+	protected TypeAdapter<?> createCursorTypeAdapter(@Nonnull final TypeAdapter<?> elementTypeAdapter) {
+		return StreamTypeAdapter.get(elementTypeAdapter);
 	}
 
 }

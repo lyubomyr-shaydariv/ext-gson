@@ -1,28 +1,27 @@
 package lsh.ext.gson.adapters;
 
-import java.lang.reflect.Type;
 import java.util.Iterator;
 import javax.annotation.Nonnull;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.ParameterizedTypes;
 
 /**
  * Represents a type adapter factory for {@link Iterator}.
+ *
+ * @param <E> Element type
  *
  * @author Lyubomyr Shaydariv
  * @see CloseableIteratorTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class CloseableIteratorTypeAdapterFactory<T>
-		extends AbstractTypeAdapterFactory<T> {
+public final class CloseableIteratorTypeAdapterFactory<E>
+		extends AbstractCursorTypeAdapterFactory<E> {
 
 	private static final TypeAdapterFactory instance = new CloseableIteratorTypeAdapterFactory<>();
 
 	private CloseableIteratorTypeAdapterFactory() {
+		super(Iterator.class);
 	}
 
 	/**
@@ -32,19 +31,10 @@ public final class CloseableIteratorTypeAdapterFactory<T>
 		return instance;
 	}
 
-	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		return Iterator.class.isAssignableFrom(typeToken.getRawType());
-	}
-
 	@Nonnull
 	@Override
-	protected TypeAdapter<T> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0][0]));
-		@SuppressWarnings("unchecked")
-		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) CloseableIteratorTypeAdapter.get(elementTypeAdapter);
-		return castTypeAdapter;
+	protected TypeAdapter<?> createCursorTypeAdapter(@Nonnull final TypeAdapter<?> elementTypeAdapter) {
+		return CloseableIteratorTypeAdapter.get(elementTypeAdapter);
 	}
 
 }
