@@ -5,7 +5,6 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import lsh.ext.gson.CloseableIterators;
 import lsh.ext.gson.ICloseableIterator;
 
 final class Streams {
@@ -17,7 +16,7 @@ final class Streams {
 		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, 0), false)
 				.onClose(() -> {
 					try {
-						CloseableIterators.tryClose(iterator);
+						iterator.close();
 					} catch ( final IOException ex ) {
 						throw new RuntimeException(ex);
 					}

@@ -72,30 +72,6 @@ public final class CloseableIteratorsTest {
 		Mockito.verifyZeroInteractions(mockConsumer, mockCloseable);
 	}
 
-	@Test
-	@SuppressWarnings("resource")
-	public void testTryClose()
-			throws Exception {
-		final Closeable mockCloseable = Mockito.mock(Closeable.class);
-		CloseableIterators.tryClose(mockCloseable);
-		Mockito.verify(mockCloseable).close();
-		Mockito.verifyZeroInteractions(mockCloseable);
-	}
-
-	@Test
-	public void testTryCloseNull()
-			throws Exception {
-		CloseableIterators.tryClose(null);
-	}
-
-	@Test
-	public void testTryToCloseNotCloseable()
-			throws Exception {
-		final Runnable mockRunnable = Mockito.mock(Runnable.class);
-		CloseableIterators.tryClose(mockRunnable);
-		Mockito.verifyZeroInteractions(mockRunnable);
-	}
-
 	private static final class CloseableIterator<T>
 			implements Iterator<T>, Closeable {
 

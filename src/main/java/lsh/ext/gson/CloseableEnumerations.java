@@ -33,7 +33,7 @@ public final class CloseableEnumerations {
 		@Override
 		public void close()
 				throws IOException {
-			CloseableIterators.tryClose(iterator);
+			iterator.close();
 		}
 
 	}

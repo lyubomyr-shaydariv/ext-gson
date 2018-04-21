@@ -71,20 +71,6 @@ public final class CloseableIterators {
 	}
 
 	/**
-	 * Tries to close the given object if it's a {@link Closeable}.
-	 *
-	 * @param object Any object. If the object is {@link Closeable}, {@link Closeable#close()} is invoked upon the object. Otherwise ignored.
-	 *
-	 * @throws IOException If an exception during {@link Closeable#close()} occurs.
-	 */
-	public static void tryClose(final Object object)
-			throws IOException {
-		if ( object instanceof Closeable ) {
-			((Closeable) object).close();
-		}
-	}
-
-	/**
 	 * @param enumeration Enumeration to convert
 	 * @param <E>         Element type
 	 *
@@ -92,6 +78,13 @@ public final class CloseableIterators {
 	 */
 	public static <E> ICloseableIterator<E> from(final ICloseableEnumeration<E> enumeration) {
 		return new CloseableIteratorFromCloseableEnumeration<>(enumeration);
+	}
+
+	private static void tryClose(final Object object)
+			throws IOException {
+		if ( object instanceof Closeable ) {
+			((Closeable) object).close();
+		}
 	}
 
 	private static final class CloseableIterator<E>
