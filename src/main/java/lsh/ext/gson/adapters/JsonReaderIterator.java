@@ -6,10 +6,10 @@ import java.util.NoSuchElementException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import lsh.ext.gson.IAutoCloseableIterator;
+import lsh.ext.gson.ICloseableIterator;
 
 public final class JsonReaderIterator<E>
-		implements IAutoCloseableIterator<E> {
+		implements ICloseableIterator<E> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
 	private final JsonReader in;
@@ -21,7 +21,7 @@ public final class JsonReaderIterator<E>
 		this.in = in;
 	}
 
-	public static <E> IAutoCloseableIterator<E> get(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
+	public static <E> ICloseableIterator<E> get(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
 		return new JsonReaderIterator<>(elementTypeAdapter, in);
 	}
 

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import lsh.ext.gson.IAutoCloseableIterator;
+import lsh.ext.gson.ICloseableIterator;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public final class JsonReaderIteratorTest {
 	public void testEmpty()
 			throws Exception {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
-		try ( final IAutoCloseableIterator<?> unit = JsonReaderIterator.get(new Gson().getAdapter(FooBar.class), in) ) {
+		try ( final ICloseableIterator<?> unit = JsonReaderIterator.get(new Gson().getAdapter(FooBar.class), in) ) {
 			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
 		}
 	}

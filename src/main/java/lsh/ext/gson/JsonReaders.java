@@ -168,8 +168,8 @@ public final class JsonReaders {
 	 * @see #readValuedJsonToken(JsonReader)
 	 * @since 0-SNAPSHOT
 	 */
-	public static IAutoCloseableIterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(final JsonReader jsonReader) {
-		return new IAutoCloseableIterator<ValuedJsonToken<?>>() {
+	public static ICloseableIterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(final JsonReader jsonReader) {
+		return new ICloseableIterator<ValuedJsonToken<?>>() {
 			private int level;
 
 			@Override

@@ -6,8 +6,8 @@ import java.util.Iterator;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.AutoCloseableIterators;
-import lsh.ext.gson.IAutoCloseableIterator;
+import lsh.ext.gson.CloseableIterators;
+import lsh.ext.gson.ICloseableIterator;
 
 /**
  * <p>
@@ -18,16 +18,16 @@ import lsh.ext.gson.IAutoCloseableIterator;
  * </p>
  *
  * @author Lyubomyr Shaydariv
- * @see AutoCloseableIteratorTypeAdapterFactory
- * @see AutoCloseableIterators
+ * @see CloseableIteratorTypeAdapterFactory
+ * @see CloseableIterators
  * @since 0-SNAPSHOT
  */
-public final class AutoCloseableIteratorTypeAdapter<E>
-		extends TypeAdapter<IAutoCloseableIterator<E>> {
+public final class CloseableIteratorTypeAdapter<E>
+		extends TypeAdapter<ICloseableIterator<E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
 
-	private AutoCloseableIteratorTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
+	private CloseableIteratorTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
 		this.elementTypeAdapter = elementTypeAdapter;
 	}
 
@@ -35,16 +35,16 @@ public final class AutoCloseableIteratorTypeAdapter<E>
 	 * @param elementTypeAdapter Element type adapter
 	 * @param <E>                Iterator element type
 	 *
-	 * @return An instance of {@link AutoCloseableIteratorTypeAdapter}.
+	 * @return An instance of {@link CloseableIteratorTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<IAutoCloseableIterator<E>> get(final TypeAdapter<E> elementTypeAdapter) {
-		return new AutoCloseableIteratorTypeAdapter<>(elementTypeAdapter)
+	public static <E> TypeAdapter<ICloseableIterator<E>> get(final TypeAdapter<E> elementTypeAdapter) {
+		return new CloseableIteratorTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
 	@Override
 	@SuppressWarnings("resource")
-	public void write(final JsonWriter out, final IAutoCloseableIterator<E> iterator)
+	public void write(final JsonWriter out, final ICloseableIterator<E> iterator)
 			throws IOException {
 		out.beginArray();
 		while ( iterator.hasNext() ) {
@@ -55,7 +55,7 @@ public final class AutoCloseableIteratorTypeAdapter<E>
 	}
 
 	@Override
-	public IAutoCloseableIterator<E> read(final JsonReader in) {
+	public ICloseableIterator<E> read(final JsonReader in) {
 		return JsonReaderIterator.get(elementTypeAdapter, in);
 	}
 

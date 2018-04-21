@@ -9,7 +9,7 @@ import java.util.stream.StreamSupport;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.IAutoCloseableIterator;
+import lsh.ext.gson.ICloseableIterator;
 import lsh.ext.gson.adapters.JsonReaderIterator;
 
 /**
@@ -60,7 +60,7 @@ public final class StreamTypeAdapter<E>
 	@Override
 	public Stream<E> read(final JsonReader in) {
 		@SuppressWarnings("resource")
-		final IAutoCloseableIterator<E> iterator = JsonReaderIterator.get(elementTypeAdapter, in);
+		final ICloseableIterator<E> iterator = JsonReaderIterator.get(elementTypeAdapter, in);
 		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, 0), false)
 				.onClose(() -> {
 					try {

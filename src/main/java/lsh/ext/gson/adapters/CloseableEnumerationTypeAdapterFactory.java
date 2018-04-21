@@ -1,6 +1,7 @@
 package lsh.ext.gson.adapters;
 
 import java.lang.reflect.Type;
+import java.util.Enumeration;
 import java.util.Iterator;
 import javax.annotation.Nonnull;
 
@@ -14,19 +15,19 @@ import lsh.ext.gson.ParameterizedTypes;
  * Represents a type adapter factory for {@link Iterator}.
  *
  * @author Lyubomyr Shaydariv
- * @see AutoCloseableIteratorTypeAdapter
+ * @see CloseableEnumerationTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class AutoCloseableIteratorTypeAdapterFactory<T>
+public final class CloseableEnumerationTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<T> {
 
-	private static final TypeAdapterFactory instance = new AutoCloseableIteratorTypeAdapterFactory<>();
+	private static final TypeAdapterFactory instance = new CloseableEnumerationTypeAdapterFactory<>();
 
-	private AutoCloseableIteratorTypeAdapterFactory() {
+	private CloseableEnumerationTypeAdapterFactory() {
 	}
 
 	/**
-	 * @return An instance of {@link AutoCloseableIteratorTypeAdapterFactory}.
+	 * @return An instance of {@link CloseableEnumerationTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory get() {
 		return instance;
@@ -34,7 +35,7 @@ public final class AutoCloseableIteratorTypeAdapterFactory<T>
 
 	@Override
 	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		return Iterator.class.isAssignableFrom(typeToken.getRawType());
+		return Enumeration.class.isAssignableFrom(typeToken.getRawType());
 	}
 
 	@Nonnull
@@ -43,7 +44,7 @@ public final class AutoCloseableIteratorTypeAdapterFactory<T>
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0][0]));
 		@SuppressWarnings("unchecked")
-		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) AutoCloseableIteratorTypeAdapter.get(elementTypeAdapter);
+		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) CloseableIteratorTypeAdapter.get(elementTypeAdapter);
 		return castTypeAdapter;
 	}
 

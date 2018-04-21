@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.lang.reflect.Type;
-import java.util.Enumeration;
 import java.util.Iterator;
 import javax.annotation.Nonnull;
 
@@ -15,19 +14,19 @@ import lsh.ext.gson.ParameterizedTypes;
  * Represents a type adapter factory for {@link Iterator}.
  *
  * @author Lyubomyr Shaydariv
- * @see AutoCloseableEnumerationTypeAdapter
+ * @see CloseableIteratorTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class AutoCloseableEnumerationTypeAdapterFactory<T>
+public final class CloseableIteratorTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<T> {
 
-	private static final TypeAdapterFactory instance = new AutoCloseableEnumerationTypeAdapterFactory<>();
+	private static final TypeAdapterFactory instance = new CloseableIteratorTypeAdapterFactory<>();
 
-	private AutoCloseableEnumerationTypeAdapterFactory() {
+	private CloseableIteratorTypeAdapterFactory() {
 	}
 
 	/**
-	 * @return An instance of {@link AutoCloseableEnumerationTypeAdapterFactory}.
+	 * @return An instance of {@link CloseableIteratorTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory get() {
 		return instance;
@@ -35,7 +34,7 @@ public final class AutoCloseableEnumerationTypeAdapterFactory<T>
 
 	@Override
 	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		return Enumeration.class.isAssignableFrom(typeToken.getRawType());
+		return Iterator.class.isAssignableFrom(typeToken.getRawType());
 	}
 
 	@Nonnull
@@ -44,7 +43,7 @@ public final class AutoCloseableEnumerationTypeAdapterFactory<T>
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0][0]));
 		@SuppressWarnings("unchecked")
-		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) AutoCloseableIteratorTypeAdapter.get(elementTypeAdapter);
+		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) CloseableIteratorTypeAdapter.get(elementTypeAdapter);
 		return castTypeAdapter;
 	}
 

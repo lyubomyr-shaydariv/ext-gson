@@ -148,7 +148,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("\"foo\" \"bar\"")) ) {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
-			final IAutoCloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value("foo"))));
 		}
 	}
@@ -159,7 +159,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("100 300")) ) {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
-			final IAutoCloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value(100D))));
 		}
 	}
@@ -170,7 +170,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("true false")) ) {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
-			final IAutoCloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value(true))));
 		}
 	}
@@ -181,7 +181,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("null false")) ) {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
-			final IAutoCloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value())));
 		}
 	}
@@ -192,7 +192,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("[1,2,3] false")) ) {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
-			final IAutoCloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(1D), ValuedJsonToken.value(2D), ValuedJsonToken.value(3D), ValuedJsonToken.arrayEnd())));
 		}
 	}
@@ -203,7 +203,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("{\"foo\":1,\"bar\":2} 300")) ) {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
-			final IAutoCloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.objectBegin(), ValuedJsonToken.name("foo"), ValuedJsonToken.value(1D), ValuedJsonToken.name("bar"), ValuedJsonToken.value(2D), ValuedJsonToken.objectEnd())));
 		}
 	}
@@ -214,7 +214,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("100 300")) ) {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
-			final IAutoCloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value(100D))));
 			iterator.next();
 		}
