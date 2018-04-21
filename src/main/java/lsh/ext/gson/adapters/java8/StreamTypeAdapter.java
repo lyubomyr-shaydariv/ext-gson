@@ -1,17 +1,13 @@
 package lsh.ext.gson.adapters.java8;
 
-import java.io.IOException;
 import java.util.Iterator;
-import java.util.Spliterators;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.CloseableIterators;
 import lsh.ext.gson.ICloseableIterator;
-import lsh.ext.gson.adapters.JsonReaderIterator;
+import lsh.ext.gson.adapters.AbstractCursorTypeAdapter;
 
 /**
  * <p>
@@ -26,12 +22,10 @@ import lsh.ext.gson.adapters.JsonReaderIterator;
  * @since 0-SNAPSHOT
  */
 public final class StreamTypeAdapter<E>
-		extends TypeAdapter<Stream<E>> {
-
-	private final TypeAdapter<E> elementTypeAdapter;
+		extends AbstractCursorTypeAdapter<Stream<? extends E>, E> {
 
 	private StreamTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
-		this.elementTypeAdapter = elementTypeAdapter;
+		super(elementTypeAdapter);
 	}
 
 	/**
@@ -40,36 +34,21 @@ public final class StreamTypeAdapter<E>
 	 *
 	 * @return An instance of {@link StreamTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<Stream<E>> get(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<Stream<? extends E>> get(final TypeAdapter<E> elementTypeAdapter) {
 		return new StreamTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
+	@Nonnull
 	@Override
-	@SuppressWarnings("resource")
-	public void write(final JsonWriter out, final Stream<E> stream)
-			throws IOException {
-		out.beginArray();
-		final Iterator<E> iterator = stream.iterator();
-		while ( iterator.hasNext() ) {
-			final E element = iterator.next();
-			elementTypeAdapter.write(out, element);
-		}
-		out.endArray();
+	protected Iterator<? extends E> toIterator(@Nonnull final Stream<? extends E> stream) {
+		return stream.iterator();
 	}
 
+	@Nonnull
 	@Override
-	public Stream<E> read(final JsonReader in) {
-		@SuppressWarnings("resource")
-		final ICloseableIterator<E> iterator = JsonReaderIterator.get(elementTypeAdapter, in);
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, 0), false)
-				.onClose(() -> {
-					try {
-						CloseableIterators.tryClose(iterator);
-					} catch ( final Exception ex ) {
-						throw new RuntimeException(ex);
-					}
-				});
+	protected Stream<? extends E> fromIterator(@Nonnull final ICloseableIterator<? extends E> iterator) {
+		return Streams.from(iterator);
 	}
 
 }

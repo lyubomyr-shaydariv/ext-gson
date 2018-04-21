@@ -84,6 +84,16 @@ public final class CloseableIterators {
 		}
 	}
 
+	/**
+	 * @param enumeration Enumeration to convert
+	 * @param <E>         Element type
+	 *
+	 * @return An enumeration wrapped in a iterator.
+	 */
+	public static <E> ICloseableIterator<E> from(final ICloseableEnumeration<E> enumeration) {
+		return new CloseableIteratorFromCloseableEnumeration<>(enumeration);
+	}
+
 	private static final class CloseableIterator<E>
 			implements ICloseableIterator<E> {
 
@@ -112,6 +122,33 @@ public final class CloseableIterators {
 		public void close()
 				throws IOException {
 			tryClose(iterator);
+		}
+
+	}
+
+	private static final class CloseableIteratorFromCloseableEnumeration<E>
+			implements ICloseableIterator<E> {
+
+		private final ICloseableEnumeration<? extends E> enumeration;
+
+		private CloseableIteratorFromCloseableEnumeration(final ICloseableEnumeration<? extends E> enumeration) {
+			this.enumeration = enumeration;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return enumeration.hasMoreElements();
+		}
+
+		@Override
+		public E next() {
+			return enumeration.nextElement();
+		}
+
+		@Override
+		public void close()
+				throws IOException {
+			tryClose(enumeration);
 		}
 
 	}

@@ -1,12 +1,14 @@
 package lsh.ext.gson.adapters;
 
-import java.io.IOException;
+import java.util.Iterator;
+import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import lsh.ext.gson.CloseableEnumerations;
+import lsh.ext.gson.CloseableIterators;
 import lsh.ext.gson.ICloseableEnumeration;
+import lsh.ext.gson.ICloseableIterator;
 
 /**
  * <p>
@@ -21,12 +23,10 @@ import lsh.ext.gson.ICloseableEnumeration;
  * @since 0-SNAPSHOT
  */
 public final class CloseableEnumerationTypeAdapter<E>
-		extends TypeAdapter<ICloseableEnumeration<E>> {
-
-	private final TypeAdapter<E> elementTypeAdapter;
+		extends AbstractCursorTypeAdapter<ICloseableEnumeration<? extends E>, E> {
 
 	private CloseableEnumerationTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
-		this.elementTypeAdapter = elementTypeAdapter;
+		super(elementTypeAdapter);
 	}
 
 	/**
@@ -35,26 +35,21 @@ public final class CloseableEnumerationTypeAdapter<E>
 	 *
 	 * @return An instance of {@link CloseableEnumerationTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<ICloseableEnumeration<E>> get(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<ICloseableEnumeration<? extends E>> get(final TypeAdapter<E> elementTypeAdapter) {
 		return new CloseableEnumerationTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
+	@Nonnull
 	@Override
-	@SuppressWarnings("resource")
-	public void write(final JsonWriter out, final ICloseableEnumeration<E> enumeration)
-			throws IOException {
-		out.beginArray();
-		while ( enumeration.hasMoreElements() ) {
-			final E element = enumeration.nextElement();
-			elementTypeAdapter.write(out, element);
-		}
-		out.endArray();
+	protected Iterator<? extends E> toIterator(@Nonnull final ICloseableEnumeration<? extends E> enumeration) {
+		return CloseableIterators.from(enumeration);
 	}
 
+	@Nonnull
 	@Override
-	public ICloseableEnumeration<E> read(final JsonReader in) {
-		return CloseableEnumerations.from(JsonReaderIterator.get(elementTypeAdapter, in));
+	protected ICloseableEnumeration<E> fromIterator(@Nonnull final ICloseableIterator<? extends E> iterator) {
+		return CloseableEnumerations.from(iterator);
 	}
 
 }

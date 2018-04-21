@@ -1,11 +1,10 @@
 package lsh.ext.gson.adapters;
 
-import java.io.IOException;
 import java.util.Iterator;
+import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import lsh.ext.gson.CloseableIterators;
 import lsh.ext.gson.ICloseableIterator;
 
@@ -23,12 +22,10 @@ import lsh.ext.gson.ICloseableIterator;
  * @since 0-SNAPSHOT
  */
 public final class CloseableIteratorTypeAdapter<E>
-		extends TypeAdapter<ICloseableIterator<E>> {
-
-	private final TypeAdapter<E> elementTypeAdapter;
+		extends AbstractCursorTypeAdapter<ICloseableIterator<? extends E>, E> {
 
 	private CloseableIteratorTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
-		this.elementTypeAdapter = elementTypeAdapter;
+		super(elementTypeAdapter);
 	}
 
 	/**
@@ -37,26 +34,21 @@ public final class CloseableIteratorTypeAdapter<E>
 	 *
 	 * @return An instance of {@link CloseableIteratorTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<ICloseableIterator<E>> get(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<ICloseableIterator<? extends E>> get(final TypeAdapter<E> elementTypeAdapter) {
 		return new CloseableIteratorTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
+	@Nonnull
 	@Override
-	@SuppressWarnings("resource")
-	public void write(final JsonWriter out, final ICloseableIterator<E> iterator)
-			throws IOException {
-		out.beginArray();
-		while ( iterator.hasNext() ) {
-			final E element = iterator.next();
-			elementTypeAdapter.write(out, element);
-		}
-		out.endArray();
+	protected Iterator<? extends E> toIterator(@Nonnull final ICloseableIterator<? extends E> iterator) {
+		return iterator;
 	}
 
+	@Nonnull
 	@Override
-	public ICloseableIterator<E> read(final JsonReader in) {
-		return JsonReaderIterator.get(elementTypeAdapter, in);
+	protected ICloseableIterator<? extends E> fromIterator(@Nonnull final ICloseableIterator<? extends E> iterator) {
+		return iterator;
 	}
 
 }
