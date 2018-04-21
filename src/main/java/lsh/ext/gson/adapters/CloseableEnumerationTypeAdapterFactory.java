@@ -35,7 +35,7 @@ public final class CloseableEnumerationTypeAdapterFactory<E>
 	@Nonnull
 	@Override
 	protected TypeAdapter<?> createCursorTypeAdapter(@Nonnull final TypeAdapter<?> elementTypeAdapter) {
-		return CloseableIteratorTypeAdapter.get(elementTypeAdapter);
+		return CloseableEnumerationTypeAdapter.get(elementTypeAdapter);
 	}
 
 }

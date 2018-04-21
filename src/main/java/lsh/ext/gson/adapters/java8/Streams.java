@@ -1,5 +1,6 @@
 package lsh.ext.gson.adapters.java8;
 
+import java.io.IOException;
 import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -17,7 +18,7 @@ final class Streams {
 				.onClose(() -> {
 					try {
 						CloseableIterators.tryClose(iterator);
-					} catch ( final Exception ex ) {
+					} catch ( final IOException ex ) {
 						throw new RuntimeException(ex);
 					}
 				});
