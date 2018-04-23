@@ -1,14 +1,13 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.Month;
+import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.NotImplementedYetException;
+import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
 public final class MonthTypeAdapter
-		extends TypeAdapter<Month> {
+		extends AbstractToStringStringTypeAdapter<Month> {
 
 	private static final TypeAdapter<Month> instance = new MonthTypeAdapter();
 
@@ -19,14 +18,10 @@ public final class MonthTypeAdapter
 		return instance;
 	}
 
+	@Nonnull
 	@Override
-	public void write(final JsonWriter out, final Month value) {
-		throw NotImplementedYetException.create();
-	}
-
-	@Override
-	public Month read(final JsonReader in) {
-		throw NotImplementedYetException.create();
+	protected Month fromString(@Nonnull final String string) {
+		return Month.valueOf(string);
 	}
 
 }

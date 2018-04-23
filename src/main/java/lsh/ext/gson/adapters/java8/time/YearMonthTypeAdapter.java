@@ -1,32 +1,35 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.NotImplementedYetException;
 
 public final class YearMonthTypeAdapter
-		extends TypeAdapter<YearMonth> {
+		extends AbstractTemporalAccessorTypeAdapter<YearMonth> {
 
-	private static final TypeAdapter<YearMonth> instance = new YearMonthTypeAdapter();
+	private static final TypeAdapter<YearMonth> instance = new YearMonthTypeAdapter(null);
 
-	private YearMonthTypeAdapter() {
+	private YearMonthTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		super(dateTimeFormatter);
 	}
 
 	public static TypeAdapter<YearMonth> get() {
 		return instance;
 	}
 
+	@Nonnull
 	@Override
-	public void write(final JsonWriter out, final YearMonth value) {
-		throw NotImplementedYetException.create();
+	protected YearMonth doFromString(@Nonnull final String string) {
+		return YearMonth.parse(string);
 	}
 
+	@Nonnull
 	@Override
-	public YearMonth read(final JsonReader in) {
-		throw NotImplementedYetException.create();
+	protected YearMonth doFromString(@Nonnull final String string, @Nonnull final DateTimeFormatter formatter) {
+		return YearMonth.parse(string, formatter);
 	}
 
 }

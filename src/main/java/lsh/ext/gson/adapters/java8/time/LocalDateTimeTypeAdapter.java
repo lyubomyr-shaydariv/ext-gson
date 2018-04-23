@@ -1,32 +1,35 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.NotImplementedYetException;
 
 public final class LocalDateTimeTypeAdapter
-		extends TypeAdapter<LocalDateTime> {
+		extends AbstractTemporalAccessorTypeAdapter<LocalDateTime> {
 
-	private static final TypeAdapter<LocalDateTime> instance = new LocalDateTimeTypeAdapter();
+	private static final TypeAdapter<LocalDateTime> instance = new LocalDateTimeTypeAdapter(null);
 
-	private LocalDateTimeTypeAdapter() {
+	private LocalDateTimeTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		super(dateTimeFormatter);
 	}
 
 	public static TypeAdapter<LocalDateTime> get() {
 		return instance;
 	}
 
+	@Nonnull
 	@Override
-	public void write(final JsonWriter out, final LocalDateTime value) {
-		throw NotImplementedYetException.create();
+	protected LocalDateTime doFromString(@Nonnull final String string) {
+		return LocalDateTime.parse(string);
 	}
 
+	@Nonnull
 	@Override
-	public LocalDateTime read(final JsonReader in) {
-		throw NotImplementedYetException.create();
+	protected LocalDateTime doFromString(@Nonnull final String string, @Nonnull final DateTimeFormatter formatter) {
+		return LocalDateTime.parse(string, formatter);
 	}
 
 }

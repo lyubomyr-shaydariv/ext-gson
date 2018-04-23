@@ -1,14 +1,13 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.DayOfWeek;
+import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.NotImplementedYetException;
+import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
 public final class DayOfWeekTypeAdapter
-		extends TypeAdapter<DayOfWeek> {
+		extends AbstractToStringStringTypeAdapter<DayOfWeek> {
 
 	private static final TypeAdapter<DayOfWeek> instance = new DayOfWeekTypeAdapter();
 
@@ -19,14 +18,10 @@ public final class DayOfWeekTypeAdapter
 		return instance;
 	}
 
+	@Nonnull
 	@Override
-	public void write(final JsonWriter out, final DayOfWeek value) {
-		throw NotImplementedYetException.create();
-	}
-
-	@Override
-	public DayOfWeek read(final JsonReader in) {
-		throw NotImplementedYetException.create();
+	protected DayOfWeek fromString(@Nonnull final String string) {
+		return DayOfWeek.valueOf(string);
 	}
 
 }

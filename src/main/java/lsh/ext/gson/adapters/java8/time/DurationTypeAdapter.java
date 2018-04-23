@@ -1,14 +1,13 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.Duration;
+import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.NotImplementedYetException;
+import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
 public final class DurationTypeAdapter
-		extends TypeAdapter<Duration> {
+		extends AbstractToStringStringTypeAdapter<Duration> {
 
 	private static final TypeAdapter<Duration> instance = new DurationTypeAdapter();
 
@@ -19,14 +18,10 @@ public final class DurationTypeAdapter
 		return instance;
 	}
 
+	@Nonnull
 	@Override
-	public void write(final JsonWriter out, final Duration value) {
-		throw NotImplementedYetException.create();
-	}
-
-	@Override
-	public Duration read(final JsonReader in) {
-		throw NotImplementedYetException.create();
+	protected Duration fromString(@Nonnull final String string) {
+		return Duration.parse(string);
 	}
 
 }

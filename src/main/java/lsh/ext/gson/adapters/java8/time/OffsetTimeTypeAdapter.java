@@ -1,32 +1,35 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.OffsetTime;
+import java.time.format.DateTimeFormatter;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.NotImplementedYetException;
 
 public final class OffsetTimeTypeAdapter
-		extends TypeAdapter<OffsetTime> {
+		extends AbstractTemporalAccessorTypeAdapter<OffsetTime> {
 
-	private static final TypeAdapter<OffsetTime> instance = new OffsetTimeTypeAdapter();
+	private static final TypeAdapter<OffsetTime> instance = new OffsetTimeTypeAdapter(null);
 
-	private OffsetTimeTypeAdapter() {
+	private OffsetTimeTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		super(dateTimeFormatter);
 	}
 
 	public static TypeAdapter<OffsetTime> get() {
 		return instance;
 	}
 
+	@Nonnull
 	@Override
-	public void write(final JsonWriter out, final OffsetTime value) {
-		throw NotImplementedYetException.create();
+	protected OffsetTime doFromString(@Nonnull final String string) {
+		return OffsetTime.parse(string);
 	}
 
+	@Nonnull
 	@Override
-	public OffsetTime read(final JsonReader in) {
-		throw NotImplementedYetException.create();
+	protected OffsetTime doFromString(@Nonnull final String string, @Nonnull final DateTimeFormatter formatter) {
+		return OffsetTime.parse(string, formatter);
 	}
 
 }

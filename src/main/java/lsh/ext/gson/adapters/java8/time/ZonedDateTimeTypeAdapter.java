@@ -1,32 +1,35 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.NotImplementedYetException;
 
 public final class ZonedDateTimeTypeAdapter
-		extends TypeAdapter<ZonedDateTime> {
+		extends AbstractTemporalAccessorTypeAdapter<ZonedDateTime> {
 
-	private static final TypeAdapter<ZonedDateTime> instance = new ZonedDateTimeTypeAdapter();
+	private static final TypeAdapter<ZonedDateTime> instance = new ZonedDateTimeTypeAdapter(null);
 
-	private ZonedDateTimeTypeAdapter() {
+	private ZonedDateTimeTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		super(dateTimeFormatter);
 	}
 
 	public static TypeAdapter<ZonedDateTime> get() {
 		return instance;
 	}
 
+	@Nonnull
 	@Override
-	public void write(final JsonWriter out, final ZonedDateTime value) {
-		throw NotImplementedYetException.create();
+	protected ZonedDateTime doFromString(@Nonnull final String string) {
+		return ZonedDateTime.parse(string);
 	}
 
+	@Nonnull
 	@Override
-	public ZonedDateTime read(final JsonReader in) {
-		throw NotImplementedYetException.create();
+	protected ZonedDateTime doFromString(@Nonnull final String string, @Nonnull final DateTimeFormatter formatter) {
+		return ZonedDateTime.parse(string, formatter);
 	}
 
 }

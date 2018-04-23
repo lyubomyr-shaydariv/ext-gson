@@ -1,14 +1,13 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.Instant;
+import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import lsh.ext.gson.NotImplementedYetException;
+import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
 public final class InstantTypeAdapter
-		extends TypeAdapter<Instant> {
+		extends AbstractToStringStringTypeAdapter<Instant> {
 
 	private static final TypeAdapter<Instant> instance = new InstantTypeAdapter();
 
@@ -19,14 +18,10 @@ public final class InstantTypeAdapter
 		return instance;
 	}
 
+	@Nonnull
 	@Override
-	public void write(final JsonWriter out, final Instant value) {
-		throw NotImplementedYetException.create();
-	}
-
-	@Override
-	public Instant read(final JsonReader in) {
-		throw NotImplementedYetException.create();
+	protected Instant fromString(@Nonnull final String string) {
+		return Instant.parse(string);
 	}
 
 }
