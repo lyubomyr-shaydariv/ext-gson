@@ -20,6 +20,13 @@ public final class ZonedDateTimeTypeAdapter
 		return instance;
 	}
 
+	public static TypeAdapter<ZonedDateTime> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		if ( dateTimeFormatter == null ) {
+			return instance;
+		}
+		return new ZonedDateTimeTypeAdapter(dateTimeFormatter);
+	}
+
 	@Nonnull
 	@Override
 	protected ZonedDateTime doFromString(@Nonnull final String string) {

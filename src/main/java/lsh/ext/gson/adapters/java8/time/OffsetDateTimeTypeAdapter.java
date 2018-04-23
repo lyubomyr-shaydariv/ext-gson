@@ -20,6 +20,13 @@ public final class OffsetDateTimeTypeAdapter
 		return instance;
 	}
 
+	public static TypeAdapter<OffsetDateTime> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		if ( dateTimeFormatter == null ) {
+			return instance;
+		}
+		return new OffsetDateTimeTypeAdapter (dateTimeFormatter);
+	}
+
 	@Nonnull
 	@Override
 	protected OffsetDateTime doFromString(@Nonnull final String string) {

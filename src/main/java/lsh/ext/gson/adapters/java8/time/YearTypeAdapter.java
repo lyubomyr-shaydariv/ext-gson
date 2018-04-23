@@ -20,6 +20,13 @@ public final class YearTypeAdapter
 		return instance;
 	}
 
+	public static TypeAdapter<Year> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		if ( dateTimeFormatter == null ) {
+			return instance;
+		}
+		return new YearTypeAdapter (dateTimeFormatter);
+	}
+
 	@Nonnull
 	@Override
 	protected Year doFromString(@Nonnull final String string) {

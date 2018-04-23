@@ -20,6 +20,13 @@ public final class MonthDayTypeAdapter
 		return instance;
 	}
 
+	public static TypeAdapter<MonthDay> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		if ( dateTimeFormatter == null ) {
+			return instance;
+		}
+		return new MonthDayTypeAdapter (dateTimeFormatter);
+	}
+
 	@Nonnull
 	@Override
 	protected MonthDay doFromString(@Nonnull final String string) {

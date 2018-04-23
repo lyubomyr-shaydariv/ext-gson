@@ -20,6 +20,13 @@ public final class LocalDateTimeTypeAdapter
 		return instance;
 	}
 
+	public static TypeAdapter<LocalDateTime> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		if ( dateTimeFormatter == null ) {
+			return instance;
+		}
+		return new LocalDateTimeTypeAdapter(dateTimeFormatter);
+	}
+
 	@Nonnull
 	@Override
 	protected LocalDateTime doFromString(@Nonnull final String string) {
