@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.NotImplementedYetException;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 public final class DurationTypeAdapterFactory
@@ -30,7 +29,7 @@ public final class DurationTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<Duration> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		throw NotImplementedYetException.create();
+		return DurationTypeAdapter.get();
 	}
 
 }

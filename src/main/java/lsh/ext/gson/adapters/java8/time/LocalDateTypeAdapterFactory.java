@@ -1,36 +1,43 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.NotImplementedYetException;
-import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 public final class LocalDateTypeAdapterFactory
-		extends AbstractTypeAdapterFactory<LocalDate> {
+		extends AbstractTemporalAccessorTypeAdapterFactory<LocalDate> {
 
-	private static final TypeAdapterFactory instance = new LocalDateTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new LocalDateTypeAdapterFactory(null);
 
-	private LocalDateTypeAdapterFactory() {
+	private LocalDateTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		super(LocalDate.class, dateTimeFormatter);
 	}
 
 	public static TypeAdapterFactory get() {
 		return instance;
 	}
 
-	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		return typeToken.getRawType() == LocalDate.class;
+	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		if ( dateTimeFormatter == null ) {
+			return instance;
+		}
+		return new LocalDateTypeAdapterFactory(dateTimeFormatter);
 	}
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<LocalDate> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		throw NotImplementedYetException.create();
+	protected TypeAdapter<LocalDate> create() {
+		return LocalDateTypeAdapter.get();
+	}
+
+	@Nonnull
+	@Override
+	protected TypeAdapter<LocalDate> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
+		return LocalDateTypeAdapter.get(dateTimeFormatter);
 	}
 
 }

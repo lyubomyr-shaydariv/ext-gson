@@ -1,36 +1,43 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.MonthDay;
+import java.time.format.DateTimeFormatter;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.NotImplementedYetException;
-import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 public final class MonthDayTypeAdapterFactory
-		extends AbstractTypeAdapterFactory<MonthDay> {
+		extends AbstractTemporalAccessorTypeAdapterFactory<MonthDay> {
 
-	private static final TypeAdapterFactory instance = new MonthDayTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new MonthDayTypeAdapterFactory(null);
 
-	private MonthDayTypeAdapterFactory() {
+	private MonthDayTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		super(MonthDay.class, dateTimeFormatter);
 	}
 
 	public static TypeAdapterFactory get() {
 		return instance;
 	}
 
-	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		return typeToken.getRawType() == MonthDay.class;
+	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+		if ( dateTimeFormatter == null ) {
+			return instance;
+		}
+		return new MonthDayTypeAdapterFactory(dateTimeFormatter);
 	}
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<MonthDay> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		throw NotImplementedYetException.create();
+	protected TypeAdapter<MonthDay> create() {
+		return MonthDayTypeAdapter.get();
+	}
+
+	@Nonnull
+	@Override
+	protected TypeAdapter<MonthDay> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
+		return MonthDayTypeAdapter.get(dateTimeFormatter);
 	}
 
 }
