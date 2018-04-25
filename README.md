@@ -8,6 +8,8 @@
 New libraries might be added someday.
 Maybe.
 
+![Travis CI](https://travis-ci.org/lyubomyr-shaydariv/ext-gson.svg?branch=master)
+
 ### Requirements
 
 * Build: Java 8 and Apache Maven.
@@ -63,7 +65,3 @@ Currently `ext-gson` supports:
   * [`com.google.common.base.Optional`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/base/Optional.html);
   * [`com.google.common.collect.Multimap`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multimap.html);
   * [`com.google.common.collect.Multiset`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multiset.html);
-
-### Development
-
-![Travis CI](https://travis-ci.org/lyubomyr-shaydariv/ext-gson.svg?branch=master)
