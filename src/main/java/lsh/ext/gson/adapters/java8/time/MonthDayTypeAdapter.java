@@ -24,7 +24,7 @@ public final class MonthDayTypeAdapter
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}
-		return new MonthDayTypeAdapter (dateTimeFormatter);
+		return new MonthDayTypeAdapter(dateTimeFormatter);
 	}
 
 	@Nonnull

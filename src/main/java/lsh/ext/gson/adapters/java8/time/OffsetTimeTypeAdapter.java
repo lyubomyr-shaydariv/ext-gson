@@ -24,7 +24,7 @@ public final class OffsetTimeTypeAdapter
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}
-		return new OffsetTimeTypeAdapter (dateTimeFormatter);
+		return new OffsetTimeTypeAdapter(dateTimeFormatter);
 	}
 
 	@Nonnull
