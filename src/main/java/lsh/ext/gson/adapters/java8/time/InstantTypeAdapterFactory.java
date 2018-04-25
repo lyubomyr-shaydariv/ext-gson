@@ -9,6 +9,12 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
+/**
+ * <p>Implements a type adapter factory for {@link Instant}</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @since 0-SNAPSHOT
+ */
 public final class InstantTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Instant> {
 
@@ -17,6 +23,9 @@ public final class InstantTypeAdapterFactory
 	private InstantTypeAdapterFactory() {
 	}
 
+	/**
+	 * @return An instance of {@link InstantTypeAdapterFactory}.
+	 */
 	public static TypeAdapterFactory get() {
 		return instance;
 	}

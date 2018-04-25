@@ -8,6 +8,12 @@ import javax.annotation.Nullable;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 
+/**
+ * <p>Implements a type adapter factory for {@link LocalTime}</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @since 0-SNAPSHOT
+ */
 public final class LocalTimeTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<LocalTime> {
 
@@ -17,10 +23,16 @@ public final class LocalTimeTypeAdapterFactory
 		super(LocalTime.class, dateTimeFormatter);
 	}
 
+	/**
+	 * @return An instance of {@link LocalTimeTypeAdapterFactory} with the Java-default {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapterFactory get() {
 		return instance;
 	}
 
+	/**
+	 * @return An instance of {@link LocalTimeTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;

@@ -6,6 +6,12 @@ import javax.annotation.Nonnull;
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
+/**
+ * <p>A type adapter for {@link Duration}.</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @see 0-SNAPSHOT
+ */
 public final class DurationTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Duration> {
 
@@ -14,6 +20,9 @@ public final class DurationTypeAdapter
 	private DurationTypeAdapter() {
 	}
 
+	/**
+	 * @return An instance of {@link DurationTypeAdapter}.
+	 */
 	public static TypeAdapter<Duration> get() {
 		return instance;
 	}

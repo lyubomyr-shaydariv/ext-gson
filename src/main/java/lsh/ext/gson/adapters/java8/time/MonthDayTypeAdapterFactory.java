@@ -8,6 +8,12 @@ import javax.annotation.Nullable;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 
+/**
+ * <p>Implements a type adapter factory for {@link MonthDay}</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @since 0-SNAPSHOT
+ */
 public final class MonthDayTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<MonthDay> {
 
@@ -17,10 +23,16 @@ public final class MonthDayTypeAdapterFactory
 		super(MonthDay.class, dateTimeFormatter);
 	}
 
+	/**
+	 * @return An instance of {@link MonthDayTypeAdapterFactory} with the Java-default {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapterFactory get() {
 		return instance;
 	}
 
+	/**
+	 * @return An instance of {@link MonthDayTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;

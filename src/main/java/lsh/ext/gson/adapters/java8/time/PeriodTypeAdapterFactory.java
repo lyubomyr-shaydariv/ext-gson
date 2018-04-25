@@ -9,6 +9,12 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
+/**
+ * <p>Implements a type adapter factory for {@link Period}</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @since 0-SNAPSHOT
+ */
 public final class PeriodTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Period> {
 
@@ -17,6 +23,9 @@ public final class PeriodTypeAdapterFactory
 	private PeriodTypeAdapterFactory() {
 	}
 
+	/**
+	 * @return An instance of {@link PeriodTypeAdapterFactory}.
+	 */
 	public static TypeAdapterFactory get() {
 		return instance;
 	}

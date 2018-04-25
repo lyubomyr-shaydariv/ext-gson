@@ -6,6 +6,12 @@ import javax.annotation.Nonnull;
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
+/**
+ * <p>A type adapter for {@link Month}.</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @see 0-SNAPSHOT
+ */
 public final class MonthTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Month> {
 
@@ -14,6 +20,9 @@ public final class MonthTypeAdapter
 	private MonthTypeAdapter() {
 	}
 
+	/**
+	 * @return An instance of {@link MonthTypeAdapter}.
+	 */
 	public static TypeAdapter<Month> get() {
 		return instance;
 	}

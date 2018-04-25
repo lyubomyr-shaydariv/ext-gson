@@ -7,6 +7,12 @@ import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 
+/**
+ * <p>A type adapter for {@link OffsetTime}.</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @see 0-SNAPSHOT
+ */
 public final class OffsetTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<OffsetTime> {
 
@@ -16,10 +22,18 @@ public final class OffsetTimeTypeAdapter
 		super(dateTimeFormatter);
 	}
 
+	/**
+	 * @return An instance of {@link OffsetTimeTypeAdapter} with the Java-default {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapter<OffsetTime> get() {
 		return instance;
 	}
 
+	/**
+	 * @param dateTimeFormatter Date/time formatter
+	 *
+	 * @return An instance of {@link OffsetTimeTypeAdapter} with a custom {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapter<OffsetTime> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;

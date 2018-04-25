@@ -6,6 +6,12 @@ import javax.annotation.Nonnull;
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
+/**
+ * <p>A type adapter for {@link DayOfWeek}.</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @see 0-SNAPSHOT
+ */
 public final class DayOfWeekTypeAdapter
 		extends AbstractToStringStringTypeAdapter<DayOfWeek> {
 
@@ -14,6 +20,9 @@ public final class DayOfWeekTypeAdapter
 	private DayOfWeekTypeAdapter() {
 	}
 
+	/**
+	 * @return An instance of {@link DayOfWeekTypeAdapter}.
+	 */
 	public static TypeAdapter<DayOfWeek> get() {
 		return instance;
 	}

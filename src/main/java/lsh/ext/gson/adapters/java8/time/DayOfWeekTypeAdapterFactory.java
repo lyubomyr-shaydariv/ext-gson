@@ -9,6 +9,12 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
+/**
+ * <p>Implements a type adapter factory for {@link DayOfWeek}</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @since 0-SNAPSHOT
+ */
 public final class DayOfWeekTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<DayOfWeek> {
 
@@ -17,6 +23,9 @@ public final class DayOfWeekTypeAdapterFactory
 	private DayOfWeekTypeAdapterFactory() {
 	}
 
+	/**
+	 * @return An instance of {@link DayOfWeekTypeAdapterFactory}.
+	 */
 	public static TypeAdapterFactory get() {
 		return instance;
 	}

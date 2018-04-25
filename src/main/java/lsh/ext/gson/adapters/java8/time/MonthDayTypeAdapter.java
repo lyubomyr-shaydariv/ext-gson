@@ -7,6 +7,12 @@ import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 
+/**
+ * <p>A type adapter for {@link MonthDay}.</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @see 0-SNAPSHOT
+ */
 public final class MonthDayTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<MonthDay> {
 
@@ -16,10 +22,18 @@ public final class MonthDayTypeAdapter
 		super(dateTimeFormatter);
 	}
 
+	/**
+	 * @return An instance of {@link MonthDayTypeAdapter} with the Java-default {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapter<MonthDay> get() {
 		return instance;
 	}
 
+	/**
+	 * @param dateTimeFormatter Date/time formatter
+	 *
+	 * @return An instance of {@link MonthDayTypeAdapter} with a custom {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapter<MonthDay> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;

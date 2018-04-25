@@ -7,6 +7,12 @@ import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 
+/**
+ * <p>A type adapter for {@link LocalTime}.</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @see 0-SNAPSHOT
+ */
 public final class LocalTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<LocalTime> {
 
@@ -16,10 +22,18 @@ public final class LocalTimeTypeAdapter
 		super(dateTimeFormatter);
 	}
 
+	/**
+	 * @return An instance of {@link LocalTimeTypeAdapter} with the Java-default {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapter<LocalTime> get() {
 		return instance;
 	}
 
+	/**
+	 * @param dateTimeFormatter Date/time formatter
+	 *
+	 * @return An instance of {@link LocalTimeTypeAdapter} with a custom {@link DateTimeFormatter}.
+	 */
 	public static TypeAdapter<LocalTime> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;

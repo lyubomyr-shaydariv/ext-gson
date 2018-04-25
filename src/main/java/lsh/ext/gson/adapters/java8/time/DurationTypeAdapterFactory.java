@@ -9,6 +9,12 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
+/**
+ * <p>Implements a type adapter factory for {@link Duration}</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @since 0-SNAPSHOT
+ */
 public final class DurationTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Duration> {
 
@@ -17,6 +23,9 @@ public final class DurationTypeAdapterFactory
 	private DurationTypeAdapterFactory() {
 	}
 
+	/**
+	 * @return An instance of {@link DurationTypeAdapterFactory}.
+	 */
 	public static TypeAdapterFactory get() {
 		return instance;
 	}

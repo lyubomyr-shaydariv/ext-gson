@@ -6,6 +6,12 @@ import javax.annotation.Nonnull;
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
+/**
+ * <p>A type adapter for {@link Instant}.</p>
+ *
+ * @author Lyubomyr Shaydariv
+ * @see 0-SNAPSHOT
+ */
 public final class InstantTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Instant> {
 
@@ -14,6 +20,9 @@ public final class InstantTypeAdapter
 	private InstantTypeAdapter() {
 	}
 
+	/**
+	 * @return An instance of {@link InstantTypeAdapter}.
+	 */
 	public static TypeAdapter<Instant> get() {
 		return instance;
 	}
