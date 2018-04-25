@@ -37,6 +37,24 @@ Currently `ext-gson` supports:
 * Specialized type adapters and factories:
   * `OptionalTypeAdapter` and `OptionalTypeAdapterFactory` - type adapter to support `java.util.Optional`;
 
+##### Java 8 Time API
+
+* Specialized type adapters and factories:
+  * `DayOfWeekTypeAdapterFactory` and `DayOfWeekTypeAdapterFactory` - type adapter to support `java.time.DayOfWeek`;
+  * `DurationTypeAdapterFactory` and `DurationTypeAdapterFactory` - type adapter to support `java.time.Duration`;
+  * `InstantTypeAdapterFactory` and `InstantTypeAdapterFactory` - type adapter to support `java.time.Instant`;
+  * `LocalDateTimeTypeAdapterFactory` and `LocalDateTimeTypeAdapterFactory` - type adapter to support `java.time.LocalDateTime`;
+  * `LocalDateTypeAdapterFactory` and `LocalDateTypeAdapterFactory` - type adapter to support `java.time.LocalDate`;
+  * `LocalTimeTypeAdapterFactory` and `LocalTimeTypeAdapterFactory` - type adapter to support `java.time.LocalTime`;
+  * `MonthDayTypeAdapterFactory` and `MonthDayTypeAdapterFactory` - type adapter to support `java.time.MonthDay`;
+  * `MonthTypeAdapterFactory` and `MonthTypeAdapterFactory` - type adapter to support `java.time.Month`;
+  * `OffsetDateTimeTypeAdapterFactory` and `OffsetDateTimeTypeAdapterFactory` - type adapter to support `java.time.OffsetDateTime`;
+  * `OffsetTimeTypeAdapterFactory` and `OffsetTimeTypeAdapterFactory` - type adapter to support `java.time.OffsetTime`;
+  * `PeriodTypeAdapterFactory` and `PeriodTypeAdapterFactory` - type adapter to support `java.time.Period`;
+  * `YearMonthTypeAdapterFactory` and `YearMonthTypeAdapterFactory` - type adapter to support `java.time.YearMonth`;
+  * `YearTypeAdapterFactory` and `YearTypeAdapterFactory` - type adapter to support `java.time.Year`;
+  * `ZonedDateTimeTypeAdapterFactory` and `ZonedDateTimeTypeAdapterFactory` - type adapter to support `java.time.ZonedDateTime`.
+
 #### Java JSON API
 
 * Specialized type adapters and factories:
