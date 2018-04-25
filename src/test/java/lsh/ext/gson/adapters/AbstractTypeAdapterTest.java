@@ -102,27 +102,27 @@ public abstract class AbstractTypeAdapterTest<T> {
 	protected abstract Object finalizeValue(@Nonnull T value);
 
 	@Test
-	public final void testWrite()
+	public final void testRead()
 			throws IOException {
 		final TypeAdapter<T> unit = createUnit(testWith, gson);
 		MatcherAssert.assertThat(finalizeValue(unit.fromJson(testWith.json)), CoreMatchers.is(finalizeValue(testWith.valueFactory.get())));
 	}
 
 	@Test
-	public final void testWriteNull()
+	public final void testReadNull()
 			throws IOException {
 		final TypeAdapter<T> unit = createUnit(testWith, gson);
 		MatcherAssert.assertThat(unit.fromJson("null"), CoreMatchers.is(nullValue));
 	}
 
 	@Test
-	public final void testRead() {
+	public final void testWrite() {
 		final TypeAdapter<T> unit = createUnit(testWith, gson);
 		MatcherAssert.assertThat(unit.toJson(testWith.valueFactory.get()), CoreMatchers.is(testWith.json));
 	}
 
 	@Test
-	public final void testReadNull() {
+	public final void testWriteNull() {
 		final TypeAdapter<T> unit = createUnit(testWith, gson);
 		MatcherAssert.assertThat(unit.toJson(nullValue), CoreMatchers.is("null"));
 	}
