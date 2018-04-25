@@ -34,38 +34,35 @@ Currently `ext-gson` supports:
   
 #### Java 8
 
-* Specialized type adapters and factories:
-  * `OptionalTypeAdapter` and `OptionalTypeAdapterFactory` - type adapter to support `java.util.Optional`;
-
-##### Java 8 Time API
-
-* Specialized type adapters and factories:
-  * `DayOfWeekTypeAdapterFactory` and `DayOfWeekTypeAdapterFactory` - type adapter to support `java.time.DayOfWeek`;
-  * `DurationTypeAdapterFactory` and `DurationTypeAdapterFactory` - type adapter to support `java.time.Duration`;
-  * `InstantTypeAdapterFactory` and `InstantTypeAdapterFactory` - type adapter to support `java.time.Instant`;
-  * `LocalDateTimeTypeAdapterFactory` and `LocalDateTimeTypeAdapterFactory` - type adapter to support `java.time.LocalDateTime`;
-  * `LocalDateTypeAdapterFactory` and `LocalDateTypeAdapterFactory` - type adapter to support `java.time.LocalDate`;
-  * `LocalTimeTypeAdapterFactory` and `LocalTimeTypeAdapterFactory` - type adapter to support `java.time.LocalTime`;
-  * `MonthDayTypeAdapterFactory` and `MonthDayTypeAdapterFactory` - type adapter to support `java.time.MonthDay`;
-  * `MonthTypeAdapterFactory` and `MonthTypeAdapterFactory` - type adapter to support `java.time.Month`;
-  * `OffsetDateTimeTypeAdapterFactory` and `OffsetDateTimeTypeAdapterFactory` - type adapter to support `java.time.OffsetDateTime`;
-  * `OffsetTimeTypeAdapterFactory` and `OffsetTimeTypeAdapterFactory` - type adapter to support `java.time.OffsetTime`;
-  * `PeriodTypeAdapterFactory` and `PeriodTypeAdapterFactory` - type adapter to support `java.time.Period`;
-  * `YearMonthTypeAdapterFactory` and `YearMonthTypeAdapterFactory` - type adapter to support `java.time.YearMonth`;
-  * `YearTypeAdapterFactory` and `YearTypeAdapterFactory` - type adapter to support `java.time.Year`;
-  * `ZonedDateTimeTypeAdapterFactory` and `ZonedDateTimeTypeAdapterFactory` - type adapter to support `java.time.ZonedDateTime`.
+* Types provided by `Java8Module`
+  * [`java.util.Optional`](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html);
+* Types provided by `Java8TimeModule`:
+  * [`java.time.DayOfWeek`](https://docs.oracle.com/javase/8/docs/api/java/time/DayOfWeek.html);
+  * [`java.time.Duration`](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html);
+  * [`java.time.Instant`](https://docs.oracle.com/javase/8/docs/api/java/time/Instant.html);
+  * [`java.time.LocalDateTime`](https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html);
+  * [`java.time.LocalDate`](https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html);
+  * [`java.time.LocalTime`](https://docs.oracle.com/javase/8/docs/api/java/time/LocalTime.html);
+  * [`java.time.MonthDay`](https://docs.oracle.com/javase/8/docs/api/java/time/MonthDay.html);
+  * [`java.time.Month`](https://docs.oracle.com/javase/8/docs/api/java/time/Month.html);
+  * [`java.time.OffsetDateTime`](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html);
+  * [`java.time.OffsetTime`](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetTime.html);
+  * [`java.time.Period`](https://docs.oracle.com/javase/8/docs/api/java/time/Period.html);
+  * [`java.time.YearMonth`](https://docs.oracle.com/javase/8/docs/api/java/time/YearMonth.html);
+  * [`java.time.Year`](https://docs.oracle.com/javase/8/docs/api/java/time/Year.html);
+  * [`java.time.ZonedDateTime`](https://docs.oracle.com/javase/8/docs/api/java/time/ZonedDateTime.html).
 
 #### Java JSON API
 
-* Specialized type adapters and factories:
-  * `JsonValueTypeAdapter` - type adapter to support `javax.json.JsonValue`.
+* Types provided by `JsonApiModule`:
+  * [`javax.json.JsonValue`](https://docs.oracle.com/javaee/7/api/javax/json/JsonValue.html).
 
 #### Google Guava
 
-* Specialized type adapters and factories:
-  * `OptionalTypeAdapter` and `OptionalTypeAdapterFactory` - type adapter to support `com.google.common.base.Optional`;
-  * `MultisetTypeAdapter` and `MultisetTypeAdapterFactory` - type adapter to support `com.google.common.collect.Multiset`.
-  * `MultimapTypeAdapter` and `MultimapTypeAdapterFactory` - type adapter to support `com.google.common.collect.Multimap`.
+* Types provided by `GuavaModule`:
+  * [`com.google.common.base.Optional`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/base/Optional.html);
+  * [`com.google.common.collect.Multimap`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multimap.html);
+  * [`com.google.common.collect.Multiset`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multiset.html);
 
 ### Development
 
