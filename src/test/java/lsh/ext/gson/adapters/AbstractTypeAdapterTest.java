@@ -29,12 +29,16 @@ public abstract class AbstractTypeAdapterTest<T> {
 		@Nullable
 		private final TypeToken<?> typeToken;
 
+		private final boolean withoutWrite;
+
 		private TestWith(@Nonnull final Supplier<? extends T> valueFactory, @Nonnull final String json,
-				@Nullable final BiFunction<? super Gson, ? super TypeToken<?>, ? extends TypeAdapter<?>> unitFactory, @Nullable final TypeToken<?> typeToken) {
+				@Nullable final BiFunction<? super Gson, ? super TypeToken<?>, ? extends TypeAdapter<?>> unitFactory, @Nullable final TypeToken<?> typeToken,
+				final boolean withoutWrite) {
 			this.valueFactory = valueFactory;
 			this.json = json;
 			this.unitFactory = unitFactory;
 			this.typeToken = typeToken;
+			this.withoutWrite = withoutWrite;
 		}
 
 		public static final class Builder<T>
@@ -52,6 +56,10 @@ public abstract class AbstractTypeAdapterTest<T> {
 			@Nullable
 			private TypeToken<?> typeToken;
 
+			private boolean withoutRead;
+
+			private boolean withoutWrite;
+
 			private Builder(@Nonnull final Supplier<? extends T> valueFactory, @Nonnull final String json) {
 				this.valueFactory = valueFactory;
 				this.json = json;
@@ -68,9 +76,14 @@ public abstract class AbstractTypeAdapterTest<T> {
 				return this;
 			}
 
+			public Builder<T> withoutWrite() {
+				withoutWrite = true;
+				return this;
+			}
+
 			@Override
 			public TestWith<T> get() {
-				return new TestWith<>(valueFactory, json, unitFactory, typeToken);
+				return new TestWith<>(valueFactory, json, unitFactory, typeToken, withoutWrite);
 			}
 
 		}
@@ -117,8 +130,10 @@ public abstract class AbstractTypeAdapterTest<T> {
 
 	@Test
 	public final void testWrite() {
-		final TypeAdapter<T> unit = createUnit(testWith, gson);
-		MatcherAssert.assertThat(unit.toJson(testWith.valueFactory.get()), CoreMatchers.is(testWith.json));
+		if ( !testWith.withoutWrite ) {
+			final TypeAdapter<T> unit = createUnit(testWith, gson);
+			MatcherAssert.assertThat(unit.toJson(testWith.valueFactory.get()), CoreMatchers.is(testWith.json));
+		}
 	}
 
 	@Test
