@@ -20,7 +20,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
 
-// TODO <T extends TemporalAccessor?>
 abstract class AbstractTimeTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
