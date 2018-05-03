@@ -3,7 +3,6 @@ package lsh.ext.gson.adapters.java8;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lsh.ext.gson.JsonElements;
@@ -23,7 +22,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToNewJsonObject() {
-		final JsonObject actual = ImmutableMap.<String, JsonElement>of(K1, v1, K2, v2, K3, v3)
+		final JsonObject actual = ImmutableMap.of(K1, v1, K2, v2, K3, v3)
 				.entrySet()
 				.stream()
 				.collect(JsonCollectors.toJsonObject());
@@ -33,7 +32,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToExistingJsonObject() {
-		final JsonObject actual = ImmutableMap.<String, JsonElement>of(K2, v2, K3, v3)
+		final JsonObject actual = ImmutableMap.of(K2, v2, K3, v3)
 				.entrySet()
 				.stream()
 				.collect(JsonCollectors.toJsonObject(() -> JsonElements.object(K1, v1)));
@@ -43,7 +42,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToExistingJsonObjectOverwritesEntries() {
-		final JsonObject actual = ImmutableMap.<String, JsonElement>of(K1, v1, K2, v2, K3, v3)
+		final JsonObject actual = ImmutableMap.of(K1, v1, K2, v2, K3, v3)
 				.entrySet()
 				.stream()
 				.collect(JsonCollectors.toJsonObject(() -> JsonElements.object(K1, v2, K2, v3, K3, v2)));
@@ -53,7 +52,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToNewJsonArray() {
-		final JsonArray actual = ImmutableList.<JsonElement>of(v1, v2, v3)
+		final JsonArray actual = ImmutableList.of(v1, v2, v3)
 				.stream()
 				.collect(JsonCollectors.toJsonArray());
 		final JsonArray expected = JsonElements.array(v1, v2, v3);
@@ -62,7 +61,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToExistingJsonArray() {
-		final JsonArray actual = ImmutableList.<JsonElement>of(v2, v3)
+		final JsonArray actual = ImmutableList.of(v2, v3)
 				.stream()
 				.collect(JsonCollectors.toJsonArray(() -> JsonElements.array(v1)));
 		final JsonArray expected = JsonElements.array(v1, v2, v3);

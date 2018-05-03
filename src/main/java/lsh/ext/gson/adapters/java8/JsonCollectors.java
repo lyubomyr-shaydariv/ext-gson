@@ -16,7 +16,7 @@ import com.google.gson.JsonObject;
  */
 public final class JsonCollectors {
 
-	private static final Collector<Map.Entry<String, JsonElement>, JsonObject, JsonObject> toNewJsonObject = createToJsonObject(JsonObject::new);
+	private static final Collector<Map.Entry<String, ? extends JsonElement>, JsonObject, JsonObject> toNewJsonObject = createToJsonObject(JsonObject::new);
 	private static final Collector<JsonElement, JsonArray, JsonArray> toNewJsonArray = createToJsonArray(JsonArray::new);
 
 	private JsonCollectors() {
@@ -25,7 +25,7 @@ public final class JsonCollectors {
 	/**
 	 * @return A collector to collect entries to a new {@link JsonObject}.
 	 */
-	public static Collector<Map.Entry<String, JsonElement>, JsonObject, JsonObject> toJsonObject() {
+	public static Collector<Map.Entry<String, ? extends JsonElement>, JsonObject, JsonObject> toJsonObject() {
 		return toNewJsonObject;
 	}
 
@@ -34,7 +34,7 @@ public final class JsonCollectors {
 	 *
 	 * @return A collector to collect entries to an existing {@link JsonObject}.
 	 */
-	public static Collector<Map.Entry<String, JsonElement>, JsonObject, JsonObject> toJsonObject(final Supplier<JsonObject> jsonObjectSupplier) {
+	public static Collector<Map.Entry<String, ? extends JsonElement>, JsonObject, JsonObject> toJsonObject(final Supplier<JsonObject> jsonObjectSupplier) {
 		return createToJsonObject(jsonObjectSupplier);
 	}
 
@@ -54,7 +54,8 @@ public final class JsonCollectors {
 		return createToJsonArray(jsonArraySupplier);
 	}
 
-	private static Collector<Map.Entry<String, JsonElement>, JsonObject, JsonObject> createToJsonObject(final Supplier<JsonObject> jsonObjectSupplier) {
+	private static Collector<Map.Entry<String, ? extends JsonElement>, JsonObject, JsonObject> createToJsonObject(
+			final Supplier<JsonObject> jsonObjectSupplier) {
 		return Collector.of(
 				jsonObjectSupplier,
 				(jsonObject1, e) -> jsonObject1.add(e.getKey(), e.getValue()),
