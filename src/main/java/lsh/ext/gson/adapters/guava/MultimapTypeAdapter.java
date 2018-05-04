@@ -8,7 +8,6 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 /**
@@ -77,7 +76,7 @@ public final class MultimapTypeAdapter<V>
 			throws IOException {
 		final Multimap<String, V> multimap = newMultimapFactory.get();
 		in.beginObject();
-		while ( in.peek() != JsonToken.END_OBJECT ) {
+		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
 			multimap.put(key, value);
