@@ -3,6 +3,7 @@ package lsh.ext.gson.adapters.guava;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Supplier;
+import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
@@ -16,6 +17,7 @@ import lsh.ext.gson.adapters.IModule;
  * </p>
  *
  * <ul>
+ * <li>{@link BiMapTypeAdapterFactory}</li>
  * <li>{@link MultimapTypeAdapterFactory}</li>
  * <li>{@link MultisetTypeAdapterFactory}</li>
  * <li>{@link OptionalTypeAdapterFactory}</li>
@@ -54,12 +56,27 @@ public final class GuavaModule
 	public static final class Builder {
 
 		@Nullable
+		private Supplier<? extends BiMap<String, Object>> newBiMapFactory;
+
+		@Nullable
 		private Supplier<? extends Multiset<Object>> newMultisetFactory;
 
 		@Nullable
 		private Supplier<? extends Multimap<String, Object>> newMultimapFactory;
 
 		private Builder() {
+		}
+
+		/**
+		 * Sets a new bidirectional map factory used in {@link BiMapTypeAdapterFactory#get(Supplier)}
+		 *
+		 * @param newBiMapFactory A supplier to return a new bidirectional map
+		 *
+		 * @return Self.
+		 */
+		public Builder withNewBiMapFactory(final Supplier<? extends BiMap<String, Object>> newBiMapFactory) {
+			this.newBiMapFactory = newBiMapFactory;
+			return this;
 		}
 
 		/**
@@ -92,6 +109,7 @@ public final class GuavaModule
 		public IModule done() {
 			final Iterable<TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
 					.add(OptionalTypeAdapterFactory.get())
+					.add(BiMapTypeAdapterFactory.get(newBiMapFactory))
 					.add(MultimapTypeAdapterFactory.get(newMultimapFactory))
 					.add(MultisetTypeAdapterFactory.get(newMultisetFactory))
 					.build();
