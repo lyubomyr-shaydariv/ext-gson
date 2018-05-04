@@ -1,5 +1,6 @@
 package lsh.ext.gson.adapters.guava;
 
+import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.BiMap;
@@ -19,12 +20,12 @@ public final class BiMapTypeAdapterFactoryTest
 		return ImmutableList.of(
 				testWith(
 						new TypeToken<BiMap<String, String>>() {},
-						new TypeToken<BiMap<Object, Integer>>() {}),
+						new TypeToken<Map<Object, Integer>>() {}),
 				testWith(
-						new TypeToken<BiMap<String, Object>>() {},
-						new TypeToken<BiMap<Integer, String>>() {}),
+						new TypeToken<BiMap<Integer, Object>>() {},
+						new TypeToken<Map<Integer, String>>() {}),
 				testWith(
-						new TypeToken<BiMap<String, Integer>>() {}
+						new TypeToken<BiMap<Float, Integer>>() {}
 				)
 		);
 	}

@@ -59,7 +59,10 @@ public final class GuavaModule
 	public static final class Builder {
 
 		@Nullable
-		private Supplier<? extends BiMap<String, Object>> newBiMapFactory;
+		private Supplier<? extends BiMap<?, ?>> newBiMapFactory;
+
+		@Nullable
+		private Converter<?, String> biMapKeyConverter;
 
 		@Nullable
 		private Supplier<? extends Multiset<?>> newMultisetFactory;
@@ -77,14 +80,26 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a new bidirectional map factory used in {@link BiMapTypeAdapterFactory#get(Supplier)}
+		 * Sets a new bidirectional map factory used in {@link BiMapTypeAdapterFactory#get(Supplier, Converter)}
 		 *
 		 * @param newBiMapFactory A supplier to return a new bidirectional map
 		 *
 		 * @return Self.
 		 */
-		public Builder withNewBiMapFactory(final Supplier<? extends BiMap<String, Object>> newBiMapFactory) {
+		public Builder withNewBiMapFactory(final Supplier<? extends BiMap<?, ?>> newBiMapFactory) {
 			this.newBiMapFactory = newBiMapFactory;
+			return this;
+		}
+
+		/**
+		 * Sets a bidirectional map key converter used in {@link BiMapTypeAdapterFactory#get(Supplier, Converter)}
+		 *
+		 * @param biMapKeyConverter A supplier to return a new multimap
+		 *
+		 * @return Self.
+		 */
+		public Builder withBiMapKeyConverter(final Converter<?, String> biMapKeyConverter) {
+			this.biMapKeyConverter = biMapKeyConverter;
 			return this;
 		}
 
@@ -134,6 +149,10 @@ public final class GuavaModule
 		 */
 		public IModule done() {
 			@SuppressWarnings("unchecked")
+			final Supplier<? extends BiMap<String, Object>> castNewBiMapFactory = (Supplier<? extends BiMap<String, Object>>) newBiMapFactory;
+			@SuppressWarnings("unchecked")
+			final Converter<String, String> castBiMapKeyConverter = (Converter<String, String>) multimapKeyConverter;
+			@SuppressWarnings("unchecked")
 			final Supplier<? extends Multimap<Object, Object>> castNewMultimapFactory = (Supplier<? extends Multimap<Object, Object>>) newMultimapFactory;
 			@SuppressWarnings("unchecked")
 			final Converter<Object, String> castMultimapKeyConverter = (Converter<Object, String>) multimapKeyConverter;
@@ -141,7 +160,7 @@ public final class GuavaModule
 			final Supplier<? extends Multiset<Object>> castNewMultisetFactory = (Supplier<? extends Multiset<Object>>) newMultisetFactory;
 			final Iterable<TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
 					.add(OptionalTypeAdapterFactory.get())
-					.add(BiMapTypeAdapterFactory.get(newBiMapFactory))
+					.add(BiMapTypeAdapterFactory.get(castNewBiMapFactory, castBiMapKeyConverter))
 					.add(MultimapTypeAdapterFactory.get(castNewMultimapFactory, castMultimapKeyConverter))
 					.add(MultisetTypeAdapterFactory.get(castNewMultisetFactory))
 					.add(TableTypeAdapterFactory.get(newTableFactory))
