@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.base.Converter;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
@@ -20,16 +21,25 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  * @see TableTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class TableTypeAdapterFactory<V>
-		extends AbstractTypeAdapterFactory<Table<String, String, V>> {
+public final class TableTypeAdapterFactory<R, C, V>
+		extends AbstractTypeAdapterFactory<Table<R, C, V>> {
 
-	private static final TypeAdapterFactory instance = new TableTypeAdapterFactory<>(null);
+	private static final TypeAdapterFactory instance = new TableTypeAdapterFactory<>(null, null, null);
 
 	@Nullable
-	private final Supplier<? extends Table<String, String, V>> newTableFactory;
+	private final Supplier<? extends Table<R, C, V>> newTableFactory;
 
-	private TableTypeAdapterFactory(@Nullable final Supplier<? extends Table<String, String, V>> newTableFactory) {
+	@Nullable
+	private final Converter<R, String> rowKeyConverter;
+
+	@Nullable
+	private final Converter<C, String> columnKeyConverter;
+
+	private TableTypeAdapterFactory(@Nullable final Supplier<? extends Table<R, C, V>> newTableFactory,
+			@Nullable final Converter<R, String> rowKeyConverter, @Nullable final Converter<C, String> columnKeyConverter) {
 		this.newTableFactory = newTableFactory;
+		this.rowKeyConverter = rowKeyConverter;
+		this.columnKeyConverter = columnKeyConverter;
 	}
 
 	/**
@@ -46,35 +56,49 @@ public final class TableTypeAdapterFactory<V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <V> TypeAdapterFactory get(@Nullable final Supplier<? extends Table<String, String, V>> newTableFactory) {
-		if ( newTableFactory == null ) {
+	@SuppressWarnings("OverlyComplexBooleanExpression")
+	public static <R, C, V> TypeAdapterFactory get(@Nullable final Supplier<? extends Table<R, C, V>> newTableFactory,
+			@Nullable final Converter<R, String> rowKeyConverter, @Nullable final Converter<C, String> columnKeyConverter) {
+		if ( newTableFactory == null && rowKeyConverter == null && columnKeyConverter == null ) {
 			return instance;
 		}
-		return new TableTypeAdapterFactory<>(newTableFactory);
+		if ( rowKeyConverter == null && columnKeyConverter != null
+				|| rowKeyConverter != null && columnKeyConverter == null ) {
+			throw new NullPointerException("Row and column key converter must both be not null or both be null");
+		}
+		return new TableTypeAdapterFactory<>(newTableFactory, rowKeyConverter, columnKeyConverter);
 	}
 
 	@Override
 	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		if ( !Table.class.isAssignableFrom(typeToken.getRawType()) ) {
-			return false;
-		}
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final Type rowKeyType = typeArguments[0][0];
-		final Type columnKeyType = typeArguments[1][0];
-		return String.class.equals(rowKeyType) && String.class.equals(columnKeyType);
+		return Table.class.isAssignableFrom(typeToken.getRawType());
 	}
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<Table<String, String, V>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	@SuppressWarnings("ConstantConditions")
+	protected TypeAdapter<Table<R, C, V>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final Type valueType = typeArguments[2][0];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
-		if ( newTableFactory == null ) {
-			return TableTypeAdapter.get(valueTypeAdapter);
+		final boolean lacksKeyConverters = rowKeyConverter == null && columnKeyConverter == null;
+		if ( newTableFactory == null && lacksKeyConverters ) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) TableTypeAdapter.get(valueTypeAdapter);
+			return castTableTypeAdapter;
 		}
-		return TableTypeAdapter.get(valueTypeAdapter, newTableFactory);
+		if ( newTableFactory != null && lacksKeyConverters ) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final Supplier<? extends Table<String, String, V>> castNewTableFactory = (Supplier) newTableFactory;
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) TableTypeAdapter.get(valueTypeAdapter, castNewTableFactory);
+			return castTableTypeAdapter;
+		}
+		if ( newTableFactory == null && !lacksKeyConverters ) {
+			return TableTypeAdapter.get(valueTypeAdapter, rowKeyConverter, columnKeyConverter);
+		}
+		return TableTypeAdapter.get(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 	}
 
 }

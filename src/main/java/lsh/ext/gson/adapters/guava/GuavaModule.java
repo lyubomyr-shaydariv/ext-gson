@@ -76,6 +76,12 @@ public final class GuavaModule
 		@Nullable
 		private Supplier<? extends Table<String, String, Object>> newTableFactory;
 
+		@Nullable
+		private Converter<?, String> tableRowKeyConverter;
+
+		@Nullable
+		private Converter<?, String> tableColumnKeyConverter;
+
 		private Builder() {
 		}
 
@@ -94,7 +100,7 @@ public final class GuavaModule
 		/**
 		 * Sets a bidirectional map key converter used in {@link BiMapTypeAdapterFactory#get(Supplier, Converter)}
 		 *
-		 * @param biMapKeyConverter A supplier to return a new multimap
+		 * @param biMapKeyConverter A converter to convert a bidirectional map key to string and vice versa
 		 *
 		 * @return Self.
 		 */
@@ -130,7 +136,7 @@ public final class GuavaModule
 		/**
 		 * Sets a multimap key converter used in {@link MultimapTypeAdapterFactory#get(Supplier, Converter)}
 		 *
-		 * @param multimapKeyConverter A supplier to return a new multimap
+		 * @param multimapKeyConverter A converter to convert a multimap key to string and vice versa
 		 *
 		 * @return Self.
 		 */
@@ -139,8 +145,39 @@ public final class GuavaModule
 			return this;
 		}
 
+		/**
+		 * Sets a new table factory use in {@link TableTypeAdapterFactory#get(Supplier, Converter, Converter)}
+		 *
+		 * @param newTableFactory A supplier to return a new table
+		 *
+		 * @return Self.
+		 */
 		public Builder withNewTableFactory(final Supplier<? extends Table<String, String, Object>> newTableFactory) {
 			this.newTableFactory = newTableFactory;
+			return this;
+		}
+
+		/**
+		 * Sets a table row key converter used in {@link TableTypeAdapterFactory#get(Supplier, Converter, Converter)}
+		 *
+		 * @param tableRowKeyConverter A converter to convert a table row key to a string and vice versa
+		 *
+		 * @return Self.
+		 */
+		public Builder withTableRowKeyConverter(final Converter<?, String> tableRowKeyConverter) {
+			this.tableRowKeyConverter = tableRowKeyConverter;
+			return this;
+		}
+
+		/**
+		 * Sets a table column key converter used in {@link TableTypeAdapterFactory#get(Supplier, Converter, Converter)}
+		 *
+		 * @param tableColumnKeyConverter A converter to convert a table column key to a string and vice versa
+		 *
+		 * @return Self.
+		 */
+		public Builder withTableColumnKeyConverter(final Converter<?, String> tableColumnKeyConverter) {
+			this.tableColumnKeyConverter = tableColumnKeyConverter;
 			return this;
 		}
 
@@ -158,12 +195,16 @@ public final class GuavaModule
 			final Converter<Object, String> castMultimapKeyConverter = (Converter<Object, String>) multimapKeyConverter;
 			@SuppressWarnings("unchecked")
 			final Supplier<? extends Multiset<Object>> castNewMultisetFactory = (Supplier<? extends Multiset<Object>>) newMultisetFactory;
+			@SuppressWarnings("unchecked")
+			final Converter<String, String> castTableRowKeyConverter = (Converter<String, String>) tableRowKeyConverter;
+			@SuppressWarnings("unchecked")
+			final Converter<String, String> castTableColumnKeyConverter = (Converter<String, String>) tableColumnKeyConverter;
 			final Iterable<TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
 					.add(OptionalTypeAdapterFactory.get())
 					.add(BiMapTypeAdapterFactory.get(castNewBiMapFactory, castBiMapKeyConverter))
 					.add(MultimapTypeAdapterFactory.get(castNewMultimapFactory, castMultimapKeyConverter))
 					.add(MultisetTypeAdapterFactory.get(castNewMultisetFactory))
-					.add(TableTypeAdapterFactory.get(newTableFactory))
+					.add(TableTypeAdapterFactory.get(newTableFactory, castTableRowKeyConverter, castTableColumnKeyConverter))
 					.build();
 			return new GuavaModule(typeAdapterFactories);
 		}

@@ -1,5 +1,8 @@
 package lsh.ext.gson.adapters.guava;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
@@ -19,12 +22,12 @@ public final class TableTypeAdapterFactoryTest
 		return ImmutableList.of(
 				testWith(
 						new TypeToken<Table<String, String, String>>() {},
-						new TypeToken<Table<Float, Object, Integer>>() {}),
+						new TypeToken<Map<Float, Integer>>() {}),
 				testWith(
-						new TypeToken<Table<String, String, Object>>() {},
-						new TypeToken<Table<Integer, Integer, String>>() {}),
+						new TypeToken<Table<Float, Integer, Object>>() {},
+						new TypeToken<Set<String>>() {}),
 				testWith(
-						new TypeToken<Table<String, String, Integer>>() {}
+						new TypeToken<Table<Character, List<Object>, Integer>>() {}
 				)
 		);
 	}
