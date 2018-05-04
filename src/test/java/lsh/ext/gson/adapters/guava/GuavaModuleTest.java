@@ -4,6 +4,7 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
@@ -16,6 +17,7 @@ public final class GuavaModuleTest
 
 	private static final Collection<TypeToken<?>> supportedTypeTokens = ImmutableList.of(
 			new TypeToken<Optional<?>>() {},
+			new TypeToken<BiMap<String, ?>>() {},
 			new TypeToken<Multiset<?>>() {},
 			new TypeToken<Multimap<String, ?>>() {}
 	);
