@@ -7,6 +7,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Table;
 import com.google.gson.TypeAdapterFactory;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
@@ -21,6 +22,7 @@ import lsh.ext.gson.adapters.IModule;
  * <li>{@link MultimapTypeAdapterFactory}</li>
  * <li>{@link MultisetTypeAdapterFactory}</li>
  * <li>{@link OptionalTypeAdapterFactory}</li>
+ * <li>{@link TableTypeAdapterFactory}</li>
  * </ul>
  *
  * @author Lyubomyr Shaydariv
@@ -64,6 +66,9 @@ public final class GuavaModule
 		@Nullable
 		private Supplier<? extends Multimap<String, Object>> newMultimapFactory;
 
+		@Nullable
+		private Supplier<? extends Table<String, String, Object>> newTableFactory;
+
 		private Builder() {
 		}
 
@@ -103,6 +108,11 @@ public final class GuavaModule
 			return this;
 		}
 
+		public Builder withNewTableFactory(final Supplier<? extends Table<String, String, Object>> newTableFactory) {
+			this.newTableFactory = newTableFactory;
+			return this;
+		}
+
 		/**
 		 * @return A new module instance.
 		 */
@@ -112,6 +122,7 @@ public final class GuavaModule
 					.add(BiMapTypeAdapterFactory.get(newBiMapFactory))
 					.add(MultimapTypeAdapterFactory.get(newMultimapFactory))
 					.add(MultisetTypeAdapterFactory.get(newMultisetFactory))
+					.add(TableTypeAdapterFactory.get(newTableFactory))
 					.build();
 			return new GuavaModule(typeAdapterFactories);
 		}
