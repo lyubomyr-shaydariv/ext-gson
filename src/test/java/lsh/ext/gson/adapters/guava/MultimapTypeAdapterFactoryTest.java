@@ -1,9 +1,11 @@
 package lsh.ext.gson.adapters.guava;
 
+import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multiset;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
@@ -19,12 +21,12 @@ public final class MultimapTypeAdapterFactoryTest
 		return ImmutableList.of(
 				testWith(
 						new TypeToken<Multimap<String, String>>() {},
-						new TypeToken<Multimap<Object, Integer>>() {}),
+						new TypeToken<Multiset<Object>>() {}),
 				testWith(
 						new TypeToken<Multimap<String, Object>>() {},
-						new TypeToken<Multimap<Integer, String>>() {}),
+						new TypeToken<Map<Integer, String>>() {}),
 				testWith(
-						new TypeToken<Multimap<String, Integer>>() {}
+						new TypeToken<Multimap<Integer, Integer>>() {}
 				)
 		);
 	}

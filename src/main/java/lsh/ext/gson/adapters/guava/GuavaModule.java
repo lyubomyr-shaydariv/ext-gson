@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters.guava;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.Converter;
 import com.google.common.base.Supplier;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
@@ -61,10 +62,13 @@ public final class GuavaModule
 		private Supplier<? extends BiMap<String, Object>> newBiMapFactory;
 
 		@Nullable
-		private Supplier<? extends Multiset<Object>> newMultisetFactory;
+		private Supplier<? extends Multiset<?>> newMultisetFactory;
 
 		@Nullable
-		private Supplier<? extends Multimap<String, Object>> newMultimapFactory;
+		private Supplier<? extends Multimap<?, ?>> newMultimapFactory;
+
+		@Nullable
+		private Converter<?, String> multimapKeyConverter;
 
 		@Nullable
 		private Supplier<? extends Table<String, String, Object>> newTableFactory;
@@ -91,20 +95,32 @@ public final class GuavaModule
 		 *
 		 * @return Self.
 		 */
-		public Builder withNewMultisetFactory(final Supplier<? extends Multiset<Object>> newMultisetFactory) {
+		public Builder withNewMultisetFactory(final Supplier<? extends Multiset<?>> newMultisetFactory) {
 			this.newMultisetFactory = newMultisetFactory;
 			return this;
 		}
 
 		/**
-		 * Sets a new multimap factory used in {@link MultimapTypeAdapterFactory#get(Supplier)}
+		 * Sets a new multimap factory used in {@link MultimapTypeAdapterFactory#get(Supplier, Converter)}
 		 *
 		 * @param newMultimapFactory A supplier to return a new multimap
 		 *
 		 * @return Self.
 		 */
-		public Builder withNewMultimapFactory(final Supplier<? extends Multimap<String, Object>> newMultimapFactory) {
+		public Builder withNewMultimapFactory(final Supplier<? extends Multimap<?, ?>> newMultimapFactory) {
 			this.newMultimapFactory = newMultimapFactory;
+			return this;
+		}
+
+		/**
+		 * Sets a multimap key converter used in {@link MultimapTypeAdapterFactory#get(Supplier, Converter)}
+		 *
+		 * @param multimapKeyConverter A supplier to return a new multimap
+		 *
+		 * @return Self.
+		 */
+		public Builder withMultimapKeyConverter(final Converter<?, String> multimapKeyConverter) {
+			this.multimapKeyConverter = multimapKeyConverter;
 			return this;
 		}
 
@@ -117,11 +133,17 @@ public final class GuavaModule
 		 * @return A new module instance.
 		 */
 		public IModule done() {
+			@SuppressWarnings("unchecked")
+			final Supplier<? extends Multimap<Object, Object>> castNewMultimapFactory = (Supplier<? extends Multimap<Object, Object>>) newMultimapFactory;
+			@SuppressWarnings("unchecked")
+			final Converter<Object, String> castMultimapKeyConverter = (Converter<Object, String>) multimapKeyConverter;
+			@SuppressWarnings("unchecked")
+			final Supplier<? extends Multiset<Object>> castNewMultisetFactory = (Supplier<? extends Multiset<Object>>) newMultisetFactory;
 			final Iterable<TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
 					.add(OptionalTypeAdapterFactory.get())
 					.add(BiMapTypeAdapterFactory.get(newBiMapFactory))
-					.add(MultimapTypeAdapterFactory.get(newMultimapFactory))
-					.add(MultisetTypeAdapterFactory.get(newMultisetFactory))
+					.add(MultimapTypeAdapterFactory.get(castNewMultimapFactory, castMultimapKeyConverter))
+					.add(MultisetTypeAdapterFactory.get(castNewMultisetFactory))
 					.add(TableTypeAdapterFactory.get(newTableFactory))
 					.build();
 			return new GuavaModule(typeAdapterFactories);

@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.base.Converter;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
@@ -20,16 +21,21 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  * @see MultimapTypeAdapter
  * @since 0-SNAPSHOT
  */
-public final class MultimapTypeAdapterFactory<V>
-		extends AbstractTypeAdapterFactory<Multimap<String, V>> {
+public final class MultimapTypeAdapterFactory<K, V>
+		extends AbstractTypeAdapterFactory<Multimap<K, V>> {
 
-	private static final TypeAdapterFactory instance = new MultimapTypeAdapterFactory<>(null);
+	private static final TypeAdapterFactory instance = new MultimapTypeAdapterFactory<>(null, null);
 
 	@Nullable
-	private final Supplier<? extends Multimap<String, V>> newMultimapFactory;
+	private final Supplier<? extends Multimap<K, V>> newMultimapFactory;
 
-	private MultimapTypeAdapterFactory(@Nullable final Supplier<? extends Multimap<String, V>> newMultimapFactory) {
+	@Nullable
+	private final Converter<K, String> keyConverter;
+
+	private MultimapTypeAdapterFactory(@Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
+			@Nullable final Converter<K, String> keyConverter) {
 		this.newMultimapFactory = newMultimapFactory;
+		this.keyConverter = keyConverter;
 	}
 
 	/**
@@ -46,34 +52,43 @@ public final class MultimapTypeAdapterFactory<V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <V> TypeAdapterFactory get(@Nullable final Supplier<? extends Multimap<String, V>> newMultimapFactory) {
-		if ( newMultimapFactory == null ) {
+	public static <K, V> TypeAdapterFactory get(@Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
+			@Nullable final Converter<K, String> keyConverter) {
+		if ( newMultimapFactory == null && keyConverter == null ) {
 			return instance;
 		}
-		return new MultimapTypeAdapterFactory<>(newMultimapFactory);
+		return new MultimapTypeAdapterFactory<>(newMultimapFactory, keyConverter);
 	}
 
 	@Override
 	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
-		if ( !Multimap.class.isAssignableFrom(typeToken.getRawType()) ) {
-			return false;
-		}
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final Type keyType = typeArguments[0][0];
-		return String.class.equals(keyType);
+		return Multimap.class.isAssignableFrom(typeToken.getRawType());
 	}
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<Multimap<String, V>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	@SuppressWarnings("ConstantConditions")
+	protected TypeAdapter<Multimap<K, V>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final Type valueType = typeArguments[1][0];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
-		if ( newMultimapFactory == null ) {
-			return MultimapTypeAdapter.get(valueTypeAdapter);
+		if ( newMultimapFactory == null && keyConverter == null ) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final TypeAdapter<Multimap<K, V>> castMultimapTypeAdapter = (TypeAdapter) MultimapTypeAdapter.get(valueTypeAdapter);
+			return castMultimapTypeAdapter;
 		}
-		return MultimapTypeAdapter.get(valueTypeAdapter, newMultimapFactory);
+		if ( newMultimapFactory != null && keyConverter == null ) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final Supplier<? extends Multimap<String, V>> castNewMultimapFactory = (Supplier) newMultimapFactory;
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final TypeAdapter<Multimap<K, V>> castMultimapTypeAdapter = (TypeAdapter) MultimapTypeAdapter.get(valueTypeAdapter, castNewMultimapFactory);
+			return castMultimapTypeAdapter;
+		}
+		if ( newMultimapFactory == null && keyConverter != null ) {
+			return MultimapTypeAdapter.get(valueTypeAdapter, keyConverter);
+		}
+		return MultimapTypeAdapter.get(valueTypeAdapter, newMultimapFactory, keyConverter);
 	}
 
 }

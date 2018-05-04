@@ -3,6 +3,7 @@ package lsh.ext.gson.adapters.guava;
 import java.io.IOException;
 import java.util.Map;
 
+import com.google.common.base.Converter;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -17,15 +18,23 @@ import com.google.gson.stream.JsonWriter;
  * @see MultimapTypeAdapterFactory
  * @since 0-SNAPSHOT
  */
-public final class MultimapTypeAdapter<V>
-		extends TypeAdapter<Multimap<String, V>> {
+public final class MultimapTypeAdapter<K, V>
+		extends TypeAdapter<Multimap<K, V>> {
+
+	private static final Supplier<? extends Multimap<?, ?>> defaultNewMultimapFactory = ArrayListMultimap::create;
+	private static final Converter<?, String> defaultKeyConverter = Converter.identity();
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final Supplier<? extends Multimap<String, V>> newMultimapFactory;
+	private final Supplier<? extends Multimap<K, V>> newMultimapFactory;
+	private final Converter<K, String> forwardKeyConverter;
+	private final Converter<String, K> reverseKeyConverter;
 
-	private MultimapTypeAdapter(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Multimap<String, V>> newMultimapFactory) {
+	private MultimapTypeAdapter(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Multimap<K, V>> newMultimapFactory,
+			final Converter<K, String> forwardKeyConverter) {
 		this.valueTypeAdapter = valueTypeAdapter;
 		this.newMultimapFactory = newMultimapFactory;
+		this.forwardKeyConverter = forwardKeyConverter;
+		reverseKeyConverter = forwardKeyConverter.reverse();
 	}
 
 	/**
@@ -34,11 +43,14 @@ public final class MultimapTypeAdapter<V>
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance whose multimap factory is {@link ArrayListMultimap#create()}.
 	 *
-	 * @see #get(TypeAdapter, Supplier)
 	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<Multimap<String, V>> get(final TypeAdapter<V> valueTypeAdapter) {
-		return get(valueTypeAdapter, (Supplier<? extends Multimap<String, V>>) ArrayListMultimap::create);
+		@SuppressWarnings("unchecked")
+		final Supplier<? extends Multimap<String, V>> newMultimapFactory = (Supplier<? extends Multimap<String, V>>) defaultNewMultimapFactory;
+		@SuppressWarnings("unchecked")
+		final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
+		return get(valueTypeAdapter, newMultimapFactory, keyConverter);
 	}
 
 	/**
@@ -48,22 +60,53 @@ public final class MultimapTypeAdapter<V>
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
 	 *
-	 * @see #get(TypeAdapter)
 	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<Multimap<String, V>> get(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multimap<String, V>> newMultimapFactory) {
-		return new MultimapTypeAdapter<>(valueTypeAdapter, newMultimapFactory)
+		@SuppressWarnings("unchecked")
+		final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
+		return get(valueTypeAdapter, newMultimapFactory, keyConverter);
+	}
+
+	/**
+	 * @param valueTypeAdapter Multimap value type adapter
+	 * @param keyConverter     A converter to convert key to JSON object property names
+	 * @param <V>              Multimap value type parameter
+	 *
+	 * @return A {@link MultimapTypeAdapter} instance.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static <K, V> TypeAdapter<Multimap<K, V>> get(final TypeAdapter<V> valueTypeAdapter, final Converter<K, String> keyConverter) {
+		@SuppressWarnings("unchecked")
+		final Supplier<? extends Multimap<K, V>> newMultimapFactory = (Supplier<? extends Multimap<K, V>>) defaultNewMultimapFactory;
+		return get(valueTypeAdapter, newMultimapFactory, keyConverter);
+	}
+
+	/**
+	 * @param valueTypeAdapter   Multimap value type adapter
+	 * @param newMultimapFactory A {@link Multimap} factory to create instance used while deserialization
+	 * @param keyConverter       A converter to convert key to JSON object property names
+	 * @param <V>                Multimap value type parameter
+	 *
+	 * @return A {@link MultimapTypeAdapter} instance.
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static <K, V> TypeAdapter<Multimap<K, V>> get(final TypeAdapter<V> valueTypeAdapter,
+			final Supplier<? extends Multimap<K, V>> newMultimapFactory, final Converter<K, String> keyConverter) {
+		return new MultimapTypeAdapter<>(valueTypeAdapter, newMultimapFactory, keyConverter)
 				.nullSafe();
 	}
 
 	@Override
 	@SuppressWarnings("resource")
-	public void write(final JsonWriter out, final Multimap<String, V> multimap)
+	public void write(final JsonWriter out, final Multimap<K, V> multimap)
 			throws IOException {
 		out.beginObject();
-		for ( final Map.Entry<String, V> e : multimap.entries() ) {
-			final String key = e.getKey();
+		for ( final Map.Entry<K, V> e : multimap.entries() ) {
+			final String key = forwardKeyConverter.convert(e.getKey());
 			final V value = e.getValue();
 			out.name(key);
 			valueTypeAdapter.write(out, value);
@@ -72,12 +115,12 @@ public final class MultimapTypeAdapter<V>
 	}
 
 	@Override
-	public Multimap<String, V> read(final JsonReader in)
+	public Multimap<K, V> read(final JsonReader in)
 			throws IOException {
-		final Multimap<String, V> multimap = newMultimapFactory.get();
+		final Multimap<K, V> multimap = newMultimapFactory.get();
 		in.beginObject();
 		while ( in.hasNext() ) {
-			final String key = in.nextName();
+			final K key = reverseKeyConverter.convert(in.nextName());
 			final V value = valueTypeAdapter.read(in);
 			multimap.put(key, value);
 		}
