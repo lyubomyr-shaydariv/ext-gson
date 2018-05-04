@@ -63,5 +63,6 @@ Currently `ext-gson` supports:
 
 * Types provided by `GuavaModule`:
   * [`com.google.common.base.Optional`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/base/Optional.html);
+  * [`com.google.common.collect.BiMap`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/BiMap.html);
   * [`com.google.common.collect.Multimap`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multimap.html);
   * [`com.google.common.collect.Multiset`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multiset.html);
