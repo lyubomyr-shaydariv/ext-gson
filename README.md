@@ -66,3 +66,4 @@ Currently `ext-gson` supports:
   * [`com.google.common.collect.BiMap`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/BiMap.html);
   * [`com.google.common.collect.Multimap`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multimap.html);
   * [`com.google.common.collect.Multiset`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multiset.html);
+  * [`com.google.common.collect.Table`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Table.html);
