@@ -26,19 +26,19 @@ public final class TableTypeAdapter<R, C, V>
 
 	private final TypeAdapter<V> valueTypeAdapter;
 	private final Supplier<? extends Table<R, C, V>> newTableFactory;
-	private final Converter<R, String> forwardRowKeyConverter;
+	private final Converter<R, String> rowKeyConverter;
 	private final Converter<String, R> reverseRowKeyConverter;
 	private final Converter<C, String> forwardColumnKeyConverter;
-	private final Converter<String, C> reverseColumnKeyConverter;
+	private final Converter<String, C> columnKeyConverter;
 
 	private TableTypeAdapter(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Table<R, C, V>> newTableFactory,
-			final Converter<R, String> forwardRowKeyConverter, final Converter<C, String> forwardColumnKeyConverter) {
+			final Converter<R, String> rowKeyConverter, final Converter<C, String> forwardColumnKeyConverter) {
 		this.valueTypeAdapter = valueTypeAdapter;
 		this.newTableFactory = newTableFactory;
-		this.forwardRowKeyConverter = forwardRowKeyConverter;
-		reverseRowKeyConverter = forwardRowKeyConverter.reverse();
+		this.rowKeyConverter = rowKeyConverter;
+		reverseRowKeyConverter = rowKeyConverter.reverse();
 		this.forwardColumnKeyConverter = forwardColumnKeyConverter;
-		reverseColumnKeyConverter = forwardColumnKeyConverter.reverse();
+		columnKeyConverter = forwardColumnKeyConverter.reverse();
 	}
 
 	/**
@@ -118,7 +118,7 @@ public final class TableTypeAdapter<R, C, V>
 		out.beginObject();
 		final Map<R, Map<C, V>> rowMap = table.rowMap();
 		for ( final Map.Entry<R, Map<C, V>> rowEntry : rowMap.entrySet() ) {
-			final String rowKey = forwardRowKeyConverter.convert(rowEntry.getKey());
+			final String rowKey = rowKeyConverter.convert(rowEntry.getKey());
 			out.name(rowKey);
 			out.beginObject();
 			final Map<C, V> columnMap = rowEntry.getValue();
@@ -142,7 +142,7 @@ public final class TableTypeAdapter<R, C, V>
 			final R rowKey = reverseRowKeyConverter.convert(in.nextName());
 			in.beginObject();
 			while ( in.hasNext() ) {
-				final C columnKey = reverseColumnKeyConverter.convert(in.nextName());
+				final C columnKey = columnKeyConverter.convert(in.nextName());
 				final V value = valueTypeAdapter.read(in);
 				table.put(rowKey, columnKey, value);
 			}

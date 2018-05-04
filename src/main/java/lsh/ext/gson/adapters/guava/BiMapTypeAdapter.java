@@ -26,15 +26,15 @@ public final class BiMapTypeAdapter<K, V>
 
 	private final TypeAdapter<V> valueTypeAdapter;
 	private final Supplier<? extends BiMap<K, V>> newBiMapFactory;
-	private final Converter<K, String> forwardKeyConverter;
+	private final Converter<K, String> keyConverter;
 	private final Converter<String, K> reverseKeyConverter;
 
 	private BiMapTypeAdapter(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends BiMap<K, V>> newBiMapFactory,
-			final Converter<K, String> forwardKeyConverter) {
+			final Converter<K, String> keyConverter) {
 		this.valueTypeAdapter = valueTypeAdapter;
 		this.newBiMapFactory = newBiMapFactory;
-		this.forwardKeyConverter = forwardKeyConverter;
-		reverseKeyConverter = forwardKeyConverter.reverse();
+		this.keyConverter = keyConverter;
+		reverseKeyConverter = keyConverter.reverse();
 	}
 
 	/**
@@ -105,7 +105,7 @@ public final class BiMapTypeAdapter<K, V>
 			throws IOException {
 		out.beginObject();
 		for ( final Map.Entry<K, V> e : biMap.entrySet() ) {
-			final String key = forwardKeyConverter.convert(e.getKey());
+			final String key = keyConverter.convert(e.getKey());
 			final V value = e.getValue();
 			out.name(key);
 			valueTypeAdapter.write(out, value);

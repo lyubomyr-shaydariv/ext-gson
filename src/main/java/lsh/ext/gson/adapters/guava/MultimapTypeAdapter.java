@@ -26,15 +26,15 @@ public final class MultimapTypeAdapter<K, V>
 
 	private final TypeAdapter<V> valueTypeAdapter;
 	private final Supplier<? extends Multimap<K, V>> newMultimapFactory;
-	private final Converter<K, String> forwardKeyConverter;
+	private final Converter<K, String> keyConverter;
 	private final Converter<String, K> reverseKeyConverter;
 
 	private MultimapTypeAdapter(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Multimap<K, V>> newMultimapFactory,
-			final Converter<K, String> forwardKeyConverter) {
+			final Converter<K, String> keyConverter) {
 		this.valueTypeAdapter = valueTypeAdapter;
 		this.newMultimapFactory = newMultimapFactory;
-		this.forwardKeyConverter = forwardKeyConverter;
-		reverseKeyConverter = forwardKeyConverter.reverse();
+		this.keyConverter = keyConverter;
+		reverseKeyConverter = keyConverter.reverse();
 	}
 
 	/**
@@ -106,7 +106,7 @@ public final class MultimapTypeAdapter<K, V>
 			throws IOException {
 		out.beginObject();
 		for ( final Map.Entry<K, V> e : multimap.entries() ) {
-			final String key = forwardKeyConverter.convert(e.getKey());
+			final String key = keyConverter.convert(e.getKey());
 			final V value = e.getValue();
 			out.name(key);
 			valueTypeAdapter.write(out, value);
