@@ -430,14 +430,14 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	public static JsonArray array(
-			final JsonElement e1,
-			final JsonElement e2,
-			final JsonElement e3,
-			final JsonElement e4,
-			final JsonElement e5,
-			final JsonElement e6,
-			final JsonElement e7,
-			final JsonElement e8
+			@Nullable final JsonElement e1,
+			@Nullable final JsonElement e2,
+			@Nullable final JsonElement e3,
+			@Nullable final JsonElement e4,
+			@Nullable final JsonElement e5,
+			@Nullable final JsonElement e6,
+			@Nullable final JsonElement e7,
+			@Nullable final JsonElement e8
 	) {
 		final JsonArray jsonArray = new JsonArray();
 		jsonArray.add(e1);
