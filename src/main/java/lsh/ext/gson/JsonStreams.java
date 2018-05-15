@@ -2,6 +2,7 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 
+import com.google.gson.internal.LazilyParsedNumber;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
@@ -46,8 +47,6 @@ public final class JsonStreams {
 	@SuppressWarnings("resource")
 	public static void copyTo(final JsonReader reader, final JsonWriter writer, final boolean ignoreTrailingTokens)
 			throws IOException {
-		final long[] longBuffer = new long[1];
-		final double[] doubleBuffer = new double[1];
 		int level = 0;
 		loop:
 		for ( JsonToken token = reader.peek(); token != null; token = reader.peek() ) {
@@ -85,16 +84,8 @@ public final class JsonStreams {
 				writer.value(s);
 				break;
 			case NUMBER:
-				final String rawN = reader.nextString();
-				if ( tryParseLong(rawN, longBuffer) ) {
-					writer.value(longBuffer[0]);
-				} else {
-					if ( tryParseDouble(rawN, doubleBuffer) ) {
-						writer.value(doubleBuffer[0]);
-					} else {
-						throw new AssertionError(rawN);
-					}
-				}
+				final LazilyParsedNumber n = new LazilyParsedNumber(reader.nextString());
+				writer.value(n);
 				break;
 			case BOOLEAN:
 				final boolean b = reader.nextBoolean();
@@ -109,24 +100,6 @@ public final class JsonStreams {
 			default:
 				throw new AssertionError(token);
 			}
-		}
-	}
-
-	private static boolean tryParseLong(final String value, final long[] buffer) {
-		try {
-			buffer[0] = Long.parseLong(value);
-			return true;
-		} catch ( final NumberFormatException ignored ) {
-			return false;
-		}
-	}
-
-	private static boolean tryParseDouble(final String value, final double[] buffer) {
-		try {
-			buffer[0] = Double.parseDouble(value);
-			return true;
-		} catch ( final NumberFormatException ignored ) {
-			return false;
 		}
 	}
 

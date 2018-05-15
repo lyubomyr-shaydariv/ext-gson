@@ -14,8 +14,8 @@ import org.junit.Test;
 
 public final class JsonStreamsTest {
 
-	private static final String NORMALIZED_JSON = "{\"foo\":\"foo\",\"bar\":\"bar\"}";
-	private static final String UNNORMALIZED_JSON = "{\n\t\"foo\": \"foo\",\n\tbar: \"bar\"\n}";
+	private static final String NORMALIZED_JSON = "{\"foo\":\"foo\",\"bar\":\"bar\",\"baz\":3.141592653589793238462643383279}";
+	private static final String UNNORMALIZED_JSON = "{\n\t\"foo\": \"foo\",\n\tbar: \"bar\"\n,\t\"baz\": 3.141592653589793238462643383279\n}";
 	private static final String UNNORMALIZED_JSON_WITH_TRAILING_BRACE = UNNORMALIZED_JSON + "}";
 
 	@Test
