@@ -1,8 +1,8 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
-import com.google.gson.internal.LazilyParsedNumber;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
@@ -84,7 +84,7 @@ public final class JsonStreams {
 				writer.value(s);
 				break;
 			case NUMBER:
-				final LazilyParsedNumber n = new LazilyParsedNumber(reader.nextString());
+				final Number n = new BigDecimal(reader.nextString());
 				writer.value(n);
 				break;
 			case BOOLEAN:
