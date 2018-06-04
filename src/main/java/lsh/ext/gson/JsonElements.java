@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 /**
@@ -18,16 +17,6 @@ import com.google.gson.JsonObject;
 public final class JsonElements {
 
 	private JsonElements() {
-	}
-
-	/**
-	 * @return {@link JsonNull#INSTANCE}.
-	 *
-	 * @since 0-SNAPSHOT
-	 */
-	@Nonnull
-	public static JsonNull from() {
-		return JsonNull.INSTANCE;
 	}
 
 	/**

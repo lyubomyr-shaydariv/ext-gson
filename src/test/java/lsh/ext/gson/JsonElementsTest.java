@@ -2,7 +2,6 @@ package lsh.ext.gson;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.hamcrest.CoreMatchers;
@@ -26,11 +25,6 @@ public final class JsonElementsTest {
 
 	private static final JsonPrimitive l = new JsonPrimitive("L");
 	private static final JsonPrimitive r = new JsonPrimitive("R");
-
-	@Test
-	public void testJsonNull() {
-		MatcherAssert.assertThat(JsonElements.from(), CoreMatchers.is(JsonNull.INSTANCE));
-	}
 
 	@Test
 	public void testJsonObject() {
