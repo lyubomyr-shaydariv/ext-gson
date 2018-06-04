@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import lsh.ext.gson.JsonElements;
+import lsh.ext.gson.JsonArrays;
 import lsh.ext.gson.JsonObjects;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
@@ -56,7 +56,7 @@ public final class JsonCollectorsTest {
 		final JsonArray actual = ImmutableList.of(v1, v2, v3)
 				.stream()
 				.collect(JsonCollectors.toJsonArray());
-		final JsonArray expected = JsonElements.array(v1, v2, v3);
+		final JsonArray expected = JsonArrays.of(v1, v2, v3);
 		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
 	}
 
@@ -64,8 +64,8 @@ public final class JsonCollectorsTest {
 	public void testToExistingJsonArray() {
 		final JsonArray actual = ImmutableList.of(v2, v3)
 				.stream()
-				.collect(JsonCollectors.toJsonArray(() -> JsonElements.array(v1)));
-		final JsonArray expected = JsonElements.array(v1, v2, v3);
+				.collect(JsonCollectors.toJsonArray(() -> JsonArrays.of(v1)));
+		final JsonArray expected = JsonArrays.of(v1, v2, v3);
 		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
 	}
 

@@ -7,14 +7,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 /**
- * Provides miscellaneous {@link JsonElement} utility methods.
+ * Provides miscellaneous {@link JsonArray} utility methods.
  *
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT
  */
-public final class JsonElements {
+public final class JsonArrays {
 
-	private JsonElements() {
+	private JsonArrays() {
 	}
 
 	/**
@@ -23,7 +23,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array() {
+	public static JsonArray of() {
 		return new JsonArray();
 	}
 
@@ -35,7 +35,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1
 	) {
 		final JsonArray jsonArray = new JsonArray();
@@ -52,7 +52,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2
 	) {
@@ -72,7 +72,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3
@@ -95,7 +95,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -121,7 +121,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -150,7 +150,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -182,7 +182,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -216,7 +216,7 @@ public final class JsonElements {
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -254,7 +254,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -295,7 +295,7 @@ public final class JsonElements {
 	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
-	public static JsonArray array(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,

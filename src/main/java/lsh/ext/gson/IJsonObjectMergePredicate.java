@@ -7,8 +7,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Predicate that specifies merging strategy for {@link JsonElements#mergeIntoLeft(JsonObject, JsonObject, IJsonObjectMergePredicate)}
- * and {@link JsonElements#mergeIntoNew(JsonObject, JsonObject, IJsonObjectMergePredicate)}
+ * Predicate that specifies merging strategy for {@link JsonArrays#mergeIntoLeft(JsonObject, JsonObject, IJsonObjectMergePredicate)}
+ * and {@link JsonArrays#mergeIntoNew(JsonObject, JsonObject, IJsonObjectMergePredicate)}
  *
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT
