@@ -257,6 +257,84 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(result, hasPropertiesOf(l, r, r));
 	}
 
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableMapCannotBeChangedViaClear() {
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+		map.clear();
+	}
+
+	@Test
+	public void testAsMutableMapCanBeChangedViaClear() {
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(2));
+		map.clear();
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(0));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableMapCannotBeChangedViaPut() {
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+		map.put(K3, l);
+	}
+
+	@Test
+	public void testAsMutableMapCanBeChangedViaPut() {
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(map.put(K3, l), CoreMatchers.nullValue());
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.is(l));
+		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
+		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.is(l));
+		MatcherAssert.assertThat(map.put(K3, r), CoreMatchers.is(l));
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.is(l));
+		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
+		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.is(r));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableMapCannotBeChangedViaPutAll() {
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+		map.putAll(ImmutableMap.of(K3, l, K4, r));
+	}
+
+	@Test
+	public void testAsMutableMapCanBeChangedViaPutAll() {
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.is(l));
+		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
+		map.putAll(ImmutableMap.of(K3, l, K4, r));
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.is(l));
+		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
+		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.is(l));
+		MatcherAssert.assertThat(jsonObject.get(K4), CoreMatchers.is(r));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableMapCannotBeChangedViaRemove() {
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+		map.remove(K1);
+	}
+
+	@Test
+	public void testAsMutableMapCanBeChangedViaRemove() {
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
+		MatcherAssert.assertThat(map.remove(K1), CoreMatchers.is(l));
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(1));
+		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
+	}
+
 	private static JsonObject createLeftObject() {
 		return JsonObjects.of(K1, l, K2, l, K3, l);
 	}

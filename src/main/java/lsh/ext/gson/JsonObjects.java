@@ -1,6 +1,10 @@
 package lsh.ext.gson;
 
+import java.util.AbstractMap;
+import java.util.AbstractSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -322,6 +326,155 @@ public final class JsonObjects {
 			}
 		}
 		return left;
+	}
+
+	/**
+	 * @param jsonObject JSON object to put into the view
+	 *
+	 * @return An immutable map view for the given JSON object
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static Map<String, JsonElement> asImmutableMap(final JsonObject jsonObject) {
+		return new ImmutableJsonObjectMap(jsonObject);
+	}
+
+	/**
+	 * @param jsonObject JSON object to put into the view
+	 *
+	 * @return A mutable map view for the given JSON object
+	 *
+	 * @since 0-SNAPSHOT
+	 */
+	public static Map<String, JsonElement> asMutableMap(final JsonObject jsonObject) {
+		return new MutableJsonObjectMap(jsonObject);
+	}
+
+	private abstract static class AbstractJsonObjectMap
+			extends AbstractMap<String, JsonElement> {
+
+		private final JsonObject jsonObject;
+
+		protected AbstractJsonObjectMap(final JsonObject jsonObject) {
+			this.jsonObject = jsonObject;
+		}
+
+		protected abstract Set<Entry<String, JsonElement>> tryEntrySet(JsonObject jsonObject);
+
+		protected abstract JsonElement tryPut(JsonObject jsonObject, String key, JsonElement jsonElement);
+
+		@Override
+		public final Set<Entry<String, JsonElement>> entrySet() {
+			return tryEntrySet(jsonObject);
+		}
+
+		@Override
+		public final JsonElement put(final String key, final JsonElement jsonElement) {
+			return tryPut(jsonObject, key, jsonElement);
+		}
+
+	}
+
+	private static final class ImmutableJsonObjectMap
+			extends AbstractJsonObjectMap {
+
+		private ImmutableJsonObjectMap(final JsonObject jsonObject) {
+			super(jsonObject);
+		}
+
+		@Override
+		protected Set<Entry<String, JsonElement>> tryEntrySet(final JsonObject jsonObject) {
+			return new ImmutableJsonObjectSet(jsonObject);
+		}
+
+		@Override
+		protected JsonElement tryPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
+			throw new UnsupportedOperationException();
+		}
+
+	}
+
+	private static final class MutableJsonObjectMap
+			extends AbstractJsonObjectMap {
+
+		private MutableJsonObjectMap(final JsonObject jsonObject) {
+			super(jsonObject);
+		}
+
+		@Override
+		protected Set<Entry<String, JsonElement>> tryEntrySet(final JsonObject jsonObject) {
+			return new MutableJsonObjectSet(jsonObject);
+		}
+
+		@Override
+		protected JsonElement tryPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
+			final JsonElement previous = jsonObject.get(key);
+			jsonObject.add(key, jsonElement);
+			return previous;
+		}
+
+	}
+
+	private abstract static class AbstractJsonObjectSet
+			extends AbstractSet<Map.Entry<String, JsonElement>> {
+
+		private final JsonObject jsonObject;
+
+		protected AbstractJsonObjectSet(final JsonObject jsonObject) {
+			this.jsonObject = jsonObject;
+		}
+
+		protected abstract Iterator<Map.Entry<String, JsonElement>> getIterator(JsonObject jsonObject);
+
+		@Override
+		public final Iterator<Map.Entry<String, JsonElement>> iterator() {
+			return getIterator(jsonObject);
+		}
+
+		@Override
+		public final int size() {
+			return jsonObject.size();
+		}
+
+	}
+
+	private static final class ImmutableJsonObjectSet
+			extends AbstractJsonObjectSet {
+
+		private ImmutableJsonObjectSet(final JsonObject jsonObject) {
+			super(jsonObject);
+		}
+
+		@Override
+		protected Iterator<Map.Entry<String, JsonElement>> getIterator(final JsonObject jsonObject) {
+			final Iterator<Map.Entry<String, JsonElement>> iterator = jsonObject.entrySet().iterator();
+			return new Iterator<Map.Entry<String, JsonElement>>() {
+				@Override
+				public boolean hasNext() {
+					return iterator.hasNext();
+				}
+
+				@Override
+				public Map.Entry<String, JsonElement> next() {
+					return iterator.next();
+				}
+			};
+		}
+
+	}
+
+	private static final class MutableJsonObjectSet
+			extends AbstractJsonObjectSet {
+
+		private MutableJsonObjectSet(final JsonObject jsonObject) {
+			super(jsonObject);
+		}
+
+		@Override
+		protected Iterator<Map.Entry<String, JsonElement>> getIterator(final JsonObject jsonObject) {
+			return jsonObject.entrySet().iterator();
+		}
+
 	}
 
 }
