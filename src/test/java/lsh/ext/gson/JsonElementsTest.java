@@ -33,64 +33,6 @@ public final class JsonElementsTest {
 	}
 
 	@Test
-	public void testJsonPrimitiveForBooleans() {
-		MatcherAssert.assertThat(JsonElements.from(Boolean.TRUE), CoreMatchers.is(new JsonPrimitive(true)));
-		MatcherAssert.assertThat(JsonElements.from(Boolean.FALSE), CoreMatchers.is(new JsonPrimitive(false)));
-	}
-
-	@Test
-	public void testJsonPrimitiveForBooleansIsFlyweight() {
-		MatcherAssert.assertThat(JsonElements.from(true), CoreMatchers.sameInstance(JsonElements.from(Boolean.TRUE)));
-		MatcherAssert.assertThat(JsonElements.from(Boolean.FALSE), CoreMatchers.sameInstance(JsonElements.from(false)));
-	}
-
-	@Test(expected = NullPointerException.class)
-	@SuppressWarnings("ConstantConditions")
-	public void testJsonPrimitiveForBooleansAsNull() {
-		JsonElements.from((Boolean) null);
-	}
-
-	@Test
-	public void testJsonPrimitiveForNumbers() {
-		MatcherAssert.assertThat(JsonElements.from((byte) 1), CoreMatchers.is(new JsonPrimitive(1)));
-		MatcherAssert.assertThat(JsonElements.from((short) 2), CoreMatchers.is(new JsonPrimitive(2)));
-		MatcherAssert.assertThat(JsonElements.from(3), CoreMatchers.is(new JsonPrimitive(3)));
-		MatcherAssert.assertThat(JsonElements.from(4L), CoreMatchers.is(new JsonPrimitive(4)));
-		MatcherAssert.assertThat(JsonElements.from(5F), CoreMatchers.is(new JsonPrimitive(5)));
-		MatcherAssert.assertThat(JsonElements.from(6D), CoreMatchers.is(new JsonPrimitive(6)));
-	}
-
-	@Test(expected = NullPointerException.class)
-	@SuppressWarnings("ConstantConditions")
-	public void testJsonPrimitiveForNumbersAsNull() {
-		JsonElements.from((Number) null);
-	}
-
-	@Test
-	public void testJsonPrimitivesForStrings() {
-		MatcherAssert.assertThat(JsonElements.from(K1), CoreMatchers.is(new JsonPrimitive(K1)));
-		MatcherAssert.assertThat(JsonElements.from(K2), CoreMatchers.is(new JsonPrimitive(K2)));
-	}
-
-	@Test(expected = NullPointerException.class)
-	@SuppressWarnings("ConstantConditions")
-	public void testJsonPrimitivesForStringsAsNull() {
-		JsonElements.from((String) null);
-	}
-
-	@Test
-	public void testJsonPrimitivesForCharacters() {
-		MatcherAssert.assertThat(JsonElements.from('f'), CoreMatchers.is(new JsonPrimitive('f')));
-		MatcherAssert.assertThat(JsonElements.from('b'), CoreMatchers.is(new JsonPrimitive('b')));
-	}
-
-	@Test(expected = NullPointerException.class)
-	@SuppressWarnings("ConstantConditions")
-	public void testJsonPrimitivesForCharactersAsNull() {
-		JsonElements.from((Character) null);
-	}
-
-	@Test
 	public void testJsonObject() {
 		MatcherAssert.assertThat(JsonElements.object(), CoreMatchers.is(new JsonObject()));
 	}
@@ -99,7 +41,7 @@ public final class JsonElementsTest {
 	public void testJsonObject1() {
 		final JsonObject o1 = new JsonObject();
 		o1.addProperty(K1, 1);
-		MatcherAssert.assertThat(JsonElements.object(K1, JsonElements.from(1)), CoreMatchers.is(o1));
+		MatcherAssert.assertThat(JsonElements.object(K1, JsonPrimitives.of(1)), CoreMatchers.is(o1));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		MatcherAssert.assertThat(JsonElements.object(K1, null), CoreMatchers.is(o2));
@@ -108,7 +50,7 @@ public final class JsonElementsTest {
 	@Test(expected = NullPointerException.class)
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject1AsNull() {
-		JsonElements.object(null, JsonElements.from(K1));
+		JsonElements.object(null, JsonPrimitives.of(K1));
 	}
 
 	@Test
@@ -116,7 +58,7 @@ public final class JsonElementsTest {
 		final JsonObject o1 = new JsonObject();
 		o1.addProperty(K1, 1);
 		o1.addProperty(K2, 2);
-		MatcherAssert.assertThat(JsonElements.object(K1, JsonElements.from(1), K2, JsonElements.from(2)), CoreMatchers.is(o1));
+		MatcherAssert.assertThat(JsonElements.object(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2)), CoreMatchers.is(o1));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		o2.addProperty(K2, (String) null);
@@ -126,7 +68,7 @@ public final class JsonElementsTest {
 	@Test(expected = NullPointerException.class)
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject2AsNull() {
-		JsonElements.object(null, JsonElements.from(K1), null, JsonElements.from(K2));
+		JsonElements.object(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2));
 	}
 
 	@Test
@@ -135,7 +77,7 @@ public final class JsonElementsTest {
 		o1.addProperty(K1, 1);
 		o1.addProperty(K2, 2);
 		o1.addProperty(K3, 3);
-		MatcherAssert.assertThat(JsonElements.object(K1, JsonElements.from(1), K2, JsonElements.from(2), K3, JsonElements.from(3)), CoreMatchers.is(o1));
+		MatcherAssert.assertThat(JsonElements.object(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3)), CoreMatchers.is(o1));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		o2.addProperty(K2, (String) null);
@@ -146,7 +88,7 @@ public final class JsonElementsTest {
 	@Test(expected = NullPointerException.class)
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject3AsNull() {
-		JsonElements.object(null, JsonElements.from(K1), null, JsonElements.from(K2), null, JsonElements.from(K3));
+		JsonElements.object(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3));
 	}
 
 	@Test
@@ -156,7 +98,7 @@ public final class JsonElementsTest {
 		o1.addProperty(K2, 2);
 		o1.addProperty(K3, 3);
 		o1.addProperty(K4, 4);
-		MatcherAssert.assertThat(JsonElements.object(K1, JsonElements.from(1), K2, JsonElements.from(2), K3, JsonElements.from(3), K4, JsonElements.from(4)), CoreMatchers.is(o1));
+		MatcherAssert.assertThat(JsonElements.object(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3), K4, JsonPrimitives.of(4)), CoreMatchers.is(o1));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		o2.addProperty(K2, (String) null);
@@ -168,7 +110,7 @@ public final class JsonElementsTest {
 	@Test(expected = NullPointerException.class)
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject4AsNull() {
-		JsonElements.object(null, JsonElements.from(K1), null, JsonElements.from(K2), null, JsonElements.from(K3), null, JsonElements.from(K4));
+		JsonElements.object(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4));
 	}
 
 	@Test
@@ -179,7 +121,7 @@ public final class JsonElementsTest {
 		o1.addProperty(K3, 3);
 		o1.addProperty(K4, 4);
 		o1.addProperty(K5, 5);
-		MatcherAssert.assertThat(JsonElements.object(K1, JsonElements.from(1), K2, JsonElements.from(2), K3, JsonElements.from(3), K4, JsonElements.from(4), K5, JsonElements.from(5)), CoreMatchers.is(o1));
+		MatcherAssert.assertThat(JsonElements.object(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3), K4, JsonPrimitives.of(4), K5, JsonPrimitives.of(5)), CoreMatchers.is(o1));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		o2.addProperty(K2, (String) null);
@@ -192,7 +134,7 @@ public final class JsonElementsTest {
 	@Test(expected = NullPointerException.class)
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject5AsNull() {
-		JsonElements.object(null, JsonElements.from(K1), null, JsonElements.from(K2), null, JsonElements.from(K3), null, JsonElements.from(K4), null, JsonElements.from(K5));
+		JsonElements.object(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4), null, JsonPrimitives.of(K5));
 	}
 
 	@Test
@@ -224,7 +166,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray1() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1)),
+				JsonElements.array(JsonPrimitives.of(K1)),
 				CoreMatchers.is(stringJsonArray(K1))
 		);
 		MatcherAssert.assertThat(
@@ -236,7 +178,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray2() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2)),
 				CoreMatchers.is(stringJsonArray(K1, K2)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null),
@@ -247,7 +189,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray3() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2), JsonElements.from(K3)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3)),
 				CoreMatchers.is(stringJsonArray(K1, K2, K3)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null, null),
@@ -258,7 +200,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray4() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2), JsonElements.from(K3), JsonElements.from(K4)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4)),
 				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null, null, null),
@@ -269,7 +211,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray5() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2), JsonElements.from(K3), JsonElements.from(K4), JsonElements.from(K5)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5)),
 				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null, null, null, null),
@@ -280,7 +222,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray6() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2), JsonElements.from(K3), JsonElements.from(K4), JsonElements.from(K5), JsonElements.from(K6)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6)),
 				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null, null, null, null, null),
@@ -291,7 +233,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray7() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2), JsonElements.from(K3), JsonElements.from(K4), JsonElements.from(K5), JsonElements.from(K6), JsonElements.from(K7)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7)),
 				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6, K7)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null, null, null, null, null, null),
@@ -302,7 +244,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray8() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2), JsonElements.from(K3), JsonElements.from(K4), JsonElements.from(K5), JsonElements.from(K6), JsonElements.from(K7), JsonElements.from(K8)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8)),
 				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null, null, null, null, null, null, null),
@@ -313,7 +255,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray9() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2), JsonElements.from(K3), JsonElements.from(K4), JsonElements.from(K5), JsonElements.from(K6), JsonElements.from(K7), JsonElements.from(K8), JsonElements.from(K9)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8), JsonPrimitives.of(K9)),
 				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8, K9)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null, null, null, null, null, null, null, null),
@@ -324,7 +266,7 @@ public final class JsonElementsTest {
 	@Test
 	public void testJsonArray10() {
 		MatcherAssert.assertThat(
-				JsonElements.array(JsonElements.from(K1), JsonElements.from(K2), JsonElements.from(K3), JsonElements.from(K4), JsonElements.from(K5), JsonElements.from(K6), JsonElements.from(K7), JsonElements.from(K8), JsonElements.from(K9), JsonElements.from(K10)),
+				JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8), JsonPrimitives.of(K9), JsonPrimitives.of(K10)),
 				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8, K9, K10)));
 		MatcherAssert.assertThat(
 				JsonElements.array(null, null, null, null, null, null, null, null, null, null),
@@ -341,7 +283,7 @@ public final class JsonElementsTest {
 				.add(new JsonObject())
 				.add(1000)
 				.add("whatever")
-				.addAll(JsonElements.array(JsonElements.from(K1), JsonElements.from(K2)))
+				.addAll(JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2)))
 				.get();
 		final JsonArray expected = new JsonArray();
 		expected.add('c');
@@ -349,7 +291,7 @@ public final class JsonElementsTest {
 		expected.add(new JsonObject());
 		expected.add(1000);
 		expected.add("whatever");
-		expected.addAll(JsonElements.array(JsonElements.from(K1), JsonElements.from(K2)));
+		expected.addAll(JsonElements.array(JsonPrimitives.of(K1), JsonPrimitives.of(K2)));
 		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
 	}
 

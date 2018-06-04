@@ -8,7 +8,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 /**
  * Provides miscellaneous {@link JsonElement} utility methods.
@@ -17,9 +16,6 @@ import com.google.gson.JsonPrimitive;
  * @since 0-SNAPSHOT
  */
 public final class JsonElements {
-
-	private static final JsonPrimitive falsePrimitive = new JsonPrimitive(false);
-	private static final JsonPrimitive truePrimitive = new JsonPrimitive(true);
 
 	private JsonElements() {
 	}
@@ -32,58 +28,6 @@ public final class JsonElements {
 	@Nonnull
 	public static JsonNull from() {
 		return JsonNull.INSTANCE;
-	}
-
-	/**
-	 * @param b A boolean value.
-	 *
-	 * @return A new JSON primitive value for {@code true} or {@code false}.
-	 *
-	 * @since 0-SNAPSHOT
-	 */
-	@Nonnull
-	@SuppressWarnings("ConstantConditions")
-	public static JsonPrimitive from(@Nonnull final Boolean b) {
-		final boolean hasValue = b != null;
-		return hasValue
-				? b ? truePrimitive : falsePrimitive
-				: new JsonPrimitive(b); // Propagate the default behavior
-	}
-
-	/**
-	 * @param n A numeric value.
-	 *
-	 * @return A new JSON primitive for numbers.
-	 *
-	 * @since 0-SNAPSHOT
-	 */
-	@Nonnull
-	public static JsonPrimitive from(@Nonnull final Number n) {
-		return new JsonPrimitive(n);
-	}
-
-	/**
-	 * @param s A string value.
-	 *
-	 * @return A new JSON primitive for strings.
-	 *
-	 * @since 0-SNAPSHOT
-	 */
-	@Nonnull
-	public static JsonPrimitive from(@Nonnull final String s) {
-		return new JsonPrimitive(s);
-	}
-
-	/**
-	 * @param c A character value.
-	 *
-	 * @return A new JSON primitive for characters.
-	 *
-	 * @since 0-SNAPSHOT
-	 */
-	@Nonnull
-	public static JsonPrimitive from(@Nonnull final Character c) {
-		return new JsonPrimitive(c);
 	}
 
 	/**
