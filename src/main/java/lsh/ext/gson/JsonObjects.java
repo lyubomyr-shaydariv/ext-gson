@@ -153,6 +153,13 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
+	public static JsonObject from(final Map<String, ? extends JsonElement> map) {
+		final JsonObject jsonObject = new JsonObject();
+		for ( final Map.Entry<String, ? extends JsonElement> e : map.entrySet() ) {
+			jsonObject.add(e.getKey(), e.getValue());
+		}
+		return jsonObject;
+	}
 
 	/**
 	 * @return An accumulator instance to accumulate {@link JsonObject} instances.

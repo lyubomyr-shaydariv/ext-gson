@@ -1,5 +1,8 @@
 package lsh.ext.gson;
 
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -19,7 +22,7 @@ public final class JsonObjectsTest {
 
 	private static final JsonPrimitive l = new JsonPrimitive("L");
 	private static final JsonPrimitive r = new JsonPrimitive("R");
-	
+
 	@Test
 	public void testJsonObject() {
 		MatcherAssert.assertThat(JsonObjects.of(), CoreMatchers.is(new JsonObject()));
@@ -123,6 +126,19 @@ public final class JsonObjectsTest {
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject5AsNull() {
 		JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4), null, JsonPrimitives.of(K5));
+	}
+
+	@Test
+	public void testFrom() {
+		final JsonPrimitive element1 = JsonPrimitives.of(K1);
+		final JsonPrimitive element2 = JsonPrimitives.of(K2);
+		final JsonPrimitive element3 = JsonPrimitives.of(K3);
+		final Map<String, ? extends JsonElement> map = ImmutableMap.of(K1, element1, K2, element2, K3, element3);
+		final JsonObject jsonObject = JsonObjects.from(map);
+		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.sameInstance(element1));
+		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.sameInstance(element2));
+		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.sameInstance(element3));
 	}
 
 	@Test
