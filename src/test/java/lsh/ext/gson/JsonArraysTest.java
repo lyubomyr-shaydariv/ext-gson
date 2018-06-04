@@ -1,5 +1,6 @@
 package lsh.ext.gson;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
@@ -24,6 +25,11 @@ public final class JsonArraysTest {
 	private static final String K8 = "garply";
 	private static final String K9 = "waldo";
 	private static final String K10 = "fred";
+
+	private static final JsonPrimitive foo = new JsonPrimitive("foo");
+	private static final JsonPrimitive bar = new JsonPrimitive("bar");
+	private static final JsonPrimitive baz = new JsonPrimitive("baz");
+	private static final JsonPrimitive qux = new JsonPrimitive("qux");
 
 	@Test
 	public void testJsonArray() {
@@ -194,6 +200,243 @@ public final class JsonArraysTest {
 		expected.add("whatever");
 		expected.addAll(JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2)));
 		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
+	}
+
+	@Test
+	public void testAsImmutableList() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaAdd() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.add(qux);
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaAdd() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonElements.add(qux), CoreMatchers.is(true));
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonElements.get(3), CoreMatchers.sameInstance(qux));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(qux));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaAddByIndex() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.add(0, qux);
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaAddByIndex() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
+		jsonElements.add(0, qux);
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(qux));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonElements.get(3), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(qux));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(baz));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaAddAll() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.addAll(Collections.emptyList());
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaAddAll() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonElements.addAll(ImmutableList.of(baz, qux)), CoreMatchers.is(true));
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonElements.get(3), CoreMatchers.sameInstance(qux));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(qux));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaAddAllViaIndex() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.addAll(0, Collections.emptyList());
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaAddAllViaIndex() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonElements.addAll(0, ImmutableList.of(baz, qux)), CoreMatchers.is(true));
+		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(qux));
+		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonElements.get(3), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(4));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(qux));
+		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(bar));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaClear() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.clear();
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaClear() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		jsonElements.clear();
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(0));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaRemove() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.remove(foo);
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaRemoveEvenIfObjectIsNotJsonElement() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.remove("whatever");
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaRemove() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.remove(foo), CoreMatchers.is(true));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonElements.remove(qux), CoreMatchers.is(false));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaRemoveViaIndex() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.remove(1);
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaRemoveViaIndex() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.remove(1), CoreMatchers.is(bar));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaRemoveAll() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.removeAll(ImmutableList.of(bar, baz));
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaRemoveAll() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.removeAll(ImmutableList.of(bar, baz)), CoreMatchers.is(true));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(qux));
+		MatcherAssert.assertThat(jsonElements.removeAll(ImmutableList.of(bar, baz)), CoreMatchers.is(false));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaRetainAll() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.retainAll(ImmutableList.of(bar, baz));
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaRetainAll() {
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.retainAll(ImmutableList.of(bar, baz)), CoreMatchers.is(true));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
+		MatcherAssert.assertThat(jsonElements.retainAll(ImmutableList.of(bar, baz)), CoreMatchers.is(false));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAsImmutableListCannotBeModifiedViaSet() {
+		final JsonArray jsonArray = JsonArrays.of(bar, bar, baz, qux);
+		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+		jsonElements.set(0, foo);
+	}
+
+	@Test
+	public void testAsMutableListCanBeModifiedViaSet() {
+		final JsonArray jsonArray = JsonArrays.of(bar, bar, baz);
+		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
+		MatcherAssert.assertThat(jsonElements.set(0, foo), CoreMatchers.is(bar));
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(bar));
+		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(baz));
 	}
 
 	private static JsonArray stringJsonArray(final String... values) {
