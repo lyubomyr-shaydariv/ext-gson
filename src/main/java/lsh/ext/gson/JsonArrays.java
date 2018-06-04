@@ -1,5 +1,6 @@
 package lsh.ext.gson;
 
+import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -318,6 +319,22 @@ public final class JsonArrays {
 		jsonArray.add(e8);
 		jsonArray.add(e9);
 		jsonArray.add(e10);
+		return jsonArray;
+	}
+
+	public static JsonArray from(final Iterable<? extends JsonElement> jsonElements) {
+		final JsonArray jsonArray = new JsonArray();
+		for ( final JsonElement jsonElement : jsonElements ) {
+			jsonArray.add(jsonElement);
+		}
+		return jsonArray;
+	}
+
+	public static JsonArray from(final Collection<? extends JsonElement> jsonElements) {
+		final JsonArray jsonArray = new JsonArray(jsonElements.size());
+		for ( final JsonElement jsonElement : jsonElements ) {
+			jsonArray.add(jsonElement);
+		}
 		return jsonArray;
 	}
 

@@ -1,10 +1,16 @@
 package lsh.ext.gson;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public final class JsonArraysTest {
 
@@ -136,6 +142,38 @@ public final class JsonArraysTest {
 				JsonArrays.of(null, null, null, null, null, null, null, null, null, null),
 				CoreMatchers.is(stringJsonArray(null, null, null, null, null, null, null, null, null, null))
 		);
+	}
+
+	@Test
+	public void testFromIterable() {
+		final JsonPrimitive element1 = JsonPrimitives.of(K1);
+		final JsonPrimitive element2 = JsonPrimitives.of(K2);
+		final JsonPrimitive element3 = JsonPrimitives.of(K3);
+		final Iterable<? extends JsonElement> jsonElements = ImmutableList.of(element1, element2, element3);
+		final JsonArray jsonArray = JsonArrays.from(jsonElements);
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(element1));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(element2));
+		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(element3));
+	}
+
+	@Test
+	public void testFromCollection() {
+		final JsonPrimitive element1 = JsonPrimitives.of(K1);
+		final JsonPrimitive element2 = JsonPrimitives.of(K2);
+		final JsonPrimitive element3 = JsonPrimitives.of(K3);
+		final List<? extends JsonElement> jsonElements = ImmutableList.of(element1, element2, element3);
+		final List<? extends JsonElement> spyJsonElements = Mockito.spy(jsonElements);
+		final JsonArray jsonArray = JsonArrays.from(spyJsonElements);
+		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(3));
+		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(element1));
+		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(element2));
+		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(element3));
+		Mockito.verify(spyJsonElements).size();
+		Mockito.verify(spyJsonElements).iterator();
+		Mockito.verify(spyJsonElements).listIterator();
+		Mockito.verify(spyJsonElements).listIterator(0);
+		Mockito.verifyNoMoreInteractions(spyJsonElements);
 	}
 
 	@Test
