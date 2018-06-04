@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lsh.ext.gson.JsonElements;
+import lsh.ext.gson.JsonObjects;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public final class JsonCollectorsTest {
 				.entrySet()
 				.stream()
 				.collect(JsonCollectors.toJsonObject());
-		final JsonObject expected = JsonElements.object(K1, v1, K2, v2, K3, v3);
+		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
 		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
 	}
 
@@ -35,8 +36,8 @@ public final class JsonCollectorsTest {
 		final JsonObject actual = ImmutableMap.of(K2, v2, K3, v3)
 				.entrySet()
 				.stream()
-				.collect(JsonCollectors.toJsonObject(() -> JsonElements.object(K1, v1)));
-		final JsonObject expected = JsonElements.object(K1, v1, K2, v2, K3, v3);
+				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.of(K1, v1)));
+		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
 		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
 	}
 
@@ -45,8 +46,8 @@ public final class JsonCollectorsTest {
 		final JsonObject actual = ImmutableMap.of(K1, v1, K2, v2, K3, v3)
 				.entrySet()
 				.stream()
-				.collect(JsonCollectors.toJsonObject(() -> JsonElements.object(K1, v2, K2, v3, K3, v2)));
-		final JsonObject expected = JsonElements.object(K1, v1, K2, v2, K3, v3);
+				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.of(K1, v2, K2, v3, K3, v2)));
+		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
 		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
 	}
 
