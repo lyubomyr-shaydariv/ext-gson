@@ -5,20 +5,12 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
 public final class LocalDateTimeTypeAdapterFactoryTest
-		extends AbstractTimeTypeAdapterFactoryTest {
+		extends AbstractTimeTypeAdapterFactoryTest<LocalDateTime> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith> parameters() {
-		return params(new TypeToken<LocalDateTime>() {});
-	}
-
-	public LocalDateTimeTypeAdapterFactoryTest(final TestWith testWith) {
-		super(testWith);
+	public LocalDateTimeTypeAdapterFactoryTest() {
+		super(new TypeToken<LocalDateTime>() {});
 	}
 
 	@Nonnull

@@ -2,64 +2,41 @@ package lsh.ext.gson.adapters.jsonpath;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.ImmutableList;
+import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
-import org.junit.Ignore;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.params.provider.Arguments;
 
-@Ignore
-@RunWith(Parameterized.class)
+@Disabled
 public final class JsonPathTypeAdapterTest
 		extends AbstractTypeAdapterTest<Object> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith<?>> parameters() {
-		return ImmutableList.of(
-				parameterize(new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1")), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}")
-						.with(TypeToken.get(Wrapper.class))
-						.get(),
-				parameterize(new WrapperWithNotExistingPath(null), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}")
-						.with(TypeToken.get(WrapperWithNotExistingPath.class))
-						.get(),
-				parameterize(new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1")), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}")
-						.with(TypeToken.get(Wrapper.class))
-						.with(JsonPathTypeAdapterFactory.get(JsonPathTypeAdapterTest::getJsonPathConfiguration)::create)
-						.get(),
-				parameterize(new WrapperWithNotExistingPath(null), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}")
-						.with(TypeToken.get(WrapperWithNotExistingPath.class))
-						.with(JsonPathTypeAdapterFactory.get(JsonPathTypeAdapterTest::getJsonPathConfiguration)::create)
-						.get(),
-				parameterize(new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1")), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}")
-						.with(TypeToken.get(Wrapper.class))
-						.with(JsonPathTypeAdapterFactory.getWithGlobalDefaults()::create)
-						.get(),
-				parameterize(new WrapperWithNotExistingPath(null), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}")
-						.with(TypeToken.get(WrapperWithNotExistingPath.class))
-						.with(JsonPathTypeAdapterFactory.getWithGlobalDefaults()::create)
-						.get()
-		);
-	}
-
-	public JsonPathTypeAdapterTest(final TestWith<?> testWith) {
-		super(null, testWith);
+	public JsonPathTypeAdapterTest() {
+		super(null);
 	}
 
 	@Nonnull
 	@Override
-	protected TypeAdapter<?> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
-		return JsonPathTypeAdapterFactory.get().create(gson, typeToken);
+	protected Stream<Arguments> source() {
+		final Gson gson = new Gson();
+		return Stream.of(
+				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(Wrapper.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))),
+				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new WrapperWithNotExistingPath(null)),
+				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(Wrapper.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))),
+				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new WrapperWithNotExistingPath(null)),
+				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(Wrapper.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))),
+				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new WrapperWithNotExistingPath(null))
+		);
 	}
 
 	@Nonnull

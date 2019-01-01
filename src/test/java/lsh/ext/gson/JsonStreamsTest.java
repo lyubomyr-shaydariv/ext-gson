@@ -10,7 +10,8 @@ import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public final class JsonStreamsTest {
 
@@ -58,13 +59,14 @@ public final class JsonStreamsTest {
 		MatcherAssert.assertThat(writer.toString(), CoreMatchers.is(NORMALIZED_JSON));
 	}
 
-	@Test(expected = MalformedJsonException.class)
-	public void testCopyToForMalformedJsonDisallowingLenient()
-			throws IOException {
-		final Writer writer = new StringWriter();
-		final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
-		final JsonWriter jsonWriter = new JsonWriter(writer);
-		JsonStreams.copyTo(jsonReader, jsonWriter, false);
+	@Test
+	public void testCopyToForMalformedJsonDisallowingLenient() {
+		Assertions.assertThrows(MalformedJsonException.class, () -> {
+			final Writer writer = new StringWriter();
+			final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
+			final JsonWriter jsonWriter = new JsonWriter(writer);
+			JsonStreams.copyTo(jsonReader, jsonWriter, false);
+		});
 	}
 
 	private static JsonReader newLenientJsonReader(final String json) {

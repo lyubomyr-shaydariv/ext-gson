@@ -5,20 +5,12 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
 public final class OffsetTimeTypeAdapterFactoryTest
-		extends AbstractTimeTypeAdapterFactoryTest {
+		extends AbstractTimeTypeAdapterFactoryTest<OffsetTime> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith> parameters() {
-		return params(new TypeToken<OffsetTime>() {});
-	}
-
-	public OffsetTimeTypeAdapterFactoryTest(final TestWith testWith) {
-		super(testWith);
+	public OffsetTimeTypeAdapterFactoryTest() {
+		super(new TypeToken<OffsetTime>() {});
 	}
 
 	@Nonnull

@@ -9,7 +9,8 @@ import com.google.gson.JsonPrimitive;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public final class JsonObjectsTest {
@@ -38,10 +39,10 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(JsonObjects.of(K1, null), CoreMatchers.is(o2));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject1AsNull() {
-		JsonObjects.of(null, JsonPrimitives.of(K1));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1)));
 	}
 
 	@Test
@@ -56,10 +57,10 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(JsonObjects.of(K1, null, K2, null), CoreMatchers.is(o2));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject2AsNull() {
-		JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2)));
 	}
 
 	@Test
@@ -76,10 +77,10 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(JsonObjects.of(K1, null, K2, null, K3, null), CoreMatchers.is(o2));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject3AsNull() {
-		JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3)));
 	}
 
 	@Test
@@ -98,10 +99,10 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(JsonObjects.of(K1, null, K2, null, K3, null, K4, null), CoreMatchers.is(o2));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject4AsNull() {
-		JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4)));
 	}
 
 	@Test
@@ -122,10 +123,10 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(JsonObjects.of(K1, null, K2, null, K3, null, K4, null, K5, null), CoreMatchers.is(o2));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject5AsNull() {
-		JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4), null, JsonPrimitives.of(K5));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4), null, JsonPrimitives.of(K5)));
 	}
 
 	@Test
@@ -257,11 +258,13 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(result, hasPropertiesOf(l, r, r));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableMapCannotBeChangedViaClear() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-		map.clear();
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+			map.clear();
+		});
 	}
 
 	@Test
@@ -273,11 +276,13 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(0));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableMapCannotBeChangedViaPut() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-		map.put(K3, l);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+			map.put(K3, l);
+		});
 	}
 
 	@Test
@@ -297,11 +302,13 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.is(r));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableMapCannotBeChangedViaPutAll() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-		map.putAll(ImmutableMap.of(K3, l, K4, r));
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+			map.putAll(ImmutableMap.of(K3, l, K4, r));
+		});
 	}
 
 	@Test
@@ -319,11 +326,13 @@ public final class JsonObjectsTest {
 		MatcherAssert.assertThat(jsonObject.get(K4), CoreMatchers.is(r));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableMapCannotBeChangedViaRemove() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-		map.remove(K1);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+			map.remove(K1);
+		});
 	}
 
 	@Test

@@ -1,45 +1,35 @@
 package lsh.ext.gson.adapters.guava;
 
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.provider.Arguments;
 
-@RunWith(Parameterized.class)
 public final class MultimapTypeAdapterTest
 		extends AbstractTypeAdapterTest<Multimap<String, ?>> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith<? extends Multimap<String, ?>>> parameters() {
-		return ImmutableList.of(
-				parameterize(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"), "{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}")
-						.with(TypeToken.get(String.class))
-						.get()
-		);
-	}
-
-	public MultimapTypeAdapterTest(final TestWith<? extends Multimap<String, ?>> testWith) {
-		super(null, testWith);
-	}
-
-	@Nonnull
-	@Override
-	protected TypeAdapter<? extends Multimap<String, ?>> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
-		return MultimapTypeAdapter.get(gson.getAdapter(typeToken));
+	public MultimapTypeAdapterTest() {
+		super(null);
 	}
 
 	@Nonnull
 	@Override
 	protected Object finalizeValue(@Nonnull final Multimap<String, ?> value) {
 		return value;
+	}
+
+	@Nonnull
+	@Override
+	protected Stream<Arguments> source() {
+		final Gson gson = new Gson();
+		return Stream.of(
+				Arguments.of(MultimapTypeAdapter.get(gson.getAdapter(String.class)), "{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}", (Supplier<?>) () -> ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
+		);
 	}
 
 }

@@ -5,20 +5,12 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
 public final class YearTypeAdapterFactoryTest
-		extends AbstractTimeTypeAdapterFactoryTest {
+		extends AbstractTimeTypeAdapterFactoryTest<Year> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith> parameters() {
-		return params(new TypeToken<Year>() {});
-	}
-
-	public YearTypeAdapterFactoryTest(final TestWith testWith) {
-		super(testWith);
+	public YearTypeAdapterFactoryTest() {
+		super(new TypeToken<Year>() {});
 	}
 
 	@Nonnull

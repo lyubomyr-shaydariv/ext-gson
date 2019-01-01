@@ -5,20 +5,12 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
 public final class PeriodTypeAdapterFactoryTest
-		extends AbstractTimeTypeAdapterFactoryTest {
+		extends AbstractTimeTypeAdapterFactoryTest<Period> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith> parameters() {
-		return params(new TypeToken<Period>() {});
-	}
-
-	public PeriodTypeAdapterFactoryTest(final TestWith testWith) {
-		super(testWith);
+	public PeriodTypeAdapterFactoryTest() {
+		super(new TypeToken<Period>() {});
 	}
 
 	@Nonnull

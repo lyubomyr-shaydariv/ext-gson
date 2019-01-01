@@ -7,8 +7,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import org.junit.Test;
-import org.mockito.Matchers;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 public final class PrePostTypeAdapterFactoryTest {
@@ -33,7 +33,7 @@ public final class PrePostTypeAdapterFactoryTest {
 				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.get(ImmutableList.of(userProcessorFactory)))
 				.create();
 		gson.toJson(new User("John", "Doe"));
-		Mockito.verify(userProcessor).pre(Matchers.eq(new User("John", "Doe")));
+		Mockito.verify(userProcessor).pre(ArgumentMatchers.eq(new User("John", "Doe")));
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public final class PrePostTypeAdapterFactoryTest {
 				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.get(ImmutableList.of(userProcessorFactory)))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);
-		Mockito.verify(userProcessor).post(Matchers.eq(new User("John", "Doe")));
+		Mockito.verify(userProcessor).post(ArgumentMatchers.eq(new User("John", "Doe")));
 	}
 
 	private static final class User {

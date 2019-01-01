@@ -1,25 +1,19 @@
 package lsh.ext.gson.adapters.jsonapi;
 
-import java.util.Collection;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.json.JsonValue;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractModuleTest;
 import lsh.ext.gson.adapters.IModule;
+import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonApiModuleTest
 		extends AbstractModuleTest {
 
-	private static final Collection<TypeToken<?>> supportedTypeTokens = ImmutableList.of(
-			new TypeToken<JsonValue>() {}
-	);
-
-	@Nonnull
-	@Override
-	protected String getExpectedName() {
-		return "Java JSON API";
+	public JsonApiModuleTest() {
+		super("Java JSON API");
 	}
 
 	@Nonnull
@@ -30,8 +24,10 @@ public final class JsonApiModuleTest
 
 	@Nonnull
 	@Override
-	protected Collection<TypeToken<?>> getSupportedTypeTokens() {
-		return supportedTypeTokens;
+	protected Stream<Arguments> supported() {
+		return Stream.of(
+				Arguments.of(new TypeToken<JsonValue>() {})
+		);
 	}
 
 }

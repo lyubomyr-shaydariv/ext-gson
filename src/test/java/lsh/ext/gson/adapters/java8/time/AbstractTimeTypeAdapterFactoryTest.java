@@ -15,12 +15,15 @@ import java.time.Year;
 import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
+import org.junit.jupiter.params.provider.Arguments;
 
-abstract class AbstractTimeTypeAdapterFactoryTest
+abstract class AbstractTimeTypeAdapterFactoryTest<T>
 		extends AbstractTypeAdapterFactoryTest {
 
 	private static final Collection<TypeToken<?>> allTypeTokens = ImmutableList.<TypeToken<?>>builder()
@@ -40,15 +43,27 @@ abstract class AbstractTimeTypeAdapterFactoryTest
 			.add(new TypeToken<ZonedDateTime>() {})
 			.build();
 
-	protected AbstractTimeTypeAdapterFactoryTest(final TestWith testWith) {
-		super(false, testWith);
+	private final TypeToken<T> typeToken;
+
+	protected AbstractTimeTypeAdapterFactoryTest(final TypeToken<T> typeToken) {
+		super(false);
+		this.typeToken = typeToken;
 	}
 
-	protected static Iterable<TestWith> params(final TypeToken<?> typeToken) {
-		return allTypeTokens
-				.stream()
-				.map(actualTypeToken -> typeToken.equals(actualTypeToken) ? testWith(typeToken) : testWith(typeToken, actualTypeToken))
-				.collect(ImmutableList.toImmutableList());
+	@Nonnull
+	@Override
+	protected final Stream<Arguments> supported() {
+		return allTypeTokens.stream()
+				.filter(tt -> tt.equals(typeToken))
+				.map(Arguments::of);
+	}
+
+	@Nonnull
+	@Override
+	protected final Stream<Arguments> unsupported() {
+		return allTypeTokens.stream()
+				.filter(tt -> !tt.equals(typeToken))
+				.map(Arguments::of);
 	}
 
 }

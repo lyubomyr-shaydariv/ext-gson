@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import lsh.ext.gson.ParameterizedTypes;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public final class MergerTest {
 

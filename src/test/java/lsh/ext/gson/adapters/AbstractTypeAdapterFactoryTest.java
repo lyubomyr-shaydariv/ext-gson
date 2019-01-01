@@ -1,5 +1,6 @@
 package lsh.ext.gson.adapters;
 
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
@@ -8,57 +9,45 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractTypeAdapterFactoryTest {
-
-	public static final class TestWith {
-
-		private final TypeToken<?> supportedTypeToken;
-		private final TypeToken<?> unsupportedTypeToken;
-
-		private TestWith(final TypeToken<?> supportedTypeToken, final TypeToken<?> unsupportedTypeToken) {
-			this.supportedTypeToken = supportedTypeToken;
-			this.unsupportedTypeToken = unsupportedTypeToken;
-		}
-
-	}
 
 	private static final Gson gson = new Gson();
 
-	private static final TypeToken<Void> voidTypeToken = TypeToken.get(Void.class);
-
 	private final boolean supportsAll;
-	private final TestWith testWith;
 
-	protected AbstractTypeAdapterFactoryTest(final boolean supportsAll, final TestWith testWith) {
+	protected AbstractTypeAdapterFactoryTest(final boolean supportsAll) {
 		this.supportsAll = supportsAll;
-		this.testWith = testWith;
-	}
-
-	protected static TestWith testWith(final TypeToken<?> supportedTypeToken) {
-		return new TestWith(supportedTypeToken, voidTypeToken);
-	}
-
-	protected static TestWith testWith(final TypeToken<?> supportedTypeToken, final TypeToken<?> unsupportedTypeToken) {
-		return new TestWith(supportedTypeToken, unsupportedTypeToken);
 	}
 
 	@Nonnull
 	protected abstract TypeAdapterFactory createUnit();
 
-	@Test
-	public final void testCreateIfSupports() {
+	@Nonnull
+	protected abstract Stream<Arguments> supported();
+
+	@Nonnull
+	protected abstract Stream<Arguments> unsupported();
+
+	@ParameterizedTest
+	@MethodSource("supported")
+	public final void testCreateIfSupports(final TypeToken<?> supportedTypeToken) {
 		final TypeAdapterFactory unit = createUnit();
-		final TypeAdapter<?> typeAdapter = unit.create(gson, testWith.supportedTypeToken);
+		final TypeAdapter<?> typeAdapter = unit.create(gson, supportedTypeToken);
 		MatcherAssert.assertThat(typeAdapter, CoreMatchers.notNullValue());
 	}
 
-	@Test
-	public final void testCreateIfDoesNotSupport() {
+	@ParameterizedTest
+	@MethodSource("unsupported")
+	public final void testCreateIfDoesNotSupport(final TypeToken<?> unsupportedTypeToken) {
 		if ( !supportsAll ) {
 			final TypeAdapterFactory unit = createUnit();
-			final TypeAdapter<?> typeAdapter = unit.create(gson, testWith.unsupportedTypeToken);
+			final TypeAdapter<?> typeAdapter = unit.create(gson, unsupportedTypeToken);
 			MatcherAssert.assertThat(typeAdapter, CoreMatchers.nullValue());
 		}
 	}

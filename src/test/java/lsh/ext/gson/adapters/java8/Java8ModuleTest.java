@@ -1,27 +1,19 @@
 package lsh.ext.gson.adapters.java8;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractModuleTest;
 import lsh.ext.gson.adapters.IModule;
+import org.junit.jupiter.params.provider.Arguments;
 
 public final class Java8ModuleTest
 		extends AbstractModuleTest {
 
-	private static final Collection<TypeToken<?>> supportedTypeTokens = ImmutableList.of(
-			new TypeToken<Optional<?>>() {},
-			new TypeToken<Stream<?>>() {}
-	);
-
-	@Nonnull
-	@Override
-	protected String getExpectedName() {
-		return "Java 8";
+	public Java8ModuleTest() {
+		super("Java 8");
 	}
 
 	@Nonnull
@@ -32,8 +24,11 @@ public final class Java8ModuleTest
 
 	@Nonnull
 	@Override
-	protected Collection<TypeToken<?>> getSupportedTypeTokens() {
-		return supportedTypeTokens;
+	protected Stream<Arguments> supported() {
+		return Stream.of(
+				Arguments.of(new TypeToken<Optional<?>>() {}),
+				Arguments.of(new TypeToken<Stream<?>>() {})
+		);
 	}
 
 }

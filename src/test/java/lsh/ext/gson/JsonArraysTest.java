@@ -10,7 +10,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public final class JsonArraysTest {
@@ -212,11 +213,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaAdd() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.add(qux);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.add(qux);
+		});
 	}
 
 	@Test
@@ -240,11 +243,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(qux));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaAddByIndex() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.add(0, qux);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.add(0, qux);
+		});
 	}
 
 	@Test
@@ -268,11 +273,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(baz));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaAddAll() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.addAll(Collections.emptyList());
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.addAll(Collections.emptyList());
+		});
 	}
 
 	@Test
@@ -295,11 +302,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(qux));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaAddAllViaIndex() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.addAll(0, Collections.emptyList());
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.addAll(0, Collections.emptyList());
+		});
 	}
 
 	@Test
@@ -322,11 +331,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(bar));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaClear() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.clear();
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.clear();
+		});
 	}
 
 	@Test
@@ -337,18 +348,22 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(0));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaRemove() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.remove(foo);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.remove(foo);
+		});
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaRemoveEvenIfObjectIsNotJsonElement() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.remove("whatever");
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.remove("whatever");
+		});
 	}
 
 	@Test
@@ -365,11 +380,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaRemoveViaIndex() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.remove(1);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.remove(1);
+		});
 	}
 
 	@Test
@@ -382,11 +399,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaRemoveAll() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.removeAll(ImmutableList.of(bar, baz));
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.removeAll(ImmutableList.of(bar, baz));
+		});
 	}
 
 	@Test
@@ -400,11 +419,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonElements.removeAll(ImmutableList.of(bar, baz)), CoreMatchers.is(false));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaRetainAll() {
-		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.retainAll(ImmutableList.of(bar, baz));
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.retainAll(ImmutableList.of(bar, baz));
+		});
 	}
 
 	@Test
@@ -421,11 +442,13 @@ public final class JsonArraysTest {
 		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAsImmutableListCannotBeModifiedViaSet() {
-		final JsonArray jsonArray = JsonArrays.of(bar, bar, baz, qux);
-		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		jsonElements.set(0, foo);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+			final JsonArray jsonArray = JsonArrays.of(bar, bar, baz, qux);
+			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
+			jsonElements.set(0, foo);
+		});
 	}
 
 	@Test

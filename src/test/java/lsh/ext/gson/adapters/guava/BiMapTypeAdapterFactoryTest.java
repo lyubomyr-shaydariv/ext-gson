@@ -1,43 +1,45 @@
 package lsh.ext.gson.adapters.guava;
 
 import java.util.Map;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.provider.Arguments;
 
-@RunWith(Parameterized.class)
 public final class BiMapTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith> parameters() {
-		return ImmutableList.of(
-				testWith(
-						new TypeToken<BiMap<String, String>>() {},
-						new TypeToken<Map<Object, Integer>>() {}),
-				testWith(
-						new TypeToken<BiMap<Integer, Object>>() {},
-						new TypeToken<Map<Integer, String>>() {}),
-				testWith(
-						new TypeToken<BiMap<Float, Integer>>() {}
-				)
-		);
-	}
-
-	public BiMapTypeAdapterFactoryTest(final TestWith testWith) {
-		super(false, testWith);
+	public BiMapTypeAdapterFactoryTest() {
+		super(false);
 	}
 
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
 		return BiMapTypeAdapterFactory.get();
+	}
+
+	@Nonnull
+	@Override
+	protected Stream<Arguments> supported() {
+		return Stream.of(
+				Arguments.of(new TypeToken<BiMap<String, String>>() {}),
+				Arguments.of(new TypeToken<BiMap<Integer, Object>>() {}),
+				Arguments.of(new TypeToken<BiMap<Float, Integer>>() {})
+		);
+	}
+
+	@Nonnull
+	@Override
+	protected Stream<Arguments> unsupported() {
+		return Stream.of(
+				Arguments.of(new TypeToken<Map<Object, Integer>>() {}),
+				Arguments.of(new TypeToken<Map<Integer, String>>() {})
+		);
 	}
 
 }

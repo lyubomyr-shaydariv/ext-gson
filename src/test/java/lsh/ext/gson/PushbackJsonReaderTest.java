@@ -11,8 +11,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public final class PushbackJsonReaderTest {
 
@@ -357,23 +357,25 @@ public final class PushbackJsonReaderTest {
 		}
 	}
 
-	@Test(expected = NotImplementedYetException.class)
-	public void testToStringForRecordingIsNotImplementedYet()
-			throws IOException {
-		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
-			@SuppressWarnings("unused")
-			final String s = unit.toString();
-		}
+	@Test
+	public void testToStringForRecordingIsNotImplementedYet() {
+		Assertions.assertThrows(NotImplementedYetException.class, () -> {
+			try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
+				@SuppressWarnings("unused")
+				final String s = unit.toString();
+			}
+		});
 	}
 
-	@Test(expected = NotImplementedYetException.class)
-	public void testToStringForReplayingIsNotImplementedYet()
-			throws IOException {
-		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
-			unit.pushback();
-			@SuppressWarnings("unused")
-			final String s = unit.toString();
-		}
+	@Test
+	public void testToStringForReplayingIsNotImplementedYet() {
+		Assertions.assertThrows(NotImplementedYetException.class, () -> {
+			try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
+				unit.pushback();
+				@SuppressWarnings("unused")
+				final String s = unit.toString();
+			}
+		});
 	}
 
 	@Test
@@ -387,25 +389,27 @@ public final class PushbackJsonReaderTest {
 			unit.beginArray();
 			unit.nextInt();
 			unit.nextInt();
-			Assert.assertThat(unit.toString(), CoreMatchers.is("PushbackJsonReader at line 1 column 5 path $[2]"));
+			MatcherAssert.assertThat(unit.toString(), CoreMatchers.is("PushbackJsonReader at line 1 column 5 path $[2]"));
 		}
 	}
 
-	@Test(expected = NotImplementedYetException.class)
-	public void testGetPathForRecordingIsNotImplementedYet()
-			throws IOException {
-		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
-			unit.getPath();
-		}
+	@Test
+	public void testGetPathForRecordingIsNotImplementedYet() {
+		Assertions.assertThrows(NotImplementedYetException.class, () -> {
+			try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
+				unit.getPath();
+			}
+		});
 	}
 
-	@Test(expected = NotImplementedYetException.class)
-	public void testGetPathForReplayingIsNotImplementedYet()
-			throws IOException {
-		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
-			unit.pushback();
-			unit.getPath();
-		}
+	@Test
+	public void testGetPathForReplayingIsNotImplementedYet() {
+		Assertions.assertThrows(NotImplementedYetException.class, () -> {
+			try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
+				unit.pushback();
+				unit.getPath();
+			}
+		});
 	}
 
 	@Test
@@ -419,7 +423,7 @@ public final class PushbackJsonReaderTest {
 			unit.beginArray();
 			unit.nextInt();
 			unit.nextInt();
-			Assert.assertThat(unit.getPath(), CoreMatchers.is("$[2]"));
+			MatcherAssert.assertThat(unit.getPath(), CoreMatchers.is("$[2]"));
 		}
 	}
 

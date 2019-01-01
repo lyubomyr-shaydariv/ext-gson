@@ -1,55 +1,33 @@
 package lsh.ext.gson.adapters.jsonapi;
 
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonValue;
 
-import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.provider.Arguments;
 
-@RunWith(Parameterized.class)
 public final class JsonValueTypeAdapterTest
 		extends AbstractTypeAdapterTest<JsonValue> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith<? extends JsonValue>> parameters() {
-		return ImmutableList.of(
-				parameterize(Json.createObjectBuilder()
-						.add("boolean", true)
-						.add("integer", 3)
-						.add("string", "foo")
-						.addNull("null")
-						.add("array", Json.createArrayBuilder()
-								.add(false)
-								.add(2)
-								.add("bar")
-								.addNull()
-								.build())
-						.build(), "{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}")
-						.get()
-		);
-	}
-
-	public JsonValueTypeAdapterTest(final TestWith<? extends JsonValue> testWith) {
-		super(JsonValue.NULL, testWith);
-	}
-
-	@Nonnull
-	@Override
-	protected TypeAdapter<? extends JsonValue> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
-		return JsonValueTypeAdapter.get();
+	public JsonValueTypeAdapterTest() {
+		super(JsonValue.NULL);
 	}
 
 	@Nonnull
 	@Override
 	protected Object finalizeValue(@Nonnull final JsonValue value) {
 		return value;
+	}
+
+	@Nonnull
+	@Override
+	protected Stream<Arguments> source() {
+		return Stream.of(
+				Arguments.of(JsonValueTypeAdapter.get(), "{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}", (Supplier<?>) () -> Json.createObjectBuilder().add("boolean", true).add("integer", 3).add("string", "foo").addNull("null").add("array", Json.createArrayBuilder().add(false).add(2).add("bar").addNull().build()).build())
+		);
 	}
 
 }

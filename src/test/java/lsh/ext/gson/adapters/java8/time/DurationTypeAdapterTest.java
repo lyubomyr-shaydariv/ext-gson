@@ -1,51 +1,36 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.Duration;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.provider.Arguments;
 
-@RunWith(Parameterized.class)
 public final class DurationTypeAdapterTest
 		extends AbstractTypeAdapterTest<Duration> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith<? extends Duration>> parameters() {
-		return ImmutableList.of(
-				parameterize(Duration.ofMillis(555), "\"PT0.555S\"")
-						.get(),
-				parameterize(Duration.ofSeconds(555), "\"PT9M15S\"")
-						.get(),
-				parameterize(Duration.ofMinutes(555), "\"PT9H15M\"")
-						.get(),
-				parameterize(Duration.ofHours(555), "\"PT555H\"")
-						.get(),
-				parameterize(Duration.ofDays(555), "\"PT13320H\"")
-						.get()
-		);
-	}
-
-	public DurationTypeAdapterTest(final TestWith<? extends Duration> testWith) {
-		super(null, testWith);
-	}
-
-	@Nonnull
-	@Override
-	protected TypeAdapter<? extends Duration> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
-		return DurationTypeAdapter.get();
+	public DurationTypeAdapterTest() {
+		super(null);
 	}
 
 	@Nonnull
 	@Override
 	protected Object finalizeValue(@Nonnull final Duration value) {
 		return value;
+	}
+
+	@Nonnull
+	@Override
+	protected Stream<Arguments> source() {
+		return Stream.of(
+				Arguments.of(DurationTypeAdapter.get(), "\"PT0.555S\"", (Supplier<?>) () -> Duration.ofMillis(555)),
+				Arguments.of(DurationTypeAdapter.get(), "\"PT9M15S\"", (Supplier<?>) () -> Duration.ofSeconds(555)),
+				Arguments.of(DurationTypeAdapter.get(), "\"PT9H15M\"", (Supplier<?>) () -> Duration.ofMinutes(555)),
+				Arguments.of(DurationTypeAdapter.get(), "\"PT555H\"", (Supplier<?>) () -> Duration.ofHours(555)),
+				Arguments.of(DurationTypeAdapter.get(), "\"PT13320H\"", (Supplier<?>) () -> Duration.ofDays(555))
+		);
 	}
 
 }

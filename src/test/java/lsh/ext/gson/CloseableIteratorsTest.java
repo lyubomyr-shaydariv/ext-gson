@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public final class CloseableIteratorsTest {

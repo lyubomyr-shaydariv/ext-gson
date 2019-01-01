@@ -1,45 +1,35 @@
 package lsh.ext.gson.adapters.guava;
 
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.provider.Arguments;
 
-@RunWith(Parameterized.class)
 public final class BiMapTypeAdapterTest
 		extends AbstractTypeAdapterTest<BiMap<String, ?>> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith<? extends BiMap<String, ?>>> parameters() {
-		return ImmutableList.of(
-				parameterize(ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz"), "{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}")
-						.with(TypeToken.get(String.class))
-						.get()
-		);
-	}
-
-	public BiMapTypeAdapterTest(final TestWith<? extends BiMap<String, ?>> testWith) {
-		super(null, testWith);
-	}
-
-	@Nonnull
-	@Override
-	protected TypeAdapter<? extends BiMap<String, ?>> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
-		return BiMapTypeAdapter.get(gson.getAdapter(typeToken));
+	public BiMapTypeAdapterTest() {
+		super(null);
 	}
 
 	@Nonnull
 	@Override
 	protected Object finalizeValue(@Nonnull final BiMap<String, ?> value) {
 		return value;
+	}
+
+	@Nonnull
+	@Override
+	protected Stream<Arguments> source() {
+		final Gson gson = new Gson();
+		return Stream.of(
+				Arguments.of(BiMapTypeAdapter.get(gson.getAdapter(String.class)), "{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}", (Supplier<?>) () -> ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz"))
+		);
 	}
 
 }

@@ -5,7 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public final class AbstractClassTypeAdapterFactoryTest {
 
@@ -26,16 +27,20 @@ public final class AbstractClassTypeAdapterFactoryTest {
 		MatcherAssert.assertThat(value.value, CoreMatchers.instanceOf(Bar.class));
 	}
 
-	@Test(expected = JsonSyntaxException.class)
+	@Test
 	public void testReadForNotExistingClass() {
-		final String json = "{\"value\":{\"$T\":\"not-existing-type\",\"$V\":{}}}";
-		gson.fromJson(json, Value.class);
+		Assertions.assertThrows(JsonSyntaxException.class, () -> {
+			final String json = "{\"value\":{\"$T\":\"not-existing-type\",\"$V\":{}}}";
+			gson.fromJson(json, Value.class);
+		});
 	}
 
-	@Test(expected = JsonSyntaxException.class)
+	@Test
 	public void testReadForSwappedFields() {
-		final String json = "{\"value\":{\"$V\":{}\"$T\":\"" + Bar.class.getTypeName() + "\"}}";
-		gson.fromJson(json, Value.class);
+		Assertions.assertThrows(JsonSyntaxException.class, () -> {
+			final String json = "{\"value\":{\"$V\":{}\"$T\":\"" + Bar.class.getTypeName() + "\"}}";
+			gson.fromJson(json, Value.class);
+		});
 	}
 
 	private static final class Value {

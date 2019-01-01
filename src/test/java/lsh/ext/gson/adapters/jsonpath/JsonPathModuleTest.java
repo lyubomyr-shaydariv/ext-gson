@@ -1,22 +1,19 @@
 package lsh.ext.gson.adapters.jsonpath;
 
-import java.util.Collection;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.ImmutableList;
-import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractModuleTest;
 import lsh.ext.gson.adapters.IModule;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.params.provider.Arguments;
 
+@Disabled
 public final class JsonPathModuleTest
 		extends AbstractModuleTest {
 
-	private static final Collection<TypeToken<?>> supportedTypeTokens = ImmutableList.of();
-
-	@Nonnull
-	@Override
-	protected String getExpectedName() {
-		return "Jayway JsonPath";
+	public JsonPathModuleTest() {
+		super("Jayway JsonPath");
 	}
 
 	@Nonnull
@@ -27,8 +24,8 @@ public final class JsonPathModuleTest
 
 	@Nonnull
 	@Override
-	protected Collection<TypeToken<?>> getSupportedTypeTokens() {
-		return supportedTypeTokens;
+	protected Stream<Arguments> supported() {
+		return Stream.empty();
 	}
 
 }

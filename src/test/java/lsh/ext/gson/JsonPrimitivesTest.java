@@ -3,7 +3,8 @@ package lsh.ext.gson;
 import com.google.gson.JsonPrimitive;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public final class JsonPrimitivesTest {
 
@@ -22,10 +23,10 @@ public final class JsonPrimitivesTest {
 		MatcherAssert.assertThat(JsonPrimitives.of(Boolean.FALSE), CoreMatchers.sameInstance(JsonPrimitives.of(false)));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonPrimitiveForBooleansAsNull() {
-		JsonPrimitives.of((Boolean) null);
+		Assertions.assertThrows(NullPointerException.class, () -> JsonPrimitives.of((Boolean) null));
 	}
 
 	@Test
@@ -38,10 +39,10 @@ public final class JsonPrimitivesTest {
 		MatcherAssert.assertThat(JsonPrimitives.of(6D), CoreMatchers.is(new JsonPrimitive(6)));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonPrimitiveForNumbersAsNull() {
-		JsonPrimitives.of((Number) null);
+		Assertions.assertThrows(NullPointerException.class, () -> JsonPrimitives.of((Number) null));
 	}
 
 	@Test
@@ -50,10 +51,10 @@ public final class JsonPrimitivesTest {
 		MatcherAssert.assertThat(JsonPrimitives.of(K2), CoreMatchers.is(new JsonPrimitive(K2)));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonPrimitivesForStringsAsNull() {
-		JsonPrimitives.of((String) null);
+		Assertions.assertThrows(NullPointerException.class, () -> JsonPrimitives.of((String) null));
 	}
 
 	@Test
@@ -62,10 +63,10 @@ public final class JsonPrimitivesTest {
 		MatcherAssert.assertThat(JsonPrimitives.of('b'), CoreMatchers.is(new JsonPrimitive('b')));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonPrimitivesForCharactersAsNull() {
-		JsonPrimitives.of((Character) null);
+		Assertions.assertThrows(NullPointerException.class, () -> JsonPrimitives.of((Character) null));
 	}
 
 }

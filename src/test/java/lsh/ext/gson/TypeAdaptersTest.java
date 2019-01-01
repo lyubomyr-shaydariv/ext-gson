@@ -22,7 +22,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public final class TypeAdaptersTest {
 
@@ -54,9 +55,9 @@ public final class TypeAdaptersTest {
 		MatcherAssert.assertThat(instanceCreator, canBeRegisteredAsTypeAdapter());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testGetTypeAdapterOfIllegalClass() {
-		TypeAdapters.ofConcrete(Object.class);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> TypeAdapters.ofConcrete(Object.class));
 	}
 
 	@Test
@@ -80,14 +81,14 @@ public final class TypeAdaptersTest {
 		MatcherAssert.assertThat(jsonDeserializer, canBeRegisteredAsTypeHierarchyAdapter());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testGetTypeHierarchyAdapterOfInstanceCreator() {
-		TypeAdapters.ofHierarchy(VoidInstanceCreator.class);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> TypeAdapters.ofHierarchy(VoidInstanceCreator.class));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testGetTypeHierarchyAdapterOfIllegalClass() {
-		TypeAdapters.ofHierarchy(Object.class);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> TypeAdapters.ofHierarchy(Object.class));
 	}
 
 	private static <T> Matcher<T> canBeRegisteredAsTypeAdapter() {

@@ -9,7 +9,7 @@ import com.google.gson.stream.JsonReader;
 import lsh.ext.gson.ICloseableIterator;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public final class JsonReaderIteratorTest {
 

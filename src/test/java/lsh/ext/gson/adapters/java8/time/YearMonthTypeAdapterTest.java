@@ -2,47 +2,33 @@ package lsh.ext.gson.adapters.java8.time;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.function.BiFunction;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.provider.Arguments;
 
-@RunWith(Parameterized.class)
 public final class YearMonthTypeAdapterTest
 		extends AbstractTypeAdapterTest<YearMonth> {
 
-	@Parameterized.Parameters
-	public static Iterable<TestWith<? extends YearMonth>> parameters() {
-		return ImmutableList.of(
-				parameterize(YearMonth.of(1999, 9), "\"1999-09\"")
-						.get(),
-				parameterize(YearMonth.of(1999, 9), "\"9.1999\"")
-						.with((BiFunction<Gson, TypeToken<YearMonth>, TypeAdapter<YearMonth>>) (gson, typeToken) -> YearMonthTypeAdapter.get(DateTimeFormatter.ofPattern("M.y")))
-						.get()
-		);
-	}
-
-	public YearMonthTypeAdapterTest(final TestWith<? extends YearMonth> testWith) {
-		super(null, testWith);
-	}
-
-	@Nonnull
-	@Override
-	protected TypeAdapter<? extends YearMonth> createDefaultUnit(@Nonnull final Gson gson, @Nullable final TypeToken<?> typeToken) {
-		return YearMonthTypeAdapter.get();
+	public YearMonthTypeAdapterTest() {
+		super(null);
 	}
 
 	@Nonnull
 	@Override
 	protected Object finalizeValue(@Nonnull final YearMonth value) {
 		return value;
+	}
+
+	@Nonnull
+	@Override
+	protected Stream<Arguments> source() {
+		return Stream.of(
+				Arguments.of(YearMonthTypeAdapter.get(), "\"1999-09\"", (Supplier<?>) () -> YearMonth.of(1999, 9)),
+				Arguments.of(YearMonthTypeAdapter.get(DateTimeFormatter.ofPattern("M.y")), "\"9.1999\"", (Supplier<?>) () -> YearMonth.of(1999, 9))
+		);
 	}
 
 }
