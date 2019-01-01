@@ -1,8 +1,6 @@
 package lsh.ext.gson;
 
 import com.google.gson.JsonPrimitive;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +11,14 @@ public final class JsonPrimitivesTest {
 
 	@Test
 	public void testJsonPrimitiveForBooleans() {
-		MatcherAssert.assertThat(JsonPrimitives.of(Boolean.TRUE), CoreMatchers.is(new JsonPrimitive(true)));
-		MatcherAssert.assertThat(JsonPrimitives.of(Boolean.FALSE), CoreMatchers.is(new JsonPrimitive(false)));
+		Assertions.assertEquals(new JsonPrimitive(true), JsonPrimitives.of(Boolean.TRUE));
+		Assertions.assertEquals(new JsonPrimitive(false), JsonPrimitives.of(Boolean.FALSE));
 	}
 
 	@Test
 	public void testJsonPrimitiveForBooleansIsFlyweight() {
-		MatcherAssert.assertThat(JsonPrimitives.of(true), CoreMatchers.sameInstance(JsonPrimitives.of(Boolean.TRUE)));
-		MatcherAssert.assertThat(JsonPrimitives.of(Boolean.FALSE), CoreMatchers.sameInstance(JsonPrimitives.of(false)));
+		Assertions.assertSame(JsonPrimitives.of(Boolean.TRUE), JsonPrimitives.of(true));
+		Assertions.assertSame(JsonPrimitives.of(Boolean.FALSE), JsonPrimitives.of(false));
 	}
 
 	@Test
@@ -31,12 +29,12 @@ public final class JsonPrimitivesTest {
 
 	@Test
 	public void testJsonPrimitiveForNumbers() {
-		MatcherAssert.assertThat(JsonPrimitives.of((byte) 1), CoreMatchers.is(new JsonPrimitive(1)));
-		MatcherAssert.assertThat(JsonPrimitives.of((short) 2), CoreMatchers.is(new JsonPrimitive(2)));
-		MatcherAssert.assertThat(JsonPrimitives.of(3), CoreMatchers.is(new JsonPrimitive(3)));
-		MatcherAssert.assertThat(JsonPrimitives.of(4L), CoreMatchers.is(new JsonPrimitive(4)));
-		MatcherAssert.assertThat(JsonPrimitives.of(5F), CoreMatchers.is(new JsonPrimitive(5)));
-		MatcherAssert.assertThat(JsonPrimitives.of(6D), CoreMatchers.is(new JsonPrimitive(6)));
+		Assertions.assertEquals(new JsonPrimitive(1), JsonPrimitives.of((byte) 1));
+		Assertions.assertEquals(new JsonPrimitive(2), JsonPrimitives.of((short) 2));
+		Assertions.assertEquals(new JsonPrimitive(3), JsonPrimitives.of(3));
+		Assertions.assertEquals(new JsonPrimitive(4), JsonPrimitives.of(4L));
+		Assertions.assertEquals(new JsonPrimitive(5), JsonPrimitives.of(5F));
+		Assertions.assertEquals(new JsonPrimitive(6), JsonPrimitives.of(6D));
 	}
 
 	@Test
@@ -47,8 +45,8 @@ public final class JsonPrimitivesTest {
 
 	@Test
 	public void testJsonPrimitivesForStrings() {
-		MatcherAssert.assertThat(JsonPrimitives.of(K1), CoreMatchers.is(new JsonPrimitive(K1)));
-		MatcherAssert.assertThat(JsonPrimitives.of(K2), CoreMatchers.is(new JsonPrimitive(K2)));
+		Assertions.assertEquals(new JsonPrimitive(K1), JsonPrimitives.of(K1));
+		Assertions.assertEquals(new JsonPrimitive(K2), JsonPrimitives.of(K2));
 	}
 
 	@Test
@@ -59,8 +57,8 @@ public final class JsonPrimitivesTest {
 
 	@Test
 	public void testJsonPrimitivesForCharacters() {
-		MatcherAssert.assertThat(JsonPrimitives.of('f'), CoreMatchers.is(new JsonPrimitive('f')));
-		MatcherAssert.assertThat(JsonPrimitives.of('b'), CoreMatchers.is(new JsonPrimitive('b')));
+		Assertions.assertEquals(new JsonPrimitive('f'), JsonPrimitives.of('f'));
+		Assertions.assertEquals(new JsonPrimitive('b'), JsonPrimitives.of('b'));
 	}
 
 	@Test

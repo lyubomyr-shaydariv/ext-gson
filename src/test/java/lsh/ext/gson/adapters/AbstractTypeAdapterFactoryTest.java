@@ -7,8 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -39,7 +38,7 @@ public abstract class AbstractTypeAdapterFactoryTest {
 	public final void testCreateIfSupports(final TypeToken<?> supportedTypeToken) {
 		final TypeAdapterFactory unit = createUnit();
 		final TypeAdapter<?> typeAdapter = unit.create(gson, supportedTypeToken);
-		MatcherAssert.assertThat(typeAdapter, CoreMatchers.notNullValue());
+		Assertions.assertNotNull(typeAdapter);
 	}
 
 	@ParameterizedTest
@@ -48,7 +47,7 @@ public abstract class AbstractTypeAdapterFactoryTest {
 		if ( !supportsAll ) {
 			final TypeAdapterFactory unit = createUnit();
 			final TypeAdapter<?> typeAdapter = unit.create(gson, unsupportedTypeToken);
-			MatcherAssert.assertThat(typeAdapter, CoreMatchers.nullValue());
+			Assertions.assertNull(typeAdapter);
 		}
 	}
 

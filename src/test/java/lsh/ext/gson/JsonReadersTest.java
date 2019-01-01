@@ -3,7 +3,6 @@ package lsh.ext.gson;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.google.common.collect.ImmutableList;
@@ -11,11 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +31,7 @@ public final class JsonReadersTest {
 	public void testSkipTokenForBeginArray()
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[]"));
-		MatcherAssert.assertThat(jsonReader.peek(), CoreMatchers.is(JsonToken.BEGIN_ARRAY));
+		Assertions.assertEquals(JsonToken.BEGIN_ARRAY, jsonReader.peek());
 		JsonReaders.skipToken(jsonReader);
 		jsonReader.endArray();
 	}
@@ -48,14 +42,14 @@ public final class JsonReadersTest {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[]"));
 		jsonReader.beginArray();
 		JsonReaders.skipToken(jsonReader);
-		MatcherAssert.assertThat(jsonReader.peek(), CoreMatchers.is(JsonToken.END_DOCUMENT));
+		Assertions.assertEquals(JsonToken.END_DOCUMENT, jsonReader.peek());
 	}
 
 	@Test
 	public void testSkipTokenForBeginObject()
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("{}"));
-		MatcherAssert.assertThat(jsonReader.peek(), CoreMatchers.is(JsonToken.BEGIN_OBJECT));
+		Assertions.assertEquals(JsonToken.BEGIN_OBJECT, jsonReader.peek());
 		JsonReaders.skipToken(jsonReader);
 		jsonReader.endObject();
 	}
@@ -66,7 +60,7 @@ public final class JsonReadersTest {
 		final JsonReader jsonReader = new JsonReader(new StringReader("{}"));
 		jsonReader.beginObject();
 		JsonReaders.skipToken(jsonReader);
-		MatcherAssert.assertThat(jsonReader.peek(), CoreMatchers.is(JsonToken.END_DOCUMENT));
+		Assertions.assertEquals(JsonToken.END_DOCUMENT, jsonReader.peek());
 	}
 
 	@Test
@@ -75,7 +69,7 @@ public final class JsonReadersTest {
 		final JsonReader jsonReader = new JsonReader(new StringReader("{\"foo\":1}"));
 		jsonReader.beginObject();
 		JsonReaders.skipToken(jsonReader);
-		MatcherAssert.assertThat(jsonReader.nextInt(), CoreMatchers.is(1));
+		Assertions.assertEquals(1, jsonReader.nextInt());
 		jsonReader.endObject();
 	}
 
@@ -84,9 +78,9 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[\"foo\",\"bar\",\"baz\"]"));
 		jsonReader.beginArray();
-		MatcherAssert.assertThat(jsonReader.nextString(), CoreMatchers.is("foo"));
+		Assertions.assertEquals("foo", jsonReader.nextString());
 		JsonReaders.skipToken(jsonReader);
-		MatcherAssert.assertThat(jsonReader.nextString(), CoreMatchers.is("baz"));
+		Assertions.assertEquals("baz", jsonReader.nextString());
 		jsonReader.endArray();
 	}
 
@@ -95,9 +89,9 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[1,2,3]"));
 		jsonReader.beginArray();
-		MatcherAssert.assertThat(jsonReader.nextInt(), CoreMatchers.is(1));
+		Assertions.assertEquals(1, jsonReader.nextInt());
 		JsonReaders.skipToken(jsonReader);
-		MatcherAssert.assertThat(jsonReader.nextInt(), CoreMatchers.is(3));
+		Assertions.assertEquals(3, jsonReader.nextInt());
 		jsonReader.endArray();
 	}
 
@@ -106,9 +100,9 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[false,true,true]"));
 		jsonReader.beginArray();
-		MatcherAssert.assertThat(jsonReader.nextBoolean(), CoreMatchers.is(false));
+		Assertions.assertFalse(jsonReader.nextBoolean());
 		JsonReaders.skipToken(jsonReader);
-		MatcherAssert.assertThat(jsonReader.nextBoolean(), CoreMatchers.is(true));
+		Assertions.assertTrue(jsonReader.nextBoolean());
 		jsonReader.endArray();
 	}
 
@@ -118,7 +112,7 @@ public final class JsonReadersTest {
 		final JsonReader jsonReader = new JsonReader(new StringReader("[null,true]"));
 		jsonReader.beginArray();
 		JsonReaders.skipToken(jsonReader);
-		MatcherAssert.assertThat(jsonReader.nextBoolean(), CoreMatchers.is(true));
+		Assertions.assertTrue(jsonReader.nextBoolean());
 		jsonReader.endArray();
 	}
 
@@ -134,13 +128,13 @@ public final class JsonReadersTest {
 	public void testReadValuedJsonToken()
 			throws IOException {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("[]")) ) {
-			MatcherAssert.assertThat(jsonReader, readsSequence(ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd(), ValuedJsonToken.documentEnd()));
+			assertSequence(jsonReader, ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd(), ValuedJsonToken.documentEnd());
 		}
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("{}")) ) {
-			MatcherAssert.assertThat(jsonReader, readsSequence(ValuedJsonToken.objectBegin(), ValuedJsonToken.objectEnd(), ValuedJsonToken.documentEnd()));
+			assertSequence(jsonReader, ValuedJsonToken.objectBegin(), ValuedJsonToken.objectEnd(), ValuedJsonToken.documentEnd());
 		}
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("{\"string\":\"fifty\",\"number\":900,\"boolean\":true,\"\":null}")) ) {
-			MatcherAssert.assertThat(jsonReader, readsSequence(ValuedJsonToken.objectBegin(), ValuedJsonToken.name("string"), ValuedJsonToken.value("fifty"), ValuedJsonToken.name("number"), ValuedJsonToken.value(900D), ValuedJsonToken.name("boolean"), ValuedJsonToken.value(true), ValuedJsonToken.name(""), ValuedJsonToken.value(), ValuedJsonToken.objectEnd(), ValuedJsonToken.documentEnd()));
+			assertSequence(jsonReader, ValuedJsonToken.objectBegin(), ValuedJsonToken.name("string"), ValuedJsonToken.value("fifty"), ValuedJsonToken.name("number"), ValuedJsonToken.value(900D), ValuedJsonToken.name("boolean"), ValuedJsonToken.value(true), ValuedJsonToken.name(""), ValuedJsonToken.value(), ValuedJsonToken.objectEnd(), ValuedJsonToken.documentEnd());
 		}
 	}
 
@@ -151,7 +145,7 @@ public final class JsonReadersTest {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
 			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			MatcherAssert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value("foo"))));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value("foo")), ImmutableList.copyOf(iterator));
 		}
 	}
 
@@ -162,7 +156,7 @@ public final class JsonReadersTest {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
 			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			MatcherAssert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value(100D))));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value(100D)), ImmutableList.copyOf(iterator));
 		}
 	}
 
@@ -173,7 +167,7 @@ public final class JsonReadersTest {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
 			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			MatcherAssert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value(true))));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value(true)), ImmutableList.copyOf(iterator));
 		}
 	}
 
@@ -184,7 +178,7 @@ public final class JsonReadersTest {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
 			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			MatcherAssert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value())));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value()), ImmutableList.copyOf(iterator));
 		}
 	}
 
@@ -195,7 +189,7 @@ public final class JsonReadersTest {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
 			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			MatcherAssert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(1D), ValuedJsonToken.value(2D), ValuedJsonToken.value(3D), ValuedJsonToken.arrayEnd())));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(1D), ValuedJsonToken.value(2D), ValuedJsonToken.value(3D), ValuedJsonToken.arrayEnd()), ImmutableList.copyOf(iterator));
 		}
 	}
 
@@ -206,7 +200,7 @@ public final class JsonReadersTest {
 			jsonReader.setLenient(true);
 			@SuppressWarnings("resource")
 			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			MatcherAssert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.objectBegin(), ValuedJsonToken.name("foo"), ValuedJsonToken.value(1D), ValuedJsonToken.name("bar"), ValuedJsonToken.value(2D), ValuedJsonToken.objectEnd())));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.objectBegin(), ValuedJsonToken.name("foo"), ValuedJsonToken.value(1D), ValuedJsonToken.name("bar"), ValuedJsonToken.value(2D), ValuedJsonToken.objectEnd()), ImmutableList.copyOf(iterator));
 		}
 	}
 
@@ -217,38 +211,19 @@ public final class JsonReadersTest {
 				jsonReader.setLenient(true);
 				@SuppressWarnings("resource")
 				final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-				MatcherAssert.assertThat(ImmutableList.copyOf(iterator), CoreMatchers.is(ImmutableList.of(ValuedJsonToken.value(100D))));
+				Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value(100D)), ImmutableList.copyOf(iterator));
 				iterator.next();
 			}
 		});
 	}
 
-	private static Matcher<JsonReader> readsSequence(final ValuedJsonToken<?>... tokens) {
-		final List<ValuedJsonToken<?>> tokensCopy = ImmutableList.copyOf(tokens);
-		return new TypeSafeMatcher<JsonReader>() {
-			@Override
-			protected boolean matchesSafely(final JsonReader jsonReader) {
-				try {
-					for ( final ValuedJsonToken<?> expectedValuedJsonToken : tokensCopy ) {
-						if ( jsonReader.peek() == JsonToken.END_DOCUMENT && expectedValuedJsonToken.getToken() != JsonToken.END_DOCUMENT ) {
-							return false;
-						}
-						final ValuedJsonToken<?> actualValuedJsonToken = JsonReaders.readValuedJsonToken(jsonReader);
-						if ( !expectedValuedJsonToken.equals(actualValuedJsonToken) ) {
-							return false;
-						}
-					}
-					return true;
-				} catch ( final IOException ex ) {
-					throw new RuntimeException(ex);
-				}
-			}
-
-			@Override
-			public void describeTo(final Description description) {
-				description.appendValue(tokensCopy);
-			}
-		};
+	private static void assertSequence(final JsonReader jsonReader, final ValuedJsonToken<?>... tokens)
+			throws IOException {
+		for ( final ValuedJsonToken<?> expectedValuedJsonToken : tokens ) {
+			Assertions.assertFalse(jsonReader.peek() == JsonToken.END_DOCUMENT && expectedValuedJsonToken.getToken() != JsonToken.END_DOCUMENT);
+			final ValuedJsonToken<?> actualValuedJsonToken = JsonReaders.readValuedJsonToken(jsonReader);
+			Assertions.assertEquals(expectedValuedJsonToken, actualValuedJsonToken);
+		}
 	}
 
 }

@@ -2,15 +2,10 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.stream.Stream;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 import com.google.gson.stream.JsonToken;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,10 +16,10 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[")) ) {
 			unit.beginArray();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.arrayBegin()));
+			assertPushback(unit, ValuedJsonToken.arrayBegin());
 			unit.pushback();
 			unit.beginArray();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -34,11 +29,11 @@ public final class PushbackJsonReaderTest {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
 			unit.beginArray();
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd()));
+			assertPushback(unit, ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd());
 			unit.pushback();
 			unit.beginArray();
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -47,10 +42,10 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("{")) ) {
 			unit.beginObject();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.objectBegin()));
+			assertPushback(unit, ValuedJsonToken.objectBegin());
 			unit.pushback();
 			unit.beginObject();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -60,11 +55,11 @@ public final class PushbackJsonReaderTest {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("{}")) ) {
 			unit.beginObject();
 			unit.endObject();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.objectBegin(), ValuedJsonToken.objectEnd()));
+			assertPushback(unit, ValuedJsonToken.objectBegin(), ValuedJsonToken.objectEnd());
 			unit.pushback();
 			unit.beginObject();
 			unit.endObject();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -73,19 +68,19 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[0]")) ) {
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(0));
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertTrue(unit.hasNext());
+			Assertions.assertEquals(0, unit.nextInt());
+			Assertions.assertFalse(unit.hasNext());
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(0), ValuedJsonToken.arrayEnd()));
+			assertPushback(unit, ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(0), ValuedJsonToken.arrayEnd());
 			unit.pushback();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
+			Assertions.assertTrue(unit.hasNext());
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(0));
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertTrue(unit.hasNext());
+			Assertions.assertEquals(0, unit.nextInt());
+			Assertions.assertFalse(unit.hasNext());
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -94,14 +89,14 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd()));
+			assertPushback(unit, ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd());
 			unit.pushback();
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -110,22 +105,22 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("{\"key\":\"value\"}")) ) {
 			unit.beginObject();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-			MatcherAssert.assertThat(unit.nextName(), CoreMatchers.is("key"));
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("value"));
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertTrue(unit.hasNext());
+			Assertions.assertEquals("key", unit.nextName());
+			Assertions.assertTrue(unit.hasNext());
+			Assertions.assertEquals("value", unit.nextString());
+			Assertions.assertFalse(unit.hasNext());
 			unit.endObject();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.objectBegin(), ValuedJsonToken.name("key"), ValuedJsonToken.value("value"), ValuedJsonToken.objectEnd()));
+			assertPushback(unit, ValuedJsonToken.objectBegin(), ValuedJsonToken.name("key"), ValuedJsonToken.value("value"), ValuedJsonToken.objectEnd());
 			unit.pushback();
 			unit.beginObject();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-			MatcherAssert.assertThat(unit.nextName(), CoreMatchers.is("key"));
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("value"));
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertTrue(unit.hasNext());
+			Assertions.assertEquals("key", unit.nextName());
+			Assertions.assertTrue(unit.hasNext());
+			Assertions.assertEquals("value", unit.nextString());
+			Assertions.assertFalse(unit.hasNext());
 			unit.endObject();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -134,14 +129,14 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("{}")) ) {
 			unit.beginObject();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 			unit.endObject();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.objectBegin(), ValuedJsonToken.objectEnd()));
+			assertPushback(unit, ValuedJsonToken.objectBegin(), ValuedJsonToken.objectEnd());
 			unit.pushback();
 			unit.beginObject();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 			unit.endObject();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -150,22 +145,22 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[[]]")) ) {
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
+			Assertions.assertTrue(unit.hasNext());
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 			unit.endArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 			unit.endArray();
 			unit.pushback();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd(), ValuedJsonToken.arrayEnd()));
+			assertPushback(unit, ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd(), ValuedJsonToken.arrayEnd());
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
+			Assertions.assertTrue(unit.hasNext());
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 			unit.endArray();
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -173,17 +168,17 @@ public final class PushbackJsonReaderTest {
 	public void testPeek()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
-			MatcherAssert.assertThat(unit.peek(), CoreMatchers.is(JsonToken.BEGIN_ARRAY));
+			Assertions.assertEquals(JsonToken.BEGIN_ARRAY, unit.peek());
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.peek(), CoreMatchers.is(JsonToken.END_ARRAY));
+			Assertions.assertEquals(JsonToken.END_ARRAY, unit.peek());
 			unit.endArray();
-			MatcherAssert.assertThat(unit.peek(), CoreMatchers.is(JsonToken.END_DOCUMENT));
+			Assertions.assertEquals(JsonToken.END_DOCUMENT, unit.peek());
 			unit.pushback();
-			MatcherAssert.assertThat(unit.peek(), CoreMatchers.is(JsonToken.BEGIN_ARRAY));
+			Assertions.assertEquals(JsonToken.BEGIN_ARRAY, unit.peek());
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.peek(), CoreMatchers.is(JsonToken.END_ARRAY));
+			Assertions.assertEquals(JsonToken.END_ARRAY, unit.peek());
 			unit.endArray();
-			MatcherAssert.assertThat(unit.peek(), CoreMatchers.is(JsonToken.END_DOCUMENT));
+			Assertions.assertEquals(JsonToken.END_DOCUMENT, unit.peek());
 		}
 	}
 
@@ -192,16 +187,16 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("{\"key\":\"value\"}")) ) {
 			unit.beginObject();
-			MatcherAssert.assertThat(unit.nextName(), CoreMatchers.is("key"));
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("value"));
+			Assertions.assertEquals("key", unit.nextName());
+			Assertions.assertEquals("value", unit.nextString());
 			unit.endObject();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.objectBegin(), ValuedJsonToken.name("key"), ValuedJsonToken.value("value"), ValuedJsonToken.objectEnd()));
+			assertPushback(unit, ValuedJsonToken.objectBegin(), ValuedJsonToken.name("key"), ValuedJsonToken.value("value"), ValuedJsonToken.objectEnd());
 			unit.pushback();
 			unit.beginObject();
-			MatcherAssert.assertThat(unit.nextName(), CoreMatchers.is("key"));
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("value"));
+			Assertions.assertEquals("key", unit.nextName());
+			Assertions.assertEquals("value", unit.nextString());
 			unit.endObject();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -209,11 +204,11 @@ public final class PushbackJsonReaderTest {
 	public void testNextString()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("\"value\"")) ) {
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("value"));
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value("value")));
+			Assertions.assertEquals("value", unit.nextString());
+			assertPushback(unit, ValuedJsonToken.value("value"));
 			unit.pushback();
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("value"));
-			MatcherAssert.assertThat(unit, mustPushback());
+			Assertions.assertEquals("value", unit.nextString());
+			assertPushback(unit);
 		}
 	}
 
@@ -221,11 +216,11 @@ public final class PushbackJsonReaderTest {
 	public void testNextBoolean()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("true")) ) {
-			MatcherAssert.assertThat(unit.nextBoolean(), CoreMatchers.is(true));
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value(true)));
+			Assertions.assertTrue(unit.nextBoolean());
+			assertPushback(unit, ValuedJsonToken.value(true));
 			unit.pushback();
-			MatcherAssert.assertThat(unit.nextBoolean(), CoreMatchers.is(true));
-			MatcherAssert.assertThat(unit, mustPushback());
+			Assertions.assertTrue(unit.nextBoolean());
+			assertPushback(unit);
 		}
 	}
 
@@ -234,10 +229,10 @@ public final class PushbackJsonReaderTest {
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("null")) ) {
 			unit.nextNull();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value()));
+			assertPushback(unit, ValuedJsonToken.value());
 			unit.pushback();
 			unit.nextNull();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -245,11 +240,11 @@ public final class PushbackJsonReaderTest {
 	public void testNextDouble()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("3.1415926")) ) {
-			MatcherAssert.assertThat(unit.nextDouble(), CoreMatchers.is(3.1415926D));
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value(3.1415926D)));
+			Assertions.assertEquals(3.1415926D, unit.nextDouble());
+			assertPushback(unit, ValuedJsonToken.value(3.1415926D));
 			unit.pushback();
-			MatcherAssert.assertThat(unit.nextDouble(), CoreMatchers.is(3.1415926D));
-			MatcherAssert.assertThat(unit, mustPushback());
+			Assertions.assertEquals(3.1415926D, unit.nextDouble());
+			assertPushback(unit);
 		}
 	}
 
@@ -257,11 +252,11 @@ public final class PushbackJsonReaderTest {
 	public void testNextDoubleFromString()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("\"3.1415926\"")) ) {
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("3.1415926"));
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value("3.1415926")));
+			Assertions.assertEquals("3.1415926", unit.nextString());
+			assertPushback(unit, ValuedJsonToken.value("3.1415926"));
 			unit.pushback();
-			MatcherAssert.assertThat(unit.nextDouble(), CoreMatchers.is(3.1415926D));
-			MatcherAssert.assertThat(unit, mustPushback());
+			Assertions.assertEquals(3.1415926D, unit.nextDouble());
+			assertPushback(unit);
 		}
 	}
 
@@ -269,11 +264,11 @@ public final class PushbackJsonReaderTest {
 	public void testNextLong()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("31415926")) ) {
-			MatcherAssert.assertThat(unit.nextLong(), CoreMatchers.is(31415926L));
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value(31415926L)));
+			Assertions.assertEquals(31415926L, unit.nextLong());
+			assertPushback(unit, ValuedJsonToken.value(31415926L));
 			unit.pushback();
-			MatcherAssert.assertThat(unit.nextLong(), CoreMatchers.is(31415926L));
-			MatcherAssert.assertThat(unit, mustPushback());
+			Assertions.assertEquals(31415926L, unit.nextLong());
+			assertPushback(unit);
 		}
 	}
 
@@ -281,11 +276,11 @@ public final class PushbackJsonReaderTest {
 	public void testNextLongFromString()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("\"31415926\"")) ) {
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("31415926"));
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value("31415926")));
+			Assertions.assertEquals("31415926", unit.nextString());
+			assertPushback(unit, ValuedJsonToken.value("31415926"));
 			unit.pushback();
-			MatcherAssert.assertThat(unit.nextLong(), CoreMatchers.is(31415926L));
-			MatcherAssert.assertThat(unit, mustPushback());
+			Assertions.assertEquals(31415926L, unit.nextLong());
+			assertPushback(unit);
 		}
 	}
 
@@ -293,11 +288,11 @@ public final class PushbackJsonReaderTest {
 	public void testNextInt()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("31415926")) ) {
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(31415926));
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value(31415926)));
+			Assertions.assertEquals(31415926, unit.nextInt());
+			assertPushback(unit, ValuedJsonToken.value(31415926));
 			unit.pushback();
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(31415926));
-			MatcherAssert.assertThat(unit, mustPushback());
+			Assertions.assertEquals(31415926, unit.nextInt());
+			assertPushback(unit);
 		}
 	}
 
@@ -305,11 +300,11 @@ public final class PushbackJsonReaderTest {
 	public void textNextIntFromString()
 			throws IOException {
 		try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("\"31415926\"")) ) {
-			MatcherAssert.assertThat(unit.nextString(), CoreMatchers.is("31415926"));
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.value("31415926")));
+			Assertions.assertEquals("31415926", unit.nextString());
+			assertPushback(unit, ValuedJsonToken.value("31415926"));
 			unit.pushback();
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(31415926));
-			MatcherAssert.assertThat(unit, mustPushback());
+			Assertions.assertEquals(31415926, unit.nextInt());
+			assertPushback(unit);
 		}
 	}
 
@@ -322,10 +317,10 @@ public final class PushbackJsonReaderTest {
 			unit.beginArray();
 			unit.nextInt();
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(0), ValuedJsonToken.arrayEnd()));
+			assertPushback(unit, ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(0), ValuedJsonToken.arrayEnd());
 		} finally {
 			unit.close();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -340,20 +335,20 @@ public final class PushbackJsonReaderTest {
 			unit.skipValue();
 			unit.skipValue();
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback(ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(0D), ValuedJsonToken.value(1D), ValuedJsonToken.value(2D), ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(8D), ValuedJsonToken.arrayEnd(), ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(1000D), ValuedJsonToken.value(2000D), ValuedJsonToken.value(3000D), ValuedJsonToken.arrayEnd(), ValuedJsonToken.arrayEnd()));
+			assertPushback(unit, ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(0D), ValuedJsonToken.value(1D), ValuedJsonToken.value(2D), ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(8D), ValuedJsonToken.arrayEnd(), ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(1000D), ValuedJsonToken.value(2000D), ValuedJsonToken.value(3000D), ValuedJsonToken.arrayEnd(), ValuedJsonToken.arrayEnd());
 			unit.pushback();
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(0));
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(1));
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(2));
+			Assertions.assertEquals(0, unit.nextInt());
+			Assertions.assertEquals(1, unit.nextInt());
+			Assertions.assertEquals(2, unit.nextInt());
 			unit.skipValue();
 			unit.beginArray();
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(1000));
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(2000));
-			MatcherAssert.assertThat(unit.nextInt(), CoreMatchers.is(3000));
+			Assertions.assertEquals(1000, unit.nextInt());
+			Assertions.assertEquals(2000, unit.nextInt());
+			Assertions.assertEquals(3000, unit.nextInt());
 			unit.endArray();
 			unit.endArray();
-			MatcherAssert.assertThat(unit, mustPushback());
+			assertPushback(unit);
 		}
 	}
 
@@ -389,7 +384,7 @@ public final class PushbackJsonReaderTest {
 			unit.beginArray();
 			unit.nextInt();
 			unit.nextInt();
-			MatcherAssert.assertThat(unit.toString(), CoreMatchers.is("PushbackJsonReader at line 1 column 5 path $[2]"));
+			Assertions.assertEquals("PushbackJsonReader at line 1 column 5 path $[2]", unit.toString());
 		}
 	}
 
@@ -423,23 +418,12 @@ public final class PushbackJsonReaderTest {
 			unit.beginArray();
 			unit.nextInt();
 			unit.nextInt();
-			MatcherAssert.assertThat(unit.getPath(), CoreMatchers.is("$[2]"));
+			Assertions.assertEquals("$[2]", unit.getPath());
 		}
 	}
 
-	private static Matcher<PushbackJsonReader> mustPushback(final ValuedJsonToken<?>... tokens) {
-		final Iterable<ValuedJsonToken<?>> tokensCopy = ImmutableList.copyOf(tokens);
-		return new TypeSafeMatcher<PushbackJsonReader>() {
-			@Override
-			protected boolean matchesSafely(final PushbackJsonReader pushbackJsonReader) {
-				return Iterators.elementsEqual(tokensCopy.iterator(), pushbackJsonReader.iterator());
-			}
-
-			@Override
-			public void describeTo(final Description description) {
-				description.appendValue(tokensCopy);
-			}
-		};
+	private static void assertPushback(final PushbackJsonReader pushbackJsonReader, final ValuedJsonToken<?>... tokens) {
+		Iterators.elementsEqual(Stream.of(tokens).iterator(), pushbackJsonReader.iterator());
 	}
 
 }

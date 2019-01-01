@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import com.google.gson.stream.JsonReader;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class JsonTest {
@@ -16,22 +15,22 @@ public final class JsonTest {
 	@Test
 	public void isJsonValidForString()
 			throws IOException {
-		MatcherAssert.assertThat(Json.isValid(VALID_JSON), CoreMatchers.is(true));
-		MatcherAssert.assertThat(Json.isValid(INVALID_JSON), CoreMatchers.is(false));
+		Assertions.assertTrue(Json.isValid(VALID_JSON));
+		Assertions.assertFalse(Json.isValid(INVALID_JSON));
 	}
 
 	@Test
 	public void isJsonValid1ForReader()
 			throws IOException {
-		MatcherAssert.assertThat(Json.isValid(new StringReader(VALID_JSON)), CoreMatchers.is(true));
-		MatcherAssert.assertThat(Json.isValid(new StringReader(INVALID_JSON)), CoreMatchers.is(false));
+		Assertions.assertTrue(Json.isValid(new StringReader(VALID_JSON)));
+		Assertions.assertFalse(Json.isValid(new StringReader(INVALID_JSON)));
 	}
 
 	@Test
 	public void isJsonValid2ForJsonReader()
 			throws IOException {
-		MatcherAssert.assertThat(Json.isValid(new JsonReader(new StringReader(VALID_JSON))), CoreMatchers.is(true));
-		MatcherAssert.assertThat(Json.isValid(new JsonReader(new StringReader(INVALID_JSON))), CoreMatchers.is(false));
+		Assertions.assertTrue(Json.isValid(new JsonReader(new StringReader(VALID_JSON))));
+		Assertions.assertFalse(Json.isValid(new JsonReader(new StringReader(INVALID_JSON))));
 	}
 
 }

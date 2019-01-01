@@ -7,8 +7,7 @@ import java.util.Objects;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import lsh.ext.gson.ICloseableIterator;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class JsonReaderIteratorTest {
@@ -18,13 +17,13 @@ public final class JsonReaderIteratorTest {
 		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
 		@SuppressWarnings("resource")
 		final Iterator<?> unit = JsonReaderIterator.get(new Gson().getAdapter(FooBar.class), in);
-		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-		MatcherAssert.assertThat(unit.next(), CoreMatchers.is(new FooBar(1, 2)));
-		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-		MatcherAssert.assertThat(unit.next(), CoreMatchers.is(new FooBar(3, 4)));
-		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(true));
-		MatcherAssert.assertThat(unit.next(), CoreMatchers.is(new FooBar(5, 6)));
-		MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+		Assertions.assertTrue(unit.hasNext());
+		Assertions.assertEquals(new FooBar(1, 2), unit.next());
+		Assertions.assertTrue(unit.hasNext());
+		Assertions.assertEquals(new FooBar(3, 4), unit.next());
+		Assertions.assertTrue(unit.hasNext());
+		Assertions.assertEquals(new FooBar(5, 6), unit.next());
+		Assertions.assertFalse(unit.hasNext());
 	}
 
 	@Test
@@ -32,7 +31,7 @@ public final class JsonReaderIteratorTest {
 			throws Exception {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
 		try ( final ICloseableIterator<?> unit = JsonReaderIterator.get(new Gson().getAdapter(FooBar.class), in) ) {
-			MatcherAssert.assertThat(unit.hasNext(), CoreMatchers.is(false));
+			Assertions.assertFalse(unit.hasNext());
 		}
 	}
 

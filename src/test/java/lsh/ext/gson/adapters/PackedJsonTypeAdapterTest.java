@@ -14,8 +14,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class PackedJsonTypeAdapterTest {
@@ -32,7 +31,7 @@ public final class PackedJsonTypeAdapterTest {
 		final Reader reader = new StringReader(INNER_JSON);
 		final JsonReader jsonReader = new JsonReader(reader);
 		final String innerJson = unit.read(jsonReader);
-		MatcherAssert.assertThat(innerJson, CoreMatchers.is(INNER_JSON));
+		Assertions.assertEquals(INNER_JSON, innerJson);
 	}
 
 	@Test
@@ -43,14 +42,14 @@ public final class PackedJsonTypeAdapterTest {
 		final JsonWriter jsonWriter = new JsonWriter(writer);
 		unit.write(jsonWriter, INNER_JSON);
 		final JsonElement innerJsonElement = gson.fromJson(writer.toString(), JsonElement.class);
-		MatcherAssert.assertThat(innerJsonElement, CoreMatchers.is(inner()));
+		Assertions.assertEquals(inner(), innerJsonElement);
 	}
 
 	@Test
 	public void testJsonAdapter() {
 		final Outer outer = gson.fromJson(OUTER_JSON, Outer.class);
-		MatcherAssert.assertThat(outer.id, CoreMatchers.is(1));
-		MatcherAssert.assertThat(outer.inner, CoreMatchers.is(INNER_JSON));
+		Assertions.assertEquals(1, outer.id);
+		Assertions.assertEquals(INNER_JSON, outer.inner);
 	}
 
 	private static final class Outer {

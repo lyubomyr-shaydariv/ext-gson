@@ -6,8 +6,7 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableList;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -17,14 +16,14 @@ public final class CloseableIteratorsTest {
 	@SuppressWarnings("resource")
 	public void testAsCloseableForCloseableIterator() {
 		final ICloseableIterator<?> closeableIterator = Mockito.mock(ICloseableIterator.class);
-		MatcherAssert.assertThat(CloseableIterators.asCloseable(closeableIterator), CoreMatchers.sameInstance(closeableIterator));
+		Assertions.assertSame(closeableIterator, CloseableIterators.asCloseable(closeableIterator));
 	}
 
 	@Test
 	@SuppressWarnings("resource")
 	public void testAsCloseableDispatcherForCloseableIterator() {
 		final Iterator<?> iterator = Mockito.mock(ICloseableIterator.class);
-		MatcherAssert.assertThat(CloseableIterators.asCloseable(iterator), CoreMatchers.sameInstance(iterator));
+		Assertions.assertSame(iterator, CloseableIterators.asCloseable(iterator));
 	}
 
 	@Test
@@ -33,8 +32,8 @@ public final class CloseableIteratorsTest {
 			throws Exception {
 		final Iterator<?> iterator = Mockito.mock(Iterator.class);
 		final ICloseableIterator<?> closeableIterator = CloseableIterators.asCloseable(iterator);
-		MatcherAssert.assertThat(closeableIterator, CoreMatchers.isA(Iterator.class));
-		MatcherAssert.assertThat(closeableIterator, CoreMatchers.isA(Closeable.class));
+		Assertions.assertTrue(closeableIterator instanceof Iterator);
+		Assertions.assertTrue(closeableIterator instanceof Closeable);
 		closeableIterator.hasNext();
 		Mockito.verify(iterator).hasNext();
 		closeableIterator.next();

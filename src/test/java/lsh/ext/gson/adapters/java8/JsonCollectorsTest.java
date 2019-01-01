@@ -7,8 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lsh.ext.gson.JsonArrays;
 import lsh.ext.gson.JsonObjects;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class JsonCollectorsTest {
@@ -28,7 +27,7 @@ public final class JsonCollectorsTest {
 				.stream()
 				.collect(JsonCollectors.toJsonObject());
 		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
-		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
+		Assertions.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -38,7 +37,7 @@ public final class JsonCollectorsTest {
 				.stream()
 				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.of(K1, v1)));
 		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
-		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
+		Assertions.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -48,7 +47,7 @@ public final class JsonCollectorsTest {
 				.stream()
 				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.of(K1, v2, K2, v3, K3, v2)));
 		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
-		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
+		Assertions.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -57,7 +56,7 @@ public final class JsonCollectorsTest {
 				.stream()
 				.collect(JsonCollectors.toJsonArray());
 		final JsonArray expected = JsonArrays.of(v1, v2, v3);
-		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
+		Assertions.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -66,7 +65,7 @@ public final class JsonCollectorsTest {
 				.stream()
 				.collect(JsonCollectors.toJsonArray(() -> JsonArrays.of(v1)));
 		final JsonArray expected = JsonArrays.of(v1, v2, v3);
-		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
+		Assertions.assertEquals(expected, actual);
 	}
 
 }

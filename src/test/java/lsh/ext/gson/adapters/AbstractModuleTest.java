@@ -10,8 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,7 +43,7 @@ public abstract class AbstractModuleTest {
 	@Test
 	public final void testGetName() {
 		final IModule unit = createUnit();
-		MatcherAssert.assertThat(unit.getName(), CoreMatchers.is(expectedName));
+		Assertions.assertEquals(expectedName, unit.getName());
 	}
 
 	@ParameterizedTest
@@ -52,12 +51,12 @@ public abstract class AbstractModuleTest {
 	public final void testCreate(final TypeToken<?> supportedTypeToken) {
 		final TypeAdapterFactory unit = createUnit();
 		final TypeAdapter<?> typeAdapter = unit.create(gson, supportedTypeToken);
-		MatcherAssert.assertThat(typeAdapter, CoreMatchers.notNullValue());
+		Assertions.assertNotNull(typeAdapter);
 		final boolean mustNotSupportForeignClasses = foreignClassTypeTokens
 				.stream()
 				.map(typeToken -> unit.create(gson, typeToken))
 				.noneMatch(Objects::nonNull);
-		MatcherAssert.assertThat(mustNotSupportForeignClasses, CoreMatchers.is(true));
+		Assertions.assertTrue(mustNotSupportForeignClasses);
 	}
 
 	private static final class Foo {

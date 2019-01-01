@@ -4,8 +4,7 @@ import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -15,24 +14,24 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	public void testTranslateNameForStaticMappings()
 			throws NoSuchFieldException {
 		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.get(DynamicSerializedNameFieldNamingStrategyTest::resolve);
-		MatcherAssert.assertThat(unit.translateName(StaticFooBar.class.getDeclaredField("foo")), CoreMatchers.is("foo"));
-		MatcherAssert.assertThat(unit.translateName(StaticFooBar.class.getDeclaredField("bar")), CoreMatchers.is("bar"));
+		Assertions.assertEquals("foo", unit.translateName(StaticFooBar.class.getDeclaredField("foo")));
+		Assertions.assertEquals("bar", unit.translateName(StaticFooBar.class.getDeclaredField("bar")));
 	}
 
 	@Test
 	public void testTranslateNameForDynamicMappings()
 			throws NoSuchFieldException {
 		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.get(DynamicSerializedNameFieldNamingStrategyTest::resolve);
-		MatcherAssert.assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("foo")), CoreMatchers.is("FOO1"));
-		MatcherAssert.assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("bar")), CoreMatchers.is("BAR2"));
+		Assertions.assertEquals("FOO1", unit.translateName(DynamicFooBar.class.getDeclaredField("foo")));
+		Assertions.assertEquals("BAR2", unit.translateName(DynamicFooBar.class.getDeclaredField("bar")));
 	}
 
 	@Test
 	public void testTranslateForDynamicMappingsIfNull()
 			throws NoSuchFieldException {
 		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.get(value -> null);
-		MatcherAssert.assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("foo")), CoreMatchers.is("foo"));
-		MatcherAssert.assertThat(unit.translateName(DynamicFooBar.class.getDeclaredField("bar")), CoreMatchers.is("bar"));
+		Assertions.assertEquals("foo", unit.translateName(DynamicFooBar.class.getDeclaredField("foo")));
+		Assertions.assertEquals("bar", unit.translateName(DynamicFooBar.class.getDeclaredField("bar")));
 	}
 
 	@Test
@@ -41,8 +40,8 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.get(DynamicSerializedNameFieldNamingStrategyTest::resolve))
 				.create();
 		final StaticFooBar staticFooBar = gson.fromJson("{\"foo\":\"1\",\"bar\":\"2\"}", StaticFooBar.class);
-		MatcherAssert.assertThat(staticFooBar.foo, CoreMatchers.is("1"));
-		MatcherAssert.assertThat(staticFooBar.bar, CoreMatchers.is("2"));
+		Assertions.assertEquals("1", staticFooBar.foo);
+		Assertions.assertEquals("2", staticFooBar.bar);
 	}
 
 	@Test
@@ -51,8 +50,8 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.get(DynamicSerializedNameFieldNamingStrategyTest::resolve))
 				.create();
 		final DynamicFooBar dynamicFooBar = gson.fromJson("{\"FOO1\":\"1\",\"BAR2\":\"2\"}", DynamicFooBar.class);
-		MatcherAssert.assertThat(dynamicFooBar.foo, CoreMatchers.is("1"));
-		MatcherAssert.assertThat(dynamicFooBar.bar, CoreMatchers.is("2"));
+		Assertions.assertEquals("1", dynamicFooBar.foo);
+		Assertions.assertEquals("2", dynamicFooBar.bar);
 	}
 
 	@Test
@@ -62,8 +61,8 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.get(mockNameResolver))
 				.create();
 		final MixedFooBar mixedFooBar = gson.fromJson("{\"staticFoo\":\"1\",\"staticBar\":\"2\"}", MixedFooBar.class);
-		MatcherAssert.assertThat(mixedFooBar.foo, CoreMatchers.is("1"));
-		MatcherAssert.assertThat(mixedFooBar.bar, CoreMatchers.is("2"));
+		Assertions.assertEquals("1", mixedFooBar.foo);
+		Assertions.assertEquals("2", mixedFooBar.bar);
 		Mockito.verifyZeroInteractions(mockNameResolver);
 	}
 

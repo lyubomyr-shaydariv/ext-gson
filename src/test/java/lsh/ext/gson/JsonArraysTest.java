@@ -8,8 +8,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -34,120 +32,129 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testJsonArray() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(),
-				CoreMatchers.is(stringJsonArray())
+		Assertions.assertEquals(
+				stringJsonArray(),
+				JsonArrays.of()
 		);
 	}
 
 	@Test
 	public void testJsonArray1() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1)),
-				CoreMatchers.is(stringJsonArray(K1))
+		Assertions.assertEquals(
+				stringJsonArray(K1),
+				JsonArrays.of(JsonPrimitives.of(K1))
 		);
-		MatcherAssert.assertThat(
-				JsonArrays.of(null),
-				CoreMatchers.is(stringJsonArray((String) null))
+		Assertions.assertEquals(
+				stringJsonArray((String) null),
+				JsonArrays.of(null)
 		);
 	}
 
 	@Test
 	public void testJsonArray2() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2)),
-				CoreMatchers.is(stringJsonArray(K1, K2)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null),
-				CoreMatchers.is(stringJsonArray(null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null),
+				JsonArrays.of(null, null)
 		);
 	}
 
 	@Test
 	public void testJsonArray3() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3)),
-				CoreMatchers.is(stringJsonArray(K1, K2, K3)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null, null),
-				CoreMatchers.is(stringJsonArray(null, null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2, K3),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null, null),
+				JsonArrays.of(null, null, null)
 		);
 	}
 
 	@Test
 	public void testJsonArray4() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4)),
-				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null, null, null),
-				CoreMatchers.is(stringJsonArray(null, null, null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2, K3, K4),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null, null, null),
+				JsonArrays.of(null, null, null, null)
 		);
 	}
 
 	@Test
 	public void testJsonArray5() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5)),
-				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null, null, null, null),
-				CoreMatchers.is(stringJsonArray(null, null, null, null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2, K3, K4, K5),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null, null, null, null),
+				JsonArrays.of(null, null, null, null, null)
 		);
 	}
 
 	@Test
 	public void testJsonArray6() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6)),
-				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null, null, null, null, null),
-				CoreMatchers.is(stringJsonArray(null, null, null, null, null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2, K3, K4, K5, K6),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null, null, null, null, null),
+				JsonArrays.of(null, null, null, null, null, null)
 		);
 	}
 
 	@Test
 	public void testJsonArray7() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7)),
-				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6, K7)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null, null, null, null, null, null),
-				CoreMatchers.is(stringJsonArray(null, null, null, null, null, null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2, K3, K4, K5, K6, K7),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null, null, null, null, null, null),
+				JsonArrays.of(null, null, null, null, null, null, null)
 		);
 	}
 
 	@Test
 	public void testJsonArray8() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8)),
-				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null, null, null, null, null, null, null),
-				CoreMatchers.is(stringJsonArray(null, null, null, null, null, null, null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null, null, null, null, null, null, null),
+				JsonArrays.of(null, null, null, null, null, null, null, null)
 		);
 	}
 
 	@Test
 	public void testJsonArray9() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8), JsonPrimitives.of(K9)),
-				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8, K9)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null, null, null, null, null, null, null, null),
-				CoreMatchers.is(stringJsonArray(null, null, null, null, null, null, null, null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8, K9),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8), JsonPrimitives.of(K9))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null, null, null, null, null, null, null, null),
+				JsonArrays.of(null, null, null, null, null, null, null, null, null)
 		);
 	}
 
 	@Test
 	public void testJsonArray10() {
-		MatcherAssert.assertThat(
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8), JsonPrimitives.of(K9), JsonPrimitives.of(K10)),
-				CoreMatchers.is(stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8, K9, K10)));
-		MatcherAssert.assertThat(
-				JsonArrays.of(null, null, null, null, null, null, null, null, null, null),
-				CoreMatchers.is(stringJsonArray(null, null, null, null, null, null, null, null, null, null))
+		Assertions.assertEquals(
+				stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8, K9, K10),
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8), JsonPrimitives.of(K9), JsonPrimitives.of(K10))
+		);
+		Assertions.assertEquals(
+				stringJsonArray(null, null, null, null, null, null, null, null, null, null),
+				JsonArrays.of(null, null, null, null, null, null, null, null, null, null)
 		);
 	}
 
@@ -158,10 +165,10 @@ public final class JsonArraysTest {
 		final JsonPrimitive element3 = JsonPrimitives.of(K3);
 		final Iterable<? extends JsonElement> jsonElements = ImmutableList.of(element1, element2, element3);
 		final JsonArray jsonArray = JsonArrays.from(jsonElements);
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(element1));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(element2));
-		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(element3));
+		Assertions.assertEquals(3, jsonArray.size());
+		Assertions.assertSame(element1, jsonArray.get(0));
+		Assertions.assertSame(element2, jsonArray.get(1));
+		Assertions.assertSame(element3, jsonArray.get(2));
 	}
 
 	@Test
@@ -172,10 +179,10 @@ public final class JsonArraysTest {
 		final List<? extends JsonElement> jsonElements = ImmutableList.of(element1, element2, element3);
 		final List<? extends JsonElement> spyJsonElements = Mockito.spy(jsonElements);
 		final JsonArray jsonArray = JsonArrays.from(spyJsonElements);
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(element1));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(element2));
-		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(element3));
+		Assertions.assertEquals(3, jsonArray.size());
+		Assertions.assertSame(element1, jsonArray.get(0));
+		Assertions.assertSame(element2, jsonArray.get(1));
+		Assertions.assertSame(element3, jsonArray.get(2));
 		Mockito.verify(spyJsonElements).size();
 		Mockito.verify(spyJsonElements).iterator();
 		Mockito.verify(spyJsonElements).listIterator();
@@ -200,17 +207,17 @@ public final class JsonArraysTest {
 		expected.add(1000);
 		expected.add("whatever");
 		expected.addAll(JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2)));
-		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
+		Assertions.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testAsImmutableList() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
+		Assertions.assertEquals(3, jsonElements.size());
+		Assertions.assertSame(foo, jsonElements.get(0));
+		Assertions.assertSame(bar, jsonElements.get(1));
+		Assertions.assertSame(baz, jsonElements.get(2));
 	}
 
 	@Test
@@ -226,21 +233,21 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaAdd() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonElements.add(qux), CoreMatchers.is(true));
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonElements.get(3), CoreMatchers.sameInstance(qux));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(qux));
+		Assertions.assertEquals(3, jsonElements.size());
+		Assertions.assertSame(foo, jsonElements.get(0));
+		Assertions.assertSame(bar, jsonElements.get(1));
+		Assertions.assertSame(baz, jsonElements.get(2));
+		Assertions.assertTrue(jsonElements.add(qux));
+		Assertions.assertEquals(4, jsonElements.size());
+		Assertions.assertSame(foo, jsonElements.get(0));
+		Assertions.assertSame(bar, jsonElements.get(1));
+		Assertions.assertSame(baz, jsonElements.get(2));
+		Assertions.assertSame(qux, jsonElements.get(3));
+		Assertions.assertEquals(4, jsonArray.size());
+		Assertions.assertSame(foo, jsonArray.get(0));
+		Assertions.assertSame(bar, jsonArray.get(1));
+		Assertions.assertSame(baz, jsonArray.get(2));
+		Assertions.assertSame(qux, jsonArray.get(3));
 	}
 
 	@Test
@@ -256,21 +263,21 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaAddByIndex() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
+		Assertions.assertEquals(3, jsonElements.size());
+		Assertions.assertSame(foo, jsonElements.get(0));
+		Assertions.assertSame(bar, jsonElements.get(1));
+		Assertions.assertSame(baz, jsonElements.get(2));
 		jsonElements.add(0, qux);
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(qux));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonElements.get(3), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(qux));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(baz));
+		Assertions.assertEquals(4, jsonElements.size());
+		Assertions.assertSame(qux, jsonElements.get(0));
+		Assertions.assertSame(foo, jsonElements.get(1));
+		Assertions.assertSame(bar, jsonElements.get(2));
+		Assertions.assertSame(baz, jsonElements.get(3));
+		Assertions.assertEquals(4, jsonArray.size());
+		Assertions.assertSame(qux, jsonArray.get(0));
+		Assertions.assertSame(foo, jsonArray.get(1));
+		Assertions.assertSame(bar, jsonArray.get(2));
+		Assertions.assertSame(baz, jsonArray.get(3));
 	}
 
 	@Test
@@ -286,20 +293,20 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaAddAll() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonElements.addAll(ImmutableList.of(baz, qux)), CoreMatchers.is(true));
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonElements.get(3), CoreMatchers.sameInstance(qux));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(qux));
+		Assertions.assertEquals(2, jsonElements.size());
+		Assertions.assertSame(foo, jsonElements.get(0));
+		Assertions.assertEquals(bar, jsonElements.get(1));
+		Assertions.assertTrue(jsonElements.addAll(ImmutableList.of(baz, qux)));
+		Assertions.assertEquals(4, jsonElements.size());
+		Assertions.assertSame(foo, jsonElements.get(0));
+		Assertions.assertSame(bar, jsonElements.get(1));
+		Assertions.assertSame(baz, jsonElements.get(2));
+		Assertions.assertSame(qux, jsonElements.get(3));
+		Assertions.assertEquals(4, jsonArray.size());
+		Assertions.assertSame(foo, jsonArray.get(0));
+		Assertions.assertSame(bar, jsonArray.get(1));
+		Assertions.assertSame(baz, jsonArray.get(2));
+		Assertions.assertSame(qux, jsonArray.get(3));
 	}
 
 	@Test
@@ -315,20 +322,20 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaAddAllViaIndex() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonElements.addAll(0, ImmutableList.of(baz, qux)), CoreMatchers.is(true));
-		MatcherAssert.assertThat(jsonElements.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonElements.get(0), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonElements.get(1), CoreMatchers.sameInstance(qux));
-		MatcherAssert.assertThat(jsonElements.get(2), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonElements.get(3), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(qux));
-		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonArray.get(3), CoreMatchers.sameInstance(bar));
+		Assertions.assertEquals(2, jsonElements.size());
+		Assertions.assertSame(foo, jsonElements.get(0));
+		Assertions.assertSame(bar, jsonElements.get(1));
+		Assertions.assertTrue(jsonElements.addAll(0, ImmutableList.of(baz, qux)));
+		Assertions.assertEquals(4, jsonElements.size());
+		Assertions.assertSame(baz, jsonElements.get(0));
+		Assertions.assertSame(qux, jsonElements.get(1));
+		Assertions.assertSame(foo, jsonElements.get(2));
+		Assertions.assertSame(bar, jsonElements.get(3));
+		Assertions.assertEquals(4, jsonArray.size());
+		Assertions.assertEquals(baz, jsonArray.get(0));
+		Assertions.assertEquals(qux, jsonArray.get(1));
+		Assertions.assertEquals(foo, jsonArray.get(2));
+		Assertions.assertEquals(bar, jsonArray.get(3));
 	}
 
 	@Test
@@ -345,7 +352,7 @@ public final class JsonArraysTest {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		jsonElements.clear();
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(0));
+		Assertions.assertEquals(0, jsonArray.size());
 	}
 
 	@Test
@@ -370,14 +377,14 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaRemove() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.remove(foo), CoreMatchers.is(true));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonElements.remove(qux), CoreMatchers.is(false));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
+		Assertions.assertTrue(jsonElements.remove(foo));
+		Assertions.assertEquals(2, jsonArray.size());
+		Assertions.assertSame(bar, jsonArray.get(0));
+		Assertions.assertSame(baz, jsonArray.get(1));
+		Assertions.assertFalse(jsonElements.remove(qux));
+		Assertions.assertEquals(2, jsonArray.size());
+		Assertions.assertSame(bar, jsonArray.get(0));
+		Assertions.assertSame(baz, jsonArray.get(1));
 	}
 
 	@Test
@@ -393,10 +400,10 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaRemoveViaIndex() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.remove(1), CoreMatchers.is(bar));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
+		Assertions.assertSame(bar, jsonElements.remove(1));
+		Assertions.assertEquals(2, jsonArray.size());
+		Assertions.assertSame(foo, jsonArray.get(0));
+		Assertions.assertSame(baz, jsonArray.get(1));
 	}
 
 	@Test
@@ -412,11 +419,11 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaRemoveAll() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.removeAll(ImmutableList.of(bar, baz)), CoreMatchers.is(true));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(qux));
-		MatcherAssert.assertThat(jsonElements.removeAll(ImmutableList.of(bar, baz)), CoreMatchers.is(false));
+		Assertions.assertTrue(jsonElements.removeAll(ImmutableList.of(bar, baz)));
+		Assertions.assertEquals(2, jsonArray.size());
+		Assertions.assertSame(foo, jsonArray.get(0));
+		Assertions.assertSame(qux, jsonArray.get(1));
+		Assertions.assertFalse(jsonElements.removeAll(ImmutableList.of(bar, baz)));
 	}
 
 	@Test
@@ -432,14 +439,14 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaRetainAll() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.retainAll(ImmutableList.of(bar, baz)), CoreMatchers.is(true));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
-		MatcherAssert.assertThat(jsonElements.retainAll(ImmutableList.of(bar, baz)), CoreMatchers.is(false));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(baz));
+		Assertions.assertTrue(jsonElements.retainAll(ImmutableList.of(bar, baz)));
+		Assertions.assertEquals(2, jsonArray.size());
+		Assertions.assertSame(bar, jsonArray.get(0));
+		Assertions.assertSame(baz, jsonArray.get(1));
+		Assertions.assertFalse(jsonElements.retainAll(ImmutableList.of(bar, baz)));
+		Assertions.assertEquals(2, jsonArray.size());
+		Assertions.assertSame(bar, jsonArray.get(0));
+		Assertions.assertSame(baz, jsonArray.get(1));
 	}
 
 	@Test
@@ -455,11 +462,11 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaSet() {
 		final JsonArray jsonArray = JsonArrays.of(bar, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		MatcherAssert.assertThat(jsonElements.set(0, foo), CoreMatchers.is(bar));
-		MatcherAssert.assertThat(jsonArray.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonArray.get(0), CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(jsonArray.get(1), CoreMatchers.sameInstance(bar));
-		MatcherAssert.assertThat(jsonArray.get(2), CoreMatchers.sameInstance(baz));
+		Assertions.assertSame(bar, jsonElements.set(0, foo));
+		Assertions.assertEquals(3, jsonArray.size());
+		Assertions.assertSame(foo, jsonArray.get(0));
+		Assertions.assertSame(bar, jsonArray.get(1));
+		Assertions.assertSame(baz, jsonArray.get(2));
 	}
 
 	private static JsonArray stringJsonArray(final String... values) {

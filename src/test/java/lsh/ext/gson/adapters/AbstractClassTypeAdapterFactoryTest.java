@@ -3,8 +3,6 @@ package lsh.ext.gson.adapters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,14 +15,14 @@ public final class AbstractClassTypeAdapterFactoryTest {
 	@Test
 	public void testWrite() {
 		final Value foo = new Value(new Foo());
-		MatcherAssert.assertThat(gson.toJson(foo), CoreMatchers.is("{\"value\":{\"$T\":\"" + Foo.class.getTypeName() + "\",\"$V\":{}}}"));
+		Assertions.assertEquals("{\"value\":{\"$T\":\"" + Foo.class.getTypeName() + "\",\"$V\":{}}}", gson.toJson(foo));
 	}
 
 	@Test
 	public void testRead() {
 		final String json = "{\"value\":{\"$T\":\"" + Bar.class.getTypeName() + "\",\"$V\":{}}}";
 		final Value value = gson.fromJson(json, Value.class);
-		MatcherAssert.assertThat(value.value, CoreMatchers.instanceOf(Bar.class));
+		Assertions.assertTrue(value.value instanceof Bar);
 	}
 
 	@Test

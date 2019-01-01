@@ -1,13 +1,13 @@
 package lsh.ext.gson;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.google.gson.reflect.TypeToken;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class ParameterizedTypesTest {
@@ -16,50 +16,54 @@ public final class ParameterizedTypesTest {
 
 	@Test
 	public void testResolveTypeArgumentsForRawTypes() {
-		MatcherAssert.assertThat(ParameterizedTypes.getTypeArguments(List.class), CoreMatchers.is(new Type[][]{ new Type[]{ Object.class } }));
+		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ Object.class } }, ParameterizedTypes.getTypeArguments(List.class));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForParameterizedTypes() {
-		MatcherAssert.assertThat(ParameterizedTypes.getTypeArguments(ParameterizedTypes.listOf(String.class)), CoreMatchers.is(new Type[][]{ new Type[]{ String.class } }));
-		MatcherAssert.assertThat(ParameterizedTypes.getTypeArguments(ParameterizedTypes.mapOf(Integer.class, Float.class)), CoreMatchers.is(new Type[][]{ new Type[]{ Integer.class }, new Type[]{ Float.class } }));
+		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ String.class } }, ParameterizedTypes.getTypeArguments(ParameterizedTypes.listOf(String.class)));
+		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ Integer.class }, new Type[]{ Float.class } }, ParameterizedTypes.getTypeArguments(ParameterizedTypes.mapOf(Integer.class, Float.class)));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForParameterizedTypesWithBounds() {
-		MatcherAssert.assertThat(ParameterizedTypes.getTypeArguments(GenericClassWithSomeBounds.class), CoreMatchers.is(new Type[][]{ new Type[]{ Number.class }, new Type[]{ CharSequence.class, new TypeToken<List<?>>() {}.getType() } }));
+		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ Number.class }, new Type[]{ CharSequence.class, new TypeToken<List<?>>() {}.getType() } }, ParameterizedTypes.getTypeArguments(GenericClassWithSomeBounds.class));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForNonGenericType() {
-		MatcherAssert.assertThat(ParameterizedTypes.getTypeArguments(String.class), CoreMatchers.is(emptyTypeArray));
+		Assertions.assertArrayEquals(emptyTypeArray, ParameterizedTypes.getTypeArguments(String.class));
 	}
 
 	@Test
 	public void testListType() {
-		MatcherAssert.assertThat(ParameterizedTypes.listOf(String.class), MoreMatchers.isParameterizedType(List.class, String.class));
-		MatcherAssert.assertThat(ParameterizedTypes.listOf(Void.class), MoreMatchers.isParameterizedType(List.class, Void.class));
-		MatcherAssert.assertThat(ParameterizedTypes.listOf(Object.class), MoreMatchers.isParameterizedType(List.class, Object.class));
-		MatcherAssert.assertThat(ParameterizedTypes.listOf(String.class), CoreMatchers.is(ParameterizedTypes.listOf(String.class)));
+		assertParameterized(ParameterizedTypes.listOf(String.class), List.class, String.class);
+		assertParameterized(ParameterizedTypes.listOf(Void.class), List.class, Void.class);
+		assertParameterized(ParameterizedTypes.listOf(Object.class), List.class, Object.class);
 	}
 
 	@Test
 	public void testSetType() {
-		MatcherAssert.assertThat(ParameterizedTypes.setOf(String.class), MoreMatchers.isParameterizedType(Set.class, String.class));
-		MatcherAssert.assertThat(ParameterizedTypes.setOf(Void.class), MoreMatchers.isParameterizedType(Set.class, Void.class));
-		MatcherAssert.assertThat(ParameterizedTypes.setOf(Object.class), MoreMatchers.isParameterizedType(Set.class, Object.class));
-		MatcherAssert.assertThat(ParameterizedTypes.setOf(String.class), CoreMatchers.is(ParameterizedTypes.setOf(String.class)));
+		assertParameterized(ParameterizedTypes.setOf(String.class), Set.class, String.class);
+		assertParameterized(ParameterizedTypes.setOf(Void.class), Set.class, Void.class);
+		assertParameterized(ParameterizedTypes.setOf(Object.class), Set.class, Object.class);
 	}
 
 	@Test
 	public void testMapType() {
-		MatcherAssert.assertThat(ParameterizedTypes.mapOf(String.class, Void.class), MoreMatchers.isParameterizedType(Map.class, String.class, Void.class));
-		MatcherAssert.assertThat(ParameterizedTypes.mapOf(Void.class, Object.class), MoreMatchers.isParameterizedType(Map.class, Void.class, Object.class));
-		MatcherAssert.assertThat(ParameterizedTypes.mapOf(Object.class, String.class), MoreMatchers.isParameterizedType(Map.class, Object.class, String.class));
-		MatcherAssert.assertThat(ParameterizedTypes.mapOf(String.class, Void.class), CoreMatchers.is(ParameterizedTypes.mapOf(String.class, Void.class)));
+		assertParameterized(ParameterizedTypes.mapOf(String.class, Void.class), Map.class, String.class, Void.class);
+		assertParameterized(ParameterizedTypes.mapOf(Void.class, Object.class), Map.class, Void.class, Object.class);
+		assertParameterized(ParameterizedTypes.mapOf(Object.class, String.class), Map.class, Object.class, String.class);
 	}
 
+	@SuppressWarnings("unused")
 	private static final class GenericClassWithSomeBounds<N extends Number, CS extends CharSequence & List<?>> {
+	}
+
+	private static void assertParameterized(final ParameterizedType actualParameterizedType, final Class<?> expectedRawType,
+			final Type... expectedTypeArguments) {
+		Assertions.assertEquals(expectedRawType, actualParameterizedType.getRawType());
+		Assertions.assertArrayEquals(expectedTypeArguments, actualParameterizedType.getActualTypeArguments());
 	}
 
 }

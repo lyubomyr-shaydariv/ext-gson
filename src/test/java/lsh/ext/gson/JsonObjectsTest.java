@@ -6,9 +6,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matcher;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -26,17 +23,17 @@ public final class JsonObjectsTest {
 
 	@Test
 	public void testJsonObject() {
-		MatcherAssert.assertThat(JsonObjects.of(), CoreMatchers.is(new JsonObject()));
+		Assertions.assertEquals(new JsonObject(), JsonObjects.of());
 	}
 
 	@Test
 	public void testJsonObject1() {
 		final JsonObject o1 = new JsonObject();
 		o1.addProperty(K1, 1);
-		MatcherAssert.assertThat(JsonObjects.of(K1, JsonPrimitives.of(1)), CoreMatchers.is(o1));
+		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1)));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
-		MatcherAssert.assertThat(JsonObjects.of(K1, null), CoreMatchers.is(o2));
+		Assertions.assertEquals(o2, JsonObjects.of(K1, null));
 	}
 
 	@Test
@@ -50,11 +47,11 @@ public final class JsonObjectsTest {
 		final JsonObject o1 = new JsonObject();
 		o1.addProperty(K1, 1);
 		o1.addProperty(K2, 2);
-		MatcherAssert.assertThat(JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2)), CoreMatchers.is(o1));
+		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2)));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		o2.addProperty(K2, (String) null);
-		MatcherAssert.assertThat(JsonObjects.of(K1, null, K2, null), CoreMatchers.is(o2));
+		Assertions.assertEquals(o2, JsonObjects.of(K1, null, K2, null));
 	}
 
 	@Test
@@ -69,12 +66,12 @@ public final class JsonObjectsTest {
 		o1.addProperty(K1, 1);
 		o1.addProperty(K2, 2);
 		o1.addProperty(K3, 3);
-		MatcherAssert.assertThat(JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3)), CoreMatchers.is(o1));
+		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3)));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		o2.addProperty(K2, (String) null);
 		o2.addProperty(K3, (String) null);
-		MatcherAssert.assertThat(JsonObjects.of(K1, null, K2, null, K3, null), CoreMatchers.is(o2));
+		Assertions.assertEquals(o2, JsonObjects.of(K1, null, K2, null, K3, null));
 	}
 
 	@Test
@@ -90,13 +87,13 @@ public final class JsonObjectsTest {
 		o1.addProperty(K2, 2);
 		o1.addProperty(K3, 3);
 		o1.addProperty(K4, 4);
-		MatcherAssert.assertThat(JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3), K4, JsonPrimitives.of(4)), CoreMatchers.is(o1));
+		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3), K4, JsonPrimitives.of(4)));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		o2.addProperty(K2, (String) null);
 		o2.addProperty(K3, (String) null);
 		o2.addProperty(K4, (String) null);
-		MatcherAssert.assertThat(JsonObjects.of(K1, null, K2, null, K3, null, K4, null), CoreMatchers.is(o2));
+		Assertions.assertEquals(o2, JsonObjects.of(K1, null, K2, null, K3, null, K4, null));
 	}
 
 	@Test
@@ -113,14 +110,14 @@ public final class JsonObjectsTest {
 		o1.addProperty(K3, 3);
 		o1.addProperty(K4, 4);
 		o1.addProperty(K5, 5);
-		MatcherAssert.assertThat(JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3), K4, JsonPrimitives.of(4), K5, JsonPrimitives.of(5)), CoreMatchers.is(o1));
+		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3), K4, JsonPrimitives.of(4), K5, JsonPrimitives.of(5)));
 		final JsonObject o2 = new JsonObject();
 		o2.addProperty(K1, (String) null);
 		o2.addProperty(K2, (String) null);
 		o2.addProperty(K3, (String) null);
 		o2.addProperty(K4, (String) null);
 		o2.addProperty(K5, (String) null);
-		MatcherAssert.assertThat(JsonObjects.of(K1, null, K2, null, K3, null, K4, null, K5, null), CoreMatchers.is(o2));
+		Assertions.assertEquals(o2, JsonObjects.of(K1, null, K2, null, K3, null, K4, null, K5, null));
 	}
 
 	@Test
@@ -136,10 +133,10 @@ public final class JsonObjectsTest {
 		final JsonPrimitive element3 = JsonPrimitives.of(K3);
 		final Map<String, ? extends JsonElement> map = ImmutableMap.of(K1, element1, K2, element2, K3, element3);
 		final JsonObject jsonObject = JsonObjects.from(map);
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.sameInstance(element1));
-		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.sameInstance(element2));
-		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.sameInstance(element3));
+		Assertions.assertEquals(3, jsonObject.size());
+		Assertions.assertSame(element1, jsonObject.get(K1));
+		Assertions.assertSame(element2, jsonObject.get(K2));
+		Assertions.assertSame(element3, jsonObject.get(K3));
 	}
 
 	@Test
@@ -157,7 +154,7 @@ public final class JsonObjectsTest {
 		expected.addProperty(K3, 100);
 		expected.addProperty(K4, false);
 		expected.add(K5, new JsonObject());
-		MatcherAssert.assertThat(actual, CoreMatchers.is(expected));
+		Assertions.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -165,8 +162,8 @@ public final class JsonObjectsTest {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
 		final JsonObject result = JsonObjects.mergeIntoNew(left, right);
-		MatcherAssert.assertThat(result, MoreMatchers.refersNone(left, right));
-		MatcherAssert.assertThat(result, hasPropertiesOf(r, r, r));
+		assertRefersNone(result, left, right);
+		assertHasValues(result, r, r, r);
 	}
 
 	@Test
@@ -175,7 +172,7 @@ public final class JsonObjectsTest {
 		final JsonObject right = createRightObject();
 		final IJsonObjectMergePredicate mockPredicate = Mockito.mock(IJsonObjectMergePredicate.class);
 		final JsonObject result = JsonObjects.mergeIntoNew(left, right, mockPredicate);
-		MatcherAssert.assertThat(result, MoreMatchers.refersNone(left, right));
+		assertRefersNone(result, left, right);
 		Mockito.verify(mockPredicate).replace(K1, left, l, right, r);
 		Mockito.verify(mockPredicate).replace(K2, left, l, right, r);
 		Mockito.verify(mockPredicate).replace(K3, left, l, right, r);
@@ -187,8 +184,8 @@ public final class JsonObjectsTest {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
 		final JsonObject result = JsonObjects.mergeIntoNew(left, right, JsonObjectMergePredicates.alwaysReplaceLeft());
-		MatcherAssert.assertThat(result, MoreMatchers.refersNone(left, right));
-		MatcherAssert.assertThat(result, hasPropertiesOf(r, r, r));
+		assertRefersNone(result, left, right);
+		assertHasValues(result, r, r, r);
 	}
 
 	@Test
@@ -196,8 +193,8 @@ public final class JsonObjectsTest {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
 		final JsonObject result = JsonObjects.mergeIntoNew(left, right, JsonObjectMergePredicates.neverReplaceLeft());
-		MatcherAssert.assertThat(result, MoreMatchers.refersNone(left, right));
-		MatcherAssert.assertThat(result, hasPropertiesOf(l, l, l));
+		assertRefersNone(result, left, right);
+		assertHasValues(result, l, l, l);
 	}
 
 	@Test
@@ -205,8 +202,8 @@ public final class JsonObjectsTest {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
 		final JsonObject result = JsonObjects.mergeIntoNew(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(K1));
-		MatcherAssert.assertThat(result, MoreMatchers.refersNone(left, right));
-		MatcherAssert.assertThat(result, hasPropertiesOf(l, r, r));
+		assertRefersNone(result, left, right);
+		assertHasValues(result, l, r, r);
 	}
 
 	@Test
@@ -214,8 +211,8 @@ public final class JsonObjectsTest {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
 		final JsonObject result = JsonObjects.mergeIntoLeft(left, right);
-		MatcherAssert.assertThat(result, MoreMatchers.refersFirst(left, right));
-		MatcherAssert.assertThat(result, hasPropertiesOf(r, r, r));
+		assertRefersFirst(result, left, right);
+		assertHasValues(result, r, r, r);
 	}
 
 	@Test
@@ -224,7 +221,7 @@ public final class JsonObjectsTest {
 		final JsonObject right = createRightObject();
 		final IJsonObjectMergePredicate mockPredicate = Mockito.mock(IJsonObjectMergePredicate.class);
 		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, mockPredicate);
-		MatcherAssert.assertThat(result, MoreMatchers.refersFirst(left, right));
+		assertRefersFirst(result, left, right);
 		Mockito.verify(mockPredicate).replace(K1, left, l, right, r);
 		Mockito.verify(mockPredicate).replace(K2, left, l, right, r);
 		Mockito.verify(mockPredicate).replace(K3, left, l, right, r);
@@ -236,8 +233,8 @@ public final class JsonObjectsTest {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
 		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, JsonObjectMergePredicates.alwaysReplaceLeft());
-		MatcherAssert.assertThat(result, MoreMatchers.refersFirst(left, right));
-		MatcherAssert.assertThat(result, hasPropertiesOf(r, r, r));
+		assertRefersFirst(result, left, right);
+		assertHasValues(result, r, r, r);
 	}
 
 	@Test
@@ -245,8 +242,8 @@ public final class JsonObjectsTest {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
 		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, JsonObjectMergePredicates.neverReplaceLeft());
-		MatcherAssert.assertThat(result, MoreMatchers.refersFirst(left, right));
-		MatcherAssert.assertThat(result, hasPropertiesOf(l, l, l));
+		assertRefersFirst(result, left, right);
+		assertHasValues(result, l, l, l);
 	}
 
 	@Test
@@ -254,8 +251,8 @@ public final class JsonObjectsTest {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
 		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(K1));
-		MatcherAssert.assertThat(result, MoreMatchers.refersFirst(left, right));
-		MatcherAssert.assertThat(result, hasPropertiesOf(l, r, r));
+		assertRefersFirst(result, left, right);
+		assertHasValues(result, l, r, r);
 	}
 
 	@Test
@@ -271,9 +268,9 @@ public final class JsonObjectsTest {
 	public void testAsMutableMapCanBeChangedViaClear() {
 		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
 		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(2));
+		Assertions.assertEquals(2, jsonObject.size());
 		map.clear();
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(0));
+		Assertions.assertEquals(0, jsonObject.size());
 	}
 
 	@Test
@@ -289,17 +286,17 @@ public final class JsonObjectsTest {
 	public void testAsMutableMapCanBeChangedViaPut() {
 		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
 		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(map.put(K3, l), CoreMatchers.nullValue());
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.is(l));
-		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
-		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.is(l));
-		MatcherAssert.assertThat(map.put(K3, r), CoreMatchers.is(l));
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(3));
-		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.is(l));
-		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
-		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.is(r));
+		Assertions.assertEquals(2, jsonObject.size());
+		Assertions.assertNull(map.put(K3, l));
+		Assertions.assertEquals(3, jsonObject.size());
+		Assertions.assertEquals(l, jsonObject.get(K1));
+		Assertions.assertEquals(r, jsonObject.get(K2));
+		Assertions.assertEquals(l, jsonObject.get(K3));
+		Assertions.assertEquals(l, map.put(K3, r));
+		Assertions.assertEquals(3, jsonObject.size());
+		Assertions.assertEquals(l, jsonObject.get(K1));
+		Assertions.assertEquals(r, jsonObject.get(K2));
+		Assertions.assertEquals(r, jsonObject.get(K3));
 	}
 
 	@Test
@@ -315,15 +312,15 @@ public final class JsonObjectsTest {
 	public void testAsMutableMapCanBeChangedViaPutAll() {
 		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
 		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(2));
-		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.is(l));
-		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
+		Assertions.assertEquals(2, jsonObject.size());
+		Assertions.assertEquals(l, jsonObject.get(K1));
+		Assertions.assertEquals(r, jsonObject.get(K2));
 		map.putAll(ImmutableMap.of(K3, l, K4, r));
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(4));
-		MatcherAssert.assertThat(jsonObject.get(K1), CoreMatchers.is(l));
-		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
-		MatcherAssert.assertThat(jsonObject.get(K3), CoreMatchers.is(l));
-		MatcherAssert.assertThat(jsonObject.get(K4), CoreMatchers.is(r));
+		Assertions.assertEquals(4, jsonObject.size());
+		Assertions.assertEquals(l, jsonObject.get(K1));
+		Assertions.assertEquals(r, jsonObject.get(K2));
+		Assertions.assertEquals(l, jsonObject.get(K3));
+		Assertions.assertEquals(r, jsonObject.get(K4));
 	}
 
 	@Test
@@ -339,9 +336,9 @@ public final class JsonObjectsTest {
 	public void testAsMutableMapCanBeChangedViaRemove() {
 		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
 		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
-		MatcherAssert.assertThat(map.remove(K1), CoreMatchers.is(l));
-		MatcherAssert.assertThat(jsonObject.size(), CoreMatchers.is(1));
-		MatcherAssert.assertThat(jsonObject.get(K2), CoreMatchers.is(r));
+		Assertions.assertEquals(l, map.remove(K1));
+		Assertions.assertEquals(1, jsonObject.size());
+		Assertions.assertEquals(r, jsonObject.get(K2));
 	}
 
 	private static JsonObject createLeftObject() {
@@ -352,8 +349,21 @@ public final class JsonObjectsTest {
 		return JsonObjects.of(K1, r, K2, r, K3, r);
 	}
 
-	private static Matcher<JsonObject> hasPropertiesOf(final JsonElement v1, final JsonElement v2, final JsonElement v3) {
-		return CoreMatchers.allOf(MoreMatchers.hasProperty(K1, v1), MoreMatchers.hasProperty(K2, v2), MoreMatchers.hasProperty(K3, v3));
+	private static void assertHasValues(final JsonObject o, final JsonElement e1, final JsonElement e2, final JsonElement e3) {
+		Assertions.assertEquals(e1, o.get(K1));
+		Assertions.assertEquals(e2, o.get(K2));
+		Assertions.assertEquals(e3, o.get(K3));
+	}
+
+	private static void assertRefersNone(final JsonElement o, final JsonElement... es) {
+		for ( final JsonElement e : es ) {
+			Assertions.assertNotSame(o, e);
+		}
+	}
+
+	private static void assertRefersFirst(final JsonElement o, final JsonElement e1, final JsonElement... es) {
+		Assertions.assertSame(o, e1);
+		assertRefersNone(o, es);
 	}
 
 }

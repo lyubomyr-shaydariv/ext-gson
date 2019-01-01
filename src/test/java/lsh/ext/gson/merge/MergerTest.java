@@ -5,8 +5,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import lsh.ext.gson.ParameterizedTypes;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class MergerTest {
@@ -18,8 +17,8 @@ public final class MergerTest {
 		final Map<Integer, String> map = Factories.linkedHashMap(1, "one", 2, "two", 3, "threa");
 		final IMerger unit = Merger.getMerger(gson);
 		final Map<Integer, String> mergedMap = unit.merge(map, gson -> gson.fromJson("{\"3\":\"three\",\"4\":\"four\"}", ParameterizedTypes.mapOf(Integer.class, String.class)));
-		MatcherAssert.assertThat(mergedMap, CoreMatchers.sameInstance(map));
-		MatcherAssert.assertThat(mergedMap, CoreMatchers.is(Factories.linkedHashMap(1, "one", 2, "two", 3, "three", 4, "four")));
+		Assertions.assertSame(map, mergedMap);
+		Assertions.assertEquals(Factories.linkedHashMap(1, "one", 2, "two", 3, "three", 4, "four"), mergedMap);
 	}
 
 	@Test
@@ -27,8 +26,8 @@ public final class MergerTest {
 		final Map<Integer, String> map = Factories.linkedHashMap(1, "one", 2, "too", 3, "threa");
 		final IMerger unit = Merger.getMerger(gson);
 		final Map<Integer, String> mergedMap = unit.merge(map, gson -> gson.fromJson("{\"1\":null,\"2\":two,\"3\":\"three\",\"4\":\"four\",\"5\":{}}", ParameterizedTypes.mapOf(Integer.class, Object.class)));
-		MatcherAssert.assertThat(mergedMap, CoreMatchers.sameInstance(map));
-		MatcherAssert.assertThat(mergedMap, CoreMatchers.is(Factories.linkedHashMap(1, null, 2, "two", 3, "three", 4, "four", 5, Collections.emptyMap())));
+		Assertions.assertSame(map, mergedMap);
+		Assertions.assertEquals(Factories.linkedHashMap(1, null, 2, "two", 3, "three", 4, "four", 5, Collections.emptyMap()), mergedMap);
 	}
 
 	@Test
@@ -36,10 +35,10 @@ public final class MergerTest {
 		final Foo foo = new Foo("FOO", null);
 		final IMerger unit = Merger.getMerger(gson);
 		final Foo mergedFoo = unit.merge(foo, gson -> gson.fromJson("{\"bar\":\"BAR\"}", Foo.class));
-		MatcherAssert.assertThat(mergedFoo, CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(mergedFoo.foo, CoreMatchers.is("FOO"));
-		MatcherAssert.assertThat(mergedFoo.bar, CoreMatchers.is("BAR"));
-		MatcherAssert.assertThat(mergedFoo.ref, CoreMatchers.nullValue());
+		Assertions.assertSame(foo, mergedFoo);
+		Assertions.assertEquals("FOO", mergedFoo.foo);
+		Assertions.assertEquals("BAR", mergedFoo.bar);
+		Assertions.assertNull(mergedFoo.ref);
 	}
 
 	@Test
@@ -47,12 +46,12 @@ public final class MergerTest {
 		final Foo foo = new Foo("FOO", null);
 		final IMerger unit = Merger.getMerger(gson);
 		final Foo mergedFoo = unit.merge(foo, gson -> gson.fromJson("{\"bar\":\"BAR\",\"ref\":{\"bar\":\"foobar\"}}", Foo.class));
-		MatcherAssert.assertThat(mergedFoo, CoreMatchers.sameInstance(foo));
-		MatcherAssert.assertThat(mergedFoo.foo, CoreMatchers.is("FOO"));
-		MatcherAssert.assertThat(mergedFoo.bar, CoreMatchers.is("BAR"));
-		MatcherAssert.assertThat(mergedFoo.ref.foo, CoreMatchers.nullValue());
-		MatcherAssert.assertThat(mergedFoo.ref.bar, CoreMatchers.is("foobar"));
-		MatcherAssert.assertThat(mergedFoo.ref.ref, CoreMatchers.nullValue());
+		Assertions.assertSame(foo, mergedFoo);
+		Assertions.assertEquals("FOO", mergedFoo.foo);
+		Assertions.assertEquals("BAR", mergedFoo.bar);
+		Assertions.assertNull(mergedFoo.ref.foo);
+		Assertions.assertEquals("foobar", mergedFoo.ref.bar);
+		Assertions.assertNull(mergedFoo.ref.ref);
 	}
 
 	private static final class Foo {

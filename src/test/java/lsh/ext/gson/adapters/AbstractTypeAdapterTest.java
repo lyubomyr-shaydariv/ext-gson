@@ -6,8 +6,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -32,7 +31,7 @@ public abstract class AbstractTypeAdapterTest<T> {
 	@MethodSource("source")
 	public final void testRead(final TypeAdapter<T> unit, final String json, final Supplier<? extends T> valueFactory)
 			throws IOException {
-		MatcherAssert.assertThat(finalizeValue(unit.fromJson(json)), CoreMatchers.is(finalizeValue(valueFactory.get())));
+		Assertions.assertEquals(finalizeValue(valueFactory.get()), finalizeValue(unit.fromJson(json)));
 	}
 
 	@ParameterizedTest
@@ -40,20 +39,20 @@ public abstract class AbstractTypeAdapterTest<T> {
 	public final void testReadNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final String json,
 			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory)
 			throws IOException {
-		MatcherAssert.assertThat(unit.fromJson("null"), CoreMatchers.is(nullValue));
+		Assertions.assertEquals(nullValue, unit.fromJson("null"));
 	}
 
 	@ParameterizedTest
 	@MethodSource("source")
 	public final void testWrite(final TypeAdapter<T> unit, final String json, final Supplier<? extends T> valueFactory) {
-		MatcherAssert.assertThat(unit.toJson(valueFactory.get()), CoreMatchers.is(json));
+		Assertions.assertEquals(json, unit.toJson(valueFactory.get()));
 	}
 
 	@ParameterizedTest
 	@MethodSource("source")
 	public final void testWriteNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final String json,
 			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory) {
-		MatcherAssert.assertThat(unit.toJson(nullValue), CoreMatchers.is("null"));
+		Assertions.assertEquals("null", unit.toJson(nullValue));
 	}
 
 }

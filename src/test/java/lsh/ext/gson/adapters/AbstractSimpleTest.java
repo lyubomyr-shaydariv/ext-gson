@@ -5,8 +5,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,13 +22,13 @@ public abstract class AbstractSimpleTest {
 	@ParameterizedTest
 	@MethodSource("source")
 	public final void testRead(final Type type, final String json, final Object value) {
-		MatcherAssert.assertThat(gson.fromJson(json, type), CoreMatchers.is(value));
+		Assertions.assertEquals(value, gson.fromJson(json, type));
 	}
 
 	@ParameterizedTest
 	@MethodSource("source")
 	public final void testWrite(final Type type, final String json, final Object value) {
-		MatcherAssert.assertThat(gson.toJson(value, type), CoreMatchers.is(json));
+		Assertions.assertEquals(json, gson.toJson(value, type));
 	}
 
 }

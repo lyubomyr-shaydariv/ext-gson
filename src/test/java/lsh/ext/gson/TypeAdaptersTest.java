@@ -2,11 +2,8 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Arrays;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -17,11 +14,6 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -30,29 +22,25 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeAdapterOfTypeAdapter() {
 		final TypeAdapter<?> typeAdapter = TypeAdapters.ofConcrete(VoidTypeAdapter.class);
-		MatcherAssert.assertThat(typeAdapter, CoreMatchers.instanceOf(TypeAdapter.class));
-		MatcherAssert.assertThat(typeAdapter, canBeRegisteredAsTypeAdapter());
+		Assertions.assertNotNull(typeAdapter);
 	}
 
 	@Test
 	public void testGetTypeAdapterOfJsonSerializer() {
 		final JsonSerializer<?> jsonSerializer = TypeAdapters.ofConcrete(VoidJsonSerializer.class);
-		MatcherAssert.assertThat(jsonSerializer, CoreMatchers.instanceOf(JsonSerializer.class));
-		MatcherAssert.assertThat(jsonSerializer, canBeRegisteredAsTypeAdapter());
+		Assertions.assertNotNull(jsonSerializer);
 	}
 
 	@Test
 	public void testGetTypeAdapterOfJsonDeserializer() {
 		final JsonDeserializer<?> jsonDeserializer = TypeAdapters.ofConcrete(VoidJsonDeserializer.class);
-		MatcherAssert.assertThat(jsonDeserializer, CoreMatchers.instanceOf(JsonDeserializer.class));
-		MatcherAssert.assertThat(jsonDeserializer, canBeRegisteredAsTypeAdapter());
+		Assertions.assertNotNull(jsonDeserializer);
 	}
 
 	@Test
 	public void testGetTypeAdapterOfInstanceCreator() {
 		final InstanceCreator<?> instanceCreator = TypeAdapters.ofConcrete(VoidInstanceCreator.class);
-		MatcherAssert.assertThat(instanceCreator, CoreMatchers.instanceOf(InstanceCreator.class));
-		MatcherAssert.assertThat(instanceCreator, canBeRegisteredAsTypeAdapter());
+		Assertions.assertNotNull(instanceCreator);
 	}
 
 	@Test
@@ -63,22 +51,19 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeHierarchyAdapterOfTypeAdapter() {
 		final TypeAdapter<?> typeAdapter = TypeAdapters.ofHierarchy(VoidTypeAdapter.class);
-		MatcherAssert.assertThat(typeAdapter, CoreMatchers.instanceOf(TypeAdapter.class));
-		MatcherAssert.assertThat(typeAdapter, canBeRegisteredAsTypeHierarchyAdapter());
+		Assertions.assertNotNull(typeAdapter);
 	}
 
 	@Test
 	public void testGetTypeHierarchyAdapterOfJsonSerializer() {
 		final JsonSerializer<?> jsonSerializer = TypeAdapters.ofHierarchy(VoidJsonSerializer.class);
-		MatcherAssert.assertThat(jsonSerializer, CoreMatchers.instanceOf(JsonSerializer.class));
-		MatcherAssert.assertThat(jsonSerializer, canBeRegisteredAsTypeHierarchyAdapter());
+		Assertions.assertNotNull(jsonSerializer);
 	}
 
 	@Test
 	public void testGetTypeHierarchyAdapterOfJsonDeserializer() {
 		final JsonDeserializer<?> jsonDeserializer = TypeAdapters.ofHierarchy(VoidJsonDeserializer.class);
-		MatcherAssert.assertThat(jsonDeserializer, CoreMatchers.instanceOf(JsonDeserializer.class));
-		MatcherAssert.assertThat(jsonDeserializer, canBeRegisteredAsTypeHierarchyAdapter());
+		Assertions.assertNotNull(jsonDeserializer);
 	}
 
 	@Test
@@ -89,54 +74,6 @@ public final class TypeAdaptersTest {
 	@Test
 	public void testGetTypeHierarchyAdapterOfIllegalClass() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> TypeAdapters.ofHierarchy(Object.class));
-	}
-
-	private static <T> Matcher<T> canBeRegisteredAsTypeAdapter() {
-		return new AbstractTypeAdapterMatcher<T>(Arrays.asList(TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class, InstanceCreator.class)) {
-			@Override
-			protected void register(@Nonnull final GsonBuilder builder, @Nonnull final T typeAdapter) {
-				builder.registerTypeAdapter(Void.class, typeAdapter);
-			}
-		};
-	}
-
-	private static <T> Matcher<T> canBeRegisteredAsTypeHierarchyAdapter() {
-		return new AbstractTypeAdapterMatcher<T>(Arrays.asList(TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class)) {
-			@Override
-			protected void register(@Nonnull final GsonBuilder builder, @Nonnull final T typeAdapter) {
-				builder.registerTypeHierarchyAdapter(Void.class, typeAdapter);
-			}
-		};
-	}
-
-	private abstract static class AbstractTypeAdapterMatcher<T>
-			extends TypeSafeMatcher<T> {
-
-		private final Iterable<Class<?>> supportedClasses;
-
-		protected AbstractTypeAdapterMatcher(final Iterable<Class<?>> supportedClasses) {
-			this.supportedClasses = supportedClasses;
-		}
-
-		protected abstract void register(@Nonnull GsonBuilder builder, @Nonnull T typeAdapter);
-
-		@Override
-		protected final boolean matchesSafely(final T typeAdapter) {
-			try {
-				final GsonBuilder gsonBuilder = new GsonBuilder();
-				register(gsonBuilder, typeAdapter);
-				gsonBuilder.create();
-				return true;
-			} catch ( Exception ex ) {
-				return false;
-			}
-		}
-
-		@Override
-		public final void describeTo(final Description description) {
-			description.appendText("an instance of " + supportedClasses);
-		}
-
 	}
 
 	private static final class VoidTypeAdapter
