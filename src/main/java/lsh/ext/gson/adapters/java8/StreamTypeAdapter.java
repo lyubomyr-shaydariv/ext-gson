@@ -22,7 +22,7 @@ import lsh.ext.gson.adapters.AbstractCursorTypeAdapter;
  * @since 0-SNAPSHOT
  */
 public final class StreamTypeAdapter<E>
-		extends AbstractCursorTypeAdapter<Stream<? extends E>, E> {
+		extends AbstractCursorTypeAdapter<Stream<E>, E> {
 
 	private StreamTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
 		super(elementTypeAdapter);
@@ -34,20 +34,20 @@ public final class StreamTypeAdapter<E>
 	 *
 	 * @return An instance of {@link StreamTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<Stream<? extends E>> get(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<Stream<E>> get(final TypeAdapter<E> elementTypeAdapter) {
 		return new StreamTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
 	@Nonnull
 	@Override
-	protected Iterator<? extends E> toIterator(@Nonnull final Stream<? extends E> stream) {
+	protected Iterator<E> toIterator(@Nonnull final Stream<E> stream) {
 		return stream.iterator();
 	}
 
 	@Nonnull
 	@Override
-	protected Stream<? extends E> fromIterator(@Nonnull final ICloseableIterator<? extends E> iterator) {
+	protected Stream<E> fromIterator(@Nonnull final ICloseableIterator<E> iterator) {
 		return Streams.from(iterator);
 	}
 

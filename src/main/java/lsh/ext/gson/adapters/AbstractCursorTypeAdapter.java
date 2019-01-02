@@ -30,10 +30,10 @@ public abstract class AbstractCursorTypeAdapter<C, E>
 	}
 
 	@Nonnull
-	protected abstract Iterator<? extends E> toIterator(@Nonnull C cursor);
+	protected abstract Iterator<E> toIterator(@Nonnull C cursor);
 
 	@Nonnull
-	protected abstract C fromIterator(@Nonnull ICloseableIterator<? extends E> iterator);
+	protected abstract C fromIterator(@Nonnull ICloseableIterator<E> iterator);
 
 	@Override
 	@SuppressWarnings("resource")

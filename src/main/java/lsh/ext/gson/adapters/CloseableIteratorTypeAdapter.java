@@ -22,7 +22,7 @@ import lsh.ext.gson.ICloseableIterator;
  * @since 0-SNAPSHOT
  */
 public final class CloseableIteratorTypeAdapter<E>
-		extends AbstractCursorTypeAdapter<ICloseableIterator<? extends E>, E> {
+		extends AbstractCursorTypeAdapter<ICloseableIterator<E>, E> {
 
 	private CloseableIteratorTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
 		super(elementTypeAdapter);
@@ -34,20 +34,20 @@ public final class CloseableIteratorTypeAdapter<E>
 	 *
 	 * @return An instance of {@link CloseableIteratorTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<ICloseableIterator<? extends E>> get(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<ICloseableIterator<E>> get(final TypeAdapter<E> elementTypeAdapter) {
 		return new CloseableIteratorTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
 	@Nonnull
 	@Override
-	protected Iterator<? extends E> toIterator(@Nonnull final ICloseableIterator<? extends E> iterator) {
+	protected Iterator<E> toIterator(@Nonnull final ICloseableIterator<E> iterator) {
 		return iterator;
 	}
 
 	@Nonnull
 	@Override
-	protected ICloseableIterator<? extends E> fromIterator(@Nonnull final ICloseableIterator<? extends E> iterator) {
+	protected ICloseableIterator<E> fromIterator(@Nonnull final ICloseableIterator<E> iterator) {
 		return iterator;
 	}
 
