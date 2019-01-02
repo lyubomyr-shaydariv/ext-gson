@@ -4,13 +4,12 @@ import java.time.Duration;
 import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 
 public final class DurationTypeAdapterFactoryTest
 		extends AbstractTimeTypeAdapterFactoryTest<Duration> {
 
 	public DurationTypeAdapterFactoryTest() {
-		super(new TypeToken<Duration>() {});
+		super(Duration.class);
 	}
 
 	@Nonnull

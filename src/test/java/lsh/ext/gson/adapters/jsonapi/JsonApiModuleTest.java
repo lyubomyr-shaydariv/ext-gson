@@ -26,7 +26,7 @@ public final class JsonApiModuleTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<JsonValue>() {})
+				Arguments.of(TypeToken.get(JsonValue.class))
 		);
 	}
 

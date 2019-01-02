@@ -4,13 +4,12 @@ import java.time.LocalDate;
 import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 
 public final class LocalDateTypeAdapterFactoryTest
 		extends AbstractTimeTypeAdapterFactoryTest<LocalDate> {
 
 	public LocalDateTypeAdapterFactoryTest() {
-		super(new TypeToken<LocalDate>() {});
+		super(LocalDate.class);
 	}
 
 	@Nonnull

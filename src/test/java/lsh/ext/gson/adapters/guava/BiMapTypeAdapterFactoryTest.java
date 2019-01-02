@@ -27,9 +27,9 @@ public final class BiMapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<BiMap<String, String>>() {}),
-				Arguments.of(new TypeToken<BiMap<Integer, Object>>() {}),
-				Arguments.of(new TypeToken<BiMap<Float, Integer>>() {})
+				Arguments.of(TypeToken.getParameterized(BiMap.class, String.class, String.class)),
+				Arguments.of(TypeToken.getParameterized(BiMap.class, Integer.class, Object.class)),
+				Arguments.of(TypeToken.getParameterized(BiMap.class, Float.class, Integer.class))
 		);
 	}
 
@@ -37,8 +37,8 @@ public final class BiMapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Map<Object, Integer>>() {}),
-				Arguments.of(new TypeToken<Map<Integer, String>>() {})
+				Arguments.of(TypeToken.getParameterized(Map.class, Object.class, Integer.class)),
+				Arguments.of(TypeToken.getParameterized(Map.class, Integer.class, String.class))
 		);
 	}
 

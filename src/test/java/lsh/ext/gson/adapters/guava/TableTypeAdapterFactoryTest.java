@@ -29,9 +29,9 @@ public final class TableTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Table<String, String, String>>() {}),
-				Arguments.of(new TypeToken<Table<Float, Integer, Object>>() {}),
-				Arguments.of(new TypeToken<Table<Character, List<Object>, Integer>>() {})
+				Arguments.of(TypeToken.getParameterized(Table.class, String.class, String.class, String.class)),
+				Arguments.of(TypeToken.getParameterized(Table.class, Float.class, Integer.class, Object.class)),
+				Arguments.of(TypeToken.getParameterized(Table.class, Character.class, List.class, Integer.class))
 		);
 	}
 
@@ -39,8 +39,8 @@ public final class TableTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Map<Float, Integer>>() {}),
-				Arguments.of(new TypeToken<Set<String>>() {})
+				Arguments.of(TypeToken.getParameterized(Map.class, Float.class, Integer.class)),
+				Arguments.of(TypeToken.getParameterized(Set.class, String.class))
 		);
 	}
 

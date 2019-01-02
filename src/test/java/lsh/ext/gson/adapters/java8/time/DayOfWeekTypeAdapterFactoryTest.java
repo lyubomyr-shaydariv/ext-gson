@@ -4,13 +4,12 @@ import java.time.DayOfWeek;
 import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 
 public final class DayOfWeekTypeAdapterFactoryTest
 		extends AbstractTimeTypeAdapterFactoryTest<DayOfWeek> {
 
 	public DayOfWeekTypeAdapterFactoryTest() {
-		super(new TypeToken<DayOfWeek>() {});
+		super(DayOfWeek.class);
 	}
 
 	@Nonnull

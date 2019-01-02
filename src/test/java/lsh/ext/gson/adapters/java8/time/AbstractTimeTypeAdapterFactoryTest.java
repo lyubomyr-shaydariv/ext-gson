@@ -14,11 +14,9 @@ import java.time.Period;
 import java.time.Year;
 import java.time.YearMonth;
 import java.time.ZonedDateTime;
-import java.util.Collection;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -26,43 +24,45 @@ import org.junit.jupiter.params.provider.Arguments;
 abstract class AbstractTimeTypeAdapterFactoryTest<T>
 		extends AbstractTypeAdapterFactoryTest {
 
-	private static final Collection<TypeToken<?>> allTypeTokens = ImmutableList.<TypeToken<?>>builder()
-			.add(new TypeToken<DayOfWeek>() {})
-			.add(new TypeToken<Duration>() {})
-			.add(new TypeToken<Instant>() {})
-			.add(new TypeToken<LocalDate>() {})
-			.add(new TypeToken<LocalDateTime>() {})
-			.add(new TypeToken<LocalTime>() {})
-			.add(new TypeToken<Month>() {})
-			.add(new TypeToken<MonthDay>() {})
-			.add(new TypeToken<OffsetDateTime>() {})
-			.add(new TypeToken<OffsetTime>() {})
-			.add(new TypeToken<Period>() {})
-			.add(new TypeToken<Year>() {})
-			.add(new TypeToken<YearMonth>() {})
-			.add(new TypeToken<ZonedDateTime>() {})
-			.build();
+	private static final Class<?>[] java8TimeApiClasses = {
+			DayOfWeek.class,
+			Duration.class,
+			Instant.class,
+			LocalDate.class,
+			LocalDateTime.class,
+			LocalTime.class,
+			Month.class,
+			MonthDay.class,
+			OffsetDateTime.class,
+			OffsetTime.class,
+			Period.class,
+			Year.class,
+			YearMonth.class,
+			ZonedDateTime.class
+	};
 
-	private final TypeToken<T> typeToken;
+	private final Class<T> clazz;
 
-	protected AbstractTimeTypeAdapterFactoryTest(final TypeToken<T> typeToken) {
+	protected AbstractTimeTypeAdapterFactoryTest(final Class<T> clazz) {
 		super(false);
-		this.typeToken = typeToken;
+		this.clazz = clazz;
 	}
 
 	@Nonnull
 	@Override
 	protected final Stream<Arguments> supported() {
-		return allTypeTokens.stream()
-				.filter(tt -> tt.equals(typeToken))
+		return Stream.of(java8TimeApiClasses)
+				.filter(c -> c.equals(clazz))
+				.map(TypeToken::get)
 				.map(Arguments::of);
 	}
 
 	@Nonnull
 	@Override
 	protected final Stream<Arguments> unsupported() {
-		return allTypeTokens.stream()
-				.filter(tt -> !tt.equals(typeToken))
+		return Stream.of(java8TimeApiClasses)
+				.filter(tt -> !tt.equals(clazz))
+				.map(TypeToken::get)
 				.map(Arguments::of);
 	}
 

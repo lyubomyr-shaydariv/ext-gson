@@ -4,13 +4,12 @@ import java.time.OffsetTime;
 import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 
 public final class OffsetTimeTypeAdapterFactoryTest
 		extends AbstractTimeTypeAdapterFactoryTest<OffsetTime> {
 
 	public OffsetTimeTypeAdapterFactoryTest() {
-		super(new TypeToken<OffsetTime>() {});
+		super(OffsetTime.class);
 	}
 
 	@Nonnull

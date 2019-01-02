@@ -28,9 +28,9 @@ public final class MultimapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Multimap<String, String>>() {}),
-				Arguments.of(new TypeToken<Multimap<String, Object>>() {}),
-				Arguments.of(new TypeToken<Multimap<Integer, Integer>>() {})
+				Arguments.of(TypeToken.getParameterized(Multimap.class, String.class, String.class)),
+				Arguments.of(TypeToken.getParameterized(Multimap.class, String.class, Object.class)),
+				Arguments.of(TypeToken.getParameterized(Multimap.class, Integer.class, Integer.class))
 		);
 	}
 
@@ -38,8 +38,8 @@ public final class MultimapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Multiset<Object>>() {}),
-				Arguments.of(new TypeToken<Map<Integer, String>>() {})
+				Arguments.of(TypeToken.getParameterized(Multiset.class, Object.class)),
+				Arguments.of(TypeToken.getParameterized(Map.class, Integer.class, String.class))
 		);
 	}
 

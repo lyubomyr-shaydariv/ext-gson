@@ -4,13 +4,12 @@ import java.time.Month;
 import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 
 public final class MonthTypeAdapterFactoryTest
 		extends AbstractTimeTypeAdapterFactoryTest<Month> {
 
 	public MonthTypeAdapterFactoryTest() {
-		super(new TypeToken<Month>() {});
+		super(Month.class);
 	}
 
 	@Nonnull

@@ -33,7 +33,8 @@ public final class AlwaysListTypeAdapterTest
 		final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(TypeToken.get(String.class));
 		final TypeAdapter<Integer> integerTypeAdapter = gson.getAdapter(TypeToken.get(Integer.class));
 		final TypeAdapter<Boolean> booleanTypeAdapter = gson.getAdapter(TypeToken.get(Boolean.class));
-		final TypeAdapter<Map<String, Integer>> stringToIntegerMapTypeAdapter = gson.getAdapter(new TypeToken<Map<String, Integer>>() {});
+		@SuppressWarnings("unchecked")
+		final TypeAdapter<Map<String, Integer>> stringToIntegerMapTypeAdapter = (TypeAdapter<Map<String, Integer>>) gson.getAdapter(TypeToken.getParameterized(Map.class, String.class, Integer.class));
 		return Stream.of(
 				Arguments.of(AlwaysListTypeAdapter.get(stringToIntegerMapTypeAdapter), "{\"foo\":1,\"bar\":2}", (Supplier<?>) () -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2))),
 				Arguments.of(AlwaysListTypeAdapter.get(stringTypeAdapter), "\"foo\"", (Supplier<?>) () -> ImmutableList.of("foo")),

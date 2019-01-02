@@ -26,9 +26,9 @@ public final class MultisetTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Multiset<String>>() {}),
-				Arguments.of(new TypeToken<Multiset<Object>>() {}),
-				Arguments.of(new TypeToken<Multiset<Integer>>() {})
+				Arguments.of(TypeToken.getParameterized(Multiset.class, String.class)),
+				Arguments.of(TypeToken.getParameterized(Multiset.class, Object.class)),
+				Arguments.of(TypeToken.getParameterized(Multiset.class, Integer.class))
 		);
 	}
 

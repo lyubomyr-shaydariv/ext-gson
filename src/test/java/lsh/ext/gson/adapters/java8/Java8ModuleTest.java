@@ -26,8 +26,8 @@ public final class Java8ModuleTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Optional<?>>() {}),
-				Arguments.of(new TypeToken<Stream<?>>() {})
+				Arguments.of(TypeToken.getParameterized(Optional.class, Integer.class)),
+				Arguments.of(TypeToken.getParameterized(Stream.class, Integer.class))
 		);
 	}
 

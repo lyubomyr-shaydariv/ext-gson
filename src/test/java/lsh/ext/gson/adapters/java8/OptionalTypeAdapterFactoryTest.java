@@ -26,9 +26,9 @@ public final class OptionalTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Optional<String>>() {}),
-				Arguments.of(new TypeToken<Optional<Object>>() {}),
-				Arguments.of(new TypeToken<Optional<Integer>>() {})
+				Arguments.of(TypeToken.getParameterized(Optional.class, String.class)),
+				Arguments.of(TypeToken.getParameterized(Optional.class, Object.class)),
+				Arguments.of(TypeToken.getParameterized(Optional.class, Integer.class))
 		);
 	}
 

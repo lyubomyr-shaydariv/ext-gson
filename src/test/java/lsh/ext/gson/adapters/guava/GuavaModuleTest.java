@@ -30,11 +30,11 @@ public final class GuavaModuleTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(new TypeToken<Optional<?>>() {}),
-				Arguments.of(new TypeToken<BiMap<String, ?>>() {}),
-				Arguments.of(new TypeToken<Multiset<?>>() {}),
-				Arguments.of(new TypeToken<Multimap<String, ?>>() {}),
-				Arguments.of(new TypeToken<Table<String, String, ?>>() {})
+				Arguments.of(TypeToken.getParameterized(Optional.class, Integer.class)),
+				Arguments.of(TypeToken.getParameterized(BiMap.class, String.class, Integer.class)),
+				Arguments.of(TypeToken.getParameterized(Multiset.class, Integer.class)),
+				Arguments.of(TypeToken.getParameterized(Multimap.class, String.class, Integer.class)),
+				Arguments.of(TypeToken.getParameterized(Table.class, String.class, String.class, Integer.class))
 		);
 	}
 

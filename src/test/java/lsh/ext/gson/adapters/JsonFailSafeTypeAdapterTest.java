@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters;
 
-import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
@@ -8,6 +7,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.ParameterizedTypes;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonFailSafeTypeAdapterTest
@@ -28,8 +28,8 @@ public final class JsonFailSafeTypeAdapterTest
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();
 		return Stream.of(
-				Arguments.of(JsonFailSafeTypeAdapterFactory.get().create(gson, new TypeToken<List<String>>() {}), "[\"foo\",\"bar\"]", (Supplier<?>) () -> ImmutableList.of("foo", "bar")),
-				Arguments.of(JsonFailSafeTypeAdapterFactory.get().create(gson, new TypeToken<List<Integer>>() {}), "[1000]", (Supplier<?>) () -> ImmutableList.of(1000))
+				Arguments.of(JsonFailSafeTypeAdapterFactory.get().create(gson, TypeToken.get(ParameterizedTypes.listOf(String.class))), "[\"foo\",\"bar\"]", (Supplier<?>) () -> ImmutableList.of("foo", "bar")),
+				Arguments.of(JsonFailSafeTypeAdapterFactory.get().create(gson, TypeToken.get(ParameterizedTypes.listOf(Integer.class))), "[1000]", (Supplier<?>) () -> ImmutableList.of(1000))
 		);
 	}
 

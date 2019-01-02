@@ -4,13 +4,12 @@ import java.time.Instant;
 import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 
 public final class InstantTypeAdapterFactoryTest
 		extends AbstractTimeTypeAdapterFactoryTest<Instant> {
 
 	public InstantTypeAdapterFactoryTest() {
-		super(new TypeToken<Instant>() {});
+		super(Instant.class);
 	}
 
 	@Nonnull

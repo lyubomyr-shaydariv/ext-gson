@@ -4,13 +4,12 @@ import java.time.ZonedDateTime;
 import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 
 public final class ZonedDateTimeMonthTypeAdapterFactoryTest
 		extends AbstractTimeTypeAdapterFactoryTest<ZonedDateTime> {
 
 	public ZonedDateTimeMonthTypeAdapterFactoryTest() {
-		super(new TypeToken<ZonedDateTime>() {});
+		super(ZonedDateTime.class);
 	}
 
 	@Nonnull
