@@ -38,7 +38,7 @@ public final class YearTypeAdapter
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}
-		return new YearTypeAdapter (dateTimeFormatter);
+		return new YearTypeAdapter(dateTimeFormatter);
 	}
 
 	@Nonnull
