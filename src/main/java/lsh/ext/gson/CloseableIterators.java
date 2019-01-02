@@ -41,7 +41,7 @@ public final class CloseableIterators {
 	 *
 	 * @see #asCloseable(ICloseableIterator)
 	 */
-	public static <E> ICloseableIterator<E> asCloseable(final Iterator<E> iterator) {
+	public static <E> ICloseableIterator<E> asCloseable(final Iterator<? extends E> iterator) {
 		if ( iterator instanceof ICloseableIterator ) {
 			@SuppressWarnings("unchecked")
 			final ICloseableIterator<E> closeableIterator = (ICloseableIterator<E>) iterator;
@@ -76,7 +76,7 @@ public final class CloseableIterators {
 	 *
 	 * @return An enumeration wrapped in a iterator.
 	 */
-	public static <E> ICloseableIterator<E> from(final ICloseableEnumeration<E> enumeration) {
+	public static <E> ICloseableIterator<E> from(final ICloseableEnumeration<? extends E> enumeration) {
 		return new CloseableIteratorFromCloseableEnumeration<>(enumeration);
 	}
 
@@ -90,9 +90,9 @@ public final class CloseableIterators {
 	private static final class CloseableIterator<E>
 			implements ICloseableIterator<E> {
 
-		private final Iterator<E> iterator;
+		private final Iterator<? extends E> iterator;
 
-		private CloseableIterator(final Iterator<E> iterator) {
+		private CloseableIterator(final Iterator<? extends E> iterator) {
 			this.iterator = iterator;
 		}
 
