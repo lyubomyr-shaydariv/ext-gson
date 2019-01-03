@@ -1,10 +1,10 @@
 package lsh.ext.gson.adapters.guava;
 
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Optional;
-import com.google.common.base.Supplier;
 import com.google.gson.Gson;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
