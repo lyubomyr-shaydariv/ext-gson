@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.guava;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -28,7 +27,11 @@ public final class MultisetTypeAdapterTest
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();
 		return Stream.of(
-				Arguments.of(MultisetTypeAdapter.get(gson.getAdapter(String.class)), "[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]", (Supplier<?>) () -> ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz"))
+				test(
+						MultisetTypeAdapter.get(gson.getAdapter(String.class)),
+						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
+						() -> ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
+				)
 		);
 	}
 

@@ -36,14 +36,46 @@ public final class AlwaysListTypeAdapterTest
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<Map<String, Integer>> stringToIntegerMapTypeAdapter = (TypeAdapter<Map<String, Integer>>) gson.getAdapter(TypeToken.getParameterized(Map.class, String.class, Integer.class));
 		return Stream.of(
-				Arguments.of(AlwaysListTypeAdapter.get(stringToIntegerMapTypeAdapter), "{\"foo\":1,\"bar\":2}", (Supplier<?>) () -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2))),
-				Arguments.of(AlwaysListTypeAdapter.get(stringTypeAdapter), "\"foo\"", (Supplier<?>) () -> ImmutableList.of("foo")),
-				Arguments.of(AlwaysListTypeAdapter.get(integerTypeAdapter), "39", (Supplier<?>) () -> ImmutableList.of(39)),
-				Arguments.of(AlwaysListTypeAdapter.get(booleanTypeAdapter), "true", (Supplier<?>) () -> ImmutableList.of(true)),
-				Arguments.of(AlwaysListTypeAdapter.get(stringToIntegerMapTypeAdapter), "[{\"foo\":1,\"bar\":2},{\"bar\":3,\"qux\":4}]", (Supplier<?>) () -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4))),
-				Arguments.of(AlwaysListTypeAdapter.get(stringTypeAdapter), "[\"foo\",\"bar\",\"baz\"]", (Supplier<?>) () -> ImmutableList.of("foo", "bar", "baz")),
-				Arguments.of(AlwaysListTypeAdapter.get(integerTypeAdapter), "[39,42,100]", (Supplier<?>) () -> ImmutableList.of(39, 42, 100)),
-				Arguments.of(AlwaysListTypeAdapter.get(booleanTypeAdapter), "[true,false,true]", (Supplier<?>) () -> ImmutableList.of(true, false, true))
+				test(
+						AlwaysListTypeAdapter.get(stringToIntegerMapTypeAdapter),
+						"{\"foo\":1,\"bar\":2}",
+						() -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2))
+				),
+				test(
+						AlwaysListTypeAdapter.get(stringTypeAdapter),
+						"\"foo\"",
+						() -> ImmutableList.of("foo")
+				),
+				test(
+						AlwaysListTypeAdapter.get(integerTypeAdapter),
+						"39",
+						() -> ImmutableList.of(39)
+				),
+				test(
+						AlwaysListTypeAdapter.get(booleanTypeAdapter),
+						"true",
+						() -> ImmutableList.of(true)
+				),
+				test(
+						AlwaysListTypeAdapter.get(stringToIntegerMapTypeAdapter),
+						"[{\"foo\":1,\"bar\":2},{\"bar\":3,\"qux\":4}]",
+						() -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4))
+				),
+				test(
+						AlwaysListTypeAdapter.get(stringTypeAdapter),
+						"[\"foo\",\"bar\",\"baz\"]",
+						(Supplier<?>) () -> ImmutableList.of("foo", "bar", "baz")
+				),
+				test(
+						AlwaysListTypeAdapter.get(integerTypeAdapter),
+						"[39,42,100]",
+						(Supplier<?>) () -> ImmutableList.of(39, 42, 100)
+				),
+				test(
+						AlwaysListTypeAdapter.get(booleanTypeAdapter),
+						"[true,false,true]",
+						(Supplier<?>) () -> ImmutableList.of(true, false, true)
+				)
 		);
 	}
 

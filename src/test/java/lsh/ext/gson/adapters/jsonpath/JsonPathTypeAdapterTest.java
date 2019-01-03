@@ -2,22 +2,21 @@ package lsh.ext.gson.adapters.jsonpath;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.provider.Arguments;
 
-@Disabled
 public final class JsonPathTypeAdapterTest
 		extends AbstractTypeAdapterTest<Object> {
 
@@ -28,14 +27,34 @@ public final class JsonPathTypeAdapterTest
 	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
-		final Gson gson = new Gson();
+		final Gson gson = new GsonBuilder()
+				.create();
+		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapterFactory.get(JsonPathTypeAdapterTest::getJsonPathConfiguration);
 		return Stream.of(
-				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(Wrapper.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))),
-				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new WrapperWithNotExistingPath(null)),
-				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(Wrapper.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))),
-				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new WrapperWithNotExistingPath(null)),
-				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(Wrapper.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))),
-				Arguments.of(JsonPathTypeAdapterFactory.get().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)), "{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}", (Supplier<?>) () -> new WrapperWithNotExistingPath(null))
+				test(
+						typeAdapterFactory.create(gson, TypeToken.get(Wrapper.class)),
+						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
+						"{\"fooRef\":\"Foo\",\"barRef\":\"A\",\"bazRef\":{\"k1\":\"v1\"}}",
+						() -> new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))
+				),
+				test(
+						typeAdapterFactory.create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
+						"{\"fooRef\":null}",
+						() -> new WrapperWithNotExistingPath(null)
+				),
+				test(
+						JsonPathTypeAdapterFactory.get(JsonPathTypeAdapterTest::getJsonPathConfiguration).create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
+						"{\"fooRef\":null}",
+						() -> new WrapperWithNotExistingPath(null)
+				),
+				test(
+						JsonPathTypeAdapterFactory.getWithGlobalDefaults().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
+						"{\"fooRef\":null}",
+						() -> new WrapperWithNotExistingPath(null)
+				)
 		);
 	}
 

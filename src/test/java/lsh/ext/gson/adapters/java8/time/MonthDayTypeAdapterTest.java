@@ -3,7 +3,6 @@ package lsh.ext.gson.adapters.java8.time;
 import java.time.Month;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -27,8 +26,16 @@ public final class MonthDayTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(MonthDayTypeAdapter.get(), "\"--07-13\"", (Supplier<?>) () -> MonthDay.of(Month.JULY, 13)),
-				Arguments.of(MonthDayTypeAdapter.get(DateTimeFormatter.ofPattern("M.d")), "\"7.13\"", (Supplier<?>) () -> MonthDay.of(Month.JULY, 13))
+				test(
+						MonthDayTypeAdapter.get(),
+						"\"--07-13\"",
+						() -> MonthDay.of(Month.JULY, 13)
+				),
+				test(
+						MonthDayTypeAdapter.get(DateTimeFormatter.ofPattern("M.d")),
+						"\"7.13\"",
+						() -> MonthDay.of(Month.JULY, 13)
+				)
 		);
 	}
 

@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters.java8.time;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -26,8 +25,16 @@ public final class LocalTimeTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(LocalTimeTypeAdapter.get(), "\"10:10\"", (Supplier<?>) () -> LocalTime.of(10, 10, 0)),
-				Arguments.of(LocalTimeTypeAdapter.get(DateTimeFormatter.ISO_TIME), "\"19:23:33\"", (Supplier<?>) () -> LocalTime.of(19, 23, 33))
+				test(
+						LocalTimeTypeAdapter.get(),
+						"\"10:10\"",
+						() -> LocalTime.of(10, 10, 0)
+				),
+				test(
+						LocalTimeTypeAdapter.get(DateTimeFormatter.ISO_TIME),
+						"\"19:23:33\"",
+						() -> LocalTime.of(19, 23, 33)
+				)
 		);
 	}
 

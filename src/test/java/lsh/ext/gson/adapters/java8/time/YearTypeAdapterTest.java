@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters.java8.time;
 
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -26,8 +25,16 @@ public final class YearTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(YearTypeAdapter.get(), "\"2018\"", (Supplier<?>) () -> Year.of(2018)),
-				Arguments.of(YearTypeAdapter.get(DateTimeFormatter.ofPattern("y'-xx-xx'")), "\"2018-xx-xx\"", (Supplier<?>) () -> Year.of(2018))
+				test(
+						YearTypeAdapter.get(),
+						"\"2018\"",
+						() -> Year.of(2018)
+				),
+				test(
+						YearTypeAdapter.get(DateTimeFormatter.ofPattern("y'-xx-xx'")),
+						"\"2018-xx-xx\"",
+						() -> Year.of(2018)
+				)
 		);
 	}
 

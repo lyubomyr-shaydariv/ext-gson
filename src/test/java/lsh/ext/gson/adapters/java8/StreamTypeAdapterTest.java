@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.java8;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -27,7 +26,11 @@ public final class StreamTypeAdapterTest
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();
 		return Stream.of(
-				Arguments.of(StreamTypeAdapter.get(gson.getAdapter(Integer.class)), "[1,2,4,8]", (Supplier<?>) () -> ImmutableList.of(1, 2, 4, 8).stream())
+				test(
+						StreamTypeAdapter.get(gson.getAdapter(Integer.class)),
+						"[1,2,4,8]",
+						() -> ImmutableList.of(1, 2, 4, 8).stream()
+				)
 		);
 	}
 

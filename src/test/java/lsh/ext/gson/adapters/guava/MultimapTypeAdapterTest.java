@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.guava;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -28,7 +27,11 @@ public final class MultimapTypeAdapterTest
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();
 		return Stream.of(
-				Arguments.of(MultimapTypeAdapter.get(gson.getAdapter(String.class)), "{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}", (Supplier<?>) () -> ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
+				test(
+						MultimapTypeAdapter.get(gson.getAdapter(String.class)),
+						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
+						() -> ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar")
+				)
 		);
 	}
 

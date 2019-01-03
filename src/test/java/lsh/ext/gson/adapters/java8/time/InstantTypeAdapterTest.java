@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.Instant;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -25,8 +24,16 @@ public final class InstantTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(InstantTypeAdapter.get(), "\"1970-01-01T00:00:00Z\"", (Supplier<?>) () -> Instant.ofEpochMilli(0)),
-				Arguments.of(InstantTypeAdapter.get(), "\"2061-08-14T09:37:12.837Z\"", (Supplier<?>) () -> Instant.ofEpochMilli(2891237832837L))
+				test(
+						InstantTypeAdapter.get(),
+						"\"1970-01-01T00:00:00Z\"",
+						() -> Instant.ofEpochMilli(0)
+				),
+				test(
+						InstantTypeAdapter.get(),
+						"\"2061-08-14T09:37:12.837Z\"",
+						() -> Instant.ofEpochMilli(2891237832837L)
+				)
 		);
 	}
 

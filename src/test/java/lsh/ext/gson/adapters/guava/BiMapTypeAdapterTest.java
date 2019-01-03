@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.guava;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -28,7 +27,11 @@ public final class BiMapTypeAdapterTest
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();
 		return Stream.of(
-				Arguments.of(BiMapTypeAdapter.get(gson.getAdapter(String.class)), "{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}", (Supplier<?>) () -> ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz"))
+				test(
+						BiMapTypeAdapter.get(gson.getAdapter(String.class)),
+						"{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}",
+						() -> ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz")
+				)
 		);
 	}
 

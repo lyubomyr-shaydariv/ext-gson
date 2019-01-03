@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.Period;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -25,7 +24,11 @@ public class PeriodTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(PeriodTypeAdapter.get(), "\"P1Y8M20D\"", (Supplier<?>) () -> Period.of(1, 8, 20))
+				test(
+						PeriodTypeAdapter.get(),
+						"\"P1Y8M20D\"",
+						() -> Period.of(1, 8, 20)
+				)
 		);
 	}
 

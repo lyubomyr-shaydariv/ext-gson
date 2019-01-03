@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters.java8.time;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -26,8 +25,16 @@ public final class LocalDateTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(LocalDateTypeAdapter.get(), "\"2018-01-01\"", (Supplier<?>) () -> LocalDate.of(2018, 01, 01)),
-				Arguments.of(LocalDateTypeAdapter.get(DateTimeFormatter.ISO_LOCAL_DATE), "\"2018-01-01\"", (Supplier<?>) () -> LocalDate.of(2018, 01, 01))
+				test(
+						LocalDateTypeAdapter.get(),
+						"\"2018-01-01\"",
+						() -> LocalDate.of(2018, 01, 01)
+				),
+				test(
+						LocalDateTypeAdapter.get(DateTimeFormatter.ISO_LOCAL_DATE),
+						"\"2018-01-01\"",
+						() -> LocalDate.of(2018, 01, 01)
+				)
 		);
 	}
 

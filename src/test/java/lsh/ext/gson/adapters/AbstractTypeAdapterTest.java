@@ -29,14 +29,14 @@ public abstract class AbstractTypeAdapterTest<T> {
 
 	@ParameterizedTest
 	@MethodSource("source")
-	public final void testRead(final TypeAdapter<T> unit, final String json, final Supplier<? extends T> valueFactory)
+	public final void testRead(final TypeAdapter<T> unit, final Json json, final Supplier<? extends T> valueFactory)
 			throws IOException {
-		Assertions.assertEquals(finalizeValue(valueFactory.get()), finalizeValue(unit.fromJson(json)));
+		Assertions.assertEquals(finalizeValue(valueFactory.get()), finalizeValue(unit.fromJson(json.read)));
 	}
 
 	@ParameterizedTest
 	@MethodSource("source")
-	public final void testReadNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final String json,
+	public final void testReadNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final Json json,
 			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory)
 			throws IOException {
 		Assertions.assertEquals(nullValue, unit.fromJson("null"));
@@ -44,15 +44,35 @@ public abstract class AbstractTypeAdapterTest<T> {
 
 	@ParameterizedTest
 	@MethodSource("source")
-	public final void testWrite(final TypeAdapter<T> unit, final String json, final Supplier<? extends T> valueFactory) {
-		Assertions.assertEquals(json, unit.toJson(valueFactory.get()));
+	public final void testWrite(final TypeAdapter<T> unit, final Json json, final Supplier<? extends T> valueFactory) {
+		Assertions.assertEquals(json.write, unit.toJson(valueFactory.get()));
 	}
 
 	@ParameterizedTest
 	@MethodSource("source")
-	public final void testWriteNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final String json,
+	public final void testWriteNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final Json json,
 			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory) {
 		Assertions.assertEquals("null", unit.toJson(nullValue));
+	}
+
+	protected static Arguments test(final TypeAdapter<?> unit, final String json, final Supplier<?> valueFactory) {
+		return Arguments.of(unit, new Json(json, json), valueFactory);
+	}
+
+	protected static Arguments test(final TypeAdapter<?> unit, final String readJson, final String writeJson, final Supplier<?> valueFactory) {
+		return Arguments.of(unit, new Json(readJson, writeJson), valueFactory);
+	}
+
+	private static final class Json {
+
+		private final String read;
+		private final String write;
+
+		private Json(final String read, final String write) {
+			this.read = read;
+			this.write = write;
+		}
+
 	}
 
 }

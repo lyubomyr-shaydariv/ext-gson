@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.guava;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -29,7 +28,15 @@ public final class TableTypeAdapterTest
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();
 		return Stream.of(
-				Arguments.of(TableTypeAdapter.get(gson.getAdapter(TypeToken.get(Integer.class))), "{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}", (Supplier<?>) () -> ImmutableTable.<String, String, Integer>builder().put("A", "1", 1).put("B", "2", 2).put("C", "3", 3).build())
+				test(
+						TableTypeAdapter.get(gson.getAdapter(TypeToken.get(Integer.class))),
+						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
+						() -> ImmutableTable.<String, String, Integer>builder()
+								.put("A", "1", 1)
+								.put("B", "2", 2)
+								.put("C", "3", 3)
+								.build()
+				)
 		);
 	}
 

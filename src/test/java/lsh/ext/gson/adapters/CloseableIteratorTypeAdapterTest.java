@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -25,10 +24,15 @@ public final class CloseableIteratorTypeAdapterTest
 
 	@Nonnull
 	@Override
+	@SuppressWarnings("resource")
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();
 		return Stream.of(
-				Arguments.of(CloseableIteratorTypeAdapter.get(gson.getAdapter(Integer.class)), "[1,2,4,8]", (Supplier<?>) () -> CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator()))
+				test(
+						CloseableIteratorTypeAdapter.get(gson.getAdapter(Integer.class)),
+						"[1,2,4,8]",
+						() -> CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator())
+				)
 		);
 	}
 

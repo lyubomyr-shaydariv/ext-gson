@@ -1,6 +1,5 @@
 package lsh.ext.gson.adapters.jsonapi;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.json.Json;
@@ -26,7 +25,22 @@ public final class JsonValueTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(JsonValueTypeAdapter.get(), "{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}", (Supplier<?>) () -> Json.createObjectBuilder().add("boolean", true).add("integer", 3).add("string", "foo").addNull("null").add("array", Json.createArrayBuilder().add(false).add(2).add("bar").addNull().build()).build())
+				test(
+						JsonValueTypeAdapter.get(),
+						"{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}",
+						() -> Json.createObjectBuilder()
+								.add("boolean", true)
+								.add("integer", 3)
+								.add("string", "foo")
+								.addNull("null")
+								.add("array", Json.createArrayBuilder()
+										.add(false)
+										.add(2)
+										.add("bar")
+										.addNull()
+										.build()
+								).build()
+				)
 		);
 	}
 

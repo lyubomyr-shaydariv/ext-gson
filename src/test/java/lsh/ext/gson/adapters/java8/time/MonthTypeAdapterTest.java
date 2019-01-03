@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.Month;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -25,7 +24,11 @@ public final class MonthTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(MonthTypeAdapter.get(), "\"SEPTEMBER\"", (Supplier<?>) () -> Month.SEPTEMBER)
+				test(
+						MonthTypeAdapter.get(),
+						"\"SEPTEMBER\"",
+						() -> Month.SEPTEMBER
+				)
 		);
 	}
 

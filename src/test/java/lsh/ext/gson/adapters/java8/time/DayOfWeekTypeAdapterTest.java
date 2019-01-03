@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters.java8.time;
 
 import java.time.DayOfWeek;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -25,8 +24,16 @@ public final class DayOfWeekTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(DayOfWeekTypeAdapter.get(), "\"MONDAY\"", (Supplier<?>) () -> DayOfWeek.MONDAY),
-				Arguments.of(DayOfWeekTypeAdapter.get(), "\"FRIDAY\"", (Supplier<?>) () -> DayOfWeek.FRIDAY)
+				test(
+						DayOfWeekTypeAdapter.get(),
+						"\"MONDAY\"",
+						() -> DayOfWeek.MONDAY
+				),
+				test(
+						DayOfWeekTypeAdapter.get(),
+						"\"FRIDAY\"",
+						() -> DayOfWeek.FRIDAY
+				)
 		);
 	}
 

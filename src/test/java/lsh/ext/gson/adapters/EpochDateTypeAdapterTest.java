@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.util.Date;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -24,7 +23,11 @@ public final class EpochDateTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(EpochDateTypeAdapter.get(), "1488929283", (Supplier<?>) () -> new Date(1488929283000L))
+				test(
+						EpochDateTypeAdapter.get(),
+						"1488929283",
+						() -> new Date(1488929283000L)
+				)
 		);
 	}
 

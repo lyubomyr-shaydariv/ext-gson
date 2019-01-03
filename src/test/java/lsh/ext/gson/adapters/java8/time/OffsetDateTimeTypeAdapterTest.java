@@ -3,7 +3,6 @@ package lsh.ext.gson.adapters.java8.time;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -27,8 +26,16 @@ public final class OffsetDateTimeTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(OffsetDateTimeTypeAdapter.get(), "\"1996-10-18T12:34:45Z\"", (Supplier<?>) () -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)),
-				Arguments.of(OffsetDateTimeTypeAdapter.get(DateTimeFormatter.ISO_OFFSET_DATE_TIME), "\"1996-10-18T12:34:45Z\"", (Supplier<?>) () -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC))
+				test(
+						OffsetDateTimeTypeAdapter.get(),
+						"\"1996-10-18T12:34:45Z\"",
+						() -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
+				),
+				test(
+						OffsetDateTimeTypeAdapter.get(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+						"\"1996-10-18T12:34:45Z\"",
+						() -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
+				)
 		);
 	}
 

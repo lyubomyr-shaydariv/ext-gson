@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters.java8.time;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -26,8 +25,16 @@ public final class YearMonthTypeAdapterTest
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(
-				Arguments.of(YearMonthTypeAdapter.get(), "\"1999-09\"", (Supplier<?>) () -> YearMonth.of(1999, 9)),
-				Arguments.of(YearMonthTypeAdapter.get(DateTimeFormatter.ofPattern("M.y")), "\"9.1999\"", (Supplier<?>) () -> YearMonth.of(1999, 9))
+				test(
+						YearMonthTypeAdapter.get(),
+						"\"1999-09\"",
+						() -> YearMonth.of(1999, 9)
+				),
+				test(
+						YearMonthTypeAdapter.get(DateTimeFormatter.ofPattern("M.y")),
+						"\"9.1999\"",
+						() -> YearMonth.of(1999, 9)
+				)
 		);
 	}
 
