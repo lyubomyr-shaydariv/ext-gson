@@ -4,20 +4,17 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class YearMonthTypeAdapterTest
-		extends AbstractTypeAdapterTest<YearMonth> {
+		extends AbstractTypeAdapterTest<YearMonth, YearMonth> {
 
-	public YearMonthTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final YearMonth value) {
+	protected YearMonth finalize(@Nullable final YearMonth value) {
 		return value;
 	}
 

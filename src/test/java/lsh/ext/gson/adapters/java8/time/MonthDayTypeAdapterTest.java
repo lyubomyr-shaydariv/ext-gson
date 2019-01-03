@@ -5,20 +5,17 @@ import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MonthDayTypeAdapterTest
-		extends AbstractTypeAdapterTest<MonthDay> {
+		extends AbstractTypeAdapterTest<MonthDay, MonthDay> {
 
-	public MonthDayTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final MonthDay value) {
+	protected MonthDay finalize(@Nullable final MonthDay value) {
 		return value;
 	}
 

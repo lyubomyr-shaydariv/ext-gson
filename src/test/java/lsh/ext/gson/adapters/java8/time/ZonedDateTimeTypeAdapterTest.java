@@ -4,20 +4,17 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class ZonedDateTimeTypeAdapterTest
-		extends AbstractTypeAdapterTest<ZonedDateTime> {
+		extends AbstractTypeAdapterTest<ZonedDateTime, ZonedDateTime> {
 
-	public ZonedDateTimeTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final ZonedDateTime value) {
+	protected ZonedDateTime finalize(@Nullable final ZonedDateTime value) {
 		return value;
 	}
 

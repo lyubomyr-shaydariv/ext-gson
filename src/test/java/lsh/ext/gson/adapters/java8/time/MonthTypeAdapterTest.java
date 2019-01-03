@@ -3,20 +3,17 @@ package lsh.ext.gson.adapters.java8.time;
 import java.time.Month;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MonthTypeAdapterTest
-		extends AbstractTypeAdapterTest<Month> {
+		extends AbstractTypeAdapterTest<Month, Month> {
 
-	public MonthTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Month value) {
+	protected Month finalize(@Nullable final Month value) {
 		return value;
 	}
 

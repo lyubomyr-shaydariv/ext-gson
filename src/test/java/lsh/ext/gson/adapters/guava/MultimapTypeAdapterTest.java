@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters.guava;
 
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -10,15 +11,11 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultimapTypeAdapterTest
-		extends AbstractTypeAdapterTest<Multimap<String, ?>> {
+		extends AbstractTypeAdapterTest<Multimap<String, ?>, Multimap<String, ?>> {
 
-	public MultimapTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Multimap<String, ?> value) {
+	protected Multimap<String, ?> finalize(@Nullable final Multimap<String, ?> value) {
 		return value;
 	}
 

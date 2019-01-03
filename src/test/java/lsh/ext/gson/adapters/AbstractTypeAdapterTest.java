@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import org.junit.jupiter.api.Assertions;
@@ -13,25 +14,19 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public abstract class AbstractTypeAdapterTest<T> {
-
-	private final T nullValue;
-
-	protected AbstractTypeAdapterTest(final T nullValue) {
-		this.nullValue = nullValue;
-	}
+public abstract class AbstractTypeAdapterTest<T, R> {
 
 	@Nonnull
 	protected abstract Stream<Arguments> source();
 
-	@Nonnull
-	protected abstract Object finalizeValue(@Nonnull T value);
+	@Nullable
+	protected abstract R finalize(@Nullable T value);
 
 	@ParameterizedTest
 	@MethodSource("source")
 	public final void testRead(final TypeAdapter<T> unit, final Json json, final Supplier<? extends T> valueFactory)
 			throws IOException {
-		Assertions.assertEquals(finalizeValue(valueFactory.get()), finalizeValue(unit.fromJson(json.read)));
+		Assertions.assertEquals(finalize(valueFactory.get()), finalize(unit.fromJson(json.read)));
 	}
 
 	@ParameterizedTest
@@ -39,7 +34,7 @@ public abstract class AbstractTypeAdapterTest<T> {
 	public final void testReadNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final Json json,
 			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory)
 			throws IOException {
-		Assertions.assertEquals(nullValue, unit.fromJson("null"));
+		Assertions.assertEquals(finalize(null), unit.fromJson("null"));
 	}
 
 	@ParameterizedTest
@@ -52,7 +47,9 @@ public abstract class AbstractTypeAdapterTest<T> {
 	@MethodSource("source")
 	public final void testWriteNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final Json json,
 			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory) {
-		Assertions.assertEquals("null", unit.toJson(nullValue));
+		@SuppressWarnings("unchecked")
+		final T finalize = (T) finalize(null);
+		Assertions.assertEquals("null", unit.toJson(finalize));
 	}
 
 	protected static Arguments test(final TypeAdapter<?> unit, final String json, final Supplier<?> valueFactory) {

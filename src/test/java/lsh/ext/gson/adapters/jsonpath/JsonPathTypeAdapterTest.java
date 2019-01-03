@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
@@ -18,10 +19,12 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonPathTypeAdapterTest
-		extends AbstractTypeAdapterTest<Object> {
+		extends AbstractTypeAdapterTest<Object, Object> {
 
-	public JsonPathTypeAdapterTest() {
-		super(null);
+	@Nullable
+	@Override
+	protected Object finalize(@Nullable final Object value) {
+		return value;
 	}
 
 	@Nonnull
@@ -56,12 +59,6 @@ public final class JsonPathTypeAdapterTest
 						() -> new WrapperWithNotExistingPath(null)
 				)
 		);
-	}
-
-	@Nonnull
-	@Override
-	protected Object finalizeValue(@Nonnull final Object value) {
-		return value;
 	}
 
 	private static Configuration getJsonPathConfiguration(final Gson gson) {

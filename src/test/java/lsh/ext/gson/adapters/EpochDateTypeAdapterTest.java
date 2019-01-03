@@ -3,19 +3,16 @@ package lsh.ext.gson.adapters;
 import java.util.Date;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class EpochDateTypeAdapterTest
-		extends AbstractTypeAdapterTest<Date> {
+		extends AbstractTypeAdapterTest<Date, Date> {
 
-	public EpochDateTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Date value) {
+	protected Date finalize(@Nullable final Date value) {
 		return value;
 	}
 

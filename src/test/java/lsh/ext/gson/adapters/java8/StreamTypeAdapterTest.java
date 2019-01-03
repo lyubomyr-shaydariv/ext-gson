@@ -1,7 +1,9 @@
 package lsh.ext.gson.adapters.java8;
 
+import java.util.List;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
@@ -9,16 +11,12 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class StreamTypeAdapterTest
-		extends AbstractTypeAdapterTest<Stream<?>> {
+		extends AbstractTypeAdapterTest<Stream<?>, List<?>> {
 
-	public StreamTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Stream<?> value) {
-		return value.collect(ImmutableList.toImmutableList());
+	protected List<?> finalize(@Nullable final Stream<?> value) {
+		return value != null ? value.collect(ImmutableList.toImmutableList()) : null;
 	}
 
 	@Nonnull

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -14,15 +15,11 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class AlwaysListTypeAdapterTest
-		extends AbstractTypeAdapterTest<List<?>> {
+		extends AbstractTypeAdapterTest<List<?>, List<?>> {
 
-	public AlwaysListTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final List<?> value) {
+	protected List<?> finalize(@Nullable final List<?> value) {
 		return value;
 	}
 

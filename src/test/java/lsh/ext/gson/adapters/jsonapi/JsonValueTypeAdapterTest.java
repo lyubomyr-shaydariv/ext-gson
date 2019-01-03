@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters.jsonapi;
 
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonValue;
 
@@ -9,16 +10,12 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonValueTypeAdapterTest
-		extends AbstractTypeAdapterTest<JsonValue> {
+		extends AbstractTypeAdapterTest<JsonValue, JsonValue> {
 
-	public JsonValueTypeAdapterTest() {
-		super(JsonValue.NULL);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final JsonValue value) {
-		return value;
+	protected JsonValue finalize(@Nullable final JsonValue value) {
+		return value != null ? value : JsonValue.NULL;
 	}
 
 	@Nonnull

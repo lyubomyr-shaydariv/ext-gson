@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters.guava;
 
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
@@ -9,16 +10,12 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class OptionalTypeAdapterTest
-		extends AbstractTypeAdapterTest<Optional<?>> {
+		extends AbstractTypeAdapterTest<Optional<?>, Optional<?>> {
 
-	public OptionalTypeAdapterTest() {
-		super(Optional.absent());
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Optional<?> value) {
-		return value;
+	protected Optional<?> finalize(@Nullable final Optional<?> value) {
+		return value != null ? value : Optional.absent();
 	}
 
 	@Nonnull

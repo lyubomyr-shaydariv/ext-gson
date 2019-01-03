@@ -4,20 +4,17 @@ import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class YearTypeAdapterTest
-		extends AbstractTypeAdapterTest<Year> {
+		extends AbstractTypeAdapterTest<Year, Year> {
 
-	public YearTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Year value) {
+	protected Year finalize(@Nullable final Year value) {
 		return value;
 	}
 

@@ -3,20 +3,17 @@ package lsh.ext.gson.adapters.java8.time;
 import java.time.Duration;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class DurationTypeAdapterTest
-		extends AbstractTypeAdapterTest<Duration> {
+		extends AbstractTypeAdapterTest<Duration, Duration> {
 
-	public DurationTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Duration value) {
+	protected Duration finalize(@Nullable final Duration value) {
 		return value;
 	}
 

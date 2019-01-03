@@ -5,20 +5,17 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class OffsetDateTimeTypeAdapterTest
-		extends AbstractTypeAdapterTest<OffsetDateTime> {
+		extends AbstractTypeAdapterTest<OffsetDateTime, OffsetDateTime> {
 
-	public OffsetDateTimeTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final OffsetDateTime value) {
+	protected OffsetDateTime finalize(@Nullable final OffsetDateTime value) {
 		return value;
 	}
 

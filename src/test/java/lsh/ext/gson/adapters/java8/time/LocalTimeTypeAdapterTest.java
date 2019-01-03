@@ -4,20 +4,17 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class LocalTimeTypeAdapterTest
-		extends AbstractTypeAdapterTest<LocalTime> {
+		extends AbstractTypeAdapterTest<LocalTime, LocalTime> {
 
-	public LocalTimeTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final LocalTime value) {
+	protected LocalTime finalize(@Nullable final LocalTime value) {
 		return value;
 	}
 

@@ -3,20 +3,17 @@ package lsh.ext.gson.adapters.java8.time;
 import java.time.Period;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
-public class PeriodTypeAdapterTest
-		extends AbstractTypeAdapterTest<Period> {
+public final class PeriodTypeAdapterTest
+		extends AbstractTypeAdapterTest<Period, Period> {
 
-	public PeriodTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Period value) {
+	protected Period finalize(@Nullable final Period value) {
 		return value;
 	}
 

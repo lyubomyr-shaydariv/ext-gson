@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters.guava;
 
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
@@ -11,15 +12,11 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class TableTypeAdapterTest
-		extends AbstractTypeAdapterTest<Table<String, String, ?>> {
+		extends AbstractTypeAdapterTest<Table<String, String, ?>, Table<String, String, ?>> {
 
-	public TableTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Table<String, String, ?> value) {
+	protected Table<String, String, ?> finalize(@Nullable final Table<String, String, ?> value) {
 		return value;
 	}
 

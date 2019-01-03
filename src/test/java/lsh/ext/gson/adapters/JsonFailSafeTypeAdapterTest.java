@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters;
 
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
@@ -10,15 +11,11 @@ import lsh.ext.gson.ParameterizedTypes;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonFailSafeTypeAdapterTest
-		extends AbstractTypeAdapterTest<Object> {
+		extends AbstractTypeAdapterTest<Object, Object> {
 
-	public JsonFailSafeTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Object value) {
+	protected Object finalize(@Nullable final Object value) {
 		return value;
 	}
 

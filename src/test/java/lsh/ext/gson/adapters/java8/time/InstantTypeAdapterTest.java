@@ -3,20 +3,17 @@ package lsh.ext.gson.adapters.java8.time;
 import java.time.Instant;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class InstantTypeAdapterTest
-		extends AbstractTypeAdapterTest<Instant> {
+		extends AbstractTypeAdapterTest<Instant, Instant> {
 
-	public InstantTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Instant value) {
+	protected Instant finalize(@Nullable final Instant value) {
 		return value;
 	}
 

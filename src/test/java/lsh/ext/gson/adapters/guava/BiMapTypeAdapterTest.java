@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters.guava;
 
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
@@ -10,15 +11,11 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class BiMapTypeAdapterTest
-		extends AbstractTypeAdapterTest<BiMap<String, ?>> {
+		extends AbstractTypeAdapterTest<BiMap<String, ?>, BiMap<String, ?>> {
 
-	public BiMapTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final BiMap<String, ?> value) {
+	protected BiMap<String, ?> finalize(@Nullable final BiMap<String, ?> value) {
 		return value;
 	}
 

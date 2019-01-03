@@ -2,6 +2,7 @@ package lsh.ext.gson.adapters.guava;
 
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset;
@@ -10,15 +11,11 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultisetTypeAdapterTest
-		extends AbstractTypeAdapterTest<Multiset<?>> {
+		extends AbstractTypeAdapterTest<Multiset<?>, Multiset<?>> {
 
-	public MultisetTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final Multiset<?> value) {
+	protected Multiset<?> finalize(@Nullable final Multiset<?> value) {
 		return value;
 	}
 

@@ -1,8 +1,10 @@
 package lsh.ext.gson.adapters;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
@@ -12,16 +14,12 @@ import lsh.ext.gson.ICloseableEnumeration;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class CloseableEnumerationTypeAdapterTest
-		extends AbstractTypeAdapterTest<ICloseableEnumeration<?>> {
+		extends AbstractTypeAdapterTest<ICloseableEnumeration<?>, List<?>> {
 
-	public CloseableEnumerationTypeAdapterTest() {
-		super(null);
-	}
-
-	@Nonnull
+	@Nullable
 	@Override
-	protected Object finalizeValue(@Nonnull final ICloseableEnumeration<?> value) {
-		return ImmutableList.copyOf(Collections.list(value));
+	protected List<?> finalize(@Nullable final ICloseableEnumeration<?> value) {
+		return value != null ? ImmutableList.copyOf(Collections.list(value)) : null;
 	}
 
 	@Nonnull
