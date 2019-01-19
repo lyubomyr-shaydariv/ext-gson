@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
  * A string-oriented type adapter that emits strings with {@link Object#toString()} when generating strings.
  * </p>
  *
- * @param <T>
+ * @param <T> Any type
  *
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT

@@ -10,7 +10,7 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  * <p>A type adapter for {@link Instant}.</p>
  *
  * @author Lyubomyr Shaydariv
- * @see 0-SNAPSHOT
+ * @since 0-SNAPSHOT
  */
 public final class InstantTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Instant> {

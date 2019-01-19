@@ -39,7 +39,7 @@ public final class MultimapTypeAdapter<K, V>
 
 	/**
 	 * @param valueTypeAdapter Multimap value type adapter
-	 * @param <V>              Multimap value type parameter
+	 * @param <V>              Multimap value type
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance whose multimap factory is {@link ArrayListMultimap#create()}.
 	 *
@@ -56,7 +56,7 @@ public final class MultimapTypeAdapter<K, V>
 	/**
 	 * @param valueTypeAdapter   Multimap value type adapter
 	 * @param newMultimapFactory A {@link Multimap} factory to create instance used while deserialization
-	 * @param <V>                Multimap value type parameter
+	 * @param <V>                Multimap value type
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
 	 *
@@ -72,7 +72,8 @@ public final class MultimapTypeAdapter<K, V>
 	/**
 	 * @param valueTypeAdapter Multimap value type adapter
 	 * @param keyConverter     A converter to convert key to JSON object property names
-	 * @param <V>              Multimap value type parameter
+	 * @param <K>              Multimap key type
+	 * @param <V>              Multimap value type
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
 	 *
@@ -88,7 +89,8 @@ public final class MultimapTypeAdapter<K, V>
 	 * @param valueTypeAdapter   Multimap value type adapter
 	 * @param newMultimapFactory A {@link Multimap} factory to create instance used while deserialization
 	 * @param keyConverter       A converter to convert key to JSON object property names
-	 * @param <V>                Multimap value type parameter
+	 * @param <K>                Multimap key type
+	 * @param <V>                Multimap value type
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
 	 *

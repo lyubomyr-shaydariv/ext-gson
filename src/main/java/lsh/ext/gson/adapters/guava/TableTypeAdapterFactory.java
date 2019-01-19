@@ -52,6 +52,13 @@ public final class TableTypeAdapterFactory<R, C, V>
 	}
 
 	/**
+	 * @param newTableFactory    New table factory
+	 * @param rowKeyConverter    Row key converter
+	 * @param columnKeyConverter Column key converter
+	 * @param <R>                Row type
+	 * @param <C>                Column type
+	 * @param <V>                Value type
+	 *
 	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
 	 *
 	 * @since 0-SNAPSHOT

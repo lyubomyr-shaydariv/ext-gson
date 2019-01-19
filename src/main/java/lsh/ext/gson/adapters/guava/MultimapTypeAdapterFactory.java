@@ -48,6 +48,11 @@ public final class MultimapTypeAdapterFactory<K, V>
 	}
 
 	/**
+	 * @param newMultimapFactory Multimap factory
+	 * @param keyConverter       Key converter
+	 * @param <K>                Key type
+	 * @param <V>                Vqlue type
+	 *
 	 * @return An instance of {@link MultimapTypeAdapterFactory} with a custom new {@link Multimap} factory.
 	 *
 	 * @since 0-SNAPSHOT

@@ -31,6 +31,8 @@ public final class YearMonthTypeAdapterFactory
 	}
 
 	/**
+	 * @param dateTimeFormatter Date/time formatter
+	 *
 	 * @return An instance of {@link YearMonthTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
 	 */
 	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {

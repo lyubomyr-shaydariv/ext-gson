@@ -32,7 +32,7 @@ public final class MultisetTypeAdapter<E>
 
 	/**
 	 * @param elementTypeAdapter Multiset element type adapter
-	 * @param <E>                Multiset element type parameter
+	 * @param <E>                Multiset element type
 	 *
 	 * @return A {@link MultisetTypeAdapter} instance whose multiset factory is {@link LinkedHashMultiset#create()}.
 	 *
@@ -46,7 +46,7 @@ public final class MultisetTypeAdapter<E>
 	/**
 	 * @param valueTypeAdapter   Multiset value type adapter
 	 * @param newMultisetFactory A {@link Multiset} factory to create instance used while deserialization
-	 * @param <V>                Multiset element type parameter
+	 * @param <V>                Multiset element type
 	 *
 	 * @return A {@link MultisetTypeAdapter} instance.
 	 *

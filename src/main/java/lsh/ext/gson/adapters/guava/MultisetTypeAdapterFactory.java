@@ -44,6 +44,9 @@ public final class MultisetTypeAdapterFactory<E>
 	}
 
 	/**
+	 * @param newMultisetFactory Multiset factory
+	 * @param <E>                Element type
+	 *
 	 * @return An instance of {@link MultisetTypeAdapterFactory} with a custom new {@link Multiset} factory.
 	 *
 	 * @since 0-SNAPSHOT

@@ -12,7 +12,7 @@ import lsh.ext.gson.ICloseableIterator;
 
 /**
  * <p>
- * Type adapter for {@link ICloseableEnumeration <E>}. Enumerations are supposed to read and write JSON arrays only.
+ * Type adapter for {@link ICloseableEnumeration}. Enumerations are supposed to read and write JSON arrays only.
  * </p>
  * <p>
  * <b>CAUTION</b> Note that the {@link #read(JsonReader)} method returns a closeable iterator that must be closed manually.

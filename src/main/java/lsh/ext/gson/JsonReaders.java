@@ -106,6 +106,7 @@ public final class JsonReaders {
 	 *
 	 * @return A valued JSON token from the JSON reader
 	 *
+	 * @throws IOException A rethrown exception
 	 * @see #skipToken(JsonReader)
 	 * @see #readValuedJsonTokenRecursively(JsonReader)
 	 * @since 0-SNAPSHOT

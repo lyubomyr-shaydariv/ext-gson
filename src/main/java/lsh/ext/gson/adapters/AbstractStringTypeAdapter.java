@@ -15,7 +15,7 @@ import com.google.gson.stream.JsonWriter;
  * in {@link TypeAdapter#nullSafe()}.
  * </p>
  *
- * @param <T>
+ * @param <T> Any type
  *
  * @author Lyubomyr Shaydariv
  * @since 0-SNAPSHOT

@@ -11,7 +11,7 @@ import com.google.gson.TypeAdapter;
  * <p>A type adapter for {@link OffsetDateTime}.</p>
  *
  * @author Lyubomyr Shaydariv
- * @see 0-SNAPSHOT
+ * @since 0-SNAPSHOT
  */
 public final class OffsetDateTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<OffsetDateTime> {

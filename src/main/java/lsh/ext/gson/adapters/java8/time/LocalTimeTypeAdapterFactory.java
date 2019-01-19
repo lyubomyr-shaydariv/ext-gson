@@ -31,6 +31,8 @@ public final class LocalTimeTypeAdapterFactory
 	}
 
 	/**
+	 * @param dateTimeFormatter Date/time formatter
+	 *
 	 * @return An instance of {@link LocalTimeTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
 	 */
 	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {

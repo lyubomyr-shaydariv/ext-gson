@@ -31,6 +31,8 @@ public final class ZonedDateTimeTypeAdapterFactory
 	}
 
 	/**
+	 * @param dateTimeFormatter Date/time formatter
+	 *
 	 * @return An instance of {@link ZonedDateTimeTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
 	 */
 	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {
