@@ -1,7 +1,7 @@
 `ext-gson` is a simple extension library for [Google Gson 2.8.6](https://github.com/google/gson) and later including a few extensions for the following libraries:
 
-* [Jayway JsonPath 2.4.0](https://github.com/json-path/JsonPath)
-* [Google Guava 24.1 for JRE](https://github.com/google/guava)
+* [Jayway JsonPath](https://github.com/json-path/JsonPath)
+* [Google Guava for JRE](https://github.com/google/guava)
 * [JSR 374 (JSON Processing) API](https://javaee.github.io/jsonp)
 * [JSR 374 (JSON Processing) Default Provider](https://javaee.github.io/jsonp)
 
@@ -62,8 +62,8 @@ Currently `ext-gson` supports:
 #### Google Guava
 
 * Types provided by `GuavaModule`:
-  * [`com.google.common.base.Optional`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/base/Optional.html);
-  * [`com.google.common.collect.BiMap`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/BiMap.html);
-  * [`com.google.common.collect.Multimap`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multimap.html);
-  * [`com.google.common.collect.Multiset`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Multiset.html);
-  * [`com.google.common.collect.Table`](https://google.github.io/guava/releases/23.0/api/docs/com/google/common/collect/Table.html);
+  * [`com.google.common.base.Optional`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/base/Optional.html);
+  * [`com.google.common.collect.BiMap`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/collect/BiMap.html);
+  * [`com.google.common.collect.Multimap`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/collect/Multimap.html);
+  * [`com.google.common.collect.Multiset`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/collect/Multiset.html);
+  * [`com.google.common.collect.Table`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/collect/Table.html).
