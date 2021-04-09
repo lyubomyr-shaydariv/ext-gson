@@ -354,7 +354,7 @@ public final class PushbackJsonReaderTest {
 
 	@Test
 	public void testToStringForRecordingIsNotImplementedYet() {
-		Assertions.assertThrows(NotImplementedYetException.class, () -> {
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
 			try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
 				@SuppressWarnings("unused")
 				final String s = unit.toString();
@@ -364,7 +364,7 @@ public final class PushbackJsonReaderTest {
 
 	@Test
 	public void testToStringForReplayingIsNotImplementedYet() {
-		Assertions.assertThrows(NotImplementedYetException.class, () -> {
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
 			try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
 				unit.pushback();
 				@SuppressWarnings("unused")
@@ -390,7 +390,7 @@ public final class PushbackJsonReaderTest {
 
 	@Test
 	public void testGetPathForRecordingIsNotImplementedYet() {
-		Assertions.assertThrows(NotImplementedYetException.class, () -> {
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
 			try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
 				unit.getPath();
 			}
@@ -399,7 +399,7 @@ public final class PushbackJsonReaderTest {
 
 	@Test
 	public void testGetPathForReplayingIsNotImplementedYet() {
-		Assertions.assertThrows(NotImplementedYetException.class, () -> {
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
 			try ( final PushbackJsonReader unit = PushbackJsonReader.getAndRecord(new StringReader("[]")) ) {
 				unit.pushback();
 				unit.getPath();

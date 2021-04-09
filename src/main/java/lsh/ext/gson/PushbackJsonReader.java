@@ -383,9 +383,9 @@ public final class PushbackJsonReader
 		final String toString;
 		switch ( mode ) {
 		case RECORDING:
-			throw NotImplementedYetException.create();
+			throw new UnsupportedOperationException("Not implemented yet"); // TODO Implement
 		case REPLAYING:
-			throw NotImplementedYetException.create();
+			throw new UnsupportedOperationException("Not implemented yet"); // TODO Implement
 		case REPLAYED:
 			toString = super.toString();
 			break;
@@ -400,9 +400,9 @@ public final class PushbackJsonReader
 		final String getPath;
 		switch ( mode ) {
 		case RECORDING:
-			throw NotImplementedYetException.create();
+			throw new UnsupportedOperationException("Not implemented yet"); // TODO Implement
 		case REPLAYING:
-			throw NotImplementedYetException.create();
+			throw new UnsupportedOperationException("Not implemented yet"); // TODO Implement
 		case REPLAYED:
 			getPath = super.getPath();
 			break;
