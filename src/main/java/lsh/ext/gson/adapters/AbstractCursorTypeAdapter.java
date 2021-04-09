@@ -8,7 +8,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lsh.ext.gson.ICloseableIterator;
-import lsh.ext.gson.adapters.java8.StreamTypeAdapter;
+import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapter;
 
 /**
  * Represents a base type adapter for cursor classes like iterators and streams.
