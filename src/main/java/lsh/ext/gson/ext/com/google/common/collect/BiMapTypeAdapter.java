@@ -102,7 +102,6 @@ public final class BiMapTypeAdapter<K, V>
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final BiMap<K, V> biMap)
 			throws IOException {
 		out.beginObject();

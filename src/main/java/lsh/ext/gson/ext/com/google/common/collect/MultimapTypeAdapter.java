@@ -103,7 +103,6 @@ public final class MultimapTypeAdapter<K, V>
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final Multimap<K, V> multimap)
 			throws IOException {
 		out.beginObject();

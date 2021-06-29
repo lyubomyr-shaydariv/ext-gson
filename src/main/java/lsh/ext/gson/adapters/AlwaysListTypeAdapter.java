@@ -41,7 +41,6 @@ public final class AlwaysListTypeAdapter<E>
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final List<E> list)
 			throws IOException {
 		switch ( list.size() ) {

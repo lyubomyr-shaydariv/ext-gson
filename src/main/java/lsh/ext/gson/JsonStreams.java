@@ -44,7 +44,6 @@ public final class JsonStreams {
 	 * @see #copyTo(JsonReader, JsonWriter)
 	 * @since 0-SNAPSHOT
 	 */
-	@SuppressWarnings("resource")
 	public static void copyTo(final JsonReader reader, final JsonWriter writer, final boolean ignoreTrailingTokens)
 			throws IOException {
 		int level = 0;

@@ -64,7 +64,6 @@ public final class UnpackedJsonTypeAdapterFactory
 		}
 
 		@Override
-		@SuppressWarnings("resource")
 		public void write(final JsonWriter out, final T value)
 				throws IOException {
 			out.value(typeAdapter.toJson(value));

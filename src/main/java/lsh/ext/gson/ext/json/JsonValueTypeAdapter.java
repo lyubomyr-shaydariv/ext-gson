@@ -132,7 +132,6 @@ public final class JsonValueTypeAdapter
 		private static final TypeAdapter<JsonValue> instance = new JsonNullTypeAdapter();
 
 		@Override
-		@SuppressWarnings("resource")
 		public void write(final JsonWriter out, final JsonValue jsonNull)
 				throws IOException {
 			out.nullValue();
@@ -154,7 +153,6 @@ public final class JsonValueTypeAdapter
 				.nullSafe();
 
 		@Override
-		@SuppressWarnings("resource")
 		public void write(final JsonWriter out, final JsonValue jsonBoolean)
 				throws IllegalArgumentException, IOException {
 			final ValueType valueType = jsonBoolean.getValueType();
@@ -198,7 +196,6 @@ public final class JsonValueTypeAdapter
 		}
 
 		@Override
-		@SuppressWarnings("resource")
 		public void write(final JsonWriter out, final JsonNumber jsonNumber)
 				throws IOException {
 			try {
@@ -237,7 +234,6 @@ public final class JsonValueTypeAdapter
 		}
 
 		@Override
-		@SuppressWarnings("resource")
 		public void write(final JsonWriter out, final JsonString jsonString)
 				throws IOException {
 			out.value(jsonString.getString());
@@ -258,7 +254,6 @@ public final class JsonValueTypeAdapter
 		}
 
 		@Override
-		@SuppressWarnings("resource")
 		public void write(final JsonWriter out, final JsonObject jsonObject)
 				throws IOException {
 			out.beginObject();
@@ -323,7 +318,6 @@ public final class JsonValueTypeAdapter
 		}
 
 		@Override
-		@SuppressWarnings("resource")
 		public void write(final JsonWriter out, final JsonArray jsonArray)
 				throws IOException {
 			out.beginArray();

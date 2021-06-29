@@ -54,7 +54,6 @@ public final class TypeAwareTypeAdapter<T>
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final Object value)
 			throws IOException {
 		final Class<?> type = value.getClass();

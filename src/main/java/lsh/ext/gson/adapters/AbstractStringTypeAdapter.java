@@ -50,7 +50,6 @@ public abstract class AbstractStringTypeAdapter<T>
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public final void write(final JsonWriter out, @Nullable final T value)
 			throws IOException {
 		if ( value == null ) {

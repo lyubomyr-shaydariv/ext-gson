@@ -116,7 +116,6 @@ public final class TableTypeAdapter<R, C, V>
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final Table<R, C, V> table)
 			throws IOException {
 		out.beginObject();

@@ -36,7 +36,6 @@ public abstract class AbstractCursorTypeAdapter<C, E>
 	protected abstract C fromIterator(@Nonnull ICloseableIterator<E> iterator);
 
 	@Override
-	@SuppressWarnings("resource")
 	public final void write(final JsonWriter out, final C cursor)
 			throws IOException {
 		out.beginArray();

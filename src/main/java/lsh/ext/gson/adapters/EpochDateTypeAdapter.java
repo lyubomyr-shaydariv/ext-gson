@@ -38,7 +38,6 @@ public final class EpochDateTypeAdapter
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final Date value)
 			throws IOException {
 		out.value(value.getTime() / 1000);

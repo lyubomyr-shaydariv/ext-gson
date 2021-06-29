@@ -60,7 +60,6 @@ public final class MultisetTypeAdapter<E>
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	public void write(final JsonWriter out, final Multiset<E> multiset)
 			throws IOException {
 		out.beginArray();

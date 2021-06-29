@@ -74,18 +74,18 @@ public final class PackedJsonTypeAdapter
 	@Override
 	public void write(final JsonWriter out, final String json)
 			throws IOException {
-		@SuppressWarnings("resource")
-		final Reader reader = new StringReader(json);
-		JsonStreams.copyTo(new JsonReader(reader), out);
+		try ( final Reader reader = new StringReader(json) ) {
+			JsonStreams.copyTo(new JsonReader(reader), out);
+		}
 	}
 
 	@Override
 	public String read(final JsonReader in)
 			throws IOException {
-		@SuppressWarnings("resource")
-		final Writer writer = new StringWriter();
-		JsonStreams.copyTo(in, new JsonWriter(writer));
-		return writer.toString();
+		try ( final Writer writer = new StringWriter() ) {
+			JsonStreams.copyTo(in, new JsonWriter(writer));
+			return writer.toString();
+		}
 	}
 
 }
