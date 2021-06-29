@@ -54,9 +54,9 @@ public abstract class AbstractStringTypeAdapter<T>
 			throws IOException {
 		if ( value == null ) {
 			out.nullValue();
-		} else {
-			out.value(toString(value));
+			return;
 		}
+		out.value(toString(value));
 	}
 
 }

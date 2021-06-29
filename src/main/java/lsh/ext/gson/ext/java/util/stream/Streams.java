@@ -12,8 +12,8 @@ final class Streams {
 	private Streams() {
 	}
 
-	static <E> Stream<E> from(final ICloseableIterator<E> iterator) {
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, 0), false)
+	static <E> Stream<E> from(final ICloseableIterator<? extends E> iterator) {
+		return StreamSupport.<E>stream(Spliterators.spliteratorUnknownSize(iterator, 0), false)
 				.onClose(() -> {
 					try {
 						iterator.close();

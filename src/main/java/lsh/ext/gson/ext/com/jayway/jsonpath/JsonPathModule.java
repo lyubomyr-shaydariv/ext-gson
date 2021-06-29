@@ -1,6 +1,5 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import com.google.gson.TypeAdapterFactory;
@@ -55,7 +54,7 @@ public final class JsonPathModule
 		 * @return A new module instance.
 		 */
 		public IModule done() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Collections.unmodifiableList(Arrays.asList(
+			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(
 					JsonPathTypeAdapterFactory.getDefaultInstance()
 			));
 			return new JsonPathModule(typeAdapterFactories);
