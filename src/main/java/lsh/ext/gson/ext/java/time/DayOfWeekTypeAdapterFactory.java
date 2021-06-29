@@ -18,7 +18,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class DayOfWeekTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<DayOfWeek> {
 
-	private static final TypeAdapterFactory instance = new DayOfWeekTypeAdapterFactory();
+	private static final TypeAdapterFactory defaultInstance = new DayOfWeekTypeAdapterFactory();
 
 	private DayOfWeekTypeAdapterFactory() {
 	}
@@ -26,8 +26,8 @@ public final class DayOfWeekTypeAdapterFactory
 	/**
 	 * @return An instance of {@link DayOfWeekTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public final class DayOfWeekTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<DayOfWeek> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		return DayOfWeekTypeAdapter.get();
+		return DayOfWeekTypeAdapter.getDefaultInstance();
 	}
 
 }

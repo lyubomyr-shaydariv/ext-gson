@@ -12,13 +12,13 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class JsonValueTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<JsonValue> {
 
-	private static final TypeAdapterFactory instance = new JsonValueTypeAdapterFactory();
+	private static final TypeAdapterFactory defaultInstance = new JsonValueTypeAdapterFactory();
 
 	private JsonValueTypeAdapterFactory() {
 	}
 
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public final class JsonValueTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<JsonValue> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		return JsonValueTypeAdapter.get();
+		return JsonValueTypeAdapter.getDefaultInstance();
 	}
 
 }

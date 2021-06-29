@@ -23,7 +23,7 @@ public final class LocalTimeTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						LocalTimeTypeAdapter.get(),
+						LocalTimeTypeAdapter.getDefaultInstance(),
 						"\"10:10\"",
 						() -> LocalTime.of(10, 10, 0)
 				),

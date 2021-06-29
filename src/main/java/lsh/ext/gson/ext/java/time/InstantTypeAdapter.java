@@ -15,7 +15,7 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class InstantTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Instant> {
 
-	private static final TypeAdapter<Instant> instance = new InstantTypeAdapter();
+	private static final TypeAdapter<Instant> defaultInstance = new InstantTypeAdapter();
 
 	private InstantTypeAdapter() {
 	}
@@ -23,8 +23,8 @@ public final class InstantTypeAdapter
 	/**
 	 * @return An instance of {@link InstantTypeAdapter}.
 	 */
-	public static TypeAdapter<Instant> get() {
-		return instance;
+	public static TypeAdapter<Instant> getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	@Nonnull

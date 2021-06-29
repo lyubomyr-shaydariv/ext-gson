@@ -18,7 +18,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class DurationTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Duration> {
 
-	private static final TypeAdapterFactory instance = new DurationTypeAdapterFactory();
+	private static final TypeAdapterFactory defaultInstance = new DurationTypeAdapterFactory();
 
 	private DurationTypeAdapterFactory() {
 	}
@@ -26,8 +26,8 @@ public final class DurationTypeAdapterFactory
 	/**
 	 * @return An instance of {@link DurationTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public final class DurationTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<Duration> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
-		return DurationTypeAdapter.get();
+		return DurationTypeAdapter.getDefaultInstance();
 	}
 
 }

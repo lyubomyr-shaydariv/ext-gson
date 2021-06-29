@@ -19,7 +19,7 @@ public final class OptionalTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return OptionalTypeAdapterFactory.get();
+		return OptionalTypeAdapterFactory.getDefaultInstance();
 	}
 
 	@Nonnull

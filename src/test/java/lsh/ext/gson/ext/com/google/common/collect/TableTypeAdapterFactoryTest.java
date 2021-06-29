@@ -22,7 +22,7 @@ public final class TableTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return TableTypeAdapterFactory.get();
+		return TableTypeAdapterFactory.getDefaultInstance();
 	}
 
 	@Nonnull

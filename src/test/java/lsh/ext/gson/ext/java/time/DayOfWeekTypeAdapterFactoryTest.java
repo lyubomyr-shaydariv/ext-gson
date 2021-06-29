@@ -15,7 +15,7 @@ public final class DayOfWeekTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return DayOfWeekTypeAdapterFactory.get();
+		return DayOfWeekTypeAdapterFactory.getDefaultInstance();
 	}
 
 }

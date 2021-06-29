@@ -17,7 +17,7 @@ public final class JsonFailSafeTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return JsonFailSafeTypeAdapterFactory.get();
+		return JsonFailSafeTypeAdapterFactory.getDefaultInstance();
 	}
 
 	@Nonnull

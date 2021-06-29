@@ -15,7 +15,7 @@ public final class PeriodTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return PeriodTypeAdapterFactory.get();
+		return PeriodTypeAdapterFactory.getDefaultInstance();
 	}
 
 }

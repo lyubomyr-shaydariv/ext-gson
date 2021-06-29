@@ -23,7 +23,7 @@ public final class JsonValueTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						JsonValueTypeAdapter.get(),
+						JsonValueTypeAdapter.getDefaultInstance(),
 						"{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}",
 						() -> Json.createObjectBuilder()
 								.add("boolean", true)

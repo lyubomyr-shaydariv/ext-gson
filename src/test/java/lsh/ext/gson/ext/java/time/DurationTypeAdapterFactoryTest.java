@@ -15,7 +15,7 @@ public final class DurationTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return DurationTypeAdapterFactory.get();
+		return DurationTypeAdapterFactory.getDefaultInstance();
 	}
 
 }

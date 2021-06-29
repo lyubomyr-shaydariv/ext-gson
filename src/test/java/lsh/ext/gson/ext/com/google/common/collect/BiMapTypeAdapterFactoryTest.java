@@ -20,7 +20,7 @@ public final class BiMapTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return BiMapTypeAdapterFactory.get();
+		return BiMapTypeAdapterFactory.getDefaultInstance();
 	}
 
 	@Nonnull

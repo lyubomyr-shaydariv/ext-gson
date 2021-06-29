@@ -23,7 +23,7 @@ public final class YearTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						YearTypeAdapter.get(),
+						YearTypeAdapter.getDefaultInstance(),
 						"\"2018\"",
 						() -> Year.of(2018)
 				),

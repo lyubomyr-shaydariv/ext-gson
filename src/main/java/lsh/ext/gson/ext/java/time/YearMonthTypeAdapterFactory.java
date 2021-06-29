@@ -18,7 +18,7 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 public final class YearMonthTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<YearMonth> {
 
-	private static final TypeAdapterFactory instance = new YearMonthTypeAdapterFactory(null);
+	private static final TypeAdapterFactory defaultInstance = new YearMonthTypeAdapterFactory(null);
 
 	private YearMonthTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(YearMonth.class, dateTimeFormatter);
@@ -27,8 +27,8 @@ public final class YearMonthTypeAdapterFactory
 	/**
 	 * @return An instance of {@link YearMonthTypeAdapterFactory} with the Java-default {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	/**
@@ -38,7 +38,7 @@ public final class YearMonthTypeAdapterFactory
 	 */
 	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
-			return instance;
+			return defaultInstance;
 		}
 		return new YearMonthTypeAdapterFactory(dateTimeFormatter);
 	}
@@ -46,7 +46,7 @@ public final class YearMonthTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<YearMonth> create() {
-		return YearMonthTypeAdapter.get();
+		return YearMonthTypeAdapter.getDefaultInstance();
 	}
 
 	@Nonnull

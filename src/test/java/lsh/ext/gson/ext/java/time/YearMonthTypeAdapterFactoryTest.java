@@ -15,7 +15,7 @@ public final class YearMonthTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return YearMonthTypeAdapterFactory.get();
+		return YearMonthTypeAdapterFactory.getDefaultInstance();
 	}
 
 }

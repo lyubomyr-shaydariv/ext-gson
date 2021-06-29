@@ -19,7 +19,7 @@ import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
 public final class StreamTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
 
-	private static final TypeAdapterFactory instance = new StreamTypeAdapterFactory<>();
+	private static final TypeAdapterFactory defaultInstance = new StreamTypeAdapterFactory<>();
 
 	private StreamTypeAdapterFactory() {
 		super(Stream.class);
@@ -28,8 +28,8 @@ public final class StreamTypeAdapterFactory<E>
 	/**
 	 * @return An instance of {@link StreamTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	@Nonnull

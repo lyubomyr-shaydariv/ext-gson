@@ -24,7 +24,7 @@ public final class MonthDayTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						MonthDayTypeAdapter.get(),
+						MonthDayTypeAdapter.getDefaultInstance(),
 						"\"--07-13\"",
 						() -> MonthDay.of(Month.JULY, 13)
 				),

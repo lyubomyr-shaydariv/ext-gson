@@ -19,7 +19,7 @@ public final class MultisetTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultisetTypeAdapterFactory.get();
+		return MultisetTypeAdapterFactory.getDefaultInstance();
 	}
 
 	@Nonnull

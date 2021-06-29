@@ -18,7 +18,7 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 public final class LocalDateTimeTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<LocalDateTime> {
 
-	private static final TypeAdapterFactory instance = new LocalDateTimeTypeAdapterFactory(null);
+	private static final TypeAdapterFactory defaultInstance = new LocalDateTimeTypeAdapterFactory(null);
 
 	private LocalDateTimeTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(LocalDateTime.class, dateTimeFormatter);
@@ -27,8 +27,8 @@ public final class LocalDateTimeTypeAdapterFactory
 	/**
 	 * @return An instance of {@link LocalDateTimeTypeAdapterFactory} with the Java-default {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	/**
@@ -38,7 +38,7 @@ public final class LocalDateTimeTypeAdapterFactory
 	 */
 	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
-			return instance;
+			return defaultInstance;
 		}
 		return new LocalDateTimeTypeAdapterFactory(dateTimeFormatter);
 	}
@@ -46,7 +46,7 @@ public final class LocalDateTimeTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<LocalDateTime> create() {
-		return LocalDateTimeTypeAdapter.get();
+		return LocalDateTimeTypeAdapter.getDefaultInstance();
 	}
 
 	@Nonnull

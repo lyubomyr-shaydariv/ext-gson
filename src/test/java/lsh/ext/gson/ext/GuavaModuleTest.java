@@ -23,7 +23,7 @@ public final class GuavaModuleTest
 	@Nonnull
 	@Override
 	protected IModule createUnit() {
-		return GuavaModule.get();
+		return GuavaModule.getDefaultInstance();
 	}
 
 	@Nonnull

@@ -56,7 +56,7 @@ import lsh.ext.gson.JsonStreams;
 public final class PackedJsonTypeAdapter
 		extends TypeAdapter<String> {
 
-	private static final TypeAdapter<String> instance = new PackedJsonTypeAdapter()
+	private static final TypeAdapter<String> defaultInstance = new PackedJsonTypeAdapter()
 			.nullSafe();
 
 	private PackedJsonTypeAdapter() {
@@ -67,8 +67,8 @@ public final class PackedJsonTypeAdapter
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapter<String> get() {
-		return instance;
+	public static TypeAdapter<String> getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	@Override

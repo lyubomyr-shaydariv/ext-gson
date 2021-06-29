@@ -24,7 +24,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class TableTypeAdapterFactory<R, C, V>
 		extends AbstractTypeAdapterFactory<Table<R, C, V>> {
 
-	private static final TypeAdapterFactory instance = new TableTypeAdapterFactory<>(null, null, null);
+	private static final TypeAdapterFactory defaultInstance = new TableTypeAdapterFactory<>(null, null, null);
 
 	@Nullable
 	private final Supplier<? extends Table<R, C, V>> newTableFactory;
@@ -47,8 +47,8 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 	public static <R, C, V> TypeAdapterFactory get(@Nullable final Supplier<? extends Table<R, C, V>> newTableFactory,
 			@Nullable final Converter<R, String> rowKeyConverter, @Nullable final Converter<C, String> columnKeyConverter) {
 		if ( newTableFactory == null && rowKeyConverter == null && columnKeyConverter == null ) {
-			return instance;
+			return defaultInstance;
 		}
 		if ( rowKeyConverter == null && columnKeyConverter != null
 				|| rowKeyConverter != null && columnKeyConverter == null ) {

@@ -22,27 +22,27 @@ public final class DurationTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						DurationTypeAdapter.get(),
+						DurationTypeAdapter.getDefaultInstance(),
 						"\"PT0.555S\"",
 						() -> Duration.ofMillis(555)
 				),
 				test(
-						DurationTypeAdapter.get(),
+						DurationTypeAdapter.getDefaultInstance(),
 						"\"PT9M15S\"",
 						() -> Duration.ofSeconds(555)
 				),
 				test(
-						DurationTypeAdapter.get(),
+						DurationTypeAdapter.getDefaultInstance(),
 						"\"PT9H15M\"",
 						() -> Duration.ofMinutes(555)
 				),
 				test(
-						DurationTypeAdapter.get(),
+						DurationTypeAdapter.getDefaultInstance(),
 						"\"PT555H\"",
 						() -> Duration.ofHours(555)
 				),
 				test(
-						DurationTypeAdapter.get(),
+						DurationTypeAdapter.getDefaultInstance(),
 						"\"PT13320H\"",
 						() -> Duration.ofDays(555)
 				)

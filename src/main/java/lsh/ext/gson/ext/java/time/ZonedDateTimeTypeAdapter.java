@@ -17,7 +17,7 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 public final class ZonedDateTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<ZonedDateTime> {
 
-	private static final TypeAdapter<ZonedDateTime> instance = new ZonedDateTimeTypeAdapter(null);
+	private static final TypeAdapter<ZonedDateTime> defaultInstance = new ZonedDateTimeTypeAdapter(null);
 
 	private ZonedDateTimeTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);
@@ -26,8 +26,8 @@ public final class ZonedDateTimeTypeAdapter
 	/**
 	 * @return An instance of {@link ZonedDateTimeTypeAdapter} with the Java-default {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<ZonedDateTime> get() {
-		return instance;
+	public static TypeAdapter<ZonedDateTime> getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	/**
@@ -37,7 +37,7 @@ public final class ZonedDateTimeTypeAdapter
 	 */
 	public static TypeAdapter<ZonedDateTime> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
-			return instance;
+			return defaultInstance;
 		}
 		return new ZonedDateTimeTypeAdapter(dateTimeFormatter);
 	}

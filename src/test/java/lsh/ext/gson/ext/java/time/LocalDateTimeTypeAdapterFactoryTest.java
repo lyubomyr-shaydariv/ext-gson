@@ -15,7 +15,7 @@ public final class LocalDateTimeTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return LocalDateTimeTypeAdapterFactory.get();
+		return LocalDateTimeTypeAdapterFactory.getDefaultInstance();
 	}
 
 }

@@ -24,7 +24,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class MultimapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<Multimap<K, V>> {
 
-	private static final TypeAdapterFactory instance = new MultimapTypeAdapterFactory<>(null, null);
+	private static final TypeAdapterFactory defaultInstance = new MultimapTypeAdapterFactory<>(null, null);
 
 	@Nullable
 	private final Supplier<? extends Multimap<K, V>> newMultimapFactory;
@@ -43,8 +43,8 @@ public final class MultimapTypeAdapterFactory<K, V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 	public static <K, V> TypeAdapterFactory get(@Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
 			@Nullable final Converter<K, String> keyConverter) {
 		if ( newMultimapFactory == null && keyConverter == null ) {
-			return instance;
+			return defaultInstance;
 		}
 		return new MultimapTypeAdapterFactory<>(newMultimapFactory, keyConverter);
 	}

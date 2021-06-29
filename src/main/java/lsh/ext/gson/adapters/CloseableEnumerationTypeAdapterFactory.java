@@ -19,7 +19,7 @@ import com.google.gson.TypeAdapterFactory;
 public final class CloseableEnumerationTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
 
-	private static final TypeAdapterFactory instance = new CloseableEnumerationTypeAdapterFactory<>();
+	private static final TypeAdapterFactory defaultInstance = new CloseableEnumerationTypeAdapterFactory<>();
 
 	private CloseableEnumerationTypeAdapterFactory() {
 		super(Enumeration.class);
@@ -28,8 +28,8 @@ public final class CloseableEnumerationTypeAdapterFactory<E>
 	/**
 	 * @return An instance of {@link CloseableEnumerationTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory get() {
-		return instance;
+	public static TypeAdapterFactory getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	@Nonnull

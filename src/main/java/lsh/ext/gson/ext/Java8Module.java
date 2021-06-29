@@ -25,7 +25,7 @@ import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapterFactory;
 public final class Java8Module
 		extends AbstractModule {
 
-	private static final IModule instance = build()
+	private static final IModule defaultInstance = build()
 			.done();
 
 	private Java8Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -35,8 +35,8 @@ public final class Java8Module
 	/**
 	 * @return The default instance of the module with the default type adapter factories settings.
 	 */
-	public static IModule get() {
-		return instance;
+	public static IModule getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	/**
@@ -59,8 +59,8 @@ public final class Java8Module
 		 */
 		public IModule done() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-					OptionalTypeAdapterFactory.get(),
-					StreamTypeAdapterFactory.get()
+					OptionalTypeAdapterFactory.getDefaultInstance(),
+					StreamTypeAdapterFactory.getDefaultInstance()
 			)
 					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
 			return new Java8Module(typeAdapterFactories);

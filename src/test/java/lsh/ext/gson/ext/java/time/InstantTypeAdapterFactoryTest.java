@@ -15,7 +15,7 @@ public final class InstantTypeAdapterFactoryTest
 	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return InstantTypeAdapterFactory.get();
+		return InstantTypeAdapterFactory.getDefaultInstance();
 	}
 
 }

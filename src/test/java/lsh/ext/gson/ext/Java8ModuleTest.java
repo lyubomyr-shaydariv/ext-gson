@@ -19,7 +19,7 @@ public final class Java8ModuleTest
 	@Nonnull
 	@Override
 	protected IModule createUnit() {
-		return Java8Module.get();
+		return Java8Module.getDefaultInstance();
 	}
 
 	@Nonnull

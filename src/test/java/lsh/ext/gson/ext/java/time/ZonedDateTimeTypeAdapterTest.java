@@ -23,7 +23,7 @@ public final class ZonedDateTimeTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						ZonedDateTimeTypeAdapter.get(),
+						ZonedDateTimeTypeAdapter.getDefaultInstance(),
 						"\"2018-03-20T12:34:56.000000666Z[UTC]\"",
 						() -> ZonedDateTime.of(2018, 03, 20, 12, 34, 56, 666, ZoneId.of("UTC"))
 				)

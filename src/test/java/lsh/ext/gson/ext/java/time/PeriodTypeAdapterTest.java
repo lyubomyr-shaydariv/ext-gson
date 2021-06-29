@@ -22,7 +22,7 @@ public final class PeriodTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						PeriodTypeAdapter.get(),
+						PeriodTypeAdapter.getDefaultInstance(),
 						"\"P1Y8M20D\"",
 						() -> Period.of(1, 8, 20)
 				)

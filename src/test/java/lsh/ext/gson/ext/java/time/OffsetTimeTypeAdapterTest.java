@@ -24,7 +24,7 @@ public final class OffsetTimeTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						OffsetTimeTypeAdapter.get(),
+						OffsetTimeTypeAdapter.getDefaultInstance(),
 						"\"12:34:56Z\"",
 						() -> OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
 				),

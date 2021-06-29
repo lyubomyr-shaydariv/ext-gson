@@ -15,7 +15,7 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class MonthTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Month> {
 
-	private static final TypeAdapter<Month> instance = new MonthTypeAdapter();
+	private static final TypeAdapter<Month> defaultInstance = new MonthTypeAdapter();
 
 	private MonthTypeAdapter() {
 	}
@@ -23,8 +23,8 @@ public final class MonthTypeAdapter
 	/**
 	 * @return An instance of {@link MonthTypeAdapter}.
 	 */
-	public static TypeAdapter<Month> get() {
-		return instance;
+	public static TypeAdapter<Month> getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	@Nonnull

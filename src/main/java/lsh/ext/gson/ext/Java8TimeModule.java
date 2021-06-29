@@ -52,7 +52,7 @@ import lsh.ext.gson.ext.java.time.ZonedDateTimeTypeAdapterFactory;
 public final class Java8TimeModule
 		extends AbstractModule {
 
-	private static final IModule instance = build()
+	private static final IModule defaultInstance = build()
 			.done();
 
 	protected Java8TimeModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -62,8 +62,8 @@ public final class Java8TimeModule
 	/**
 	 * @return The default instance of the module with the default type adapter factories settings.
 	 */
-	public static IModule get() {
-		return instance;
+	public static IModule getDefaultInstance() {
+		return defaultInstance;
 	}
 
 	/**
@@ -221,17 +221,17 @@ public final class Java8TimeModule
 		 */
 		public IModule done() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-					DayOfWeekTypeAdapterFactory.get(),
-					DurationTypeAdapterFactory.get(),
-					InstantTypeAdapterFactory.get(),
+					DayOfWeekTypeAdapterFactory.getDefaultInstance(),
+					DurationTypeAdapterFactory.getDefaultInstance(),
+					InstantTypeAdapterFactory.getDefaultInstance(),
 					LocalDateTimeTypeAdapterFactory.get(localDateTimeFormatter),
 					LocalDateTypeAdapterFactory.get(localDateFormatter),
 					LocalTimeTypeAdapterFactory.get(localTimeFormatter),
 					MonthDayTypeAdapterFactory.get(monthDayFormatter),
-					MonthTypeAdapterFactory.get(),
+					MonthTypeAdapterFactory.getDefaultInstance(),
 					OffsetDateTimeTypeAdapterFactory.get(offsetDateTimeFormatter),
 					OffsetTimeTypeAdapterFactory.get(offsetTimeFormatter),
-					PeriodTypeAdapterFactory.get(),
+					PeriodTypeAdapterFactory.getDefaultInstance(),
 					YearMonthTypeAdapterFactory.get(yearMonthFormatter),
 					YearTypeAdapterFactory.get(yearFormatter),
 					ZonedDateTimeTypeAdapterFactory.get(zonedDateTimeFormatter)
