@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import javax.annotation.Nullable;
 
 /**
  * <p>
@@ -58,6 +59,7 @@ public abstract class AbstractTypeAdapterFactory<CT>
 	protected abstract TypeAdapter<CT> createTypeAdapter(@Nonnull final Gson gson, @Nonnull TypeToken<?> typeToken);
 
 	@Override
+	@Nullable
 	public final <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		if ( !isSupported(typeToken) ) {
 			return null;

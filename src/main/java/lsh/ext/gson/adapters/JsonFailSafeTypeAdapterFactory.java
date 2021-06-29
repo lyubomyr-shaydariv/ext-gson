@@ -10,6 +10,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
+import javax.annotation.Nullable;
 
 /**
  * <p>This type adapter factory skips malformed JSON values. For example, consider the following mapping:</p>
@@ -46,6 +47,7 @@ public final class JsonFailSafeTypeAdapterFactory
 	}
 
 	@Override
+	@Nullable
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		if ( typeToken.getRawType().isPrimitive() ) {
 			return null;
@@ -79,6 +81,7 @@ public final class JsonFailSafeTypeAdapterFactory
 			}
 		}
 
+		@Nullable
 		private static <T> T fallback(final JsonReader in)
 				throws IOException {
 			final JsonToken jsonToken = in.peek();

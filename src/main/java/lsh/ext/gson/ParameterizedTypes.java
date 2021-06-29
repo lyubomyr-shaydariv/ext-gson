@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import javax.annotation.Nullable;
 
 /**
  * Provides miscellaneous {@link ParameterizedType} utility methods.
@@ -124,6 +125,7 @@ public final class ParameterizedTypes {
 		}
 
 		@Override
+		@Nullable
 		public final Type getOwnerType() {
 			return null;
 		}

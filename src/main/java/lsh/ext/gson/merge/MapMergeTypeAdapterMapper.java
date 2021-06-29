@@ -77,6 +77,7 @@ public final class MapMergeTypeAdapterMapper
 		}
 
 		@Override
+		@Nullable
 		public V put(final K key, final V value) {
 			super.put(key, value);
 			return null;

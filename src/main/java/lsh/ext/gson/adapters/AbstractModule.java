@@ -32,6 +32,7 @@ public abstract class AbstractModule
 	}
 
 	@Override
+	@Nullable
 	public final <T> TypeAdapter<T> create(@Nonnull final Gson gson, @Nonnull final TypeToken<T> typeToken) {
 		for ( final TypeAdapterFactory typeAdapterFactory : typeAdapterFactories ) {
 			@Nullable

@@ -68,6 +68,7 @@ public final class Merger
 		}
 
 		@Override
+		@Nullable
 		public <T> TypeAdapter<T> create(final Gson mergingGson, final TypeToken<T> typeToken) {
 			final TypeAdapter<T> typeAdapter = gson.getAdapter(typeToken);
 			for ( final IMergeTypeAdapterMapper mapper : mappers ) {

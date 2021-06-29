@@ -11,6 +11,7 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import javax.annotation.Nullable;
 
 /**
  * Represents a pre/post type adapter factory to perform pre/post checks for a serializable/deserializable values respectively.
@@ -52,6 +53,7 @@ public final class PrePostTypeAdapterFactory
 	}
 
 	@Override
+	@Nullable
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		Collection<IPrePostProcessor<?>> processors = null;
 		for ( final IPrePostProcessorFactory<?> factory : processorFactories ) {
