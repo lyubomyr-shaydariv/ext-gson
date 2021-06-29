@@ -52,7 +52,7 @@ public final class ZonedDateTimeTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<ZonedDateTime> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
-		return ZonedDateTimeTypeAdapter.get(dateTimeFormatter);
+		return ZonedDateTimeTypeAdapter.create(dateTimeFormatter);
 	}
 
 }

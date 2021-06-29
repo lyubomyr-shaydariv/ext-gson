@@ -35,7 +35,7 @@ public final class LocalDateTimeTypeAdapter
 	 *
 	 * @return An instance of {@link LocalDateTimeTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<LocalDateTime> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<LocalDateTime> create(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return defaultInstance;
 		}

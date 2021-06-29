@@ -57,7 +57,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <K, V> TypeAdapterFactory get(@Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
+	public static <K, V> TypeAdapterFactory create(@Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
 			@Nullable final Converter<K, String> keyConverter) {
 		if ( newMultimapFactory == null && keyConverter == null ) {
 			return defaultInstance;
@@ -80,20 +80,20 @@ public final class MultimapTypeAdapterFactory<K, V>
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		if ( newMultimapFactory == null && keyConverter == null ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<Multimap<K, V>> castMultimapTypeAdapter = (TypeAdapter) MultimapTypeAdapter.get(valueTypeAdapter);
+			final TypeAdapter<Multimap<K, V>> castMultimapTypeAdapter = (TypeAdapter) MultimapTypeAdapter.create(valueTypeAdapter);
 			return castMultimapTypeAdapter;
 		}
 		if ( newMultimapFactory != null && keyConverter == null ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Supplier<? extends Multimap<String, V>> castNewMultimapFactory = (Supplier) newMultimapFactory;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<Multimap<K, V>> castMultimapTypeAdapter = (TypeAdapter) MultimapTypeAdapter.get(valueTypeAdapter, castNewMultimapFactory);
+			final TypeAdapter<Multimap<K, V>> castMultimapTypeAdapter = (TypeAdapter) MultimapTypeAdapter.create(valueTypeAdapter, castNewMultimapFactory);
 			return castMultimapTypeAdapter;
 		}
 		if ( newMultimapFactory == null && keyConverter != null ) {
-			return MultimapTypeAdapter.get(valueTypeAdapter, keyConverter);
+			return MultimapTypeAdapter.create(valueTypeAdapter, keyConverter);
 		}
-		return MultimapTypeAdapter.get(valueTypeAdapter, newMultimapFactory, keyConverter);
+		return MultimapTypeAdapter.create(valueTypeAdapter, newMultimapFactory, keyConverter);
 	}
 
 }

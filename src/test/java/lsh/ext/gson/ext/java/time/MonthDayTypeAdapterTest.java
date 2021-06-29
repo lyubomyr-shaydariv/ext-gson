@@ -29,7 +29,7 @@ public final class MonthDayTypeAdapterTest
 						() -> MonthDay.of(Month.JULY, 13)
 				),
 				test(
-						MonthDayTypeAdapter.get(DateTimeFormatter.ofPattern("M.d")),
+						MonthDayTypeAdapter.create(DateTimeFormatter.ofPattern("M.d")),
 						"\"7.13\"",
 						() -> MonthDay.of(Month.JULY, 13)
 				)

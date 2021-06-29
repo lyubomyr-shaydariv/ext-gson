@@ -36,11 +36,11 @@ public final class MultisetTypeAdapter<E>
 	 *
 	 * @return A {@link MultisetTypeAdapter} instance whose multiset factory is {@link LinkedHashMultiset#create()}.
 	 *
-	 * @see #get(TypeAdapter, Supplier)
+	 * @see #create(TypeAdapter, Supplier)
 	 * @since 0-SNAPSHOT
 	 */
-	public static <E> TypeAdapter<Multiset<E>> get(final TypeAdapter<E> elementTypeAdapter) {
-		return get(elementTypeAdapter, (Supplier<? extends Multiset<E>>) LinkedHashMultiset::create);
+	public static <E> TypeAdapter<Multiset<E>> create(final TypeAdapter<E> elementTypeAdapter) {
+		return create(elementTypeAdapter, (Supplier<? extends Multiset<E>>) LinkedHashMultiset::create);
 	}
 
 	/**
@@ -50,10 +50,10 @@ public final class MultisetTypeAdapter<E>
 	 *
 	 * @return A {@link MultisetTypeAdapter} instance.
 	 *
-	 * @see #get(TypeAdapter)
+	 * @see #create(TypeAdapter)
 	 * @since 0-SNAPSHOT
 	 */
-	public static <V> TypeAdapter<Multiset<V>> get(final TypeAdapter<V> valueTypeAdapter,
+	public static <V> TypeAdapter<Multiset<V>> create(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multiset<V>> newMultisetFactory) {
 		return new MultisetTypeAdapter<>(valueTypeAdapter, newMultisetFactory)
 				.nullSafe();

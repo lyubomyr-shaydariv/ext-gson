@@ -38,7 +38,7 @@ public final class OptionalTypeAdapterFactory<T>
 	@Nonnull
 	@Override
 	protected TypeAdapter<Optional<T>> from(@Nonnull final TypeAdapter<T> valueTypeAdapter) {
-		return OptionalTypeAdapter.get(valueTypeAdapter);
+		return OptionalTypeAdapter.create(valueTypeAdapter);
 	}
 
 }

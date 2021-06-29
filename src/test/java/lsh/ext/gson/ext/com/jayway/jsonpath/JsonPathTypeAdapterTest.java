@@ -32,7 +32,7 @@ public final class JsonPathTypeAdapterTest
 	protected Stream<Arguments> source() {
 		final Gson gson = new GsonBuilder()
 				.create();
-		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapterFactory.get(JsonPathTypeAdapterTest::getJsonPathConfiguration);
+		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapterFactory.create(JsonPathTypeAdapterTest::getJsonPathConfiguration);
 		return Stream.of(
 				test(
 						typeAdapterFactory.create(gson, TypeToken.get(Wrapper.class)),
@@ -47,7 +47,7 @@ public final class JsonPathTypeAdapterTest
 						() -> new WrapperWithNotExistingPath(null)
 				),
 				test(
-						JsonPathTypeAdapterFactory.get(JsonPathTypeAdapterTest::getJsonPathConfiguration).create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						JsonPathTypeAdapterFactory.create(JsonPathTypeAdapterTest::getJsonPathConfiguration).create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						() -> new WrapperWithNotExistingPath(null)

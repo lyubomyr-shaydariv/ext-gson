@@ -24,7 +24,7 @@ public final class OptionalTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						OptionalTypeAdapter.get(gson.getAdapter(String.class)),
+						OptionalTypeAdapter.create(gson.getAdapter(String.class)),
 						"\"foo\"",
 						() -> Optional.of("foo")
 				)

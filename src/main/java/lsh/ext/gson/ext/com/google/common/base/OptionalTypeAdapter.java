@@ -29,7 +29,7 @@ public final class OptionalTypeAdapter<T>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <T> TypeAdapter<Optional<T>> get(final TypeAdapter<T> valueTypeAdapter) {
+	public static <T> TypeAdapter<Optional<T>> create(final TypeAdapter<T> valueTypeAdapter) {
 		return new OptionalTypeAdapter<>(valueTypeAdapter);
 	}
 

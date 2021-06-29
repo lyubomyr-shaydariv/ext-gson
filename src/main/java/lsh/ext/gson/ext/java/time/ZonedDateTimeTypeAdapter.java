@@ -35,7 +35,7 @@ public final class ZonedDateTimeTypeAdapter
 	 *
 	 * @return An instance of {@link ZonedDateTimeTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<ZonedDateTime> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<ZonedDateTime> create(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return defaultInstance;
 		}

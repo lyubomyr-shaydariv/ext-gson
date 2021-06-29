@@ -28,7 +28,7 @@ public final class YearMonthTypeAdapterTest
 						() -> YearMonth.of(1999, 9)
 				),
 				test(
-						YearMonthTypeAdapter.get(DateTimeFormatter.ofPattern("M.y")),
+						YearMonthTypeAdapter.create(DateTimeFormatter.ofPattern("M.y")),
 						"\"9.1999\"",
 						() -> YearMonth.of(1999, 9)
 				)

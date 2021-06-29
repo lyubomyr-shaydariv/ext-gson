@@ -49,14 +49,14 @@ public final class TableTypeAdapter<R, C, V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <V> TypeAdapter<Table<String, String, V>> get(final TypeAdapter<V> valueTypeAdapter) {
+	public static <V> TypeAdapter<Table<String, String, V>> create(final TypeAdapter<V> valueTypeAdapter) {
 		@SuppressWarnings("unchecked")
 		final Supplier<? extends Table<String, String, V>> newTableFactory = (Supplier<? extends Table<String, String, V>>) defaultNewTableFactory;
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> rowKeyConverter = (Converter<String, String>) defaultKeyConverter;
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> columnKeyConverter = (Converter<String, String>) defaultKeyConverter;
-		return get(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
+		return create(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 	}
 
 	/**
@@ -68,13 +68,13 @@ public final class TableTypeAdapter<R, C, V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <V> TypeAdapter<Table<String, String, V>> get(final TypeAdapter<V> valueTypeAdapter,
+	public static <V> TypeAdapter<Table<String, String, V>> create(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Table<String, String, V>> newTableFactory) {
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> rowKeyConverter = (Converter<String, String>) defaultKeyConverter;
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> columnKeyConverter = (Converter<String, String>) defaultKeyConverter;
-		return get(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
+		return create(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 	}
 
 	/**
@@ -89,11 +89,11 @@ public final class TableTypeAdapter<R, C, V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <R, C, V> TypeAdapter<Table<R, C, V>> get(final TypeAdapter<V> valueTypeAdapter, final Converter<R, String> rowKeyConverter,
+	public static <R, C, V> TypeAdapter<Table<R, C, V>> create(final TypeAdapter<V> valueTypeAdapter, final Converter<R, String> rowKeyConverter,
 			final Converter<C, String> columnKeyConverter) {
 		@SuppressWarnings("unchecked")
 		final Supplier<? extends Table<R, C, V>> newTableFactory = (Supplier<? extends Table<R, C, V>>) defaultNewTableFactory;
-		return get(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
+		return create(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public final class TableTypeAdapter<R, C, V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <R, C, V> TypeAdapter<Table<R, C, V>> get(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Table<R, C, V>> newTableFactory,
+	public static <R, C, V> TypeAdapter<Table<R, C, V>> create(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Table<R, C, V>> newTableFactory,
 			final Converter<R, String> rowKeyConverter, final Converter<C, String> columnKeyConverter) {
 		return new TableTypeAdapter<>(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter)
 				.nullSafe();

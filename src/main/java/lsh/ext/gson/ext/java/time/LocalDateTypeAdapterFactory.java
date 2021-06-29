@@ -52,7 +52,7 @@ public final class LocalDateTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<LocalDate> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
-		return LocalDateTypeAdapter.get(dateTimeFormatter);
+		return LocalDateTypeAdapter.create(dateTimeFormatter);
 	}
 
 }

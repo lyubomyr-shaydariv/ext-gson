@@ -35,7 +35,7 @@ public final class MonthDayTypeAdapter
 	 *
 	 * @return An instance of {@link MonthDayTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<MonthDay> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<MonthDay> create(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return defaultInstance;
 		}

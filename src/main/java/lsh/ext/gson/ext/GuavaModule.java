@@ -91,7 +91,7 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a new bidirectional map factory used in {@link BiMapTypeAdapterFactory#get(Supplier, Converter)}
+		 * Sets a new bidirectional map factory used in {@link BiMapTypeAdapterFactory#create(Supplier, Converter)}
 		 *
 		 * @param newBiMapFactory A supplier to return a new bidirectional map
 		 *
@@ -103,7 +103,7 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a bidirectional map key converter used in {@link BiMapTypeAdapterFactory#get(Supplier, Converter)}
+		 * Sets a bidirectional map key converter used in {@link BiMapTypeAdapterFactory#create(Supplier, Converter)}
 		 *
 		 * @param biMapKeyConverter A converter to convert a bidirectional map key to string and vice versa
 		 *
@@ -115,7 +115,7 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a new multiset factory used in {@link MultisetTypeAdapterFactory#get(Supplier)}
+		 * Sets a new multiset factory used in {@link MultisetTypeAdapterFactory#create(Supplier)}
 		 *
 		 * @param newMultisetFactory A supplier to return a new multiset
 		 *
@@ -127,7 +127,7 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a new multimap factory used in {@link MultimapTypeAdapterFactory#get(Supplier, Converter)}
+		 * Sets a new multimap factory used in {@link MultimapTypeAdapterFactory#create(Supplier, Converter)}
 		 *
 		 * @param newMultimapFactory A supplier to return a new multimap
 		 *
@@ -139,7 +139,7 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a multimap key converter used in {@link MultimapTypeAdapterFactory#get(Supplier, Converter)}
+		 * Sets a multimap key converter used in {@link MultimapTypeAdapterFactory#create(Supplier, Converter)}
 		 *
 		 * @param multimapKeyConverter A converter to convert a multimap key to string and vice versa
 		 *
@@ -206,9 +206,9 @@ public final class GuavaModule
 			final Converter<String, String> castTableColumnKeyConverter = (Converter<String, String>) tableColumnKeyConverter;
 			final Iterable<TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
 					.add(OptionalTypeAdapterFactory.getDefaultInstance())
-					.add(BiMapTypeAdapterFactory.get(castNewBiMapFactory, castBiMapKeyConverter))
-					.add(MultimapTypeAdapterFactory.get(castNewMultimapFactory, castMultimapKeyConverter))
-					.add(MultisetTypeAdapterFactory.get(castNewMultisetFactory))
+					.add(BiMapTypeAdapterFactory.create(castNewBiMapFactory, castBiMapKeyConverter))
+					.add(MultimapTypeAdapterFactory.create(castNewMultimapFactory, castMultimapKeyConverter))
+					.add(MultisetTypeAdapterFactory.create(castNewMultisetFactory))
 					.add(TableTypeAdapterFactory.get(newTableFactory, castTableRowKeyConverter, castTableColumnKeyConverter))
 					.build();
 			return new GuavaModule(typeAdapterFactories);

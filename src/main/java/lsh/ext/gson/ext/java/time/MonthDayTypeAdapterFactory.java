@@ -52,7 +52,7 @@ public final class MonthDayTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<MonthDay> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
-		return MonthDayTypeAdapter.get(dateTimeFormatter);
+		return MonthDayTypeAdapter.create(dateTimeFormatter);
 	}
 
 }

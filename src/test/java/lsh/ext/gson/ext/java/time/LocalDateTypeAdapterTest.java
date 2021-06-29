@@ -28,7 +28,7 @@ public final class LocalDateTypeAdapterTest
 						() -> LocalDate.of(2018, 01, 01)
 				),
 				test(
-						LocalDateTypeAdapter.get(DateTimeFormatter.ISO_LOCAL_DATE),
+						LocalDateTypeAdapter.create(DateTimeFormatter.ISO_LOCAL_DATE),
 						"\"2018-01-01\"",
 						() -> LocalDate.of(2018, 01, 01)
 				)

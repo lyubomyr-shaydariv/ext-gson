@@ -52,7 +52,7 @@ public final class YearMonthTypeAdapterFactory
 	@Nonnull
 	@Override
 	protected TypeAdapter<YearMonth> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
-		return YearMonthTypeAdapter.get(dateTimeFormatter);
+		return YearMonthTypeAdapter.create(dateTimeFormatter);
 	}
 
 }

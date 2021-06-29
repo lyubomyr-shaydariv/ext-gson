@@ -56,7 +56,7 @@ public final class BiMapTypeAdapterFactory<K, V>
 	 *
 	 * @since 0-SNAPSHOT
 	 */
-	public static <K, V> TypeAdapterFactory get(@Nullable final Supplier<? extends BiMap<K, V>> newBiMapFactory,
+	public static <K, V> TypeAdapterFactory create(@Nullable final Supplier<? extends BiMap<K, V>> newBiMapFactory,
 			@Nullable final Converter<K, String> keyConverter) {
 		if ( newBiMapFactory == null && keyConverter == null ) {
 			return defaultInstance;
@@ -79,20 +79,20 @@ public final class BiMapTypeAdapterFactory<K, V>
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		if ( newBiMapFactory == null && keyConverter == null ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<BiMap<K, V>> castBiMapTypeAdapter = (TypeAdapter) BiMapTypeAdapter.get(valueTypeAdapter);
+			final TypeAdapter<BiMap<K, V>> castBiMapTypeAdapter = (TypeAdapter) BiMapTypeAdapter.create(valueTypeAdapter);
 			return castBiMapTypeAdapter;
 		}
 		if ( newBiMapFactory != null && keyConverter == null ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Supplier<? extends BiMap<String, V>> castNewBiMapFactory = (Supplier) newBiMapFactory;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<BiMap<K, V>> castBiMapTypeAdapter = (TypeAdapter) BiMapTypeAdapter.get(valueTypeAdapter, castNewBiMapFactory);
+			final TypeAdapter<BiMap<K, V>> castBiMapTypeAdapter = (TypeAdapter) BiMapTypeAdapter.create(valueTypeAdapter, castNewBiMapFactory);
 			return castBiMapTypeAdapter;
 		}
 		if ( newBiMapFactory == null && keyConverter != null ) {
-			return BiMapTypeAdapter.get(valueTypeAdapter, keyConverter);
+			return BiMapTypeAdapter.create(valueTypeAdapter, keyConverter);
 		}
-		return BiMapTypeAdapter.get(valueTypeAdapter, newBiMapFactory, keyConverter);
+		return BiMapTypeAdapter.create(valueTypeAdapter, newBiMapFactory, keyConverter);
 	}
 
 }

@@ -35,7 +35,7 @@ public final class YearMonthTypeAdapter
 	 *
 	 * @return An instance of {@link YearMonthTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<YearMonth> get(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<YearMonth> create(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return defaultInstance;
 		}
