@@ -193,7 +193,7 @@ public final class GuavaModule
 			@SuppressWarnings("unchecked")
 			final Supplier<? extends BiMap<String, Object>> castNewBiMapFactory = (Supplier<? extends BiMap<String, Object>>) newBiMapFactory;
 			@SuppressWarnings("unchecked")
-			final Converter<String, String> castBiMapKeyConverter = (Converter<String, String>) multimapKeyConverter;
+			final Converter<String, String> castBiMapKeyConverter = (Converter<String, String>) biMapKeyConverter;
 			@SuppressWarnings("unchecked")
 			final Supplier<? extends Multimap<Object, Object>> castNewMultimapFactory = (Supplier<? extends Multimap<Object, Object>>) newMultimapFactory;
 			@SuppressWarnings("unchecked")
