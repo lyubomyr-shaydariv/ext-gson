@@ -35,7 +35,7 @@ public final class AbstractClassTypeAdapterFactory<T>
 	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory get(final String typePropertyName, final String valuePropertyName) {
-		return new AbstractClassTypeAdapterFactory(typePropertyName, valuePropertyName);
+		return new AbstractClassTypeAdapterFactory<>(typePropertyName, valuePropertyName);
 	}
 
 	@Override
