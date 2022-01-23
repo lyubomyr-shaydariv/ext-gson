@@ -33,7 +33,7 @@ public final class Merger
 	 *
 	 * @return An instance of {@link Merger}.
 	 */
-	public static IMerger getMerger(final Gson gson) {
+	public static IMerger getInstance(final Gson gson) {
 		final Collection<IMergeTypeAdapterMapper> mappers = new ArrayList<>();
 		mappers.add(MapMergeTypeAdapterMapper.getInstance());
 		mappers.add(ReflectiveMergeTypeAdapterMapper.getInstance());

@@ -15,7 +15,7 @@ public final class MergerTest {
 	@Test
 	public void testMergeMap() {
 		final Map<Integer, String> map = Factories.linkedHashMap(1, "one", 2, "two", 3, "threa");
-		final IMerger unit = Merger.getMerger(gson);
+		final IMerger unit = Merger.getInstance(gson);
 		final Map<Integer, String> mergedMap = unit.merge(map, gson -> gson.fromJson("{\"3\":\"three\",\"4\":\"four\"}", ParameterizedTypes.mapOf(Integer.class, String.class)));
 		Assertions.assertSame(map, mergedMap);
 		Assertions.assertEquals(Factories.linkedHashMap(1, "one", 2, "two", 3, "three", 4, "four"), mergedMap);
@@ -24,7 +24,7 @@ public final class MergerTest {
 	@Test
 	public void testMergeMapWithNestedMap() {
 		final Map<Integer, String> map = Factories.linkedHashMap(1, "one", 2, "too", 3, "threa");
-		final IMerger unit = Merger.getMerger(gson);
+		final IMerger unit = Merger.getInstance(gson);
 		final Map<Integer, String> mergedMap = unit.merge(map, gson -> gson.fromJson("{\"1\":null,\"2\":two,\"3\":\"three\",\"4\":\"four\",\"5\":{}}", ParameterizedTypes.mapOf(Integer.class, Object.class)));
 		Assertions.assertSame(map, mergedMap);
 		Assertions.assertEquals(Factories.linkedHashMap(1, null, 2, "two", 3, "three", 4, "four", 5, Collections.emptyMap()), mergedMap);
@@ -33,7 +33,7 @@ public final class MergerTest {
 	@Test
 	public void testMergeObject() {
 		final Foo foo = new Foo("FOO", null);
-		final IMerger unit = Merger.getMerger(gson);
+		final IMerger unit = Merger.getInstance(gson);
 		final Foo mergedFoo = unit.merge(foo, gson -> gson.fromJson("{\"bar\":\"BAR\"}", Foo.class));
 		Assertions.assertSame(foo, mergedFoo);
 		Assertions.assertEquals("FOO", mergedFoo.foo);
@@ -44,7 +44,7 @@ public final class MergerTest {
 	@Test
 	public void testMergeObjectWithSelfReference() {
 		final Foo foo = new Foo("FOO", null);
-		final IMerger unit = Merger.getMerger(gson);
+		final IMerger unit = Merger.getInstance(gson);
 		final Foo mergedFoo = unit.merge(foo, gson -> gson.fromJson("{\"bar\":\"BAR\",\"ref\":{\"bar\":\"foobar\"}}", Foo.class));
 		Assertions.assertSame(foo, mergedFoo);
 		Assertions.assertEquals("FOO", mergedFoo.foo);
