@@ -4,14 +4,13 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import lombok.experimental.UtilityClass;
 
 /**
  * Provides some default merge predicates for {@link IJsonObjectMergePredicate}.
  */
+@UtilityClass
 public final class JsonObjectMergePredicates {
-
-	private JsonObjectMergePredicates() {
-	}
 
 	/**
 	 * @return A predicate that always allows to replace the left value.

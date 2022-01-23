@@ -7,19 +7,18 @@ import java.util.stream.Collector;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import lombok.experimental.UtilityClass;
 
 /**
  * <p>Contains various implementations of {@link Collector} for {@link JsonElement}.</p>
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class JsonCollectors {
 
 	private static final Collector<Map.Entry<String, ? extends JsonElement>, JsonObject, JsonObject> toNewJsonObject = createToJsonObject(JsonObject::new);
 	private static final Collector<JsonElement, JsonArray, JsonArray> toNewJsonArray = createToJsonArray(JsonArray::new);
-
-	private JsonCollectors() {
-	}
 
 	/**
 	 * @return A collector to collect entries to a new {@link JsonObject}.

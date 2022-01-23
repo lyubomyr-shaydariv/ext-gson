@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
+import lombok.experimental.UtilityClass;
 import lsh.ext.gson.adapters.CloseableIteratorTypeAdapter;
 import lsh.ext.gson.adapters.CloseableIteratorTypeAdapterFactory;
 
@@ -15,10 +16,8 @@ import lsh.ext.gson.adapters.CloseableIteratorTypeAdapterFactory;
  * @see CloseableIteratorTypeAdapter
  * @see CloseableIteratorTypeAdapterFactory
  */
+@UtilityClass
 public final class CloseableIterators {
-
-	private CloseableIterators() {
-	}
 
 	/**
 	 * @param iterator Iterator

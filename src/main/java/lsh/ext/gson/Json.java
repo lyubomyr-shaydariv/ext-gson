@@ -7,16 +7,15 @@ import java.io.StringReader;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.MalformedJsonException;
+import lombok.experimental.UtilityClass;
 
 /**
  * Provides generic JSON methods.
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class Json {
-
-	private Json() {
-	}
 
 	/**
 	 * @param json JSON string

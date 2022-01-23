@@ -9,16 +9,15 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous {@link JsonArray} utility methods.
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class JsonArrays {
-
-	private JsonArrays() {
-	}
 
 	/**
 	 * @return A new empty JSON array.

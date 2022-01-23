@@ -8,16 +8,15 @@ import java.util.NoSuchElementException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous {@link JsonReader} utility methods.
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class JsonReaders {
-
-	private JsonReaders() {
-	}
 
 	/**
 	 * <p>Google Gson does not fail on empty strings since version 1.5:</p>

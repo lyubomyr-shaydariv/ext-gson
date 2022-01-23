@@ -11,12 +11,14 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.internal.ConstructorConstructor;
 import com.google.gson.internal.ObjectConstructor;
 import com.google.gson.reflect.TypeToken;
+import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous {@link TypeAdapter} utility methods.
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class TypeAdapters {
 
 	private static final Iterable<Class<?>> supportedTypeAdapterClasses = Collections.unmodifiableList(Arrays.asList(
@@ -28,9 +30,6 @@ public final class TypeAdapters {
 	));
 
 	private static final ConstructorConstructor constructorConstructor = new ConstructorConstructor(Collections.emptyMap());
-
-	private TypeAdapters() {
-	}
 
 	/**
 	 * <p>

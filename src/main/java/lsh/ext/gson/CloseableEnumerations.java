@@ -4,11 +4,10 @@ import java.io.IOException;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public final class CloseableEnumerations {
-
-	private CloseableEnumerations() {
-	}
 
 	public static <E> ICloseableEnumeration<E> from(final ICloseableIterator<? extends E> iterator) {
 		return new CloseableEnumerationFromCloseableIterator<>(iterator);

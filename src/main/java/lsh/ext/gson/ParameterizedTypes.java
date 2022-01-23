@@ -11,18 +11,18 @@ import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nullable;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * Provides miscellaneous {@link ParameterizedType} utility methods.
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class ParameterizedTypes {
 
 	private static final Type[] emptyType1dArray = {};
 	private static final Type[][] emptyType2dArray = {};
-
-	private ParameterizedTypes() {
-	}
 
 	/**
 	 * @param type Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned.

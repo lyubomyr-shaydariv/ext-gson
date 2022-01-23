@@ -6,16 +6,15 @@ import java.math.BigDecimal;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous utility methods for JSON streams.
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class JsonStreams {
-
-	private JsonStreams() {
-	}
 
 	/**
 	 * Copies the given {@link JsonReader} stream to normalized JSON output via {@link JsonWriter} not ignoring incoming JSON stream trailing tokens.

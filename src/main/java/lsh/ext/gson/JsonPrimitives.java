@@ -1,19 +1,18 @@
 package lsh.ext.gson;
 
 import com.google.gson.JsonPrimitive;
+import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous {@link JsonPrimitive} utility methods.
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class JsonPrimitives {
 
 	private static final JsonPrimitive falsePrimitive = new JsonPrimitive(false);
 	private static final JsonPrimitive truePrimitive = new JsonPrimitive(true);
-
-	private JsonPrimitives() {
-	}
 
 	/**
 	 * @param b A boolean value.

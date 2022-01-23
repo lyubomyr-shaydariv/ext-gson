@@ -9,16 +9,15 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous {@link JsonObject} utility methods.
  *
  * @author Lyubomyr Shaydariv
  */
+@UtilityClass
 public final class JsonObjects {
-
-	private JsonObjects() {
-	}
 
 	/**
 	 * @return A new empty JSON object.
