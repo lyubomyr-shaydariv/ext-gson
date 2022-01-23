@@ -12,7 +12,9 @@ import com.google.gson.reflect.TypeToken;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -66,6 +68,7 @@ public final class JsonPathTypeAdapterTest
 				.build();
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@EqualsAndHashCode
 	@ToString
 	private static final class Wrapper {
@@ -79,24 +82,15 @@ public final class JsonPathTypeAdapterTest
 		@JsonPathExpression("$.l1.l2.l3.baz")
 		private final Map<String, ?> bazRef;
 
-		private Wrapper(final String fooRef, final String barRef, final Map<String, ?> bazRef) {
-			this.fooRef = fooRef;
-			this.barRef = barRef;
-			this.bazRef = bazRef;
-		}
-
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@EqualsAndHashCode
 	@ToString
 	private static final class WrapperWithNotExistingPath {
 
 		@JsonPathExpression("$.nowhere")
 		private final String fooRef;
-
-		private WrapperWithNotExistingPath(final String fooRef) {
-			this.fooRef = fooRef;
-		}
 
 	}
 
