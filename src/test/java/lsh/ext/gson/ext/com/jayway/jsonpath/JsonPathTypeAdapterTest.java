@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,6 +13,7 @@ import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -67,6 +67,7 @@ public final class JsonPathTypeAdapterTest
 	}
 
 	@EqualsAndHashCode
+	@ToString
 	private static final class Wrapper {
 
 		@JsonPathExpression("$.l1.l2.l3.foo")
@@ -84,18 +85,10 @@ public final class JsonPathTypeAdapterTest
 			this.bazRef = bazRef;
 		}
 
-		@Override
-		public String toString() {
-			return MoreObjects.toStringHelper(this)
-					.add("fooRef", fooRef)
-					.add("barRef", barRef)
-					.add("bazRef", bazRef)
-					.toString();
-		}
-
 	}
 
 	@EqualsAndHashCode
+	@ToString
 	private static final class WrapperWithNotExistingPath {
 
 		@JsonPathExpression("$.nowhere")
@@ -103,13 +96,6 @@ public final class JsonPathTypeAdapterTest
 
 		private WrapperWithNotExistingPath(final String fooRef) {
 			this.fooRef = fooRef;
-		}
-
-		@Override
-		public String toString() {
-			return MoreObjects.toStringHelper(this)
-					.add("fooRef", fooRef)
-					.toString();
 		}
 
 	}

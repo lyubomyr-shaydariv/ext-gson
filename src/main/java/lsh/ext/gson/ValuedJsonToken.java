@@ -4,8 +4,10 @@ import javax.annotation.Nullable;
 
 import com.google.gson.stream.JsonToken;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @EqualsAndHashCode
+@ToString
 public final class ValuedJsonToken<T> {
 
 	private static final ValuedJsonToken<Void> arrayBegin = new ValuedJsonToken<>(JsonToken.BEGIN_ARRAY, null);
@@ -74,14 +76,6 @@ public final class ValuedJsonToken<T> {
 	@Nullable
 	public T getValue() {
 		return value;
-	}
-
-	@Override
-	public String toString() {
-		if ( value == null ) {
-			return token.toString();
-		}
-		return token + "=" + value;
 	}
 
 }
