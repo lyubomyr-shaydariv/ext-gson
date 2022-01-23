@@ -2,6 +2,9 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 public final class CloseableEnumerations {
 
 	private CloseableEnumerations() {
@@ -11,14 +14,11 @@ public final class CloseableEnumerations {
 		return new CloseableEnumerationFromCloseableIterator<>(iterator);
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class CloseableEnumerationFromCloseableIterator<E>
 			implements ICloseableEnumeration<E> {
 
 		private final ICloseableIterator<? extends E> iterator;
-
-		private CloseableEnumerationFromCloseableIterator(final ICloseableIterator<? extends E> iterator) {
-			this.iterator = iterator;
-		}
 
 		@Override
 		public boolean hasMoreElements() {

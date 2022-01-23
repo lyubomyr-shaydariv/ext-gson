@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ParameterizedTypes;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
@@ -19,6 +21,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  * @author Lyubomyr Shaydariv
  * @see BiMapTypeAdapter
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BiMapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<BiMap<K, V>> {
 
@@ -29,11 +32,6 @@ public final class BiMapTypeAdapterFactory<K, V>
 
 	@Nullable
 	private final Converter<K, String> keyConverter;
-
-	private BiMapTypeAdapterFactory(@Nullable final Supplier<? extends BiMap<K, V>> newBiMapFactory, final Converter<K, String> keyConverter) {
-		this.newBiMapFactory = newBiMapFactory;
-		this.keyConverter = keyConverter;
-	}
 
 	/**
 	 * @return An instance of {@link BiMapTypeAdapterFactory}.

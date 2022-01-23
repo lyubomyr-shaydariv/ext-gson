@@ -13,6 +13,8 @@ import com.google.gson.internal.Excluder;
 import com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory;
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * A merge type adapter mapper for objects serialized and deserialized using reflection.
@@ -20,13 +22,11 @@ import com.google.gson.reflect.TypeToken;
  * @author Lyubomyr Shaydariv
  * @see ReflectiveTypeAdapterFactory
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ReflectiveMergeTypeAdapterMapper
 		implements IMergeTypeAdapterMapper {
 
 	private static final IMergeTypeAdapterMapper instance = new ReflectiveMergeTypeAdapterMapper();
-
-	private ReflectiveMergeTypeAdapterMapper() {
-	}
 
 	/**
 	 * @return An instance of {@link ReflectiveMergeTypeAdapterMapper}.

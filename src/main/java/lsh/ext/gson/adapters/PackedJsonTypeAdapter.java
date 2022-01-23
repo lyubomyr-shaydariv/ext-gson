@@ -9,6 +9,8 @@ import java.io.Writer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lsh.ext.gson.JsonStreams;
 
 /**
@@ -52,14 +54,12 @@ import lsh.ext.gson.JsonStreams;
  * @author Lyubomyr Shaydariv
  * @see UnpackedJsonTypeAdapterFactory
  */
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PackedJsonTypeAdapter
 		extends TypeAdapter<String> {
 
 	private static final TypeAdapter<String> instance = new PackedJsonTypeAdapter()
 			.nullSafe();
-
-	private PackedJsonTypeAdapter() {
-	}
 
 	/**
 	 * @return An instance of {@link PackedJsonTypeAdapter}.

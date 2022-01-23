@@ -9,6 +9,8 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a type adapter for {@link Multiset} from Google Guava.
@@ -18,16 +20,12 @@ import com.google.gson.stream.JsonWriter;
  * @author Lyubomyr Shaydariv
  * @see MultisetTypeAdapterFactory
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultisetTypeAdapter<E>
 		extends TypeAdapter<Multiset<E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
 	private final Supplier<? extends Multiset<E>> newMultisetFactory;
-
-	private MultisetTypeAdapter(final TypeAdapter<E> elementTypeAdapter, final Supplier<? extends Multiset<E>> newMultisetFactory) {
-		this.elementTypeAdapter = elementTypeAdapter;
-		this.newMultisetFactory = newMultisetFactory;
-	}
 
 	/**
 	 * @param elementTypeAdapter Multiset element type adapter

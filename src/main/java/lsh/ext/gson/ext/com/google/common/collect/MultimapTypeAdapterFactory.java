@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ParameterizedTypes;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
@@ -19,6 +21,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  * @author Lyubomyr Shaydariv
  * @see MultimapTypeAdapter
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultimapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<Multimap<K, V>> {
 
@@ -29,12 +32,6 @@ public final class MultimapTypeAdapterFactory<K, V>
 
 	@Nullable
 	private final Converter<K, String> keyConverter;
-
-	private MultimapTypeAdapterFactory(@Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
-			@Nullable final Converter<K, String> keyConverter) {
-		this.newMultimapFactory = newMultimapFactory;
-		this.keyConverter = keyConverter;
-	}
 
 	/**
 	 * @return An instance of {@link MultimapTypeAdapterFactory}.

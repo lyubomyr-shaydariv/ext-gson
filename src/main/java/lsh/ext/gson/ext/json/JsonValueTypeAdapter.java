@@ -18,6 +18,8 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * <p>Represents a type adapter for {@code javax.json} JSON values.
@@ -29,6 +31,7 @@ import com.google.gson.stream.JsonWriter;
  * @see JsonObject
  * @see JsonArray
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonValueTypeAdapter
 		extends TypeAdapter<JsonValue> {
 
@@ -40,11 +43,6 @@ public final class JsonValueTypeAdapter
 	private final TypeAdapter<JsonString> jsonStringTypeAdapter;
 	private final TypeAdapter<JsonObject> jsonObjectTypeAdapter = new JsonObjectTypeAdapter().nullSafe();
 	private final TypeAdapter<JsonArray> jsonArrayTypeAdapter = new JsonArrayTypeAdapter().nullSafe();
-
-	private JsonValueTypeAdapter(final TypeAdapter<JsonNumber> jsonNumberTypeAdapter, final TypeAdapter<JsonString> jsonStringTypeAdapter) {
-		this.jsonNumberTypeAdapter = jsonNumberTypeAdapter;
-		this.jsonStringTypeAdapter = jsonStringTypeAdapter;
-	}
 
 	/**
 	 * @return An instance of {@link JsonValueTypeAdapter}.

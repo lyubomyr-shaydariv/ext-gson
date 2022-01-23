@@ -13,20 +13,18 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Merger
 		implements IMerger {
 
 	private final Gson gson;
 	private final Collection<IMergeTypeAdapterMapper> mappers;
-
-	private Merger(final Gson gson, final Collection<IMergeTypeAdapterMapper> mappers) {
-		this.gson = gson;
-		this.mappers = mappers;
-	}
 
 	/**
 	 * @param gson Gson instance

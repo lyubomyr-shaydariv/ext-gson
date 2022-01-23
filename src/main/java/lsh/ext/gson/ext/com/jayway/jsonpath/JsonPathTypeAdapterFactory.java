@@ -19,6 +19,8 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * <p>
@@ -67,6 +69,7 @@ import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
  * @see #getInstance(Function)
  * @see #getWithGlobalDefaults()
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapterFactory
 		implements TypeAdapterFactory {
 
@@ -74,10 +77,6 @@ public final class JsonPathTypeAdapterFactory
 	private static final TypeAdapterFactory instanceWithGlobalDefaults = new JsonPathTypeAdapterFactory(gson -> Configuration.defaultConfiguration());
 
 	private final Function<? super Gson, ? extends Configuration> configurationProvider;
-
-	private JsonPathTypeAdapterFactory(final Function<? super Gson, ? extends Configuration> configurationProvider) {
-		this.configurationProvider = configurationProvider;
-	}
 
 	/**
 	 * @return A {@link JsonPathTypeAdapterFactory} instance that is configured with the predefined JsonPath configuration. The default JsonPath configuration

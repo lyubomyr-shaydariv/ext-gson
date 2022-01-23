@@ -14,6 +14,8 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.internal.ConstructorConstructor;
 import com.google.gson.internal.bind.MapTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * A merge type adapter mapper for {@link Map}.
@@ -21,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
  * @author Lyubomyr Shaydariv
  * @see MapTypeAdapterFactory
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MapMergeTypeAdapterMapper
 		implements IMergeTypeAdapterMapper {
 
@@ -28,10 +31,6 @@ public final class MapMergeTypeAdapterMapper
 	private static final IMergeTypeAdapterMapper instanceComplex = new MapMergeTypeAdapterMapper(true);
 
 	private final boolean complexMapKeySerialization;
-
-	private MapMergeTypeAdapterMapper(final boolean complexMapKeySerialization) {
-		this.complexMapKeySerialization = complexMapKeySerialization;
-	}
 
 	/**
 	 * @return An instance of {@link MapMergeTypeAdapterMapper}.

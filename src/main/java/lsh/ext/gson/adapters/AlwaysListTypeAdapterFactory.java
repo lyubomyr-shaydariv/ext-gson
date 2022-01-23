@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ParameterizedTypes;
 
 /**
@@ -14,13 +16,11 @@ import lsh.ext.gson.ParameterizedTypes;
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AlwaysListTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<List<E>> {
 
 	private static final TypeAdapterFactory instance = new AlwaysListTypeAdapterFactory<>();
-
-	private AlwaysListTypeAdapterFactory() {
-	}
 
 	/**
 	 * @return An instance of {@link AlwaysListTypeAdapterFactory}.

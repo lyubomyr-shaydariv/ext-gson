@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a type adapter factory for {@code abstract} classes. {@link TypeAwareTypeAdapter} is used behind the scenes.
@@ -13,16 +15,12 @@ import com.google.gson.reflect.TypeToken;
  * @author Lyubomyr Shaydariv
  * @see TypeAwareTypeAdapter
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AbstractClassTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<T> {
 
 	private final String typePropertyName;
 	private final String valuePropertyName;
-
-	private AbstractClassTypeAdapterFactory(final String typePropertyName, final String valuePropertyName) {
-		this.typePropertyName = typePropertyName;
-		this.valuePropertyName = valuePropertyName;
-	}
 
 	/**
 	 * @param typePropertyName  Type property name

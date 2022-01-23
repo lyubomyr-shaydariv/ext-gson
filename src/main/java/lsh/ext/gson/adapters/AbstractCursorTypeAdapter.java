@@ -6,6 +6,8 @@ import java.util.Iterator;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ICloseableIterator;
 import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapter;
 
@@ -18,14 +20,11 @@ import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapter;
  * @author Lyubomyr Shaydariv
  * @see StreamTypeAdapter
  */
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractCursorTypeAdapter<C, E>
 		extends TypeAdapter<C> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-
-	protected AbstractCursorTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
-		this.elementTypeAdapter = elementTypeAdapter;
-	}
 
 	protected abstract Iterator<E> toIterator(C cursor);
 

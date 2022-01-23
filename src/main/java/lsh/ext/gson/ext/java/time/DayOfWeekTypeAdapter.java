@@ -3,6 +3,8 @@ package lsh.ext.gson.ext.java.time;
 import java.time.DayOfWeek;
 
 import com.google.gson.TypeAdapter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
 /**
@@ -10,13 +12,11 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DayOfWeekTypeAdapter
 		extends AbstractToStringStringTypeAdapter<DayOfWeek> {
 
 	private static final TypeAdapter<DayOfWeek> instance = new DayOfWeekTypeAdapter();
-
-	private DayOfWeekTypeAdapter() {
-	}
 
 	/**
 	 * @return An instance of {@link DayOfWeekTypeAdapter}.

@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ParameterizedTypes;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
@@ -19,6 +21,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  * @author Lyubomyr Shaydariv
  * @see TableTypeAdapter
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TableTypeAdapterFactory<R, C, V>
 		extends AbstractTypeAdapterFactory<Table<R, C, V>> {
 
@@ -32,13 +35,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 
 	@Nullable
 	private final Converter<C, String> columnKeyConverter;
-
-	private TableTypeAdapterFactory(@Nullable final Supplier<? extends Table<R, C, V>> newTableFactory,
-			@Nullable final Converter<R, String> rowKeyConverter, @Nullable final Converter<C, String> columnKeyConverter) {
-		this.newTableFactory = newTableFactory;
-		this.rowKeyConverter = rowKeyConverter;
-		this.columnKeyConverter = columnKeyConverter;
-	}
 
 	/**
 	 * @return An instance of {@link TableTypeAdapterFactory}.

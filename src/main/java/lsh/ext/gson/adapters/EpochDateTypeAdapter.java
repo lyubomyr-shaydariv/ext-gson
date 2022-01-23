@@ -6,20 +6,20 @@ import java.util.Date;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents the epoch to {@link Date} and vice versa type adapter.
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EpochDateTypeAdapter
 		extends TypeAdapter<Date> {
 
 	private static final TypeAdapter<Date> instance = new EpochDateTypeAdapter()
 			.nullSafe();
-
-	private EpochDateTypeAdapter() {
-	}
 
 	/**
 	 * @return An instance of {@link EpochDateTypeAdapter}.

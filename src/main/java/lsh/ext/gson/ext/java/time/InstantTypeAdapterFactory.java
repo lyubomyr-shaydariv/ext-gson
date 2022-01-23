@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 /**
@@ -13,13 +15,11 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class InstantTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Instant> {
 
 	private static final TypeAdapterFactory instance = new InstantTypeAdapterFactory();
-
-	private InstantTypeAdapterFactory() {
-	}
 
 	/**
 	 * @return An instance of {@link InstantTypeAdapterFactory}.

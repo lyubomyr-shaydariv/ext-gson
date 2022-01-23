@@ -5,6 +5,8 @@ import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ParameterizedTypes;
 import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapter;
 
@@ -16,14 +18,11 @@ import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapter;
  * @author Lyubomyr Shaydariv
  * @see StreamTypeAdapter
  */
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractCursorTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<E> {
 
 	private final Class<?> cursorClass;
-
-	protected AbstractCursorTypeAdapterFactory(final Class<?> cursorClass) {
-		this.cursorClass = cursorClass;
-	}
 
 	protected abstract TypeAdapter<?> createCursorTypeAdapter(TypeAdapter<?> elementTypeAdapter);
 

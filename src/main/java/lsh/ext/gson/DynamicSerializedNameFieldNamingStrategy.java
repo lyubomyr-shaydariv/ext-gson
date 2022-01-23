@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.FieldNamingStrategy;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a field naming strategy where field names must be evaluated dynamically.
@@ -11,16 +13,12 @@ import com.google.gson.FieldNamingStrategy;
  * @author Lyubomyr Shaydariv
  * @see DynamicSerializedName
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DynamicSerializedNameFieldNamingStrategy
 		implements FieldNamingStrategy {
 
 	private final IFieldNamingResolver fieldNamingResolver;
 	private final FieldNamingStrategy fallbackFieldNamingStrategy;
-
-	private DynamicSerializedNameFieldNamingStrategy(final IFieldNamingResolver fieldNamingResolver, final FieldNamingStrategy fallbackFieldNamingStrategy) {
-		this.fieldNamingResolver = fieldNamingResolver;
-		this.fallbackFieldNamingStrategy = fallbackFieldNamingStrategy;
-	}
 
 	/**
 	 * @param fieldNamingResolver A strategy to resolve JSON property names dynamically.

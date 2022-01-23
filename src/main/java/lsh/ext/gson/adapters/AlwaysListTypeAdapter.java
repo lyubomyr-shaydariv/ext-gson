@@ -9,6 +9,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a type adapter that can convert a single value to a list or keep an existing list of multiple elements.
@@ -17,14 +19,11 @@ import com.google.gson.stream.MalformedJsonException;
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AlwaysListTypeAdapter<E>
 		extends TypeAdapter<List<E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-
-	private AlwaysListTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
-		this.elementTypeAdapter = elementTypeAdapter;
-	}
 
 	/**
 	 * @param elementTypeAdapter Element type adapter for every list element

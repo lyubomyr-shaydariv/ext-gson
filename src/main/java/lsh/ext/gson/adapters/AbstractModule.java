@@ -6,22 +6,20 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Implements an abstract module with modules found in linear manner (from first to last).
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractModule
 		implements IModule {
 
 	private final String name;
 	private final Iterable<? extends TypeAdapterFactory> typeAdapterFactories;
-
-	protected AbstractModule(final String name, final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		this.name = name;
-		this.typeAdapterFactories = typeAdapterFactories;
-	}
 
 	@Override
 	public final String getName() {

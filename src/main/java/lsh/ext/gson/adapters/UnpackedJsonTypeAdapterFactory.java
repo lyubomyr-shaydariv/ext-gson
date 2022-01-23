@@ -8,6 +8,8 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * <p>
@@ -40,11 +42,9 @@ import com.google.gson.stream.JsonWriter;
  * @author Lyubomyr Shaydariv
  * @see UnpackedJsonTypeAdapter
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UnpackedJsonTypeAdapterFactory
 		implements TypeAdapterFactory {
-
-	private UnpackedJsonTypeAdapterFactory() {
-	}
 
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {

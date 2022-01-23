@@ -11,6 +11,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * <p>This type adapter factory skips malformed JSON values. For example, consider the following mapping:</p>
@@ -30,13 +32,11 @@ import com.google.gson.stream.MalformedJsonException;
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonFailSafeTypeAdapterFactory
 		implements TypeAdapterFactory {
 
 	private static final TypeAdapterFactory instance = new JsonFailSafeTypeAdapterFactory();
-
-	private JsonFailSafeTypeAdapterFactory() {
-	}
 
 	/**
 	 * @return An instance of {@link JsonFailSafeTypeAdapterFactory}.

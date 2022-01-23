@@ -7,8 +7,11 @@ import javax.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTemporalAccessorTypeAdapterFactory<T extends TemporalAccessor>
 		extends AbstractTypeAdapterFactory<T> {
 
@@ -16,11 +19,6 @@ public abstract class AbstractTemporalAccessorTypeAdapterFactory<T extends Tempo
 
 	@Nullable
 	private final DateTimeFormatter dateTimeFormatter;
-
-	protected AbstractTemporalAccessorTypeAdapterFactory(final Class<T> clazz, @Nullable final DateTimeFormatter dateTimeFormatter) {
-		this.clazz = clazz;
-		this.dateTimeFormatter = dateTimeFormatter;
-	}
 
 	protected abstract TypeAdapter<T> create();
 

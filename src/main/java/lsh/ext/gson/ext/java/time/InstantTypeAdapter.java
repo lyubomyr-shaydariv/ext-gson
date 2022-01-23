@@ -3,6 +3,8 @@ package lsh.ext.gson.ext.java.time;
 import java.time.Instant;
 
 import com.google.gson.TypeAdapter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
 /**
@@ -10,13 +12,11 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class InstantTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Instant> {
 
 	private static final TypeAdapter<Instant> instance = new InstantTypeAdapter();
-
-	private InstantTypeAdapter() {
-	}
 
 	/**
 	 * @return An instance of {@link InstantTypeAdapter}.
