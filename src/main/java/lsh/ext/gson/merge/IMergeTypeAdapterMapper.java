@@ -1,6 +1,6 @@
 package lsh.ext.gson.merge;
 
-import javax.annotation.Nonnull;
+
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -24,6 +24,6 @@ public interface IMergeTypeAdapterMapper {
 	 * @return A type adapter to map with.
 	 */
 	@Nullable
-	<T> TypeAdapter<T> map(@Nonnull TypeAdapter<?> typeAdapter, Object instance, @Nonnull Gson gson, @Nonnull TypeToken<T> typeToken);
+	<T> TypeAdapter<T> map(TypeAdapter<?> typeAdapter, Object instance, Gson gson, TypeToken<T> typeToken);
 
 }

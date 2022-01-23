@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.util.stream;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -38,15 +37,13 @@ public final class StreamTypeAdapter<E>
 				.nullSafe();
 	}
 
-	@Nonnull
 	@Override
-	protected Iterator<E> toIterator(@Nonnull final Stream<E> stream) {
+	protected Iterator<E> toIterator(final Stream<E> stream) {
 		return stream.iterator();
 	}
 
-	@Nonnull
 	@Override
-	protected Stream<E> fromIterator(@Nonnull final ICloseableIterator<E> iterator) {
+	protected Stream<E> fromIterator(final ICloseableIterator<E> iterator) {
 		return Streams.from(iterator);
 	}
 

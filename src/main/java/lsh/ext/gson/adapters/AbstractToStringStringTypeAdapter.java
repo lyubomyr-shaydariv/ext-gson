@@ -1,6 +1,6 @@
 package lsh.ext.gson.adapters;
 
-import javax.annotation.Nonnull;
+
 
 /**
  * <p>
@@ -14,9 +14,8 @@ import javax.annotation.Nonnull;
 public abstract class AbstractToStringStringTypeAdapter<T>
 		extends AbstractStringTypeAdapter<T> {
 
-	@Nonnull
 	@Override
-	protected final String toString(@Nonnull final T value) {
+	protected final String toString(final T value) {
 		return value.toString();
 	}
 

@@ -3,7 +3,6 @@ package lsh.ext.gson.adapters;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
@@ -22,7 +21,6 @@ public final class CloseableEnumerationTypeAdapterTest
 		return value != null ? ImmutableList.copyOf(Collections.list(value)) : null;
 	}
 
-	@Nonnull
 	@Override
 	@SuppressWarnings("resource")
 	protected Stream<Arguments> source() {

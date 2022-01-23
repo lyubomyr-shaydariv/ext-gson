@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -31,13 +30,12 @@ public final class AlwaysListTypeAdapterFactory<E>
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return List.class.isAssignableFrom(typeToken.getRawType());
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<List<E>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<List<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		final Type elementType = ParameterizedTypes.getTypeArguments(typeToken.getType())[0][0];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));

@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.DayOfWeek;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -26,9 +25,8 @@ public final class DayOfWeekTypeAdapter
 		return defaultInstance;
 	}
 
-	@Nonnull
 	@Override
-	protected DayOfWeek fromString(@Nonnull final String string) {
+	protected DayOfWeek fromString(final String string) {
 		return DayOfWeek.valueOf(string);
 	}
 

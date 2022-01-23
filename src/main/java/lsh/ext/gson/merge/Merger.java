@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -42,7 +41,7 @@ public final class Merger
 	}
 
 	@Override
-	public <T> T merge(final T instance, @Nonnull final Function<? super Gson, ? extends T> extractor) {
+	public <T> T merge(final T instance, final Function<? super Gson, ? extends T> extractor) {
 		final Gson mergingGson = new GsonBuilder()
 				.registerTypeAdapterFactory(MergingTypeAdapterFactory.create(instance, gson, mappers))
 				.create();

@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.util.stream;
 
 import java.util.List;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
@@ -19,7 +18,6 @@ public final class StreamTypeAdapterTest
 		return value != null ? value.collect(ImmutableList.toImmutableList()) : null;
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();

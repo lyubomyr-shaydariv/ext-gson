@@ -1,7 +1,6 @@
 package lsh.ext.gson.merge;
 
 import java.util.Collections;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.FieldNamingStrategy;
@@ -39,8 +38,8 @@ public final class ReflectiveMergeTypeAdapterMapper
 	@Nullable
 	@Override
 	@SuppressWarnings("UnnecessarilyQualifiedInnerClassAccess")
-	public <T> TypeAdapter<T> map(@Nonnull final TypeAdapter<?> typeAdapter, final Object instance, @Nonnull final Gson gson,
-			@Nonnull final TypeToken<T> typeToken) {
+	public <T> TypeAdapter<T> map(final TypeAdapter<?> typeAdapter, final Object instance, final Gson gson,
+			final TypeToken<T> typeToken) {
 		if ( !(typeAdapter instanceof ReflectiveTypeAdapterFactory.Adapter) ) {
 			return null;
 		}

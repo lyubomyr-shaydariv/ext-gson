@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters;
 
 import java.util.Date;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,7 +15,6 @@ public final class EpochDateTypeAdapterTest
 		return value;
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(

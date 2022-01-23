@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.util.Objects;
-import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
@@ -19,11 +18,10 @@ public final class PrePostTypeAdapterFactoryTest {
 		final IPrePostProcessor<User> userProcessor = Mockito.mock(IPrePostProcessor.class);
 		final IPrePostProcessorFactory<User> userProcessorFactory = new IPrePostProcessorFactory<User>() {
 			@Override
-			public boolean supports(@Nonnull final TypeToken<?> typeToken) {
+			public boolean supports(final TypeToken<?> typeToken) {
 				return typeToken.getRawType() == User.class;
 			}
 
-			@Nonnull
 			@Override
 			public IPrePostProcessor<User> createProcessor() {
 				return userProcessor;
@@ -42,11 +40,10 @@ public final class PrePostTypeAdapterFactoryTest {
 		final IPrePostProcessor<User> userProcessor = Mockito.mock(IPrePostProcessor.class);
 		final IPrePostProcessorFactory<User> userProcessorFactory = new IPrePostProcessorFactory<User>() {
 			@Override
-			public boolean supports(@Nonnull final TypeToken<?> typeToken) {
+			public boolean supports(final TypeToken<?> typeToken) {
 				return typeToken.getRawType() == User.class;
 			}
 
-			@Nonnull
 			@Override
 			public IPrePostProcessor<User> createProcessor() {
 				return userProcessor;

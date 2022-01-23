@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.Instant;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -30,13 +29,12 @@ public final class InstantTypeAdapterFactory
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == Instant.class;
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<Instant> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<Instant> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		return InstantTypeAdapter.getDefaultInstance();
 	}
 

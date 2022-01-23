@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.util.Map;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
@@ -18,13 +17,11 @@ public final class MultimapTypeAdapterFactoryTest
 		super(false);
 	}
 
-	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
 		return MultimapTypeAdapterFactory.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
@@ -34,7 +31,6 @@ public final class MultimapTypeAdapterFactoryTest
 		);
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(

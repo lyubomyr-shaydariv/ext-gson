@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters;
 
 import java.util.List;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
@@ -15,13 +14,11 @@ public final class AlwaysListTypeAdapterFactoryTest
 		super(false);
 	}
 
-	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
 		return AlwaysListTypeAdapterFactory.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
@@ -29,7 +26,6 @@ public final class AlwaysListTypeAdapterFactoryTest
 		);
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(

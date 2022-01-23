@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
@@ -23,7 +22,6 @@ public final class AlwaysListTypeAdapterTest
 		return value;
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();

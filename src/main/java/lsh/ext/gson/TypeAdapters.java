@@ -3,7 +3,6 @@ package lsh.ext.gson;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collections;
-import javax.annotation.Nonnull;
 
 import com.google.gson.InstanceCreator;
 import com.google.gson.JsonDeserializer;
@@ -50,7 +49,7 @@ public final class TypeAdapters {
 	 *
 	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
 	 */
-	public static <T> T ofConcrete(@Nonnull final Class<?> clazz)
+	public static <T> T ofConcrete(final Class<?> clazz)
 			throws IllegalArgumentException {
 		for ( final Class<?> expectedClass : supportedTypeAdapterClasses ) {
 			if ( expectedClass.isAssignableFrom(clazz) ) {

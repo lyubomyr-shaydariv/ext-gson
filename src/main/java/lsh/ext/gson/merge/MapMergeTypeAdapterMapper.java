@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -52,8 +51,8 @@ public final class MapMergeTypeAdapterMapper
 
 	@Nullable
 	@Override
-	public <T> TypeAdapter<T> map(@Nonnull final TypeAdapter<?> typeAdapter, final Object instance, @Nonnull final Gson gson,
-			@Nonnull final TypeToken<T> typeToken) {
+	public <T> TypeAdapter<T> map(final TypeAdapter<?> typeAdapter, final Object instance, final Gson gson,
+			final TypeToken<T> typeToken) {
 		if ( typeAdapter.getClass().getEnclosingClass() != MapTypeAdapterFactory.class ) {
 			return null;
 		}

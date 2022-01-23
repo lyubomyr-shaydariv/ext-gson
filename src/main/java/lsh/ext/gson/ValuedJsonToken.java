@@ -1,7 +1,6 @@
 package lsh.ext.gson;
 
 import java.util.Objects;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.stream.JsonToken;
@@ -17,13 +16,12 @@ public final class ValuedJsonToken<T> {
 	private static final ValuedJsonToken<Boolean> falseBoolean = new ValuedJsonToken<>(JsonToken.BOOLEAN, false);
 	private static final ValuedJsonToken<Void> nullValue = new ValuedJsonToken<>(JsonToken.NULL, null);
 
-	@Nonnull
 	private final JsonToken token;
 
 	@Nullable
 	private final T value;
 
-	private ValuedJsonToken(@Nonnull final JsonToken token, @Nullable final T value) {
+	private ValuedJsonToken(final JsonToken token, @Nullable final T value) {
 		this.token = token;
 		this.value = value;
 	}
@@ -68,7 +66,6 @@ public final class ValuedJsonToken<T> {
 		return nullValue;
 	}
 
-	@Nonnull
 	public JsonToken getToken() {
 		return token;
 	}

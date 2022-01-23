@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.Period;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -26,9 +25,8 @@ public final class PeriodTypeAdapter
 		return defaultInstance;
 	}
 
-	@Nonnull
 	@Override
-	protected Period fromString(@Nonnull final String string) {
+	protected Period fromString(final String string) {
 		return Period.parse(string);
 	}
 

@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.util;
 
 import java.util.Optional;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
@@ -30,13 +29,12 @@ public final class OptionalTypeAdapterFactory<T>
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == Optional.class;
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<Optional<T>> from(@Nonnull final TypeAdapter<T> valueTypeAdapter) {
+	protected TypeAdapter<Optional<T>> from(final TypeAdapter<T> valueTypeAdapter) {
 		return OptionalTypeAdapter.create(valueTypeAdapter);
 	}
 

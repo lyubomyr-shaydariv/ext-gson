@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.lang.reflect.Type;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Supplier;
@@ -54,13 +53,12 @@ public final class MultisetTypeAdapterFactory<E>
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return Multiset.class.isAssignableFrom(typeToken.getRawType());
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<Multiset<E>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<Multiset<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final Type elementType = typeArguments[0][0];
 		@SuppressWarnings("unchecked")

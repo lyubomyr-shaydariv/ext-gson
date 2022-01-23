@@ -1,7 +1,5 @@
 package lsh.ext.gson;
 
-import javax.annotation.Nonnull;
-
 import com.google.gson.JsonPrimitive;
 
 /**
@@ -22,9 +20,8 @@ public final class JsonPrimitives {
 	 *
 	 * @return A new JSON primitive value for {@code true} or {@code false}.
 	 */
-	@Nonnull
 	@SuppressWarnings("ConstantConditions")
-	public static JsonPrimitive of(@Nonnull final Boolean b) {
+	public static JsonPrimitive of(final Boolean b) {
 		final boolean hasValue = b != null;
 		return hasValue
 				? b ? truePrimitive : falsePrimitive
@@ -36,8 +33,7 @@ public final class JsonPrimitives {
 	 *
 	 * @return A new JSON primitive for numbers.
 	 */
-	@Nonnull
-	public static JsonPrimitive of(@Nonnull final Number n) {
+	public static JsonPrimitive of(final Number n) {
 		return new JsonPrimitive(n);
 	}
 
@@ -46,8 +42,7 @@ public final class JsonPrimitives {
 	 *
 	 * @return A new JSON primitive for strings.
 	 */
-	@Nonnull
-	public static JsonPrimitive of(@Nonnull final String s) {
+	public static JsonPrimitive of(final String s) {
 		return new JsonPrimitive(s);
 	}
 
@@ -56,8 +51,7 @@ public final class JsonPrimitives {
 	 *
 	 * @return A new JSON primitive for characters.
 	 */
-	@Nonnull
-	public static JsonPrimitive of(@Nonnull final Character c) {
+	public static JsonPrimitive of(final Character c) {
 		return new JsonPrimitive(c);
 	}
 

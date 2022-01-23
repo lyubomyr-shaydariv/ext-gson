@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.json;
 
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonValue;
@@ -18,7 +17,6 @@ public final class JsonValueTypeAdapterTest
 		return value != null ? value : JsonValue.NULL;
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(

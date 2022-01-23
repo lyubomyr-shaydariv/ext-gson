@@ -4,7 +4,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.annotation.Nonnull;
 
 /**
  * <p>
@@ -44,7 +43,6 @@ public @interface DynamicSerializedName {
 	/**
 	 * @return A string value to be resolved in {@link DynamicSerializedNameFieldNamingStrategy}.
 	 */
-	@Nonnull
 	String value();
 
 }

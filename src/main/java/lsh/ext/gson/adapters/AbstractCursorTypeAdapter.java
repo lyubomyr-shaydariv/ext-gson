@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters;
 
 import java.io.IOException;
 import java.util.Iterator;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -28,11 +27,9 @@ public abstract class AbstractCursorTypeAdapter<C, E>
 		this.elementTypeAdapter = elementTypeAdapter;
 	}
 
-	@Nonnull
-	protected abstract Iterator<E> toIterator(@Nonnull C cursor);
+	protected abstract Iterator<E> toIterator(C cursor);
 
-	@Nonnull
-	protected abstract C fromIterator(@Nonnull ICloseableIterator<E> iterator);
+	protected abstract C fromIterator(ICloseableIterator<E> iterator);
 
 	@Override
 	public final void write(final JsonWriter out, final C cursor)

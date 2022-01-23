@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.lang.reflect.Modifier;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -36,13 +35,12 @@ public final class AbstractClassTypeAdapterFactory<T>
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return Modifier.isAbstract(typeToken.getRawType().getModifiers());
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<T> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		return TypeAwareTypeAdapter.get(gson, typePropertyName, valuePropertyName);
 	}
 

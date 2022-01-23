@@ -1,6 +1,6 @@
 package lsh.ext.gson.adapters;
 
-import javax.annotation.Nonnull;
+
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -42,7 +42,7 @@ public abstract class AbstractTypeAdapterFactory<CT>
 	 *
 	 * @return {@code true} if the given type token hold type is supported, otherwise {@code false}.
 	 */
-	protected abstract boolean isSupported(@Nonnull TypeToken<?> typeToken);
+	protected abstract boolean isSupported(TypeToken<?> typeToken);
 
 	/**
 	 * @param gson      Actual Gson instance
@@ -50,8 +50,7 @@ public abstract class AbstractTypeAdapterFactory<CT>
 	 *
 	 * @return A type adapter for the given concrete type.
 	 */
-	@Nonnull
-	protected abstract TypeAdapter<CT> createTypeAdapter(@Nonnull final Gson gson, @Nonnull TypeToken<?> typeToken);
+	protected abstract TypeAdapter<CT> createTypeAdapter(final Gson gson, TypeToken<?> typeToken);
 
 	@Override
 	@Nullable

@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.com.jayway.jsonpath;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.MoreObjects;
@@ -27,7 +26,6 @@ public final class JsonPathTypeAdapterTest
 		return value;
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
 		final Gson gson = new GsonBuilder()

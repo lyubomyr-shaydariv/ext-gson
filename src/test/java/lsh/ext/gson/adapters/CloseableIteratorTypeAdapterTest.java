@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters;
 
 import java.util.List;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
@@ -20,7 +19,6 @@ public final class CloseableIteratorTypeAdapterTest
 		return value != null ? ImmutableList.copyOf(value) : null;
 	}
 
-	@Nonnull
 	@Override
 	@SuppressWarnings("resource")
 	protected Stream<Arguments> source() {

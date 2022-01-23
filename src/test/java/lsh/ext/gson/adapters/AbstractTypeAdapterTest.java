@@ -3,7 +3,6 @@ package lsh.ext.gson.adapters;
 import java.io.IOException;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -16,7 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractTypeAdapterTest<T, R> {
 
-	@Nonnull
 	protected abstract Stream<Arguments> source();
 
 	@Nullable

@@ -1,6 +1,5 @@
 package lsh.ext.gson;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
@@ -25,7 +24,7 @@ public interface IJsonObjectMergePredicate {
 	 *
 	 * @return {@code true} if the left object value can be replaced with the right object value, otherwise {@code false}.
 	 */
-	boolean replace(@Nonnull String key, @Nonnull JsonObject leftObject, @Nullable JsonElement leftValue, @Nonnull JsonObject rightObject,
+	boolean replace(String key, JsonObject leftObject, @Nullable JsonElement leftValue, JsonObject rightObject,
 			@Nullable JsonElement rightValue);
 
 }

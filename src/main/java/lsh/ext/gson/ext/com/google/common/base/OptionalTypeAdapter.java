@@ -1,6 +1,6 @@
 package lsh.ext.gson.ext.com.google.common.base;
 
-import javax.annotation.Nonnull;
+
 import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
@@ -32,12 +32,11 @@ public final class OptionalTypeAdapter<T>
 
 	@Nullable
 	@Override
-	protected T fromOptional(@Nonnull final Optional<T> optional) {
+	protected T fromOptional(final Optional<T> optional) {
 		return optional.orNull();
 	}
 
 	@Override
-	@Nonnull
 	protected Optional<T> toOptional(@Nullable final T value) {
 		return Optional.fromNullable(value);
 	}

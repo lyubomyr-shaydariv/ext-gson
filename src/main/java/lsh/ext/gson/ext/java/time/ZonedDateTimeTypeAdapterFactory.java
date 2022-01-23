@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -42,15 +41,13 @@ public final class ZonedDateTimeTypeAdapterFactory
 		return new ZonedDateTimeTypeAdapterFactory(dateTimeFormatter);
 	}
 
-	@Nonnull
 	@Override
 	protected TypeAdapter<ZonedDateTime> create() {
 		return ZonedDateTimeTypeAdapter.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<ZonedDateTime> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
+	protected TypeAdapter<ZonedDateTime> create(final DateTimeFormatter dateTimeFormatter) {
 		return ZonedDateTimeTypeAdapter.create(dateTimeFormatter);
 	}
 

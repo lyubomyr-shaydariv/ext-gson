@@ -5,7 +5,6 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
@@ -24,7 +23,6 @@ public final class JsonObjects {
 	/**
 	 * @return A new empty JSON object.
 	 */
-	@Nonnull
 	public static JsonObject of() {
 		return new JsonObject();
 	}
@@ -35,9 +33,8 @@ public final class JsonObjects {
 	 *
 	 * @return A new JSON object with one key-value pair.
 	 */
-	@Nonnull
 	public static JsonObject of(
-			@Nonnull final String k1, @Nullable final JsonElement v1
+			final String k1, @Nullable final JsonElement v1
 	) {
 		final JsonObject jsonObject = new JsonObject();
 		jsonObject.add(k1, v1);
@@ -52,10 +49,9 @@ public final class JsonObjects {
 	 *
 	 * @return A new JSON object with two key-value pairs.
 	 */
-	@Nonnull
 	public static JsonObject of(
-			@Nonnull final String k1, @Nullable final JsonElement v1,
-			@Nonnull final String k2, @Nullable final JsonElement v2
+			final String k1, @Nullable final JsonElement v1,
+			final String k2, @Nullable final JsonElement v2
 	) {
 		final JsonObject jsonObject = new JsonObject();
 		jsonObject.add(k1, v1);
@@ -73,11 +69,10 @@ public final class JsonObjects {
 	 *
 	 * @return A new JSON object with three key-value pairs.
 	 */
-	@Nonnull
 	public static JsonObject of(
-			@Nonnull final String k1, @Nullable final JsonElement v1,
-			@Nonnull final String k2, @Nullable final JsonElement v2,
-			@Nonnull final String k3, @Nullable final JsonElement v3
+			final String k1, @Nullable final JsonElement v1,
+			final String k2, @Nullable final JsonElement v2,
+			final String k3, @Nullable final JsonElement v3
 	) {
 		final JsonObject jsonObject = new JsonObject();
 		jsonObject.add(k1, v1);
@@ -98,12 +93,11 @@ public final class JsonObjects {
 	 *
 	 * @return A new JSON object with four key-value pairs.
 	 */
-	@Nonnull
 	public static JsonObject of(
-			@Nonnull final String k1, @Nullable final JsonElement v1,
-			@Nonnull final String k2, @Nullable final JsonElement v2,
-			@Nonnull final String k3, @Nullable final JsonElement v3,
-			@Nonnull final String k4, @Nullable final JsonElement v4
+			final String k1, @Nullable final JsonElement v1,
+			final String k2, @Nullable final JsonElement v2,
+			final String k3, @Nullable final JsonElement v3,
+			final String k4, @Nullable final JsonElement v4
 	) {
 		final JsonObject jsonObject = new JsonObject();
 		jsonObject.add(k1, v1);
@@ -127,13 +121,12 @@ public final class JsonObjects {
 	 *
 	 * @return A new JSON object with five key-value pairs.
 	 */
-	@Nonnull
 	public static JsonObject of(
-			@Nonnull final String k1, @Nullable final JsonElement v1,
-			@Nonnull final String k2, @Nullable final JsonElement v2,
-			@Nonnull final String k3, @Nullable final JsonElement v3,
-			@Nonnull final String k4, @Nullable final JsonElement v4,
-			@Nonnull final String k5, @Nullable final JsonElement v5
+			final String k1, @Nullable final JsonElement v1,
+			final String k2, @Nullable final JsonElement v2,
+			final String k3, @Nullable final JsonElement v3,
+			final String k4, @Nullable final JsonElement v4,
+			final String k5, @Nullable final JsonElement v5
 	) {
 		final JsonObject jsonObject = new JsonObject();
 		jsonObject.add(k1, v1);

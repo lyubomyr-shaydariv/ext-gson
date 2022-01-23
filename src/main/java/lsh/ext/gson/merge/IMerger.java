@@ -1,7 +1,6 @@
 package lsh.ext.gson.merge;
 
 import java.util.function.Function;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 
@@ -17,6 +16,6 @@ public interface IMerger {
 	 *
 	 * @return An instance of then given object merged with a deserialized instance.
 	 */
-	<T> T merge(T instance, @Nonnull Function<? super Gson, ? extends T> extractor);
+	<T> T merge(T instance, Function<? super Gson, ? extends T> extractor);
 
 }

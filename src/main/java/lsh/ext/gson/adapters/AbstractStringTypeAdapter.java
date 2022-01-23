@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -27,16 +26,14 @@ public abstract class AbstractStringTypeAdapter<T>
 	 *
 	 * @return An object parsed from string.
 	 */
-	@Nonnull
-	protected abstract T fromString(@Nonnull String string);
+	protected abstract T fromString(String string);
 
 	/**
 	 * @param value A value to convert to a string
 	 *
 	 * @return A string generated from the value.
 	 */
-	@Nonnull
-	protected abstract String toString(@Nonnull T value);
+	protected abstract String toString(T value);
 
 	@Override
 	@Nullable

@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMultiset;
@@ -19,7 +18,6 @@ public final class MultisetTypeAdapterTest
 		return value;
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();

@@ -1,6 +1,5 @@
 package lsh.ext.gson;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -20,6 +19,6 @@ public interface IFieldNamingResolver {
 	 * special way depending on its implementation.
 	 */
 	@Nullable
-	String resolveName(@Nonnull String value);
+	String resolveName(String value);
 
 }

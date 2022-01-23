@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.DayOfWeek;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -30,13 +29,12 @@ public final class DayOfWeekTypeAdapterFactory
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == DayOfWeek.class;
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<DayOfWeek> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<DayOfWeek> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		return DayOfWeekTypeAdapter.getDefaultInstance();
 	}
 

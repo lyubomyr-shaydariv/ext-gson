@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.lang.reflect.Type;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -24,12 +23,10 @@ public abstract class AbstractOptionalTypeAdapterFactory<O, T>
 	 *
 	 * @return A type adapter for the optional values that can be held by the given type adapter
 	 */
-	@Nonnull
-	protected abstract TypeAdapter<O> from(@Nonnull TypeAdapter<T> valueTypeAdapter);
+	protected abstract TypeAdapter<O> from(TypeAdapter<T> valueTypeAdapter);
 
-	@Nonnull
 	@Override
-	protected final TypeAdapter<O> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected final TypeAdapter<O> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final Type parameterType = typeArguments[0][0];
 		@SuppressWarnings("unchecked")

@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -42,15 +41,13 @@ public final class LocalDateTimeTypeAdapterFactory
 		return new LocalDateTimeTypeAdapterFactory(dateTimeFormatter);
 	}
 
-	@Nonnull
 	@Override
 	protected TypeAdapter<LocalDateTime> create() {
 		return LocalDateTimeTypeAdapter.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<LocalDateTime> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
+	protected TypeAdapter<LocalDateTime> create(final DateTimeFormatter dateTimeFormatter) {
 		return LocalDateTimeTypeAdapter.create(dateTimeFormatter);
 	}
 

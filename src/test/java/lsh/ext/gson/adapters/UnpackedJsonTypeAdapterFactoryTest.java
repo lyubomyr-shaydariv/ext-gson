@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters;
 
 import java.util.List;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.annotations.JsonAdapter;
@@ -39,7 +38,6 @@ public final class UnpackedJsonTypeAdapterFactoryTest
 
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
 		return Stream.of(

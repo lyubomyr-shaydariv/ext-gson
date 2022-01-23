@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.Duration;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -26,9 +25,8 @@ public final class DurationTypeAdapter
 		return defaultInstance;
 	}
 
-	@Nonnull
 	@Override
-	protected Duration fromString(@Nonnull final String string) {
+	protected Duration fromString(final String string) {
 		return Duration.parse(string);
 	}
 

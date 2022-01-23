@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.util.Iterator;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -39,15 +38,13 @@ public final class CloseableEnumerationTypeAdapter<E>
 				.nullSafe();
 	}
 
-	@Nonnull
 	@Override
-	protected Iterator<E> toIterator(@Nonnull final ICloseableEnumeration<E> enumeration) {
+	protected Iterator<E> toIterator(final ICloseableEnumeration<E> enumeration) {
 		return CloseableIterators.from(enumeration);
 	}
 
-	@Nonnull
 	@Override
-	protected ICloseableEnumeration<E> fromIterator(@Nonnull final ICloseableIterator<E> iterator) {
+	protected ICloseableEnumeration<E> fromIterator(final ICloseableIterator<E> iterator) {
 		return CloseableEnumerations.from(iterator);
 	}
 

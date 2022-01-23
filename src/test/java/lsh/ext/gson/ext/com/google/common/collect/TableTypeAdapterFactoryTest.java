@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.common.collect.Table;
 import com.google.gson.TypeAdapterFactory;
@@ -19,13 +18,11 @@ public final class TableTypeAdapterFactoryTest
 		super(false);
 	}
 
-	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
 		return TableTypeAdapterFactory.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
@@ -35,7 +32,6 @@ public final class TableTypeAdapterFactoryTest
 		);
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(

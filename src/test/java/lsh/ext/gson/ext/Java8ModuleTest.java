@@ -2,7 +2,6 @@ package lsh.ext.gson.ext;
 
 import java.util.Optional;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractModuleTest;
@@ -16,13 +15,11 @@ public final class Java8ModuleTest
 		super("Java 8");
 	}
 
-	@Nonnull
 	@Override
 	protected IModule createUnit() {
 		return Java8Module.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(

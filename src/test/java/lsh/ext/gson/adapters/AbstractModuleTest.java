@@ -3,7 +3,6 @@ package lsh.ext.gson.adapters;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
@@ -34,10 +33,8 @@ public abstract class AbstractModuleTest {
 		this.expectedName = expectedName;
 	}
 
-	@Nonnull
 	protected abstract IModule createUnit();
 
-	@Nonnull
 	protected abstract Stream<Arguments> supported();
 
 	@Test

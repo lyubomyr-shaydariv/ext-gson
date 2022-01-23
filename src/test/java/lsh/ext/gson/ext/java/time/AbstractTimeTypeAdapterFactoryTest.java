@@ -15,7 +15,6 @@ import java.time.Year;
 import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
@@ -48,7 +47,6 @@ abstract class AbstractTimeTypeAdapterFactoryTest<T>
 		this.clazz = clazz;
 	}
 
-	@Nonnull
 	@Override
 	protected final Stream<Arguments> supported() {
 		return Stream.of(java8TimeApiClasses)
@@ -57,7 +55,6 @@ abstract class AbstractTimeTypeAdapterFactoryTest<T>
 				.map(Arguments::of);
 	}
 
-	@Nonnull
 	@Override
 	protected final Stream<Arguments> unsupported() {
 		return Stream.of(java8TimeApiClasses)

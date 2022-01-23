@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext;
 
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.BiMap;
@@ -20,13 +19,11 @@ public final class GuavaModuleTest
 		super("Google Guava");
 	}
 
-	@Nonnull
 	@Override
 	protected IModule createUnit() {
 		return GuavaModule.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(

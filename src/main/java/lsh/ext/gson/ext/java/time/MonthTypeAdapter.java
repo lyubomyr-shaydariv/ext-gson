@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.Month;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -26,9 +25,8 @@ public final class MonthTypeAdapter
 		return defaultInstance;
 	}
 
-	@Nonnull
 	@Override
-	protected Month fromString(@Nonnull final String string) {
+	protected Month fromString(final String string) {
 		return Month.valueOf(string);
 	}
 

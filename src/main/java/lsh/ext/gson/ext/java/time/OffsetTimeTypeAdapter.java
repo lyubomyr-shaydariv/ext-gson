@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.OffsetTime;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -41,15 +40,13 @@ public final class OffsetTimeTypeAdapter
 		return new OffsetTimeTypeAdapter(dateTimeFormatter);
 	}
 
-	@Nonnull
 	@Override
-	protected OffsetTime doFromString(@Nonnull final String string) {
+	protected OffsetTime doFromString(final String string) {
 		return OffsetTime.parse(string);
 	}
 
-	@Nonnull
 	@Override
-	protected OffsetTime doFromString(@Nonnull final String string, @Nonnull final DateTimeFormatter formatter) {
+	protected OffsetTime doFromString(final String string, final DateTimeFormatter formatter) {
 		return OffsetTime.parse(string, formatter);
 	}
 

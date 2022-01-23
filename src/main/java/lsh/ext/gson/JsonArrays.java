@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
@@ -24,7 +23,6 @@ public final class JsonArrays {
 	/**
 	 * @return A new empty JSON array.
 	 */
-	@Nonnull
 	public static JsonArray of() {
 		return new JsonArray();
 	}
@@ -34,7 +32,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with one element.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1
 	) {
@@ -49,7 +46,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with two elements.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2
@@ -67,7 +63,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with three elements.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -88,7 +83,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with four elements.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -112,7 +106,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with five elements.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -139,7 +132,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with six elements.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -169,7 +161,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with seven elements.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -237,7 +228,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with nine elements.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -276,7 +266,6 @@ public final class JsonArrays {
 	 *
 	 * @return A new JSON array with ten elements.
 	 */
-	@Nonnull
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,

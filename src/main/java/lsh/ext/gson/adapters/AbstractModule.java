@@ -1,6 +1,6 @@
 package lsh.ext.gson.adapters;
 
-import javax.annotation.Nonnull;
+
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -24,7 +24,6 @@ public abstract class AbstractModule
 		this.typeAdapterFactories = typeAdapterFactories;
 	}
 
-	@Nonnull
 	@Override
 	public final String getName() {
 		return name;
@@ -32,7 +31,7 @@ public abstract class AbstractModule
 
 	@Override
 	@Nullable
-	public final <T> TypeAdapter<T> create(@Nonnull final Gson gson, @Nonnull final TypeToken<T> typeToken) {
+	public final <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		for ( final TypeAdapterFactory typeAdapterFactory : typeAdapterFactories ) {
 			@Nullable
 			final TypeAdapter<T> typeAdapter = typeAdapterFactory.create(gson, typeToken);

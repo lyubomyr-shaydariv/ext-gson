@@ -1,6 +1,6 @@
 package lsh.ext.gson.adapters;
 
-import javax.annotation.Nonnull;
+
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -18,9 +18,8 @@ public interface IModule
 
 	@Override
 	@Nullable
-	<T> TypeAdapter<T> create(@Nonnull Gson gson, @Nonnull TypeToken<T> typeToken);
+	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	@Nonnull
 	String getName();
 
 }

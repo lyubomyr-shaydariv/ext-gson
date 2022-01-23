@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters;
 
 import java.util.Enumeration;
 import java.util.Iterator;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
@@ -31,9 +30,8 @@ public final class CloseableEnumerationTypeAdapterFactory<E>
 		return defaultInstance;
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<?> createCursorTypeAdapter(@Nonnull final TypeAdapter<?> elementTypeAdapter) {
+	protected TypeAdapter<?> createCursorTypeAdapter(final TypeAdapter<?> elementTypeAdapter) {
 		return CloseableEnumerationTypeAdapter.get(elementTypeAdapter);
 	}
 

@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.util.stream;
 
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
@@ -31,9 +30,8 @@ public final class StreamTypeAdapterFactory<E>
 		return defaultInstance;
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<?> createCursorTypeAdapter(@Nonnull final TypeAdapter<?> elementTypeAdapter) {
+	protected TypeAdapter<?> createCursorTypeAdapter(final TypeAdapter<?> elementTypeAdapter) {
 		return StreamTypeAdapter.create(elementTypeAdapter);
 	}
 

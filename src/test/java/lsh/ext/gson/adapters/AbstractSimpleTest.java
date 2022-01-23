@@ -2,7 +2,6 @@ package lsh.ext.gson.adapters;
 
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +15,6 @@ public abstract class AbstractSimpleTest {
 
 	private static final Gson gson = new Gson();
 
-	@Nonnull
 	protected abstract Stream<Arguments> source();
 
 	@ParameterizedTest

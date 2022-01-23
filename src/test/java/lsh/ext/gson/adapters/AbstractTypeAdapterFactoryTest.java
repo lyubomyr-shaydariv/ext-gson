@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -24,13 +23,10 @@ public abstract class AbstractTypeAdapterFactoryTest {
 		this.supportsAll = supportsAll;
 	}
 
-	@Nonnull
 	protected abstract TypeAdapterFactory createUnit();
 
-	@Nonnull
 	protected abstract Stream<Arguments> supported();
 
-	@Nonnull
 	protected abstract Stream<Arguments> unsupported();
 
 	@ParameterizedTest

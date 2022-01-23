@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.Period;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -30,13 +29,12 @@ public final class PeriodTypeAdapterFactory
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == Period.class;
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<Period> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<Period> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		return PeriodTypeAdapter.getDefaultInstance();
 	}
 

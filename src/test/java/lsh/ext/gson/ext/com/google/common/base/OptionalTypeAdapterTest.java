@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.com.google.common.base;
 
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
@@ -18,7 +17,6 @@ public final class OptionalTypeAdapterTest
 		return value != null ? value : Optional.absent();
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> source() {
 		final Gson gson = new Gson();

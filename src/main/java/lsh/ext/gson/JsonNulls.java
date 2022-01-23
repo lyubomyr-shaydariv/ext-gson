@@ -1,6 +1,6 @@
 package lsh.ext.gson;
 
-import javax.annotation.Nonnull;
+
 
 import com.google.gson.JsonNull;
 
@@ -17,7 +17,6 @@ public final class JsonNulls {
 	/**
 	 * @return {@link JsonNull#INSTANCE}.
 	 */
-	@Nonnull
 	public static JsonNull of() {
 		return JsonNull.INSTANCE;
 	}

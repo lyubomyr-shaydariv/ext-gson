@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -31,14 +30,13 @@ public abstract class AbstractOptionalTypeAdapter<O, T>
 	 * @return A value from the given optional.
 	 */
 	@Nullable
-	protected abstract T fromOptional(@Nonnull O optional);
+	protected abstract T fromOptional(O optional);
 
 	/**
 	 * @param value Value to get an optional from
 	 *
 	 * @return An optional from the given value.
 	 */
-	@Nonnull
 	protected abstract O toOptional(@Nullable T value);
 
 	@Override

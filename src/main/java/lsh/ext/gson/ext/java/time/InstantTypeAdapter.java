@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.Instant;
-import javax.annotation.Nonnull;
 
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -26,9 +25,8 @@ public final class InstantTypeAdapter
 		return defaultInstance;
 	}
 
-	@Nonnull
 	@Override
-	protected Instant fromString(@Nonnull final String string) {
+	protected Instant fromString(final String string) {
 		return Instant.parse(string);
 	}
 

@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.lang.reflect.Type;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Converter;
@@ -72,14 +71,13 @@ public final class TableTypeAdapterFactory<R, C, V>
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return Table.class.isAssignableFrom(typeToken.getRawType());
 	}
 
-	@Nonnull
 	@Override
 	@SuppressWarnings("ConstantConditions")
-	protected TypeAdapter<Table<R, C, V>> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<Table<R, C, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final Type valueType = typeArguments[2][0];
 		@SuppressWarnings("unchecked")

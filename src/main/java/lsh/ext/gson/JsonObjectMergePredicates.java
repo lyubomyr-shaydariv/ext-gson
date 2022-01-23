@@ -1,6 +1,6 @@
 package lsh.ext.gson;
 
-import javax.annotation.Nonnull;
+
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
@@ -33,16 +33,16 @@ public final class JsonObjectMergePredicates {
 
 		ALWAYS_REPLACE_LEFT {
 			@Override
-			public boolean replace(@Nonnull final String key, @Nonnull final JsonObject leftObject, @Nullable final JsonElement leftValue,
-					@Nonnull final JsonObject rightObject, @Nullable final JsonElement rightValue) {
+			public boolean replace(final String key, final JsonObject leftObject, @Nullable final JsonElement leftValue,
+					final JsonObject rightObject, @Nullable final JsonElement rightValue) {
 				return true;
 			}
 		},
 
 		NEVER_REPLACE_LEFT {
 			@Override
-			public boolean replace(@Nonnull final String key, @Nonnull final JsonObject leftObject, @Nullable final JsonElement leftValue,
-					@Nonnull final JsonObject rightObject, @Nullable final JsonElement rightValue) {
+			public boolean replace(final String key, final JsonObject leftObject, @Nullable final JsonElement leftValue,
+					final JsonObject rightObject, @Nullable final JsonElement rightValue) {
 				return false;
 			}
 		}

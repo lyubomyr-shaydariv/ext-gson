@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 
 import com.google.common.collect.Multiset;
 import com.google.gson.TypeAdapterFactory;
@@ -16,13 +15,11 @@ public final class MultisetTypeAdapterFactoryTest
 		super(false);
 	}
 
-	@Nonnull
 	@Override
 	protected TypeAdapterFactory createUnit() {
 		return MultisetTypeAdapterFactory.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
@@ -32,7 +29,6 @@ public final class MultisetTypeAdapterFactoryTest
 		);
 	}
 
-	@Nonnull
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(

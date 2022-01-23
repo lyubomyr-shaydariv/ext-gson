@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.lang.reflect.Type;
-import javax.annotation.Nonnull;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -26,17 +25,15 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 		this.cursorClass = cursorClass;
 	}
 
-	@Nonnull
-	protected abstract TypeAdapter<?> createCursorTypeAdapter(@Nonnull TypeAdapter<?> elementTypeAdapter);
+	protected abstract TypeAdapter<?> createCursorTypeAdapter(TypeAdapter<?> elementTypeAdapter);
 
 	@Override
-	protected final boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected final boolean isSupported(final TypeToken<?> typeToken) {
 		return cursorClass.isAssignableFrom(typeToken.getRawType());
 	}
 
-	@Nonnull
 	@Override
-	protected final TypeAdapter<E> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
 		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0][0]));
 		@SuppressWarnings("unchecked")

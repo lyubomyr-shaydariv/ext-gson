@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -42,15 +41,13 @@ public final class MonthDayTypeAdapterFactory
 		return new MonthDayTypeAdapterFactory(dateTimeFormatter);
 	}
 
-	@Nonnull
 	@Override
 	protected TypeAdapter<MonthDay> create() {
 		return MonthDayTypeAdapter.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<MonthDay> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
+	protected TypeAdapter<MonthDay> create(final DateTimeFormatter dateTimeFormatter) {
 		return MonthDayTypeAdapter.create(dateTimeFormatter);
 	}
 

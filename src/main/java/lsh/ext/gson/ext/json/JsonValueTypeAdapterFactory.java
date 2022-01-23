@@ -1,6 +1,6 @@
 package lsh.ext.gson.ext.json;
 
-import javax.annotation.Nonnull;
+
 import javax.json.JsonValue;
 
 import com.google.gson.Gson;
@@ -22,13 +22,12 @@ public final class JsonValueTypeAdapterFactory
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported(final TypeToken<?> typeToken) {
 		return JsonValue.class.isAssignableFrom(typeToken.getRawType());
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<JsonValue> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		return JsonValueTypeAdapter.getDefaultInstance();
 	}
 

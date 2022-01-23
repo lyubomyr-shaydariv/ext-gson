@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -41,15 +40,13 @@ public final class YearTypeAdapter
 		return new YearTypeAdapter(dateTimeFormatter);
 	}
 
-	@Nonnull
 	@Override
-	protected Year doFromString(@Nonnull final String string) {
+	protected Year doFromString(final String string) {
 		return Year.parse(string);
 	}
 
-	@Nonnull
 	@Override
-	protected Year doFromString(@Nonnull final String string, @Nonnull final DateTimeFormatter formatter) {
+	protected Year doFromString(final String string, final DateTimeFormatter formatter) {
 		return Year.parse(string, formatter);
 	}
 

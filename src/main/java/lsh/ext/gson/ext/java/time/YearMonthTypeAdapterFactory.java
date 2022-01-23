@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -42,15 +41,13 @@ public final class YearMonthTypeAdapterFactory
 		return new YearMonthTypeAdapterFactory(dateTimeFormatter);
 	}
 
-	@Nonnull
 	@Override
 	protected TypeAdapter<YearMonth> create() {
 		return YearMonthTypeAdapter.getDefaultInstance();
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<YearMonth> create(@Nonnull final DateTimeFormatter dateTimeFormatter) {
+	protected TypeAdapter<YearMonth> create(final DateTimeFormatter dateTimeFormatter) {
 		return YearMonthTypeAdapter.create(dateTimeFormatter);
 	}
 
