@@ -20,7 +20,7 @@ public interface IPrePostProcessor<T> {
 	 * @see com.google.gson.TypeAdapter#write(com.google.gson.stream.JsonWriter, Object)
 	 * @since 0-SNAPSHOT
 	 */
-	default void pre(final T value) {
+	default void pre(@SuppressWarnings("unused") final T value) {
 	}
 
 	/**
@@ -31,7 +31,7 @@ public interface IPrePostProcessor<T> {
 	 * @see com.google.gson.TypeAdapter#read(com.google.gson.stream.JsonReader)
 	 * @since 0-SNAPSHOT
 	 */
-	default void post(final T value) {
+	default void post(@SuppressWarnings("unused") final T value) {
 	}
 
 }
