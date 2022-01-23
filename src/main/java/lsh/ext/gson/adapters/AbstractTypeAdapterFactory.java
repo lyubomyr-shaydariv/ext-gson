@@ -1,12 +1,12 @@
 package lsh.ext.gson.adapters;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import javax.annotation.Nullable;
 
 /**
  * <p>

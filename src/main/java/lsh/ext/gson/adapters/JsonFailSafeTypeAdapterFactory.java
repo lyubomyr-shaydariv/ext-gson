@@ -1,6 +1,7 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -10,7 +11,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
-import javax.annotation.Nullable;
 
 /**
  * <p>This type adapter factory skips malformed JSON values. For example, consider the following mapping:</p>

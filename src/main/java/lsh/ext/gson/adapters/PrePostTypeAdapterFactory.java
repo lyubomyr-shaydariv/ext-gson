@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -11,7 +12,6 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import javax.annotation.Nullable;
 
 /**
  * Represents a pre/post type adapter factory to perform pre/post checks for a serializable/deserializable values respectively.
