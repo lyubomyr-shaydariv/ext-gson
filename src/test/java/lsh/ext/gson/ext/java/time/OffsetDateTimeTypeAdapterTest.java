@@ -22,7 +22,7 @@ public final class OffsetDateTimeTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						OffsetDateTimeTypeAdapter.getDefaultInstance(),
+						OffsetDateTimeTypeAdapter.getInstance(),
 						"\"1996-10-18T12:34:45Z\"",
 						() -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
 				),

@@ -20,7 +20,7 @@ public final class TableTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return TableTypeAdapterFactory.getDefaultInstance();
+		return TableTypeAdapterFactory.getInstance();
 	}
 
 	@Override

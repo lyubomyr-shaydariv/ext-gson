@@ -23,7 +23,7 @@ import com.google.gson.reflect.TypeToken;
 public final class ReflectiveMergeTypeAdapterMapper
 		implements IMergeTypeAdapterMapper {
 
-	private static final IMergeTypeAdapterMapper defaultInstance = new ReflectiveMergeTypeAdapterMapper();
+	private static final IMergeTypeAdapterMapper instance = new ReflectiveMergeTypeAdapterMapper();
 
 	private ReflectiveMergeTypeAdapterMapper() {
 	}
@@ -31,8 +31,8 @@ public final class ReflectiveMergeTypeAdapterMapper
 	/**
 	 * @return An instance of {@link ReflectiveMergeTypeAdapterMapper}.
 	 */
-	public static IMergeTypeAdapterMapper getDefaultInstance() {
-		return defaultInstance;
+	public static IMergeTypeAdapterMapper getInstance() {
+		return instance;
 	}
 
 	@Nullable

@@ -17,7 +17,7 @@ public final class JsonApiModuleTest
 
 	@Override
 	protected IModule createUnit() {
-		return JsonApiModule.getDefaultInstance();
+		return JsonApiModule.getInstance();
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public final class LocalDateTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return LocalDateTypeAdapterFactory.getDefaultInstance();
+		return LocalDateTypeAdapterFactory.getInstance();
 	}
 
 }

@@ -15,7 +15,7 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 public final class MonthDayTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<MonthDay> {
 
-	private static final TypeAdapter<MonthDay> defaultInstance = new MonthDayTypeAdapter(null);
+	private static final TypeAdapter<MonthDay> instance = new MonthDayTypeAdapter(null);
 
 	private MonthDayTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);
@@ -24,8 +24,8 @@ public final class MonthDayTypeAdapter
 	/**
 	 * @return An instance of {@link MonthDayTypeAdapter} with the Java-default {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<MonthDay> getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapter<MonthDay> getInstance() {
+		return instance;
 	}
 
 	/**
@@ -35,7 +35,7 @@ public final class MonthDayTypeAdapter
 	 */
 	public static TypeAdapter<MonthDay> create(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
-			return defaultInstance;
+			return instance;
 		}
 		return new MonthDayTypeAdapter(dateTimeFormatter);
 	}

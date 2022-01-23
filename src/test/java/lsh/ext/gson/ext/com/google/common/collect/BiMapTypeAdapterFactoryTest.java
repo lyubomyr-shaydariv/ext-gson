@@ -18,7 +18,7 @@ public final class BiMapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return BiMapTypeAdapterFactory.getDefaultInstance();
+		return BiMapTypeAdapterFactory.getInstance();
 	}
 
 	@Override

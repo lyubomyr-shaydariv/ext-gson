@@ -36,7 +36,7 @@ public final class Merger
 	public static IMerger getMerger(final Gson gson) {
 		final Collection<IMergeTypeAdapterMapper> mappers = new ArrayList<>();
 		mappers.add(MapMergeTypeAdapterMapper.get());
-		mappers.add(ReflectiveMergeTypeAdapterMapper.getDefaultInstance());
+		mappers.add(ReflectiveMergeTypeAdapterMapper.getInstance());
 		return new Merger(gson, mappers);
 	}
 

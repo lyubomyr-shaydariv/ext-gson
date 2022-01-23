@@ -13,7 +13,7 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class DayOfWeekTypeAdapter
 		extends AbstractToStringStringTypeAdapter<DayOfWeek> {
 
-	private static final TypeAdapter<DayOfWeek> defaultInstance = new DayOfWeekTypeAdapter();
+	private static final TypeAdapter<DayOfWeek> instance = new DayOfWeekTypeAdapter();
 
 	private DayOfWeekTypeAdapter() {
 	}
@@ -21,8 +21,8 @@ public final class DayOfWeekTypeAdapter
 	/**
 	 * @return An instance of {@link DayOfWeekTypeAdapter}.
 	 */
-	public static TypeAdapter<DayOfWeek> getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapter<DayOfWeek> getInstance() {
+		return instance;
 	}
 
 	@Override

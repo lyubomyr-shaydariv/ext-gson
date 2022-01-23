@@ -16,7 +16,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class PeriodTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Period> {
 
-	private static final TypeAdapterFactory defaultInstance = new PeriodTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new PeriodTypeAdapterFactory();
 
 	private PeriodTypeAdapterFactory() {
 	}
@@ -24,8 +24,8 @@ public final class PeriodTypeAdapterFactory
 	/**
 	 * @return An instance of {@link PeriodTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public final class PeriodTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<Period> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		return PeriodTypeAdapter.getDefaultInstance();
+		return PeriodTypeAdapter.getInstance();
 	}
 
 }

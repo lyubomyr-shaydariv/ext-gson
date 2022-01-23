@@ -21,7 +21,7 @@ import lsh.ext.gson.adapters.IModule;
 public final class JsonPathModule
 		extends AbstractModule {
 
-	private static final IModule defaultInstance = build()
+	private static final IModule instance = build()
 			.done();
 
 	private JsonPathModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -31,8 +31,8 @@ public final class JsonPathModule
 	/**
 	 * @return The default instance of the module with the default type adapter factories settings.
 	 */
-	public static IModule getDefaultInstance() {
-		return defaultInstance;
+	public static IModule getInstance() {
+		return instance;
 	}
 
 	/**
@@ -55,7 +55,7 @@ public final class JsonPathModule
 		 */
 		public IModule done() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(
-					JsonPathTypeAdapterFactory.getDefaultInstance()
+					JsonPathTypeAdapterFactory.getInstance()
 			));
 			return new JsonPathModule(typeAdapterFactories);
 		}

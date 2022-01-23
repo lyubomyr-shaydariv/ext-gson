@@ -16,7 +16,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class MonthTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Month> {
 
-	private static final TypeAdapterFactory defaultInstance = new MonthTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new MonthTypeAdapterFactory();
 
 	private MonthTypeAdapterFactory() {
 	}
@@ -24,8 +24,8 @@ public final class MonthTypeAdapterFactory
 	/**
 	 * @return An instance of {@link MonthTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public final class MonthTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<Month> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		return MonthTypeAdapter.getDefaultInstance();
+		return MonthTypeAdapter.getInstance();
 	}
 
 }

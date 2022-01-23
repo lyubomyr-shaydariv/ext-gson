@@ -15,7 +15,7 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 public final class YearTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<Year> {
 
-	private static final TypeAdapter<Year> defaultInstance = new YearTypeAdapter(null);
+	private static final TypeAdapter<Year> instance = new YearTypeAdapter(null);
 
 	private YearTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);
@@ -24,8 +24,8 @@ public final class YearTypeAdapter
 	/**
 	 * @return An instance of {@link YearTypeAdapter} with the Java-default {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<Year> getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapter<Year> getInstance() {
+		return instance;
 	}
 
 	/**
@@ -35,7 +35,7 @@ public final class YearTypeAdapter
 	 */
 	public static TypeAdapter<Year> create(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
-			return defaultInstance;
+			return instance;
 		}
 		return new YearTypeAdapter(dateTimeFormatter);
 	}

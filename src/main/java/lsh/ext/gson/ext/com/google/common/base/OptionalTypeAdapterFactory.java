@@ -15,7 +15,7 @@ import lsh.ext.gson.adapters.AbstractOptionalTypeAdapterFactory;
 public final class OptionalTypeAdapterFactory<T>
 		extends AbstractOptionalTypeAdapterFactory<Optional<T>, T> {
 
-	private static final TypeAdapterFactory defaultInstance = new OptionalTypeAdapterFactory<>();
+	private static final TypeAdapterFactory instance = new OptionalTypeAdapterFactory<>();
 
 	private OptionalTypeAdapterFactory() {
 	}
@@ -23,8 +23,8 @@ public final class OptionalTypeAdapterFactory<T>
 	/**
 	 * @return An instance of {@link OptionalTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	@Override

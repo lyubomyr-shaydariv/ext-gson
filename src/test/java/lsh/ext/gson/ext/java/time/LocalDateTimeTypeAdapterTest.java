@@ -21,7 +21,7 @@ public final class LocalDateTimeTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						LocalDateTimeTypeAdapter.getDefaultInstance(),
+						LocalDateTimeTypeAdapter.getInstance(),
 						"\"2018-01-01T15:31\"",
 						() -> LocalDateTime.of(2018, 01, 01, 15, 31)
 				),

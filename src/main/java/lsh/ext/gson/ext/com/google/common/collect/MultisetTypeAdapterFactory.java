@@ -23,7 +23,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class MultisetTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Multiset<E>> {
 
-	private static final TypeAdapterFactory defaultInstance = new MultisetTypeAdapterFactory<>(null);
+	private static final TypeAdapterFactory instance = new MultisetTypeAdapterFactory<>(null);
 
 	@Nullable
 	private final Supplier<? extends Multiset<E>> newMultisetFactory;
@@ -35,8 +35,8 @@ public final class MultisetTypeAdapterFactory<E>
 	/**
 	 * @return An instance of {@link MultisetTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	/**
@@ -47,7 +47,7 @@ public final class MultisetTypeAdapterFactory<E>
 	 */
 	public static <E> TypeAdapterFactory create(@Nullable final Supplier<? extends Multiset<E>> newMultisetFactory) {
 		if ( newMultisetFactory == null ) {
-			return defaultInstance;
+			return instance;
 		}
 		return new MultisetTypeAdapterFactory<>(newMultisetFactory);
 	}

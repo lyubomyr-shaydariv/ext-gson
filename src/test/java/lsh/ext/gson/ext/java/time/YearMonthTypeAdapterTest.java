@@ -21,7 +21,7 @@ public final class YearMonthTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						YearMonthTypeAdapter.getDefaultInstance(),
+						YearMonthTypeAdapter.getInstance(),
 						"\"1999-09\"",
 						() -> YearMonth.of(1999, 9)
 				),

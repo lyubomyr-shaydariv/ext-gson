@@ -16,7 +16,7 @@ public final class JsonPathTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return JsonPathTypeAdapterFactory.getDefaultInstance();
+		return JsonPathTypeAdapterFactory.getInstance();
 	}
 
 	@Override

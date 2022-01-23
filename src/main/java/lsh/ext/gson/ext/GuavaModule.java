@@ -37,7 +37,7 @@ import lsh.ext.gson.ext.com.google.common.collect.TableTypeAdapterFactory;
 public final class GuavaModule
 		extends AbstractModule {
 
-	private static final IModule defaultInstance = build()
+	private static final IModule instance = build()
 			.done();
 
 	private GuavaModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -47,8 +47,8 @@ public final class GuavaModule
 	/**
 	 * @return The default instance of the module with the default type adapter factories settings.
 	 */
-	public static IModule getDefaultInstance() {
-		return defaultInstance;
+	public static IModule getInstance() {
+		return instance;
 	}
 
 	/**
@@ -205,7 +205,7 @@ public final class GuavaModule
 			@SuppressWarnings("unchecked")
 			final Converter<String, String> castTableColumnKeyConverter = (Converter<String, String>) tableColumnKeyConverter;
 			final Iterable<TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
-					.add(OptionalTypeAdapterFactory.getDefaultInstance())
+					.add(OptionalTypeAdapterFactory.getInstance())
 					.add(BiMapTypeAdapterFactory.create(castNewBiMapFactory, castBiMapKeyConverter))
 					.add(MultimapTypeAdapterFactory.create(castNewMultimapFactory, castMultimapKeyConverter))
 					.add(MultisetTypeAdapterFactory.create(castNewMultisetFactory))

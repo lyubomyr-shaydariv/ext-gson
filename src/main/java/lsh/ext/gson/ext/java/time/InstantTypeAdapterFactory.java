@@ -16,7 +16,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class InstantTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Instant> {
 
-	private static final TypeAdapterFactory defaultInstance = new InstantTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new InstantTypeAdapterFactory();
 
 	private InstantTypeAdapterFactory() {
 	}
@@ -24,8 +24,8 @@ public final class InstantTypeAdapterFactory
 	/**
 	 * @return An instance of {@link InstantTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public final class InstantTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<Instant> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		return InstantTypeAdapter.getDefaultInstance();
+		return InstantTypeAdapter.getInstance();
 	}
 
 }

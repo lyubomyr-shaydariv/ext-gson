@@ -13,7 +13,7 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class PeriodTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Period> {
 
-	private static final TypeAdapter<Period> defaultInstance = new PeriodTypeAdapter();
+	private static final TypeAdapter<Period> instance = new PeriodTypeAdapter();
 
 	private PeriodTypeAdapter() {
 	}
@@ -21,8 +21,8 @@ public final class PeriodTypeAdapter
 	/**
 	 * @return An instance of {@link PeriodTypeAdapter}.
 	 */
-	public static TypeAdapter<Period> getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapter<Period> getInstance() {
+		return instance;
 	}
 
 	@Override

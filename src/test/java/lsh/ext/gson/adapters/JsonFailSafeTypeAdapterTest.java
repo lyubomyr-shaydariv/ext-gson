@@ -23,12 +23,12 @@ public final class JsonFailSafeTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						JsonFailSafeTypeAdapterFactory.getDefaultInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(String.class))),
+						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(String.class))),
 						"[\"foo\",\"bar\"]",
 						() -> ImmutableList.of("foo", "bar")
 				),
 				test(
-						JsonFailSafeTypeAdapterFactory.getDefaultInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(Integer.class))),
+						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(Integer.class))),
 						"[1000]",
 						() -> ImmutableList.of(1000)
 				)

@@ -15,7 +15,7 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 public final class OffsetTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<OffsetTime> {
 
-	private static final TypeAdapter<OffsetTime> defaultInstance = new OffsetTimeTypeAdapter(null);
+	private static final TypeAdapter<OffsetTime> instance = new OffsetTimeTypeAdapter(null);
 
 	private OffsetTimeTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);
@@ -24,8 +24,8 @@ public final class OffsetTimeTypeAdapter
 	/**
 	 * @return An instance of {@link OffsetTimeTypeAdapter} with the Java-default {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<OffsetTime> getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapter<OffsetTime> getInstance() {
+		return instance;
 	}
 
 	/**
@@ -35,7 +35,7 @@ public final class OffsetTimeTypeAdapter
 	 */
 	public static TypeAdapter<OffsetTime> create(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
-			return defaultInstance;
+			return instance;
 		}
 		return new OffsetTimeTypeAdapter(dateTimeFormatter);
 	}

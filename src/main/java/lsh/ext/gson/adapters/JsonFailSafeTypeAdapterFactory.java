@@ -33,7 +33,7 @@ import com.google.gson.stream.MalformedJsonException;
 public final class JsonFailSafeTypeAdapterFactory
 		implements TypeAdapterFactory {
 
-	private static final TypeAdapterFactory defaultInstance = new JsonFailSafeTypeAdapterFactory();
+	private static final TypeAdapterFactory instance = new JsonFailSafeTypeAdapterFactory();
 
 	private JsonFailSafeTypeAdapterFactory() {
 	}
@@ -41,8 +41,8 @@ public final class JsonFailSafeTypeAdapterFactory
 	/**
 	 * @return An instance of {@link JsonFailSafeTypeAdapterFactory}.
 	 */
-	static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	@Override

@@ -20,12 +20,12 @@ public final class DayOfWeekTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						DayOfWeekTypeAdapter.getDefaultInstance(),
+						DayOfWeekTypeAdapter.getInstance(),
 						"\"MONDAY\"",
 						() -> DayOfWeek.MONDAY
 				),
 				test(
-						DayOfWeekTypeAdapter.getDefaultInstance(),
+						DayOfWeekTypeAdapter.getInstance(),
 						"\"FRIDAY\"",
 						() -> DayOfWeek.FRIDAY
 				)

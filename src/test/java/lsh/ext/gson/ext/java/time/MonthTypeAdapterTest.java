@@ -20,7 +20,7 @@ public final class MonthTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						MonthTypeAdapter.getDefaultInstance(),
+						MonthTypeAdapter.getInstance(),
 						"\"SEPTEMBER\"",
 						() -> Month.SEPTEMBER
 				)

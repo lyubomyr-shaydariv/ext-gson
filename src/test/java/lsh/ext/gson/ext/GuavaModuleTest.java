@@ -21,7 +21,7 @@ public final class GuavaModuleTest
 
 	@Override
 	protected IModule createUnit() {
-		return GuavaModule.getDefaultInstance();
+		return GuavaModule.getInstance();
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public final class AlwaysListTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return AlwaysListTypeAdapterFactory.getDefaultInstance();
+		return AlwaysListTypeAdapterFactory.getInstance();
 	}
 
 	@Override

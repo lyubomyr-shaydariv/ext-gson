@@ -22,7 +22,7 @@ import lsh.ext.gson.adapters.IModule;
 public final class JsonApiModule
 		extends AbstractModule {
 
-	private static final IModule defaultInstance = build()
+	private static final IModule instance = build()
 			.done();
 
 	private JsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -32,8 +32,8 @@ public final class JsonApiModule
 	/**
 	 * @return The default instance of the module with the default type adapter factories settings.
 	 */
-	public static IModule getDefaultInstance() {
-		return defaultInstance;
+	public static IModule getInstance() {
+		return instance;
 	}
 
 	/**
@@ -56,7 +56,7 @@ public final class JsonApiModule
 		 */
 		public IModule done() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Collections.unmodifiableList(Arrays.asList(
-					JsonValueTypeAdapterFactory.getDefaultInstance()
+					JsonValueTypeAdapterFactory.getInstance()
 			));
 			return new JsonApiModule(typeAdapterFactories);
 		}

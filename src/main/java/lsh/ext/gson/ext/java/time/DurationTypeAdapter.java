@@ -13,7 +13,7 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class DurationTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Duration> {
 
-	private static final TypeAdapter<Duration> defaultInstance = new DurationTypeAdapter();
+	private static final TypeAdapter<Duration> instance = new DurationTypeAdapter();
 
 	private DurationTypeAdapter() {
 	}
@@ -21,8 +21,8 @@ public final class DurationTypeAdapter
 	/**
 	 * @return An instance of {@link DurationTypeAdapter}.
 	 */
-	public static TypeAdapter<Duration> getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapter<Duration> getInstance() {
+		return instance;
 	}
 
 	@Override

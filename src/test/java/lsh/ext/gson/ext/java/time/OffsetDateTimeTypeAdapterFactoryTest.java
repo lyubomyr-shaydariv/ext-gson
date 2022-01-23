@@ -13,7 +13,7 @@ public final class OffsetDateTimeTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return OffsetDateTimeTypeAdapterFactory.getDefaultInstance();
+		return OffsetDateTimeTypeAdapterFactory.getInstance();
 	}
 
 }

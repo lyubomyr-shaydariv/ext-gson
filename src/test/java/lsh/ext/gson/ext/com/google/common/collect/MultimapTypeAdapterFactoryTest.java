@@ -19,7 +19,7 @@ public final class MultimapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultimapTypeAdapterFactory.getDefaultInstance();
+		return MultimapTypeAdapterFactory.getInstance();
 	}
 
 	@Override

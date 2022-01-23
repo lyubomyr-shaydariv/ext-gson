@@ -19,7 +19,7 @@ public final class EpochDateTypeAdapterTest
 	protected Stream<Arguments> source() {
 		return Stream.of(
 				test(
-						EpochDateTypeAdapter.getDefaultInstance(),
+						EpochDateTypeAdapter.getInstance(),
 						"1488929283",
 						() -> new Date(1488929283000L)
 				)

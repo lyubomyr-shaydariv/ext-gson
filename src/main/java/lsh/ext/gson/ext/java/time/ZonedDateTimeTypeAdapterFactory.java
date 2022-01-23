@@ -16,7 +16,7 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 public final class ZonedDateTimeTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<ZonedDateTime> {
 
-	private static final TypeAdapterFactory defaultInstance = new ZonedDateTimeTypeAdapterFactory(null);
+	private static final TypeAdapterFactory instance = new ZonedDateTimeTypeAdapterFactory(null);
 
 	private ZonedDateTimeTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(ZonedDateTime.class, dateTimeFormatter);
@@ -25,8 +25,8 @@ public final class ZonedDateTimeTypeAdapterFactory
 	/**
 	 * @return An instance of {@link ZonedDateTimeTypeAdapterFactory} with the Java-default {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	/**
@@ -36,14 +36,14 @@ public final class ZonedDateTimeTypeAdapterFactory
 	 */
 	public static TypeAdapterFactory get(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
-			return defaultInstance;
+			return instance;
 		}
 		return new ZonedDateTimeTypeAdapterFactory(dateTimeFormatter);
 	}
 
 	@Override
 	protected TypeAdapter<ZonedDateTime> create() {
-		return ZonedDateTimeTypeAdapter.getDefaultInstance();
+		return ZonedDateTimeTypeAdapter.getInstance();
 	}
 
 	@Override

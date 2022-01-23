@@ -16,7 +16,7 @@ import com.google.gson.TypeAdapterFactory;
 public final class CloseableIteratorTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
 
-	private static final TypeAdapterFactory defaultInstance = new CloseableIteratorTypeAdapterFactory<>();
+	private static final TypeAdapterFactory instance = new CloseableIteratorTypeAdapterFactory<>();
 
 	private CloseableIteratorTypeAdapterFactory() {
 		super(Iterator.class);
@@ -25,8 +25,8 @@ public final class CloseableIteratorTypeAdapterFactory<E>
 	/**
 	 * @return An instance of {@link CloseableIteratorTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	@Override

@@ -63,14 +63,14 @@ import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
  * <p>JSON path expressions that point to not existing paths are ignored.</p>
  *
  * @author Lyubomyr Shaydariv
- * @see #getDefaultInstance()
+ * @see #getInstance()
  * @see #create(Function)
  * @see #getWithGlobalDefaults()
  */
 public final class JsonPathTypeAdapterFactory
 		implements TypeAdapterFactory {
 
-	private static final TypeAdapterFactory defaultInstance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
+	private static final TypeAdapterFactory instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
 	private static final TypeAdapterFactory instanceWithGlobalDefaults = new JsonPathTypeAdapterFactory(gson -> Configuration.defaultConfiguration());
 
 	private final Function<? super Gson, ? extends Configuration> configurationProvider;
@@ -89,8 +89,8 @@ public final class JsonPathTypeAdapterFactory
 	 * @see Configuration.Defaults#jsonProvider()
 	 * @see Configuration.Defaults#mappingProvider()
 	 */
-	public static TypeAdapterFactory getDefaultInstance() {
-		return defaultInstance;
+	public static TypeAdapterFactory getInstance() {
+		return instance;
 	}
 
 	/**
