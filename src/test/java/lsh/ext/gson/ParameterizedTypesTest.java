@@ -1,5 +1,6 @@
 package lsh.ext.gson;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -27,7 +28,7 @@ public final class ParameterizedTypesTest {
 
 	@Test
 	public void testResolveTypeArgumentsForParameterizedTypesWithBounds() {
-		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ Number.class }, new Type[]{ CharSequence.class, new TypeToken<List<?>>() {}.getType() } }, ParameterizedTypes.getTypeArguments(GenericClassWithSomeBounds.class));
+		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ Number.class }, new Type[]{ Serializable.class, new TypeToken<List<?>>() {}.getType() } }, ParameterizedTypes.getTypeArguments(GenericClassWithSomeBounds.class));
 	}
 
 	@Test
@@ -57,7 +58,7 @@ public final class ParameterizedTypesTest {
 	}
 
 	@SuppressWarnings("unused")
-	private static final class GenericClassWithSomeBounds<N extends Number, CS extends CharSequence & List<?>> {
+	private static final class GenericClassWithSomeBounds<N extends Number, T extends Serializable & List<?>> {
 	}
 
 	private static void assertParameterized(final ParameterizedType actualParameterizedType, final Class<?> expectedRawType,
