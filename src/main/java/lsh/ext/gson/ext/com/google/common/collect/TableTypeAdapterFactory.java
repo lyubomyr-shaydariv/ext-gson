@@ -85,20 +85,20 @@ public final class TableTypeAdapterFactory<R, C, V>
 		final boolean lacksKeyConverters = rowKeyConverter == null && columnKeyConverter == null;
 		if ( newTableFactory == null && lacksKeyConverters ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) TableTypeAdapter.create(valueTypeAdapter);
+			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) TableTypeAdapter.getInstance(valueTypeAdapter);
 			return castTableTypeAdapter;
 		}
 		if ( newTableFactory != null && lacksKeyConverters ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Supplier<? extends Table<String, String, V>> castNewTableFactory = (Supplier) newTableFactory;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) TableTypeAdapter.create(valueTypeAdapter, castNewTableFactory);
+			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) TableTypeAdapter.getInstance(valueTypeAdapter, castNewTableFactory);
 			return castTableTypeAdapter;
 		}
 		if ( newTableFactory == null && !lacksKeyConverters ) {
-			return TableTypeAdapter.create(valueTypeAdapter, rowKeyConverter, columnKeyConverter);
+			return TableTypeAdapter.getInstance(valueTypeAdapter, rowKeyConverter, columnKeyConverter);
 		}
-		return TableTypeAdapter.create(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
+		return TableTypeAdapter.getInstance(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 	}
 
 }

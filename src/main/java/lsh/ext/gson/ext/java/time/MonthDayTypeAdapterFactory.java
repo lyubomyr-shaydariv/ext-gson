@@ -48,7 +48,7 @@ public final class MonthDayTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<MonthDay> create(final DateTimeFormatter dateTimeFormatter) {
-		return MonthDayTypeAdapter.create(dateTimeFormatter);
+		return MonthDayTypeAdapter.getInstance(dateTimeFormatter);
 	}
 
 }

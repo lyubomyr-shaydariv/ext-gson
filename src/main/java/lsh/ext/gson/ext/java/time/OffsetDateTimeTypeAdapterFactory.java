@@ -48,7 +48,7 @@ public final class OffsetDateTimeTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<OffsetDateTime> create(final DateTimeFormatter dateTimeFormatter) {
-		return OffsetDateTimeTypeAdapter.create(dateTimeFormatter);
+		return OffsetDateTimeTypeAdapter.getInstance(dateTimeFormatter);
 	}
 
 }

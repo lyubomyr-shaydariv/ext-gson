@@ -45,7 +45,7 @@ public final class MultisetTypeAdapterFactory<E>
 	 *
 	 * @return An instance of {@link MultisetTypeAdapterFactory} with a custom new {@link Multiset} factory.
 	 */
-	public static <E> TypeAdapterFactory create(@Nullable final Supplier<? extends Multiset<E>> newMultisetFactory) {
+	public static <E> TypeAdapterFactory getInstance(@Nullable final Supplier<? extends Multiset<E>> newMultisetFactory) {
 		if ( newMultisetFactory == null ) {
 			return instance;
 		}
@@ -64,9 +64,9 @@ public final class MultisetTypeAdapterFactory<E>
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
 		if ( newMultisetFactory == null ) {
-			return MultisetTypeAdapter.create(elementTypeAdapter);
+			return MultisetTypeAdapter.getInstance(elementTypeAdapter);
 		}
-		return MultisetTypeAdapter.create(elementTypeAdapter, newMultisetFactory);
+		return MultisetTypeAdapter.getInstance(elementTypeAdapter, newMultisetFactory);
 	}
 
 }

@@ -23,7 +23,7 @@ public final class MultimapTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						MultimapTypeAdapter.create(gson.getAdapter(String.class)),
+						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
 						() -> ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar")
 				)

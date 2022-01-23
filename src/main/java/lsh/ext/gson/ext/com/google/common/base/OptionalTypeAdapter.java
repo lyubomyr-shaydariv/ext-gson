@@ -25,7 +25,7 @@ public final class OptionalTypeAdapter<T>
 	 *
 	 * @return An {@link OptionalTypeAdapter} instance
 	 */
-	public static <T> TypeAdapter<Optional<T>> create(final TypeAdapter<T> valueTypeAdapter) {
+	public static <T> TypeAdapter<Optional<T>> getInstance(final TypeAdapter<T> valueTypeAdapter) {
 		return new OptionalTypeAdapter<>(valueTypeAdapter);
 	}
 

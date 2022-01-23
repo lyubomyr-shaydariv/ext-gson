@@ -23,7 +23,7 @@ public final class BiMapTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						BiMapTypeAdapter.create(gson.getAdapter(String.class)),
+						BiMapTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}",
 						() -> ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz")
 				)

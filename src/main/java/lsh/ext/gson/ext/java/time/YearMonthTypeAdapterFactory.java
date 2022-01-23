@@ -48,7 +48,7 @@ public final class YearMonthTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<YearMonth> create(final DateTimeFormatter dateTimeFormatter) {
-		return YearMonthTypeAdapter.create(dateTimeFormatter);
+		return YearMonthTypeAdapter.getInstance(dateTimeFormatter);
 	}
 
 }

@@ -32,7 +32,7 @@ import com.google.gson.stream.JsonWriter;
 public final class JsonValueTypeAdapter
 		extends TypeAdapter<JsonValue> {
 
-	private static final TypeAdapter<JsonValue> instance = create(JsonProvider.provider());
+	private static final TypeAdapter<JsonValue> instance = getInstance(JsonProvider.provider());
 
 	private final TypeAdapter<JsonValue> jsonNullTypeAdapter = JsonNullTypeAdapter.instance;
 	private final TypeAdapter<JsonValue> jsonBooleanTypeAdapter = JsonBooleanTypeAdapter.instance;
@@ -58,7 +58,7 @@ public final class JsonValueTypeAdapter
 	 *
 	 * @return An instance of {@link JsonValueTypeAdapter}.
 	 */
-	public static TypeAdapter<JsonValue> create(final JsonProvider jsonProvider) {
+	public static TypeAdapter<JsonValue> getInstance(final JsonProvider jsonProvider) {
 		return new JsonValueTypeAdapter(JsonNumberTypeAdapter.getInstance(jsonProvider), JsonStringTypeAdapter.getInstance(jsonProvider));
 	}
 

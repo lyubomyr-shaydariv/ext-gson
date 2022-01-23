@@ -48,7 +48,7 @@ public final class LocalDateTimeTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<LocalDateTime> create(final DateTimeFormatter dateTimeFormatter) {
-		return LocalDateTimeTypeAdapter.create(dateTimeFormatter);
+		return LocalDateTimeTypeAdapter.getInstance(dateTimeFormatter);
 	}
 
 }

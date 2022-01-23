@@ -33,7 +33,7 @@ public final class OffsetDateTimeTypeAdapter
 	 *
 	 * @return An instance of {@link OffsetDateTimeTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */
-	public static TypeAdapter<OffsetDateTime> create(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<OffsetDateTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}

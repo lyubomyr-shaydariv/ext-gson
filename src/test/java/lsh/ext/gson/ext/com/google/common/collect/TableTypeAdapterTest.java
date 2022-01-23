@@ -24,7 +24,7 @@ public final class TableTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						TableTypeAdapter.create(gson.getAdapter(TypeToken.get(Integer.class))),
+						TableTypeAdapter.getInstance(gson.getAdapter(TypeToken.get(Integer.class))),
 						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
 						() -> ImmutableTable.<String, String, Integer>builder()
 								.put("A", "1", 1)

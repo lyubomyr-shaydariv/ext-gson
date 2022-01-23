@@ -48,7 +48,7 @@ public final class ZonedDateTimeTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<ZonedDateTime> create(final DateTimeFormatter dateTimeFormatter) {
-		return ZonedDateTimeTypeAdapter.create(dateTimeFormatter);
+		return ZonedDateTimeTypeAdapter.getInstance(dateTimeFormatter);
 	}
 
 }

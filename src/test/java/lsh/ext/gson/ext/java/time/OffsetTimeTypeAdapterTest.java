@@ -27,7 +27,7 @@ public final class OffsetTimeTypeAdapterTest
 						() -> OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
 				),
 				test(
-						OffsetTimeTypeAdapter.create(DateTimeFormatter.ISO_OFFSET_TIME),
+						OffsetTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_OFFSET_TIME),
 						"\"12:34:56Z\"",
 						() -> OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
 				)

@@ -27,7 +27,7 @@ public final class OffsetDateTimeTypeAdapterTest
 						() -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
 				),
 				test(
-						OffsetDateTimeTypeAdapter.create(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+						OffsetDateTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
 						"\"1996-10-18T12:34:45Z\"",
 						() -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
 				)

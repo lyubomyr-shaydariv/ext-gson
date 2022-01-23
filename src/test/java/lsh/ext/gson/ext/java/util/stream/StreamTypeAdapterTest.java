@@ -23,7 +23,7 @@ public final class StreamTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						StreamTypeAdapter.create(gson.getAdapter(Integer.class)),
+						StreamTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
 						() -> ImmutableList.of(1, 2, 4, 8).stream()
 				)

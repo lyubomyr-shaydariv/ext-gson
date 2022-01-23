@@ -22,7 +22,7 @@ public final class OptionalTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						OptionalTypeAdapter.create(gson.getAdapter(String.class)),
+						OptionalTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"\"foo\"",
 						() -> Optional.of("foo")
 				)

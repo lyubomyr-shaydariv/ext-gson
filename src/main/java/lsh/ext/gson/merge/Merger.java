@@ -43,7 +43,7 @@ public final class Merger
 	@Override
 	public <T> T merge(final T instance, final Function<? super Gson, ? extends T> extractor) {
 		final Gson mergingGson = new GsonBuilder()
-				.registerTypeAdapterFactory(MergingTypeAdapterFactory.create(instance, gson, mappers))
+				.registerTypeAdapterFactory(MergingTypeAdapterFactory.getInstance(instance, gson, mappers))
 				.create();
 		return extractor.apply(mergingGson);
 	}
@@ -61,7 +61,7 @@ public final class Merger
 			this.mappers = mappers;
 		}
 
-		private static TypeAdapterFactory create(final Object instance, final Gson gson, final Iterable<? extends IMergeTypeAdapterMapper> mappers) {
+		private static TypeAdapterFactory getInstance(final Object instance, final Gson gson, final Iterable<? extends IMergeTypeAdapterMapper> mappers) {
 			return new MergingTypeAdapterFactory(instance, gson, mappers);
 		}
 

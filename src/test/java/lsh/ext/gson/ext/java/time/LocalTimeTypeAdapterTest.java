@@ -26,7 +26,7 @@ public final class LocalTimeTypeAdapterTest
 						() -> LocalTime.of(10, 10, 0)
 				),
 				test(
-						LocalTimeTypeAdapter.create(DateTimeFormatter.ISO_TIME),
+						LocalTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_TIME),
 						"\"19:23:33\"",
 						() -> LocalTime.of(19, 23, 33)
 				)

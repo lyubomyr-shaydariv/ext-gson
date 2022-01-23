@@ -23,7 +23,7 @@ public final class MultisetTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						MultisetTypeAdapter.create(gson.getAdapter(String.class)),
+						MultisetTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
 						() -> ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
 				)

@@ -32,7 +32,7 @@ public final class StreamTypeAdapterFactory<E>
 
 	@Override
 	protected TypeAdapter<?> createCursorTypeAdapter(final TypeAdapter<?> elementTypeAdapter) {
-		return StreamTypeAdapter.create(elementTypeAdapter);
+		return StreamTypeAdapter.getInstance(elementTypeAdapter);
 	}
 
 }

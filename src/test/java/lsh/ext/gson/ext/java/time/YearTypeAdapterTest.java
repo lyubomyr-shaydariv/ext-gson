@@ -26,7 +26,7 @@ public final class YearTypeAdapterTest
 						() -> Year.of(2018)
 				),
 				test(
-						YearTypeAdapter.create(DateTimeFormatter.ofPattern("y'-xx-xx'")),
+						YearTypeAdapter.getInstance(DateTimeFormatter.ofPattern("y'-xx-xx'")),
 						"\"2018-xx-xx\"",
 						() -> Year.of(2018)
 				)

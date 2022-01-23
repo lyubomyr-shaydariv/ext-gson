@@ -42,12 +42,12 @@ public final class MultimapTypeAdapter<K, V>
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance whose multimap factory is {@link ArrayListMultimap#create()}.
 	 */
-	public static <V> TypeAdapter<Multimap<String, V>> create(final TypeAdapter<V> valueTypeAdapter) {
+	public static <V> TypeAdapter<Multimap<String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter) {
 		@SuppressWarnings("unchecked")
 		final Supplier<? extends Multimap<String, V>> newMultimapFactory = (Supplier<? extends Multimap<String, V>>) defaultNewMultimapFactory;
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
-		return create(valueTypeAdapter, newMultimapFactory, keyConverter);
+		return getInstance(valueTypeAdapter, newMultimapFactory, keyConverter);
 	}
 
 	/**
@@ -57,11 +57,11 @@ public final class MultimapTypeAdapter<K, V>
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
 	 */
-	public static <V> TypeAdapter<Multimap<String, V>> create(final TypeAdapter<V> valueTypeAdapter,
+	public static <V> TypeAdapter<Multimap<String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multimap<String, V>> newMultimapFactory) {
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
-		return create(valueTypeAdapter, newMultimapFactory, keyConverter);
+		return getInstance(valueTypeAdapter, newMultimapFactory, keyConverter);
 	}
 
 	/**
@@ -72,10 +72,10 @@ public final class MultimapTypeAdapter<K, V>
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
 	 */
-	public static <K, V> TypeAdapter<Multimap<K, V>> create(final TypeAdapter<V> valueTypeAdapter, final Converter<K, String> keyConverter) {
+	public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter, final Converter<K, String> keyConverter) {
 		@SuppressWarnings("unchecked")
 		final Supplier<? extends Multimap<K, V>> newMultimapFactory = (Supplier<? extends Multimap<K, V>>) defaultNewMultimapFactory;
-		return create(valueTypeAdapter, newMultimapFactory, keyConverter);
+		return getInstance(valueTypeAdapter, newMultimapFactory, keyConverter);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public final class MultimapTypeAdapter<K, V>
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
 	 */
-	public static <K, V> TypeAdapter<Multimap<K, V>> create(final TypeAdapter<V> valueTypeAdapter,
+	public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multimap<K, V>> newMultimapFactory, final Converter<K, String> keyConverter) {
 		return new MultimapTypeAdapter<>(valueTypeAdapter, newMultimapFactory, keyConverter)
 				.nullSafe();

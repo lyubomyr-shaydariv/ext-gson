@@ -42,12 +42,12 @@ public final class BiMapTypeAdapter<K, V>
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */
-	public static <V> TypeAdapter<BiMap<String, V>> create(final TypeAdapter<V> valueTypeAdapter) {
+	public static <V> TypeAdapter<BiMap<String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter) {
 		@SuppressWarnings("unchecked")
 		final Supplier<? extends BiMap<String, V>> newBiMapFactory = (Supplier<? extends BiMap<String, V>>) defaultNewBiMapFactory;
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
-		return create(valueTypeAdapter, newBiMapFactory, keyConverter);
+		return getInstance(valueTypeAdapter, newBiMapFactory, keyConverter);
 	}
 
 	/**
@@ -57,10 +57,10 @@ public final class BiMapTypeAdapter<K, V>
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */
-	public static <V> TypeAdapter<BiMap<String, V>> create(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends BiMap<String, V>> newBiMapFactory) {
+	public static <V> TypeAdapter<BiMap<String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends BiMap<String, V>> newBiMapFactory) {
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
-		return create(valueTypeAdapter, newBiMapFactory, keyConverter);
+		return getInstance(valueTypeAdapter, newBiMapFactory, keyConverter);
 	}
 
 	/**
@@ -71,10 +71,10 @@ public final class BiMapTypeAdapter<K, V>
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */
-	public static <K, V> TypeAdapter<BiMap<K, V>> create(final TypeAdapter<V> valueTypeAdapter, final Converter<K, String> keyConverter) {
+	public static <K, V> TypeAdapter<BiMap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter, final Converter<K, String> keyConverter) {
 		@SuppressWarnings("unchecked")
 		final Supplier<? extends BiMap<K, V>> newBiMapFactory = (Supplier<? extends BiMap<K, V>>) defaultNewBiMapFactory;
-		return create(valueTypeAdapter, newBiMapFactory, keyConverter);
+		return getInstance(valueTypeAdapter, newBiMapFactory, keyConverter);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public final class BiMapTypeAdapter<K, V>
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */
-	public static <K, V> TypeAdapter<BiMap<K, V>> create(final TypeAdapter<V> valueTypeAdapter,
+	public static <K, V> TypeAdapter<BiMap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends BiMap<K, V>> newBiMapFactory, final Converter<K, String> keyConverter) {
 		return new BiMapTypeAdapter<>(valueTypeAdapter, newBiMapFactory, keyConverter)
 				.nullSafe();

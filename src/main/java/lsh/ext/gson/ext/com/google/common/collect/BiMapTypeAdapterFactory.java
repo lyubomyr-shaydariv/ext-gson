@@ -50,7 +50,7 @@ public final class BiMapTypeAdapterFactory<K, V>
 	 *
 	 * @return An instance of {@link BiMapTypeAdapterFactory} with a custom new {@link BiMap} factory.
 	 */
-	public static <K, V> TypeAdapterFactory create(@Nullable final Supplier<? extends BiMap<K, V>> newBiMapFactory,
+	public static <K, V> TypeAdapterFactory getInstance(@Nullable final Supplier<? extends BiMap<K, V>> newBiMapFactory,
 			@Nullable final Converter<K, String> keyConverter) {
 		if ( newBiMapFactory == null && keyConverter == null ) {
 			return instance;
@@ -72,20 +72,20 @@ public final class BiMapTypeAdapterFactory<K, V>
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		if ( newBiMapFactory == null && keyConverter == null ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<BiMap<K, V>> castBiMapTypeAdapter = (TypeAdapter) BiMapTypeAdapter.create(valueTypeAdapter);
+			final TypeAdapter<BiMap<K, V>> castBiMapTypeAdapter = (TypeAdapter) BiMapTypeAdapter.getInstance(valueTypeAdapter);
 			return castBiMapTypeAdapter;
 		}
 		if ( newBiMapFactory != null && keyConverter == null ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Supplier<? extends BiMap<String, V>> castNewBiMapFactory = (Supplier) newBiMapFactory;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<BiMap<K, V>> castBiMapTypeAdapter = (TypeAdapter) BiMapTypeAdapter.create(valueTypeAdapter, castNewBiMapFactory);
+			final TypeAdapter<BiMap<K, V>> castBiMapTypeAdapter = (TypeAdapter) BiMapTypeAdapter.getInstance(valueTypeAdapter, castNewBiMapFactory);
 			return castBiMapTypeAdapter;
 		}
 		if ( newBiMapFactory == null && keyConverter != null ) {
-			return BiMapTypeAdapter.create(valueTypeAdapter, keyConverter);
+			return BiMapTypeAdapter.getInstance(valueTypeAdapter, keyConverter);
 		}
-		return BiMapTypeAdapter.create(valueTypeAdapter, newBiMapFactory, keyConverter);
+		return BiMapTypeAdapter.getInstance(valueTypeAdapter, newBiMapFactory, keyConverter);
 	}
 
 }
