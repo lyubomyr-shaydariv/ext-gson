@@ -109,7 +109,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link LocalDateTimeTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link LocalDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param localDateTimeFormatter Date formatter
 		 *
@@ -121,7 +121,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link LocalDateTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link LocalDateTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param localDateFormatter Date formatter
 		 *
@@ -133,7 +133,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link LocalTimeTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link LocalTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param localTimeFormatter Date formatter
 		 *
@@ -145,7 +145,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link MonthDayTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link MonthDayTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param monthDayFormatter Date formatter
 		 *
@@ -157,7 +157,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link OffsetDateTimeTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link OffsetDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param offsetDateTimeFormatter Date formatter
 		 *
@@ -169,7 +169,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link OffsetTimeTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link OffsetTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param offsetTimeFormatter Date formatter
 		 *
@@ -181,7 +181,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link YearMonthTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link YearMonthTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param yearMonthFormatter Date formatter
 		 *
@@ -193,7 +193,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link YearTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link YearTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param yearFormatter Date formatter
 		 *
@@ -205,7 +205,7 @@ public final class Java8TimeModule
 		}
 
 		/**
-		 * Sets a date/time formatter to be used in {@link ZonedDateTimeTypeAdapterFactory#get(DateTimeFormatter)}.
+		 * Sets a date/time formatter to be used in {@link ZonedDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
 		 * @param zonedDateTimeFormatter Date formatter
 		 *
@@ -224,17 +224,17 @@ public final class Java8TimeModule
 					DayOfWeekTypeAdapterFactory.getInstance(),
 					DurationTypeAdapterFactory.getInstance(),
 					InstantTypeAdapterFactory.getInstance(),
-					LocalDateTimeTypeAdapterFactory.get(localDateTimeFormatter),
-					LocalDateTypeAdapterFactory.get(localDateFormatter),
-					LocalTimeTypeAdapterFactory.get(localTimeFormatter),
-					MonthDayTypeAdapterFactory.get(monthDayFormatter),
+					LocalDateTimeTypeAdapterFactory.getInstance(localDateTimeFormatter),
+					LocalDateTypeAdapterFactory.getInstance(localDateFormatter),
+					LocalTimeTypeAdapterFactory.getInstance(localTimeFormatter),
+					MonthDayTypeAdapterFactory.getInstance(monthDayFormatter),
 					MonthTypeAdapterFactory.getInstance(),
-					OffsetDateTimeTypeAdapterFactory.get(offsetDateTimeFormatter),
-					OffsetTimeTypeAdapterFactory.get(offsetTimeFormatter),
+					OffsetDateTimeTypeAdapterFactory.getInstance(offsetDateTimeFormatter),
+					OffsetTimeTypeAdapterFactory.getInstance(offsetTimeFormatter),
 					PeriodTypeAdapterFactory.getInstance(),
-					YearMonthTypeAdapterFactory.get(yearMonthFormatter),
-					YearTypeAdapterFactory.get(yearFormatter),
-					ZonedDateTimeTypeAdapterFactory.get(zonedDateTimeFormatter)
+					YearMonthTypeAdapterFactory.getInstance(yearMonthFormatter),
+					YearTypeAdapterFactory.getInstance(yearFormatter),
+					ZonedDateTimeTypeAdapterFactory.getInstance(zonedDateTimeFormatter)
 			)
 					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
 			return new Java8TimeModule(typeAdapterFactories);

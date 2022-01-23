@@ -27,7 +27,7 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	 *
 	 * @return A {@link DynamicSerializedNameFieldNamingStrategy} instance.
 	 */
-	public static FieldNamingStrategy get(final IFieldNamingResolver fieldNamingResolver) {
+	public static FieldNamingStrategy getInstance(final IFieldNamingResolver fieldNamingResolver) {
 		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, FieldNamingPolicy.IDENTITY);
 	}
 
@@ -37,7 +37,7 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	 *
 	 * @return A {@link DynamicSerializedNameFieldNamingStrategy} instance.
 	 */
-	public static FieldNamingStrategy get(final IFieldNamingResolver fieldNamingResolver,
+	public static FieldNamingStrategy getInstance(final IFieldNamingResolver fieldNamingResolver,
 			final FieldNamingStrategy fallbackFieldNamingStrategy) {
 		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, fallbackFieldNamingStrategy);
 	}

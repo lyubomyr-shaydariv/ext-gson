@@ -30,7 +30,7 @@ public final class AbstractClassTypeAdapterFactory<T>
 	 *
 	 * @return An instance of {@link AbstractClassTypeAdapterFactory}
 	 */
-	public static TypeAdapterFactory get(final String typePropertyName, final String valuePropertyName) {
+	public static TypeAdapterFactory getInstance(final String typePropertyName, final String valuePropertyName) {
 		return new AbstractClassTypeAdapterFactory<>(typePropertyName, valuePropertyName);
 	}
 
@@ -41,7 +41,7 @@ public final class AbstractClassTypeAdapterFactory<T>
 
 	@Override
 	protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		return TypeAwareTypeAdapter.get(gson, typePropertyName, valuePropertyName);
+		return TypeAwareTypeAdapter.getInstance(gson, typePropertyName, valuePropertyName);
 	}
 
 }

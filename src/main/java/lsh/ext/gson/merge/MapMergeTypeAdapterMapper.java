@@ -36,8 +36,8 @@ public final class MapMergeTypeAdapterMapper
 	/**
 	 * @return An instance of {@link MapMergeTypeAdapterMapper}.
 	 */
-	public static IMergeTypeAdapterMapper get() {
-		return get(false);
+	public static IMergeTypeAdapterMapper getInstance() {
+		return getInstance(false);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public final class MapMergeTypeAdapterMapper
 	 *
 	 * @return An instance of {@link MapMergeTypeAdapterMapper}.
 	 */
-	public static IMergeTypeAdapterMapper get(final boolean complexMapKeySerialization) {
+	public static IMergeTypeAdapterMapper getInstance(final boolean complexMapKeySerialization) {
 		return !complexMapKeySerialization ? instance : instanceComplex;
 	}
 

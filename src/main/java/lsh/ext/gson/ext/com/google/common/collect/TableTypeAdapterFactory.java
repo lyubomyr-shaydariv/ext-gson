@@ -58,7 +58,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
 	 */
 	@SuppressWarnings("OverlyComplexBooleanExpression")
-	public static <R, C, V> TypeAdapterFactory get(@Nullable final Supplier<? extends Table<R, C, V>> newTableFactory,
+	public static <R, C, V> TypeAdapterFactory getInstance(@Nullable final Supplier<? extends Table<R, C, V>> newTableFactory,
 			@Nullable final Converter<R, String> rowKeyConverter, @Nullable final Converter<C, String> columnKeyConverter) {
 		if ( newTableFactory == null && rowKeyConverter == null && columnKeyConverter == null ) {
 			return instance;

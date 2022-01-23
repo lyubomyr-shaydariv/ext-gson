@@ -59,7 +59,7 @@ public final class JsonValueTypeAdapter
 	 * @return An instance of {@link JsonValueTypeAdapter}.
 	 */
 	public static TypeAdapter<JsonValue> create(final JsonProvider jsonProvider) {
-		return new JsonValueTypeAdapter(JsonNumberTypeAdapter.get(jsonProvider), JsonStringTypeAdapter.get(jsonProvider));
+		return new JsonValueTypeAdapter(JsonNumberTypeAdapter.getInstance(jsonProvider), JsonStringTypeAdapter.getInstance(jsonProvider));
 	}
 
 	@Override
@@ -185,7 +185,7 @@ public final class JsonValueTypeAdapter
 			this.jsonProvider = jsonProvider;
 		}
 
-		private static TypeAdapter<JsonNumber> get(final JsonProvider jsonProvider) {
+		private static TypeAdapter<JsonNumber> getInstance(final JsonProvider jsonProvider) {
 			return new JsonNumberTypeAdapter(jsonProvider)
 					.nullSafe();
 		}
@@ -223,7 +223,7 @@ public final class JsonValueTypeAdapter
 			this.jsonProvider = jsonProvider;
 		}
 
-		private static TypeAdapter<JsonString> get(final JsonProvider jsonProvider) {
+		private static TypeAdapter<JsonString> getInstance(final JsonProvider jsonProvider) {
 			return new JsonStringTypeAdapter(jsonProvider)
 					.nullSafe();
 		}

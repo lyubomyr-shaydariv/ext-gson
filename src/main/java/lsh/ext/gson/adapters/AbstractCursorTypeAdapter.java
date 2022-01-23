@@ -45,7 +45,7 @@ public abstract class AbstractCursorTypeAdapter<C, E>
 
 	@Override
 	public final C read(final JsonReader in) {
-		final ICloseableIterator<E> closeableIterator = JsonReaderIterator.get(elementTypeAdapter, in);
+		final ICloseableIterator<E> closeableIterator = JsonReaderIterator.getInstance(elementTypeAdapter, in);
 		return fromIterator(closeableIterator);
 	}
 

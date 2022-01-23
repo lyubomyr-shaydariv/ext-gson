@@ -32,7 +32,7 @@ public final class AlwaysListTypeAdapter<E>
 	 *
 	 * @return An instance of {@link AlwaysListTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<List<E>> get(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<List<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 		return new AlwaysListTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}

@@ -27,7 +27,7 @@ public final class CloseableEnumerationTypeAdapterTest
 		final Gson gson = new Gson();
 		return Stream.of(
 				test(
-						CloseableEnumerationTypeAdapter.get(gson.getAdapter(Integer.class)),
+						CloseableEnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
 						() -> CloseableEnumerations.from(CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator()))
 				)

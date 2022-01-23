@@ -39,7 +39,7 @@ public final class AlwaysListTypeAdapterFactory<E>
 		final Type elementType = ParameterizedTypes.getTypeArguments(typeToken.getType())[0][0];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
-		return AlwaysListTypeAdapter.get(elementTypeAdapter);
+		return AlwaysListTypeAdapter.getInstance(elementTypeAdapter);
 	}
 
 }

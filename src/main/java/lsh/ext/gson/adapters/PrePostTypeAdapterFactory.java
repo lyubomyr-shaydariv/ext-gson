@@ -32,9 +32,9 @@ public final class PrePostTypeAdapterFactory
 	 *
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
 	 *
-	 * @see #get(IPrePostProcessorFactory)
+	 * @see #getInstance(IPrePostProcessorFactory)
 	 */
-	public static TypeAdapterFactory get(final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories) {
+	public static TypeAdapterFactory getInstance(final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories) {
 		return new PrePostTypeAdapterFactory(processorFactories);
 	}
 
@@ -43,9 +43,9 @@ public final class PrePostTypeAdapterFactory
 	 *
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
 	 *
-	 * @see #get(Iterable)
+	 * @see #getInstance(Iterable)
 	 */
-	public static TypeAdapterFactory get(final IPrePostProcessorFactory<?> processorFactory) {
+	public static TypeAdapterFactory getInstance(final IPrePostProcessorFactory<?> processorFactory) {
 		return new PrePostTypeAdapterFactory(Collections.singleton(processorFactory));
 	}
 

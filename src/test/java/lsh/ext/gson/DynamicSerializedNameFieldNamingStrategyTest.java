@@ -13,7 +13,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateNameForStaticMappings()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.get(DynamicSerializedNameFieldNamingStrategyTest::resolve);
+		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::resolve);
 		Assertions.assertEquals("foo", unit.translateName(StaticFooBar.class.getDeclaredField("foo")));
 		Assertions.assertEquals("bar", unit.translateName(StaticFooBar.class.getDeclaredField("bar")));
 	}
@@ -21,7 +21,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateNameForDynamicMappings()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.get(DynamicSerializedNameFieldNamingStrategyTest::resolve);
+		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::resolve);
 		Assertions.assertEquals("FOO1", unit.translateName(DynamicFooBar.class.getDeclaredField("foo")));
 		Assertions.assertEquals("BAR2", unit.translateName(DynamicFooBar.class.getDeclaredField("bar")));
 	}
@@ -29,7 +29,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateForDynamicMappingsIfNull()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.get(value -> null);
+		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(value -> null);
 		Assertions.assertEquals("foo", unit.translateName(DynamicFooBar.class.getDeclaredField("foo")));
 		Assertions.assertEquals("bar", unit.translateName(DynamicFooBar.class.getDeclaredField("bar")));
 	}
@@ -37,7 +37,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateNameForStaticMappingsIntegration() {
 		final Gson gson = new GsonBuilder()
-				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.get(DynamicSerializedNameFieldNamingStrategyTest::resolve))
+				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::resolve))
 				.create();
 		final StaticFooBar staticFooBar = gson.fromJson("{\"foo\":\"1\",\"bar\":\"2\"}", StaticFooBar.class);
 		Assertions.assertEquals("1", staticFooBar.foo);
@@ -47,7 +47,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegration() {
 		final Gson gson = new GsonBuilder()
-				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.get(DynamicSerializedNameFieldNamingStrategyTest::resolve))
+				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::resolve))
 				.create();
 		final DynamicFooBar dynamicFooBar = gson.fromJson("{\"FOO1\":\"1\",\"BAR2\":\"2\"}", DynamicFooBar.class);
 		Assertions.assertEquals("1", dynamicFooBar.foo);
@@ -58,7 +58,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	public void testTranslateNameForDynamicMappingsIntegrationWithSerializedNameThatHasHigherPriority() {
 		final IFieldNamingResolver mockNameResolver = Mockito.mock(IFieldNamingResolver.class);
 		final Gson gson = new GsonBuilder()
-				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.get(mockNameResolver))
+				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getInstance(mockNameResolver))
 				.create();
 		final MixedFooBar mixedFooBar = gson.fromJson("{\"staticFoo\":\"1\",\"staticBar\":\"2\"}", MixedFooBar.class);
 		Assertions.assertEquals("1", mixedFooBar.foo);

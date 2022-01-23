@@ -28,7 +28,7 @@ public final class PrePostTypeAdapterFactoryTest {
 			}
 		};
 		final Gson gson = new GsonBuilder()
-				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.get(ImmutableList.of(userProcessorFactory)))
+				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(ImmutableList.of(userProcessorFactory)))
 				.create();
 		gson.toJson(new User("John", "Doe"));
 		Mockito.verify(userProcessor).pre(ArgumentMatchers.eq(new User("John", "Doe")));
@@ -50,7 +50,7 @@ public final class PrePostTypeAdapterFactoryTest {
 			}
 		};
 		final Gson gson = new GsonBuilder()
-				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.get(ImmutableList.of(userProcessorFactory)))
+				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(ImmutableList.of(userProcessorFactory)))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);
 		Mockito.verify(userProcessor).post(ArgumentMatchers.eq(new User("John", "Doe")));

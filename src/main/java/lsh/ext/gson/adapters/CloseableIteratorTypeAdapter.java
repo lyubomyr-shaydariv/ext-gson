@@ -32,7 +32,7 @@ public final class CloseableIteratorTypeAdapter<E>
 	 *
 	 * @return An instance of {@link CloseableIteratorTypeAdapter}.
 	 */
-	public static <E> TypeAdapter<ICloseableIterator<E>> get(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<ICloseableIterator<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 		return new CloseableIteratorTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}

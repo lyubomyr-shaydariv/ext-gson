@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public final class AbstractClassTypeAdapterFactoryTest {
 
 	private static final Gson gson = new GsonBuilder()
-			.registerTypeAdapterFactory(AbstractClassTypeAdapterFactory.get("$T", "$V"))
+			.registerTypeAdapterFactory(AbstractClassTypeAdapterFactory.getInstance("$T", "$V"))
 			.create();
 
 	@Test

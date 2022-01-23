@@ -21,7 +21,7 @@ public final class JsonReaderIterator<E>
 		this.in = in;
 	}
 
-	public static <E> ICloseableIterator<E> get(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
+	public static <E> ICloseableIterator<E> getInstance(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
 		return new JsonReaderIterator<>(elementTypeAdapter, in);
 	}
 

@@ -151,7 +151,7 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a new table factory use in {@link TableTypeAdapterFactory#get(Supplier, Converter, Converter)}
+		 * Sets a new table factory use in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
 		 *
 		 * @param newTableFactory A supplier to return a new table
 		 *
@@ -163,7 +163,7 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a table row key converter used in {@link TableTypeAdapterFactory#get(Supplier, Converter, Converter)}
+		 * Sets a table row key converter used in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
 		 *
 		 * @param tableRowKeyConverter A converter to convert a table row key to a string and vice versa
 		 *
@@ -175,7 +175,7 @@ public final class GuavaModule
 		}
 
 		/**
-		 * Sets a table column key converter used in {@link TableTypeAdapterFactory#get(Supplier, Converter, Converter)}
+		 * Sets a table column key converter used in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
 		 *
 		 * @param tableColumnKeyConverter A converter to convert a table column key to a string and vice versa
 		 *
@@ -209,7 +209,7 @@ public final class GuavaModule
 					.add(BiMapTypeAdapterFactory.create(castNewBiMapFactory, castBiMapKeyConverter))
 					.add(MultimapTypeAdapterFactory.create(castNewMultimapFactory, castMultimapKeyConverter))
 					.add(MultisetTypeAdapterFactory.create(castNewMultisetFactory))
-					.add(TableTypeAdapterFactory.get(newTableFactory, castTableRowKeyConverter, castTableColumnKeyConverter))
+					.add(TableTypeAdapterFactory.getInstance(newTableFactory, castTableRowKeyConverter, castTableColumnKeyConverter))
 					.build();
 			return new GuavaModule(typeAdapterFactories);
 		}
