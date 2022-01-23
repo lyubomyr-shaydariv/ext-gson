@@ -1,6 +1,5 @@
 package lsh.ext.gson.merge;
 
-
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;

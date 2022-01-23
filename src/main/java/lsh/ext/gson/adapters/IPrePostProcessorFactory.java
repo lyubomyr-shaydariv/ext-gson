@@ -1,7 +1,5 @@
 package lsh.ext.gson.adapters;
 
-
-
 import com.google.gson.reflect.TypeToken;
 
 /**

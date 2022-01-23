@@ -1,7 +1,5 @@
 package lsh.ext.gson;
 
-
-
 import com.google.gson.JsonNull;
 
 /**

@@ -1,6 +1,5 @@
 package lsh.ext.gson.ext.json;
 
-
 import javax.json.JsonValue;
 
 import com.google.gson.Gson;

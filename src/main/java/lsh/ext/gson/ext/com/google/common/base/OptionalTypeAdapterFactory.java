@@ -1,7 +1,5 @@
 package lsh.ext.gson.ext.com.google.common.base;
 
-
-
 import com.google.common.base.Optional;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;

@@ -1,6 +1,5 @@
 package lsh.ext.gson.ext.com.google.common.base;
 
-
 import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
