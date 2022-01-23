@@ -17,7 +17,6 @@ import com.google.gson.reflect.TypeToken;
  * Provides miscellaneous {@link TypeAdapter} utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class TypeAdapters {
 
@@ -50,7 +49,6 @@ public final class TypeAdapters {
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
 	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
-	 * @since 0-SNAPSHOT
 	 */
 	public static <T> T ofConcrete(@Nonnull final Class<?> clazz)
 			throws IllegalArgumentException {
@@ -78,7 +76,6 @@ public final class TypeAdapters {
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
 	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
-	 * @since 0-SNAPSHOT
 	 */
 	public static <T> T ofHierarchy(final Class<?> clazz)
 			throws IllegalArgumentException {

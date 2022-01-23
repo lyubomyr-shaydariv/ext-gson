@@ -20,7 +20,6 @@ import lsh.ext.gson.ICloseableIterator;
  *
  * @author Lyubomyr Shaydariv
  * @see CloseableEnumerationTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class CloseableEnumerationTypeAdapter<E>
 		extends AbstractCursorTypeAdapter<ICloseableEnumeration<E>, E> {

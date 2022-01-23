@@ -15,7 +15,6 @@ import javax.annotation.Nullable;
  * Provides miscellaneous {@link ParameterizedType} utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class ParameterizedTypes {
 
@@ -31,8 +30,6 @@ public final class ParameterizedTypes {
 	 *
 	 * @return A two-dimensional array where each element is an array of a {@link Type} instance or {@code Object.class} but never {@code null}, otherwise an
 	 * empty array if no type parameters are available.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static Type[][] getTypeArguments(final Type type) {
 		if ( type instanceof ParameterizedType ) {
@@ -68,7 +65,6 @@ public final class ParameterizedTypes {
 	 *
 	 * @see #setOf(Type)
 	 * @see #mapOf(Type, Type)
-	 * @since 0-SNAPSHOT
 	 */
 	public static ParameterizedType listOf(final Type elementType) {
 		return new ListParameterizedType(elementType);
@@ -81,7 +77,6 @@ public final class ParameterizedTypes {
 	 *
 	 * @see #listOf(Type)
 	 * @see #mapOf(Type, Type)
-	 * @since 0-SNAPSHOT
 	 */
 	public static ParameterizedType setOf(final Type elementType) {
 		return new SetParameterizedType(elementType);
@@ -95,7 +90,6 @@ public final class ParameterizedTypes {
 	 *
 	 * @see #listOf(Type)
 	 * @see #setOf(Type)
-	 * @since 0-SNAPSHOT
 	 */
 	public static ParameterizedType mapOf(final Type keyType, final Type valueType) {
 		return new MapParameterizedType(keyType, valueType);

@@ -15,7 +15,6 @@ import com.google.gson.stream.JsonWriter;
  * @param <T> Value held by optional type
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public abstract class AbstractOptionalTypeAdapter<O, T>
 		extends TypeAdapter<O> {
@@ -30,8 +29,6 @@ public abstract class AbstractOptionalTypeAdapter<O, T>
 	 * @param optional Optional to get a value from
 	 *
 	 * @return A value from the given optional.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nullable
 	protected abstract T fromOptional(@Nonnull O optional);
@@ -40,8 +37,6 @@ public abstract class AbstractOptionalTypeAdapter<O, T>
 	 * @param value Value to get an optional from
 	 *
 	 * @return An optional from the given value.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	protected abstract O toOptional(@Nullable T value);

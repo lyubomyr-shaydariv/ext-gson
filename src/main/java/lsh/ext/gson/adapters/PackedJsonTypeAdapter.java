@@ -51,7 +51,6 @@ import lsh.ext.gson.JsonStreams;
  *
  * @author Lyubomyr Shaydariv
  * @see UnpackedJsonTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class PackedJsonTypeAdapter
 		extends TypeAdapter<String> {
@@ -64,8 +63,6 @@ public final class PackedJsonTypeAdapter
 
 	/**
 	 * @return An instance of {@link PackedJsonTypeAdapter}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapter<String> getDefaultInstance() {
 		return defaultInstance;

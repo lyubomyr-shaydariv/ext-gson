@@ -16,7 +16,6 @@ import com.google.gson.stream.JsonWriter;
  *
  * @author Lyubomyr Shaydariv
  * @see TableTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class TableTypeAdapter<R, C, V>
 		extends TypeAdapter<Table<R, C, V>> {
@@ -46,8 +45,6 @@ public final class TableTypeAdapter<R, C, V>
 	 * @param <V>              Table value type
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<Table<String, String, V>> create(final TypeAdapter<V> valueTypeAdapter) {
 		@SuppressWarnings("unchecked")
@@ -65,8 +62,6 @@ public final class TableTypeAdapter<R, C, V>
 	 * @param <V>              Table value type
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<Table<String, String, V>> create(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Table<String, String, V>> newTableFactory) {
@@ -86,8 +81,6 @@ public final class TableTypeAdapter<R, C, V>
 	 * @param <V>                Table value type
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <R, C, V> TypeAdapter<Table<R, C, V>> create(final TypeAdapter<V> valueTypeAdapter, final Converter<R, String> rowKeyConverter,
 			final Converter<C, String> columnKeyConverter) {
@@ -106,8 +99,6 @@ public final class TableTypeAdapter<R, C, V>
 	 * @param <V>                Table value type
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <R, C, V> TypeAdapter<Table<R, C, V>> create(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Table<R, C, V>> newTableFactory,
 			final Converter<R, String> rowKeyConverter, final Converter<C, String> columnKeyConverter) {

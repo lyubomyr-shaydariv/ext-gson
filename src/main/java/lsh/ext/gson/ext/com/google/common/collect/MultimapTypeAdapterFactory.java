@@ -19,7 +19,6 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  *
  * @author Lyubomyr Shaydariv
  * @see MultimapTypeAdapter
- * @since 0-SNAPSHOT
  */
 public final class MultimapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<Multimap<K, V>> {
@@ -40,8 +39,6 @@ public final class MultimapTypeAdapterFactory<K, V>
 
 	/**
 	 * @return An instance of {@link MultimapTypeAdapterFactory}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory getDefaultInstance() {
 		return defaultInstance;
@@ -54,8 +51,6 @@ public final class MultimapTypeAdapterFactory<K, V>
 	 * @param <V>                Vqlue type
 	 *
 	 * @return An instance of {@link MultimapTypeAdapterFactory} with a custom new {@link Multimap} factory.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <K, V> TypeAdapterFactory create(@Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
 			@Nullable final Converter<K, String> keyConverter) {

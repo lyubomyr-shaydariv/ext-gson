@@ -8,7 +8,6 @@ import com.google.gson.JsonPrimitive;
  * Provides miscellaneous {@link JsonPrimitive} utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class JsonPrimitives {
 
@@ -22,8 +21,6 @@ public final class JsonPrimitives {
 	 * @param b A boolean value.
 	 *
 	 * @return A new JSON primitive value for {@code true} or {@code false}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")
@@ -38,8 +35,6 @@ public final class JsonPrimitives {
 	 * @param n A numeric value.
 	 *
 	 * @return A new JSON primitive for numbers.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonPrimitive of(@Nonnull final Number n) {
@@ -50,8 +45,6 @@ public final class JsonPrimitives {
 	 * @param s A string value.
 	 *
 	 * @return A new JSON primitive for strings.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonPrimitive of(@Nonnull final String s) {
@@ -62,8 +55,6 @@ public final class JsonPrimitives {
 	 * @param c A character value.
 	 *
 	 * @return A new JSON primitive for characters.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonPrimitive of(@Nonnull final Character c) {

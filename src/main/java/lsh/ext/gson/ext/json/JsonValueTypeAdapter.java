@@ -28,7 +28,6 @@ import com.google.gson.stream.JsonWriter;
  * @see JsonString
  * @see JsonObject
  * @see JsonArray
- * @since 0-SNAPSHOT
  */
 public final class JsonValueTypeAdapter
 		extends TypeAdapter<JsonValue> {
@@ -49,8 +48,6 @@ public final class JsonValueTypeAdapter
 
 	/**
 	 * @return An instance of {@link JsonValueTypeAdapter}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapter<JsonValue> getDefaultInstance() {
 		return defaultInstance;
@@ -60,8 +57,6 @@ public final class JsonValueTypeAdapter
 	 * @param jsonProvider JSON provider
 	 *
 	 * @return An instance of {@link JsonValueTypeAdapter}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapter<JsonValue> create(final JsonProvider jsonProvider) {
 		return new JsonValueTypeAdapter(JsonNumberTypeAdapter.get(jsonProvider), JsonStringTypeAdapter.get(jsonProvider));

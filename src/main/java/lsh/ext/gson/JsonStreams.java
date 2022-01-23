@@ -11,7 +11,6 @@ import com.google.gson.stream.JsonWriter;
  * Provides miscellaneous utility methods for JSON streams.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class JsonStreams {
 
@@ -26,7 +25,6 @@ public final class JsonStreams {
 	 *
 	 * @throws IOException A rethrown exception
 	 * @see #copyTo(JsonReader, JsonWriter, boolean)
-	 * @since 0-SNAPSHOT
 	 */
 	public static void copyTo(final JsonReader reader, final JsonWriter writer)
 			throws IOException {
@@ -42,7 +40,6 @@ public final class JsonStreams {
 	 *
 	 * @throws IOException A rethrown exception
 	 * @see #copyTo(JsonReader, JsonWriter)
-	 * @since 0-SNAPSHOT
 	 */
 	public static void copyTo(final JsonReader reader, final JsonWriter writer, final boolean ignoreTrailingTokens)
 			throws IOException {

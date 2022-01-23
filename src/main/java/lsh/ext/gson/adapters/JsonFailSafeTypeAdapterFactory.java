@@ -29,7 +29,6 @@ import com.google.gson.stream.MalformedJsonException;
  * <p>The {@code bar} cannot be an array, therefore adding the type adapter factory will assign {@code null} to the `bar` field once JSON parsing fails.</p>
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class JsonFailSafeTypeAdapterFactory
 		implements TypeAdapterFactory {

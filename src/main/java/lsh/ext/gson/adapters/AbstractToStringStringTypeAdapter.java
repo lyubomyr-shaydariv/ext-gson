@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
  * @param <T> Any type
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public abstract class AbstractToStringStringTypeAdapter<T>
 		extends AbstractStringTypeAdapter<T> {

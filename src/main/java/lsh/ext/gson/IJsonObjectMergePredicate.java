@@ -11,7 +11,6 @@ import com.google.gson.JsonObject;
  * and {@link JsonObjects#mergeIntoNew(JsonObject, JsonObject, IJsonObjectMergePredicate)}
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public interface IJsonObjectMergePredicate {
 
@@ -25,8 +24,6 @@ public interface IJsonObjectMergePredicate {
 	 * @param rightValue  Right JSON object value to be merge
 	 *
 	 * @return {@code true} if the left object value can be replaced with the right object value, otherwise {@code false}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	boolean replace(@Nonnull String key, @Nonnull JsonObject leftObject, @Nullable JsonElement leftValue, @Nonnull JsonObject rightObject,
 			@Nullable JsonElement rightValue);

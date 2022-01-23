@@ -13,7 +13,6 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  * <p>Implements a type adapter factory for {@link Instant}</p>
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class InstantTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Instant> {

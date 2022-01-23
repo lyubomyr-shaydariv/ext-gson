@@ -12,7 +12,6 @@ import com.google.gson.stream.MalformedJsonException;
  * Provides generic JSON methods.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class Json {
 
@@ -25,7 +24,6 @@ public final class Json {
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
 	 *
 	 * @throws IOException A rethrown exception.
-	 * @since 0-SNAPSHOT
 	 */
 	public static boolean isValid(final String json)
 			throws IOException {
@@ -38,7 +36,6 @@ public final class Json {
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
 	 *
 	 * @throws IOException A rethrown exception
-	 * @since 0-SNAPSHOT
 	 */
 	public static boolean isValid(final Reader reader)
 			throws IOException {
@@ -51,7 +48,6 @@ public final class Json {
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
 	 *
 	 * @throws IOException A rethrown exception
-	 * @since 0-SNAPSHOT
 	 */
 	public static boolean isValid(final JsonReader jsonReader)
 			throws IOException {

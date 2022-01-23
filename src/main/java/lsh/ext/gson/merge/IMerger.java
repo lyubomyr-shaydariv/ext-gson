@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 
 /**
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public interface IMerger {
 
@@ -17,8 +16,6 @@ public interface IMerger {
 	 * @param <T>       Object type
 	 *
 	 * @return An instance of then given object merged with a deserialized instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	<T> T merge(T instance, @Nonnull Function<? super Gson, ? extends T> extractor);
 

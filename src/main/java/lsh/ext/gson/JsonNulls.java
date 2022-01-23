@@ -8,7 +8,6 @@ import com.google.gson.JsonNull;
  * Provides miscellaneous {@link JsonNull} utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class JsonNulls {
 
@@ -17,8 +16,6 @@ public final class JsonNulls {
 
 	/**
 	 * @return {@link JsonNull#INSTANCE}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonNull of() {

@@ -17,7 +17,6 @@ import com.google.gson.stream.JsonWriter;
 
 /**
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class Merger
 		implements IMerger {

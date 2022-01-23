@@ -16,7 +16,6 @@ import com.google.gson.stream.JsonWriter;
  *
  * @author Lyubomyr Shaydariv
  * @see BiMapTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class BiMapTypeAdapter<K, V>
 		extends TypeAdapter<BiMap<K, V>> {
@@ -42,8 +41,6 @@ public final class BiMapTypeAdapter<K, V>
 	 * @param <V>              Bidirectional map value type
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<BiMap<String, V>> create(final TypeAdapter<V> valueTypeAdapter) {
 		@SuppressWarnings("unchecked")
@@ -59,8 +56,6 @@ public final class BiMapTypeAdapter<K, V>
 	 * @param <V>              Bidirectional map value type
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<BiMap<String, V>> create(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends BiMap<String, V>> newBiMapFactory) {
 		@SuppressWarnings("unchecked")
@@ -75,8 +70,6 @@ public final class BiMapTypeAdapter<K, V>
 	 * @param <V>              Bidirectional map value type
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <K, V> TypeAdapter<BiMap<K, V>> create(final TypeAdapter<V> valueTypeAdapter, final Converter<K, String> keyConverter) {
 		@SuppressWarnings("unchecked")
@@ -92,8 +85,6 @@ public final class BiMapTypeAdapter<K, V>
 	 * @param <V>              Bidirectional map value type
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <K, V> TypeAdapter<BiMap<K, V>> create(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends BiMap<K, V>> newBiMapFactory, final Converter<K, String> keyConverter) {

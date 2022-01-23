@@ -11,7 +11,6 @@ import com.google.gson.reflect.TypeToken;
  *
  * @author Lyubomyr Shaydariv
  * @see IPrePostProcessor
- * @since 0-SNAPSHOT
  */
 public interface IPrePostProcessorFactory<T> {
 
@@ -19,15 +18,11 @@ public interface IPrePostProcessorFactory<T> {
 	 * @param typeToken Type token.
 	 *
 	 * @return {@code true} if the factory can create a processor for the type represented by the given type token, otherwise {@code false}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	boolean supports(@Nonnull TypeToken<?> typeToken);
 
 	/**
 	 * @return A pre/post processor for the given type.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	IPrePostProcessor<T> createProcessor();

@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
  *
  * @author Lyubomyr Shaydariv
  * @see DynamicSerializedNameFieldNamingStrategy
- * @since 0-SNAPSHOT
  */
 public interface IFieldNamingResolver {
 

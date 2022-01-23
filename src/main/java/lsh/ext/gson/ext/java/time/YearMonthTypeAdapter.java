@@ -12,7 +12,6 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
  * <p>A type adapter for {@link YearMonth}.</p>
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class YearMonthTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<YearMonth> {

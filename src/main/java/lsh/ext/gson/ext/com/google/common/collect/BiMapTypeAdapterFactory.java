@@ -19,7 +19,6 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  *
  * @author Lyubomyr Shaydariv
  * @see BiMapTypeAdapter
- * @since 0-SNAPSHOT
  */
 public final class BiMapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<BiMap<K, V>> {
@@ -39,8 +38,6 @@ public final class BiMapTypeAdapterFactory<K, V>
 
 	/**
 	 * @return An instance of {@link BiMapTypeAdapterFactory}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory getDefaultInstance() {
 		return defaultInstance;
@@ -53,8 +50,6 @@ public final class BiMapTypeAdapterFactory<K, V>
 	 * @param <V>             Value type
 	 *
 	 * @return An instance of {@link BiMapTypeAdapterFactory} with a custom new {@link BiMap} factory.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <K, V> TypeAdapterFactory create(@Nullable final Supplier<? extends BiMap<K, V>> newBiMapFactory,
 			@Nullable final Converter<K, String> keyConverter) {

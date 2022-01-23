@@ -11,7 +11,6 @@ import javax.annotation.Nonnull;
  *
  * @author Lyubomyr Shaydariv
  * @see JsonPathTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
@@ -19,8 +18,6 @@ public @interface JsonPathExpression {
 
 	/**
 	 * @return A JSON path expression supported in {@link com.jayway.jsonpath.JsonPath#getPath()}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	String value();

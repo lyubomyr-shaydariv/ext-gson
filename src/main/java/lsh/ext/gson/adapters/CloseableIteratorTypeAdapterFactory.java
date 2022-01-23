@@ -13,7 +13,6 @@ import com.google.gson.TypeAdapterFactory;
  *
  * @author Lyubomyr Shaydariv
  * @see CloseableIteratorTypeAdapter
- * @since 0-SNAPSHOT
  */
 public final class CloseableIteratorTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {

@@ -14,7 +14,6 @@ import lsh.ext.gson.ParameterizedTypes;
  * Represents a type adapter factory for single values that can be converted to a list or keep an existing list of multiple elements.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class AlwaysListTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<List<E>> {
@@ -26,8 +25,6 @@ public final class AlwaysListTypeAdapterFactory<E>
 
 	/**
 	 * @return An instance of {@link AlwaysListTypeAdapterFactory}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory getDefaultInstance() {
 		return defaultInstance;

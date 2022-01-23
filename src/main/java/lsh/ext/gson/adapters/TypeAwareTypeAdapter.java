@@ -23,7 +23,6 @@ import com.google.gson.stream.MalformedJsonException;
  *
  * @author Lyubomyr Shaydariv
  * @see AbstractClassTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class TypeAwareTypeAdapter<T>
 		extends TypeAdapter<T> {
@@ -45,8 +44,6 @@ public final class TypeAwareTypeAdapter<T>
 	 * @param <T>               Any type
 	 *
 	 * @return An instance of {@link TypeAwareTypeAdapter}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <T> TypeAdapter<T> get(final Gson gson, final String typePropertyName, final String valuePropertyName) {
 		return new TypeAwareTypeAdapter<T>(gson, typePropertyName, valuePropertyName)

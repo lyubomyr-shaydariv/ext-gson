@@ -13,7 +13,6 @@ import lsh.ext.gson.adapters.AbstractOptionalTypeAdapterFactory;
  *
  * @author Lyubomyr Shaydariv
  * @see OptionalTypeAdapter
- * @since 0-SNAPSHOT
  */
 public final class OptionalTypeAdapterFactory<T>
 		extends AbstractOptionalTypeAdapterFactory<Optional<T>, T> {

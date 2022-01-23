@@ -11,7 +11,6 @@ import com.google.gson.stream.JsonWriter;
  * Represents the epoch to {@link Date} and vice versa type adapter.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class EpochDateTypeAdapter
 		extends TypeAdapter<Date> {
@@ -24,8 +23,6 @@ public final class EpochDateTypeAdapter
 
 	/**
 	 * @return An instance of {@link EpochDateTypeAdapter}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapter<Date> getDefaultInstance() {
 		return defaultInstance;

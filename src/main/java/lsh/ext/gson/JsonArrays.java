@@ -15,7 +15,6 @@ import com.google.gson.JsonElement;
  * Provides miscellaneous {@link JsonArray} utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class JsonArrays {
 
@@ -24,8 +23,6 @@ public final class JsonArrays {
 
 	/**
 	 * @return A new empty JSON array.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of() {
@@ -36,8 +33,6 @@ public final class JsonArrays {
 	 * @param e1 Element 1.
 	 *
 	 * @return A new JSON array with one element.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -53,8 +48,6 @@ public final class JsonArrays {
 	 * @param e2 Element 2.
 	 *
 	 * @return A new JSON array with two elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -73,8 +66,6 @@ public final class JsonArrays {
 	 * @param e3 Element 3.
 	 *
 	 * @return A new JSON array with three elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -96,8 +87,6 @@ public final class JsonArrays {
 	 * @param e4 Element 4.
 	 *
 	 * @return A new JSON array with four elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -122,8 +111,6 @@ public final class JsonArrays {
 	 * @param e5 Element 5.
 	 *
 	 * @return A new JSON array with five elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -151,8 +138,6 @@ public final class JsonArrays {
 	 * @param e6 Element 6.
 	 *
 	 * @return A new JSON array with six elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -183,8 +168,6 @@ public final class JsonArrays {
 	 * @param e7 Element 7.
 	 *
 	 * @return A new JSON array with seven elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -218,8 +201,6 @@ public final class JsonArrays {
 	 * @param e8 Element 8.
 	 *
 	 * @return A new JSON array with eight elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
@@ -255,8 +236,6 @@ public final class JsonArrays {
 	 * @param e9 Element 9.
 	 *
 	 * @return A new JSON array with nine elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -296,8 +275,6 @@ public final class JsonArrays {
 	 * @param e10 Element 10.
 	 *
 	 * @return A new JSON array with ten elements.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonArray of(
@@ -344,8 +321,6 @@ public final class JsonArrays {
 
 	/**
 	 * @return An accumulator instance to accumulate {@link JsonArray} instances.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static JsonArrayAccumulator arrayWith() {
 		return new JsonArrayAccumulator();
@@ -354,8 +329,6 @@ public final class JsonArrays {
 	/**
 	 * Represents a {@link JsonArray} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates
 	 * a certain state with builder-like syntax.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static final class JsonArrayAccumulator {
 
@@ -368,8 +341,6 @@ public final class JsonArrays {
 		 * @param jsonElement A JSON element.
 		 *
 		 * @return Self with the new element appended to the end of the array.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonArrayAccumulator add(final JsonElement jsonElement) {
 			jsonArray.add(jsonElement);
@@ -380,8 +351,6 @@ public final class JsonArrays {
 		 * @param b A boolean value.
 		 *
 		 * @return Self with the new element appended to the end of the array.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonArrayAccumulator add(final Boolean b) {
 			jsonArray.add(b);
@@ -392,8 +361,6 @@ public final class JsonArrays {
 		 * @param c A character value.
 		 *
 		 * @return Self with the new element appended to the end of the array.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonArrayAccumulator add(final Character c) {
 			jsonArray.add(c);
@@ -404,8 +371,6 @@ public final class JsonArrays {
 		 * @param n A numeric value.
 		 *
 		 * @return Self with the new element appended to the end of the array.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonArrayAccumulator add(final Number n) {
 			jsonArray.add(n);
@@ -416,8 +381,6 @@ public final class JsonArrays {
 		 * @param s A string value.
 		 *
 		 * @return Self with the new element appended to the end of the array.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonArrayAccumulator add(final String s) {
 			jsonArray.add(s);
@@ -428,8 +391,6 @@ public final class JsonArrays {
 		 * @param jsonArray A JSON array.
 		 *
 		 * @return Self with all the new elements from the input array appended to the end of the array.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonArrayAccumulator addAll(final JsonArray jsonArray) {
 			this.jsonArray.addAll(jsonArray);
@@ -438,8 +399,6 @@ public final class JsonArrays {
 
 		/**
 		 * @return The accumulated {@link JsonArray} instance.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonArray get() {
 			return jsonArray;
@@ -451,8 +410,6 @@ public final class JsonArrays {
 	 * @param jsonArray JSON array to put into the view
 	 *
 	 * @return An immutable list view for the given JSON array
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static List<JsonElement> asImmutableList(final JsonArray jsonArray) {
 		return new ImmutableJsonArrayList(jsonArray);
@@ -462,8 +419,6 @@ public final class JsonArrays {
 	 * @param jsonArray JSON array to put into the view
 	 *
 	 * @return A mutable list view for the given JSON array
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static List<JsonElement> asMutableList(final JsonArray jsonArray) {
 		return new MutableJsonArrayList(jsonArray);

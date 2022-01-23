@@ -8,7 +8,6 @@ package lsh.ext.gson.adapters;
  * @author Lyubomyr Shaydariv
  * @see IPrePostProcessorFactory
  * @see PrePostTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public interface IPrePostProcessor<T> {
 
@@ -18,7 +17,6 @@ public interface IPrePostProcessor<T> {
 	 * @param value Any value
 	 *
 	 * @see com.google.gson.TypeAdapter#write(com.google.gson.stream.JsonWriter, Object)
-	 * @since 0-SNAPSHOT
 	 */
 	default void pre(@SuppressWarnings("unused") final T value) {
 	}
@@ -29,7 +27,6 @@ public interface IPrePostProcessor<T> {
 	 * @param value Any value
 	 *
 	 * @see com.google.gson.TypeAdapter#read(com.google.gson.stream.JsonReader)
-	 * @since 0-SNAPSHOT
 	 */
 	default void post(@SuppressWarnings("unused") final T value) {
 	}

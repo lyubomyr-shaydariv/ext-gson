@@ -36,7 +36,6 @@ import javax.annotation.Nonnull;
  * @author Lyubomyr Shaydariv
  * @see DynamicSerializedNameFieldNamingStrategy
  * @see com.google.gson.annotations.SerializedName
- * @since 0-SNAPSHOT
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
@@ -44,8 +43,6 @@ public @interface DynamicSerializedName {
 
 	/**
 	 * @return A string value to be resolved in {@link DynamicSerializedNameFieldNamingStrategy}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	String value();

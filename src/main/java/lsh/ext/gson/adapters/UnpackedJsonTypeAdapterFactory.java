@@ -39,7 +39,6 @@ import com.google.gson.stream.JsonWriter;
  *
  * @author Lyubomyr Shaydariv
  * @see UnpackedJsonTypeAdapter
- * @since 0-SNAPSHOT
  */
 public final class UnpackedJsonTypeAdapterFactory
 		implements TypeAdapterFactory {

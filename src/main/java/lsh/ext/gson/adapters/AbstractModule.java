@@ -12,7 +12,6 @@ import com.google.gson.reflect.TypeToken;
  * Implements an abstract module with modules found in linear manner (from first to last).
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public abstract class AbstractModule
 		implements IModule {

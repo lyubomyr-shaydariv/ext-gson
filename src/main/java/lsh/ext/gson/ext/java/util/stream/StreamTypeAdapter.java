@@ -19,7 +19,6 @@ import lsh.ext.gson.adapters.AbstractCursorTypeAdapter;
  *
  * @author Lyubomyr Shaydariv
  * @see StreamTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class StreamTypeAdapter<E>
 		extends AbstractCursorTypeAdapter<Stream<E>, E> {

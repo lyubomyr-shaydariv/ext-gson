@@ -15,7 +15,6 @@ import lsh.ext.gson.ParameterizedTypes;
  * @param <T> Value held by optional type
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public abstract class AbstractOptionalTypeAdapterFactory<O, T>
 		extends AbstractTypeAdapterFactory<O> {
@@ -24,8 +23,6 @@ public abstract class AbstractOptionalTypeAdapterFactory<O, T>
 	 * @param valueTypeAdapter Value type adapter
 	 *
 	 * @return A type adapter for the optional values that can be held by the given type adapter
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	protected abstract TypeAdapter<O> from(@Nonnull TypeAdapter<T> valueTypeAdapter);

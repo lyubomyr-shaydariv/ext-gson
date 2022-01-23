@@ -10,7 +10,6 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  * <p>A type adapter for {@link Period}.</p>
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class PeriodTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Period> {

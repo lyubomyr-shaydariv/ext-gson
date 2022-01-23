@@ -13,7 +13,6 @@ import com.google.gson.stream.JsonToken;
  * Provides miscellaneous {@link JsonReader} utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class JsonReaders {
 
@@ -46,8 +45,6 @@ public final class JsonReaders {
 	 * @param reader Reader
 	 *
 	 * @return An empty content fail-fast JSON reader.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static JsonReader getEmptyStringFailFastJsonReader(final Reader reader) {
 		return new EmptyStringFailFastJsonReader(reader);
@@ -68,7 +65,6 @@ public final class JsonReaders {
 	 * @throws IOException A rethrown exception
 	 * @see JsonReader#skipValue()
 	 * @see #readValuedJsonToken(JsonReader)
-	 * @since 0-SNAPSHOT
 	 */
 	public static void skipToken(final JsonReader reader)
 			throws IOException {
@@ -109,7 +105,6 @@ public final class JsonReaders {
 	 * @throws IOException A rethrown exception
 	 * @see #skipToken(JsonReader)
 	 * @see #readValuedJsonTokenRecursively(JsonReader)
-	 * @since 0-SNAPSHOT
 	 */
 	public static ValuedJsonToken<?> readValuedJsonToken(final JsonReader jsonReader)
 			throws IOException {
@@ -167,7 +162,6 @@ public final class JsonReaders {
 	 * @return An iterator of a single value JSON tokens: either single primitives, either single object/arrays.
 	 *
 	 * @see #readValuedJsonToken(JsonReader)
-	 * @since 0-SNAPSHOT
 	 */
 	public static ICloseableIterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(final JsonReader jsonReader) {
 		return new ICloseableIterator<ValuedJsonToken<?>>() {

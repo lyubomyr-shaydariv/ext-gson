@@ -17,7 +17,6 @@ import com.google.gson.stream.JsonWriter;
  * Represents a pre/post type adapter factory to perform pre/post checks for a serializable/deserializable values respectively.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class PrePostTypeAdapterFactory
 		implements TypeAdapterFactory {
@@ -34,7 +33,6 @@ public final class PrePostTypeAdapterFactory
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
 	 *
 	 * @see #get(IPrePostProcessorFactory)
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory get(final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories) {
 		return new PrePostTypeAdapterFactory(processorFactories);
@@ -46,7 +44,6 @@ public final class PrePostTypeAdapterFactory
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
 	 *
 	 * @see #get(Iterable)
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory get(final IPrePostProcessorFactory<?> processorFactory) {
 		return new PrePostTypeAdapterFactory(Collections.singleton(processorFactory));

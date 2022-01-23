@@ -21,7 +21,6 @@ import com.google.gson.reflect.TypeToken;
  *
  * @author Lyubomyr Shaydariv
  * @see MapTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class MapMergeTypeAdapterMapper
 		implements IMergeTypeAdapterMapper {
@@ -37,8 +36,6 @@ public final class MapMergeTypeAdapterMapper
 
 	/**
 	 * @return An instance of {@link MapMergeTypeAdapterMapper}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static IMergeTypeAdapterMapper get() {
 		return get(false);
@@ -48,8 +45,6 @@ public final class MapMergeTypeAdapterMapper
 	 * @param complexMapKeySerialization Specifies if {@link MapTypeAdapterFactory#complexMapKeySerialization} should be used.
 	 *
 	 * @return An instance of {@link MapMergeTypeAdapterMapper}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static IMergeTypeAdapterMapper get(final boolean complexMapKeySerialization) {
 		return !complexMapKeySerialization ? instance : instanceComplex;

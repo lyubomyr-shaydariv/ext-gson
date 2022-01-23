@@ -19,7 +19,6 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  *
  * @author Lyubomyr Shaydariv
  * @see TableTypeAdapter
- * @since 0-SNAPSHOT
  */
 public final class TableTypeAdapterFactory<R, C, V>
 		extends AbstractTypeAdapterFactory<Table<R, C, V>> {
@@ -44,8 +43,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 
 	/**
 	 * @return An instance of {@link TableTypeAdapterFactory}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static TypeAdapterFactory getDefaultInstance() {
 		return defaultInstance;
@@ -60,8 +57,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 * @param <V>                Value type
 	 *
 	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@SuppressWarnings("OverlyComplexBooleanExpression")
 	public static <R, C, V> TypeAdapterFactory get(@Nullable final Supplier<? extends Table<R, C, V>> newTableFactory,

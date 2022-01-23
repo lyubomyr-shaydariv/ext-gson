@@ -19,7 +19,6 @@ import lsh.ext.gson.ICloseableIterator;
  * @author Lyubomyr Shaydariv
  * @see CloseableIteratorTypeAdapterFactory
  * @see CloseableIterators
- * @since 0-SNAPSHOT
  */
 public final class CloseableIteratorTypeAdapter<E>
 		extends AbstractCursorTypeAdapter<ICloseableIterator<E>, E> {

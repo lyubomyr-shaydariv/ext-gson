@@ -17,7 +17,6 @@ import com.google.gson.stream.JsonToken;
  * Represents a pushback implementation of {@link JsonReader} similar to {@link java.io.PushbackInputStream} and {@link java.io.PushbackReader}.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 @Beta
 public final class PushbackJsonReader
@@ -37,8 +36,6 @@ public final class PushbackJsonReader
 	 * @param reader Reader to provide JSON character stream
 	 *
 	 * @return An instance of {@link PushbackJsonReader}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static PushbackJsonReader getAndRecord(final Reader reader) {
 		return new PushbackJsonReader(reader, Mode.RECORDING);
@@ -419,8 +416,6 @@ public final class PushbackJsonReader
 
 	/**
 	 * Stops the recording and resets the reader state to replay recorded JSON tokens.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public void pushback() {
 		mode = Mode.REPLAYING;

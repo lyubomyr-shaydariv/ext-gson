@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonWriter;
  * A class representing a type adapter designed for reading purposes only.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public abstract class ReadOnlyTypeAdapter<T>
 		extends TypeAdapter<T> {

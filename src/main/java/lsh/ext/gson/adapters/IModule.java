@@ -12,7 +12,6 @@ import com.google.gson.reflect.TypeToken;
  * A type adapter factory that can add multiple {@link TypeAdapterFactory} instances at once.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public interface IModule
 		extends TypeAdapterFactory {

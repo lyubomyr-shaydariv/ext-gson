@@ -8,8 +8,6 @@ import com.google.gson.JsonObject;
 
 /**
  * Provides some default merge predicates for {@link IJsonObjectMergePredicate}.
- *
- * @since 0-SNAPSHOT
  */
 public final class JsonObjectMergePredicates {
 
@@ -18,8 +16,6 @@ public final class JsonObjectMergePredicates {
 
 	/**
 	 * @return A predicate that always allows to replace the left value.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static IJsonObjectMergePredicate alwaysReplaceLeft() {
 		return DefaultJsonObjectMergePredicate.ALWAYS_REPLACE_LEFT;
@@ -27,8 +23,6 @@ public final class JsonObjectMergePredicates {
 
 	/**
 	 * @return A predicate that never allows to replace the left value leaving the left object as is.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static IJsonObjectMergePredicate neverReplaceLeft() {
 		return DefaultJsonObjectMergePredicate.NEVER_REPLACE_LEFT;

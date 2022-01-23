@@ -16,7 +16,6 @@ import com.google.gson.stream.JsonWriter;
  *
  * @author Lyubomyr Shaydariv
  * @see MultimapTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class MultimapTypeAdapter<K, V>
 		extends TypeAdapter<Multimap<K, V>> {
@@ -42,8 +41,6 @@ public final class MultimapTypeAdapter<K, V>
 	 * @param <V>              Multimap value type
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance whose multimap factory is {@link ArrayListMultimap#create()}.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<Multimap<String, V>> create(final TypeAdapter<V> valueTypeAdapter) {
 		@SuppressWarnings("unchecked")
@@ -59,8 +56,6 @@ public final class MultimapTypeAdapter<K, V>
 	 * @param <V>                Multimap value type
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<Multimap<String, V>> create(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multimap<String, V>> newMultimapFactory) {
@@ -76,8 +71,6 @@ public final class MultimapTypeAdapter<K, V>
 	 * @param <V>              Multimap value type
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <K, V> TypeAdapter<Multimap<K, V>> create(final TypeAdapter<V> valueTypeAdapter, final Converter<K, String> keyConverter) {
 		@SuppressWarnings("unchecked")
@@ -93,8 +86,6 @@ public final class MultimapTypeAdapter<K, V>
 	 * @param <V>                Multimap value type
 	 *
 	 * @return A {@link MultimapTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <K, V> TypeAdapter<Multimap<K, V>> create(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multimap<K, V>> newMultimapFactory, final Converter<K, String> keyConverter) {

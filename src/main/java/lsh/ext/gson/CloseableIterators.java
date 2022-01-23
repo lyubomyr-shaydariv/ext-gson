@@ -14,7 +14,6 @@ import lsh.ext.gson.adapters.CloseableIteratorTypeAdapterFactory;
  * @author Lyubomyr Shaydariv
  * @see CloseableIteratorTypeAdapter
  * @see CloseableIteratorTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class CloseableIterators {
 

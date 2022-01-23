@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
  * <p>Contains various implementations of {@link Collector} for {@link JsonElement}.</p>
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class JsonCollectors {
 

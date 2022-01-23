@@ -15,7 +15,6 @@ import com.google.gson.JsonObject;
  * Provides miscellaneous {@link JsonObject} utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @since 0-SNAPSHOT
  */
 public final class JsonObjects {
 
@@ -24,8 +23,6 @@ public final class JsonObjects {
 
 	/**
 	 * @return A new empty JSON object.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonObject of() {
@@ -37,8 +34,6 @@ public final class JsonObjects {
 	 * @param v1 Value 1.
 	 *
 	 * @return A new JSON object with one key-value pair.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonObject of(
@@ -56,8 +51,6 @@ public final class JsonObjects {
 	 * @param v2 Value 2.
 	 *
 	 * @return A new JSON object with two key-value pairs.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonObject of(
@@ -79,8 +72,6 @@ public final class JsonObjects {
 	 * @param v3 Value 3.
 	 *
 	 * @return A new JSON object with three key-value pairs.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonObject of(
@@ -106,8 +97,6 @@ public final class JsonObjects {
 	 * @param v4 Value 4.
 	 *
 	 * @return A new JSON object with four key-value pairs.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonObject of(
@@ -137,8 +126,6 @@ public final class JsonObjects {
 	 * @param v5 Value 5.
 	 *
 	 * @return A new JSON object with five key-value pairs.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	@Nonnull
 	public static JsonObject of(
@@ -167,8 +154,6 @@ public final class JsonObjects {
 
 	/**
 	 * @return An accumulator instance to accumulate {@link JsonObject} instances.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static JsonObjectAccumulator objectWith() {
 		return new JsonObjectAccumulator();
@@ -177,8 +162,6 @@ public final class JsonObjects {
 	/**
 	 * Represents a {@link JsonObject} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates
 	 * a certain state with builder-like syntax.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static final class JsonObjectAccumulator {
 
@@ -192,8 +175,6 @@ public final class JsonObjects {
 		 * @param jsonElement A JSON element.
 		 *
 		 * @return Self with a new key/value pair.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonObjectAccumulator add(final String property, final JsonElement jsonElement) {
 			jsonObject.add(property, jsonElement);
@@ -205,8 +186,6 @@ public final class JsonObjects {
 		 * @param b        A boolean value.
 		 *
 		 * @return Self with a new key/value pair.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonObjectAccumulator add(final String property, final Boolean b) {
 			jsonObject.addProperty(property, b);
@@ -218,8 +197,6 @@ public final class JsonObjects {
 		 * @param c        A character value.
 		 *
 		 * @return Self with a new key/value pair.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonObjectAccumulator add(final String property, final Character c) {
 			jsonObject.addProperty(property, c);
@@ -231,8 +208,6 @@ public final class JsonObjects {
 		 * @param n        A numeric value.
 		 *
 		 * @return Self with a new key/value pair.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonObjectAccumulator add(final String property, final Number n) {
 			jsonObject.addProperty(property, n);
@@ -244,8 +219,6 @@ public final class JsonObjects {
 		 * @param s        A string value.
 		 *
 		 * @return Self with a new key/value pair.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonObjectAccumulator add(final String property, final String s) {
 			jsonObject.addProperty(property, s);
@@ -254,8 +227,6 @@ public final class JsonObjects {
 
 		/**
 		 * @return The accumulated {@link JsonObject} instance.
-		 *
-		 * @since 0-SNAPSHOT
 		 */
 		public JsonObject get() {
 			return jsonObject;
@@ -268,8 +239,6 @@ public final class JsonObjects {
 	 * @param right Right
 	 *
 	 * @return A new {@link JsonObject} containing a merged result of both {@link JsonObject} arguments.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right) {
 		return mergeIntoNew(left, right, JsonObjectMergePredicates.alwaysReplaceLeft());
@@ -281,8 +250,6 @@ public final class JsonObjects {
 	 * @param predicate Predicate
 	 *
 	 * @return A new {@link JsonObject} containing a merged result of both {@link JsonObject} arguments.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
 		final JsonObject merged = new JsonObject();
@@ -300,7 +267,6 @@ public final class JsonObjects {
 	 * @return The {@code left} object with the {@code right} object merged into.
 	 *
 	 * @see #mergeIntoLeft(JsonObject, JsonObject, IJsonObjectMergePredicate)
-	 * @since 0-SNAPSHOT
 	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right) {
 		return mergeIntoLeft(left, right, JsonObjectMergePredicates.alwaysReplaceLeft());
@@ -314,7 +280,6 @@ public final class JsonObjects {
 	 * @return The {@code left} object with the {@code right} object merged into.
 	 *
 	 * @see #mergeIntoLeft(JsonObject, JsonObject)
-	 * @since 0-SNAPSHOT
 	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
 		for ( final Map.Entry<String, JsonElement> rightEntry : right.entrySet() ) {
@@ -332,8 +297,6 @@ public final class JsonObjects {
 	 * @param jsonObject JSON object to put into the view
 	 *
 	 * @return An immutable map view for the given JSON object
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static Map<String, JsonElement> asImmutableMap(final JsonObject jsonObject) {
 		return new ImmutableJsonObjectMap(jsonObject);
@@ -343,8 +306,6 @@ public final class JsonObjects {
 	 * @param jsonObject JSON object to put into the view
 	 *
 	 * @return A mutable map view for the given JSON object
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static Map<String, JsonElement> asMutableMap(final JsonObject jsonObject) {
 		return new MutableJsonObjectMap(jsonObject);

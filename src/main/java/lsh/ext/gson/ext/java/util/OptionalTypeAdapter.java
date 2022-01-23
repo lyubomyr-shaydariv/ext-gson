@@ -12,7 +12,6 @@ import lsh.ext.gson.adapters.AbstractOptionalTypeAdapter;
  *
  * @author Lyubomyr Shaydariv
  * @see OptionalTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class OptionalTypeAdapter<T>
 		extends AbstractOptionalTypeAdapter<Optional<T>, T> {
@@ -26,8 +25,6 @@ public final class OptionalTypeAdapter<T>
 	 * @param <T>              Optional value type
 	 *
 	 * @return An {@link OptionalTypeAdapter} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static <T> TypeAdapter<Optional<T>> create(final TypeAdapter<T> valueTypeAdapter) {
 		return new OptionalTypeAdapter<>(valueTypeAdapter);

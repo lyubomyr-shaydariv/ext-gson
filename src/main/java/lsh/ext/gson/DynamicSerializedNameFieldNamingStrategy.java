@@ -10,7 +10,6 @@ import com.google.gson.FieldNamingStrategy;
  *
  * @author Lyubomyr Shaydariv
  * @see DynamicSerializedName
- * @since 0-SNAPSHOT
  */
 public final class DynamicSerializedNameFieldNamingStrategy
 		implements FieldNamingStrategy {
@@ -27,8 +26,6 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	 * @param fieldNamingResolver A strategy to resolve JSON property names dynamically.
 	 *
 	 * @return A {@link DynamicSerializedNameFieldNamingStrategy} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static FieldNamingStrategy get(final IFieldNamingResolver fieldNamingResolver) {
 		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, FieldNamingPolicy.IDENTITY);
@@ -39,8 +36,6 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	 * @param fallbackFieldNamingStrategy A strategy to be used if {@code fieldNamingResolver} returns {@code null}.
 	 *
 	 * @return A {@link DynamicSerializedNameFieldNamingStrategy} instance.
-	 *
-	 * @since 0-SNAPSHOT
 	 */
 	public static FieldNamingStrategy get(final IFieldNamingResolver fieldNamingResolver,
 			final FieldNamingStrategy fallbackFieldNamingStrategy) {

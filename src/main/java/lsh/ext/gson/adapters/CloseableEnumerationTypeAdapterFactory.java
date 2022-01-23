@@ -14,7 +14,6 @@ import com.google.gson.TypeAdapterFactory;
  *
  * @author Lyubomyr Shaydariv
  * @see CloseableEnumerationTypeAdapter
- * @since 0-SNAPSHOT
  */
 public final class CloseableEnumerationTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {

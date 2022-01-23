@@ -17,7 +17,6 @@ import com.google.gson.stream.JsonWriter;
  *
  * @author Lyubomyr Shaydariv
  * @see MultisetTypeAdapterFactory
- * @since 0-SNAPSHOT
  */
 public final class MultisetTypeAdapter<E>
 		extends TypeAdapter<Multiset<E>> {
@@ -37,7 +36,6 @@ public final class MultisetTypeAdapter<E>
 	 * @return A {@link MultisetTypeAdapter} instance whose multiset factory is {@link LinkedHashMultiset#create()}.
 	 *
 	 * @see #create(TypeAdapter, Supplier)
-	 * @since 0-SNAPSHOT
 	 */
 	public static <E> TypeAdapter<Multiset<E>> create(final TypeAdapter<E> elementTypeAdapter) {
 		return create(elementTypeAdapter, (Supplier<? extends Multiset<E>>) LinkedHashMultiset::create);
@@ -51,7 +49,6 @@ public final class MultisetTypeAdapter<E>
 	 * @return A {@link MultisetTypeAdapter} instance.
 	 *
 	 * @see #create(TypeAdapter)
-	 * @since 0-SNAPSHOT
 	 */
 	public static <V> TypeAdapter<Multiset<V>> create(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multiset<V>> newMultisetFactory) {
