@@ -63,7 +63,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 		final MixedFooBar mixedFooBar = gson.fromJson("{\"staticFoo\":\"1\",\"staticBar\":\"2\"}", MixedFooBar.class);
 		Assertions.assertEquals("1", mixedFooBar.foo);
 		Assertions.assertEquals("2", mixedFooBar.bar);
-		Mockito.verifyZeroInteractions(mockNameResolver);
+		Mockito.verifyNoMoreInteractions(mockNameResolver);
 	}
 
 	private static String resolve(final String value) {

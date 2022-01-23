@@ -52,7 +52,7 @@ public final class CloseableIteratorsTest {
 		Mockito.verify(mockConsumer).accept("foo");
 		Mockito.verify(mockConsumer).accept("bar");
 		Mockito.verify(mockConsumer).accept("baz");
-		Mockito.verifyZeroInteractions(mockConsumer);
+		Mockito.verifyNoMoreInteractions(mockConsumer);
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public final class CloseableIteratorsTest {
 		Mockito.verify(mockConsumer).accept("bar");
 		Mockito.verify(mockConsumer).accept("baz");
 		Mockito.verify(mockCloseable).close();
-		Mockito.verifyZeroInteractions(mockConsumer, mockCloseable);
+		Mockito.verifyNoMoreInteractions(mockConsumer, mockCloseable);
 	}
 
 	private static final class CloseableIterator<T>
