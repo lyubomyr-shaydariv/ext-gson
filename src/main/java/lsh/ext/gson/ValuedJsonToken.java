@@ -1,10 +1,11 @@
 package lsh.ext.gson;
 
-import java.util.Objects;
 import javax.annotation.Nullable;
 
 import com.google.gson.stream.JsonToken;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public final class ValuedJsonToken<T> {
 
 	private static final ValuedJsonToken<Void> arrayBegin = new ValuedJsonToken<>(JsonToken.BEGIN_ARRAY, null);
@@ -81,24 +82,6 @@ public final class ValuedJsonToken<T> {
 			return token.toString();
 		}
 		return token + "=" + value;
-	}
-
-	@Override
-	public boolean equals(final Object o) {
-		if ( this == o ) {
-			return true;
-		}
-		if ( o == null || getClass() != o.getClass() ) {
-			return false;
-		}
-		final ValuedJsonToken<?> that = (ValuedJsonToken<?>) o;
-		return token == that.token
-				&& Objects.equals(value, that.value);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(token, value);
 	}
 
 }

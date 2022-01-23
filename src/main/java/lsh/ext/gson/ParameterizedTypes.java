@@ -4,13 +4,12 @@ import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nullable;
 
+import lombok.EqualsAndHashCode;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -95,6 +94,7 @@ public final class ParameterizedTypes {
 		return new MapParameterizedType(keyType, valueType);
 	}
 
+	@EqualsAndHashCode
 	private abstract static class AbstractParameterizedType
 			implements ParameterizedType {
 
@@ -122,24 +122,6 @@ public final class ParameterizedTypes {
 		@Nullable
 		public final Type getOwnerType() {
 			return null;
-		}
-
-		@Override
-		public final boolean equals(final Object o) {
-			if ( this == o ) {
-				return true;
-			}
-			if ( o == null || getClass() != o.getClass() ) {
-				return false;
-			}
-			final AbstractParameterizedType that = (AbstractParameterizedType) o;
-			return Objects.equals(rawType, that.rawType) &&
-					Arrays.equals(actualTypeArguments, that.actualTypeArguments);
-		}
-
-		@Override
-		public final int hashCode() {
-			return Objects.hash(rawType, actualTypeArguments);
 		}
 
 	}

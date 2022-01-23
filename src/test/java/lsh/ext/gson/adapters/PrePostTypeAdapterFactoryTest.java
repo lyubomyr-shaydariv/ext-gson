@@ -1,11 +1,10 @@
 package lsh.ext.gson.adapters;
 
-import java.util.Objects;
-
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import lombok.EqualsAndHashCode;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -56,6 +55,7 @@ public final class PrePostTypeAdapterFactoryTest {
 		Mockito.verify(userProcessor).post(ArgumentMatchers.eq(new User("John", "Doe")));
 	}
 
+	@EqualsAndHashCode
 	private static final class User {
 
 		final String firstName;
@@ -64,24 +64,6 @@ public final class PrePostTypeAdapterFactoryTest {
 		private User(final String firstName, final String lastName) {
 			this.firstName = firstName;
 			this.lastName = lastName;
-		}
-
-		@Override
-		public boolean equals(final Object o) {
-			if ( this == o ) {
-				return true;
-			}
-			if ( o == null || getClass() != o.getClass() ) {
-				return false;
-			}
-			final User that = (User) o;
-			return Objects.equals(firstName, that.firstName) &&
-					Objects.equals(lastName, that.lastName);
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(firstName, lastName);
 		}
 
 	}

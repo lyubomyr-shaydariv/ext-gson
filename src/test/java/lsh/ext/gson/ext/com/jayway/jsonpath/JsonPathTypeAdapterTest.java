@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
@@ -14,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
+import lombok.EqualsAndHashCode;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -66,6 +66,7 @@ public final class JsonPathTypeAdapterTest
 				.build();
 	}
 
+	@EqualsAndHashCode
 	private static final class Wrapper {
 
 		@JsonPathExpression("$.l1.l2.l3.foo")
@@ -84,25 +85,6 @@ public final class JsonPathTypeAdapterTest
 		}
 
 		@Override
-		public boolean equals(final Object o) {
-			if ( this == o ) {
-				return true;
-			}
-			if ( o == null || getClass() != o.getClass() ) {
-				return false;
-			}
-			final Wrapper that = (Wrapper) o;
-			return Objects.equals(fooRef, that.fooRef)
-					&& Objects.equals(barRef, that.barRef)
-					&& Objects.equals(bazRef, that.bazRef);
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(fooRef, barRef, bazRef);
-		}
-
-		@Override
 		public String toString() {
 			return MoreObjects.toStringHelper(this)
 					.add("fooRef", fooRef)
@@ -113,6 +95,7 @@ public final class JsonPathTypeAdapterTest
 
 	}
 
+	@EqualsAndHashCode
 	private static final class WrapperWithNotExistingPath {
 
 		@JsonPathExpression("$.nowhere")
@@ -120,23 +103,6 @@ public final class JsonPathTypeAdapterTest
 
 		private WrapperWithNotExistingPath(final String fooRef) {
 			this.fooRef = fooRef;
-		}
-
-		@Override
-		public boolean equals(final Object o) {
-			if ( this == o ) {
-				return true;
-			}
-			if ( o == null || getClass() != o.getClass() ) {
-				return false;
-			}
-			final WrapperWithNotExistingPath that = (WrapperWithNotExistingPath) o;
-			return Objects.equals(fooRef, that.fooRef);
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(fooRef);
 		}
 
 		@Override

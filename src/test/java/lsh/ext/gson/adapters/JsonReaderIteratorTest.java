@@ -2,10 +2,10 @@ package lsh.ext.gson.adapters;
 
 import java.io.StringReader;
 import java.util.Iterator;
-import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import lombok.EqualsAndHashCode;
 import lsh.ext.gson.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,6 +35,7 @@ public final class JsonReaderIteratorTest {
 		}
 	}
 
+	@EqualsAndHashCode
 	private static final class FooBar {
 
 		private final int foo;
@@ -43,23 +44,6 @@ public final class JsonReaderIteratorTest {
 		private FooBar(final int foo, final int bar) {
 			this.foo = foo;
 			this.bar = bar;
-		}
-
-		@Override
-		public boolean equals(final Object o) {
-			if ( this == o ) {
-				return true;
-			}
-			if ( o == null || getClass() != o.getClass() ) {
-				return false;
-			}
-			final FooBar fooBar = (FooBar) o;
-			return Objects.equals(foo, fooBar.foo) && Objects.equals(bar, fooBar.bar);
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(foo, bar);
 		}
 
 	}
