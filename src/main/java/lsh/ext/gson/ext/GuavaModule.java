@@ -10,6 +10,8 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Table;
 import com.google.gson.TypeAdapterFactory;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 import lsh.ext.gson.ext.com.google.common.base.OptionalTypeAdapterFactory;
@@ -60,6 +62,7 @@ public final class GuavaModule
 	/**
 	 * A builder to configure a new module instance.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
 		@Nullable
@@ -85,9 +88,6 @@ public final class GuavaModule
 
 		@Nullable
 		private Converter<?, String> tableColumnKeyConverter;
-
-		private Builder() {
-		}
 
 		/**
 		 * Sets a new bidirectional map factory used in {@link BiMapTypeAdapterFactory#getInstance(Supplier, Converter)}

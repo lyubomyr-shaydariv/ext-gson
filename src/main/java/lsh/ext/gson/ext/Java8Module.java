@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 import lsh.ext.gson.ext.java.util.OptionalTypeAdapterFactory;
@@ -48,10 +50,8 @@ public final class Java8Module
 	/**
 	 * A builder to configure a new module instance.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
-
-		private Builder() {
-		}
 
 		/**
 		 * @return A new module instance.

@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import com.google.gson.TypeAdapterFactory;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 
@@ -45,10 +47,8 @@ public final class JsonApiModule
 	/**
 	 * A builder to configure a new module instance.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
-
-		private Builder() {
-		}
 
 		/**
 		 * @return A new module instance.

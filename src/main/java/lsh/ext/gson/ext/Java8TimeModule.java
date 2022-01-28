@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapterFactory;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 import lsh.ext.gson.ext.java.time.DayOfWeekTypeAdapterFactory;
@@ -75,6 +77,7 @@ public final class Java8TimeModule
 	/**
 	 * A builder to configure a new module instance.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
 		@Nullable
@@ -103,9 +106,6 @@ public final class Java8TimeModule
 
 		@Nullable
 		private DateTimeFormatter zonedDateTimeFormatter;
-
-		private Builder() {
-		}
 
 		/**
 		 * Sets a date/time formatter to be used in {@link LocalDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
