@@ -1,7 +1,5 @@
 package lsh.ext.gson.ext.java.lang;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.annotations.Beta;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -34,13 +32,12 @@ public final class RecordTypeAdapterFactory<T extends Record>
 	}
 
 	@Override
-	protected boolean isSupported(@Nonnull final TypeToken<?> typeToken) {
+	protected boolean isSupported( final TypeToken<?> typeToken) {
 		return Record.class.isAssignableFrom(typeToken.getRawType());
 	}
 
-	@Nonnull
 	@Override
-	protected TypeAdapter<T> createTypeAdapter(@Nonnull final Gson gson, @Nonnull final TypeToken<?> typeToken) {
+	protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		try {
 			@SuppressWarnings("unchecked")
 			final Class<T> recordClass = (Class<T>) typeToken.getRawType();
