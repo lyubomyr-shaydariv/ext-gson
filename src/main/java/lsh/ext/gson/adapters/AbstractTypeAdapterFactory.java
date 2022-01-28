@@ -8,9 +8,7 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * <p>
  * Provides a standard scenario type adapter without using {@code @SuppressWarnings("unchecked")}:
- * </p>
  *
  * <pre>
  * public class FooTypeAdapterFactory

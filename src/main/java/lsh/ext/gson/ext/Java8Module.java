@@ -13,9 +13,7 @@ import lsh.ext.gson.ext.java.util.OptionalTypeAdapterFactory;
 import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapterFactory;
 
 /**
- * <p>
  * Implements a Java 8 module registering the following type adapter factories:
- * </p>
  *
  * <ul>
  * <li>{@link OptionalTypeAdapterFactory}</li>

@@ -6,14 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>
  * A special annotation that defines an expression to be evaluate to resolve JSON property names. This annotation can work along with {@link
- * DynamicSerializedNameFieldNamingStrategy} only.
- * </p>
- *
- * <p>
- * Example of use:
- * </p>
+ * DynamicSerializedNameFieldNamingStrategy} only. Example of use:
  *
  * <pre>
  * final class User {

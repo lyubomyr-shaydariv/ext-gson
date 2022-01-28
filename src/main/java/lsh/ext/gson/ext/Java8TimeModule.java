@@ -27,9 +27,7 @@ import lsh.ext.gson.ext.java.time.YearTypeAdapterFactory;
 import lsh.ext.gson.ext.java.time.ZonedDateTimeTypeAdapterFactory;
 
 /**
- * <p>
  * Implements a Java 8 Time API module registering the following type adapter factories:
- * </p>
  *
  * <ul>
  * <li>{@link DayOfWeekTypeAdapterFactory}</li>

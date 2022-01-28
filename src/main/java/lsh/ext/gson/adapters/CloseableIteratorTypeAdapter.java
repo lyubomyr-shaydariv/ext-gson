@@ -8,9 +8,8 @@ import lsh.ext.gson.CloseableIterators;
 import lsh.ext.gson.ICloseableIterator;
 
 /**
- * <p>
  * Type adapter for {@link Iterator}. Iterators are supposed to read and write JSON arrays only.
- * </p>
+ *
  * <p>
  * <b>CAUTION</b> Note that the {@link #read(JsonReader)} method returns a closeable iterator that must be closed manually.
  * </p>
@@ -33,8 +32,7 @@ public final class CloseableIteratorTypeAdapter<E>
 	 * @return An instance of {@link CloseableIteratorTypeAdapter}.
 	 */
 	public static <E> TypeAdapter<ICloseableIterator<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
-		return new CloseableIteratorTypeAdapter<>(elementTypeAdapter)
-				.nullSafe();
+		return new CloseableIteratorTypeAdapter<>(elementTypeAdapter).nullSafe();
 	}
 
 	@Override

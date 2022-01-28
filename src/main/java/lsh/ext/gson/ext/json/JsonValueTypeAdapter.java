@@ -22,7 +22,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 /**
- * <p>Represents a type adapter for {@code javax.json} JSON values.
+ * Represents a type adapter for {@code javax.json} JSON values.
  *
  * @author Lyubomyr Shaydariv
  * @see JsonValue

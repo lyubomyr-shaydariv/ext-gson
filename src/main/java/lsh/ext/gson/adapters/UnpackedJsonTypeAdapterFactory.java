@@ -12,13 +12,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 /**
- * <p>
- * Represents a type adapter factory to "unpack" string-packed JSON documents. Can be used with {@link com.google.gson.annotations.JsonAdapter} only.
- * </p>
- *
- * <p>
- * An example JSON document
- * </p>
+ * Represents a type adapter factory to "unpack" string-packed JSON documents. Can be used with {@link com.google.gson.annotations.JsonAdapter} only. An example
+ * JSON document
  *
  * <pre>
  * {
@@ -26,9 +21,7 @@ import lombok.RequiredArgsConstructor;
  * }
  * </pre>
  *
- * <p>
  * can have the following mapping:
- * </p>
  *
  * <pre>
  * final class Wrapper {

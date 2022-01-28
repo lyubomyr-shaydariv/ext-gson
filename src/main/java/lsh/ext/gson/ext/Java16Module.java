@@ -10,9 +10,7 @@ import lsh.ext.gson.adapters.IModule;
 import lsh.ext.gson.ext.java.lang.RecordTypeAdapterFactory;
 
 /**
- * <p>
  * Implements a Java 16 module registering the following type adapter factories:
- * </p>
  *
  * <ul>
  * <li>{@link RecordTypeAdapterFactory}</li>

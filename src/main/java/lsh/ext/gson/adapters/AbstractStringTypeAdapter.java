@@ -9,10 +9,8 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 /**
- * <p>
  * Represents a type adapter that should store its values in single strings. This class is {@code null}-safe and does not require its descendants to be wrapped
  * in {@link TypeAdapter#nullSafe()}.
- * </p>
  *
  * @param <T> Any type
  *

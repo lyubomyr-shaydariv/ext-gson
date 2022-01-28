@@ -19,7 +19,7 @@ import lombok.experimental.UtilityClass;
 public final class JsonReaders {
 
 	/**
-	 * <p>Google Gson does not fail on empty strings since version 1.5:</p>
+	 * Google Gson does not fail on empty strings since version 1.5:
 	 *
 	 * <pre>
 	 * public &lt;T&gt; T fromJson(JsonReader reader, Type typeOfT) throws JsonIOException, JsonSyntaxException {
@@ -39,7 +39,7 @@ public final class JsonReaders {
 	 *     throw new JsonSyntaxException(e);
 	 * </pre>
 	 *
-	 * <p>In some cases it can be undesirable.</p>
+	 * In some cases it can be undesirable.
 	 *
 	 * @param reader Reader
 	 *
@@ -50,7 +50,7 @@ public final class JsonReaders {
 	}
 
 	/**
-	 * <p>Skips a token of any type for the given {@link JsonReader}. Unlike {@link JsonReader#skipValue()}, this method can also skip tokens such as:</p>
+	 * Skips a token of any type for the given {@link JsonReader}. Unlike {@link JsonReader#skipValue()}, this method can also skip tokens such as:
 	 *
 	 * <ul>
 	 * <li>{@link JsonToken#BEGIN_OBJECT} and {@link JsonToken#END_OBJECT}</li>

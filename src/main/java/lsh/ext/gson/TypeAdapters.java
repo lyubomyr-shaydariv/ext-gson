@@ -32,13 +32,8 @@ public final class TypeAdapters {
 	private static final ConstructorConstructor constructorConstructor = new ConstructorConstructor(Collections.emptyMap());
 
 	/**
-	 * <p>
-	 * Creates an instance of an object that can be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}.
-	 * </p>
-	 * <p>
-	 * As of Gson 2.8.0 that method does not allow to register {@link Class} instances, however {@link com.google.gson.annotations.JsonAdapter} can accept
-	 * {@link Class} only.
-	 * </p>
+	 * Creates an instance of an object that can be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}. As of Gson 2.8.0 that
+	 * method does not allow to register {@link Class} instances, however {@link com.google.gson.annotations.JsonAdapter} can accept {@link Class} only.
 	 *
 	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer} or {@link
 	 *              InstanceCreator}.
@@ -59,13 +54,9 @@ public final class TypeAdapters {
 	}
 
 	/**
-	 * <p>
-	 * Creates an instance of an object that can be registered in {@link com.google.gson.GsonBuilder#registerTypeHierarchyAdapter(Class, Object)}.
-	 * </p>
-	 * <p>
-	 * As of Gson 2.8.0 that method does not allow to register {@link Class} instances, however {@link com.google.gson.annotations.JsonAdapter} can accept
-	 * {@link Class} only.
-	 * </p>
+	 * Creates an instance of an object that can be registered in {@link com.google.gson.GsonBuilder#registerTypeHierarchyAdapter(Class, Object)}. As of Gson
+	 * 2.8.0 that method does not allow to register {@link Class} instances, however {@link com.google.gson.annotations.JsonAdapter} can accept {@link Class}
+	 * only.
 	 *
 	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer} or {@link
 	 *              InstanceCreator}.

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 /**
- * <p>Implements a type adapter factory for {@link DayOfWeek}</p>
+ * Implements a type adapter factory for {@link DayOfWeek}.
  *
  * @author Lyubomyr Shaydariv
  */

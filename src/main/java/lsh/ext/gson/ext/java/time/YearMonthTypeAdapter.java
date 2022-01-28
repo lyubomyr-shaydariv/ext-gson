@@ -8,7 +8,7 @@ import com.google.gson.TypeAdapter;
 import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 
 /**
- * <p>A type adapter for {@link YearMonth}.</p>
+ * A type adapter for {@link YearMonth}.
  *
  * @author Lyubomyr Shaydariv
  */

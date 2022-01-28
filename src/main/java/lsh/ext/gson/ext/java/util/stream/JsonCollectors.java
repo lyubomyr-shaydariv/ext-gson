@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import lombok.experimental.UtilityClass;
 
 /**
- * <p>Contains various implementations of {@link Collector} for {@link JsonElement}.</p>
+ * Contains various implementations of {@link Collector} for {@link JsonElement}.
  *
  * @author Lyubomyr Shaydariv
  */

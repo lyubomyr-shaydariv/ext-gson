@@ -10,9 +10,7 @@ import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 
 /**
- * <p>
  * Represents a type adapter to hold both object type name and object value. Example result JSON document:
- * </p>
  *
  * <pre>
  * {

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 /**
- * <p>Implements a type adapter factory for {@link Duration}</p>
+ * Implements a type adapter factory for {@link Duration}.
  *
  * @author Lyubomyr Shaydariv
  */

@@ -15,20 +15,20 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 /**
- * <p>This type adapter factory skips malformed JSON values. For example, consider the following mapping:</p>
+ * This type adapter factory skips malformed JSON values. For example, consider the following mapping:
  *
  * <pre>
  *     class Foo { Bar bar; }
  *     class Bar { }
  * </pre>
  *
- * <p>And the following JSON:</p>
+ * And the following JSON:
  *
  * <pre>
  *     {"bar": []}
  * </pre>
  *
- * <p>The {@code bar} cannot be an array, therefore adding the type adapter factory will assign {@code null} to the `bar` field once JSON parsing fails.</p>
+ * The {@code bar} cannot be an array, therefore adding the type adapter factory will assign {@code null} to the `bar` field once JSON parsing fails.
  *
  * @author Lyubomyr Shaydariv
  */

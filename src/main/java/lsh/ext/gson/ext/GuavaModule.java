@@ -21,9 +21,7 @@ import lsh.ext.gson.ext.com.google.common.collect.MultisetTypeAdapterFactory;
 import lsh.ext.gson.ext.com.google.common.collect.TableTypeAdapterFactory;
 
 /**
- * <p>
  * Implements a Google Guava module registering the following type adapter factories:
- * </p>
  *
  * <ul>
  * <li>{@link BiMapTypeAdapterFactory}</li>

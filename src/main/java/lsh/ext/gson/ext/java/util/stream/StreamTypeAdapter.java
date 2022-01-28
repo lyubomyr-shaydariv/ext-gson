@@ -9,9 +9,8 @@ import lsh.ext.gson.ICloseableIterator;
 import lsh.ext.gson.adapters.AbstractCursorTypeAdapter;
 
 /**
- * <p>
  * Type adapter for {@link Stream}. Streams are supposed to read and write JSON arrays only.
- * </p>
+ *
  * <p>
  * <b>CAUTION</b> Note that the {@link #read(JsonReader)} method returns a closeable iterator that must be closed manually.
  * </p>

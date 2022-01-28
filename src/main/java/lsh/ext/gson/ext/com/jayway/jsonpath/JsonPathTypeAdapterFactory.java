@@ -23,11 +23,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 /**
- * <p>
- * Represents a type adapter factory that can deserialize object fields using {@link JsonPathExpression}-annotations in JSON mappings.
- * </p>
- *
- * <p>Example of use. The following JSON:</p>
+ * Represents a type adapter factory that can deserialize object fields using {@link JsonPathExpression}-annotations in JSON mappings. Example of use, the
+ * following JSON:
  *
  * <pre>
  *     {
@@ -41,7 +38,7 @@ import lombok.RequiredArgsConstructor;
  *     }
  * </pre>
  *
- * <p>can be mapped to the following mapping using this type adapter factory:</p>
+ * can be mapped to the following mapping using this type adapter factory:
  *
  * <pre>
  *     public final class Foo {
@@ -52,7 +49,7 @@ import lombok.RequiredArgsConstructor;
  *     }
  * </pre>
  *
- * <p>So, the following code outputs {@code Foo!} to stdout:</p>
+ * So, the following code outputs {@code Foo!} to stdout:
  *
  * <pre>
  *     final Gson gson = new GsonBuilder()
@@ -62,7 +59,7 @@ import lombok.RequiredArgsConstructor;
  *     System.out.println(foo.fooRef);
  * </pre>
  *
- * <p>JSON path expressions that point to not existing paths are ignored.</p>
+ * JSON path expressions that point to not existing paths are ignored.
  *
  * @author Lyubomyr Shaydariv
  * @see #getInstance()

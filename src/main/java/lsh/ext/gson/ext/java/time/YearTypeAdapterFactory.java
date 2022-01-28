@@ -9,7 +9,7 @@ import com.google.gson.TypeAdapterFactory;
 import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFactory;
 
 /**
- * <p>Implements a type adapter factory for {@link Year}</p>
+ * Implements a type adapter factory for {@link Year}.
  *
  * @author Lyubomyr Shaydariv
  */

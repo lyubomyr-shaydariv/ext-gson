@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
 /**
- * <p>A type adapter for {@link DayOfWeek}.</p>
+ * A type adapter for {@link DayOfWeek}.
  *
  * @author Lyubomyr Shaydariv
  */

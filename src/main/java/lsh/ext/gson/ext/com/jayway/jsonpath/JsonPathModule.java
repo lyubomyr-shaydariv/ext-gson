@@ -9,9 +9,7 @@ import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 
 /**
- * <p>
  * Implements a Jayway JsonPath module registering the following type adapter factories:
- * </p>
  *
  * <ul>
  * <li>{@link JsonPathTypeAdapterFactory}</li>

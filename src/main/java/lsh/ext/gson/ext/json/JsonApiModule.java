@@ -10,9 +10,7 @@ import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 
 /**
- * <p>
  * Implements a Java JSON API module registering the following type adapter factories:
- * </p>
  *
  * <ul>
  * <li>{@link JsonValueTypeAdapterFactory}</li>

@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
 /**
- * <p>A type adapter for {@link Period}.</p>
+ * A type adapter for {@link Period}.
  *
  * @author Lyubomyr Shaydariv
  */
