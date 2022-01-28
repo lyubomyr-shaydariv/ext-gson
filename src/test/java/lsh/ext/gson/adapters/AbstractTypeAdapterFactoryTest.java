@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.GsonBuilders;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +16,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractTypeAdapterFactoryTest {
 
-	private static final Gson gson = new Gson();
+	private static final Gson gson = GsonBuilders.createCanonical()
+			.create();
 
 	private final boolean supportsAll;
 

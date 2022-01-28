@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import lsh.ext.gson.CloseableIterators;
+import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.ICloseableIterator;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -22,7 +23,8 @@ public final class CloseableIteratorTypeAdapterTest
 	@Override
 	@SuppressWarnings("resource")
 	protected Stream<Arguments> source() {
-		final Gson gson = new Gson();
+		final Gson gson = GsonBuilders.createCanonical()
+				.create();
 		return Stream.of(
 				test(
 						CloseableIteratorTypeAdapter.getInstance(gson.getAdapter(Integer.class)),

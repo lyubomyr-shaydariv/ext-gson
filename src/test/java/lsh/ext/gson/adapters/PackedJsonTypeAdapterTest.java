@@ -14,12 +14,14 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lsh.ext.gson.GsonBuilders;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class PackedJsonTypeAdapterTest {
 
-	private static final Gson gson = new Gson();
+	private static final Gson gson = GsonBuilders.createCanonical()
+			.create();
 
 	private static final String OUTER_JSON = outer().toString();
 	private static final String INNER_JSON = inner().toString();

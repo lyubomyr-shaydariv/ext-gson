@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.GsonBuilders;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class AlwaysListTypeAdapterTest
@@ -24,7 +25,8 @@ public final class AlwaysListTypeAdapterTest
 
 	@Override
 	protected Stream<Arguments> source() {
-		final Gson gson = new Gson();
+		final Gson gson = GsonBuilders.createCanonical()
+				.create();
 		final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(TypeToken.get(String.class));
 		final TypeAdapter<Integer> integerTypeAdapter = gson.getAdapter(TypeToken.get(Integer.class));
 		final TypeAdapter<Boolean> booleanTypeAdapter = gson.getAdapter(TypeToken.get(Boolean.class));

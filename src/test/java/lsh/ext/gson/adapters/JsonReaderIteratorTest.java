@@ -6,6 +6,7 @@ import java.util.Iterator;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import lombok.EqualsAndHashCode;
+import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,10 @@ public final class JsonReaderIteratorTest {
 	@Test
 	public void testSome() {
 		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
+		final Gson gson = GsonBuilders.createCanonical()
+				.create();
 		@SuppressWarnings("resource")
-		final Iterator<?> unit = JsonReaderIterator.getInstance(new Gson().getAdapter(FooBar.class), in);
+		final Iterator<?> unit = JsonReaderIterator.getInstance(gson.getAdapter(FooBar.class), in);
 		Assertions.assertTrue(unit.hasNext());
 		Assertions.assertEquals(new FooBar(1, 2), unit.next());
 		Assertions.assertTrue(unit.hasNext());
@@ -30,7 +33,9 @@ public final class JsonReaderIteratorTest {
 	public void testEmpty()
 			throws Exception {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
-		try ( final ICloseableIterator<?> unit = JsonReaderIterator.getInstance(new Gson().getAdapter(FooBar.class), in) ) {
+		final Gson gson = GsonBuilders.createCanonical()
+				.create();
+		try ( final ICloseableIterator<?> unit = JsonReaderIterator.getInstance(gson.getAdapter(FooBar.class), in) ) {
 			Assertions.assertFalse(unit.hasNext());
 		}
 	}

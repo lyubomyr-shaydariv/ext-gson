@@ -4,13 +4,15 @@ import java.util.Collections;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.ParameterizedTypes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class MergerTest {
 
-	private static final Gson gson = new Gson();
+	private static final Gson gson = GsonBuilders.createCanonical()
+			.create();
 
 	@Test
 	public void testMergeMap() {

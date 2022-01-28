@@ -15,7 +15,8 @@ import org.junit.jupiter.api.Test;
 
 public final class JsonReadersTest {
 
-	private static final Gson gson = new Gson();
+	private static final Gson gson = GsonBuilders.createCanonical()
+			.create();
 
 	@Test
 	public void testGsonWithoutEmptyStringFailFastJsonReaderMustNotFailOnReadingAnEmptyString() {
