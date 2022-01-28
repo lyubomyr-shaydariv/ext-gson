@@ -32,7 +32,6 @@ import lsh.ext.gson.ext.com.google.common.collect.TableTypeAdapterFactory;
  * </ul>
  *
  * @author Lyubomyr Shaydariv
- * @version 0-SNAPSHOT
  */
 public final class GuavaModule
 		extends AbstractModule {

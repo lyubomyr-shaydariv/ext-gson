@@ -47,7 +47,6 @@ import lsh.ext.gson.ext.java.time.ZonedDateTimeTypeAdapterFactory;
  * </ul>
  *
  * @author Lyubomyr Shaydariv
- * @version 0-SNAPSHOT
  */
 public final class Java8TimeModule
 		extends AbstractModule {

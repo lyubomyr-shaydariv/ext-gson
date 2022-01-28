@@ -20,7 +20,6 @@ import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapterFactory;
  * </ul>
  *
  * @author Lyubomyr Shaydariv
- * @version 0-SNAPSHOT
  */
 public final class Java8Module
 		extends AbstractModule {

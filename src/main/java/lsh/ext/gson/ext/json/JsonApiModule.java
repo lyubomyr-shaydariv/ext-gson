@@ -17,7 +17,6 @@ import lsh.ext.gson.adapters.IModule;
  * </ul>
  *
  * @author Lyubomyr Shaydariv
- * @version 0-SNAPSHOT
  */
 public final class JsonApiModule
 		extends AbstractModule {
