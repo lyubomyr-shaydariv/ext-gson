@@ -54,6 +54,11 @@ Currently `ext-gson` supports:
   * [`java.time.Year`](https://docs.oracle.com/javase/8/docs/api/java/time/Year.html);
   * [`java.time.ZonedDateTime`](https://docs.oracle.com/javase/8/docs/api/java/time/ZonedDateTime.html).
 
+#### Java 16
+
+* Types provided by `Java16Module`
+  * [`java.lang.Record`](https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Record.html).
+
 #### Java JSON API
 
 * Types provided by `JsonApiModule`:
