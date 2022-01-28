@@ -220,21 +220,21 @@ public final class Java8TimeModule
 		 */
 		public IModule done() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-					DayOfWeekTypeAdapterFactory.getInstance(),
-					DurationTypeAdapterFactory.getInstance(),
-					InstantTypeAdapterFactory.getInstance(),
-					LocalDateTimeTypeAdapterFactory.getInstance(localDateTimeFormatter),
-					LocalDateTypeAdapterFactory.getInstance(localDateFormatter),
-					LocalTimeTypeAdapterFactory.getInstance(localTimeFormatter),
-					MonthDayTypeAdapterFactory.getInstance(monthDayFormatter),
-					MonthTypeAdapterFactory.getInstance(),
-					OffsetDateTimeTypeAdapterFactory.getInstance(offsetDateTimeFormatter),
-					OffsetTimeTypeAdapterFactory.getInstance(offsetTimeFormatter),
-					PeriodTypeAdapterFactory.getInstance(),
-					YearMonthTypeAdapterFactory.getInstance(yearMonthFormatter),
-					YearTypeAdapterFactory.getInstance(yearFormatter),
-					ZonedDateTimeTypeAdapterFactory.getInstance(zonedDateTimeFormatter)
-			)
+							DayOfWeekTypeAdapterFactory.getInstance(),
+							DurationTypeAdapterFactory.getInstance(),
+							InstantTypeAdapterFactory.getInstance(),
+							LocalDateTimeTypeAdapterFactory.getInstance(localDateTimeFormatter),
+							LocalDateTypeAdapterFactory.getInstance(localDateFormatter),
+							LocalTimeTypeAdapterFactory.getInstance(localTimeFormatter),
+							MonthDayTypeAdapterFactory.getInstance(monthDayFormatter),
+							MonthTypeAdapterFactory.getInstance(),
+							OffsetDateTimeTypeAdapterFactory.getInstance(offsetDateTimeFormatter),
+							OffsetTimeTypeAdapterFactory.getInstance(offsetTimeFormatter),
+							PeriodTypeAdapterFactory.getInstance(),
+							YearMonthTypeAdapterFactory.getInstance(yearMonthFormatter),
+							YearTypeAdapterFactory.getInstance(yearFormatter),
+							ZonedDateTimeTypeAdapterFactory.getInstance(zonedDateTimeFormatter)
+					)
 					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
 			return new Java8TimeModule(typeAdapterFactories);
 		}

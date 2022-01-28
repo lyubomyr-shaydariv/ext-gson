@@ -100,7 +100,8 @@ public final class TableTypeAdapter<R, C, V>
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
 	 */
-	public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Table<R, C, V>> newTableFactory,
+	public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
+			final Supplier<? extends Table<R, C, V>> newTableFactory,
 			final Converter<R, String> rowKeyConverter, final Converter<C, String> columnKeyConverter) {
 		return new TableTypeAdapter<>(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter)
 				.nullSafe();

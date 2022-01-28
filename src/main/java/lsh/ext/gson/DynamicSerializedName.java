@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * A special annotation that defines an expression to be evaluate to resolve JSON property names. This annotation can work along with
- * {@link DynamicSerializedNameFieldNamingStrategy} only.
+ * A special annotation that defines an expression to be evaluate to resolve JSON property names. This annotation can work along with {@link
+ * DynamicSerializedNameFieldNamingStrategy} only.
  * </p>
  *
  * <p>

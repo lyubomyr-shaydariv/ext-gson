@@ -57,7 +57,7 @@ public final class Java16Module
 		public IModule done() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
 							RecordTypeAdapterFactory.getInstance()
-			)
+					)
 					.toList();
 			return new Java16Module(typeAdapterFactories);
 		}

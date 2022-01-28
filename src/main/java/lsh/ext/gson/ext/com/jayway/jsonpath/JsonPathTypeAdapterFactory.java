@@ -81,8 +81,8 @@ public final class JsonPathTypeAdapterFactory
 	/**
 	 * @return A {@link JsonPathTypeAdapterFactory} instance that is configured with the predefined JsonPath configuration. The default JsonPath configuration
 	 * used for this instance uses {@link Configuration.Defaults} with an internally defined {@link GsonJsonProvider} bound to the {@link Gson} instance
-	 * provided in {@link #create(Gson, TypeToken)}, an internally defined {@link GsonMappingProvider} bound to the {@link Gson} instance provided in
-	 * {@link #create(Gson, TypeToken)}, and empty options set.
+	 * provided in {@link #create(Gson, TypeToken)}, an internally defined {@link GsonMappingProvider} bound to the {@link Gson} instance provided in {@link
+	 * #create(Gson, TypeToken)}, and empty options set.
 	 *
 	 * @see Configuration.Defaults#options()
 	 * @see Configuration.Defaults#jsonProvider()

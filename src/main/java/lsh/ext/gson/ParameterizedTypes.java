@@ -24,8 +24,8 @@ public final class ParameterizedTypes {
 	private static final Type[][] emptyType2dArray = {};
 
 	/**
-	 * @param type Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned.
-	 *             If {@code type} is just {@link GenericDeclaration}, type bounds are extracted.
+	 * @param type Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned. If {@code
+	 *             type} is just {@link GenericDeclaration}, type bounds are extracted.
 	 *
 	 * @return A two-dimensional array where each element is an array of a {@link Type} instance or {@code Object.class} but never {@code null}, otherwise an
 	 * empty array if no type parameters are available.

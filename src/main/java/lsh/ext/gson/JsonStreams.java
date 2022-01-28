@@ -33,7 +33,8 @@ public final class JsonStreams {
 	/**
 	 * Copies the given {@link JsonReader} content to normalized JSON output via {@link JsonWriter}.
 	 *
-	 * @param reader               JSON reader. The reader must have {@link JsonReader#setLenient(boolean)} set to {@code} in order to read not normalized JSON streams.
+	 * @param reader               JSON reader. The reader must have {@link JsonReader#setLenient(boolean)} set to {@code} in order to read not normalized JSON
+	 *                             streams.
 	 * @param writer               JSON writer
 	 * @param ignoreTrailingTokens Ignore incoming JSON stream trailing tokens
 	 *

@@ -58,9 +58,9 @@ public final class Java8Module
 		 */
 		public IModule done() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-					OptionalTypeAdapterFactory.getInstance(),
-					StreamTypeAdapterFactory.getInstance()
-			)
+							OptionalTypeAdapterFactory.getInstance(),
+							StreamTypeAdapterFactory.getInstance()
+					)
 					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
 			return new Java8Module(typeAdapterFactories);
 		}

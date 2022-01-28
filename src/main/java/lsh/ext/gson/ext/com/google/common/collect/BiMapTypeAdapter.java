@@ -57,7 +57,8 @@ public final class BiMapTypeAdapter<K, V>
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */
-	public static <V> TypeAdapter<BiMap<String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends BiMap<String, V>> newBiMapFactory) {
+	public static <V> TypeAdapter<BiMap<String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
+			final Supplier<? extends BiMap<String, V>> newBiMapFactory) {
 		@SuppressWarnings("unchecked")
 		final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
 		return getInstance(valueTypeAdapter, newBiMapFactory, keyConverter);

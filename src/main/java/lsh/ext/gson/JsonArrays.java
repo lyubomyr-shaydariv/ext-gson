@@ -315,8 +315,8 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * Represents a {@link JsonArray} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates
-	 * a certain state with builder-like syntax.
+	 * Represents a {@link JsonArray} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates a
+	 * certain state with builder-like syntax.
 	 */
 	public static final class JsonArrayAccumulator {
 

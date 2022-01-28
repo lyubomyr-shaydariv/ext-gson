@@ -15,8 +15,7 @@ import lsh.ext.gson.JsonStreams;
 
 /**
  * <p>
- * This type adapter is designed to "pack" child JSON properties as strings.
- * For example, suppose the following mapping:
+ * This type adapter is designed to "pack" child JSON properties as strings. For example, suppose the following mapping:
  * </p>
  *
  * <pre>

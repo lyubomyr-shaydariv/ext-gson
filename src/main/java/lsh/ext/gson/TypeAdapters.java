@@ -40,8 +40,8 @@ public final class TypeAdapters {
 	 * {@link Class} only.
 	 * </p>
 	 *
-	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
-	 *              or {@link InstanceCreator}.
+	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer} or {@link
+	 *              InstanceCreator}.
 	 * @param <T>   Type the resolved type adapter should be cast to.
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
@@ -67,8 +67,8 @@ public final class TypeAdapters {
 	 * {@link Class} only.
 	 * </p>
 	 *
-	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer}
-	 *              or {@link InstanceCreator}.
+	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer} or {@link
+	 *              InstanceCreator}.
 	 * @param <T>   Type the resolved type adapter should be cast to.
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
