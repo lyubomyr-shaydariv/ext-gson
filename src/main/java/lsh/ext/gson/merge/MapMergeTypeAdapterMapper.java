@@ -16,6 +16,7 @@ import com.google.gson.internal.bind.MapTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.internal.ConstructorConstructors;
 
 /**
  * A merge type adapter mapper for {@link Map}.
@@ -57,7 +58,7 @@ public final class MapMergeTypeAdapterMapper
 		}
 		@SuppressWarnings("unchecked")
 		final Map<Type, InstanceCreator<?>> instanceCreators = Collections.singletonMap(typeToken.getType(), type -> new NullOnPutMap<>((Map<Object, Object>) instance));
-		final ConstructorConstructor constructorConstructor = new ConstructorConstructor(instanceCreators);
+		final ConstructorConstructor constructorConstructor = ConstructorConstructors.create(instanceCreators);
 		final TypeAdapterFactory typeAdapterFactory = new MapTypeAdapterFactory(constructorConstructor, complexMapKeySerialization);
 		return typeAdapterFactory.create(gson, typeToken);
 	}

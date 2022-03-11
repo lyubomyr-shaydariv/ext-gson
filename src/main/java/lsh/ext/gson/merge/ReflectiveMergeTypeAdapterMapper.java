@@ -15,6 +15,7 @@ import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.internal.ConstructorConstructors;
 
 /**
  * A merge type adapter mapper for objects serialized and deserialized using reflection.
@@ -44,7 +45,7 @@ public final class ReflectiveMergeTypeAdapterMapper
 			return null;
 		}
 		final InstanceCreator<?> o = (InstanceCreator<Object>) type -> instance;
-		final ConstructorConstructor constructorConstructor = new ConstructorConstructor(Collections.singletonMap(typeToken.getType(), o));
+		final ConstructorConstructor constructorConstructor = ConstructorConstructors.create(Collections.singletonMap(typeToken.getType(), o));
 		final FieldNamingStrategy fieldNamingPolicy = gson.fieldNamingStrategy();
 		final Excluder excluder = gson.excluder();
 		final JsonAdapterAnnotationTypeAdapterFactory jsonAdapterFactory = new JsonAdapterAnnotationTypeAdapterFactory(constructorConstructor);
