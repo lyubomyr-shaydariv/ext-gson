@@ -53,6 +53,7 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- TODO Consider migration/adaptation to jakarta.json:jakarta.json-api:2.1.0 -->
 		<dependency>
 			<groupId>javax.json</groupId>
 			<artifactId>javax.json-api</artifactId>
@@ -67,6 +68,7 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- TODO Consider migration/adaptation to org.glassfish:jakarta.json:2.0.1 -->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
