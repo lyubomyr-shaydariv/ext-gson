@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.ParameterizedTypes;
 import org.junit.jupiter.api.Assertions;
@@ -56,16 +58,12 @@ public final class MergerTest {
 		Assertions.assertNull(mergedFoo.ref.ref);
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class Foo {
 
 		private final String foo;
 		private final String bar;
 		private Foo ref;
-
-		private Foo(final String foo, final String bar) {
-			this.foo = foo;
-			this.bar = bar;
-		}
 
 	}
 

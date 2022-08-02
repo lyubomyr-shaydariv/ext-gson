@@ -3,10 +3,10 @@ package lsh.ext.gson.merge;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-final class Factories {
+import lombok.experimental.UtilityClass;
 
-	private Factories() {
-	}
+@UtilityClass
+final class Factories {
 
 	static <K, V> Map<K, V> linkedHashMap(
 			final K k1, final V v1

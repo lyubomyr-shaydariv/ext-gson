@@ -14,6 +14,8 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -76,11 +78,9 @@ public final class TypeAdaptersTest {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> TypeAdapters.ofHierarchy(Object.class));
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class VoidTypeAdapter
 			extends TypeAdapter<Void> {
-
-		private VoidTypeAdapter() {
-		}
 
 		@Override
 		@SuppressWarnings("resource")
@@ -99,11 +99,9 @@ public final class TypeAdaptersTest {
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class VoidJsonSerializer
 			implements JsonSerializer<Void> {
-
-		private VoidJsonSerializer() {
-		}
 
 		@Override
 		public JsonElement serialize(final Void noValue, final Type type, final JsonSerializationContext context) {
@@ -112,11 +110,9 @@ public final class TypeAdaptersTest {
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class VoidJsonDeserializer
 			implements JsonDeserializer<Void> {
-
-		private VoidJsonDeserializer() {
-		}
 
 		@Override
 		@Nullable
@@ -126,11 +122,9 @@ public final class TypeAdaptersTest {
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static class VoidInstanceCreator
 			implements InstanceCreator<Void> {
-
-		private VoidInstanceCreator() {
-		}
 
 		@Override
 		@Nullable
