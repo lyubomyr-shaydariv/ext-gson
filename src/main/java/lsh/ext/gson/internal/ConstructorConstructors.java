@@ -3,6 +3,9 @@ package lsh.ext.gson.internal;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 
@@ -19,9 +22,13 @@ public final class ConstructorConstructors {
 	@Nullable
 	private static final Constructor<ConstructorConstructor> gsonPost290Constructor;
 
+	@Nullable
+	private static final Constructor<ConstructorConstructor> gsonPost291Constructor;
+
 	static {
 		gsonPre289Constructor = Constructors.getConstructorOrNull(ConstructorConstructor.class, Map.class);
 		gsonPost290Constructor = Constructors.getConstructorOrNull(ConstructorConstructor.class, Map.class, boolean.class);
+		gsonPost291Constructor = Constructors.getConstructorOrNull(ConstructorConstructor.class, Map.class, boolean.class, List.class);
 	}
 
 	public static ConstructorConstructor create(final Map<Type, InstanceCreator<?>> instanceCreators) {
@@ -29,6 +36,13 @@ public final class ConstructorConstructors {
 	}
 
 	public static ConstructorConstructor create(final Map<Type, InstanceCreator<?>> instanceCreators, final boolean useJdkUnsafe) {
+		if ( gsonPost291Constructor != null ) {
+			try {
+				return gsonPost291Constructor.newInstance(instanceCreators, useJdkUnsafe, Collections.emptyList());
+			} catch ( final InstantiationException | IllegalAccessException | InvocationTargetException ex ) {
+				throw new RuntimeException(ex);
+			}
+		}
 		if ( gsonPost290Constructor != null ) {
 			try {
 				return gsonPost290Constructor.newInstance(instanceCreators, useJdkUnsafe);
@@ -44,7 +58,7 @@ public final class ConstructorConstructors {
 				throw new RuntimeException(ex);
 			}
 		}
-		throw new AssertionError("Cannot find a way to resolve the constructor for " + ConstructorConstructor.class);
+		throw new AssertionError("Cannot find a way to resolve the constructor for " + ConstructorConstructor.class + ". Candidates: " + Arrays.asList(ConstructorConstructor.class.getDeclaredConstructors()));
 	}
 
 }
