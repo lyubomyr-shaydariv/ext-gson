@@ -44,13 +44,13 @@ public final class YearTypeAdapter
 	}
 
 	@Override
-	protected Year doFromString(final String string) {
-		return Year.parse(string);
+	protected Year doFromString(final String text) {
+		return Year.parse(text);
 	}
 
 	@Override
-	protected Year doFromString(final String string, final DateTimeFormatter formatter) {
-		return Year.parse(string, formatter);
+	protected Year doFromString(final String text, final DateTimeFormatter formatter) {
+		return Year.parse(text, formatter);
 	}
 
 }

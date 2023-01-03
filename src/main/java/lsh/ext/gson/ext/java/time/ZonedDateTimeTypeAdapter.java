@@ -44,13 +44,13 @@ public final class ZonedDateTimeTypeAdapter
 	}
 
 	@Override
-	protected ZonedDateTime doFromString(final String string) {
-		return ZonedDateTime.parse(string);
+	protected ZonedDateTime doFromString(final String text) {
+		return ZonedDateTime.parse(text);
 	}
 
 	@Override
-	protected ZonedDateTime doFromString(final String string, final DateTimeFormatter formatter) {
-		return ZonedDateTime.parse(string, formatter);
+	protected ZonedDateTime doFromString(final String text, final DateTimeFormatter formatter) {
+		return ZonedDateTime.parse(text, formatter);
 	}
 
 }

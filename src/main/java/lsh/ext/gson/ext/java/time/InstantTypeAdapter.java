@@ -28,8 +28,8 @@ public final class InstantTypeAdapter
 	}
 
 	@Override
-	protected Instant fromString(final String string) {
-		return Instant.parse(string);
+	protected Instant fromString(final String text) {
+		return Instant.parse(text);
 	}
 
 }

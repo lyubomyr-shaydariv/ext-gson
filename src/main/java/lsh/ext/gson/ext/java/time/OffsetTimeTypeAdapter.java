@@ -44,13 +44,13 @@ public final class OffsetTimeTypeAdapter
 	}
 
 	@Override
-	protected OffsetTime doFromString(final String string) {
-		return OffsetTime.parse(string);
+	protected OffsetTime doFromString(final String text) {
+		return OffsetTime.parse(text);
 	}
 
 	@Override
-	protected OffsetTime doFromString(final String string, final DateTimeFormatter formatter) {
-		return OffsetTime.parse(string, formatter);
+	protected OffsetTime doFromString(final String text, final DateTimeFormatter formatter) {
+		return OffsetTime.parse(text, formatter);
 	}
 
 }

@@ -44,13 +44,13 @@ public final class MonthDayTypeAdapter
 	}
 
 	@Override
-	protected MonthDay doFromString(final String string) {
-		return MonthDay.parse(string);
+	protected MonthDay doFromString(final String text) {
+		return MonthDay.parse(text);
 	}
 
 	@Override
-	protected MonthDay doFromString(final String string, final DateTimeFormatter formatter) {
-		return MonthDay.parse(string, formatter);
+	protected MonthDay doFromString(final String text, final DateTimeFormatter formatter) {
+		return MonthDay.parse(text, formatter);
 	}
 
 }

@@ -20,11 +20,11 @@ public abstract class AbstractStringTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	/**
-	 * @param string A string to convert to a value
+	 * @param text A string to convert to a value
 	 *
 	 * @return An object parsed from string.
 	 */
-	protected abstract T fromString(String string);
+	protected abstract T fromString(String text);
 
 	/**
 	 * @param value A value to convert to a string

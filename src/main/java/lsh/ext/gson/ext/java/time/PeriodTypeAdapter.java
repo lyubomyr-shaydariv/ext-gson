@@ -28,8 +28,8 @@ public final class PeriodTypeAdapter
 	}
 
 	@Override
-	protected Period fromString(final String string) {
-		return Period.parse(string);
+	protected Period fromString(final String text) {
+		return Period.parse(text);
 	}
 
 }

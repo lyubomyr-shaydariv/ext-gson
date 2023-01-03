@@ -28,8 +28,8 @@ public final class DayOfWeekTypeAdapter
 	}
 
 	@Override
-	protected DayOfWeek fromString(final String string) {
-		return DayOfWeek.valueOf(string);
+	protected DayOfWeek fromString(final String text) {
+		return DayOfWeek.valueOf(text);
 	}
 
 }

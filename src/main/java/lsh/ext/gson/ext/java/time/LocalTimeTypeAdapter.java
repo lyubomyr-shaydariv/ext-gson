@@ -44,13 +44,13 @@ public final class LocalTimeTypeAdapter
 	}
 
 	@Override
-	protected LocalTime doFromString(final String string) {
-		return LocalTime.parse(string);
+	protected LocalTime doFromString(final String text) {
+		return LocalTime.parse(text);
 	}
 
 	@Override
-	protected LocalTime doFromString(final String string, final DateTimeFormatter formatter) {
-		return LocalTime.parse(string, formatter);
+	protected LocalTime doFromString(final String text, final DateTimeFormatter formatter) {
+		return LocalTime.parse(text, formatter);
 	}
 
 }

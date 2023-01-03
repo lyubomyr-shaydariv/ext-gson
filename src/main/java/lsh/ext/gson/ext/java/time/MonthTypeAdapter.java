@@ -28,8 +28,8 @@ public final class MonthTypeAdapter
 	}
 
 	@Override
-	protected Month fromString(final String string) {
-		return Month.valueOf(string);
+	protected Month fromString(final String text) {
+		return Month.valueOf(text);
 	}
 
 }

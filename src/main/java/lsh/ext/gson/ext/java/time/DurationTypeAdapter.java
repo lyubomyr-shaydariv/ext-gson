@@ -28,8 +28,8 @@ public final class DurationTypeAdapter
 	}
 
 	@Override
-	protected Duration fromString(final String string) {
-		return Duration.parse(string);
+	protected Duration fromString(final String text) {
+		return Duration.parse(text);
 	}
 
 }

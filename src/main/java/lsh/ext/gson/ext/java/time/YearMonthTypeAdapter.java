@@ -44,13 +44,13 @@ public final class YearMonthTypeAdapter
 	}
 
 	@Override
-	protected YearMonth doFromString(final String string) {
-		return YearMonth.parse(string);
+	protected YearMonth doFromString(final String text) {
+		return YearMonth.parse(text);
 	}
 
 	@Override
-	protected YearMonth doFromString(final String string, final DateTimeFormatter formatter) {
-		return YearMonth.parse(string, formatter);
+	protected YearMonth doFromString(final String text, final DateTimeFormatter formatter) {
+		return YearMonth.parse(text, formatter);
 	}
 
 }

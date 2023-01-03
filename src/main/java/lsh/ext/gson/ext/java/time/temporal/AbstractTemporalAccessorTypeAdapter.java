@@ -15,16 +15,16 @@ public abstract class AbstractTemporalAccessorTypeAdapter<T extends TemporalAcce
 	@Nullable
 	private final DateTimeFormatter dateTimeFormatter;
 
-	protected abstract T doFromString(final String string);
+	protected abstract T doFromString(final String text);
 
-	protected abstract T doFromString(final String string, final DateTimeFormatter formatter);
+	protected abstract T doFromString(final String text, final DateTimeFormatter formatter);
 
 	@Override
-	protected final T fromString(final String string) {
+	protected final T fromString(final String text) {
 		if ( dateTimeFormatter == null ) {
-			return doFromString(string);
+			return doFromString(text);
 		}
-		return doFromString(string, dateTimeFormatter);
+		return doFromString(text, dateTimeFormatter);
 	}
 
 	@Override
