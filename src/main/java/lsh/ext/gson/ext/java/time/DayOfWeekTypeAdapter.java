@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.java.time;
 import java.time.DayOfWeek;
 
 import com.google.gson.TypeAdapter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -21,6 +22,7 @@ public final class DayOfWeekTypeAdapter
 	/**
 	 * @return An instance of {@link DayOfWeekTypeAdapter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<DayOfWeek> getInstance() {
 		return instance;
 	}

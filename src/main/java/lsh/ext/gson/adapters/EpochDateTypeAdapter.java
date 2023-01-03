@@ -6,6 +6,7 @@ import java.util.Date;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +25,7 @@ public final class EpochDateTypeAdapter
 	/**
 	 * @return An instance of {@link EpochDateTypeAdapter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<Date> getInstance() {
 		return instance;
 	}

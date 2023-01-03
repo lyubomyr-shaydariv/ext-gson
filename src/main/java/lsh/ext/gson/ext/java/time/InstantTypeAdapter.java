@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.java.time;
 import java.time.Instant;
 
 import com.google.gson.TypeAdapter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -21,6 +22,7 @@ public final class InstantTypeAdapter
 	/**
 	 * @return An instance of {@link InstantTypeAdapter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<Instant> getInstance() {
 		return instance;
 	}

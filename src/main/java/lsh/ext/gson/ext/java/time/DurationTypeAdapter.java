@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.java.time;
 import java.time.Duration;
 
 import com.google.gson.TypeAdapter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -21,6 +22,7 @@ public final class DurationTypeAdapter
 	/**
 	 * @return An instance of {@link DurationTypeAdapter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<Duration> getInstance() {
 		return instance;
 	}

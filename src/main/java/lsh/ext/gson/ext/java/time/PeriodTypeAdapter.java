@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.java.time;
 import java.time.Period;
 
 import com.google.gson.TypeAdapter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
@@ -21,6 +22,7 @@ public final class PeriodTypeAdapter
 	/**
 	 * @return An instance of {@link PeriodTypeAdapter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<Period> getInstance() {
 		return instance;
 	}

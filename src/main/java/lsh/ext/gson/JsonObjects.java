@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -220,6 +221,7 @@ public final class JsonObjects {
 		/**
 		 * @return The accumulated {@link JsonObject} instance.
 		 */
+		@SuppressFBWarnings("EI_EXPOSE_REP")
 		public JsonObject get() {
 			return jsonObject;
 		}

@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -388,6 +389,7 @@ public final class JsonArrays {
 		/**
 		 * @return The accumulated {@link JsonArray} instance.
 		 */
+		@SuppressFBWarnings("EI_EXPOSE_REP")
 		public JsonArray get() {
 			return jsonArray;
 		}

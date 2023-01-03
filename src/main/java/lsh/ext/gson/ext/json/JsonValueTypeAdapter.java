@@ -18,6 +18,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -47,6 +48,7 @@ public final class JsonValueTypeAdapter
 	/**
 	 * @return An instance of {@link JsonValueTypeAdapter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<JsonValue> getInstance() {
 		return instance;
 	}

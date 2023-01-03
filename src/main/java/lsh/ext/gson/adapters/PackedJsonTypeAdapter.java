@@ -9,6 +9,7 @@ import java.io.Writer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lsh.ext.gson.JsonStreams;
@@ -55,6 +56,7 @@ public final class PackedJsonTypeAdapter
 	/**
 	 * @return An instance of {@link PackedJsonTypeAdapter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<String> getInstance() {
 		return instance;
 	}

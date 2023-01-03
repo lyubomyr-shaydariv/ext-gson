@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 
 /**
@@ -24,6 +25,7 @@ public final class MonthDayTypeAdapter
 	/**
 	 * @return An instance of {@link MonthDayTypeAdapter} with the Java-default {@link DateTimeFormatter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<MonthDay> getInstance() {
 		return instance;
 	}
@@ -33,6 +35,7 @@ public final class MonthDayTypeAdapter
 	 *
 	 * @return An instance of {@link MonthDayTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	public static TypeAdapter<MonthDay> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
