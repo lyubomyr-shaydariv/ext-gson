@@ -15,19 +15,19 @@ public final class StreamTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected List<?> finalize(@Nullable final Stream<?> value) {
+	protected List<?> normalize(@Nullable final Stream<?> value) {
 		return value != null ? value.collect(ImmutableList.toImmutableList()) : null;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		return Stream.of(
-				test(
+				makeTestCase(
 						StreamTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
-						() -> ImmutableList.of(1, 2, 4, 8).stream()
+						() -> Stream.of(1, 2, 4, 8)
 				)
 		);
 	}

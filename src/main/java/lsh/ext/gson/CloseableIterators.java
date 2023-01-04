@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lsh.ext.gson.adapters.CloseableIteratorTypeAdapter;
 import lsh.ext.gson.adapters.CloseableIteratorTypeAdapterFactory;
@@ -85,14 +87,11 @@ public final class CloseableIterators {
 		}
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class CloseableIterator<E>
 			implements ICloseableIterator<E> {
 
 		private final Iterator<? extends E> iterator;
-
-		private CloseableIterator(final Iterator<? extends E> iterator) {
-			this.iterator = iterator;
-		}
 
 		@Override
 		public boolean hasNext() {
@@ -117,14 +116,11 @@ public final class CloseableIterators {
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class CloseableIteratorFromCloseableEnumeration<E>
 			implements ICloseableIterator<E> {
 
 		private final ICloseableEnumeration<? extends E> enumeration;
-
-		private CloseableIteratorFromCloseableEnumeration(final ICloseableEnumeration<? extends E> enumeration) {
-			this.enumeration = enumeration;
-		}
 
 		@Override
 		public boolean hasNext() {

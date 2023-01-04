@@ -1,14 +1,14 @@
 package lsh.ext.gson.adapters;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import lsh.ext.gson.GsonBuilders;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class AbstractClassTypeAdapterFactoryTest {
 
-	private static final Gson gson = new GsonBuilder()
+	private static final Gson gson = GsonBuilders.createCanonical()
 			.registerTypeAdapterFactory(AbstractClassTypeAdapterFactory.getInstance("$T", "$V"))
 			.create();
 
@@ -41,14 +41,9 @@ public final class AbstractClassTypeAdapterFactoryTest {
 		});
 	}
 
-	private static final class Value {
-
-		private final Abstract value;
-
-		private Value(final Abstract value) {
-			this.value = value;
-		}
-
+	private static record Value (
+			Abstract value
+	) {
 	}
 
 	private abstract static class Abstract {

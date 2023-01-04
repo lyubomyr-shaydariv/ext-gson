@@ -13,17 +13,17 @@ public final class RecordTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Record finalize(@Nullable final Record value) {
+	protected Record normalize(@Nullable final Record value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		try {
 			return Stream.of(
-					test(
+					makeTestCase(
 							RecordTypeAdapter.getInstance(FooBar.class, gson),
 							"{\"foo\":\"1\",\"bar\":\"2\"}",
 							() -> new FooBar("1", "2")

@@ -47,7 +47,7 @@ public abstract class AbstractTypeAdapterFactory<CT>
 	 *
 	 * @return A type adapter for the given concrete type.
 	 */
-	protected abstract TypeAdapter<CT> createTypeAdapter(final Gson gson, TypeToken<?> typeToken);
+	protected abstract TypeAdapter<CT> createTypeAdapter(Gson gson, TypeToken<?> typeToken);
 
 	@Override
 	@Nullable

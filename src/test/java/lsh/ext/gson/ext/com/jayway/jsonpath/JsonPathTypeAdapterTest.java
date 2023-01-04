@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.jayway.jsonpath.Configuration;
@@ -16,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -24,35 +24,35 @@ public final class JsonPathTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Object finalize(@Nullable final Object value) {
+	protected Object normalize(@Nullable final Object value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
-		final Gson gson = new GsonBuilder()
+	protected Stream<Arguments> makeTestCases() {
+		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapterFactory.getInstance(JsonPathTypeAdapterTest::getJsonPathConfiguration);
 		return Stream.of(
-				test(
+				makeTestCase(
 						typeAdapterFactory.create(gson, TypeToken.get(Wrapper.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":\"Foo\",\"barRef\":\"A\",\"bazRef\":{\"k1\":\"v1\"}}",
 						() -> new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))
 				),
-				test(
+				makeTestCase(
 						typeAdapterFactory.create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						() -> new WrapperWithNotExistingPath(null)
 				),
-				test(
+				makeTestCase(
 						JsonPathTypeAdapterFactory.getInstance(JsonPathTypeAdapterTest::getJsonPathConfiguration).create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						() -> new WrapperWithNotExistingPath(null)
 				),
-				test(
+				makeTestCase(
 						JsonPathTypeAdapterFactory.getWithGlobalDefaults().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
@@ -84,14 +84,10 @@ public final class JsonPathTypeAdapterTest
 
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	@EqualsAndHashCode
-	@ToString
-	private static final class WrapperWithNotExistingPath {
-
-		@JsonPathExpression("$.nowhere")
-		private final String fooRef;
-
+	private static record WrapperWithNotExistingPath(
+			@JsonPathExpression("$.nowhere")
+			String fooRef
+	) {
 	}
 
 }

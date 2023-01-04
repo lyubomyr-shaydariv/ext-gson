@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nullable;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -66,7 +68,7 @@ public final class ParameterizedTypes {
 	 * @see #mapOf(Type, Type)
 	 */
 	public static ParameterizedType listOf(final Type elementType) {
-		return new ListParameterizedType(elementType);
+		return new ConcreteParameterizedType(List.class, new Type[]{ elementType });
 	}
 
 	/**
@@ -78,7 +80,7 @@ public final class ParameterizedTypes {
 	 * @see #mapOf(Type, Type)
 	 */
 	public static ParameterizedType setOf(final Type elementType) {
-		return new SetParameterizedType(elementType);
+		return new ConcreteParameterizedType(Set.class, new Type[]{ elementType });
 	}
 
 	/**
@@ -91,28 +93,24 @@ public final class ParameterizedTypes {
 	 * @see #setOf(Type)
 	 */
 	public static ParameterizedType mapOf(final Type keyType, final Type valueType) {
-		return new MapParameterizedType(keyType, valueType);
+		return new ConcreteParameterizedType(Map.class, new Type[]{ keyType, valueType });
 	}
 
+	@RequiredArgsConstructor(access =  AccessLevel.PRIVATE)
 	@EqualsAndHashCode
-	private abstract static class AbstractParameterizedType
+	private static final class ConcreteParameterizedType
 			implements ParameterizedType {
 
 		private final Type rawType;
 		private final Type[] actualTypeArguments;
 
-		private AbstractParameterizedType(final Type rawType, final Type... actualTypeArguments) {
-			this.rawType = rawType;
-			this.actualTypeArguments = actualTypeArguments;
-		}
-
 		@Override
-		public final Type getRawType() {
+		public Type getRawType() {
 			return rawType;
 		}
 
 		@Override
-		public final Type[] getActualTypeArguments() {
+		public Type[] getActualTypeArguments() {
 			return actualTypeArguments.length != 0
 					? actualTypeArguments.clone()
 					: emptyType1dArray;
@@ -120,35 +118,8 @@ public final class ParameterizedTypes {
 
 		@Override
 		@Nullable
-		public final Type getOwnerType() {
+		public Type getOwnerType() {
 			return null;
-		}
-
-	}
-
-	private static final class ListParameterizedType
-			extends AbstractParameterizedType {
-
-		private ListParameterizedType(final Type elementType) {
-			super(List.class, elementType);
-		}
-
-	}
-
-	private static final class SetParameterizedType
-			extends AbstractParameterizedType {
-
-		private SetParameterizedType(final Type elementType) {
-			super(Set.class, elementType);
-		}
-
-	}
-
-	private static final class MapParameterizedType
-			extends AbstractParameterizedType {
-
-		private MapParameterizedType(final Type keyType, final Type valueType) {
-			super(Map.class, keyType, valueType);
 		}
 
 	}

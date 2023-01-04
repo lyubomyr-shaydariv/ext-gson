@@ -51,8 +51,7 @@ public abstract class AbstractModuleTest {
 		final TypeAdapterFactory unit = createUnit();
 		final TypeAdapter<?> typeAdapter = unit.create(gson, supportedTypeToken);
 		Assertions.assertNotNull(typeAdapter);
-		final boolean mustNotSupportForeignClasses = foreignClassTypeTokens
-				.stream()
+		final boolean mustNotSupportForeignClasses = foreignClassTypeTokens.stream()
 				.map(typeToken -> unit.create(gson, typeToken))
 				.noneMatch(Objects::nonNull);
 		Assertions.assertTrue(mustNotSupportForeignClasses);

@@ -19,12 +19,12 @@ public final class AlwaysListTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected List<?> finalize(@Nullable final List<?> value) {
+	protected List<?> normalize(@Nullable final List<?> value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(TypeToken.get(String.class));
@@ -33,42 +33,42 @@ public final class AlwaysListTypeAdapterTest
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<Map<String, Integer>> stringToIntegerMapTypeAdapter = (TypeAdapter<Map<String, Integer>>) gson.getAdapter(TypeToken.getParameterized(Map.class, String.class, Integer.class));
 		return Stream.of(
-				test(
+				makeTestCase(
 						AlwaysListTypeAdapter.getInstance(stringToIntegerMapTypeAdapter),
 						"{\"foo\":1,\"bar\":2}",
 						() -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2))
 				),
-				test(
+				makeTestCase(
 						AlwaysListTypeAdapter.getInstance(stringTypeAdapter),
 						"\"foo\"",
 						() -> ImmutableList.of("foo")
 				),
-				test(
+				makeTestCase(
 						AlwaysListTypeAdapter.getInstance(integerTypeAdapter),
 						"39",
 						() -> ImmutableList.of(39)
 				),
-				test(
+				makeTestCase(
 						AlwaysListTypeAdapter.getInstance(booleanTypeAdapter),
 						"true",
 						() -> ImmutableList.of(true)
 				),
-				test(
+				makeTestCase(
 						AlwaysListTypeAdapter.getInstance(stringToIntegerMapTypeAdapter),
 						"[{\"foo\":1,\"bar\":2},{\"bar\":3,\"qux\":4}]",
 						() -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4))
 				),
-				test(
+				makeTestCase(
 						AlwaysListTypeAdapter.getInstance(stringTypeAdapter),
 						"[\"foo\",\"bar\",\"baz\"]",
 						(Supplier<?>) () -> ImmutableList.of("foo", "bar", "baz")
 				),
-				test(
+				makeTestCase(
 						AlwaysListTypeAdapter.getInstance(integerTypeAdapter),
 						"[39,42,100]",
 						(Supplier<?>) () -> ImmutableList.of(39, 42, 100)
 				),
-				test(
+				makeTestCase(
 						AlwaysListTypeAdapter.getInstance(booleanTypeAdapter),
 						"[true,false,true]",
 						(Supplier<?>) () -> ImmutableList.of(true, false, true)

@@ -12,34 +12,34 @@ public final class DurationTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Duration finalize(@Nullable final Duration value) {
+	protected Duration normalize(@Nullable final Duration value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						DurationTypeAdapter.getInstance(),
 						"\"PT0.555S\"",
 						() -> Duration.ofMillis(555)
 				),
-				test(
+				makeTestCase(
 						DurationTypeAdapter.getInstance(),
 						"\"PT9M15S\"",
 						() -> Duration.ofSeconds(555)
 				),
-				test(
+				makeTestCase(
 						DurationTypeAdapter.getInstance(),
 						"\"PT9H15M\"",
 						() -> Duration.ofMinutes(555)
 				),
-				test(
+				makeTestCase(
 						DurationTypeAdapter.getInstance(),
 						"\"PT555H\"",
 						() -> Duration.ofHours(555)
 				),
-				test(
+				makeTestCase(
 						DurationTypeAdapter.getInstance(),
 						"\"PT13320H\"",
 						() -> Duration.ofDays(555)

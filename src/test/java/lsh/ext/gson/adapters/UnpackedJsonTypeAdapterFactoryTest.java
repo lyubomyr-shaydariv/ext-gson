@@ -5,22 +5,15 @@ import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.annotations.JsonAdapter;
-import lombok.EqualsAndHashCode;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class UnpackedJsonTypeAdapterFactoryTest
 		extends AbstractSimpleTest {
 
-	@EqualsAndHashCode
-	private static final class Wrapper {
-
-		@JsonAdapter(UnpackedJsonTypeAdapterFactory.class)
-		final List<Integer> value;
-
-		private Wrapper(final List<Integer> value) {
-			this.value = value;
-		}
-
+	private static record Wrapper(
+			@JsonAdapter(UnpackedJsonTypeAdapterFactory.class)
+			List<Integer> value
+	) {
 	}
 
 	@Override

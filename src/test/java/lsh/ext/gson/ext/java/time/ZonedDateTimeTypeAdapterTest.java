@@ -13,14 +13,14 @@ public final class ZonedDateTimeTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected ZonedDateTime finalize(@Nullable final ZonedDateTime value) {
+	protected ZonedDateTime normalize(@Nullable final ZonedDateTime value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						ZonedDateTimeTypeAdapter.getInstance(),
 						"\"2018-03-20T12:34:56.000000666Z[UTC]\"",
 						() -> ZonedDateTime.of(2018, 03, 20, 12, 34, 56, 666, ZoneId.of("UTC"))

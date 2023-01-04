@@ -15,16 +15,16 @@ public final class BiMapTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected BiMap<String, ?> finalize(@Nullable final BiMap<String, ?> value) {
+	protected BiMap<String, ?> normalize(@Nullable final BiMap<String, ?> value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		return Stream.of(
-				test(
+				makeTestCase(
 						BiMapTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}",
 						() -> ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz")

@@ -15,59 +15,47 @@ import org.junit.jupiter.params.provider.MethodSource;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractTypeAdapterTest<T, R> {
 
-	protected abstract Stream<Arguments> source();
+	protected abstract Stream<Arguments> makeTestCases();
 
 	@Nullable
-	protected abstract R finalize(@Nullable T value);
+	protected abstract R normalize(@Nullable T value);
 
 	@ParameterizedTest
-	@MethodSource("source")
-	public final void testRead(final TypeAdapter<T> unit, final Json json, final Supplier<? extends T> valueFactory)
+	@MethodSource("makeTestCases")
+	public final void testRead(final TypeAdapter<? extends T> unit, final String readJson, @SuppressWarnings("unused") final String writeJson, final Supplier<? extends T> valueFactory)
 			throws IOException {
-		Assertions.assertEquals(finalize(valueFactory.get()), finalize(unit.fromJson(json.read)));
+		Assertions.assertEquals(normalize(valueFactory.get()), normalize(unit.fromJson(readJson)));
 	}
 
 	@ParameterizedTest
-	@MethodSource("source")
-	public final void testReadNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final Json json,
+	@MethodSource("makeTestCases")
+	public final void testReadNull(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, @SuppressWarnings("unused") final String writeJson,
 			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory)
 			throws IOException {
-		Assertions.assertEquals(finalize(null), unit.fromJson("null"));
+		Assertions.assertEquals(normalize(null), unit.fromJson("null"));
 	}
 
 	@ParameterizedTest
-	@MethodSource("source")
-	public final void testWrite(final TypeAdapter<T> unit, final Json json, final Supplier<? extends T> valueFactory) {
-		Assertions.assertEquals(json.write, unit.toJson(valueFactory.get()));
+	@MethodSource("makeTestCases")
+	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, final String writeJson, final Supplier<? extends T> valueFactory) {
+		Assertions.assertEquals(writeJson, unit.toJson(valueFactory.get()));
 	}
 
 	@ParameterizedTest
-	@MethodSource("source")
-	public final void testWriteNull(final TypeAdapter<T> unit, @SuppressWarnings("unused") final Json json,
+	@MethodSource("makeTestCases")
+	public final void testWriteNull(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, @SuppressWarnings("unused") final String writeJson,
 			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory) {
 		@SuppressWarnings("unchecked")
-		final T finalize = (T) finalize(null);
+		final T finalize = (T) normalize(null);
 		Assertions.assertEquals("null", unit.toJson(finalize));
 	}
 
-	protected static Arguments test(final TypeAdapter<?> unit, final String json, final Supplier<?> valueFactory) {
-		return Arguments.of(unit, new Json(json, json), valueFactory);
+	protected static Arguments makeTestCase(final TypeAdapter<?> unit, final String json, final Supplier<?> valueFactory) {
+		return makeTestCase(unit, json, json, valueFactory);
 	}
 
-	protected static Arguments test(final TypeAdapter<?> unit, final String readJson, final String writeJson, final Supplier<?> valueFactory) {
-		return Arguments.of(unit, new Json(readJson, writeJson), valueFactory);
-	}
-
-	private static final class Json {
-
-		private final String read;
-		private final String write;
-
-		private Json(final String read, final String write) {
-			this.read = read;
-			this.write = write;
-		}
-
+	protected static Arguments makeTestCase(final TypeAdapter<?> unit, final String readJson, final String writeJson, final Supplier<?> valueFactory) {
+		return Arguments.of(unit, readJson, writeJson, valueFactory);
 	}
 
 }

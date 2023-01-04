@@ -12,14 +12,14 @@ public final class MonthTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Month finalize(@Nullable final Month value) {
+	protected Month normalize(@Nullable final Month value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						MonthTypeAdapter.getInstance(),
 						"\"SEPTEMBER\"",
 						() -> Month.SEPTEMBER

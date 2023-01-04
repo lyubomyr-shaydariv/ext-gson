@@ -6,8 +6,11 @@ import java.util.NoSuchElementException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ICloseableIterator;
 
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonReaderIterator<E>
 		implements ICloseableIterator<E> {
 
@@ -15,11 +18,6 @@ public final class JsonReaderIterator<E>
 	private final JsonReader in;
 
 	private ReadingIteratorState state = ReadingIteratorState.BEFORE_ARRAY;
-
-	private JsonReaderIterator(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
-		this.elementTypeAdapter = elementTypeAdapter;
-		this.in = in;
-	}
 
 	public static <E> ICloseableIterator<E> getInstance(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
 		return new JsonReaderIterator<>(elementTypeAdapter, in);

@@ -16,16 +16,16 @@ public final class TableTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Table<String, String, ?> finalize(@Nullable final Table<String, String, ?> value) {
+	protected Table<String, String, ?> normalize(@Nullable final Table<String, String, ?> value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		return Stream.of(
-				test(
+				makeTestCase(
 						TableTypeAdapter.getInstance(gson.getAdapter(TypeToken.get(Integer.class))),
 						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
 						() -> ImmutableTable.<String, String, Integer>builder()

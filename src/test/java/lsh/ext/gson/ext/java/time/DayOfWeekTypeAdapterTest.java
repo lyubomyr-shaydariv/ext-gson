@@ -12,19 +12,19 @@ public final class DayOfWeekTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected DayOfWeek finalize(@Nullable final DayOfWeek value) {
+	protected DayOfWeek normalize(@Nullable final DayOfWeek value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						DayOfWeekTypeAdapter.getInstance(),
 						"\"MONDAY\"",
 						() -> DayOfWeek.MONDAY
 				),
-				test(
+				makeTestCase(
 						DayOfWeekTypeAdapter.getInstance(),
 						"\"FRIDAY\"",
 						() -> DayOfWeek.FRIDAY

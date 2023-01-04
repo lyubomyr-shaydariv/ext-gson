@@ -13,7 +13,7 @@ public final class ReadOnlyTypeAdapterTest {
 	@Test
 	public void write() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final TypeAdapter<String> readOnlyTypeAdapter = new ReadOnlyTypeAdapter<String>() {
+			final TypeAdapter<String> readOnlyTypeAdapter = new ReadOnlyTypeAdapter<>() {
 				@Override
 				public String read(final JsonReader in) {
 					throw new AssertionError();

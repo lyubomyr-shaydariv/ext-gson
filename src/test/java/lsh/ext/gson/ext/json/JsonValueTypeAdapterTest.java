@@ -13,14 +13,14 @@ public final class JsonValueTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected JsonValue finalize(@Nullable final JsonValue value) {
+	protected JsonValue normalize(@Nullable final JsonValue value) {
 		return value != null ? value : JsonValue.NULL;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						JsonValueTypeAdapter.getInstance(),
 						"{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}",
 						() -> Json.createObjectBuilder()
@@ -34,7 +34,8 @@ public final class JsonValueTypeAdapterTest
 										.add("bar")
 										.addNull()
 										.build()
-								).build()
+								)
+								.build()
 				)
 		);
 	}

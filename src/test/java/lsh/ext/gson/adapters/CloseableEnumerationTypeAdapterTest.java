@@ -18,17 +18,17 @@ public final class CloseableEnumerationTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected List<?> finalize(@Nullable final ICloseableEnumeration<?> value) {
+	protected List<?> normalize(@Nullable final ICloseableEnumeration<?> value) {
 		return value != null ? ImmutableList.copyOf(Collections.list(value)) : null;
 	}
 
 	@Override
 	@SuppressWarnings("resource")
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		return Stream.of(
-				test(
+				makeTestCase(
 						CloseableEnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
 						() -> CloseableEnumerations.from(CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator()))

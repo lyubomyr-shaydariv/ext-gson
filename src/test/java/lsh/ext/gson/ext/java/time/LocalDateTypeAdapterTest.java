@@ -13,19 +13,19 @@ public final class LocalDateTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected LocalDate finalize(@Nullable final LocalDate value) {
+	protected LocalDate normalize(@Nullable final LocalDate value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						LocalDateTypeAdapter.getInstance(),
 						"\"2018-01-01\"",
 						() -> LocalDate.of(2018, 01, 01)
 				),
-				test(
+				makeTestCase(
 						LocalDateTypeAdapter.getInstance(DateTimeFormatter.ISO_LOCAL_DATE),
 						"\"2018-01-01\"",
 						() -> LocalDate.of(2018, 01, 01)

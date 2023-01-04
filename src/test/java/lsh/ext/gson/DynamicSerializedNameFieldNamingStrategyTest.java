@@ -2,7 +2,6 @@ package lsh.ext.gson;
 
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	@Test
 	public void testTranslateNameForStaticMappingsIntegration() {
-		final Gson gson = new GsonBuilder()
+		final Gson gson = GsonBuilders.createCanonical()
 				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::resolve))
 				.create();
 		final StaticFooBar staticFooBar = gson.fromJson("{\"foo\":\"1\",\"bar\":\"2\"}", StaticFooBar.class);
@@ -46,7 +45,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegration() {
-		final Gson gson = new GsonBuilder()
+		final Gson gson = GsonBuilders.createCanonical()
 				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::resolve))
 				.create();
 		final DynamicFooBar dynamicFooBar = gson.fromJson("{\"FOO1\":\"1\",\"BAR2\":\"2\"}", DynamicFooBar.class);
@@ -57,7 +56,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegrationWithSerializedNameThatHasHigherPriority() {
 		final IFieldNamingResolver mockNameResolver = Mockito.mock(IFieldNamingResolver.class);
-		final Gson gson = new GsonBuilder()
+		final Gson gson = GsonBuilders.createCanonical()
 				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getInstance(mockNameResolver))
 				.create();
 		final MixedFooBar mixedFooBar = gson.fromJson("{\"staticFoo\":\"1\",\"staticBar\":\"2\"}", MixedFooBar.class);

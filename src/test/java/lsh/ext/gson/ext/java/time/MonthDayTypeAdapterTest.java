@@ -14,19 +14,19 @@ public final class MonthDayTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected MonthDay finalize(@Nullable final MonthDay value) {
+	protected MonthDay normalize(@Nullable final MonthDay value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						MonthDayTypeAdapter.getInstance(),
 						"\"--07-13\"",
 						() -> MonthDay.of(Month.JULY, 13)
 				),
-				test(
+				makeTestCase(
 						MonthDayTypeAdapter.getInstance(DateTimeFormatter.ofPattern("M.d")),
 						"\"7.13\"",
 						() -> MonthDay.of(Month.JULY, 13)

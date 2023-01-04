@@ -10,6 +10,8 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -156,12 +158,10 @@ public final class JsonObjects {
 	 * Represents a {@link JsonObject} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates a
 	 * certain state with builder-like syntax.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class JsonObjectAccumulator {
 
 		private final JsonObject jsonObject = new JsonObject();
-
-		private JsonObjectAccumulator() {
-		}
 
 		/**
 		 * @param property    Property name.
@@ -403,7 +403,7 @@ public final class JsonObjects {
 		@Override
 		protected Iterator<Map.Entry<String, JsonElement>> getIterator(final JsonObject jsonObject) {
 			final Iterator<Map.Entry<String, JsonElement>> iterator = jsonObject.entrySet().iterator();
-			return new Iterator<Map.Entry<String, JsonElement>>() {
+			return new Iterator<>() {
 				@Override
 				public boolean hasNext() {
 					return iterator.hasNext();

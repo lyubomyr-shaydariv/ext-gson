@@ -11,14 +11,14 @@ public final class EpochDateTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Date finalize(@Nullable final Date value) {
+	protected Date normalize(@Nullable final Date value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						EpochDateTypeAdapter.getInstance(),
 						"1488929283",
 						() -> new Date(1488929283000L)

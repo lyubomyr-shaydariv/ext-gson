@@ -15,16 +15,16 @@ public final class MultisetTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Multiset<?> finalize(@Nullable final Multiset<?> value) {
+	protected Multiset<?> normalize(@Nullable final Multiset<?> value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		return Stream.of(
-				test(
+				makeTestCase(
 						MultisetTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
 						() -> ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")

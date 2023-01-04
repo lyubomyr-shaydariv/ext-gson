@@ -13,19 +13,19 @@ public final class YearTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Year finalize(@Nullable final Year value) {
+	protected Year normalize(@Nullable final Year value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						YearTypeAdapter.getInstance(),
 						"\"2018\"",
 						() -> Year.of(2018)
 				),
-				test(
+				makeTestCase(
 						YearTypeAdapter.getInstance(DateTimeFormatter.ofPattern("y'-xx-xx'")),
 						"\"2018-xx-xx\"",
 						() -> Year.of(2018)

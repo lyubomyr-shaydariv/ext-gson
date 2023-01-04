@@ -14,19 +14,19 @@ public final class OffsetTimeTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected OffsetTime finalize(@Nullable final OffsetTime value) {
+	protected OffsetTime normalize(@Nullable final OffsetTime value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						OffsetTimeTypeAdapter.getInstance(),
 						"\"12:34:56Z\"",
 						() -> OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
 				),
-				test(
+				makeTestCase(
 						OffsetTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_OFFSET_TIME),
 						"\"12:34:56Z\"",
 						() -> OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)

@@ -8,6 +8,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a type adapter to hold both object type name and object value. Example result JSON document:
@@ -22,18 +24,13 @@ import com.google.gson.stream.MalformedJsonException;
  * @author Lyubomyr Shaydariv
  * @see AbstractClassTypeAdapterFactory
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TypeAwareTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	private final Gson gson;
 	private final String typePropertyName;
 	private final String valuePropertyName;
-
-	private TypeAwareTypeAdapter(final Gson gson, final String typePropertyName, final String valuePropertyName) {
-		this.gson = gson;
-		this.typePropertyName = typePropertyName;
-		this.valuePropertyName = valuePropertyName;
-	}
 
 	/**
 	 * @param gson              Gson instance

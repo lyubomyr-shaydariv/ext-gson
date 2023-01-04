@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 public final class ParameterizedTypesTest {
 
-	private static final Type[] emptyTypeArray = new Type[0];
+	private static final Type[] emptyTypeArray = {};
 
 	@Test
 	public void testResolveTypeArgumentsForRawTypes() {

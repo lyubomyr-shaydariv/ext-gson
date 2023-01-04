@@ -13,19 +13,19 @@ public final class LocalTimeTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected LocalTime finalize(@Nullable final LocalTime value) {
+	protected LocalTime normalize(@Nullable final LocalTime value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						LocalTimeTypeAdapter.getInstance(),
 						"\"10:10\"",
 						() -> LocalTime.of(10, 10, 0)
 				),
-				test(
+				makeTestCase(
 						LocalTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_TIME),
 						"\"19:23:33\"",
 						() -> LocalTime.of(19, 23, 33)

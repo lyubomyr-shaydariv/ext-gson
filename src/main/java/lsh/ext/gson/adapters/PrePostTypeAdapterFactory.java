@@ -12,20 +12,19 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a pre/post type adapter factory to perform pre/post checks for a serializable/deserializable values respectively.
  *
  * @author Lyubomyr Shaydariv
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PrePostTypeAdapterFactory
 		implements TypeAdapterFactory {
 
 	private final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories;
-
-	private PrePostTypeAdapterFactory(final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories) {
-		this.processorFactories = processorFactories;
-	}
 
 	/**
 	 * @param processorFactories A sequence of processor factories.
@@ -71,17 +70,12 @@ public final class PrePostTypeAdapterFactory
 				.nullSafe();
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class PrePostTypeAdapter<T>
 			extends TypeAdapter<T> {
 
 		private final Iterable<? extends IPrePostProcessor<? super T>> processors;
 		private final TypeAdapter<T> delegateTypeAdapter;
-
-		private PrePostTypeAdapter(final Iterable<? extends IPrePostProcessor<? super T>> processors,
-				final TypeAdapter<T> delegateTypeAdapter) {
-			this.processors = processors;
-			this.delegateTypeAdapter = delegateTypeAdapter;
-		}
 
 		@Override
 		public void write(final JsonWriter out, final T value)

@@ -15,16 +15,16 @@ public final class MultimapTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Multimap<String, ?> finalize(@Nullable final Multimap<String, ?> value) {
+	protected Multimap<String, ?> normalize(@Nullable final Multimap<String, ?> value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		return Stream.of(
-				test(
+				makeTestCase(
 						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
 						() -> ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar")

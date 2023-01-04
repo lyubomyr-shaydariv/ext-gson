@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import lombok.EqualsAndHashCode;
 import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
@@ -40,17 +39,10 @@ public final class JsonReaderIteratorTest {
 		}
 	}
 
-	@EqualsAndHashCode
-	private static final class FooBar {
-
-		private final int foo;
-		private final int bar;
-
-		private FooBar(final int foo, final int bar) {
-			this.foo = foo;
-			this.bar = bar;
-		}
-
+	private static record FooBar(
+			int foo,
+			int bar
+	) {
 	}
 
 }

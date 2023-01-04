@@ -14,16 +14,16 @@ public final class OptionalTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Optional<?> finalize(@Nullable final Optional<?> value) {
+	protected Optional<?> normalize(@Nullable final Optional<?> value) {
 		return value != null ? value : Optional.empty();
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		return Stream.of(
-				test(
+				makeTestCase(
 						OptionalTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"\"foo\"",
 						() -> Optional.of("foo")

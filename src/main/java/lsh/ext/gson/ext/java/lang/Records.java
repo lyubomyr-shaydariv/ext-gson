@@ -12,10 +12,10 @@ final class Records {
 
 	static <T extends Record> Constructor<T> lookupConstructor(final Class<T> recordClass)
 			throws NoSuchMethodException {
-		return recordClass.getDeclaredConstructor(lookupParameters(recordClass));
+		return recordClass.getDeclaredConstructor(lookupParameterTypes(recordClass));
 	}
 
-	private static Class<?>[] lookupParameters(final Class<? extends Record> recordClass)
+	private static Class<?>[] lookupParameterTypes(final Class<? extends Record> recordClass)
 			throws IllegalArgumentException {
 		@Nullable
 		final RecordComponent[] recordComponents = recordClass.getRecordComponents();

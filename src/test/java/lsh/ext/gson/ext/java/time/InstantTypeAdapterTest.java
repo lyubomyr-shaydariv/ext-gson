@@ -12,19 +12,19 @@ public final class InstantTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Instant finalize(@Nullable final Instant value) {
+	protected Instant normalize(@Nullable final Instant value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						InstantTypeAdapter.getInstance(),
 						"\"1970-01-01T00:00:00Z\"",
 						() -> Instant.ofEpochMilli(0)
 				),
-				test(
+				makeTestCase(
 						InstantTypeAdapter.getInstance(),
 						"\"2061-08-14T09:37:12.837Z\"",
 						() -> Instant.ofEpochMilli(2891237832837L)

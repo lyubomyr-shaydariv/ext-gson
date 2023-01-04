@@ -13,19 +13,19 @@ public final class LocalDateTimeTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected LocalDateTime finalize(@Nullable final LocalDateTime value) {
+	protected LocalDateTime normalize(@Nullable final LocalDateTime value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						LocalDateTimeTypeAdapter.getInstance(),
 						"\"2018-01-01T15:31\"",
 						() -> LocalDateTime.of(2018, 01, 01, 15, 31)
 				),
-				test(
+				makeTestCase(
 						LocalDateTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
 						"\"2018-01-01T15:31:00\"",
 						() -> LocalDateTime.of(2018, 01, 01, 15, 31)

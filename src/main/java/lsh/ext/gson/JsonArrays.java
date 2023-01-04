@@ -10,6 +10,8 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -319,12 +321,10 @@ public final class JsonArrays {
 	 * Represents a {@link JsonArray} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates a
 	 * certain state with builder-like syntax.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class JsonArrayAccumulator {
 
 		private final JsonArray jsonArray = new JsonArray();
-
-		private JsonArrayAccumulator() {
-		}
 
 		/**
 		 * @param jsonElement A JSON element.

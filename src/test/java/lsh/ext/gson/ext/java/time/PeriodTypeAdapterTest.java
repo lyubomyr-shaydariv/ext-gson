@@ -12,14 +12,14 @@ public final class PeriodTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Period finalize(@Nullable final Period value) {
+	protected Period normalize(@Nullable final Period value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						PeriodTypeAdapter.getInstance(),
 						"\"P1Y8M20D\"",
 						() -> Period.of(1, 8, 20)

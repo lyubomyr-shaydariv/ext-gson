@@ -55,14 +55,11 @@ public final class JsonFailSafeTypeAdapterFactory
 		return new JsonFailSafeTypeAdapter<>(delegateTypeAdapter);
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class JsonFailSafeTypeAdapter<T>
 			extends TypeAdapter<T> {
 
 		private final TypeAdapter<T> delegateTypeAdapter;
-
-		private JsonFailSafeTypeAdapter(final TypeAdapter<T> delegateTypeAdapter) {
-			this.delegateTypeAdapter = delegateTypeAdapter;
-		}
 
 		@Override
 		public void write(final JsonWriter out, final T value)

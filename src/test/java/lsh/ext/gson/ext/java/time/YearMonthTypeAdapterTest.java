@@ -13,19 +13,19 @@ public final class YearMonthTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected YearMonth finalize(@Nullable final YearMonth value) {
+	protected YearMonth normalize(@Nullable final YearMonth value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
-				test(
+				makeTestCase(
 						YearMonthTypeAdapter.getInstance(),
 						"\"1999-09\"",
 						() -> YearMonth.of(1999, 9)
 				),
-				test(
+				makeTestCase(
 						YearMonthTypeAdapter.getInstance(DateTimeFormatter.ofPattern("M.y")),
 						"\"9.1999\"",
 						() -> YearMonth.of(1999, 9)

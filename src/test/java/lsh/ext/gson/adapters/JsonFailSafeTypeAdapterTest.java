@@ -15,21 +15,21 @@ public final class JsonFailSafeTypeAdapterTest
 
 	@Nullable
 	@Override
-	protected Object finalize(@Nullable final Object value) {
+	protected Object normalize(@Nullable final Object value) {
 		return value;
 	}
 
 	@Override
-	protected Stream<Arguments> source() {
+	protected Stream<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		return Stream.of(
-				test(
+				makeTestCase(
 						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(String.class))),
 						"[\"foo\",\"bar\"]",
 						() -> ImmutableList.of("foo", "bar")
 				),
-				test(
+				makeTestCase(
 						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(Integer.class))),
 						"[1000]",
 						() -> ImmutableList.of(1000)
