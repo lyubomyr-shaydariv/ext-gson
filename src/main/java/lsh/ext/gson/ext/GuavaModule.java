@@ -37,7 +37,7 @@ public final class GuavaModule
 		extends AbstractModule {
 
 	private static final IModule instance = build()
-			.done();
+			.build();
 
 	private GuavaModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Google Guava", typeAdapterFactories);
@@ -186,7 +186,7 @@ public final class GuavaModule
 		/**
 		 * @return A new module instance.
 		 */
-		public IModule done() {
+		public IModule build() {
 			@SuppressWarnings("unchecked")
 			final Supplier<? extends BiMap<String, Object>> castNewBiMapFactory = (Supplier<? extends BiMap<String, Object>>) newBiMapFactory;
 			@SuppressWarnings("unchecked")

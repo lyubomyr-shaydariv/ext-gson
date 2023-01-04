@@ -22,7 +22,7 @@ public final class JsonApiModule
 		extends AbstractModule {
 
 	private static final IModule instance = build()
-			.done();
+			.build();
 
 	private JsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Java JSON API", typeAdapterFactories);
@@ -51,7 +51,7 @@ public final class JsonApiModule
 		/**
 		 * @return A new module instance.
 		 */
-		public IModule done() {
+		public IModule build() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Collections.unmodifiableList(Arrays.asList(
 					JsonValueTypeAdapterFactory.getInstance()
 			));

@@ -25,7 +25,7 @@ public final class Java8Module
 		extends AbstractModule {
 
 	private static final IModule instance = build()
-			.done();
+			.build();
 
 	private Java8Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Java 8", typeAdapterFactories);
@@ -54,7 +54,7 @@ public final class Java8Module
 		/**
 		 * @return A new module instance.
 		 */
-		public IModule done() {
+		public IModule build() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
 							OptionalTypeAdapterFactory.getInstance(),
 							StreamTypeAdapterFactory.getInstance()

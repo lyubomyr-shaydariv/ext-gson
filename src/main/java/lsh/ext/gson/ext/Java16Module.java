@@ -23,7 +23,7 @@ public final class Java16Module
 		extends AbstractModule {
 
 	private static final IModule defaultInstance = build()
-			.done();
+			.build();
 
 	private Java16Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Java 16", typeAdapterFactories);
@@ -52,7 +52,7 @@ public final class Java16Module
 		/**
 		 * @return A new module instance.
 		 */
-		public IModule done() {
+		public IModule build() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
 							RecordTypeAdapterFactory.getInstance()
 					)

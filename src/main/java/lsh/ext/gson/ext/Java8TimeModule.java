@@ -52,7 +52,7 @@ public final class Java8TimeModule
 		extends AbstractModule {
 
 	private static final IModule instance = build()
-			.done();
+			.build();
 
 	protected Java8TimeModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Java 8 Time", typeAdapterFactories);
@@ -216,7 +216,7 @@ public final class Java8TimeModule
 		/**
 		 * @return A new module instance.
 		 */
-		public IModule done() {
+		public IModule build() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
 							DayOfWeekTypeAdapterFactory.getInstance(),
 							DurationTypeAdapterFactory.getInstance(),

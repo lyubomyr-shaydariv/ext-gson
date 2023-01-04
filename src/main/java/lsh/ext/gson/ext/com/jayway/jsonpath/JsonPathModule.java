@@ -21,7 +21,7 @@ public final class JsonPathModule
 		extends AbstractModule {
 
 	private static final IModule instance = build()
-			.done();
+			.build();
 
 	private JsonPathModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Jayway JsonPath", typeAdapterFactories);
@@ -50,7 +50,7 @@ public final class JsonPathModule
 		/**
 		 * @return A new module instance.
 		 */
-		public IModule done() {
+		public IModule build() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(
 					JsonPathTypeAdapterFactory.getInstance()
 			));
