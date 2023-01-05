@@ -1,11 +1,11 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.ext.java;
 
 import java.util.Iterator;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import lsh.ext.gson.CloseableIterators;
 import lsh.ext.gson.ICloseableIterator;
+import lsh.ext.gson.adapters.AbstractCursorTypeAdapter;
 
 /**
  * Type adapter for {@link Iterator}. Iterators are supposed to read and write JSON arrays only.

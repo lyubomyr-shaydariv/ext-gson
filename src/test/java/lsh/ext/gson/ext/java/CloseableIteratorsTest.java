@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.ext.java;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableList;
+import lsh.ext.gson.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

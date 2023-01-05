@@ -1,4 +1,4 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.ext.java;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -6,9 +6,9 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
-import lsh.ext.gson.CloseableIterators;
 import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.ICloseableIterator;
+import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class CloseableIteratorTypeAdapterTest

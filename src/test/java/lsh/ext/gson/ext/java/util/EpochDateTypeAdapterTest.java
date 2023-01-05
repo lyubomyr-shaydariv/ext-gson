@@ -1,9 +1,10 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.ext.java.util;
 
 import java.util.Date;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
+import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class EpochDateTypeAdapterTest

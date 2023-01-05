@@ -1,10 +1,11 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.ext.java;
 
 import java.util.Enumeration;
 import java.util.Iterator;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
+import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Iterator}.

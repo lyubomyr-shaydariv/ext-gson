@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.ext.java;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -8,8 +8,8 @@ import java.util.function.Consumer;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.adapters.CloseableIteratorTypeAdapter;
-import lsh.ext.gson.adapters.CloseableIteratorTypeAdapterFactory;
+import lsh.ext.gson.ICloseableEnumeration;
+import lsh.ext.gson.ICloseableIterator;
 
 /**
  * Provides closeable iterators utility methods.

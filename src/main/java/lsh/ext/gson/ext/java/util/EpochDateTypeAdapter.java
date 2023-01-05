@@ -1,4 +1,4 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.ext.java.util;
 
 import java.io.IOException;
 import java.util.Date;
