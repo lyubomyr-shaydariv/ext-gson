@@ -18,6 +18,16 @@ public final class JsonReadersTest {
 	private static final Gson gson = GsonBuilders.createCanonical()
 			.create();
 
+	private static final String VALID_JSON = "{\"foo\": \"bar\"}";
+	private static final String INVALID_JSON = "foobar";
+
+	@Test
+	public void isJsonValid()
+			throws IOException {
+		Assertions.assertTrue(JsonReaders.isValid(new JsonReader(new StringReader(VALID_JSON))));
+		Assertions.assertFalse(JsonReaders.isValid(new JsonReader(new StringReader(INVALID_JSON))));
+	}
+
 	@Test
 	public void testGsonWithoutEmptyStringFailFastJsonReaderMustNotFailOnReadingAnEmptyString() {
 		gson.fromJson(new StringReader(""), Void.class);

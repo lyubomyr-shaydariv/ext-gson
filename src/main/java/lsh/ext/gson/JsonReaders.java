@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.MalformedJsonException;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -17,6 +18,26 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public final class JsonReaders {
+
+	/**
+	 * @param jsonReader JSON reader
+	 *
+	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
+	 *
+	 * @throws IOException A rethrown exception
+	 */
+	public static boolean isValid(final JsonReader jsonReader)
+			throws IOException {
+		try {
+			JsonToken token;
+			while ( (token = jsonReader.peek()) != JsonToken.END_DOCUMENT && token != null ) {
+				skipToken(jsonReader);
+			}
+			return true;
+		} catch ( final MalformedJsonException ignored ) {
+			return false;
+		}
+	}
 
 	/**
 	 * Google Gson does not fail on empty strings since version 1.5:
