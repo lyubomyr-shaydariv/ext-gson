@@ -26,7 +26,7 @@ Currently `ext-gson` supports:
 * Parameterized type arguments parsers and simple collections/maps type factory methods.
 * Specialized type adapters and factories:
   * `AbstractBoundTypeAdapterFactory` - a type adapter factory super class bound to a specific type getting rid of `@SuppressWarnings("unchecked")` boilerplates;
-  * `AlwaysListTypeAdapter` and `AlwaysListTypeAdapterFactory` - a type adapter to "align" single element object and multiple elements objects array to `java.util.List`;
+  * `CoercedCollectionTypeAdapter` and `CoercedCollectionTypeAdapterFactory` - a type adapter to "align" single element object and multiple elements objects array to `java.util.Collection`;
   * `EpochDateTypeAdapter` - UNIX epoch timestamps type adapter;
   * `IteratorTypeAdapter` and `IteratorTypeAdapterFactory` - type adapter to support `java.util.Iterator` allowing to stream elements;
   * `JsonPathTypeAdapterFactory` - type adapter factory to enable `@JsonPathExpression` support (requires JsonPath dependency);

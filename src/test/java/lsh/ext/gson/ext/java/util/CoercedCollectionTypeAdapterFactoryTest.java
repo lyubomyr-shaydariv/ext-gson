@@ -1,22 +1,23 @@
-package lsh.ext.gson.adapters;
+package lsh.ext.gson.ext.java.util;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
 import org.junit.jupiter.params.provider.Arguments;
 
-public final class AlwaysListTypeAdapterFactoryTest
+public final class CoercedCollectionTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	public AlwaysListTypeAdapterFactoryTest() {
+	public CoercedCollectionTypeAdapterFactoryTest() {
 		super(false);
 	}
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return AlwaysListTypeAdapterFactory.getInstance();
+		return CoercedCollectionTypeAdapterFactory.getInstance();
 	}
 
 	@Override
