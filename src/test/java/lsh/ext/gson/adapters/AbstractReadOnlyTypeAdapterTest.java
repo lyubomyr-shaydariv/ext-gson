@@ -8,12 +8,12 @@ import com.google.gson.stream.JsonWriter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public final class ReadOnlyTypeAdapterTest {
+public final class AbstractReadOnlyTypeAdapterTest {
 
 	@Test
 	public void write() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final TypeAdapter<String> readOnlyTypeAdapter = new ReadOnlyTypeAdapter<>() {
+			final TypeAdapter<String> readOnlyTypeAdapter = new AbstractReadOnlyTypeAdapter<>() {
 				@Override
 				public String read(final JsonReader in) {
 					throw new AssertionError();

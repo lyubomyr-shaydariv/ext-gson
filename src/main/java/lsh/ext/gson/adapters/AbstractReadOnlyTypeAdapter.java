@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonWriter;
  *
  * @author Lyubomyr Shaydariv
  */
-public abstract class ReadOnlyTypeAdapter<T>
+public abstract class AbstractReadOnlyTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	/**
