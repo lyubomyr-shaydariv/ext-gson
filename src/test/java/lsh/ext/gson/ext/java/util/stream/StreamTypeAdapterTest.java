@@ -27,7 +27,7 @@ public final class StreamTypeAdapterTest
 				makeTestCase(
 						StreamTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
-						() -> Stream.of(1, 2, 4, 8)
+						Stream.of(1, 2, 4, 8)
 				)
 		);
 	}

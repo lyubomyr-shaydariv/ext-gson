@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
@@ -22,40 +21,40 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testRead(final TypeAdapter<? extends T> unit, final String readJson, @SuppressWarnings("unused") final String writeJson, final Supplier<? extends T> valueFactory)
+	public final void testRead(final TypeAdapter<? extends T> unit, final String readJson, @SuppressWarnings("unused") final String writeJson, final T value)
 			throws IOException {
-		Assertions.assertEquals(normalize(valueFactory.get()), normalize(unit.fromJson(readJson)));
+		Assertions.assertEquals(normalize(value), normalize(unit.fromJson(readJson)));
 	}
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
 	public final void testReadNull(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, @SuppressWarnings("unused") final String writeJson,
-			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory)
+			@SuppressWarnings("unused") final T value)
 			throws IOException {
 		Assertions.assertEquals(normalize(null), unit.fromJson("null"));
 	}
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, final String writeJson, final Supplier<? extends T> valueFactory) {
-		Assertions.assertEquals(writeJson, unit.toJson(valueFactory.get()));
+	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, final String writeJson, final T value) {
+		Assertions.assertEquals(writeJson, unit.toJson(value));
 	}
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
 	public final void testWriteNull(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, @SuppressWarnings("unused") final String writeJson,
-			@SuppressWarnings("unused") final Supplier<? extends T> valueFactory) {
+			@SuppressWarnings("unused") final T value) {
 		@SuppressWarnings("unchecked")
 		final T finalize = (T) normalize(null);
 		Assertions.assertEquals("null", unit.toJson(finalize));
 	}
 
-	protected static Arguments makeTestCase(final TypeAdapter<?> unit, final String json, final Supplier<?> valueFactory) {
-		return makeTestCase(unit, json, json, valueFactory);
+	protected final Arguments makeTestCase(final TypeAdapter<?> unit, final String json, final T value) {
+		return makeTestCase(unit, json, json, value);
 	}
 
-	protected static Arguments makeTestCase(final TypeAdapter<?> unit, final String readJson, final String writeJson, final Supplier<?> valueFactory) {
-		return Arguments.of(unit, readJson, writeJson, valueFactory);
+	protected final Arguments makeTestCase(final TypeAdapter<?> unit, final String readJson, final String writeJson, final T value) {
+		return Arguments.of(unit, readJson, writeJson, value);
 	}
 
 }

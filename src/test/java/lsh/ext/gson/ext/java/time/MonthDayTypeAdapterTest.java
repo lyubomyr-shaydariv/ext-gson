@@ -24,12 +24,12 @@ public final class MonthDayTypeAdapterTest
 				makeTestCase(
 						MonthDayTypeAdapter.getInstance(),
 						"\"--07-13\"",
-						() -> MonthDay.of(Month.JULY, 13)
+						MonthDay.of(Month.JULY, 13)
 				),
 				makeTestCase(
 						MonthDayTypeAdapter.getInstance(DateTimeFormatter.ofPattern("M.d")),
 						"\"7.13\"",
-						() -> MonthDay.of(Month.JULY, 13)
+						MonthDay.of(Month.JULY, 13)
 				)
 		);
 	}

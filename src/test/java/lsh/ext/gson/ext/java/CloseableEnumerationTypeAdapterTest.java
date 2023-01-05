@@ -30,7 +30,7 @@ public final class CloseableEnumerationTypeAdapterTest
 				makeTestCase(
 						CloseableEnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
-						() -> CloseableEnumerations.from(CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator()))
+						CloseableEnumerations.from(CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator()))
 				)
 		);
 	}

@@ -22,7 +22,7 @@ public final class EpochDateTypeAdapterTest
 				makeTestCase(
 						EpochDateTypeAdapter.getInstance(),
 						"1488929283",
-						() -> new Date(1488929283000L)
+						new Date(1488929283000L)
 				)
 		);
 	}

@@ -27,12 +27,12 @@ public final class JsonFailSafeTypeAdapterTest
 				makeTestCase(
 						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(String.class))),
 						"[\"foo\",\"bar\"]",
-						() -> ImmutableList.of("foo", "bar")
+						ImmutableList.of("foo", "bar")
 				),
 				makeTestCase(
 						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(Integer.class))),
 						"[1000]",
-						() -> ImmutableList.of(1000)
+						ImmutableList.of(1000)
 				)
 		);
 	}

@@ -26,7 +26,7 @@ public final class OptionalTypeAdapterTest
 				makeTestCase(
 						OptionalTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"\"foo\"",
-						() -> Optional.of("foo")
+						Optional.of("foo")
 				)
 		);
 	}

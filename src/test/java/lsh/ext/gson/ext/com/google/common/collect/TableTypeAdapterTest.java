@@ -28,7 +28,7 @@ public final class TableTypeAdapterTest
 				makeTestCase(
 						TableTypeAdapter.getInstance(gson.getAdapter(TypeToken.get(Integer.class))),
 						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
-						() -> ImmutableTable.<String, String, Integer>builder()
+						ImmutableTable.<String, String, Integer>builder()
 								.put("A", "1", 1)
 								.put("B", "2", 2)
 								.put("C", "3", 3)

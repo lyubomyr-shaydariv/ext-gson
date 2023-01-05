@@ -22,7 +22,7 @@ public final class MonthTypeAdapterTest
 				makeTestCase(
 						MonthTypeAdapter.getInstance(),
 						"\"SEPTEMBER\"",
-						() -> Month.SEPTEMBER
+						Month.SEPTEMBER
 				)
 		);
 	}

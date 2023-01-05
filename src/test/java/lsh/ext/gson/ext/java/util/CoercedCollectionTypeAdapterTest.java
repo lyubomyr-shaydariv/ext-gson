@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.java.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
@@ -38,42 +37,42 @@ public final class CoercedCollectionTypeAdapterTest
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, ArrayList::new),
 						"{\"foo\":1,\"bar\":2}",
-						() -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2))
+						ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2))
 				),
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, ArrayList::new),
 						"\"foo\"",
-						() -> ImmutableList.of("foo")
+						ImmutableList.of("foo")
 				),
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, ArrayList::new),
 						"39",
-						() -> ImmutableList.of(39)
+						ImmutableList.of(39)
 				),
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, ArrayList::new),
 						"true",
-						() -> ImmutableList.of(true)
+						ImmutableList.of(true)
 				),
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, ArrayList::new),
 						"[{\"foo\":1,\"bar\":2},{\"bar\":3,\"qux\":4}]",
-						() -> ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4))
+						ImmutableList.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4))
 				),
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, ArrayList::new),
 						"[\"foo\",\"bar\",\"baz\"]",
-						(Supplier<?>) () -> ImmutableList.of("foo", "bar", "baz")
+						ImmutableList.of("foo", "bar", "baz")
 				),
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, ArrayList::new),
 						"[39,42,100]",
-						(Supplier<?>) () -> ImmutableList.of(39, 42, 100)
+						ImmutableList.of(39, 42, 100)
 				),
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, ArrayList::new),
 						"[true,false,true]",
-						(Supplier<?>) () -> ImmutableList.of(true, false, true)
+						ImmutableList.of(true, false, true)
 				)
 		);
 	}

@@ -22,12 +22,12 @@ public final class DayOfWeekTypeAdapterTest
 				makeTestCase(
 						DayOfWeekTypeAdapter.getInstance(),
 						"\"MONDAY\"",
-						() -> DayOfWeek.MONDAY
+						DayOfWeek.MONDAY
 				),
 				makeTestCase(
 						DayOfWeekTypeAdapter.getInstance(),
 						"\"FRIDAY\"",
-						() -> DayOfWeek.FRIDAY
+						DayOfWeek.FRIDAY
 				)
 		);
 	}

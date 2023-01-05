@@ -24,12 +24,12 @@ public final class OffsetTimeTypeAdapterTest
 				makeTestCase(
 						OffsetTimeTypeAdapter.getInstance(),
 						"\"12:34:56Z\"",
-						() -> OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
+						OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
 				),
 				makeTestCase(
 						OffsetTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_OFFSET_TIME),
 						"\"12:34:56Z\"",
-						() -> OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
+						OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
 				)
 		);
 	}

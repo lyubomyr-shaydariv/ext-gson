@@ -23,12 +23,12 @@ public final class LocalDateTypeAdapterTest
 				makeTestCase(
 						LocalDateTypeAdapter.getInstance(),
 						"\"2018-01-01\"",
-						() -> LocalDate.of(2018, 01, 01)
+						LocalDate.of(2018, 01, 01)
 				),
 				makeTestCase(
 						LocalDateTypeAdapter.getInstance(DateTimeFormatter.ISO_LOCAL_DATE),
 						"\"2018-01-01\"",
-						() -> LocalDate.of(2018, 01, 01)
+						LocalDate.of(2018, 01, 01)
 				)
 		);
 	}

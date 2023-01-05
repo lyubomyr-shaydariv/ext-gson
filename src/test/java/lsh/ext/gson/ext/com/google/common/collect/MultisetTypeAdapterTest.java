@@ -27,7 +27,7 @@ public final class MultisetTypeAdapterTest
 				makeTestCase(
 						MultisetTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
-						() -> ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
+						ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
 				)
 		);
 	}

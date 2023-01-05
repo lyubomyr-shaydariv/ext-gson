@@ -23,12 +23,12 @@ public final class LocalTimeTypeAdapterTest
 				makeTestCase(
 						LocalTimeTypeAdapter.getInstance(),
 						"\"10:10\"",
-						() -> LocalTime.of(10, 10, 0)
+						LocalTime.of(10, 10, 0)
 				),
 				makeTestCase(
 						LocalTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_TIME),
 						"\"19:23:33\"",
-						() -> LocalTime.of(19, 23, 33)
+						LocalTime.of(19, 23, 33)
 				)
 		);
 	}

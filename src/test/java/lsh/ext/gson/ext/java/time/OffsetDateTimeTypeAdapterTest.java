@@ -24,12 +24,12 @@ public final class OffsetDateTimeTypeAdapterTest
 				makeTestCase(
 						OffsetDateTimeTypeAdapter.getInstance(),
 						"\"1996-10-18T12:34:45Z\"",
-						() -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
+						OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
 				),
 				makeTestCase(
 						OffsetDateTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
 						"\"1996-10-18T12:34:45Z\"",
-						() -> OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
+						OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)
 				)
 		);
 	}

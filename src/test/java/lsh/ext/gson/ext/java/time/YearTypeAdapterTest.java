@@ -23,12 +23,12 @@ public final class YearTypeAdapterTest
 				makeTestCase(
 						YearTypeAdapter.getInstance(),
 						"\"2018\"",
-						() -> Year.of(2018)
+						Year.of(2018)
 				),
 				makeTestCase(
 						YearTypeAdapter.getInstance(DateTimeFormatter.ofPattern("y'-xx-xx'")),
 						"\"2018-xx-xx\"",
-						() -> Year.of(2018)
+						Year.of(2018)
 				)
 		);
 	}

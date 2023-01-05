@@ -22,7 +22,7 @@ public final class PeriodTypeAdapterTest
 				makeTestCase(
 						PeriodTypeAdapter.getInstance(),
 						"\"P1Y8M20D\"",
-						() -> Period.of(1, 8, 20)
+						Period.of(1, 8, 20)
 				)
 		);
 	}

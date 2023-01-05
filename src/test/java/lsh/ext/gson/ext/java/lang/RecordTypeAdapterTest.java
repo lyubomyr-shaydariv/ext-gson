@@ -26,7 +26,7 @@ public final class RecordTypeAdapterTest
 					makeTestCase(
 							RecordTypeAdapter.getInstance(FooBar.class, gson),
 							"{\"foo\":\"1\",\"bar\":\"2\"}",
-							() -> new FooBar("1", "2")
+							new FooBar("1", "2")
 					)
 			);
 		} catch ( final NoSuchMethodException ex ) {
