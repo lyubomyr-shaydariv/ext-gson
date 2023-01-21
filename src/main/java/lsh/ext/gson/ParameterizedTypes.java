@@ -96,7 +96,7 @@ public final class ParameterizedTypes {
 		return new ConcreteParameterizedType(Map.class, new Type[]{ keyType, valueType });
 	}
 
-	@RequiredArgsConstructor(access =  AccessLevel.PRIVATE)
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@EqualsAndHashCode
 	private static final class ConcreteParameterizedType
 			implements ParameterizedType {

@@ -41,7 +41,7 @@ public final class AbstractClassTypeAdapterFactoryTest {
 		});
 	}
 
-	private static record Value (
+	private static record Value(
 			Abstract value
 	) {
 	}
