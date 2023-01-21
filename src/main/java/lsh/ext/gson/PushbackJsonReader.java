@@ -33,7 +33,8 @@ public final class PushbackJsonReader
 	}
 
 	/**
-	 * @param reader Reader to provide JSON character stream
+	 * @param reader
+	 * 		Reader to provide JSON character stream
 	 *
 	 * @return An instance of {@link PushbackJsonReader}.
 	 */

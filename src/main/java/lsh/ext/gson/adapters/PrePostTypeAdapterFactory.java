@@ -27,7 +27,8 @@ public final class PrePostTypeAdapterFactory
 	private final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories;
 
 	/**
-	 * @param processorFactories A sequence of processor factories.
+	 * @param processorFactories
+	 * 		A sequence of processor factories.
 	 *
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
 	 *
@@ -38,7 +39,8 @@ public final class PrePostTypeAdapterFactory
 	}
 
 	/**
-	 * @param processorFactory A single processor factory.
+	 * @param processorFactory
+	 * 		A single processor factory.
 	 *
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
 	 *

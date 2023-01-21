@@ -31,7 +31,8 @@ public final class ZonedDateTimeTypeAdapter
 	}
 
 	/**
-	 * @param dateTimeFormatter Date/time formatter
+	 * @param dateTimeFormatter
+	 * 		Date/time formatter
 	 *
 	 * @return An instance of {@link ZonedDateTimeTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */

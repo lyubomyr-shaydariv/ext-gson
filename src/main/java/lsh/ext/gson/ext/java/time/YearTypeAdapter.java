@@ -31,7 +31,8 @@ public final class YearTypeAdapter
 	}
 
 	/**
-	 * @param dateTimeFormatter Date/time formatter
+	 * @param dateTimeFormatter
+	 * 		Date/time formatter
 	 *
 	 * @return An instance of {@link YearTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */

@@ -22,8 +22,10 @@ import lsh.ext.gson.ICloseableIterator;
 public final class CloseableIterators {
 
 	/**
-	 * @param iterator Iterator
-	 * @param <E>      Iterator element type
+	 * @param iterator
+	 * 		Iterator
+	 * @param <E>
+	 * 		Iterator element type
 	 *
 	 * @return An iterator parameter being a more efficient overload for {@link #asCloseable(Iterator)}.
 	 *
@@ -34,8 +36,10 @@ public final class CloseableIterators {
 	}
 
 	/**
-	 * @param iterator Iterator
-	 * @param <E>      Iterator element type
+	 * @param iterator
+	 * 		Iterator
+	 * @param <E>
+	 * 		Iterator element type
 	 *
 	 * @return A new iterator if the iterator is not {@link ICloseableIterator}, otherwise self.
 	 *
@@ -53,11 +57,15 @@ public final class CloseableIterators {
 	/**
 	 * Performs an action for each iterator element and tries to close the iterator using {@link #tryClose(Object)}.
 	 *
-	 * @param iterator Iterator elements to iterate over
-	 * @param consumer An action to be performed for each element
-	 * @param <E>      Iterator element type
+	 * @param iterator
+	 * 		Iterator elements to iterate over
+	 * @param consumer
+	 * 		An action to be performed for each element
+	 * @param <E>
+	 * 		Iterator element type
 	 *
-	 * @throws IOException If an exception during {@link Closeable#close()} occurs.
+	 * @throws IOException
+	 * 		If an exception during {@link Closeable#close()} occurs.
 	 */
 	public static <E> void forEachAndTryClose(final Iterator<? extends E> iterator, final Consumer<? super E> consumer)
 			throws IOException {
@@ -71,8 +79,10 @@ public final class CloseableIterators {
 	}
 
 	/**
-	 * @param enumeration Enumeration to convert
-	 * @param <E>         Element type
+	 * @param enumeration
+	 * 		Enumeration to convert
+	 * @param <E>
+	 * 		Element type
 	 *
 	 * @return An enumeration wrapped in a iterator.
 	 */

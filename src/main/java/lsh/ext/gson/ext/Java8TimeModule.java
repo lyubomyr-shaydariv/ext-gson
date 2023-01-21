@@ -108,7 +108,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link LocalDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param localDateTimeFormatter Date formatter
+		 * @param localDateTimeFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */
@@ -120,7 +121,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link LocalDateTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param localDateFormatter Date formatter
+		 * @param localDateFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */
@@ -132,7 +134,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link LocalTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param localTimeFormatter Date formatter
+		 * @param localTimeFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */
@@ -144,7 +147,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link MonthDayTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param monthDayFormatter Date formatter
+		 * @param monthDayFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */
@@ -156,7 +160,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link OffsetDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param offsetDateTimeFormatter Date formatter
+		 * @param offsetDateTimeFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */
@@ -168,7 +173,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link OffsetTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param offsetTimeFormatter Date formatter
+		 * @param offsetTimeFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */
@@ -180,7 +186,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link YearMonthTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param yearMonthFormatter Date formatter
+		 * @param yearMonthFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */
@@ -192,7 +199,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link YearTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param yearFormatter Date formatter
+		 * @param yearFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */
@@ -204,7 +212,8 @@ public final class Java8TimeModule
 		/**
 		 * Sets a date/time formatter to be used in {@link ZonedDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
 		 *
-		 * @param zonedDateTimeFormatter Date formatter
+		 * @param zonedDateTimeFormatter
+		 * 		Date formatter
 		 *
 		 * @return Self.
 		 */

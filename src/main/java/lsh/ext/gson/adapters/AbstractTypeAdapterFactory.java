@@ -27,7 +27,8 @@ import com.google.gson.reflect.TypeToken;
  * }
  * </pre>
  *
- * @param <CT> Concrete type
+ * @param <CT>
+ * 		Concrete type
  *
  * @author Lyubomyr Shaydariv
  */
@@ -35,15 +36,18 @@ public abstract class AbstractTypeAdapterFactory<CT>
 		implements TypeAdapterFactory {
 
 	/**
-	 * @param typeToken Type token
+	 * @param typeToken
+	 * 		Type token
 	 *
 	 * @return {@code true} if the given type token hold type is supported, otherwise {@code false}.
 	 */
 	protected abstract boolean isSupported(TypeToken<?> typeToken);
 
 	/**
-	 * @param gson      Actual Gson instance
-	 * @param typeToken Type token
+	 * @param gson
+	 * 		Actual Gson instance
+	 * @param typeToken
+	 * 		Type token
 	 *
 	 * @return A type adapter for the given concrete type.
 	 */

@@ -30,7 +30,8 @@ public final class OffsetTimeTypeAdapterFactory
 	}
 
 	/**
-	 * @param dateTimeFormatter Date/time formatter
+	 * @param dateTimeFormatter
+	 * 		Date/time formatter
 	 *
 	 * @return An instance of {@link OffsetTimeTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
 	 */

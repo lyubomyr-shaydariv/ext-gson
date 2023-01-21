@@ -12,7 +12,8 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 /**
  * Represents a type adapter factory that can handle {@link Record} initially introduced in Java 16.
  *
- * @param <T> Record type to handle
+ * @param <T>
+ * 		Record type to handle
  *
  * @author Lyubomyr Shaydariv
  * @see RecordTypeAdapter

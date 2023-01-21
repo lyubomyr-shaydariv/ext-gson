@@ -15,7 +15,8 @@ public final class JsonPrimitives {
 	private static final JsonPrimitive truePrimitive = new JsonPrimitive(true);
 
 	/**
-	 * @param b A boolean value.
+	 * @param b
+	 * 		A boolean value.
 	 *
 	 * @return A new JSON primitive value for {@code true} or {@code false}.
 	 */
@@ -28,7 +29,8 @@ public final class JsonPrimitives {
 	}
 
 	/**
-	 * @param n A numeric value.
+	 * @param n
+	 * 		A numeric value.
 	 *
 	 * @return A new JSON primitive for numbers.
 	 */
@@ -37,7 +39,8 @@ public final class JsonPrimitives {
 	}
 
 	/**
-	 * @param s A string value.
+	 * @param s
+	 * 		A string value.
 	 *
 	 * @return A new JSON primitive for strings.
 	 */
@@ -46,7 +49,8 @@ public final class JsonPrimitives {
 	}
 
 	/**
-	 * @param c A character value.
+	 * @param c
+	 * 		A character value.
 	 *
 	 * @return A new JSON primitive for characters.
 	 */

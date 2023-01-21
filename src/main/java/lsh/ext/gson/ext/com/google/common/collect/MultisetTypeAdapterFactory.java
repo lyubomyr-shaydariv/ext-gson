@@ -17,7 +17,8 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 /**
  * Represents a type adapter factory for {@link Multiset} from Google Guava.
  *
- * @param <E> Element type
+ * @param <E>
+ * 		Element type
  *
  * @author Lyubomyr Shaydariv
  * @see MultisetTypeAdapter
@@ -39,8 +40,10 @@ public final class MultisetTypeAdapterFactory<E>
 	}
 
 	/**
-	 * @param newMultisetFactory Multiset factory
-	 * @param <E>                Element type
+	 * @param newMultisetFactory
+	 * 		Multiset factory
+	 * @param <E>
+	 * 		Element type
 	 *
 	 * @return An instance of {@link MultisetTypeAdapterFactory} with a custom new {@link Multiset} factory.
 	 */

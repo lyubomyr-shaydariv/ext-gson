@@ -28,7 +28,8 @@ public final class JsonCollectors {
 	}
 
 	/**
-	 * @param jsonObjectSupplier Supplier to provide a {@link JsonObject} to collect to.
+	 * @param jsonObjectSupplier
+	 * 		Supplier to provide a {@link JsonObject} to collect to.
 	 *
 	 * @return A collector to collect entries to an existing {@link JsonObject}.
 	 */
@@ -44,7 +45,8 @@ public final class JsonCollectors {
 	}
 
 	/**
-	 * @param jsonArraySupplier Supplier to provide a {@link JsonArray} to collect to.
+	 * @param jsonArraySupplier
+	 * 		Supplier to provide a {@link JsonArray} to collect to.
 	 *
 	 * @return A collector to collect entries to an existing {@link JsonArray}.
 	 */

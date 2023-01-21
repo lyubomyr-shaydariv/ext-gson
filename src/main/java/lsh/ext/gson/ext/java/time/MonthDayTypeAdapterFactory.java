@@ -30,7 +30,8 @@ public final class MonthDayTypeAdapterFactory
 	}
 
 	/**
-	 * @param dateTimeFormatter Date/time formatter
+	 * @param dateTimeFormatter
+	 * 		Date/time formatter
 	 *
 	 * @return An instance of {@link MonthDayTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
 	 */

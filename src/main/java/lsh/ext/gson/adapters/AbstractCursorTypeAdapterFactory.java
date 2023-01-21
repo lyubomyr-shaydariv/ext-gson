@@ -13,7 +13,8 @@ import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapter;
 /**
  * Represents a base type adapter factory for cursor classes like iterators and streams.
  *
- * @param <E> Element type
+ * @param <E>
+ * 		Element type
  *
  * @author Lyubomyr Shaydariv
  * @see StreamTypeAdapter

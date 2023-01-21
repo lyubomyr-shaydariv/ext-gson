@@ -41,10 +41,14 @@ public final class BiMapTypeAdapterFactory<K, V>
 	}
 
 	/**
-	 * @param newBiMapFactory New bidirectional map factory
-	 * @param keyConverter    Key converter
-	 * @param <K>             Key type
-	 * @param <V>             Value type
+	 * @param newBiMapFactory
+	 * 		New bidirectional map factory
+	 * @param keyConverter
+	 * 		Key converter
+	 * @param <K>
+	 * 		Key type
+	 * @param <V>
+	 * 		Value type
 	 *
 	 * @return An instance of {@link BiMapTypeAdapterFactory} with a custom new {@link BiMap} factory.
 	 */

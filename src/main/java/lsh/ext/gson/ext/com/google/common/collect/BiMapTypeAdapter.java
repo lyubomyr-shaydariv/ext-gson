@@ -37,8 +37,10 @@ public final class BiMapTypeAdapter<K, V>
 	}
 
 	/**
-	 * @param valueTypeAdapter Bidirectional map value type adapter
-	 * @param <V>              Bidirectional map value type
+	 * @param valueTypeAdapter
+	 * 		Bidirectional map value type adapter
+	 * @param <V>
+	 * 		Bidirectional map value type
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */
@@ -51,9 +53,12 @@ public final class BiMapTypeAdapter<K, V>
 	}
 
 	/**
-	 * @param valueTypeAdapter Bidirectional map value type adapter
-	 * @param newBiMapFactory  A {@link BiMap} factory to create instance used while deserialization
-	 * @param <V>              Bidirectional map value type
+	 * @param valueTypeAdapter
+	 * 		Bidirectional map value type adapter
+	 * @param newBiMapFactory
+	 * 		A {@link BiMap} factory to create instance used while deserialization
+	 * @param <V>
+	 * 		Bidirectional map value type
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */
@@ -65,10 +70,14 @@ public final class BiMapTypeAdapter<K, V>
 	}
 
 	/**
-	 * @param valueTypeAdapter Bidirectional map value type adapter
-	 * @param keyConverter     A converter to convert key to JSON object property names
-	 * @param <K>              Bidirectional map key type
-	 * @param <V>              Bidirectional map value type
+	 * @param valueTypeAdapter
+	 * 		Bidirectional map value type adapter
+	 * @param keyConverter
+	 * 		A converter to convert key to JSON object property names
+	 * @param <K>
+	 * 		Bidirectional map key type
+	 * @param <V>
+	 * 		Bidirectional map value type
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */
@@ -79,11 +88,16 @@ public final class BiMapTypeAdapter<K, V>
 	}
 
 	/**
-	 * @param valueTypeAdapter Bidirectional map value type adapter
-	 * @param newBiMapFactory  A {@link BiMap} factory to create instance used while deserialization
-	 * @param keyConverter     A converter to convert key to JSON object property names
-	 * @param <K>              Bidirectional map key type
-	 * @param <V>              Bidirectional map value type
+	 * @param valueTypeAdapter
+	 * 		Bidirectional map value type adapter
+	 * @param newBiMapFactory
+	 * 		A {@link BiMap} factory to create instance used while deserialization
+	 * @param keyConverter
+	 * 		A converter to convert key to JSON object property names
+	 * @param <K>
+	 * 		Bidirectional map key type
+	 * @param <V>
+	 * 		Bidirectional map value type
 	 *
 	 * @return A {@link BiMapTypeAdapter} instance.
 	 */

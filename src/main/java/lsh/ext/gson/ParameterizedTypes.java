@@ -26,8 +26,9 @@ public final class ParameterizedTypes {
 	private static final Type[][] emptyType2dArray = {};
 
 	/**
-	 * @param type Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned. If {@code
-	 *             type} is just {@link GenericDeclaration}, type bounds are extracted.
+	 * @param type
+	 * 		Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned. If {@code
+	 * 		type} is just {@link GenericDeclaration}, type bounds are extracted.
 	 *
 	 * @return A two-dimensional array where each element is an array of a {@link Type} instance or {@code Object.class} but never {@code null}, otherwise an
 	 * empty array if no type parameters are available.
@@ -39,7 +40,7 @@ public final class ParameterizedTypes {
 			final int length = actualTypeArguments.length;
 			final Type[][] resultTypeArguments = new Type[length][];
 			for ( int i = 0; i < length; i++ ) {
-				resultTypeArguments[i] = new Type[]{ actualTypeArguments[i] };
+				resultTypeArguments[i] = new Type[] { actualTypeArguments[i] };
 			}
 			return resultTypeArguments;
 		}
@@ -60,7 +61,8 @@ public final class ParameterizedTypes {
 	}
 
 	/**
-	 * @param elementType List element type
+	 * @param elementType
+	 * 		List element type
 	 *
 	 * @return Parameterized type for generic lists {@code List<E>}.
 	 *
@@ -68,11 +70,12 @@ public final class ParameterizedTypes {
 	 * @see #mapOf(Type, Type)
 	 */
 	public static ParameterizedType listOf(final Type elementType) {
-		return new ConcreteParameterizedType(List.class, new Type[]{ elementType });
+		return new ConcreteParameterizedType(List.class, new Type[] { elementType });
 	}
 
 	/**
-	 * @param elementType Set element type
+	 * @param elementType
+	 * 		Set element type
 	 *
 	 * @return Parameterized type for generic sets {@code Set<E>}.
 	 *
@@ -80,12 +83,14 @@ public final class ParameterizedTypes {
 	 * @see #mapOf(Type, Type)
 	 */
 	public static ParameterizedType setOf(final Type elementType) {
-		return new ConcreteParameterizedType(Set.class, new Type[]{ elementType });
+		return new ConcreteParameterizedType(Set.class, new Type[] { elementType });
 	}
 
 	/**
-	 * @param keyType   Map key type
-	 * @param valueType Map value type
+	 * @param keyType
+	 * 		Map key type
+	 * @param valueType
+	 * 		Map value type
 	 *
 	 * @return parameterized type for generic maps {@code Map<K, V>}.
 	 *
@@ -93,7 +98,7 @@ public final class ParameterizedTypes {
 	 * @see #setOf(Type)
 	 */
 	public static ParameterizedType mapOf(final Type keyType, final Type valueType) {
-		return new ConcreteParameterizedType(Map.class, new Type[]{ keyType, valueType });
+		return new ConcreteParameterizedType(Map.class, new Type[] { keyType, valueType });
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)

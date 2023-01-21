@@ -30,7 +30,8 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
+	 * @param e1
+	 * 		Element 1.
 	 *
 	 * @return A new JSON array with one element.
 	 */
@@ -43,8 +44,10 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
-	 * @param e2 Element 2.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
 	 *
 	 * @return A new JSON array with two elements.
 	 */
@@ -59,9 +62,12 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
-	 * @param e2 Element 2.
-	 * @param e3 Element 3.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
+	 * @param e3
+	 * 		Element 3.
 	 *
 	 * @return A new JSON array with three elements.
 	 */
@@ -78,10 +84,14 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
-	 * @param e2 Element 2.
-	 * @param e3 Element 3.
-	 * @param e4 Element 4.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
+	 * @param e3
+	 * 		Element 3.
+	 * @param e4
+	 * 		Element 4.
 	 *
 	 * @return A new JSON array with four elements.
 	 */
@@ -100,11 +110,16 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
-	 * @param e2 Element 2.
-	 * @param e3 Element 3.
-	 * @param e4 Element 4.
-	 * @param e5 Element 5.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
+	 * @param e3
+	 * 		Element 3.
+	 * @param e4
+	 * 		Element 4.
+	 * @param e5
+	 * 		Element 5.
 	 *
 	 * @return A new JSON array with five elements.
 	 */
@@ -125,12 +140,18 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
-	 * @param e2 Element 2.
-	 * @param e3 Element 3.
-	 * @param e4 Element 4.
-	 * @param e5 Element 5.
-	 * @param e6 Element 6.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
+	 * @param e3
+	 * 		Element 3.
+	 * @param e4
+	 * 		Element 4.
+	 * @param e5
+	 * 		Element 5.
+	 * @param e6
+	 * 		Element 6.
 	 *
 	 * @return A new JSON array with six elements.
 	 */
@@ -153,13 +174,20 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
-	 * @param e2 Element 2.
-	 * @param e3 Element 3.
-	 * @param e4 Element 4.
-	 * @param e5 Element 5.
-	 * @param e6 Element 6.
-	 * @param e7 Element 7.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
+	 * @param e3
+	 * 		Element 3.
+	 * @param e4
+	 * 		Element 4.
+	 * @param e5
+	 * 		Element 5.
+	 * @param e6
+	 * 		Element 6.
+	 * @param e7
+	 * 		Element 7.
 	 *
 	 * @return A new JSON array with seven elements.
 	 */
@@ -184,14 +212,22 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
-	 * @param e2 Element 2.
-	 * @param e3 Element 3.
-	 * @param e4 Element 4.
-	 * @param e5 Element 5.
-	 * @param e6 Element 6.
-	 * @param e7 Element 7.
-	 * @param e8 Element 8.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
+	 * @param e3
+	 * 		Element 3.
+	 * @param e4
+	 * 		Element 4.
+	 * @param e5
+	 * 		Element 5.
+	 * @param e6
+	 * 		Element 6.
+	 * @param e7
+	 * 		Element 7.
+	 * @param e8
+	 * 		Element 8.
 	 *
 	 * @return A new JSON array with eight elements.
 	 */
@@ -218,15 +254,24 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1 Element 1.
-	 * @param e2 Element 2.
-	 * @param e3 Element 3.
-	 * @param e4 Element 4.
-	 * @param e5 Element 5.
-	 * @param e6 Element 6.
-	 * @param e7 Element 7.
-	 * @param e8 Element 8.
-	 * @param e9 Element 9.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
+	 * @param e3
+	 * 		Element 3.
+	 * @param e4
+	 * 		Element 4.
+	 * @param e5
+	 * 		Element 5.
+	 * @param e6
+	 * 		Element 6.
+	 * @param e7
+	 * 		Element 7.
+	 * @param e8
+	 * 		Element 8.
+	 * @param e9
+	 * 		Element 9.
 	 *
 	 * @return A new JSON array with nine elements.
 	 */
@@ -255,16 +300,26 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param e1  Element 1.
-	 * @param e2  Element 2.
-	 * @param e3  Element 3.
-	 * @param e4  Element 4.
-	 * @param e5  Element 5.
-	 * @param e6  Element 6.
-	 * @param e7  Element 7.
-	 * @param e8  Element 8.
-	 * @param e9  Element 9.
-	 * @param e10 Element 10.
+	 * @param e1
+	 * 		Element 1.
+	 * @param e2
+	 * 		Element 2.
+	 * @param e3
+	 * 		Element 3.
+	 * @param e4
+	 * 		Element 4.
+	 * @param e5
+	 * 		Element 5.
+	 * @param e6
+	 * 		Element 6.
+	 * @param e7
+	 * 		Element 7.
+	 * @param e8
+	 * 		Element 8.
+	 * @param e9
+	 * 		Element 9.
+	 * @param e10
+	 * 		Element 10.
 	 *
 	 * @return A new JSON array with ten elements.
 	 */
@@ -327,7 +382,8 @@ public final class JsonArrays {
 		private final JsonArray jsonArray = new JsonArray();
 
 		/**
-		 * @param jsonElement A JSON element.
+		 * @param jsonElement
+		 * 		A JSON element.
 		 *
 		 * @return Self with the new element appended to the end of the array.
 		 */
@@ -337,7 +393,8 @@ public final class JsonArrays {
 		}
 
 		/**
-		 * @param b A boolean value.
+		 * @param b
+		 * 		A boolean value.
 		 *
 		 * @return Self with the new element appended to the end of the array.
 		 */
@@ -347,7 +404,8 @@ public final class JsonArrays {
 		}
 
 		/**
-		 * @param c A character value.
+		 * @param c
+		 * 		A character value.
 		 *
 		 * @return Self with the new element appended to the end of the array.
 		 */
@@ -357,7 +415,8 @@ public final class JsonArrays {
 		}
 
 		/**
-		 * @param n A numeric value.
+		 * @param n
+		 * 		A numeric value.
 		 *
 		 * @return Self with the new element appended to the end of the array.
 		 */
@@ -367,7 +426,8 @@ public final class JsonArrays {
 		}
 
 		/**
-		 * @param s A string value.
+		 * @param s
+		 * 		A string value.
 		 *
 		 * @return Self with the new element appended to the end of the array.
 		 */
@@ -377,7 +437,8 @@ public final class JsonArrays {
 		}
 
 		/**
-		 * @param jsonArray A JSON array.
+		 * @param jsonArray
+		 * 		A JSON array.
 		 *
 		 * @return Self with all the new elements from the input array appended to the end of the array.
 		 */
@@ -397,7 +458,8 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param jsonArray JSON array to put into the view
+	 * @param jsonArray
+	 * 		JSON array to put into the view
 	 *
 	 * @return An immutable list view for the given JSON array
 	 */
@@ -406,7 +468,8 @@ public final class JsonArrays {
 	}
 
 	/**
-	 * @param jsonArray JSON array to put into the view
+	 * @param jsonArray
+	 * 		JSON array to put into the view
 	 *
 	 * @return A mutable list view for the given JSON array
 	 */

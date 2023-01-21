@@ -20,11 +20,13 @@ import lombok.experimental.UtilityClass;
 public final class JsonReaders {
 
 	/**
-	 * @param jsonReader JSON reader
+	 * @param jsonReader
+	 * 		JSON reader
 	 *
 	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
 	 *
-	 * @throws IOException A rethrown exception
+	 * @throws IOException
+	 * 		A rethrown exception
 	 */
 	public static boolean isValid(final JsonReader jsonReader)
 			throws IOException {
@@ -62,7 +64,8 @@ public final class JsonReaders {
 	 *
 	 * In some cases it can be undesirable.
 	 *
-	 * @param reader Reader
+	 * @param reader
+	 * 		Reader
 	 *
 	 * @return An empty content fail-fast JSON reader.
 	 */
@@ -80,9 +83,11 @@ public final class JsonReaders {
 	 * <li>{@link JsonToken#END_DOCUMENT} (ignored)</li>
 	 * </ul>
 	 *
-	 * @param reader Reader any token to read and skip from
+	 * @param reader
+	 * 		Reader any token to read and skip from
 	 *
-	 * @throws IOException A rethrown exception
+	 * @throws IOException
+	 * 		A rethrown exception
 	 * @see JsonReader#skipValue()
 	 * @see #readValuedJsonToken(JsonReader)
 	 */
@@ -118,11 +123,13 @@ public final class JsonReaders {
 	}
 
 	/**
-	 * @param jsonReader JSON reader
+	 * @param jsonReader
+	 * 		JSON reader
 	 *
 	 * @return A valued JSON token from the JSON reader
 	 *
-	 * @throws IOException A rethrown exception
+	 * @throws IOException
+	 * 		A rethrown exception
 	 * @see #skipToken(JsonReader)
 	 * @see #readValuedJsonTokenRecursively(JsonReader)
 	 */
@@ -177,7 +184,8 @@ public final class JsonReaders {
 	}
 
 	/**
-	 * @param jsonReader JSON reader
+	 * @param jsonReader
+	 * 		JSON reader
 	 *
 	 * @return An iterator of a single value JSON tokens: either single primitives, either single object/arrays.
 	 *

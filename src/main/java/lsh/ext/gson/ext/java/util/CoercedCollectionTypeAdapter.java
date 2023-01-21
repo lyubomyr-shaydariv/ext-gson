@@ -14,7 +14,8 @@ import lombok.RequiredArgsConstructor;
 /**
  * Represents a type adapter that can convert a single value to a collection or keep an existing collection of multiple elements.
  *
- * @param <E> Element type
+ * @param <E>
+ * 		Element type
  *
  * @author Lyubomyr Shaydariv
  */
@@ -32,9 +33,12 @@ public final class CoercedCollectionTypeAdapter<E, C extends Collection<E>>
 	private final IFactory<? extends E, ? extends C> collectionFactory;
 
 	/**
-	 * @param elementTypeAdapter Element type adapter for every list element
-	 * @param collectionFactory  A factory to create a new collection
-	 * @param <E>                Element type
+	 * @param elementTypeAdapter
+	 * 		Element type adapter for every list element
+	 * @param collectionFactory
+	 * 		A factory to create a new collection
+	 * @param <E>
+	 * 		Element type
 	 *
 	 * @return An instance of {@link CoercedCollectionTypeAdapter}.
 	 */

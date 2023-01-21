@@ -10,7 +10,8 @@ import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
 /**
  * Represents a type adapter factory for {@link Iterator}.
  *
- * @param <E> Element type
+ * @param <E>
+ * 		Element type
  *
  * @author Lyubomyr Shaydariv
  * @see CloseableEnumerationTypeAdapter

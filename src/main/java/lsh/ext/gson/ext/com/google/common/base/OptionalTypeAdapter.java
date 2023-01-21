@@ -20,8 +20,10 @@ public final class OptionalTypeAdapter<T>
 	}
 
 	/**
-	 * @param valueTypeAdapter {@link Optional} backed value type adapter
-	 * @param <T>              Optional value type
+	 * @param valueTypeAdapter
+	 *        {@link Optional} backed value type adapter
+	 * @param <T>
+	 * 		Optional value type
 	 *
 	 * @return An {@link OptionalTypeAdapter} instance
 	 */

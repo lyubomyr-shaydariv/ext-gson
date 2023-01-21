@@ -33,10 +33,14 @@ public final class TypeAwareTypeAdapter<T>
 	private final String valuePropertyName;
 
 	/**
-	 * @param gson              Gson instance
-	 * @param typePropertyName  Type property name
-	 * @param valuePropertyName Value property name
-	 * @param <T>               Any type
+	 * @param gson
+	 * 		Gson instance
+	 * @param typePropertyName
+	 * 		Type property name
+	 * @param valuePropertyName
+	 * 		Value property name
+	 * @param <T>
+	 * 		Any type
 	 *
 	 * @return An instance of {@link TypeAwareTypeAdapter}.
 	 */

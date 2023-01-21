@@ -15,7 +15,8 @@ import lombok.RequiredArgsConstructor;
 /**
  * Represents a type adapter for {@link Multiset} from Google Guava.
  *
- * @param <E> Element type
+ * @param <E>
+ * 		Element type
  *
  * @author Lyubomyr Shaydariv
  * @see MultisetTypeAdapterFactory
@@ -28,8 +29,10 @@ public final class MultisetTypeAdapter<E>
 	private final Supplier<? extends Multiset<E>> newMultisetFactory;
 
 	/**
-	 * @param elementTypeAdapter Multiset element type adapter
-	 * @param <E>                Multiset element type
+	 * @param elementTypeAdapter
+	 * 		Multiset element type adapter
+	 * @param <E>
+	 * 		Multiset element type
 	 *
 	 * @return A {@link MultisetTypeAdapter} instance whose multiset factory is {@link LinkedHashMultiset#create()}.
 	 *
@@ -40,9 +43,12 @@ public final class MultisetTypeAdapter<E>
 	}
 
 	/**
-	 * @param valueTypeAdapter   Multiset value type adapter
-	 * @param newMultisetFactory A {@link Multiset} factory to create instance used while deserialization
-	 * @param <V>                Multiset element type
+	 * @param valueTypeAdapter
+	 * 		Multiset value type adapter
+	 * @param newMultisetFactory
+	 * 		A {@link Multiset} factory to create instance used while deserialization
+	 * @param <V>
+	 * 		Multiset element type
 	 *
 	 * @return A {@link MultisetTypeAdapter} instance.
 	 *

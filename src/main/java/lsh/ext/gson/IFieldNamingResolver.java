@@ -13,7 +13,8 @@ public interface IFieldNamingResolver {
 	/**
 	 * Resolves a name by the given value.
 	 *
-	 * @param value Any string value.
+	 * @param value
+	 * 		Any string value.
 	 *
 	 * @return A value corresponding to the given expression. A particular {@link com.google.gson.FieldNamingStrategy} may proceed with {@code null} in a
 	 * special way depending on its implementation.

@@ -90,7 +90,8 @@ public final class GuavaModule
 		/**
 		 * Sets a new bidirectional map factory used in {@link BiMapTypeAdapterFactory#getInstance(Supplier, Converter)}
 		 *
-		 * @param newBiMapFactory A supplier to return a new bidirectional map
+		 * @param newBiMapFactory
+		 * 		A supplier to return a new bidirectional map
 		 *
 		 * @return Self.
 		 */
@@ -102,7 +103,8 @@ public final class GuavaModule
 		/**
 		 * Sets a bidirectional map key converter used in {@link BiMapTypeAdapterFactory#getInstance(Supplier, Converter)}
 		 *
-		 * @param biMapKeyConverter A converter to convert a bidirectional map key to string and vice versa
+		 * @param biMapKeyConverter
+		 * 		A converter to convert a bidirectional map key to string and vice versa
 		 *
 		 * @return Self.
 		 */
@@ -114,7 +116,8 @@ public final class GuavaModule
 		/**
 		 * Sets a new multiset factory used in {@link MultisetTypeAdapterFactory#getInstance(Supplier)}
 		 *
-		 * @param newMultisetFactory A supplier to return a new multiset
+		 * @param newMultisetFactory
+		 * 		A supplier to return a new multiset
 		 *
 		 * @return Self.
 		 */
@@ -126,7 +129,8 @@ public final class GuavaModule
 		/**
 		 * Sets a new multimap factory used in {@link MultimapTypeAdapterFactory#getInstance(Supplier, Converter)}
 		 *
-		 * @param newMultimapFactory A supplier to return a new multimap
+		 * @param newMultimapFactory
+		 * 		A supplier to return a new multimap
 		 *
 		 * @return Self.
 		 */
@@ -138,7 +142,8 @@ public final class GuavaModule
 		/**
 		 * Sets a multimap key converter used in {@link MultimapTypeAdapterFactory#getInstance(Supplier, Converter)}
 		 *
-		 * @param multimapKeyConverter A converter to convert a multimap key to string and vice versa
+		 * @param multimapKeyConverter
+		 * 		A converter to convert a multimap key to string and vice versa
 		 *
 		 * @return Self.
 		 */
@@ -150,7 +155,8 @@ public final class GuavaModule
 		/**
 		 * Sets a new table factory use in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
 		 *
-		 * @param newTableFactory A supplier to return a new table
+		 * @param newTableFactory
+		 * 		A supplier to return a new table
 		 *
 		 * @return Self.
 		 */
@@ -162,7 +168,8 @@ public final class GuavaModule
 		/**
 		 * Sets a table row key converter used in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
 		 *
-		 * @param tableRowKeyConverter A converter to convert a table row key to a string and vice versa
+		 * @param tableRowKeyConverter
+		 * 		A converter to convert a table row key to a string and vice versa
 		 *
 		 * @return Self.
 		 */
@@ -174,7 +181,8 @@ public final class GuavaModule
 		/**
 		 * Sets a table column key converter used in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
 		 *
-		 * @param tableColumnKeyConverter A converter to convert a table column key to a string and vice versa
+		 * @param tableColumnKeyConverter
+		 * 		A converter to convert a table column key to a string and vice versa
 		 *
 		 * @return Self.
 		 */

@@ -30,7 +30,8 @@ public final class LocalDateTimeTypeAdapterFactory
 	}
 
 	/**
-	 * @param dateTimeFormatter Date/time formatter instance
+	 * @param dateTimeFormatter
+	 * 		Date/time formatter instance
 	 *
 	 * @return An instance of {@link LocalDateTimeTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
 	 */

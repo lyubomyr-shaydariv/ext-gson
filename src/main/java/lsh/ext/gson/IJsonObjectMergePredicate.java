@@ -16,11 +16,16 @@ public interface IJsonObjectMergePredicate {
 	/**
 	 * Determines if the left object value can be replaced with the right object value.
 	 *
-	 * @param key         JSON object key
-	 * @param leftObject  Left JSON object to be merged
-	 * @param leftValue   Left JSON object value to be merge
-	 * @param rightObject Right JSON object to be merged
-	 * @param rightValue  Right JSON object value to be merge
+	 * @param key
+	 * 		JSON object key
+	 * @param leftObject
+	 * 		Left JSON object to be merged
+	 * @param leftValue
+	 * 		Left JSON object value to be merge
+	 * @param rightObject
+	 * 		Right JSON object to be merged
+	 * @param rightValue
+	 * 		Right JSON object value to be merge
 	 *
 	 * @return {@code true} if the left object value can be replaced with the right object value, otherwise {@code false}.
 	 */

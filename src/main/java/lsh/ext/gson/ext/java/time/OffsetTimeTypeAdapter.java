@@ -31,7 +31,8 @@ public final class OffsetTimeTypeAdapter
 	}
 
 	/**
-	 * @param dateTimeFormatter Date/time formatter
+	 * @param dateTimeFormatter
+	 * 		Date/time formatter
 	 *
 	 * @return An instance of {@link OffsetTimeTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */

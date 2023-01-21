@@ -54,7 +54,8 @@ public final class JsonValueTypeAdapter
 	}
 
 	/**
-	 * @param jsonProvider JSON provider
+	 * @param jsonProvider
+	 * 		JSON provider
 	 *
 	 * @return An instance of {@link JsonValueTypeAdapter}.
 	 */

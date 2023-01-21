@@ -30,8 +30,10 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param k1 Key 1 name.
-	 * @param v1 Value 1.
+	 * @param k1
+	 * 		Key 1 name.
+	 * @param v1
+	 * 		Value 1.
 	 *
 	 * @return A new JSON object with one key-value pair.
 	 */
@@ -44,10 +46,14 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param k1 Key 1 name.
-	 * @param v1 Value 1.
-	 * @param k2 Key 2 name.
-	 * @param v2 Value 2.
+	 * @param k1
+	 * 		Key 1 name.
+	 * @param v1
+	 * 		Value 1.
+	 * @param k2
+	 * 		Key 2 name.
+	 * @param v2
+	 * 		Value 2.
 	 *
 	 * @return A new JSON object with two key-value pairs.
 	 */
@@ -62,12 +68,18 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param k1 Key 1 name.
-	 * @param v1 Value 1.
-	 * @param k2 Key 2 name.
-	 * @param v2 Value 2.
-	 * @param k3 Key 3 name.
-	 * @param v3 Value 3.
+	 * @param k1
+	 * 		Key 1 name.
+	 * @param v1
+	 * 		Value 1.
+	 * @param k2
+	 * 		Key 2 name.
+	 * @param v2
+	 * 		Value 2.
+	 * @param k3
+	 * 		Key 3 name.
+	 * @param v3
+	 * 		Value 3.
 	 *
 	 * @return A new JSON object with three key-value pairs.
 	 */
@@ -84,14 +96,22 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param k1 Key 1 name.
-	 * @param v1 Value 1.
-	 * @param k2 Key 2 name.
-	 * @param v2 Value 2.
-	 * @param k3 Key 3 name.
-	 * @param v3 Value 3.
-	 * @param k4 Key 4 name.
-	 * @param v4 Value 4.
+	 * @param k1
+	 * 		Key 1 name.
+	 * @param v1
+	 * 		Value 1.
+	 * @param k2
+	 * 		Key 2 name.
+	 * @param v2
+	 * 		Value 2.
+	 * @param k3
+	 * 		Key 3 name.
+	 * @param v3
+	 * 		Value 3.
+	 * @param k4
+	 * 		Key 4 name.
+	 * @param v4
+	 * 		Value 4.
 	 *
 	 * @return A new JSON object with four key-value pairs.
 	 */
@@ -110,16 +130,26 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param k1 Key 1 name.
-	 * @param v1 Value 1.
-	 * @param k2 Key 2 name.
-	 * @param v2 Value 2.
-	 * @param k3 Key 3 name.
-	 * @param v3 Value 3.
-	 * @param k4 Key 4 name.
-	 * @param v4 Value 4.
-	 * @param k5 Key 5 name.
-	 * @param v5 Value 5.
+	 * @param k1
+	 * 		Key 1 name.
+	 * @param v1
+	 * 		Value 1.
+	 * @param k2
+	 * 		Key 2 name.
+	 * @param v2
+	 * 		Value 2.
+	 * @param k3
+	 * 		Key 3 name.
+	 * @param v3
+	 * 		Value 3.
+	 * @param k4
+	 * 		Key 4 name.
+	 * @param v4
+	 * 		Value 4.
+	 * @param k5
+	 * 		Key 5 name.
+	 * @param v5
+	 * 		Value 5.
 	 *
 	 * @return A new JSON object with five key-value pairs.
 	 */
@@ -164,8 +194,10 @@ public final class JsonObjects {
 		private final JsonObject jsonObject = new JsonObject();
 
 		/**
-		 * @param property    Property name.
-		 * @param jsonElement A JSON element.
+		 * @param property
+		 * 		Property name.
+		 * @param jsonElement
+		 * 		A JSON element.
 		 *
 		 * @return Self with a new key/value pair.
 		 */
@@ -175,8 +207,10 @@ public final class JsonObjects {
 		}
 
 		/**
-		 * @param property Property name.
-		 * @param b        A boolean value.
+		 * @param property
+		 * 		Property name.
+		 * @param b
+		 * 		A boolean value.
 		 *
 		 * @return Self with a new key/value pair.
 		 */
@@ -186,8 +220,10 @@ public final class JsonObjects {
 		}
 
 		/**
-		 * @param property Property name.
-		 * @param c        A character value.
+		 * @param property
+		 * 		Property name.
+		 * @param c
+		 * 		A character value.
 		 *
 		 * @return Self with a new key/value pair.
 		 */
@@ -197,8 +233,10 @@ public final class JsonObjects {
 		}
 
 		/**
-		 * @param property Property name.
-		 * @param n        A numeric value.
+		 * @param property
+		 * 		Property name.
+		 * @param n
+		 * 		A numeric value.
 		 *
 		 * @return Self with a new key/value pair.
 		 */
@@ -208,8 +246,10 @@ public final class JsonObjects {
 		}
 
 		/**
-		 * @param property Property name.
-		 * @param s        A string value.
+		 * @param property
+		 * 		Property name.
+		 * @param s
+		 * 		A string value.
 		 *
 		 * @return Self with a new key/value pair.
 		 */
@@ -229,8 +269,10 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param left  Left
-	 * @param right Right
+	 * @param left
+	 * 		Left
+	 * @param right
+	 * 		Right
 	 *
 	 * @return A new {@link JsonObject} containing a merged result of both {@link JsonObject} arguments.
 	 */
@@ -239,9 +281,12 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param left      Left
-	 * @param right     Right
-	 * @param predicate Predicate
+	 * @param left
+	 * 		Left
+	 * @param right
+	 * 		Right
+	 * @param predicate
+	 * 		Predicate
 	 *
 	 * @return A new {@link JsonObject} containing a merged result of both {@link JsonObject} arguments.
 	 */
@@ -255,8 +300,10 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param left  Left
-	 * @param right Right
+	 * @param left
+	 * 		Left
+	 * @param right
+	 * 		Right
 	 *
 	 * @return The {@code left} object with the {@code right} object merged into.
 	 *
@@ -267,9 +314,12 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param left      Left
-	 * @param right     Right
-	 * @param predicate Predicate
+	 * @param left
+	 * 		Left
+	 * @param right
+	 * 		Right
+	 * @param predicate
+	 * 		Predicate
 	 *
 	 * @return The {@code left} object with the {@code right} object merged into.
 	 *
@@ -288,7 +338,8 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param jsonObject JSON object to put into the view
+	 * @param jsonObject
+	 * 		JSON object to put into the view
 	 *
 	 * @return An immutable map view for the given JSON object
 	 */
@@ -297,7 +348,8 @@ public final class JsonObjects {
 	}
 
 	/**
-	 * @param jsonObject JSON object to put into the view
+	 * @param jsonObject
+	 * 		JSON object to put into the view
 	 *
 	 * @return A mutable map view for the given JSON object
 	 */

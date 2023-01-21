@@ -23,8 +23,10 @@ public final class AbstractClassTypeAdapterFactory<T>
 	private final String valuePropertyName;
 
 	/**
-	 * @param typePropertyName  Type property name
-	 * @param valuePropertyName Value property name
+	 * @param typePropertyName
+	 * 		Type property name
+	 * @param valuePropertyName
+	 * 		Value property name
 	 *
 	 * @return An instance of {@link AbstractClassTypeAdapterFactory}
 	 */

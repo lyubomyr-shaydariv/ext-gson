@@ -17,18 +17,18 @@ public final class ParameterizedTypesTest {
 
 	@Test
 	public void testResolveTypeArgumentsForRawTypes() {
-		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ Object.class } }, ParameterizedTypes.getTypeArguments(List.class));
+		Assertions.assertArrayEquals(new Type[][] { new Type[] { Object.class } }, ParameterizedTypes.getTypeArguments(List.class));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForParameterizedTypes() {
-		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ String.class } }, ParameterizedTypes.getTypeArguments(ParameterizedTypes.listOf(String.class)));
-		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ Integer.class }, new Type[]{ Float.class } }, ParameterizedTypes.getTypeArguments(ParameterizedTypes.mapOf(Integer.class, Float.class)));
+		Assertions.assertArrayEquals(new Type[][] { new Type[] { String.class } }, ParameterizedTypes.getTypeArguments(ParameterizedTypes.listOf(String.class)));
+		Assertions.assertArrayEquals(new Type[][] { new Type[] { Integer.class }, new Type[] { Float.class } }, ParameterizedTypes.getTypeArguments(ParameterizedTypes.mapOf(Integer.class, Float.class)));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForParameterizedTypesWithBounds() {
-		Assertions.assertArrayEquals(new Type[][]{ new Type[]{ Number.class }, new Type[]{ Serializable.class, new TypeToken<List<?>>() {}.getType() } }, ParameterizedTypes.getTypeArguments(GenericClassWithSomeBounds.class));
+		Assertions.assertArrayEquals(new Type[][] { new Type[] { Number.class }, new Type[] { Serializable.class, new TypeToken<List<?>>() {}.getType() } }, ParameterizedTypes.getTypeArguments(GenericClassWithSomeBounds.class));
 	}
 
 	@Test

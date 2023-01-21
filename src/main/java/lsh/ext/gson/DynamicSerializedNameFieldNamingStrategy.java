@@ -21,7 +21,8 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	private final FieldNamingStrategy fallbackFieldNamingStrategy;
 
 	/**
-	 * @param fieldNamingResolver A strategy to resolve JSON property names dynamically.
+	 * @param fieldNamingResolver
+	 * 		A strategy to resolve JSON property names dynamically.
 	 *
 	 * @return A {@link DynamicSerializedNameFieldNamingStrategy} instance.
 	 */
@@ -30,8 +31,10 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	}
 
 	/**
-	 * @param fieldNamingResolver         A strategy to resolve JSON property names dynamically.
-	 * @param fallbackFieldNamingStrategy A strategy to be used if {@code fieldNamingResolver} returns {@code null}.
+	 * @param fieldNamingResolver
+	 * 		A strategy to resolve JSON property names dynamically.
+	 * @param fallbackFieldNamingStrategy
+	 * 		A strategy to be used if {@code fieldNamingResolver} returns {@code null}.
 	 *
 	 * @return A {@link DynamicSerializedNameFieldNamingStrategy} instance.
 	 */

@@ -23,13 +23,13 @@ import lsh.ext.gson.internal.ConstructorConstructors;
 public final class TypeAdapters {
 
 	private static final Iterable<Class<?>> supportedTypeAdapterClasses = Stream.of(
-			TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class, InstanceCreator.class
-	)
+					TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class, InstanceCreator.class
+			)
 			.toList();
 
 	private static final Iterable<Class<?>> supportedTypeHierarchyAdapterClasses = Stream.of(
-			TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class
-	)
+					TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class
+			)
 			.toList();
 
 	private static final ConstructorConstructor constructorConstructor = ConstructorConstructors.create(Collections.emptyMap());
@@ -38,13 +38,16 @@ public final class TypeAdapters {
 	 * Creates an instance of an object that can be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}. As of Gson 2.8.0 that
 	 * method does not allow to register {@link Class} instances, however {@link com.google.gson.annotations.JsonAdapter} can accept {@link Class} only.
 	 *
-	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer} or {@link
-	 *              InstanceCreator}.
-	 * @param <T>   Type the resolved type adapter should be cast to.
+	 * @param clazz
+	 * 		A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer} or {@link
+	 *        InstanceCreator}.
+	 * @param <T>
+	 * 		Type the resolved type adapter should be cast to.
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
-	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
+	 * @throws IllegalArgumentException
+	 * 		If the given class instance does not meet its parameter expectations
 	 */
 	public static <T> T ofConcrete(final Class<?> clazz)
 			throws IllegalArgumentException {
@@ -61,13 +64,16 @@ public final class TypeAdapters {
 	 * 2.8.0 that method does not allow to register {@link Class} instances, however {@link com.google.gson.annotations.JsonAdapter} can accept {@link Class}
 	 * only.
 	 *
-	 * @param clazz A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer} or {@link
-	 *              InstanceCreator}.
-	 * @param <T>   Type the resolved type adapter should be cast to.
+	 * @param clazz
+	 * 		A class representing a class that implements any of {@link TypeAdapter}, {@link JsonSerializer}, {@link JsonDeserializer} or {@link
+	 *        InstanceCreator}.
+	 * @param <T>
+	 * 		Type the resolved type adapter should be cast to.
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
 	 *
-	 * @throws IllegalArgumentException If the given class instance does not meet its parameter expectations
+	 * @throws IllegalArgumentException
+	 * 		If the given class instance does not meet its parameter expectations
 	 */
 	public static <T> T ofHierarchy(final Class<?> clazz)
 			throws IllegalArgumentException {

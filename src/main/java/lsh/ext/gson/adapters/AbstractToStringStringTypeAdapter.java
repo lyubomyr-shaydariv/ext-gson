@@ -3,7 +3,8 @@ package lsh.ext.gson.adapters;
 /**
  * A string-oriented type adapter that emits strings with {@link Object#toString()} when generating strings.
  *
- * @param <T> Any type
+ * @param <T>
+ * 		Any type
  *
  * @author Lyubomyr Shaydariv
  */

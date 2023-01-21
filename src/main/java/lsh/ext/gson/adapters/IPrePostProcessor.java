@@ -3,7 +3,8 @@ package lsh.ext.gson.adapters;
 /**
  * Represents a pre/post processor.
  *
- * @param <T> Type the processor is implemented for.
+ * @param <T>
+ * 		Type the processor is implemented for.
  *
  * @author Lyubomyr Shaydariv
  * @see IPrePostProcessorFactory
@@ -14,7 +15,8 @@ public interface IPrePostProcessor<T> {
 	/**
 	 * Defines a routine to be executed before some process.
 	 *
-	 * @param value Any value
+	 * @param value
+	 * 		Any value
 	 *
 	 * @see com.google.gson.TypeAdapter#write(com.google.gson.stream.JsonWriter, Object)
 	 */
@@ -24,7 +26,8 @@ public interface IPrePostProcessor<T> {
 	/**
 	 * Defines a routine to be executed after some process.
 	 *
-	 * @param value Any value
+	 * @param value
+	 * 		Any value
 	 *
 	 * @see com.google.gson.TypeAdapter#read(com.google.gson.stream.JsonReader)
 	 */

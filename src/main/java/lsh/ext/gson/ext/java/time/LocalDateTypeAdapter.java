@@ -31,7 +31,8 @@ public final class LocalDateTypeAdapter
 	}
 
 	/**
-	 * @param dateTimeFormatter Date/time formatter
+	 * @param dateTimeFormatter
+	 * 		Date/time formatter
 	 *
 	 * @return An instance of {@link LocalDateTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */

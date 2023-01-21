@@ -41,8 +41,10 @@ public final class TableTypeAdapter<R, C, V>
 	}
 
 	/**
-	 * @param valueTypeAdapter Table value type adapter
-	 * @param <V>              Table value type
+	 * @param valueTypeAdapter
+	 * 		Table value type adapter
+	 * @param <V>
+	 * 		Table value type
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
 	 */
@@ -57,9 +59,12 @@ public final class TableTypeAdapter<R, C, V>
 	}
 
 	/**
-	 * @param valueTypeAdapter Table value type adapter
-	 * @param newTableFactory  A {@link Table} factory to create instance used while deserialization
-	 * @param <V>              Table value type
+	 * @param valueTypeAdapter
+	 * 		Table value type adapter
+	 * @param newTableFactory
+	 * 		A {@link Table} factory to create instance used while deserialization
+	 * @param <V>
+	 * 		Table value type
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
 	 */
@@ -73,12 +78,18 @@ public final class TableTypeAdapter<R, C, V>
 	}
 
 	/**
-	 * @param valueTypeAdapter   Table value type adapter
-	 * @param rowKeyConverter    A converter to convert row key to JSON object property names
-	 * @param columnKeyConverter A converter to convert column key to JSON object property names
-	 * @param <R>                Table row type
-	 * @param <C>                Table column type
-	 * @param <V>                Table value type
+	 * @param valueTypeAdapter
+	 * 		Table value type adapter
+	 * @param rowKeyConverter
+	 * 		A converter to convert row key to JSON object property names
+	 * @param columnKeyConverter
+	 * 		A converter to convert column key to JSON object property names
+	 * @param <R>
+	 * 		Table row type
+	 * @param <C>
+	 * 		Table column type
+	 * @param <V>
+	 * 		Table value type
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
 	 */
@@ -90,13 +101,20 @@ public final class TableTypeAdapter<R, C, V>
 	}
 
 	/**
-	 * @param valueTypeAdapter   Table value type adapter
-	 * @param newTableFactory    A {@link Table} factory to create instance used while deserialization
-	 * @param rowKeyConverter    A converter to convert row key to JSON object property names
-	 * @param columnKeyConverter A converter to convert column key to JSON object property names
-	 * @param <R>                Table row type
-	 * @param <C>                Table column type
-	 * @param <V>                Table value type
+	 * @param valueTypeAdapter
+	 * 		Table value type adapter
+	 * @param newTableFactory
+	 * 		A {@link Table} factory to create instance used while deserialization
+	 * @param rowKeyConverter
+	 * 		A converter to convert row key to JSON object property names
+	 * @param columnKeyConverter
+	 * 		A converter to convert column key to JSON object property names
+	 * @param <R>
+	 * 		Table row type
+	 * @param <C>
+	 * 		Table column type
+	 * @param <V>
+	 * 		Table value type
 	 *
 	 * @return A {@link TableTypeAdapter} instance.
 	 */

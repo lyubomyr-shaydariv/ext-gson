@@ -12,10 +12,13 @@ public abstract class AbstractReadOnlyTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	/**
-	 * @param out   JSON writer, has no effect
-	 * @param value Any value, has no effect
+	 * @param out
+	 * 		JSON writer, has no effect
+	 * @param value
+	 * 		Any value, has no effect
 	 *
-	 * @throws UnsupportedOperationException Always.
+	 * @throws UnsupportedOperationException
+	 * 		Always.
 	 */
 	@Override
 	public final void write(final JsonWriter out, final T value)

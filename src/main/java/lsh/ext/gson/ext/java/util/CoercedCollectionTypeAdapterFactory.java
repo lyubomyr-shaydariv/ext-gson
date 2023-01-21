@@ -36,10 +36,14 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	}
 
 	/**
-	 * @param baseCollectionType Collection super type to start with
-	 * @param collectionFactory  Collection factory
-	 * @param <E>                Collection element type
-	 * @param <C>                Collection type based on the element type
+	 * @param baseCollectionType
+	 * 		Collection super type to start with
+	 * @param collectionFactory
+	 * 		Collection factory
+	 * @param <E>
+	 * 		Collection element type
+	 * @param <C>
+	 * 		Collection type based on the element type
 	 *
 	 * @return An instance of {@link CoercedCollectionTypeAdapterFactory} based on {@link List} and {@link ArrayList}.
 	 */

@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 /**
  * Represents an abstract type adapter factory for <i>optional</i> wrappers.
  *
- * @param <O> Optional type
- * @param <T> Value held by optional type
+ * @param <O>
+ * 		Optional type
+ * @param <T>
+ * 		Value held by optional type
  *
  * @author Lyubomyr Shaydariv
  */
@@ -24,7 +26,8 @@ public abstract class AbstractOptionalTypeAdapter<O, T>
 	private final TypeAdapter<T> valueTypeAdapter;
 
 	/**
-	 * @param optional Optional to get a value from
+	 * @param optional
+	 * 		Optional to get a value from
 	 *
 	 * @return A value from the given optional.
 	 */
@@ -32,7 +35,8 @@ public abstract class AbstractOptionalTypeAdapter<O, T>
 	protected abstract T fromOptional(O optional);
 
 	/**
-	 * @param value Value to get an optional from
+	 * @param value
+	 * 		Value to get an optional from
 	 *
 	 * @return An optional from the given value.
 	 */

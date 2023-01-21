@@ -31,7 +31,8 @@ public final class MonthDayTypeAdapter
 	}
 
 	/**
-	 * @param dateTimeFormatter Date/time formatter
+	 * @param dateTimeFormatter
+	 * 		Date/time formatter
 	 *
 	 * @return An instance of {@link MonthDayTypeAdapter} with a custom {@link DateTimeFormatter}.
 	 */

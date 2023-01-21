@@ -121,7 +121,8 @@ public final class JsonPathTypeAdapterFactory
 	}
 
 	/**
-	 * @param configurationProvider A function (strategy) to return a JsonPath {@link Configuration}.
+	 * @param configurationProvider
+	 * 		A function (strategy) to return a JsonPath {@link Configuration}.
 	 *
 	 * @return A {@link JsonPathTypeAdapterFactory} instance that can be configured with the given strategy.
 	 */

@@ -18,7 +18,8 @@ import lombok.RequiredArgsConstructor;
  * this type adapter factory creates a shadowing POJO class that mimics the record class to Gson and does mapping between two. The POJO class is generated at
  * runtime.
  *
- * @param <T> Record type to handle
+ * @param <T>
+ * 		Record type to handle
  *
  * @author Lyubomyr Shaydariv
  */
@@ -31,9 +32,12 @@ public final class RecordTypeAdapter<T extends Record>
 	private final TypeAdapter<Object> shadowClassTypeAdapter;
 
 	/**
-	 * @param <T>         Record class type parameter to handle
-	 * @param recordClass Record class
-	 * @param gson        Gson instance to get the shadowing class type adapter from
+	 * @param <T>
+	 * 		Record class type parameter to handle
+	 * @param recordClass
+	 * 		Record class
+	 * @param gson
+	 * 		Gson instance to get the shadowing class type adapter from
 	 *
 	 * @return A new {@link RecordTypeAdapter} instance.
 	 */

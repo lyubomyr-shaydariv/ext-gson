@@ -10,8 +10,10 @@ import lsh.ext.gson.ParameterizedTypes;
 /**
  * Represents an abstract type adapter factory for <i>optional</i> wrappers.
  *
- * @param <O> Optional type
- * @param <T> Value held by optional type
+ * @param <O>
+ * 		Optional type
+ * @param <T>
+ * 		Value held by optional type
  *
  * @author Lyubomyr Shaydariv
  */
@@ -19,7 +21,8 @@ public abstract class AbstractOptionalTypeAdapterFactory<O, T>
 		extends AbstractTypeAdapterFactory<O> {
 
 	/**
-	 * @param valueTypeAdapter Value type adapter
+	 * @param valueTypeAdapter
+	 * 		Value type adapter
 	 *
 	 * @return A type adapter for the optional values that can be held by the given type adapter
 	 */

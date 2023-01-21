@@ -52,8 +52,8 @@ public final class JsonApiModule
 		 */
 		public IModule build() {
 			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-					JsonValueTypeAdapterFactory.getInstance()
-			)
+							JsonValueTypeAdapterFactory.getInstance()
+					)
 					.toList();
 			return new JsonApiModule(typeAdapterFactories);
 		}

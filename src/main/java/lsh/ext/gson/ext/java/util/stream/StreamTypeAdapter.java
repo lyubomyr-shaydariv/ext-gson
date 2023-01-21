@@ -26,8 +26,10 @@ public final class StreamTypeAdapter<E>
 	}
 
 	/**
-	 * @param elementTypeAdapter Element type adapter
-	 * @param <E>                Iterator element type
+	 * @param elementTypeAdapter
+	 * 		Element type adapter
+	 * @param <E>
+	 * 		Iterator element type
 	 *
 	 * @return An instance of {@link StreamTypeAdapter}.
 	 */
