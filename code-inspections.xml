@@ -589,7 +589,10 @@
   <inspection_tool class="CompareToUsesNonFinalVariable" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="ComparisonOfShortAndChar" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="ComplexRedundantLet" enabled="false" level="INFO" enabled_by_default="false" />
-  <inspection_tool class="ComponentNotRegistered" enabled="false" level="WARNING" enabled_by_default="false" />
+  <inspection_tool class="ComponentNotRegistered" enabled="false" level="WARNING" enabled_by_default="false">
+    <option name="CHECK_ACTIONS" value="true" />
+    <option name="IGNORE_NON_PUBLIC" value="true" />
+  </inspection_tool>
   <inspection_tool class="ComponentRegistrationProblems" enabled="false" level="ERROR" enabled_by_default="false" />
   <inspection_tool class="ConditionCoveredByFurtherCondition" enabled="false" level="WARNING" enabled_by_default="false" />
   <inspection_tool class="ConditionSignal" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -1335,7 +1338,9 @@
   <inspection_tool class="LambdaParameterHidingMemberVariable" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="LambdaUnfriendlyMethodOverload" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="LanguageDetectionInspection" enabled="false" level="WARNING" enabled_by_default="false" />
-  <inspection_tool class="LanguageMismatch" enabled="false" level="WARNING" enabled_by_default="false" />
+  <inspection_tool class="LanguageMismatch" enabled="false" level="WARNING" enabled_by_default="false">
+    <option name="CHECK_NON_ANNOTATED_REFERENCES" value="true" />
+  </inspection_tool>
   <inspection_tool class="LateinitVarOverridesLateinitVar" enabled="false" level="WARNING" enabled_by_default="false" />
   <inspection_tool class="LawOfDemeter" enabled="true" level="WEAK WARNING" enabled_by_default="true">
     <option name="ignoreLibraryCalls" value="true" />
@@ -1660,7 +1665,9 @@
   </inspection_tool>
   <inspection_tool class="PatternNotApplicable" enabled="false" level="ERROR" enabled_by_default="false" />
   <inspection_tool class="PatternOverriddenByNonAnnotatedMethod" enabled="false" level="WARNING" enabled_by_default="false" />
-  <inspection_tool class="PatternValidation" enabled="false" level="WARNING" enabled_by_default="false" />
+  <inspection_tool class="PatternValidation" enabled="false" level="WARNING" enabled_by_default="false">
+    <option name="CHECK_NON_CONSTANT_VALUES" value="true" />
+  </inspection_tool>
   <inspection_tool class="PatternVariableCanBeUsed" enabled="false" level="WARNING" enabled_by_default="false" />
   <inspection_tool class="PatternVariableHidesField" enabled="false" level="WARNING" enabled_by_default="false" />
   <inspection_tool class="PhpAbstractStaticMethodInspection" enabled="false" level="WARNING" enabled_by_default="true" />
@@ -2328,7 +2335,7 @@
   <inspection_tool class="ThrowableInstanceNeverThrown" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="ThrowablePrintStackTrace" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="ThrowableResultOfMethodCallIgnored" enabled="true" level="WARNING" enabled_by_default="true" />
-  <inspection_tool class="ThrowsRuntimeException" enabled="true" level="WARNING" enabled_by_default="true" />
+  <inspection_tool class="ThrowsRuntimeException" enabled="true" level="WEAK WARNING" enabled_by_default="true" editorAttributes="INFO_ATTRIBUTES" />
   <inspection_tool class="ThymeleafMessagesResolveInspection" enabled="false" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="ThymeleafVariablesResolveInspection" enabled="false" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="TimeToString" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -2426,12 +2433,7 @@
   <inspection_tool class="UnnecessaryVariable" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
   <inspection_tool class="UnparsedCustomBeanInspection" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="UnqualifiedInnerClassAccess" enabled="true" level="WARNING" enabled_by_default="true">
-    <option name="ignoreReferencesToLocalInnerClasses" value="false" />
-  </inspection_tool>
-  <inspection_tool class="UnqualifiedStaticUsage" enabled="true" level="WARNING" enabled_by_default="true">
-    <option name="m_ignoreStaticFieldAccesses" value="false" />
-    <option name="m_ignoreStaticMethodCalls" value="false" />
-    <option name="m_ignoreStaticAccessFromStaticContext" value="false" />
+    <option name="ignoreReferencesToLocalInnerClasses" value="true" />
   </inspection_tool>
   <inspection_tool class="UnreachableCodeJS" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="Unregister global variable" enabled="true" level="ERROR" enabled_by_default="true" />
