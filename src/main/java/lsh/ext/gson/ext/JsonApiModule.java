@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.json;
+package lsh.ext.gson.ext;
 
 import java.util.stream.Stream;
 
@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
+import lsh.ext.gson.ext.javax.json.JsonValueTypeAdapterFactory;
 
 /**
  * Implements a Java JSON API module registering the following type adapter factories:

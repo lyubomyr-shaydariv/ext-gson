@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.json;
+package lsh.ext.gson.ext.javax.json;
 
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
