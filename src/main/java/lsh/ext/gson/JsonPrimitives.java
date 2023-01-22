@@ -11,21 +11,14 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class JsonPrimitives {
 
-	private static final JsonPrimitive falsePrimitive = new JsonPrimitive(false);
-	private static final JsonPrimitive truePrimitive = new JsonPrimitive(true);
-
 	/**
 	 * @param b
 	 * 		A boolean value.
 	 *
 	 * @return A new JSON primitive value for {@code true} or {@code false}.
 	 */
-	@SuppressWarnings("ConstantConditions")
 	public static JsonPrimitive of(final Boolean b) {
-		final boolean hasValue = b != null;
-		return hasValue
-				? b ? truePrimitive : falsePrimitive
-				: new JsonPrimitive(b); // Propagate the default behavior
+		return new JsonPrimitive(b);
 	}
 
 	/**

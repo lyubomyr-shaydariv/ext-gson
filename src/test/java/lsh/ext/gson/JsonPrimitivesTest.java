@@ -16,12 +16,6 @@ public final class JsonPrimitivesTest {
 	}
 
 	@Test
-	public void testJsonPrimitiveForBooleansIsFlyweight() {
-		Assertions.assertSame(JsonPrimitives.of(Boolean.TRUE), JsonPrimitives.of(true));
-		Assertions.assertSame(JsonPrimitives.of(Boolean.FALSE), JsonPrimitives.of(false));
-	}
-
-	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonPrimitiveForBooleansAsNull() {
 		Assertions.assertThrows(NullPointerException.class, () -> JsonPrimitives.of((Boolean) null));
