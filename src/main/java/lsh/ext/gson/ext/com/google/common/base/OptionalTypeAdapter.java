@@ -33,11 +33,12 @@ public final class OptionalTypeAdapter<T>
 
 	@Nullable
 	@Override
-	protected T fromOptional(final Optional<T> optional) {
+	protected T fromOptional(@SuppressWarnings("Guava") final Optional<T> optional) {
 		return optional.orNull();
 	}
 
 	@Override
+	@SuppressWarnings("Guava")
 	protected Optional<T> toOptional(@Nullable final T value) {
 		return Optional.fromNullable(value);
 	}

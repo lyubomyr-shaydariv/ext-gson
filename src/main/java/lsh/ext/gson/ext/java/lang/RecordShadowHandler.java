@@ -96,7 +96,7 @@ final class RecordShadowHandler<T extends Record> {
 		final Field[] shadowDeclaredFields = shadowClass.getDeclaredFields();
 		for ( int i = 0; i < recordComponents.length; i++ ) {
 			final RecordComponent recordComponent = recordComponents[i];
-			Method recordValueMethod = recordClass.getMethod(recordComponent.getName());
+			final Method recordValueMethod = recordClass.getMethod(recordComponent.getName());
 			final Field shadowValueField = shadowDeclaredFields[i];
 			shadowValueField.setAccessible(true);
 			metadata[i] = new Meta(recordValueMethod, shadowValueField);
