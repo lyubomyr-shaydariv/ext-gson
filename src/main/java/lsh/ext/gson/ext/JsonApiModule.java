@@ -1,6 +1,6 @@
 package lsh.ext.gson.ext;
 
-import java.util.stream.Stream;
+import java.util.Collections;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
@@ -43,10 +43,9 @@ public final class JsonApiModule
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
-		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(
+		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(
 						JsonValueTypeAdapterFactory.getInstance()
-				)
-				.toList();
+				));
 
 		/**
 		 * @return A new module instance.
