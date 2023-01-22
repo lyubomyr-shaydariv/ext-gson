@@ -42,15 +42,16 @@ public final class JsonApiModule
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
+		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(
+						JsonValueTypeAdapterFactory.getInstance()
+				)
+				.toList();
+
 		/**
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-							JsonValueTypeAdapterFactory.getInstance()
-					)
-					.toList();
-			return new JsonApiModule(typeAdapterFactories);
+			return new JsonApiModule(defaultTypeAdapterFactories);
 		}
 
 	}

@@ -46,16 +46,17 @@ public final class Java8Module
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
+		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(
+						OptionalTypeAdapterFactory.getInstance(),
+						StreamTypeAdapterFactory.getInstance()
+				)
+				.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+
 		/**
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-							OptionalTypeAdapterFactory.getInstance(),
-							StreamTypeAdapterFactory.getInstance()
-					)
-					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
-			return new Java8Module(typeAdapterFactories);
+			return new Java8Module(defaultTypeAdapterFactories);
 		}
 
 	}

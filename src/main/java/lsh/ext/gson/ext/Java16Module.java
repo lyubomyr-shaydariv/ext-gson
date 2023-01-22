@@ -49,15 +49,16 @@ public final class Java16Module
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
+		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(
+						RecordTypeAdapterFactory.getInstance()
+				)
+				.toList();
+
 		/**
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-							RecordTypeAdapterFactory.getInstance()
-					)
-					.toList();
-			return new Java16Module(typeAdapterFactories);
+			return new Java16Module(defaultTypeAdapterFactories);
 		}
 
 	}

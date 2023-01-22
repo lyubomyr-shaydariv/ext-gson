@@ -1,6 +1,8 @@
 package lsh.ext.gson.ext;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -67,6 +69,16 @@ public final class Java8TimeModule
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
+
+		private static final Collection<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Collections.unmodifiableList(
+				Arrays.asList(
+						DayOfWeekTypeAdapterFactory.getInstance(),
+						DurationTypeAdapterFactory.getInstance(),
+						InstantTypeAdapterFactory.getInstance(),
+						MonthTypeAdapterFactory.getInstance(),
+						PeriodTypeAdapterFactory.getInstance()
+				)
+		);
 
 		@Nullable
 		private DateTimeFormatter localDateTimeFormatter;
@@ -216,22 +228,20 @@ public final class Java8TimeModule
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.of(
-							DayOfWeekTypeAdapterFactory.getInstance(),
-							DurationTypeAdapterFactory.getInstance(),
-							InstantTypeAdapterFactory.getInstance(),
-							LocalDateTimeTypeAdapterFactory.getInstance(localDateTimeFormatter),
-							LocalDateTypeAdapterFactory.getInstance(localDateFormatter),
-							LocalTimeTypeAdapterFactory.getInstance(localTimeFormatter),
-							MonthDayTypeAdapterFactory.getInstance(monthDayFormatter),
-							MonthTypeAdapterFactory.getInstance(),
-							OffsetDateTimeTypeAdapterFactory.getInstance(offsetDateTimeFormatter),
-							OffsetTimeTypeAdapterFactory.getInstance(offsetTimeFormatter),
-							PeriodTypeAdapterFactory.getInstance(),
-							YearMonthTypeAdapterFactory.getInstance(yearMonthFormatter),
-							YearTypeAdapterFactory.getInstance(yearFormatter),
-							ZonedDateTimeTypeAdapterFactory.getInstance(zonedDateTimeFormatter)
-					)
+			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.concat(
+							defaultTypeAdapterFactories
+									.stream(),
+							Stream.of(
+									LocalDateTimeTypeAdapterFactory.getInstance(localDateTimeFormatter),
+									LocalDateTypeAdapterFactory.getInstance(localDateFormatter),
+									LocalTimeTypeAdapterFactory.getInstance(localTimeFormatter),
+									MonthDayTypeAdapterFactory.getInstance(monthDayFormatter),
+									OffsetDateTimeTypeAdapterFactory.getInstance(offsetDateTimeFormatter),
+									OffsetTimeTypeAdapterFactory.getInstance(offsetTimeFormatter),
+									YearMonthTypeAdapterFactory.getInstance(yearMonthFormatter),
+									YearTypeAdapterFactory.getInstance(yearFormatter),
+									ZonedDateTimeTypeAdapterFactory.getInstance(zonedDateTimeFormatter)
+							))
 					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
 			return new Java8TimeModule(typeAdapterFactories);
 		}

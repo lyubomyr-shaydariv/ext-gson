@@ -42,14 +42,15 @@ public final class JsonPathModule
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
+		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(
+				JsonPathTypeAdapterFactory.getInstance()
+		));
+
 		/**
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(
-					JsonPathTypeAdapterFactory.getInstance()
-			));
-			return new JsonPathModule(typeAdapterFactories);
+			return new JsonPathModule(defaultTypeAdapterFactories);
 		}
 
 	}
