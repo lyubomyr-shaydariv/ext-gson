@@ -61,7 +61,13 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- TODO Consider migration/adaptation to jakarta.json:jakarta.json-api:2.1.0 -->
+		<dependency>
+			<groupId>jakarta.json</groupId>
+			<artifactId>jakarta.json-api</artifactId>
+			<version>2.1.1</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>javax.json</groupId>
 			<artifactId>javax.json-api</artifactId>
@@ -76,7 +82,19 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- TODO Consider migration/adaptation to org.glassfish:jakarta.json:2.0.1 -->
+		<dependency>
+			<groupId>org.eclipse.parsson</groupId>
+			<artifactId>parsson</artifactId>
+			<version>1.1.1</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>jakarta.json</groupId>
+					<artifactId>jakarta.json-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>

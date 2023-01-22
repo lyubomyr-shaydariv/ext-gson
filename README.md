@@ -64,6 +64,9 @@ Currently `ext-gson` supports:
 * Types provided by `JsonApiModule`:
   * [`javax.json.JsonValue`](https://docs.oracle.com/javaee/7/api/javax/json/JsonValue.html).
 
+* Types provided by `JakartaJsonApiModule`:
+  * [`jakarta.json.JsonValue`](https://jakarta.ee/specifications/platform/9/apidocs/jakarta/json/jsonvalue).
+
 #### Google Guava
 
 * Types provided by `GuavaModule`:
