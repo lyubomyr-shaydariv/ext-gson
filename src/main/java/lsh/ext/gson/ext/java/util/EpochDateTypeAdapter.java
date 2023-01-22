@@ -21,8 +21,7 @@ public final class EpochDateTypeAdapter
 		extends TypeAdapter<Date> {
 
 	@Getter(onMethod_ = {@SuppressFBWarnings("MS_EXPOSE_REP")})
-	private static final TypeAdapter<Date> instance = new EpochDateTypeAdapter()
-			.nullSafe();
+	private static final TypeAdapter<Date> instance = new EpochDateTypeAdapter();
 
 	@Override
 	public Date read(final JsonReader in)

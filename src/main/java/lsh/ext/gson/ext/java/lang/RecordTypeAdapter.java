@@ -45,8 +45,7 @@ public final class RecordTypeAdapter<T extends Record>
 			throws IllegalArgumentException, NoSuchMethodException {
 		final RecordShadowHandler<T> recordShadowHandler = RecordShadowHandler.from(recordClass);
 		final TypeAdapter<Object> shadowClassTypeAdapter = recordShadowHandler.getShadowClassTypeAdapter(gson);
-		return new RecordTypeAdapter<T>(recordShadowHandler, shadowClassTypeAdapter)
-				.nullSafe();
+		return new RecordTypeAdapter<>(recordShadowHandler, shadowClassTypeAdapter);
 	}
 
 	@Override

@@ -103,8 +103,7 @@ public final class MultimapTypeAdapter<K, V>
 	 */
 	public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multimap<K, V>> newMultimapFactory, final Converter<K, String> keyConverter) {
-		return new MultimapTypeAdapter<>(valueTypeAdapter, newMultimapFactory, keyConverter)
-				.nullSafe();
+		return new MultimapTypeAdapter<>(valueTypeAdapter, newMultimapFactory, keyConverter);
 	}
 
 	@Override

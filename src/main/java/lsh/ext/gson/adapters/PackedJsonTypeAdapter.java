@@ -52,8 +52,7 @@ public final class PackedJsonTypeAdapter
 		extends TypeAdapter<String> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<String> instance = new PackedJsonTypeAdapter()
-			.nullSafe();
+	private static final TypeAdapter<String> instance = new PackedJsonTypeAdapter();
 
 	@Override
 	public void write(final JsonWriter out, final String json)

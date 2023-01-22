@@ -34,8 +34,7 @@ public final class CloseableEnumerationTypeAdapter<E>
 	 * @return An instance of {@link CloseableEnumerationTypeAdapter}.
 	 */
 	public static <E> TypeAdapter<ICloseableEnumeration<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
-		return new CloseableEnumerationTypeAdapter<>(elementTypeAdapter)
-				.nullSafe();
+		return new CloseableEnumerationTypeAdapter<>(elementTypeAdapter);
 	}
 
 	@Override

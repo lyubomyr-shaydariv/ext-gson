@@ -28,25 +28,8 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testReadNull(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, @SuppressWarnings("unused") final String writeJson,
-			@SuppressWarnings("unused") final T value)
-			throws IOException {
-		Assertions.assertEquals(normalize(null), unit.fromJson("null"));
-	}
-
-	@ParameterizedTest
-	@MethodSource("makeTestCases")
 	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, final String writeJson, final T value) {
 		Assertions.assertEquals(writeJson, unit.toJson(value));
-	}
-
-	@ParameterizedTest
-	@MethodSource("makeTestCases")
-	public final void testWriteNull(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, @SuppressWarnings("unused") final String writeJson,
-			@SuppressWarnings("unused") final T value) {
-		@SuppressWarnings("unchecked")
-		final T finalize = (T) normalize(null);
-		Assertions.assertEquals("null", unit.toJson(finalize));
 	}
 
 	protected final Arguments makeTestCase(final TypeAdapter<?> unit, final String json, final T value) {

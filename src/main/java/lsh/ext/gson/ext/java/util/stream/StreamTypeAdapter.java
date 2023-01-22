@@ -34,8 +34,7 @@ public final class StreamTypeAdapter<E>
 	 * @return An instance of {@link StreamTypeAdapter}.
 	 */
 	public static <E> TypeAdapter<Stream<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
-		return new StreamTypeAdapter<>(elementTypeAdapter)
-				.nullSafe();
+		return new StreamTypeAdapter<>(elementTypeAdapter);
 	}
 
 	@Override

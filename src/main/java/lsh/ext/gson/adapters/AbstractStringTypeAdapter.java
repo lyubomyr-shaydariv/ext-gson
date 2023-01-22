@@ -1,16 +1,13 @@
 package lsh.ext.gson.adapters;
 
 import java.io.IOException;
-import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 /**
- * Represents a type adapter that should store its values in single strings. This class is {@code null}-safe and does not require its descendants to be wrapped
- * in {@link TypeAdapter#nullSafe()}.
+ * Represents a type adapter that should store its values in single strings.
  *
  * @param <T>
  * 		Any type
@@ -37,22 +34,14 @@ public abstract class AbstractStringTypeAdapter<T>
 	protected abstract String toString(T value);
 
 	@Override
-	@Nullable
 	public final T read(final JsonReader in)
 			throws IOException {
-		if ( in.peek() == JsonToken.NULL ) {
-			return null;
-		}
 		return fromString(in.nextString());
 	}
 
 	@Override
-	public final void write(final JsonWriter out, @Nullable final T value)
+	public final void write(final JsonWriter out, final T value)
 			throws IOException {
-		if ( value == null ) {
-			out.nullValue();
-			return;
-		}
 		out.value(toString(value));
 	}
 

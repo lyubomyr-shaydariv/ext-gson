@@ -42,8 +42,7 @@ public final class UnpackedJsonTypeAdapterFactory
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		final TypeAdapter<T> delegateTypeAdapter = gson.getAdapter(typeToken);
-		return new UnpackedJsonTypeAdapter<>(delegateTypeAdapter)
-				.nullSafe();
+		return new UnpackedJsonTypeAdapter<>(delegateTypeAdapter);
 	}
 
 	private static final class UnpackedJsonTypeAdapter<T>

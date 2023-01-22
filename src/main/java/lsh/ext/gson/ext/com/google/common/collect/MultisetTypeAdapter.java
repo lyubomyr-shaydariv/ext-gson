@@ -56,8 +56,7 @@ public final class MultisetTypeAdapter<E>
 	 */
 	public static <V> TypeAdapter<Multiset<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends Multiset<V>> newMultisetFactory) {
-		return new MultisetTypeAdapter<>(valueTypeAdapter, newMultisetFactory)
-				.nullSafe();
+		return new MultisetTypeAdapter<>(valueTypeAdapter, newMultisetFactory);
 	}
 
 	@Override

@@ -44,8 +44,8 @@ public final class JsonValueTypeAdapter
 	private final TypeAdapter<JsonValue> jsonBooleanTypeAdapter = JsonBooleanTypeAdapter.instance;
 	private final TypeAdapter<JsonNumber> jsonNumberTypeAdapter;
 	private final TypeAdapter<JsonString> jsonStringTypeAdapter;
-	private final TypeAdapter<JsonObject> jsonObjectTypeAdapter = new JsonObjectTypeAdapter().nullSafe();
-	private final TypeAdapter<JsonArray> jsonArrayTypeAdapter = new JsonArrayTypeAdapter().nullSafe();
+	private final TypeAdapter<JsonObject> jsonObjectTypeAdapter = new JsonObjectTypeAdapter();
+	private final TypeAdapter<JsonArray> jsonArrayTypeAdapter = new JsonArrayTypeAdapter();
 
 	/**
 	 * @param jsonProvider
@@ -54,7 +54,7 @@ public final class JsonValueTypeAdapter
 	 * @return An instance of {@link JsonValueTypeAdapter}.
 	 */
 	public static TypeAdapter<JsonValue> getInstance(final JsonProvider jsonProvider) {
-		return new JsonValueTypeAdapter(JsonNumberTypeAdapter.getInstance(jsonProvider), JsonStringTypeAdapter.getInstance(jsonProvider));
+		return new JsonValueTypeAdapter(new JsonNumberTypeAdapter(jsonProvider), new JsonStringTypeAdapter(jsonProvider));
 	}
 
 	@Override
@@ -141,8 +141,7 @@ public final class JsonValueTypeAdapter
 	private static final class JsonBooleanTypeAdapter
 			extends TypeAdapter<JsonValue> {
 
-		private static final TypeAdapter<JsonValue> instance = new JsonBooleanTypeAdapter()
-				.nullSafe();
+		private static final TypeAdapter<JsonValue> instance = new JsonBooleanTypeAdapter();
 
 		@Override
 		public void write(final JsonWriter out, final JsonValue jsonBoolean)
@@ -179,11 +178,6 @@ public final class JsonValueTypeAdapter
 
 		private final JsonProvider jsonProvider;
 
-		private static TypeAdapter<JsonNumber> getInstance(final JsonProvider jsonProvider) {
-			return new JsonNumberTypeAdapter(jsonProvider)
-					.nullSafe();
-		}
-
 		@Override
 		public void write(final JsonWriter out, final JsonNumber jsonNumber)
 				throws IOException {
@@ -213,11 +207,6 @@ public final class JsonValueTypeAdapter
 			extends TypeAdapter<JsonString> {
 
 		private final JsonProvider jsonProvider;
-
-		private static TypeAdapter<JsonString> getInstance(final JsonProvider jsonProvider) {
-			return new JsonStringTypeAdapter(jsonProvider)
-					.nullSafe();
-		}
 
 		@Override
 		public void write(final JsonWriter out, final JsonString jsonString)

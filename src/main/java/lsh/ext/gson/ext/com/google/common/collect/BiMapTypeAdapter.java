@@ -103,8 +103,7 @@ public final class BiMapTypeAdapter<K, V>
 	 */
 	public static <K, V> TypeAdapter<BiMap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends BiMap<K, V>> newBiMapFactory, final Converter<K, String> keyConverter) {
-		return new BiMapTypeAdapter<>(valueTypeAdapter, newBiMapFactory, keyConverter)
-				.nullSafe();
+		return new BiMapTypeAdapter<>(valueTypeAdapter, newBiMapFactory, keyConverter);
 	}
 
 	@Override
