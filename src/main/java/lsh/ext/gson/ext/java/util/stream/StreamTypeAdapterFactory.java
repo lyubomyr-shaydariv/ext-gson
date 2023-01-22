@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
+import lombok.Getter;
 import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
 
 /**
@@ -18,17 +19,11 @@ import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
 public final class StreamTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
 
+	@Getter
 	private static final TypeAdapterFactory instance = new StreamTypeAdapterFactory<>();
 
 	private StreamTypeAdapterFactory() {
 		super(Stream.class);
-	}
-
-	/**
-	 * @return An instance of {@link StreamTypeAdapterFactory}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
 	}
 
 	@Override

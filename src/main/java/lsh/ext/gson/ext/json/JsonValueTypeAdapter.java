@@ -20,6 +20,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -36,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 public final class JsonValueTypeAdapter
 		extends TypeAdapter<JsonValue> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<JsonValue> instance = getInstance(JsonProvider.provider());
 
 	private final TypeAdapter<JsonValue> jsonNullTypeAdapter = JsonNullTypeAdapter.instance;
@@ -44,14 +46,6 @@ public final class JsonValueTypeAdapter
 	private final TypeAdapter<JsonString> jsonStringTypeAdapter;
 	private final TypeAdapter<JsonObject> jsonObjectTypeAdapter = new JsonObjectTypeAdapter().nullSafe();
 	private final TypeAdapter<JsonArray> jsonArrayTypeAdapter = new JsonArrayTypeAdapter().nullSafe();
-
-	/**
-	 * @return An instance of {@link JsonValueTypeAdapter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<JsonValue> getInstance() {
-		return instance;
-	}
 
 	/**
 	 * @param jsonProvider
@@ -122,6 +116,7 @@ public final class JsonValueTypeAdapter
 		}
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class JsonNullTypeAdapter
 			extends TypeAdapter<JsonValue> {
 
@@ -142,6 +137,7 @@ public final class JsonValueTypeAdapter
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class JsonBooleanTypeAdapter
 			extends TypeAdapter<JsonValue> {
 
@@ -177,14 +173,11 @@ public final class JsonValueTypeAdapter
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class JsonNumberTypeAdapter
 			extends TypeAdapter<JsonNumber> {
 
 		private final JsonProvider jsonProvider;
-
-		private JsonNumberTypeAdapter(final JsonProvider jsonProvider) {
-			this.jsonProvider = jsonProvider;
-		}
 
 		private static TypeAdapter<JsonNumber> getInstance(final JsonProvider jsonProvider) {
 			return new JsonNumberTypeAdapter(jsonProvider)
@@ -215,14 +208,11 @@ public final class JsonValueTypeAdapter
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class JsonStringTypeAdapter
 			extends TypeAdapter<JsonString> {
 
 		private final JsonProvider jsonProvider;
-
-		private JsonStringTypeAdapter(final JsonProvider jsonProvider) {
-			this.jsonProvider = jsonProvider;
-		}
 
 		private static TypeAdapter<JsonString> getInstance(final JsonProvider jsonProvider) {
 			return new JsonStringTypeAdapter(jsonProvider)
@@ -243,11 +233,9 @@ public final class JsonValueTypeAdapter
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private final class JsonObjectTypeAdapter
 			extends TypeAdapter<JsonObject> {
-
-		private JsonObjectTypeAdapter() {
-		}
 
 		@Override
 		public void write(final JsonWriter out, final JsonObject jsonObject)
@@ -307,11 +295,9 @@ public final class JsonValueTypeAdapter
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private final class JsonArrayTypeAdapter
 			extends TypeAdapter<JsonArray> {
-
-		private JsonArrayTypeAdapter() {
-		}
 
 		@Override
 		public void write(final JsonWriter out, final JsonArray jsonArray)

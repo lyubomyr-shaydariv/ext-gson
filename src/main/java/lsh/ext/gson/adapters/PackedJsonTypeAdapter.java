@@ -12,6 +12,7 @@ import com.google.gson.stream.JsonWriter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lsh.ext.gson.JsonStreams;
 
 /**
@@ -50,16 +51,9 @@ import lsh.ext.gson.JsonStreams;
 public final class PackedJsonTypeAdapter
 		extends TypeAdapter<String> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<String> instance = new PackedJsonTypeAdapter()
 			.nullSafe();
-
-	/**
-	 * @return An instance of {@link PackedJsonTypeAdapter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<String> getInstance() {
-		return instance;
-	}
 
 	@Override
 	public void write(final JsonWriter out, final String json)

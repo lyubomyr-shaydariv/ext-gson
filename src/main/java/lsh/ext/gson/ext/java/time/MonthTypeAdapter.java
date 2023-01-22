@@ -5,6 +5,7 @@ import java.time.Month;
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
@@ -17,15 +18,8 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class MonthTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Month> {
 
+	@Getter(onMethod_ = {@SuppressFBWarnings("MS_EXPOSE_REP")})
 	private static final TypeAdapter<Month> instance = new MonthTypeAdapter();
-
-	/**
-	 * @return An instance of {@link MonthTypeAdapter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<Month> getInstance() {
-		return instance;
-	}
 
 	@Override
 	protected Month fromString(final String text) {

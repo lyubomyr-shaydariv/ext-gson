@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
@@ -20,18 +21,12 @@ import lsh.ext.gson.adapters.IModule;
 public final class JsonApiModule
 		extends AbstractModule {
 
+	@Getter
 	private static final IModule instance = build()
 			.build();
 
 	private JsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Java JSON API", typeAdapterFactories);
-	}
-
-	/**
-	 * @return The default instance of the module with the default type adapter factories settings.
-	 */
-	public static IModule getInstance() {
-		return instance;
 	}
 
 	/**

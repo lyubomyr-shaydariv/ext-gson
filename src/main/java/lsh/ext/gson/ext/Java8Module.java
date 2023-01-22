@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
@@ -24,18 +25,12 @@ import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapterFactory;
 public final class Java8Module
 		extends AbstractModule {
 
+	@Getter
 	private static final IModule instance = build()
 			.build();
 
 	private Java8Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Java 8", typeAdapterFactories);
-	}
-
-	/**
-	 * @return The default instance of the module with the default type adapter factories settings.
-	 */
-	public static IModule getInstance() {
-		return instance;
 	}
 
 	/**

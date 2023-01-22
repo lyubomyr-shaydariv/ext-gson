@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
+import lombok.Getter;
 import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFactory;
 
 /**
@@ -16,17 +17,11 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 public final class ZonedDateTimeTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<ZonedDateTime> {
 
+	@Getter
 	private static final TypeAdapterFactory instance = new ZonedDateTimeTypeAdapterFactory(null);
 
 	private ZonedDateTimeTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(ZonedDateTime.class, dateTimeFormatter);
-	}
-
-	/**
-	 * @return An instance of {@link ZonedDateTimeTypeAdapterFactory} with the Java-default {@link DateTimeFormatter}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
 	}
 
 	/**

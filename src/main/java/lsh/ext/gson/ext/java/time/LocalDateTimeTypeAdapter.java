@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.Getter;
 import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 
 /**
@@ -16,18 +17,11 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 public final class LocalDateTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<LocalDateTime> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<LocalDateTime> instance = new LocalDateTimeTypeAdapter(null);
 
 	private LocalDateTimeTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);
-	}
-
-	/**
-	 * @return An instance of {@link LocalDateTimeTypeAdapter} with the Java-default {@link DateTimeFormatter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<LocalDateTime> getInstance() {
-		return instance;
 	}
 
 	/**

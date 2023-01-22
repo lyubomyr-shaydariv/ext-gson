@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.Getter;
 import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 
 /**
@@ -16,18 +17,11 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapter;
 public final class YearTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<Year> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Year> instance = new YearTypeAdapter(null);
 
 	private YearTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);
-	}
-
-	/**
-	 * @return An instance of {@link YearTypeAdapter} with the Java-default {@link DateTimeFormatter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<Year> getInstance() {
-		return instance;
 	}
 
 	/**

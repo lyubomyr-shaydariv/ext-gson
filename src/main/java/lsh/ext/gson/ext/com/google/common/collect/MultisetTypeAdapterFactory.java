@@ -10,6 +10,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ParameterizedTypes;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
@@ -27,17 +28,11 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class MultisetTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Multiset<E>> {
 
+	@Getter
 	private static final TypeAdapterFactory instance = new MultisetTypeAdapterFactory<>(null);
 
 	@Nullable
 	private final Supplier<? extends Multiset<E>> newMultisetFactory;
-
-	/**
-	 * @return An instance of {@link MultisetTypeAdapterFactory}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
-	}
 
 	/**
 	 * @param newMultisetFactory

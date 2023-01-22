@@ -5,6 +5,7 @@ import java.time.Period;
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
@@ -17,15 +18,8 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class PeriodTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Period> {
 
+	@Getter(onMethod_ = {@SuppressFBWarnings("MS_EXPOSE_REP")})
 	private static final TypeAdapter<Period> instance = new PeriodTypeAdapter();
-
-	/**
-	 * @return An instance of {@link PeriodTypeAdapter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<Period> getInstance() {
-		return instance;
-	}
 
 	@Override
 	protected Period fromString(final String text) {

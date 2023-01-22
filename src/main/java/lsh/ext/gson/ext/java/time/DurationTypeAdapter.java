@@ -5,6 +5,7 @@ import java.time.Duration;
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
@@ -17,15 +18,8 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class DurationTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Duration> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Duration> instance = new DurationTypeAdapter();
-
-	/**
-	 * @return An instance of {@link DurationTypeAdapter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<Duration> getInstance() {
-		return instance;
-	}
 
 	@Override
 	protected Duration fromString(final String text) {

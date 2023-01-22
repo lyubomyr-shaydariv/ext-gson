@@ -12,6 +12,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -36,14 +37,8 @@ import lombok.RequiredArgsConstructor;
 public final class JsonFailSafeTypeAdapterFactory
 		implements TypeAdapterFactory {
 
+	@Getter
 	private static final TypeAdapterFactory instance = new JsonFailSafeTypeAdapterFactory();
-
-	/**
-	 * @return An instance of {@link JsonFailSafeTypeAdapterFactory}.
-	 */
-	static TypeAdapterFactory getInstance() {
-		return instance;
-	}
 
 	@Override
 	@Nullable

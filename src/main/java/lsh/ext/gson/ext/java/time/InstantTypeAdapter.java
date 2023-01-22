@@ -5,6 +5,7 @@ import java.time.Instant;
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
@@ -17,15 +18,8 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class InstantTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Instant> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Instant> instance = new InstantTypeAdapter();
-
-	/**
-	 * @return An instance of {@link InstantTypeAdapter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<Instant> getInstance() {
-		return instance;
-	}
 
 	@Override
 	protected Instant fromString(final String text) {

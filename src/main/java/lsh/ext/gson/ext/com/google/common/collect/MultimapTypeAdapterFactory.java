@@ -11,6 +11,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ParameterizedTypes;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
@@ -25,6 +26,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class MultimapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<Multimap<K, V>> {
 
+	@Getter
 	private static final TypeAdapterFactory instance = new MultimapTypeAdapterFactory<>(null, null);
 
 	@Nullable
@@ -32,13 +34,6 @@ public final class MultimapTypeAdapterFactory<K, V>
 
 	@Nullable
 	private final Converter<K, String> keyConverter;
-
-	/**
-	 * @return An instance of {@link MultimapTypeAdapterFactory}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
-	}
 
 	/**
 	 * @param newMultimapFactory

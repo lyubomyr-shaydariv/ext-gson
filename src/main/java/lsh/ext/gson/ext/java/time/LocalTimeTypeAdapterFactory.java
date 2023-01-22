@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.Getter;
 import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFactory;
 
 /**
@@ -16,17 +18,11 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 public final class LocalTimeTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<LocalTime> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapterFactory instance = new LocalTimeTypeAdapterFactory(null);
 
 	private LocalTimeTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(LocalTime.class, dateTimeFormatter);
-	}
-
-	/**
-	 * @return An instance of {@link LocalTimeTypeAdapterFactory} with the Java-default {@link DateTimeFormatter}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
 	}
 
 	/**

@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
+import lombok.Getter;
 import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
 
 /**
@@ -19,17 +20,11 @@ import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
 public final class CloseableEnumerationTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
 
+	@Getter
 	private static final TypeAdapterFactory instance = new CloseableEnumerationTypeAdapterFactory<>();
 
 	private CloseableEnumerationTypeAdapterFactory() {
 		super(Enumeration.class);
-	}
-
-	/**
-	 * @return An instance of {@link CloseableEnumerationTypeAdapterFactory}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
 	}
 
 	@Override

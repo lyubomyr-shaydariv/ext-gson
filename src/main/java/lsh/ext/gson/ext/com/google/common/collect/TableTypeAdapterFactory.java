@@ -11,6 +11,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ParameterizedTypes;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
@@ -25,6 +26,7 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class TableTypeAdapterFactory<R, C, V>
 		extends AbstractTypeAdapterFactory<Table<R, C, V>> {
 
+	@Getter
 	private static final TypeAdapterFactory instance = new TableTypeAdapterFactory<>(null, null, null);
 
 	@Nullable
@@ -35,13 +37,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 
 	@Nullable
 	private final Converter<C, String> columnKeyConverter;
-
-	/**
-	 * @return An instance of {@link TableTypeAdapterFactory}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
-	}
 
 	/**
 	 * @param newTableFactory

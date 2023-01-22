@@ -7,6 +7,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
@@ -19,14 +20,8 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 public final class DayOfWeekTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<DayOfWeek> {
 
+	@Getter
 	private static final TypeAdapterFactory instance = new DayOfWeekTypeAdapterFactory();
-
-	/**
-	 * @return An instance of {@link DayOfWeekTypeAdapterFactory}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
-	}
 
 	@Override
 	protected boolean isSupported(final TypeToken<?> typeToken) {

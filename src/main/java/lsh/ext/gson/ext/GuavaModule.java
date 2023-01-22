@@ -11,6 +11,7 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Table;
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
@@ -36,18 +37,12 @@ import lsh.ext.gson.ext.com.google.common.collect.TableTypeAdapterFactory;
 public final class GuavaModule
 		extends AbstractModule {
 
+	@Getter
 	private static final IModule instance = build()
 			.build();
 
 	private GuavaModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Google Guava", typeAdapterFactories);
-	}
-
-	/**
-	 * @return The default instance of the module with the default type adapter factories settings.
-	 */
-	public static IModule getInstance() {
-		return instance;
 	}
 
 	/**

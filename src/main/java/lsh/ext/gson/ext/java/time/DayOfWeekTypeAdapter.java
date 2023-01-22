@@ -5,6 +5,7 @@ import java.time.DayOfWeek;
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 
@@ -17,15 +18,8 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class DayOfWeekTypeAdapter
 		extends AbstractToStringStringTypeAdapter<DayOfWeek> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<DayOfWeek> instance = new DayOfWeekTypeAdapter();
-
-	/**
-	 * @return An instance of {@link DayOfWeekTypeAdapter}.
-	 */
-	@SuppressFBWarnings("MS_EXPOSE_REP")
-	public static TypeAdapter<DayOfWeek> getInstance() {
-		return instance;
-	}
 
 	@Override
 	protected DayOfWeek fromString(final String text) {
