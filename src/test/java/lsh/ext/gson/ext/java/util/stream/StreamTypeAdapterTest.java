@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
@@ -16,7 +15,7 @@ public final class StreamTypeAdapterTest
 	@Nullable
 	@Override
 	protected List<?> normalize(@Nullable final Stream<?> value) {
-		return value != null ? value.collect(ImmutableList.toImmutableList()) : null;
+		return value != null ? value.toList() : null;
 	}
 
 	@Override

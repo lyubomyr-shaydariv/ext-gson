@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.Queue;
 import javax.annotation.Nullable;
 
-import com.google.common.annotations.Beta;
-import com.google.common.collect.Iterators;
 import com.google.gson.internal.LazilyParsedNumber;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -18,7 +16,6 @@ import com.google.gson.stream.JsonToken;
  *
  * @author Lyubomyr Shaydariv
  */
-@Beta
 public final class PushbackJsonReader
 		extends JsonReader
 		implements Iterable<ValuedJsonToken<?>> {
@@ -412,7 +409,18 @@ public final class PushbackJsonReader
 
 	@Override
 	public Iterator<ValuedJsonToken<?>> iterator() {
-		return Iterators.unmodifiableIterator(tokens.iterator());
+		final Iterator<ValuedJsonToken<?>> iterator = tokens.iterator();
+		return new Iterator<>() {
+			@Override
+			public boolean hasNext() {
+				return iterator.hasNext();
+			}
+
+			@Override
+			public ValuedJsonToken<?> next() {
+				return iterator.next();
+			}
+		};
 	}
 
 	/**

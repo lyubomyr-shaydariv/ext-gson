@@ -1,10 +1,11 @@
 package lsh.ext.gson.adapters;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
+import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
@@ -23,7 +24,7 @@ public abstract class AbstractModuleTest {
 	private static final Gson gson = GsonBuilders.createCanonical()
 			.create();
 
-	private static final List<TypeToken<?>> foreignClassTypeTokens = ImmutableList.of(
+	private static final Collection<TypeToken<?>> foreignClassTypeTokens = List.of(
 			TypeToken.get(Foo.class),
 			TypeToken.get(Bar.class),
 			TypeToken.get(Baz.class)
@@ -49,6 +50,7 @@ public abstract class AbstractModuleTest {
 	@MethodSource("supported")
 	public final void testCreate(final TypeToken<?> supportedTypeToken) {
 		final TypeAdapterFactory unit = createUnit();
+		@Nullable
 		final TypeAdapter<?> typeAdapter = unit.create(gson, supportedTypeToken);
 		Assertions.assertNotNull(typeAdapter);
 		final boolean mustNotSupportForeignClasses = foreignClassTypeTokens.stream()

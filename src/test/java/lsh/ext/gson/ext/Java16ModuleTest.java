@@ -26,7 +26,7 @@ public final class Java16ModuleTest
 		);
 	}
 
-	private static record DummyRecord(
+	private record DummyRecord(
 	) {
 	}
 

@@ -63,7 +63,7 @@ final class RecordShadowHandler<T extends Record> {
 		return recordClassConstructor.newInstance(args);
 	}
 
-	private static record Meta(
+	private record Meta(
 			Method recordValueMethod,
 			Field shadowValueField
 	) {

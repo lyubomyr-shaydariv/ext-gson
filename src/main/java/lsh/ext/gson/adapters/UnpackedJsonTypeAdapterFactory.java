@@ -45,14 +45,11 @@ public final class UnpackedJsonTypeAdapterFactory
 		return new UnpackedJsonTypeAdapter<>(delegateTypeAdapter);
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class UnpackedJsonTypeAdapter<T>
 			extends TypeAdapter<T> {
 
 		private final TypeAdapter<T> typeAdapter;
-
-		private UnpackedJsonTypeAdapter(final TypeAdapter<T> typeAdapter) {
-			this.typeAdapter = typeAdapter;
-		}
 
 		@Override
 		public void write(final JsonWriter out, final T value)

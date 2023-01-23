@@ -53,7 +53,7 @@ import lsh.ext.gson.ext.java.time.ZonedDateTimeTypeAdapterFactory;
 public final class Java8TimeModule
 		extends AbstractModule {
 
-	protected Java8TimeModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private Java8TimeModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super("Java 8 Time", typeAdapterFactories);
 	}
 

@@ -26,9 +26,9 @@ public final class ConstructorConstructors {
 	private static final Constructor<ConstructorConstructor> gsonPost291Constructor;
 
 	static {
-		gsonPre289Constructor = Constructors.getConstructorOrNull(ConstructorConstructor.class, Map.class);
-		gsonPost290Constructor = Constructors.getConstructorOrNull(ConstructorConstructor.class, Map.class, boolean.class);
-		gsonPost291Constructor = Constructors.getConstructorOrNull(ConstructorConstructor.class, Map.class, boolean.class, List.class);
+		gsonPre289Constructor = getConstructorConstructorConstructor(Map.class);
+		gsonPost290Constructor = getConstructorConstructorConstructor(Map.class, boolean.class);
+		gsonPost291Constructor = getConstructorConstructorConstructor(Map.class, boolean.class, List.class);
 	}
 
 	public static ConstructorConstructor create(final Map<Type, InstanceCreator<?>> instanceCreators) {
@@ -59,6 +59,15 @@ public final class ConstructorConstructors {
 			}
 		}
 		throw new AssertionError("Cannot find a way to resolve the constructor for " + ConstructorConstructor.class + ". Candidates: " + Arrays.asList(ConstructorConstructor.class.getDeclaredConstructors()));
+	}
+
+	@Nullable
+	private static Constructor<ConstructorConstructor> getConstructorConstructorConstructor(final Class<?>... parameterTypes) {
+		try {
+			return ConstructorConstructor.class.getConstructor(parameterTypes);
+		} catch ( final NoSuchMethodException ignored ) {
+			return null;
+		}
 	}
 
 }

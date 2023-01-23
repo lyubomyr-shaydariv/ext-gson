@@ -3,9 +3,9 @@ package lsh.ext.gson.ext.java;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Consumer;
 
-import com.google.common.collect.ImmutableList;
 import lsh.ext.gson.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ public final class CloseableIteratorsTest {
 	@Test
 	public void testForEachAndTryCloseWhenIteratorIsNotCloseable()
 			throws Exception {
-		final Iterator<String> iterator = ImmutableList.of("foo", "bar", "baz").iterator();
+		final Iterator<String> iterator = List.of("foo", "bar", "baz").iterator();
 		@SuppressWarnings("unchecked")
 		final Consumer<String> mockConsumer = Mockito.mock(Consumer.class);
 		CloseableIterators.forEachAndTryClose(iterator, mockConsumer);
@@ -61,7 +61,7 @@ public final class CloseableIteratorsTest {
 	public void testForEachAndTryCloseWhenIteratorIsCloseable()
 			throws Exception {
 		final Closeable mockCloseable = Mockito.mock(Closeable.class);
-		final Iterator<String> iterator = new CloseableIterator<>(ImmutableList.of("foo", "bar", "baz").iterator(), mockCloseable);
+		final Iterator<String> iterator = new CloseableIterator<>(List.of("foo", "bar", "baz").iterator(), mockCloseable);
 		@SuppressWarnings("unchecked")
 		final Consumer<String> mockConsumer = Mockito.mock(Consumer.class);
 		CloseableIterators.forEachAndTryClose(iterator, mockConsumer);

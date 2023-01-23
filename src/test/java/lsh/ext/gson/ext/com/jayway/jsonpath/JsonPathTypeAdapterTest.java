@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
@@ -38,7 +37,7 @@ public final class JsonPathTypeAdapterTest
 						typeAdapterFactory.create(gson, TypeToken.get(Wrapper.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":\"Foo\",\"barRef\":\"A\",\"bazRef\":{\"k1\":\"v1\"}}",
-						new Wrapper("Foo", "A", ImmutableMap.of("k1", "v1"))
+						new Wrapper("Foo", "A", Map.of("k1", "v1"))
 				),
 				makeTestCase(
 						typeAdapterFactory.create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
@@ -84,7 +83,7 @@ public final class JsonPathTypeAdapterTest
 
 	}
 
-	private static record WrapperWithNotExistingPath(
+	private record WrapperWithNotExistingPath(
 			@JsonPathExpression("$.nowhere")
 			String fooRef
 	) {

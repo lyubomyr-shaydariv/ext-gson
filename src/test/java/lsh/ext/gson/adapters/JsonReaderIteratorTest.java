@@ -39,7 +39,7 @@ public final class JsonReaderIteratorTest {
 		}
 	}
 
-	private static record FooBar(
+	private record FooBar(
 			int foo,
 			int bar
 	) {

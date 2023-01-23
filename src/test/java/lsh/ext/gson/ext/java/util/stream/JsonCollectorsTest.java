@@ -1,7 +1,8 @@
 package lsh.ext.gson.ext.java.util.stream;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -22,7 +23,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToNewJsonObject() {
-		final JsonObject actual = ImmutableMap.of(K1, v1, K2, v2, K3, v3)
+		final JsonObject actual = Map.of(K1, v1, K2, v2, K3, v3)
 				.entrySet()
 				.stream()
 				.collect(JsonCollectors.toJsonObject());
@@ -32,7 +33,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToExistingJsonObject() {
-		final JsonObject actual = ImmutableMap.of(K2, v2, K3, v3)
+		final JsonObject actual = Map.of(K2, v2, K3, v3)
 				.entrySet()
 				.stream()
 				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.of(K1, v1)));
@@ -42,7 +43,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToExistingJsonObjectOverwritesEntries() {
-		final JsonObject actual = ImmutableMap.of(K1, v1, K2, v2, K3, v3)
+		final JsonObject actual = Map.of(K1, v1, K2, v2, K3, v3)
 				.entrySet()
 				.stream()
 				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.of(K1, v2, K2, v3, K3, v2)));
@@ -52,8 +53,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToNewJsonArray() {
-		final JsonArray actual = ImmutableList.of(v1, v2, v3)
-				.stream()
+		final JsonArray actual = Stream.of(v1, v2, v3)
 				.collect(JsonCollectors.toJsonArray());
 		final JsonArray expected = JsonArrays.of(v1, v2, v3);
 		Assertions.assertEquals(expected, actual);
@@ -61,8 +61,7 @@ public final class JsonCollectorsTest {
 
 	@Test
 	public void testToExistingJsonArray() {
-		final JsonArray actual = ImmutableList.of(v2, v3)
-				.stream()
+		final JsonArray actual = Stream.of(v2, v3)
 				.collect(JsonCollectors.toJsonArray(() -> JsonArrays.of(v1)));
 		final JsonArray expected = JsonArrays.of(v1, v2, v3);
 		Assertions.assertEquals(expected, actual);

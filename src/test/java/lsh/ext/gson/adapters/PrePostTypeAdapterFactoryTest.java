@@ -1,6 +1,7 @@
 package lsh.ext.gson.adapters;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.GsonBuilders;
@@ -26,7 +27,7 @@ public final class PrePostTypeAdapterFactoryTest {
 			}
 		};
 		final Gson gson = GsonBuilders.createCanonical()
-				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(ImmutableList.of(userProcessorFactory)))
+				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(userProcessorFactory)))
 				.create();
 		gson.toJson(new User("John", "Doe"));
 		Mockito.verify(userProcessor).pre(ArgumentMatchers.eq(new User("John", "Doe")));
@@ -48,13 +49,13 @@ public final class PrePostTypeAdapterFactoryTest {
 			}
 		};
 		final Gson gson = GsonBuilders.createCanonical()
-				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(ImmutableList.of(userProcessorFactory)))
+				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(userProcessorFactory)))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);
 		Mockito.verify(userProcessor).post(ArgumentMatchers.eq(new User("John", "Doe")));
 	}
 
-	private static record User(
+	private record User(
 			String firstName,
 			String lastName
 	) {

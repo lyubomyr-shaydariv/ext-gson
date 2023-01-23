@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import lsh.ext.gson.GsonBuilders;
 import lsh.ext.gson.ICloseableEnumeration;
@@ -18,7 +17,7 @@ public final class CloseableEnumerationTypeAdapterTest
 	@Nullable
 	@Override
 	protected List<?> normalize(@Nullable final ICloseableEnumeration<?> value) {
-		return value != null ? ImmutableList.copyOf(Collections.list(value)) : null;
+		return value != null ? List.copyOf(Collections.list(value)) : null;
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public final class CloseableEnumerationTypeAdapterTest
 				makeTestCase(
 						CloseableEnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
-						CloseableEnumerations.from(CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator()))
+						CloseableEnumerations.from(CloseableIterators.asCloseable(List.of(1, 2, 4, 8).iterator()))
 				)
 		);
 	}

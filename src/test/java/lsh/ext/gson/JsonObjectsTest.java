@@ -2,7 +2,6 @@ package lsh.ext.gson;
 
 import java.util.Map;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -131,7 +130,7 @@ public final class JsonObjectsTest {
 		final JsonPrimitive element1 = JsonPrimitives.of(K1);
 		final JsonPrimitive element2 = JsonPrimitives.of(K2);
 		final JsonPrimitive element3 = JsonPrimitives.of(K3);
-		final Map<String, ? extends JsonElement> map = ImmutableMap.of(K1, element1, K2, element2, K3, element3);
+		final Map<String, ? extends JsonElement> map = Map.of(K1, element1, K2, element2, K3, element3);
 		final JsonObject jsonObject = JsonObjects.from(map);
 		Assertions.assertEquals(3, jsonObject.size());
 		Assertions.assertSame(element1, jsonObject.get(K1));
@@ -304,7 +303,7 @@ public final class JsonObjectsTest {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
 			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
 			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-			map.putAll(ImmutableMap.of(K3, l, K4, r));
+			map.putAll(Map.of(K3, l, K4, r));
 		});
 	}
 
@@ -315,7 +314,7 @@ public final class JsonObjectsTest {
 		Assertions.assertEquals(2, jsonObject.size());
 		Assertions.assertEquals(l, jsonObject.get(K1));
 		Assertions.assertEquals(r, jsonObject.get(K2));
-		map.putAll(ImmutableMap.of(K3, l, K4, r));
+		map.putAll(Map.of(K3, l, K4, r));
 		Assertions.assertEquals(4, jsonObject.size());
 		Assertions.assertEquals(l, jsonObject.get(K1));
 		Assertions.assertEquals(r, jsonObject.get(K2));
