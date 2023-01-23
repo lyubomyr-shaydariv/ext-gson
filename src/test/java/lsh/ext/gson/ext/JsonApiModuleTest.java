@@ -11,10 +11,6 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class JsonApiModuleTest
 		extends AbstractModuleTest {
 
-	public JsonApiModuleTest() {
-		super("Java JSON API");
-	}
-
 	@Override
 	protected IModule createUnit() {
 		return JsonApiModule.getInstance();

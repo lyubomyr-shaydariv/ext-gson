@@ -15,10 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class GuavaModuleTest
 		extends AbstractModuleTest {
 
-	public GuavaModuleTest() {
-		super("Google Guava");
-	}
-
 	@Override
 	protected IModule createUnit() {
 		return GuavaModule.getInstance();

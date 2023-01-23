@@ -26,7 +26,7 @@ public final class Java16Module
 			.build();
 
 	private Java16Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		super("Java 16", typeAdapterFactories);
+		super(typeAdapterFactories);
 	}
 
 	/**

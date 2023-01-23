@@ -42,7 +42,7 @@ public final class GuavaModule
 			.build();
 
 	private GuavaModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		super("Google Guava", typeAdapterFactories);
+		super(typeAdapterFactories);
 	}
 
 	/**

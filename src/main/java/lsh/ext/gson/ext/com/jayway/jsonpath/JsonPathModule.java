@@ -26,7 +26,7 @@ public final class JsonPathModule
 			.build();
 
 	private JsonPathModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		super("Jayway JsonPath", typeAdapterFactories);
+		super(typeAdapterFactories);
 	}
 
 	/**

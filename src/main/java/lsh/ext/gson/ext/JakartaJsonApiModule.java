@@ -27,7 +27,7 @@ public final class JakartaJsonApiModule
 			.build();
 
 	private JakartaJsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		super("Jakarta JSON API", typeAdapterFactories);
+		super(typeAdapterFactories);
 	}
 
 	/**

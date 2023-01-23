@@ -10,10 +10,6 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class Java16ModuleTest
 		extends AbstractModuleTest {
 
-	public Java16ModuleTest() {
-		super("Java 16");
-	}
-
 	@Override
 	protected IModule createUnit() {
 		return Java16Module.getDefaultInstance();

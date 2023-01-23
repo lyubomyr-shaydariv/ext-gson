@@ -30,7 +30,7 @@ public final class Java8Module
 			.build();
 
 	private Java8Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		super("Java 8", typeAdapterFactories);
+		super(typeAdapterFactories);
 	}
 
 	/**

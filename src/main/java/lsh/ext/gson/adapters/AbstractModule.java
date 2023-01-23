@@ -18,13 +18,7 @@ import lombok.RequiredArgsConstructor;
 public abstract class AbstractModule
 		implements IModule {
 
-	private final String name;
 	private final Iterable<? extends TypeAdapterFactory> typeAdapterFactories;
-
-	@Override
-	public final String getName() {
-		return name;
-	}
 
 	@Override
 	@Nullable

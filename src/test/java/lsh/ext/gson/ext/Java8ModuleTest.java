@@ -11,10 +11,6 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class Java8ModuleTest
 		extends AbstractModuleTest {
 
-	public Java8ModuleTest() {
-		super("Java 8");
-	}
-
 	@Override
 	protected IModule createUnit() {
 		return Java8Module.getInstance();

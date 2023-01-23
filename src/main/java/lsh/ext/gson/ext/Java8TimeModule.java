@@ -54,7 +54,7 @@ public final class Java8TimeModule
 		extends AbstractModule {
 
 	private Java8TimeModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
-		super("Java 8 Time", typeAdapterFactories);
+		super(typeAdapterFactories);
 	}
 
 	/**

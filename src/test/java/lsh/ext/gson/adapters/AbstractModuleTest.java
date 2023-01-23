@@ -12,7 +12,6 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.GsonBuilders;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,21 +29,9 @@ public abstract class AbstractModuleTest {
 			TypeToken.get(Baz.class)
 	);
 
-	private final String expectedName;
-
-	protected AbstractModuleTest(final String expectedName) {
-		this.expectedName = expectedName;
-	}
-
 	protected abstract IModule createUnit();
 
 	protected abstract Stream<Arguments> supported();
-
-	@Test
-	public final void testGetName() {
-		final IModule unit = createUnit();
-		Assertions.assertEquals(expectedName, unit.getName());
-	}
 
 	@ParameterizedTest
 	@MethodSource("supported")

@@ -19,6 +19,4 @@ public interface IModule
 	@Nullable
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	String getName();
-
 }
