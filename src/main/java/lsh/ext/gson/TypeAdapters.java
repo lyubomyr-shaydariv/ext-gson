@@ -45,12 +45,8 @@ public final class TypeAdapters {
 	 * 		Type the resolved type adapter should be cast to.
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
-	 *
-	 * @throws IllegalArgumentException
-	 * 		If the given class instance does not meet its parameter expectations
 	 */
-	public static <T> T ofConcrete(final Class<?> clazz)
-			throws IllegalArgumentException {
+	public static <T> T ofConcrete(final Class<?> clazz) {
 		for ( final Class<?> expectedClass : supportedTypeAdapterClasses ) {
 			if ( expectedClass.isAssignableFrom(clazz) ) {
 				return newInstance(clazz);
@@ -71,12 +67,8 @@ public final class TypeAdapters {
 	 * 		Type the resolved type adapter should be cast to.
 	 *
 	 * @return An instance ready to be registered in {@link com.google.gson.GsonBuilder#registerTypeAdapter(Type, Object)}
-	 *
-	 * @throws IllegalArgumentException
-	 * 		If the given class instance does not meet its parameter expectations
 	 */
-	public static <T> T ofHierarchy(final Class<?> clazz)
-			throws IllegalArgumentException {
+	public static <T> T ofHierarchy(final Class<?> clazz) {
 		for ( final Class<?> expectedClass : supportedTypeHierarchyAdapterClasses ) {
 			if ( expectedClass.isAssignableFrom(clazz) ) {
 				return newInstance(clazz);

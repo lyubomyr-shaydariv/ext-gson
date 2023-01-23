@@ -16,13 +16,9 @@ public abstract class AbstractReadOnlyTypeAdapter<T>
 	 * 		JSON writer, has no effect
 	 * @param value
 	 * 		Any value, has no effect
-	 *
-	 * @throws UnsupportedOperationException
-	 * 		Always.
 	 */
 	@Override
-	public final void write(final JsonWriter out, final T value)
-			throws UnsupportedOperationException {
+	public final void write(final JsonWriter out, final T value) {
 		throw new UnsupportedOperationException();
 	}
 

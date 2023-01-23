@@ -145,7 +145,7 @@ public final class JsonValueTypeAdapter
 
 		@Override
 		public void write(final JsonWriter out, final JsonValue jsonBoolean)
-				throws IllegalArgumentException, IOException {
+				throws IOException {
 			final ValueType valueType = jsonBoolean.getValueType();
 			switch ( valueType ) {
 			case TRUE:

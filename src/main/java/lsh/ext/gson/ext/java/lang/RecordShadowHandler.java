@@ -26,7 +26,7 @@ final class RecordShadowHandler<T extends Record> {
 	private final Meta[] metadata;
 
 	static <T extends Record> RecordShadowHandler<T> from(final Class<T> recordClass)
-			throws IllegalArgumentException, NoSuchMethodException {
+			throws NoSuchMethodException {
 		if ( !recordClass.isRecord() ) {
 			throw new IllegalArgumentException(recordClass + " is not record class");
 		}

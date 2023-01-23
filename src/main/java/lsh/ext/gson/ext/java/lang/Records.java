@@ -15,8 +15,7 @@ final class Records {
 		return recordClass.getDeclaredConstructor(lookupParameterTypes(recordClass));
 	}
 
-	private static Class<?>[] lookupParameterTypes(final Class<? extends Record> recordClass)
-			throws IllegalArgumentException {
+	private static Class<?>[] lookupParameterTypes(final Class<? extends Record> recordClass) {
 		@Nullable
 		final RecordComponent[] recordComponents = recordClass.getRecordComponents();
 		if ( recordComponents == null ) {
