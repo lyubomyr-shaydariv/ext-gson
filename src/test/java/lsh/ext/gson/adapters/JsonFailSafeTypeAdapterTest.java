@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.GsonBuilders;
-import lsh.ext.gson.ParameterizedTypes;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonFailSafeTypeAdapterTest
@@ -25,12 +24,12 @@ public final class JsonFailSafeTypeAdapterTest
 				.create();
 		return Stream.of(
 				makeTestCase(
-						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(String.class))),
+						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.getParameterized(List.class, String.class)),
 						"[\"foo\",\"bar\"]",
 						List.of("foo", "bar")
 				),
 				makeTestCase(
-						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.get(ParameterizedTypes.listOf(Integer.class))),
+						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.getParameterized(List.class, Integer.class)),
 						"[1000]",
 						List.of(1000)
 				)

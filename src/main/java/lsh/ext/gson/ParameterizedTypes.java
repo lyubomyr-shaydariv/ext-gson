@@ -4,11 +4,7 @@ import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import com.google.gson.reflect.TypeToken;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -54,50 +50,6 @@ public final class ParameterizedTypes {
 			}
 		}
 		return emptyType2dArray;
-	}
-
-	/**
-	 * @param elementType
-	 * 		List element type
-	 *
-	 * @return Parameterized type for generic lists {@code List<E>}.
-	 *
-	 * @see #setOf(Type)
-	 * @see #mapOf(Type, Type)
-	 */
-	public static ParameterizedType listOf(final Type elementType) {
-		return (ParameterizedType) TypeToken.getParameterized(List.class, elementType)
-				.getType();
-	}
-
-	/**
-	 * @param elementType
-	 * 		Set element type
-	 *
-	 * @return Parameterized type for generic sets {@code Set<E>}.
-	 *
-	 * @see #listOf(Type)
-	 * @see #mapOf(Type, Type)
-	 */
-	public static ParameterizedType setOf(final Type elementType) {
-		return (ParameterizedType) TypeToken.getParameterized(Set.class, elementType)
-				.getType();
-	}
-
-	/**
-	 * @param keyType
-	 * 		Map key type
-	 * @param valueType
-	 * 		Map value type
-	 *
-	 * @return parameterized type for generic maps {@code Map<K, V>}.
-	 *
-	 * @see #listOf(Type)
-	 * @see #setOf(Type)
-	 */
-	public static ParameterizedType mapOf(final Type keyType, final Type valueType) {
-		return (ParameterizedType) TypeToken.getParameterized(Map.class, keyType, valueType)
-				.getType();
 	}
 
 }
