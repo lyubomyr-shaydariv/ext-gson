@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext;
+package lsh.ext.gson.ext.jakarta.json;
 
 import java.util.Collections;
 
@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
-import lsh.ext.gson.ext.javax.json.JsonValueTypeAdapterFactory;
 
 /**
  * Implements a Java JSON API module registering the following type adapter factories:
@@ -19,14 +18,14 @@ import lsh.ext.gson.ext.javax.json.JsonValueTypeAdapterFactory;
  *
  * @author Lyubomyr Shaydariv
  */
-public final class JsonApiModule
+public final class JakartaJsonApiModule
 		extends AbstractModule {
 
 	@Getter
 	private static final IModule instance = build()
 			.build();
 
-	private JsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private JakartaJsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -51,7 +50,7 @@ public final class JsonApiModule
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			return new JsonApiModule(defaultTypeAdapterFactories);
+			return new JakartaJsonApiModule(defaultTypeAdapterFactories);
 		}
 
 	}

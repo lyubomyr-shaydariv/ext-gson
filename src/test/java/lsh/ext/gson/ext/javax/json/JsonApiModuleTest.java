@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext;
+package lsh.ext.gson.ext.javax.json;
 
 import java.util.stream.Stream;
 import javax.json.JsonValue;
