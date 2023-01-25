@@ -7,11 +7,8 @@ import java.lang.reflect.TypeVariable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nullable;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
+import com.google.gson.reflect.TypeToken;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -22,7 +19,6 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class ParameterizedTypes {
 
-	private static final Type[] emptyType1dArray = {};
 	private static final Type[][] emptyType2dArray = {};
 
 	/**
@@ -70,7 +66,8 @@ public final class ParameterizedTypes {
 	 * @see #mapOf(Type, Type)
 	 */
 	public static ParameterizedType listOf(final Type elementType) {
-		return new ConcreteParameterizedType(List.class, new Type[] { elementType });
+		return (ParameterizedType) TypeToken.getParameterized(List.class, elementType)
+				.getType();
 	}
 
 	/**
@@ -83,7 +80,8 @@ public final class ParameterizedTypes {
 	 * @see #mapOf(Type, Type)
 	 */
 	public static ParameterizedType setOf(final Type elementType) {
-		return new ConcreteParameterizedType(Set.class, new Type[] { elementType });
+		return (ParameterizedType) TypeToken.getParameterized(Set.class, elementType)
+				.getType();
 	}
 
 	/**
@@ -98,35 +96,8 @@ public final class ParameterizedTypes {
 	 * @see #setOf(Type)
 	 */
 	public static ParameterizedType mapOf(final Type keyType, final Type valueType) {
-		return new ConcreteParameterizedType(Map.class, new Type[] { keyType, valueType });
-	}
-
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	@EqualsAndHashCode
-	private static final class ConcreteParameterizedType
-			implements ParameterizedType {
-
-		private final Type rawType;
-		private final Type[] actualTypeArguments;
-
-		@Override
-		public Type getRawType() {
-			return rawType;
-		}
-
-		@Override
-		public Type[] getActualTypeArguments() {
-			return actualTypeArguments.length != 0
-					? actualTypeArguments.clone()
-					: emptyType1dArray;
-		}
-
-		@Override
-		@Nullable
-		public Type getOwnerType() {
-			return null;
-		}
-
+		return (ParameterizedType) TypeToken.getParameterized(Map.class, keyType, valueType)
+				.getType();
 	}
 
 }
