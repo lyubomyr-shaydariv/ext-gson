@@ -3,6 +3,8 @@ package lsh.ext.gson;
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -76,6 +78,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 		}
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class StaticFooBar {
 
 		private final String foo = null;
@@ -83,6 +86,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class DynamicFooBar {
 
 		@DynamicSerializedName("#foo")
@@ -93,6 +97,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class MixedFooBar {
 
 		@SerializedName("staticFoo")

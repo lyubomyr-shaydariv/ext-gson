@@ -172,9 +172,9 @@ public final class JsonObjectsTest {
 		final IJsonObjectMergePredicate mockPredicate = Mockito.mock(IJsonObjectMergePredicate.class);
 		final JsonObject result = JsonObjects.mergeIntoNew(left, right, mockPredicate);
 		assertRefersNone(result, left, right);
-		Mockito.verify(mockPredicate).replace(K1, left, l, right, r);
-		Mockito.verify(mockPredicate).replace(K2, left, l, right, r);
-		Mockito.verify(mockPredicate).replace(K3, left, l, right, r);
+		Mockito.verify(mockPredicate).canReplace(K1, left, l, right, r);
+		Mockito.verify(mockPredicate).canReplace(K2, left, l, right, r);
+		Mockito.verify(mockPredicate).canReplace(K3, left, l, right, r);
 		Mockito.verifyNoMoreInteractions(mockPredicate);
 	}
 
@@ -221,9 +221,9 @@ public final class JsonObjectsTest {
 		final IJsonObjectMergePredicate mockPredicate = Mockito.mock(IJsonObjectMergePredicate.class);
 		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, mockPredicate);
 		assertRefersFirst(result, left, right);
-		Mockito.verify(mockPredicate).replace(K1, left, l, right, r);
-		Mockito.verify(mockPredicate).replace(K2, left, l, right, r);
-		Mockito.verify(mockPredicate).replace(K3, left, l, right, r);
+		Mockito.verify(mockPredicate).canReplace(K1, left, l, right, r);
+		Mockito.verify(mockPredicate).canReplace(K2, left, l, right, r);
+		Mockito.verify(mockPredicate).canReplace(K3, left, l, right, r);
 		Mockito.verifyNoMoreInteractions(mockPredicate);
 	}
 

@@ -29,7 +29,6 @@ public interface IJsonObjectMergePredicate {
 	 *
 	 * @return {@code true} if the left object value can be replaced with the right object value, otherwise {@code false}.
 	 */
-	boolean replace(String key, JsonObject leftObject, @Nullable JsonElement leftValue, JsonObject rightObject,
-			@Nullable JsonElement rightValue);
+	boolean canReplace(String key, JsonObject leftObject, @Nullable JsonElement leftValue, JsonObject rightObject, @Nullable JsonElement rightValue);
 
 }

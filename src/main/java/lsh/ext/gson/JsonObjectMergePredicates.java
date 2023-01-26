@@ -31,16 +31,14 @@ public final class JsonObjectMergePredicates {
 
 		ALWAYS_REPLACE_LEFT {
 			@Override
-			public boolean replace(final String key, final JsonObject leftObject, @Nullable final JsonElement leftValue,
-					final JsonObject rightObject, @Nullable final JsonElement rightValue) {
+			public boolean canReplace(final String key, final JsonObject leftObject, @Nullable final JsonElement leftValue, final JsonObject rightObject, @Nullable final JsonElement rightValue) {
 				return true;
 			}
 		},
 
 		NEVER_REPLACE_LEFT {
 			@Override
-			public boolean replace(final String key, final JsonObject leftObject, @Nullable final JsonElement leftValue,
-					final JsonObject rightObject, @Nullable final JsonElement rightValue) {
+			public boolean canReplace(final String key, final JsonObject leftObject, @Nullable final JsonElement leftValue, final JsonObject rightObject, @Nullable final JsonElement rightValue) {
 				return false;
 			}
 		}

@@ -1,7 +1,6 @@
 package lsh.ext.gson;
 
 import java.lang.reflect.Field;
-
 import javax.annotation.Nullable;
 
 import com.google.gson.FieldNamingPolicy;

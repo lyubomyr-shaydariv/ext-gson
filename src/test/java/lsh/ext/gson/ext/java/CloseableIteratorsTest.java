@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,7 @@ public final class CloseableIteratorsTest {
 	public void testAsCloseableForCloseableIterator() {
 		final ICloseableIterator<?> closeableIterator = Mockito.mock(ICloseableIterator.class);
 		Assertions.assertSame(closeableIterator, CloseableIterators.asCloseable(closeableIterator));
+		Mockito.verifyNoMoreInteractions(closeableIterator);
 	}
 
 	@Test
@@ -25,6 +28,7 @@ public final class CloseableIteratorsTest {
 	public void testAsCloseableDispatcherForCloseableIterator() {
 		final Iterator<?> iterator = Mockito.mock(ICloseableIterator.class);
 		Assertions.assertSame(iterator, CloseableIterators.asCloseable(iterator));
+		Mockito.verifyNoMoreInteractions(iterator);
 	}
 
 	@Test
@@ -33,8 +37,8 @@ public final class CloseableIteratorsTest {
 			throws Exception {
 		final Iterator<?> iterator = Mockito.mock(Iterator.class);
 		final ICloseableIterator<?> closeableIterator = CloseableIterators.asCloseable(iterator);
-		Assertions.assertTrue(closeableIterator instanceof Iterator);
-		Assertions.assertTrue(closeableIterator instanceof Closeable);
+		Assertions.assertInstanceOf(Iterator.class, closeableIterator);
+		Assertions.assertInstanceOf(Closeable.class, closeableIterator);
 		closeableIterator.hasNext();
 		Mockito.verify(iterator).hasNext();
 		closeableIterator.next();
@@ -72,16 +76,12 @@ public final class CloseableIteratorsTest {
 		Mockito.verifyNoMoreInteractions(mockConsumer, mockCloseable);
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class CloseableIterator<T>
 			implements Iterator<T>, Closeable {
 
-		private final Iterator<T> iterator;
+		private final Iterator<? extends T> iterator;
 		private final Closeable closeable;
-
-		private CloseableIterator(final Iterator<T> iterator, final Closeable closeable) {
-			this.iterator = iterator;
-			this.closeable = closeable;
-		}
 
 		@Override
 		public boolean hasNext() {

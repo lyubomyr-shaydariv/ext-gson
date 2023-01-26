@@ -330,7 +330,7 @@ public final class JsonObjects {
 			final String key = rightEntry.getKey();
 			final JsonElement leftValue = left.get(key);
 			final JsonElement rightValue = rightEntry.getValue();
-			if ( predicate.replace(key, left, leftValue, right, rightValue) ) {
+			if ( predicate.canReplace(key, left, leftValue, right, rightValue) ) {
 				left.add(key, rightValue);
 			}
 		}

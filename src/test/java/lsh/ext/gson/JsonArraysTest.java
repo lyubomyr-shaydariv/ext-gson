@@ -470,7 +470,7 @@ public final class JsonArraysTest {
 	}
 
 	private static JsonArray stringJsonArray(final String... values) {
-		final JsonArray array = new JsonArray();
+		final JsonArray array = new JsonArray(values.length);
 		for ( final String value : values ) {
 			array.add(value);
 		}

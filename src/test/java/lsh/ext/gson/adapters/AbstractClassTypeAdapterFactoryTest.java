@@ -22,7 +22,7 @@ public final class AbstractClassTypeAdapterFactoryTest {
 	public void testRead() {
 		final String json = "{\"value\":{\"$T\":\"" + Bar.class.getTypeName() + "\",\"$V\":{}}}";
 		final Value value = gson.fromJson(json, Value.class);
-		Assertions.assertTrue(value.value instanceof Bar);
+		Assertions.assertInstanceOf(Bar.class, value.value);
 	}
 
 	@Test
