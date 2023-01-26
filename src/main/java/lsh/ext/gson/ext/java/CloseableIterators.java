@@ -8,8 +8,6 @@ import java.util.function.Consumer;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.ICloseableEnumeration;
-import lsh.ext.gson.ICloseableIterator;
 
 /**
  * Provides closeable iterators utility methods.

@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import lsh.ext.gson.GsonBuilders;
-import lsh.ext.gson.ICloseableEnumeration;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 

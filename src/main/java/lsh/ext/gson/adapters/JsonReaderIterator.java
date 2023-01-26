@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.ICloseableIterator;
+import lsh.ext.gson.ext.java.ICloseableIterator;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonReaderIterator<E>

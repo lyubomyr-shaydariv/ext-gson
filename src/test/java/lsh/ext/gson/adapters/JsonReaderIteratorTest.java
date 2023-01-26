@@ -6,7 +6,7 @@ import java.util.Iterator;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import lsh.ext.gson.GsonBuilders;
-import lsh.ext.gson.ICloseableIterator;
+import lsh.ext.gson.ext.java.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

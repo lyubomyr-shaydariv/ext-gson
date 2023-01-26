@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.ICloseableIterator;
+import lsh.ext.gson.ext.java.ICloseableIterator;
 
 @UtilityClass
 final class Streams {

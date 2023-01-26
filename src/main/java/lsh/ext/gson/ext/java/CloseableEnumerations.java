@@ -5,8 +5,6 @@ import java.io.IOException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.ICloseableEnumeration;
-import lsh.ext.gson.ICloseableIterator;
 
 @UtilityClass
 public final class CloseableEnumerations {

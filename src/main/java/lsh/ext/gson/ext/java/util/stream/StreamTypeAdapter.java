@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import lsh.ext.gson.ICloseableIterator;
+import lsh.ext.gson.ext.java.ICloseableIterator;
 import lsh.ext.gson.adapters.AbstractCursorTypeAdapter;
 
 /**

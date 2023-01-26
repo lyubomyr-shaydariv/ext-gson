@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.ICloseableIterator;
+import lsh.ext.gson.ext.java.ICloseableIterator;
 import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapter;
 
 /**

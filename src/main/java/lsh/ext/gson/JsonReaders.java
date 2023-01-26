@@ -10,6 +10,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.experimental.UtilityClass;
+import lsh.ext.gson.ext.java.ICloseableIterator;
 
 /**
  * Provides miscellaneous {@link JsonReader} utility methods.
