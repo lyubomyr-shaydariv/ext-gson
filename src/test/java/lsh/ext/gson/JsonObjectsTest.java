@@ -182,7 +182,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoNewWithAlwaysReplaceLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoNew(left, right, JsonObjectMergePredicates.alwaysReplaceLeft());
+		final JsonObject result = JsonObjects.mergeIntoNew(left, right, IJsonObjectMergePredicate.alwaysReplaceLeft());
 		assertRefersNone(result, left, right);
 		assertHasValues(result, r, r, r);
 	}
@@ -191,7 +191,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoNewWithNeverReplaceLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoNew(left, right, JsonObjectMergePredicates.neverReplaceLeft());
+		final JsonObject result = JsonObjects.mergeIntoNew(left, right, IJsonObjectMergePredicate.neverReplaceLeft());
 		assertRefersNone(result, left, right);
 		assertHasValues(result, l, l, l);
 	}
@@ -231,7 +231,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoLeftWithAlwaysReplaceLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, JsonObjectMergePredicates.alwaysReplaceLeft());
+		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, IJsonObjectMergePredicate.alwaysReplaceLeft());
 		assertRefersFirst(result, left, right);
 		assertHasValues(result, r, r, r);
 	}
@@ -240,7 +240,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoLeftWithNeverReplaceLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, JsonObjectMergePredicates.neverReplaceLeft());
+		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, IJsonObjectMergePredicate.neverReplaceLeft());
 		assertRefersFirst(result, left, right);
 		assertHasValues(result, l, l, l);
 	}
