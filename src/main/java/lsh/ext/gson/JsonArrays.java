@@ -477,14 +477,11 @@ public final class JsonArrays {
 		return new MutableJsonArrayList(jsonArray);
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private abstract static class AbstractJsonArrayList
 			extends AbstractList<JsonElement> {
 
 		private final JsonArray jsonArray;
-
-		protected AbstractJsonArrayList(final JsonArray jsonArray) {
-			this.jsonArray = jsonArray;
-		}
 
 		protected abstract boolean tryAdd(JsonArray jsonArray, JsonElement jsonElement);
 
@@ -734,8 +731,8 @@ public final class JsonArrays {
 		protected boolean tryRemoveAll(final JsonArray jsonArray, final Collection<?> objects) {
 			final int sizeBefore = jsonArray.size();
 			for ( final Object object : objects ) {
-				if ( object instanceof JsonElement ) {
-					jsonArray.remove((JsonElement) object);
+				if ( object instanceof final JsonElement jsonElement ) {
+					jsonArray.remove(jsonElement);
 				}
 			}
 			final int sizeAfter = jsonArray.size();

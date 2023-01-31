@@ -45,6 +45,7 @@ public final class CloseableIterators {
 	 */
 	public static <E> ICloseableIterator<E> asCloseable(final Iterator<? extends E> iterator) {
 		if ( iterator instanceof ICloseableIterator ) {
+			// ha-ha, Java 14, because `if ( iterator instanceof @SuppressWarnings("unchecked") final ICloseableIterator<E> closeableIterator ) {` is illegal
 			@SuppressWarnings("unchecked")
 			final ICloseableIterator<E> closeableIterator = (ICloseableIterator<E>) iterator;
 			return closeableIterator;
@@ -90,8 +91,8 @@ public final class CloseableIterators {
 
 	private static void tryClose(final Object object)
 			throws IOException {
-		if ( object instanceof Closeable ) {
-			((Closeable) object).close();
+		if ( object instanceof final Closeable closeable ) {
+			closeable.close();
 		}
 	}
 

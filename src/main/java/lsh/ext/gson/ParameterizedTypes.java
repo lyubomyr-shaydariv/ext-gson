@@ -26,8 +26,7 @@ public final class ParameterizedTypes {
 	 * empty array if no type parameters are available.
 	 */
 	public static Type[][] getTypeArguments(final Type type) {
-		if ( type instanceof ParameterizedType ) {
-			final ParameterizedType parameterizedType = (ParameterizedType) type;
+		if ( type instanceof ParameterizedType parameterizedType ) {
 			final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
 			final int length = actualTypeArguments.length;
 			final Type[][] resultTypeArguments = new Type[length][];
@@ -36,8 +35,7 @@ public final class ParameterizedTypes {
 			}
 			return resultTypeArguments;
 		}
-		if ( type instanceof GenericDeclaration ) {
-			final GenericDeclaration genericDeclaration = (GenericDeclaration) type;
+		if ( type instanceof GenericDeclaration genericDeclaration ) {
 			final TypeVariable<?>[] typeParameters = genericDeclaration.getTypeParameters();
 			final int length = typeParameters.length;
 			if ( length != 0 ) {

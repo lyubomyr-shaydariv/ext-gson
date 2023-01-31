@@ -357,14 +357,11 @@ public final class JsonObjects {
 		return new MutableJsonObjectMap(jsonObject);
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private abstract static class AbstractJsonObjectMap
 			extends AbstractMap<String, JsonElement> {
 
 		private final JsonObject jsonObject;
-
-		protected AbstractJsonObjectMap(final JsonObject jsonObject) {
-			this.jsonObject = jsonObject;
-		}
 
 		protected abstract Set<Entry<String, JsonElement>> tryEntrySet(JsonObject jsonObject);
 
@@ -422,14 +419,11 @@ public final class JsonObjects {
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private abstract static class AbstractJsonObjectSet
 			extends AbstractSet<Map.Entry<String, JsonElement>> {
 
 		private final JsonObject jsonObject;
-
-		protected AbstractJsonObjectSet(final JsonObject jsonObject) {
-			this.jsonObject = jsonObject;
-		}
 
 		protected abstract Iterator<Map.Entry<String, JsonElement>> getIterator(JsonObject jsonObject);
 
