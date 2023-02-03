@@ -8,8 +8,6 @@
 New libraries might be added someday.
 Maybe.
 
-![Travis CI](https://travis-ci.org/lyubomyr-shaydariv/ext-gson.svg?branch=master)
-
 ### Requirements
 
 * Build: Java 8 and Apache Maven.
