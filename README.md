@@ -68,8 +68,8 @@ Currently `ext-gson` supports:
 #### Google Guava
 
 * Types provided by `GuavaModule`:
-  * [`com.google.common.base.Optional`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/base/Optional.html);
-  * [`com.google.common.collect.BiMap`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/collect/BiMap.html);
-  * [`com.google.common.collect.Multimap`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/collect/Multimap.html);
-  * [`com.google.common.collect.Multiset`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/collect/Multiset.html);
-  * [`com.google.common.collect.Table`](https://google.github.io/guava/releases/30.1.1-jre/api/docs/com/google/common/collect/Table.html).
+  * [`com.google.common.base.Optional`](https://google.github.io/guava/releases/31.1-jre/api/docs/com/google/common/base/Optional.html);
+  * [`com.google.common.collect.BiMap`](https://google.github.io/guava/releases/31.1-jre/api/docs/com/google/common/collect/BiMap.html);
+  * [`com.google.common.collect.Multimap`](https://google.github.io/guava/releases/31.1-jre/api/docs/com/google/common/collect/Multimap.html);
+  * [`com.google.common.collect.Multiset`](https://google.github.io/guava/releases/31.1-jre/api/docs/com/google/common/collect/Multiset.html);
+  * [`com.google.common.collect.Table`](https://google.github.io/guava/releases/31.1-jre/api/docs/com/google/common/collect/Table.html).
