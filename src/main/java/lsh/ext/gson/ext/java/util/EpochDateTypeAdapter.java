@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public final class EpochDateTypeAdapter
 		extends TypeAdapter<Date> {
 
-	@Getter(onMethod_ = {@SuppressFBWarnings("MS_EXPOSE_REP")})
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Date> instance = new EpochDateTypeAdapter();
 
 	@Override

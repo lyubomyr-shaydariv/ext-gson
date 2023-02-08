@@ -18,7 +18,7 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class MonthTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Month> {
 
-	@Getter(onMethod_ = {@SuppressFBWarnings("MS_EXPOSE_REP")})
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Month> instance = new MonthTypeAdapter();
 
 	@Override

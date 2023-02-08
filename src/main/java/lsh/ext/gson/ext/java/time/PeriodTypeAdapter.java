@@ -18,7 +18,7 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
 public final class PeriodTypeAdapter
 		extends AbstractToStringStringTypeAdapter<Period> {
 
-	@Getter(onMethod_ = {@SuppressFBWarnings("MS_EXPOSE_REP")})
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Period> instance = new PeriodTypeAdapter();
 
 	@Override
