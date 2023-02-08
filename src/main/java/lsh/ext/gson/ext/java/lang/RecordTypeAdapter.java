@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.java.lang;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import com.google.common.annotations.Beta;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -24,7 +23,6 @@ import lombok.RequiredArgsConstructor;
  * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@Beta
 public final class RecordTypeAdapter<T extends Record>
 		extends TypeAdapter<T> {
 

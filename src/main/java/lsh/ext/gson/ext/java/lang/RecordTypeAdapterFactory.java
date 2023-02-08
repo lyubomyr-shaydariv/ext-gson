@@ -1,6 +1,5 @@
 package lsh.ext.gson.ext.java.lang;
 
-import com.google.common.annotations.Beta;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
@@ -20,7 +19,6 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  * @see RecordTypeAdapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@Beta
 public final class RecordTypeAdapterFactory<T extends Record>
 		extends AbstractTypeAdapterFactory<T> {
 
