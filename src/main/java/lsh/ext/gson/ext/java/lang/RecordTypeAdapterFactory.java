@@ -16,7 +16,6 @@ import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
  * 		Record type to handle
  *
  * @author Lyubomyr Shaydariv
- * @see RecordTypeAdapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RecordTypeAdapterFactory<T extends Record>
@@ -32,13 +31,9 @@ public final class RecordTypeAdapterFactory<T extends Record>
 
 	@Override
 	protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		try {
-			@SuppressWarnings("unchecked")
-			final Class<T> recordClass = (Class<T>) typeToken.getRawType();
-			return RecordTypeAdapter.getInstance(recordClass, gson);
-		} catch ( final NoSuchMethodException ex ) {
-			throw new RuntimeException(ex);
-		}
+		@SuppressWarnings("unchecked")
+		final Class<T> recordClass = (Class<T>) typeToken.getRawType();
+		return gson.getAdapter(recordClass);
 	}
 
 }
