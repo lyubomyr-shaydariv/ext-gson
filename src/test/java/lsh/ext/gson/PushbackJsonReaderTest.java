@@ -423,7 +423,7 @@ public final class PushbackJsonReaderTest {
 	}
 
 	private static void assertPushback(final PushbackJsonReader pushbackJsonReader, final ValuedJsonToken<?>... tokens) {
-		Iterators.elementsEqual(Stream.of(tokens).iterator(), pushbackJsonReader.iterator());
+		Assertions.assertTrue(Iterators.elementsEqual(Stream.of(tokens).iterator(), pushbackJsonReader.iterator()));
 	}
 
 }
