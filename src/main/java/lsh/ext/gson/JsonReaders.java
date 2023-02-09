@@ -9,6 +9,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.MalformedJsonException;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lsh.ext.gson.ext.java.ICloseableIterator;
 
@@ -193,63 +195,71 @@ public final class JsonReaders {
 	 * @see #readValuedJsonToken(JsonReader)
 	 */
 	public static ICloseableIterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(final JsonReader jsonReader) {
-		return new ICloseableIterator<>() {
-			private int level;
+		return new RecursiveCloseableIterator(jsonReader);
+	}
 
-			@Override
-			public void close()
-					throws IOException {
-				jsonReader.close();
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	private static final class RecursiveCloseableIterator
+			implements ICloseableIterator<ValuedJsonToken<?>> {
+
+		private final JsonReader jsonReader;
+
+		private int level;
+
+		@Override
+		public void close()
+				throws IOException {
+			jsonReader.close();
+		}
+
+		@Override
+		public boolean hasNext() {
+			if ( level < 0 ) {
+				return false;
 			}
+			try {
+				final JsonToken token = jsonReader.peek();
+				return token != JsonToken.END_DOCUMENT;
+			} catch ( final IOException ex ) {
+				throw new RuntimeException(ex);
+			}
+		}
 
-			@Override
-			public boolean hasNext() {
+		@Override
+		public ValuedJsonToken<?> next() {
+			try {
 				if ( level < 0 ) {
-					return false;
+					throw new NoSuchElementException();
 				}
-				try {
-					final JsonToken token = jsonReader.peek();
-					return token != JsonToken.END_DOCUMENT;
-				} catch ( final IOException ex ) {
-					throw new RuntimeException(ex);
+				final ValuedJsonToken<?> valuedJsonToken = readValuedJsonToken(jsonReader);
+				switch ( valuedJsonToken.getToken() ) {
+				case BEGIN_ARRAY:
+				case BEGIN_OBJECT:
+					level++;
+					break;
+				case END_ARRAY:
+				case END_OBJECT:
+					level--;
+					break;
+				case NAME:
+				case STRING:
+				case NUMBER:
+				case BOOLEAN:
+				case NULL:
+					break;
+				case END_DOCUMENT:
+				default:
+					throw new AssertionError(valuedJsonToken.getToken());
 				}
+				if ( level == 0 ) {
+					level = -1;
+				}
+				return valuedJsonToken;
+			} catch ( final IOException ex ) {
+				throw new RuntimeException(ex);
 			}
+		}
 
-			@Override
-			public ValuedJsonToken<?> next() {
-				try {
-					if ( level < 0 ) {
-						throw new NoSuchElementException();
-					}
-					final ValuedJsonToken<?> valuedJsonToken = readValuedJsonToken(jsonReader);
-					switch ( valuedJsonToken.getToken() ) {
-					case BEGIN_ARRAY:
-					case BEGIN_OBJECT:
-						level++;
-						break;
-					case END_ARRAY:
-					case END_OBJECT:
-						level--;
-						break;
-					case NAME:
-					case STRING:
-					case NUMBER:
-					case BOOLEAN:
-					case NULL:
-						break;
-					case END_DOCUMENT:
-					default:
-						throw new AssertionError(valuedJsonToken.getToken());
-					}
-					if ( level == 0 ) {
-						level = -1;
-					}
-					return valuedJsonToken;
-				} catch ( final IOException ex ) {
-					throw new RuntimeException(ex);
-				}
-			}
-		};
 	}
 
 	private static final class EmptyStringFailFastJsonReader
