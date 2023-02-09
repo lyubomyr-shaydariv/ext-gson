@@ -13,6 +13,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
+import lsh.ext.gson.internal.UnmodifiableIterator;
 
 /**
  * Provides miscellaneous {@link JsonObject} utility methods.
@@ -448,18 +449,7 @@ public final class JsonObjects {
 
 		@Override
 		protected Iterator<Map.Entry<String, JsonElement>> getIterator(final JsonObject jsonObject) {
-			final Iterator<Map.Entry<String, JsonElement>> iterator = jsonObject.entrySet().iterator();
-			return new Iterator<>() {
-				@Override
-				public boolean hasNext() {
-					return iterator.hasNext();
-				}
-
-				@Override
-				public Map.Entry<String, JsonElement> next() {
-					return iterator.next();
-				}
-			};
+			return UnmodifiableIterator.of(jsonObject.entrySet().iterator());
 		}
 
 	}
