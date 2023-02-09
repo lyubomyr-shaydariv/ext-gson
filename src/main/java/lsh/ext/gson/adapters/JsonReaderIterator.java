@@ -14,12 +14,12 @@ import lsh.ext.gson.ext.java.ICloseableIterator;
 public final class JsonReaderIterator<E>
 		implements ICloseableIterator<E> {
 
-	private final TypeAdapter<E> elementTypeAdapter;
+	private final TypeAdapter<? extends E> elementTypeAdapter;
 	private final JsonReader in;
 
 	private ReadingIteratorState state = ReadingIteratorState.BEFORE_ARRAY;
 
-	public static <E> ICloseableIterator<E> getInstance(final TypeAdapter<E> elementTypeAdapter, final JsonReader in) {
+	public static <E> ICloseableIterator<E> getInstance(final TypeAdapter<? extends E> elementTypeAdapter, final JsonReader in) {
 		return new JsonReaderIterator<>(elementTypeAdapter, in);
 	}
 

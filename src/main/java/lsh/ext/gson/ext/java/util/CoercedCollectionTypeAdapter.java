@@ -42,7 +42,7 @@ public final class CoercedCollectionTypeAdapter<E, C extends Collection<E>>
 	 *
 	 * @return An instance of {@link CoercedCollectionTypeAdapter}.
 	 */
-	public static <E, C extends Collection<E>> TypeAdapter<C> getInstance(final TypeAdapter<E> elementTypeAdapter, final IFactory<? extends E, C> collectionFactory) {
+	public static <E, C extends Collection<E>> TypeAdapter<C> getInstance(final TypeAdapter<E> elementTypeAdapter, final IFactory<? extends E, ? extends C> collectionFactory) {
 		return new CoercedCollectionTypeAdapter<>(elementTypeAdapter, collectionFactory);
 	}
 
