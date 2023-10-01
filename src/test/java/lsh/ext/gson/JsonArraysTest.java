@@ -6,7 +6,6 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -188,26 +187,6 @@ public final class JsonArraysTest {
 		Mockito.verify(spyJsonElements).listIterator();
 		Mockito.verify(spyJsonElements).listIterator(0);
 		Mockito.verifyNoMoreInteractions(spyJsonElements);
-	}
-
-	@Test
-	public void testJsonArrayWith() {
-		final JsonArray actual = JsonArrays.arrayWith()
-				.add('c')
-				.add(true)
-				.add(new JsonObject())
-				.add(1000)
-				.add("whatever")
-				.addAll(JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2)))
-				.get();
-		final JsonArray expected = new JsonArray();
-		expected.add('c');
-		expected.add(true);
-		expected.add(new JsonObject());
-		expected.add(1000);
-		expected.add("whatever");
-		expected.addAll(JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2)));
-		Assertions.assertEquals(expected, actual);
 	}
 
 	@Test

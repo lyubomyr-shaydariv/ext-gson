@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
@@ -176,97 +175,6 @@ public final class JsonObjects {
 			jsonObject.add(e.getKey(), e.getValue());
 		}
 		return jsonObject;
-	}
-
-	/**
-	 * @return An accumulator instance to accumulate {@link JsonObject} instances.
-	 */
-	public static JsonObjectAccumulator objectWith() {
-		return new JsonObjectAccumulator();
-	}
-
-	/**
-	 * Represents a {@link JsonObject} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates a
-	 * certain state with builder-like syntax.
-	 */
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class JsonObjectAccumulator {
-
-		private final JsonObject jsonObject = new JsonObject();
-
-		/**
-		 * @param property
-		 * 		Property name.
-		 * @param jsonElement
-		 * 		A JSON element.
-		 *
-		 * @return Self with a new key/value pair.
-		 */
-		public JsonObjectAccumulator add(final String property, final JsonElement jsonElement) {
-			jsonObject.add(property, jsonElement);
-			return this;
-		}
-
-		/**
-		 * @param property
-		 * 		Property name.
-		 * @param b
-		 * 		A boolean value.
-		 *
-		 * @return Self with a new key/value pair.
-		 */
-		public JsonObjectAccumulator add(final String property, final Boolean b) {
-			jsonObject.addProperty(property, b);
-			return this;
-		}
-
-		/**
-		 * @param property
-		 * 		Property name.
-		 * @param c
-		 * 		A character value.
-		 *
-		 * @return Self with a new key/value pair.
-		 */
-		public JsonObjectAccumulator add(final String property, final Character c) {
-			jsonObject.addProperty(property, c);
-			return this;
-		}
-
-		/**
-		 * @param property
-		 * 		Property name.
-		 * @param n
-		 * 		A numeric value.
-		 *
-		 * @return Self with a new key/value pair.
-		 */
-		public JsonObjectAccumulator add(final String property, final Number n) {
-			jsonObject.addProperty(property, n);
-			return this;
-		}
-
-		/**
-		 * @param property
-		 * 		Property name.
-		 * @param s
-		 * 		A string value.
-		 *
-		 * @return Self with a new key/value pair.
-		 */
-		public JsonObjectAccumulator add(final String property, final String s) {
-			jsonObject.addProperty(property, s);
-			return this;
-		}
-
-		/**
-		 * @return The accumulated {@link JsonObject} instance.
-		 */
-		@SuppressFBWarnings("EI_EXPOSE_REP")
-		public JsonObject get() {
-			return jsonObject;
-		}
-
 	}
 
 	/**

@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
@@ -363,98 +362,6 @@ public final class JsonArrays {
 			jsonArray.add(jsonElement);
 		}
 		return jsonArray;
-	}
-
-	/**
-	 * @return An accumulator instance to accumulate {@link JsonArray} instances.
-	 */
-	public static JsonArrayAccumulator arrayWith() {
-		return new JsonArrayAccumulator();
-	}
-
-	/**
-	 * Represents a {@link JsonArray} accumulator. Unlike a builder, the accumulator does not create a new object in with its final method, but accumulates a
-	 * certain state with builder-like syntax.
-	 */
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class JsonArrayAccumulator {
-
-		private final JsonArray jsonArray = new JsonArray();
-
-		/**
-		 * @param jsonElement
-		 * 		A JSON element.
-		 *
-		 * @return Self with the new element appended to the end of the array.
-		 */
-		public JsonArrayAccumulator add(final JsonElement jsonElement) {
-			jsonArray.add(jsonElement);
-			return this;
-		}
-
-		/**
-		 * @param b
-		 * 		A boolean value.
-		 *
-		 * @return Self with the new element appended to the end of the array.
-		 */
-		public JsonArrayAccumulator add(final Boolean b) {
-			jsonArray.add(b);
-			return this;
-		}
-
-		/**
-		 * @param c
-		 * 		A character value.
-		 *
-		 * @return Self with the new element appended to the end of the array.
-		 */
-		public JsonArrayAccumulator add(final Character c) {
-			jsonArray.add(c);
-			return this;
-		}
-
-		/**
-		 * @param n
-		 * 		A numeric value.
-		 *
-		 * @return Self with the new element appended to the end of the array.
-		 */
-		public JsonArrayAccumulator add(final Number n) {
-			jsonArray.add(n);
-			return this;
-		}
-
-		/**
-		 * @param s
-		 * 		A string value.
-		 *
-		 * @return Self with the new element appended to the end of the array.
-		 */
-		public JsonArrayAccumulator add(final String s) {
-			jsonArray.add(s);
-			return this;
-		}
-
-		/**
-		 * @param jsonArray
-		 * 		A JSON array.
-		 *
-		 * @return Self with all the new elements from the input array appended to the end of the array.
-		 */
-		public JsonArrayAccumulator addAll(final JsonArray jsonArray) {
-			this.jsonArray.addAll(jsonArray);
-			return this;
-		}
-
-		/**
-		 * @return The accumulated {@link JsonArray} instance.
-		 */
-		@SuppressFBWarnings("EI_EXPOSE_REP")
-		public JsonArray get() {
-			return jsonArray;
-		}
-
 	}
 
 	/**

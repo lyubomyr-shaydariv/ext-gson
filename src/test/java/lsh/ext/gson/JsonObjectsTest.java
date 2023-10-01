@@ -139,24 +139,6 @@ public final class JsonObjectsTest {
 	}
 
 	@Test
-	public void testJsonObjectWith() {
-		final JsonObject actual = JsonObjects.objectWith()
-				.add(K1, "whatever")
-				.add(K2, 'c')
-				.add(K3, 100)
-				.add(K4, false)
-				.add(K5, new JsonObject())
-				.get();
-		final JsonObject expected = new JsonObject();
-		expected.addProperty(K1, "whatever");
-		expected.addProperty(K2, 'c');
-		expected.addProperty(K3, 100);
-		expected.addProperty(K4, false);
-		expected.add(K5, new JsonObject());
-		Assertions.assertEquals(expected, actual);
-	}
-
-	@Test
 	public void testMergeIntoNewWithDefaultStrategy() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
