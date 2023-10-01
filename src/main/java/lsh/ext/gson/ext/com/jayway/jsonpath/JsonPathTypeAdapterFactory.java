@@ -136,7 +136,7 @@ public final class JsonPathTypeAdapterFactory
 		final Collection<FieldInfo> fieldInfos = FieldInfo.of(typeToken.getRawType(), gson);
 		return fieldInfos.isEmpty()
 				? delegateAdapter
-				: new JsonPathTypeAdapter<>(gson, delegateAdapter, gson.getAdapter(JsonElement.class), fieldInfos, configurationProvider.apply(gson));
+				: new JsonPathTypeAdapter<>(delegateAdapter, gson.getAdapter(JsonElement.class), fieldInfos, configurationProvider.apply(gson));
 	}
 
 	private static final class JsonPathTypeAdapter<T>
@@ -147,7 +147,7 @@ public final class JsonPathTypeAdapterFactory
 		private final Collection<FieldInfo> fieldInfos;
 		private final Configuration configuration;
 
-		private JsonPathTypeAdapter(final Gson gson, final TypeAdapter<T> delegateAdapter, final TypeAdapter<JsonElement> jsonElementTypeAdapter,
+		private JsonPathTypeAdapter(final TypeAdapter<T> delegateAdapter, final TypeAdapter<JsonElement> jsonElementTypeAdapter,
 				final Collection<FieldInfo> fieldInfos, final Configuration configuration) {
 			this.delegateAdapter = delegateAdapter;
 			this.jsonElementTypeAdapter = jsonElementTypeAdapter;
