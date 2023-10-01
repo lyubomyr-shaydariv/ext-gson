@@ -87,14 +87,14 @@ public final class CoercedCollectionTypeAdapter<E, C extends Collection<E>>
 			collection.add(elementTypeAdapter.read(in));
 			break;
 		case NULL:
-			throw new AssertionError("Must never happen for nulls");
+			throw new AssertionError();
 		case NAME:
 		case END_ARRAY:
 		case END_OBJECT:
 		case END_DOCUMENT:
 			throw new MalformedJsonException("Unexpected token: " + token);
 		default:
-			throw new AssertionError("Must never happen: " + token);
+			throw new AssertionError(token);
 		}
 		return collection;
 	}

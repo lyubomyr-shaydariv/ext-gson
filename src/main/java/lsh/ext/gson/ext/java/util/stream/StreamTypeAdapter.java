@@ -5,8 +5,8 @@ import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import lsh.ext.gson.ext.java.ICloseableIterator;
 import lsh.ext.gson.adapters.AbstractCursorTypeAdapter;
+import lsh.ext.gson.ext.java.ICloseableIterator;
 
 /**
  * Type adapter for {@link Stream}. Streams are supposed to read and write JSON arrays only.

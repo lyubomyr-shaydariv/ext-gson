@@ -94,13 +94,13 @@ public final class JsonValueTypeAdapter
 		case BEGIN_ARRAY:
 			return jsonArrayTypeAdapter.read(in);
 		case END_ARRAY:
-			throw new AssertionError("Must never happen due to delegation to the array type adapter");
+			throw new AssertionError();
 		case BEGIN_OBJECT:
 			return jsonObjectTypeAdapter.read(in);
 		case END_OBJECT:
-			throw new AssertionError("Must never happen due to delegation to the object type adapter");
+			throw new AssertionError();
 		case NAME:
-			throw new AssertionError("Must never happen");
+			throw new AssertionError();
 		case STRING:
 			return jsonStringTypeAdapter.read(in);
 		case NUMBER:
@@ -110,7 +110,7 @@ public final class JsonValueTypeAdapter
 		case NULL:
 			return jsonNullTypeAdapter.read(in);
 		case END_DOCUMENT:
-			throw new AssertionError("Must never happen");
+			throw new AssertionError();
 		default:
 			throw new AssertionError(jsonToken);
 		}
@@ -250,14 +250,14 @@ public final class JsonValueTypeAdapter
 					jsonObjectBuilder.add(key, JsonValueTypeAdapter.this.read(in));
 					break;
 				case END_ARRAY:
-					throw new AssertionError("Must never happen due to delegation to the array type adapter");
+					throw new AssertionError();
 				case BEGIN_OBJECT:
 					jsonObjectBuilder.add(key, JsonValueTypeAdapter.this.read(in));
 					break;
 				case END_OBJECT:
-					throw new AssertionError("Must never happen due to delegation to the object type adapter");
+					throw new AssertionError();
 				case NAME:
-					throw new AssertionError("Must never happen");
+					throw new AssertionError();
 				case STRING:
 					jsonObjectBuilder.add(key, in.nextString());
 					break;
@@ -310,14 +310,14 @@ public final class JsonValueTypeAdapter
 					jsonArrayBuilder.add(JsonValueTypeAdapter.this.read(in));
 					break;
 				case END_ARRAY:
-					throw new AssertionError("Must never happen due to delegation to the array type adapter");
+					throw new AssertionError();
 				case BEGIN_OBJECT:
 					jsonArrayBuilder.add(JsonValueTypeAdapter.this.read(in));
 					break;
 				case END_OBJECT:
-					throw new AssertionError("Must never happen due to delegation to the object type adapter");
+					throw new AssertionError();
 				case NAME:
-					throw new AssertionError("Must never happen");
+					throw new AssertionError();
 				case STRING:
 					jsonArrayBuilder.add(in.nextString());
 					break;

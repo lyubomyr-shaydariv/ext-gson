@@ -66,7 +66,7 @@ public final class TypeAwareTypeAdapter<T>
 		final JsonToken token = in.peek();
 		switch ( token ) {
 		case NULL:
-			throw new AssertionError("Must never happen for null");
+			throw new AssertionError();
 		case BEGIN_OBJECT:
 			return parseObject(in);
 		case BEGIN_ARRAY:
