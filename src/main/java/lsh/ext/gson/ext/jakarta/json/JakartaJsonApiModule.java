@@ -43,8 +43,8 @@ public final class JakartaJsonApiModule
 	public static final class Builder {
 
 		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(
-						JsonValueTypeAdapterFactory.getInstance()
-				));
+				JsonValueTypeAdapterFactory.getInstance()
+		));
 
 		/**
 		 * @return A new module instance.
