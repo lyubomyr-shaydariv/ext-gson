@@ -17,11 +17,11 @@ import lombok.RequiredArgsConstructor;
  * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class EpochDateTypeAdapter
+public final class UnixTimeDateTypeAdapter
 		extends TypeAdapter<Date> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<Date> instance = new EpochDateTypeAdapter();
+	private static final TypeAdapter<Date> instance = new UnixTimeDateTypeAdapter();
 
 	@Override
 	public Date read(final JsonReader in)

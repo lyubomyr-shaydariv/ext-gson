@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
-public final class EpochDateTypeAdapterTest
+public final class UnixTimeDateTypeAdapterTest
 		extends AbstractTypeAdapterTest<Date, Date> {
 
 	@Nullable
@@ -20,7 +20,7 @@ public final class EpochDateTypeAdapterTest
 	protected Stream<Arguments> makeTestCases() {
 		return Stream.of(
 				makeTestCase(
-						EpochDateTypeAdapter.getInstance(),
+						UnixTimeDateTypeAdapter.getInstance(),
 						"1488929283",
 						new Date(1488929283000L)
 				)
