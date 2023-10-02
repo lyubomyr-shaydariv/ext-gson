@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractSimpleTest {
 
-	private static final Gson gson = GsonBuilders.createCanonical()
+	private static final Gson gson = GsonBuilders.createNormalized()
 			.create();
 
 	protected abstract Stream<Arguments> source();

@@ -15,7 +15,7 @@ public final class JsonReaderIteratorTest {
 	@Test
 	public void testSome() {
 		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.create();
 		@SuppressWarnings("resource")
 		final Iterator<?> unit = JsonReaderIterator.getInstance(gson.getAdapter(FooBar.class), in);
@@ -32,7 +32,7 @@ public final class JsonReaderIteratorTest {
 	public void testEmpty()
 			throws Exception {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.create();
 		try ( final ICloseableIterator<?> unit = JsonReaderIterator.getInstance(gson.getAdapter(FooBar.class), in) ) {
 			Assertions.assertFalse(unit.hasNext());

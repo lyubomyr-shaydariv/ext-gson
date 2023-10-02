@@ -12,14 +12,14 @@ import lombok.experimental.UtilityClass;
 public final class GsonBuilders {
 
 	/**
-	 * Creates a new "canonical" {@link GsonBuilder} instance excluding some default options from the default instance:
+	 * Creates a new normalized {@link GsonBuilder} instance excluding some default options from the default instance:
 	 *
 	 * <ul>
 	 *     <li>{@link GsonBuilder#disableInnerClassSerialization()}</li>
 	 *     <li>{@link GsonBuilder#disableHtmlEscaping()}</li>
 	 * </ul>
 	 */
-	public static GsonBuilder createCanonical() {
+	public static GsonBuilder createNormalized() {
 		return new GsonBuilder()
 				.disableInnerClassSerialization()
 				.disableHtmlEscaping();

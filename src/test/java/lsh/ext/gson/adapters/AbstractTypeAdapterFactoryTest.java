@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractTypeAdapterFactoryTest {
 
-	private static final Gson gson = GsonBuilders.createCanonical()
+	private static final Gson gson = GsonBuilders.createNormalized()
 			.create();
 
 	private final boolean supportsAll;

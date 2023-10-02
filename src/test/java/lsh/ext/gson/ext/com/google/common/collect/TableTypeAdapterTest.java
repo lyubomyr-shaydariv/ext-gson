@@ -22,7 +22,7 @@ public final class TableTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.create();
 		return List.of(
 				makeTestCase(

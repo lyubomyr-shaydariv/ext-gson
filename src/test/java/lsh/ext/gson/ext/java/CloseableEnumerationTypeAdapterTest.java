@@ -21,7 +21,7 @@ public final class CloseableEnumerationTypeAdapterTest
 	@Override
 	@SuppressWarnings("resource")
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.create();
 		return List.of(
 				makeTestCase(

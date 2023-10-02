@@ -24,7 +24,7 @@ public final class CoercedCollectionTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.create();
 		final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(TypeToken.get(String.class));
 		final TypeAdapter<Integer> integerTypeAdapter = gson.getAdapter(TypeToken.get(Integer.class));

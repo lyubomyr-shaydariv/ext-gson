@@ -26,7 +26,7 @@ public final class PrePostTypeAdapterFactoryTest {
 				return userProcessor;
 			}
 		};
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(userProcessorFactory)))
 				.create();
 		gson.toJson(new User("John", "Doe"));
@@ -48,7 +48,7 @@ public final class PrePostTypeAdapterFactoryTest {
 				return userProcessor;
 			}
 		};
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(userProcessorFactory)))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);

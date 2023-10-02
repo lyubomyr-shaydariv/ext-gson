@@ -29,7 +29,7 @@ public final class JsonPathTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.create();
 		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapterFactory.getInstance(JsonPathTypeAdapterTest::getJsonPathConfiguration);
 		return List.of(

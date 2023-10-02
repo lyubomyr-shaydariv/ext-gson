@@ -21,7 +21,7 @@ public final class BiMapTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createCanonical()
+		final Gson gson = GsonBuilders.createNormalized()
 				.create();
 		return List.of(
 				makeTestCase(

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 public final class JsonReadersTest {
 
-	private static final Gson gson = GsonBuilders.createCanonical()
+	private static final Gson gson = GsonBuilders.createNormalized()
 			.create();
 
 	private static final String VALID_JSON = "{\"foo\": \"bar\"}";

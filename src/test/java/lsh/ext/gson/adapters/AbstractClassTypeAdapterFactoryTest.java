@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public final class AbstractClassTypeAdapterFactoryTest {
 
-	private static final Gson gson = GsonBuilders.createCanonical()
+	private static final Gson gson = GsonBuilders.createNormalized()
 			.registerTypeAdapterFactory(AbstractClassTypeAdapterFactory.getInstance("$T", "$V"))
 			.create();
 
