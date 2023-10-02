@@ -19,10 +19,10 @@ public final class StreamTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
+	protected List<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
-		return Stream.of(
+		return List.of(
 				makeTestCase(
 						StreamTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",

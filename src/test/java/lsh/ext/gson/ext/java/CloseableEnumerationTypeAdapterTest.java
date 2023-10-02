@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -21,10 +20,10 @@ public final class CloseableEnumerationTypeAdapterTest
 
 	@Override
 	@SuppressWarnings("resource")
-	protected Stream<Arguments> makeTestCases() {
+	protected List<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
-		return Stream.of(
+		return List.of(
 				makeTestCase(
 						CloseableEnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",

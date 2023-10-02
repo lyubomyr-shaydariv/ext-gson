@@ -1,6 +1,6 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
-import java.util.stream.Stream;
+import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMultimap;
@@ -20,10 +20,10 @@ public final class MultimapTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
+	protected List<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
-		return Stream.of(
+		return List.of(
 				makeTestCase(
 						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",

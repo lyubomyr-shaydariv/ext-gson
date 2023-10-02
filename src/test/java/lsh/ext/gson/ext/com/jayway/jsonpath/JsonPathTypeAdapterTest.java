@@ -1,7 +1,7 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -28,11 +28,11 @@ public final class JsonPathTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
+	protected List<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapterFactory.getInstance(JsonPathTypeAdapterTest::getJsonPathConfiguration);
-		return Stream.of(
+		return List.of(
 				makeTestCase(
 						typeAdapterFactory.create(gson, TypeToken.get(Wrapper.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",

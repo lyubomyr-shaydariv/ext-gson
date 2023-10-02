@@ -1,7 +1,6 @@
 package lsh.ext.gson.adapters;
 
 import java.util.List;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -19,10 +18,10 @@ public final class JsonFailSafeTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
+	protected List<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
-		return Stream.of(
+		return List.of(
 				makeTestCase(
 						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.getParameterized(List.class, String.class)),
 						"[\"foo\",\"bar\"]",

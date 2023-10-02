@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.java.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMap;
@@ -24,7 +23,7 @@ public final class CoercedCollectionTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
+	protected List<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
 		final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(TypeToken.get(String.class));
@@ -32,7 +31,7 @@ public final class CoercedCollectionTypeAdapterTest
 		final TypeAdapter<Boolean> booleanTypeAdapter = gson.getAdapter(TypeToken.get(Boolean.class));
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<Map<String, Integer>> stringToIntegerMapTypeAdapter = (TypeAdapter<Map<String, Integer>>) gson.getAdapter(TypeToken.getParameterized(Map.class, String.class, Integer.class));
-		return Stream.of(
+		return List.of(
 				makeTestCase(
 						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, ArrayList::new),
 						"{\"foo\":1,\"bar\":2}",

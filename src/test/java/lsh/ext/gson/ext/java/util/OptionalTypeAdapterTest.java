@@ -1,7 +1,7 @@
 package lsh.ext.gson.ext.java.util;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -19,10 +19,10 @@ public final class OptionalTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
+	protected List<Arguments> makeTestCases() {
 		final Gson gson = GsonBuilders.createCanonical()
 				.create();
-		return Stream.of(
+		return List.of(
 				makeTestCase(
 						OptionalTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"\"foo\"",

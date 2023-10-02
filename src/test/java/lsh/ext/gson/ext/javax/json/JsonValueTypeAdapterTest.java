@@ -1,6 +1,6 @@
 package lsh.ext.gson.ext.javax.json;
 
-import java.util.stream.Stream;
+import java.util.List;
 import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonValue;
@@ -18,8 +18,8 @@ public final class JsonValueTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
-		return Stream.of(
+	protected List<Arguments> makeTestCases() {
+		return List.of(
 				makeTestCase(
 						JsonValueTypeAdapter.getInstance(),
 						"{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}",

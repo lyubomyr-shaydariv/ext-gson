@@ -1,7 +1,7 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.Instant;
-import java.util.stream.Stream;
+import java.util.List;
 import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
@@ -17,8 +17,8 @@ public final class InstantTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
-		return Stream.of(
+	protected List<Arguments> makeTestCases() {
+		return List.of(
 				makeTestCase(
 						InstantTypeAdapter.getInstance(),
 						"\"1970-01-01T00:00:00Z\"",

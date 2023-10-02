@@ -1,7 +1,7 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.Month;
-import java.util.stream.Stream;
+import java.util.List;
 import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
@@ -17,8 +17,8 @@ public final class MonthTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
-		return Stream.of(
+	protected List<Arguments> makeTestCases() {
+		return List.of(
 				makeTestCase(
 						MonthTypeAdapter.getInstance(),
 						"\"SEPTEMBER\"",

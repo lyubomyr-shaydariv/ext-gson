@@ -2,7 +2,7 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.stream.Stream;
+import java.util.List;
 import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
@@ -18,8 +18,8 @@ public final class YearMonthTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
-		return Stream.of(
+	protected List<Arguments> makeTestCases() {
+		return List.of(
 				makeTestCase(
 						YearMonthTypeAdapter.getInstance(),
 						"\"1999-09\"",

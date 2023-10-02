@@ -3,7 +3,7 @@ package lsh.ext.gson.ext.java.time;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.stream.Stream;
+import java.util.List;
 import javax.annotation.Nullable;
 
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
@@ -19,8 +19,8 @@ public final class OffsetTimeTypeAdapterTest
 	}
 
 	@Override
-	protected Stream<Arguments> makeTestCases() {
-		return Stream.of(
+	protected List<Arguments> makeTestCases() {
+		return List.of(
 				makeTestCase(
 						OffsetTimeTypeAdapter.getInstance(),
 						"\"12:34:56Z\"",
