@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 import java.util.stream.Stream;
 
 import com.google.gson.Gson;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,8 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractSimpleTest {
 
-	private static final Gson gson = GsonBuilders.createNormalized()
-			.create();
+	private static final Gson gson = Gsons.getNormalized();
 
 	protected abstract Stream<Arguments> source();
 

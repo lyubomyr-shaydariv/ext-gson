@@ -5,12 +5,14 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class CloseableEnumerationTypeAdapterTest
 		extends AbstractTypeAdapterTest<ICloseableEnumeration<?>, List<?>> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -21,8 +23,6 @@ public final class CloseableEnumerationTypeAdapterTest
 	@Override
 	@SuppressWarnings("resource")
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		return List.of(
 				makeTestCase(
 						CloseableEnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),

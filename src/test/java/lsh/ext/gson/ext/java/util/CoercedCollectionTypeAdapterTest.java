@@ -9,12 +9,14 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class CoercedCollectionTypeAdapterTest
 		extends AbstractTypeAdapterTest<List<?>, List<?>> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -24,8 +26,6 @@ public final class CoercedCollectionTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(TypeToken.get(String.class));
 		final TypeAdapter<Integer> integerTypeAdapter = gson.getAdapter(TypeToken.get(Integer.class));
 		final TypeAdapter<Boolean> booleanTypeAdapter = gson.getAdapter(TypeToken.get(Boolean.class));

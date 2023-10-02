@@ -5,12 +5,14 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class StreamTypeAdapterTest
 		extends AbstractTypeAdapterTest<Stream<?>, List<?>> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -20,8 +22,6 @@ public final class StreamTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		return List.of(
 				makeTestCase(
 						StreamTypeAdapter.getInstance(gson.getAdapter(Integer.class)),

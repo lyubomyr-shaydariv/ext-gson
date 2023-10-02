@@ -14,12 +14,14 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonPathTypeAdapterTest
 		extends AbstractTypeAdapterTest<Object, Object> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -29,8 +31,6 @@ public final class JsonPathTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapterFactory.getInstance(JsonPathTypeAdapterTest::getJsonPathConfiguration);
 		return List.of(
 				makeTestCase(

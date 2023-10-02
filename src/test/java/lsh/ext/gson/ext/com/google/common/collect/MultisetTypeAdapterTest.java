@@ -6,12 +6,14 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset;
 import com.google.gson.Gson;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultisetTypeAdapterTest
 		extends AbstractTypeAdapterTest<Multiset<?>, Multiset<?>> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -21,8 +23,6 @@ public final class MultisetTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		return List.of(
 				makeTestCase(
 						MultisetTypeAdapter.getInstance(gson.getAdapter(String.class)),

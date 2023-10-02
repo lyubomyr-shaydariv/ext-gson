@@ -7,12 +7,14 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class TableTypeAdapterTest
 		extends AbstractTypeAdapterTest<Table<String, String, ?>, Table<String, String, ?>> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -22,8 +24,6 @@ public final class TableTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		return List.of(
 				makeTestCase(
 						TableTypeAdapter.getInstance(gson.getAdapter(TypeToken.get(Integer.class))),

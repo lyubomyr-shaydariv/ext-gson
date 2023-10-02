@@ -6,12 +6,14 @@ import javax.annotation.Nullable;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.gson.Gson;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class BiMapTypeAdapterTest
 		extends AbstractTypeAdapterTest<BiMap<String, ?>, BiMap<String, ?>> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -21,8 +23,6 @@ public final class BiMapTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		return List.of(
 				makeTestCase(
 						BiMapTypeAdapter.getInstance(gson.getAdapter(String.class)),

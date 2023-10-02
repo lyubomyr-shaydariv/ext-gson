@@ -5,11 +5,13 @@ import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonFailSafeTypeAdapterTest
 		extends AbstractTypeAdapterTest<Object, Object> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -19,8 +21,6 @@ public final class JsonFailSafeTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		return List.of(
 				makeTestCase(
 						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.getParameterized(List.class, String.class)),

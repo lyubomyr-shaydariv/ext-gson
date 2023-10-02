@@ -5,12 +5,14 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
-import lsh.ext.gson.GsonBuilders;
+import lsh.ext.gson.Gsons;
 import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class OptionalTypeAdapterTest
 		extends AbstractTypeAdapterTest<Optional<?>, Optional<?>> {
+
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -20,8 +22,6 @@ public final class OptionalTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final Gson gson = GsonBuilders.createNormalized()
-				.create();
 		return List.of(
 				makeTestCase(
 						OptionalTypeAdapter.getInstance(gson.getAdapter(String.class)),
