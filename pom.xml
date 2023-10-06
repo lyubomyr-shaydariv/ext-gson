@@ -137,6 +137,26 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.4.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<rules>
+						<requireMavenVersion>
+							<version>[3.2.5,)</version>
+						</requireMavenVersion>
+					</rules>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version>
 				<configuration>
