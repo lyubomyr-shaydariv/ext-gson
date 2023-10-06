@@ -3,7 +3,9 @@ package lsh.ext.gson.ext.java;
 import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
@@ -22,18 +24,12 @@ import lsh.ext.gson.ext.java.lang.RecordTypeAdapterFactory;
 public final class Java16Module
 		extends AbstractModule {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final IModule defaultInstance = build()
 			.build();
 
 	private Java16Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
-	}
-
-	/**
-	 * @return The default instance of the module with the default type adapter factories settings.
-	 */
-	public static IModule getDefaultInstance() {
-		return defaultInstance;
 	}
 
 	/**
