@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
+import lsh.ext.gson.adapters.AbstractStringTypeAdapter;
 
 /**
  * A type adapter for {@link Period}.
@@ -16,10 +16,15 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PeriodTypeAdapter
-		extends AbstractToStringStringTypeAdapter<Period> {
+		extends AbstractStringTypeAdapter<Period> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Period> instance = new PeriodTypeAdapter();
+
+	@Override
+	protected String toString(final Period period) {
+		return period.toString();
+	}
 
 	@Override
 	protected Period fromString(final String text) {

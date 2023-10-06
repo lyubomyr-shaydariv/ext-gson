@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
+import lsh.ext.gson.adapters.AbstractStringTypeAdapter;
 
 /**
  * A type adapter for {@link Duration}.
@@ -16,10 +16,15 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DurationTypeAdapter
-		extends AbstractToStringStringTypeAdapter<Duration> {
+		extends AbstractStringTypeAdapter<Duration> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Duration> instance = new DurationTypeAdapter();
+
+	@Override
+	protected String toString(final Duration duration) {
+		return duration.toString();
+	}
 
 	@Override
 	protected Duration fromString(final String text) {

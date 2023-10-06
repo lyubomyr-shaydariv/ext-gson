@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
+import lsh.ext.gson.adapters.AbstractStringTypeAdapter;
 
 /**
  * A type adapter for {@link Instant}.
@@ -16,10 +16,15 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class InstantTypeAdapter
-		extends AbstractToStringStringTypeAdapter<Instant> {
+		extends AbstractStringTypeAdapter<Instant> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Instant> instance = new InstantTypeAdapter();
+
+	@Override
+	protected String toString(final Instant instant) {
+		return instant.toString();
+	}
 
 	@Override
 	protected Instant fromString(final String text) {

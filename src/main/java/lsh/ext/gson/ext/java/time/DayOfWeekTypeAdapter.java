@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
+import lsh.ext.gson.adapters.AbstractStringTypeAdapter;
 
 /**
  * A type adapter for {@link DayOfWeek}.
@@ -16,10 +16,15 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DayOfWeekTypeAdapter
-		extends AbstractToStringStringTypeAdapter<DayOfWeek> {
+		extends AbstractStringTypeAdapter<DayOfWeek> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<DayOfWeek> instance = new DayOfWeekTypeAdapter();
+
+	@Override
+	protected String toString(final DayOfWeek dayOfWeek) {
+		return dayOfWeek.toString();
+	}
 
 	@Override
 	protected DayOfWeek fromString(final String text) {

@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
+import lsh.ext.gson.adapters.AbstractStringTypeAdapter;
 
 /**
  * A type adapter for {@link Month}.
@@ -16,10 +16,15 @@ import lsh.ext.gson.adapters.AbstractToStringStringTypeAdapter;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MonthTypeAdapter
-		extends AbstractToStringStringTypeAdapter<Month> {
+		extends AbstractStringTypeAdapter<Month> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final TypeAdapter<Month> instance = new MonthTypeAdapter();
+
+	@Override
+	protected String toString(final Month month) {
+		return month.toString();
+	}
 
 	@Override
 	protected Month fromString(final String text) {
