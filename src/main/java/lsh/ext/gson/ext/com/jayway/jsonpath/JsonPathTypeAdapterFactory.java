@@ -139,6 +139,7 @@ public final class JsonPathTypeAdapterFactory
 				: new JsonPathTypeAdapter<>(delegateAdapter, gson.getAdapter(JsonElement.class), fieldInfos, configurationProvider.apply(gson));
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class JsonPathTypeAdapter<T>
 			extends TypeAdapter<T> {
 
@@ -146,14 +147,6 @@ public final class JsonPathTypeAdapterFactory
 		private final TypeAdapter<JsonElement> jsonElementTypeAdapter;
 		private final Collection<FieldInfo> fieldInfos;
 		private final Configuration configuration;
-
-		private JsonPathTypeAdapter(final TypeAdapter<T> delegateAdapter, final TypeAdapter<JsonElement> jsonElementTypeAdapter,
-				final Collection<FieldInfo> fieldInfos, final Configuration configuration) {
-			this.delegateAdapter = delegateAdapter;
-			this.jsonElementTypeAdapter = jsonElementTypeAdapter;
-			this.fieldInfos = fieldInfos;
-			this.configuration = configuration;
-		}
 
 		@Override
 		public void write(final JsonWriter out, final T value)
@@ -181,17 +174,12 @@ public final class JsonPathTypeAdapterFactory
 
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class FieldInfo {
 
 		private final Field field;
 		private final JsonPath jsonPath;
 		private final TypeAdapter<?> typeAdapter;
-
-		private FieldInfo(final Field field, final JsonPath jsonPath, final TypeAdapter<?> typeAdapter) {
-			this.field = field;
-			this.jsonPath = jsonPath;
-			this.typeAdapter = typeAdapter;
-		}
 
 		private static Collection<FieldInfo> of(final Class<?> clazz, final Gson gson) {
 			Collection<FieldInfo> collection = Collections.emptyList();
