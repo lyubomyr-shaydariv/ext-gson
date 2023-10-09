@@ -20,6 +20,8 @@ import javax.annotation.meta.TypeQualifierDefault;
 		ElementType.PACKAGE,
 		ElementType.TYPE_PARAMETER,
 		ElementType.TYPE_USE,
+		ElementType.MODULE,
+		ElementType.RECORD_COMPONENT,
 })
 @Nonnull
 public @interface NonnullByDefault {
