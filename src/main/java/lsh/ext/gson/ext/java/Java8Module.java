@@ -8,6 +8,7 @@ import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 import lsh.ext.gson.ext.java.util.OptionalTypeAdapterFactory;
@@ -26,7 +27,7 @@ public final class Java8Module
 		extends AbstractModule {
 
 	@Getter
-	private static final IModule instance = build()
+	private static final IModule instance = builder()
 			.build();
 
 	private Java8Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -36,7 +37,7 @@ public final class Java8Module
 	/**
 	 * @return A builder to build a new instance of the module.
 	 */
-	public static Builder build() {
+	public static Builder builder() {
 		return new Builder();
 	}
 
@@ -44,6 +45,7 @@ public final class Java8Module
 	 * A builder to configure a new module instance.
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	@Accessors(fluent = true, chain = true, prefix = "with")
 	public static final class Builder {
 
 		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(

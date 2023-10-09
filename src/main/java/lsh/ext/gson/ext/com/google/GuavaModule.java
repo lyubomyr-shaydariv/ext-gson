@@ -13,6 +13,7 @@ import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 import lsh.ext.gson.ext.com.google.common.base.OptionalTypeAdapterFactory;
@@ -38,7 +39,7 @@ public final class GuavaModule
 		extends AbstractModule {
 
 	@Getter
-	private static final IModule instance = build()
+	private static final IModule instance = builder()
 			.build();
 
 	private GuavaModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -48,7 +49,7 @@ public final class GuavaModule
 	/**
 	 * @return A builder to build a new instance of the module.
 	 */
-	public static Builder build() {
+	public static Builder builder() {
 		return new Builder();
 	}
 
@@ -56,6 +57,7 @@ public final class GuavaModule
 	 * A builder to configure a new module instance.
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	@Accessors(fluent = true, chain = true, prefix = "with")
 	public static final class Builder {
 
 		@Nullable
@@ -81,110 +83,6 @@ public final class GuavaModule
 
 		@Nullable
 		private Converter<?, String> tableColumnKeyConverter;
-
-		/**
-		 * Sets a new bidirectional map factory used in {@link BiMapTypeAdapterFactory#getInstance(Supplier, Converter)}
-		 *
-		 * @param newBiMapFactory
-		 * 		A supplier to return a new bidirectional map
-		 *
-		 * @return Self.
-		 */
-		public Builder withNewBiMapFactory(final Supplier<? extends BiMap<?, ?>> newBiMapFactory) {
-			this.newBiMapFactory = newBiMapFactory;
-			return this;
-		}
-
-		/**
-		 * Sets a bidirectional map key converter used in {@link BiMapTypeAdapterFactory#getInstance(Supplier, Converter)}
-		 *
-		 * @param biMapKeyConverter
-		 * 		A converter to convert a bidirectional map key to string and vice versa
-		 *
-		 * @return Self.
-		 */
-		public Builder withBiMapKeyConverter(final Converter<?, String> biMapKeyConverter) {
-			this.biMapKeyConverter = biMapKeyConverter;
-			return this;
-		}
-
-		/**
-		 * Sets a new multiset factory used in {@link MultisetTypeAdapterFactory#getInstance(Supplier)}
-		 *
-		 * @param newMultisetFactory
-		 * 		A supplier to return a new multiset
-		 *
-		 * @return Self.
-		 */
-		public Builder withNewMultisetFactory(final Supplier<? extends Multiset<?>> newMultisetFactory) {
-			this.newMultisetFactory = newMultisetFactory;
-			return this;
-		}
-
-		/**
-		 * Sets a new multimap factory used in {@link MultimapTypeAdapterFactory#getInstance(Supplier, Converter)}
-		 *
-		 * @param newMultimapFactory
-		 * 		A supplier to return a new multimap
-		 *
-		 * @return Self.
-		 */
-		public Builder withNewMultimapFactory(final Supplier<? extends Multimap<?, ?>> newMultimapFactory) {
-			this.newMultimapFactory = newMultimapFactory;
-			return this;
-		}
-
-		/**
-		 * Sets a multimap key converter used in {@link MultimapTypeAdapterFactory#getInstance(Supplier, Converter)}
-		 *
-		 * @param multimapKeyConverter
-		 * 		A converter to convert a multimap key to string and vice versa
-		 *
-		 * @return Self.
-		 */
-		public Builder withMultimapKeyConverter(final Converter<?, String> multimapKeyConverter) {
-			this.multimapKeyConverter = multimapKeyConverter;
-			return this;
-		}
-
-		/**
-		 * Sets a new table factory use in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
-		 *
-		 * @param newTableFactory
-		 * 		A supplier to return a new table
-		 *
-		 * @return Self.
-		 */
-		public Builder withNewTableFactory(final Supplier<? extends Table<String, String, Object>> newTableFactory) {
-			this.newTableFactory = newTableFactory;
-			return this;
-		}
-
-		/**
-		 * Sets a table row key converter used in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
-		 *
-		 * @param tableRowKeyConverter
-		 * 		A converter to convert a table row key to a string and vice versa
-		 *
-		 * @return Self.
-		 */
-		public Builder withTableRowKeyConverter(final Converter<?, String> tableRowKeyConverter) {
-			this.tableRowKeyConverter = tableRowKeyConverter;
-			return this;
-		}
-
-		/**
-		 * Sets a table column key converter used in {@link TableTypeAdapterFactory#getInstance(Supplier, Converter, Converter)}
-		 *
-		 * @param tableColumnKeyConverter
-		 * 		A converter to convert a table column key to a string and vice versa
-		 *
-		 * @return Self.
-		 */
-		public Builder withTableColumnKeyConverter(final Converter<?, String> tableColumnKeyConverter) {
-			this.tableColumnKeyConverter = tableColumnKeyConverter;
-			return this;
-		}
 
 		/**
 		 * @return A new module instance.

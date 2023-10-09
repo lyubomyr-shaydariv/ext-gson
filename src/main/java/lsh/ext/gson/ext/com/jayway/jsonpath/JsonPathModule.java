@@ -6,6 +6,7 @@ import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 
@@ -22,7 +23,7 @@ public final class JsonPathModule
 		extends AbstractModule {
 
 	@Getter
-	private static final IModule instance = build()
+	private static final IModule instance = builder()
 			.build();
 
 	private JsonPathModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -32,7 +33,7 @@ public final class JsonPathModule
 	/**
 	 * @return A builder to build a new instance of the module.
 	 */
-	public static Builder build() {
+	public static Builder builder() {
 		return new Builder();
 	}
 
@@ -40,6 +41,7 @@ public final class JsonPathModule
 	 * A builder to configure a new module instance.
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	@Accessors(fluent = true, chain = true, prefix = "with")
 	public static final class Builder {
 
 		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(

@@ -1,6 +1,6 @@
 package lsh.ext.gson.ext.java;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -25,7 +25,7 @@ public final class Java16Module
 		extends AbstractModule {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final IModule defaultInstance = build()
+	private static final IModule defaultInstance = builder()
 			.build();
 
 	private Java16Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -35,7 +35,7 @@ public final class Java16Module
 	/**
 	 * @return A builder to build a new instance of the module.
 	 */
-	public static Builder build() {
+	public static Builder builder() {
 		return new Builder();
 	}
 
@@ -45,10 +45,9 @@ public final class Java16Module
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
-		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(
+		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = List.of(
 						RecordTypeAdapterFactory.getInstance()
-				)
-				.toList();
+				);
 
 		/**
 		 * @return A new module instance.

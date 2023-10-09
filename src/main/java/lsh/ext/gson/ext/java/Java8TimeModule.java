@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 import lsh.ext.gson.adapters.AbstractModule;
 import lsh.ext.gson.adapters.IModule;
 import lsh.ext.gson.ext.java.time.DayOfWeekTypeAdapterFactory;
@@ -60,7 +61,7 @@ public final class Java8TimeModule
 	/**
 	 * @return A builder to build a new instance of the module.
 	 */
-	public static Builder build() {
+	public static Builder builder() {
 		return new Builder();
 	}
 
@@ -68,6 +69,7 @@ public final class Java8TimeModule
 	 * A builder to configure a new module instance.
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	@Accessors(fluent = true, chain = true, prefix = "with")
 	public static final class Builder {
 
 		private static final Collection<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Collections.unmodifiableList(
@@ -106,123 +108,6 @@ public final class Java8TimeModule
 
 		@Nullable
 		private DateTimeFormatter zonedDateTimeFormatter;
-
-		/**
-		 * Sets a date/time formatter to be used in {@link LocalDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param localDateTimeFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withLocalDateTimeFormatter(@Nullable final DateTimeFormatter localDateTimeFormatter) {
-			this.localDateTimeFormatter = localDateTimeFormatter;
-			return this;
-		}
-
-		/**
-		 * Sets a date/time formatter to be used in {@link LocalDateTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param localDateFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withLocalDateFormatter(@Nullable final DateTimeFormatter localDateFormatter) {
-			this.localDateFormatter = localDateFormatter;
-			return this;
-		}
-
-		/**
-		 * Sets a date/time formatter to be used in {@link LocalTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param localTimeFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withLocalTimeFormatter(@Nullable final DateTimeFormatter localTimeFormatter) {
-			this.localTimeFormatter = localTimeFormatter;
-			return this;
-		}
-
-		/**
-		 * Sets a date/time formatter to be used in {@link MonthDayTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param monthDayFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withMonthDayFormatter(@Nullable final DateTimeFormatter monthDayFormatter) {
-			this.monthDayFormatter = monthDayFormatter;
-			return this;
-		}
-
-		/**
-		 * Sets a date/time formatter to be used in {@link OffsetDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param offsetDateTimeFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withOffsetDateTimeFormatter(@Nullable final DateTimeFormatter offsetDateTimeFormatter) {
-			this.offsetDateTimeFormatter = offsetDateTimeFormatter;
-			return this;
-		}
-
-		/**
-		 * Sets a date/time formatter to be used in {@link OffsetTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param offsetTimeFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withOffsetTimeFormatter(@Nullable final DateTimeFormatter offsetTimeFormatter) {
-			this.offsetTimeFormatter = offsetTimeFormatter;
-			return this;
-		}
-
-		/**
-		 * Sets a date/time formatter to be used in {@link YearMonthTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param yearMonthFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withYearMonthFormatter(@Nullable final DateTimeFormatter yearMonthFormatter) {
-			this.yearMonthFormatter = yearMonthFormatter;
-			return this;
-		}
-
-		/**
-		 * Sets a date/time formatter to be used in {@link YearTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param yearFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withYearFormatter(@Nullable final DateTimeFormatter yearFormatter) {
-			this.yearFormatter = yearFormatter;
-			return this;
-		}
-
-		/**
-		 * Sets a date/time formatter to be used in {@link ZonedDateTimeTypeAdapterFactory#getInstance(DateTimeFormatter)}.
-		 *
-		 * @param zonedDateTimeFormatter
-		 * 		Date formatter
-		 *
-		 * @return Self.
-		 */
-		public Builder withZonedDateTimeFormatter(@Nullable final DateTimeFormatter zonedDateTimeFormatter) {
-			this.zonedDateTimeFormatter = zonedDateTimeFormatter;
-			return this;
-		}
 
 		/**
 		 * @return A new module instance.
