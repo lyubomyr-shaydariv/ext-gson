@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.java;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +24,6 @@ public final class CloseableIterators {
 	 * @param <E>
 	 * 		Iterator element type
 	 *
-	 * @return An iterator parameter being a more efficient overload for {@link #asCloseable(Iterator)}.
-	 *
-	 * @see #asCloseable(Iterator)
-	 */
-	public static <E> ICloseableIterator<E> asCloseable(final ICloseableIterator<E> iterator) {
-		return iterator;
-	}
-
-	/**
-	 * @param iterator
-	 * 		Iterator
-	 * @param <E>
-	 * 		Iterator element type
-	 *
 	 * @return A new iterator if the iterator is not {@link ICloseableIterator}, otherwise self.
 	 *
 	 * @see #asCloseable(ICloseableIterator)
@@ -51,30 +36,6 @@ public final class CloseableIterators {
 			return closeableIterator;
 		}
 		return new CloseableIterator<>(iterator);
-	}
-
-	/**
-	 * Performs an action for each iterator element and tries to close the iterator using {@link #tryClose(Object)}.
-	 *
-	 * @param iterator
-	 * 		Iterator elements to iterate over
-	 * @param consumer
-	 * 		An action to be performed for each element
-	 * @param <E>
-	 * 		Iterator element type
-	 *
-	 * @throws IOException
-	 * 		If an exception during {@link Closeable#close()} occurs.
-	 */
-	public static <E> void forEachAndTryClose(final Iterator<? extends E> iterator, final Consumer<? super E> consumer)
-			throws IOException {
-		try {
-			while ( iterator.hasNext() ) {
-				consumer.accept(iterator.next());
-			}
-		} finally {
-			tryClose(iterator);
-		}
 	}
 
 	/**
