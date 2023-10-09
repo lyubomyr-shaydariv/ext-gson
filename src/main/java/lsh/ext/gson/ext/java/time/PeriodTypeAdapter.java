@@ -19,7 +19,8 @@ public final class PeriodTypeAdapter
 		extends AbstractStringTypeAdapter<Period> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<Period> instance = new PeriodTypeAdapter();
+	private static final TypeAdapter<Period> instance = new PeriodTypeAdapter()
+			.nullSafe();
 
 	@Override
 	protected String toString(final Period period) {

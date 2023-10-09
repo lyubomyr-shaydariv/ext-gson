@@ -18,7 +18,8 @@ public final class OffsetTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<OffsetTime> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<OffsetTime> instance = new OffsetTimeTypeAdapter(null);
+	private static final TypeAdapter<OffsetTime> instance = new OffsetTimeTypeAdapter(null)
+			.nullSafe();
 
 	private OffsetTimeTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);

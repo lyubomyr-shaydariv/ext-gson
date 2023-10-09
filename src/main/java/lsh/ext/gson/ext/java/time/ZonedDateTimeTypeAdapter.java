@@ -18,7 +18,8 @@ public final class ZonedDateTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<ZonedDateTime> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<ZonedDateTime> instance = new ZonedDateTimeTypeAdapter(null);
+	private static final TypeAdapter<ZonedDateTime> instance = new ZonedDateTimeTypeAdapter(null)
+			.nullSafe();
 
 	private ZonedDateTimeTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);

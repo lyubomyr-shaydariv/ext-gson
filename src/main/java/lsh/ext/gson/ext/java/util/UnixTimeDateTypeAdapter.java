@@ -21,7 +21,8 @@ public final class UnixTimeDateTypeAdapter
 		extends TypeAdapter<Date> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<Date> instance = new UnixTimeDateTypeAdapter();
+	private static final TypeAdapter<Date> instance = new UnixTimeDateTypeAdapter()
+			.nullSafe();
 
 	@Override
 	public Date read(final JsonReader in)

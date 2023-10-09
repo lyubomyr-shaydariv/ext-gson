@@ -19,7 +19,8 @@ public final class InstantTypeAdapter
 		extends AbstractStringTypeAdapter<Instant> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<Instant> instance = new InstantTypeAdapter();
+	private static final TypeAdapter<Instant> instance = new InstantTypeAdapter()
+			.nullSafe();
 
 	@Override
 	protected String toString(final Instant instant) {

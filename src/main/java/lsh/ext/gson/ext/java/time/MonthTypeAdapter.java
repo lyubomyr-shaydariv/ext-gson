@@ -19,7 +19,8 @@ public final class MonthTypeAdapter
 		extends AbstractStringTypeAdapter<Month> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<Month> instance = new MonthTypeAdapter();
+	private static final TypeAdapter<Month> instance = new MonthTypeAdapter()
+			.nullSafe();
 
 	@Override
 	protected String toString(final Month month) {

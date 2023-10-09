@@ -19,7 +19,8 @@ public final class DayOfWeekTypeAdapter
 		extends AbstractStringTypeAdapter<DayOfWeek> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<DayOfWeek> instance = new DayOfWeekTypeAdapter();
+	private static final TypeAdapter<DayOfWeek> instance = new DayOfWeekTypeAdapter()
+			.nullSafe();
 
 	@Override
 	protected String toString(final DayOfWeek dayOfWeek) {

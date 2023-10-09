@@ -18,7 +18,8 @@ public final class MonthDayTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<MonthDay> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<MonthDay> instance = new MonthDayTypeAdapter(null);
+	private static final TypeAdapter<MonthDay> instance = new MonthDayTypeAdapter(null)
+			.nullSafe();
 
 	private MonthDayTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);

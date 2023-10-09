@@ -18,7 +18,8 @@ public final class LocalDateTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<LocalDate> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<LocalDate> instance = new LocalDateTypeAdapter(null);
+	private static final TypeAdapter<LocalDate> instance = new LocalDateTypeAdapter(null)
+			.nullSafe();
 
 	private LocalDateTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);

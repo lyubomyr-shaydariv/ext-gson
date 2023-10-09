@@ -19,7 +19,8 @@ public final class DurationTypeAdapter
 		extends AbstractStringTypeAdapter<Duration> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<Duration> instance = new DurationTypeAdapter();
+	private static final TypeAdapter<Duration> instance = new DurationTypeAdapter()
+			.nullSafe();
 
 	@Override
 	protected String toString(final Duration duration) {

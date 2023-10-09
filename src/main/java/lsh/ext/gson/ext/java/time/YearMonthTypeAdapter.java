@@ -18,7 +18,8 @@ public final class YearMonthTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<YearMonth> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapter<YearMonth> instance = new YearMonthTypeAdapter(null);
+	private static final TypeAdapter<YearMonth> instance = new YearMonthTypeAdapter(null)
+			.nullSafe();
 
 	private YearMonthTypeAdapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		super(dateTimeFormatter);
