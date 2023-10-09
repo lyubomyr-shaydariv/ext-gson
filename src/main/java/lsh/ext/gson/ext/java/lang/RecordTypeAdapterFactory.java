@@ -25,7 +25,7 @@ public final class RecordTypeAdapterFactory<T extends Record>
 	private static final TypeAdapterFactory instance = new RecordTypeAdapterFactory<>();
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return Record.class.isAssignableFrom(typeToken.getRawType());
 	}
 

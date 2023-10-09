@@ -35,7 +35,7 @@ public final class AbstractClassTypeAdapterFactory<T>
 	}
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return Modifier.isAbstract(typeToken.getRawType().getModifiers());
 	}
 

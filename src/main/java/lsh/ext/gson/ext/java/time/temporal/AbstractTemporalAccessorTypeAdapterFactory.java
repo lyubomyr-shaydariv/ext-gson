@@ -25,7 +25,7 @@ public abstract class AbstractTemporalAccessorTypeAdapterFactory<T extends Tempo
 	protected abstract TypeAdapter<T> create(DateTimeFormatter dateTimeFormatter);
 
 	@Override
-	protected final boolean isSupported(final TypeToken<?> typeToken) {
+	protected final boolean supports(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == clazz;
 	}
 

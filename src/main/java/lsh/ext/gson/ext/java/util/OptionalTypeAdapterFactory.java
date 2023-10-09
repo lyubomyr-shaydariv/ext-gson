@@ -24,7 +24,7 @@ public final class OptionalTypeAdapterFactory<T>
 	private static final TypeAdapterFactory instance = new OptionalTypeAdapterFactory<>();
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == Optional.class;
 	}
 

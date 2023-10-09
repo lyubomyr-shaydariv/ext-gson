@@ -186,7 +186,7 @@ public final class JsonObjects {
 	 * @return A new {@link JsonObject} containing a merged result of both {@link JsonObject} arguments.
 	 */
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right) {
-		return mergeIntoNew(left, right, IJsonObjectMergePredicate.alwaysReplaceLeft());
+		return mergeIntoNew(left, right, IJsonObjectMergePredicate.replace);
 	}
 
 	/**
@@ -219,7 +219,7 @@ public final class JsonObjects {
 	 * @see #mergeIntoLeft(JsonObject, JsonObject, IJsonObjectMergePredicate)
 	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right) {
-		return mergeIntoLeft(left, right, IJsonObjectMergePredicate.alwaysReplaceLeft());
+		return mergeIntoLeft(left, right, IJsonObjectMergePredicate.replace);
 	}
 
 	/**

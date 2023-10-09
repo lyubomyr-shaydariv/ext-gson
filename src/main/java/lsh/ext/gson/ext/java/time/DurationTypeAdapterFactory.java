@@ -24,7 +24,7 @@ public final class DurationTypeAdapterFactory
 	private static final TypeAdapterFactory instance = new DurationTypeAdapterFactory();
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == Duration.class;
 	}
 

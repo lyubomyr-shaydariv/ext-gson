@@ -28,7 +28,7 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 	protected abstract TypeAdapter<?> createCursorTypeAdapter(TypeAdapter<?> elementTypeAdapter);
 
 	@Override
-	protected final boolean isSupported(final TypeToken<?> typeToken) {
+	protected final boolean supports(final TypeToken<?> typeToken) {
 		return cursorClass.isAssignableFrom(typeToken.getRawType());
 	}
 

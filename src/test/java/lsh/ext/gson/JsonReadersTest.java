@@ -19,14 +19,11 @@ public final class JsonReadersTest {
 	private static final Gson gson = GsonBuilders.createNormalized()
 			.create();
 
-	private static final String VALID_JSON = "{\"foo\": \"bar\"}";
-	private static final String INVALID_JSON = "foobar";
-
 	@Test
 	public void isJsonValid()
 			throws IOException {
-		Assertions.assertTrue(JsonReaders.isValid(new JsonReader(new StringReader(VALID_JSON))));
-		Assertions.assertFalse(JsonReaders.isValid(new JsonReader(new StringReader(INVALID_JSON))));
+		Assertions.assertTrue(JsonReaders.isValid(new JsonReader(new StringReader("{\"foo\": \"bar\"}"))));
+		Assertions.assertFalse(JsonReaders.isValid(new JsonReader(new StringReader("foobar"))));
 	}
 
 	@Test

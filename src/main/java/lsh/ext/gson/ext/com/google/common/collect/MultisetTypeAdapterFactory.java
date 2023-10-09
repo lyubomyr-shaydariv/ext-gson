@@ -50,7 +50,7 @@ public final class MultisetTypeAdapterFactory<E>
 	}
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return Multiset.class.isAssignableFrom(typeToken.getRawType());
 	}
 

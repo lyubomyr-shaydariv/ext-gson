@@ -41,7 +41,7 @@ public abstract class AbstractTypeAdapterFactory<CT>
 	 *
 	 * @return {@code true} if the given type token hold type is supported, otherwise {@code false}.
 	 */
-	protected abstract boolean isSupported(TypeToken<?> typeToken);
+	protected abstract boolean supports(TypeToken<?> typeToken);
 
 	/**
 	 * @param gson
@@ -56,7 +56,7 @@ public abstract class AbstractTypeAdapterFactory<CT>
 	@Override
 	@Nullable
 	public final <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-		if ( !isSupported(typeToken) ) {
+		if ( !supports(typeToken) ) {
 			return null;
 		}
 		final TypeAdapter<CT> typeAdapter = createTypeAdapter(gson, typeToken);

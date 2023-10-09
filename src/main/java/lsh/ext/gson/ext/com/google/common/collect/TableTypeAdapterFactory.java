@@ -68,7 +68,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 	}
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return Table.class.isAssignableFrom(typeToken.getRawType());
 	}
 

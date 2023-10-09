@@ -56,7 +56,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 	}
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return Multimap.class.isAssignableFrom(typeToken.getRawType());
 	}
 

@@ -56,7 +56,7 @@ public final class BiMapTypeAdapterFactory<K, V>
 	}
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return BiMap.class.isAssignableFrom(typeToken.getRawType());
 	}
 

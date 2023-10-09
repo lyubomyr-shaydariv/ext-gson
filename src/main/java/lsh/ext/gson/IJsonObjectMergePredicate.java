@@ -31,12 +31,8 @@ public interface IJsonObjectMergePredicate {
 	 */
 	boolean canReplace(String key, JsonObject leftObject, @Nullable JsonElement leftValue, JsonObject rightObject, @Nullable JsonElement rightValue);
 
-	static IJsonObjectMergePredicate alwaysReplaceLeft() {
-		return (key, leftObject, leftValue, rightObject, rightValue) -> true;
-	}
+	IJsonObjectMergePredicate replace = (key, leftObject, leftValue, rightObject, rightValue) -> true;
 
-	static IJsonObjectMergePredicate neverReplaceLeft() {
-		return (key, leftObject, leftValue, rightObject, rightValue) -> false;
-	}
+	IJsonObjectMergePredicate retain = (key, leftObject, leftValue, rightObject, rightValue) -> false;
 
 }

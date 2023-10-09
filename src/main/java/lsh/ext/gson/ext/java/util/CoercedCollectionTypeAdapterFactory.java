@@ -53,7 +53,7 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	}
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return baseCollectionType.isAssignableFrom(typeToken.getRawType());
 	}
 

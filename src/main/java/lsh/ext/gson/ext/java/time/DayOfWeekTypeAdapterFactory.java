@@ -24,7 +24,7 @@ public final class DayOfWeekTypeAdapterFactory
 	private static final TypeAdapterFactory instance = new DayOfWeekTypeAdapterFactory();
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == DayOfWeek.class;
 	}
 

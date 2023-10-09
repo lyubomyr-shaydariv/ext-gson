@@ -24,7 +24,7 @@ public final class PeriodTypeAdapterFactory
 	private static final TypeAdapterFactory instance = new PeriodTypeAdapterFactory();
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == Period.class;
 	}
 

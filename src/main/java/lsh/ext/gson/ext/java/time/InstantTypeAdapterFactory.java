@@ -29,7 +29,7 @@ public final class InstantTypeAdapterFactory
 	}
 
 	@Override
-	protected boolean isSupported(final TypeToken<?> typeToken) {
+	protected boolean supports(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == Instant.class;
 	}
 
