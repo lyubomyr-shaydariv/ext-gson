@@ -33,4 +33,10 @@ public final class RecordTypeAdapterFactoryTest
 		);
 	}
 
+	private record FooBar(
+			String foo,
+			String bar
+	) {
+	}
+
 }

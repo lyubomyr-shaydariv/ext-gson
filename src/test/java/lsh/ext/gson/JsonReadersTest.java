@@ -16,8 +16,7 @@ import org.junit.jupiter.api.Test;
 
 public final class JsonReadersTest {
 
-	private static final Gson gson = GsonBuilders.createNormalized()
-			.create();
+	private static final Gson gson = Gsons.getNormalized();
 
 	@Test
 	public void isJsonValid()

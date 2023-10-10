@@ -51,16 +51,14 @@ abstract class AbstractTimeTypeAdapterFactoryTest<T>
 	protected final Stream<Arguments> supported() {
 		return Stream.of(java8TimeApiClasses)
 				.filter(c -> c.equals(clazz))
-				.map(TypeToken::get)
-				.map(Arguments::of);
+				.map(c -> Arguments.of(TypeToken.get(c)));
 	}
 
 	@Override
 	protected final Stream<Arguments> unsupported() {
 		return Stream.of(java8TimeApiClasses)
-				.filter(tt -> !tt.equals(clazz))
-				.map(TypeToken::get)
-				.map(Arguments::of);
+				.filter(c -> !c.equals(clazz))
+				.map(c -> Arguments.of(TypeToken.get(c)));
 	}
 
 }
