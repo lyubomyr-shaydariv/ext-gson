@@ -9,8 +9,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
-import lsh.ext.gson.adapters.AbstractModule;
-import lsh.ext.gson.adapters.IModule;
+import lsh.ext.gson.AbstractModule;
+import lsh.ext.gson.IModule;
 import lsh.ext.gson.ext.java.util.OptionalTypeAdapterFactory;
 import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapterFactory;
 

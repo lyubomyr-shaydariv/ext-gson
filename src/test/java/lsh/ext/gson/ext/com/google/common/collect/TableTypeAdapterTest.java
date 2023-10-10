@@ -7,8 +7,8 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.AbstractTypeAdapterTest;
 import lsh.ext.gson.Gsons;
-import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class TableTypeAdapterTest

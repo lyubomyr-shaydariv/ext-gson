@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractStringTypeAdapter;
+import lsh.ext.gson.AbstractStringTypeAdapter;
 
 /**
  * A type adapter for {@link Month}.

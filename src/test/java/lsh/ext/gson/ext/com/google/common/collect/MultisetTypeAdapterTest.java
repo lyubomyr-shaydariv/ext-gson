@@ -6,8 +6,8 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset;
 import com.google.gson.Gson;
+import lsh.ext.gson.AbstractTypeAdapterTest;
 import lsh.ext.gson.Gsons;
-import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultisetTypeAdapterTest

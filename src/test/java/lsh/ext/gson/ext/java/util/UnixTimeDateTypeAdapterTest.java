@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
+import lsh.ext.gson.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class UnixTimeDateTypeAdapterTest

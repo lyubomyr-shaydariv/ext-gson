@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import lombok.Getter;
-import lsh.ext.gson.adapters.AbstractCursorTypeAdapterFactory;
+import lsh.ext.gson.AbstractCursorTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Stream}.

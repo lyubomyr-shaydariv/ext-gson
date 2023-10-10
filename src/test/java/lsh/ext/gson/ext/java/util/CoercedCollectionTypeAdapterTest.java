@@ -9,8 +9,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.AbstractTypeAdapterTest;
 import lsh.ext.gson.Gsons;
-import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class CoercedCollectionTypeAdapterTest

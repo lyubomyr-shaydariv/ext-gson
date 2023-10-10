@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 import jakarta.json.Json;
 import jakarta.json.JsonValue;
-import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
+import lsh.ext.gson.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonValueTypeAdapterTest

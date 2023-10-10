@@ -7,8 +7,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractModule;
-import lsh.ext.gson.adapters.IModule;
+import lsh.ext.gson.AbstractModule;
+import lsh.ext.gson.IModule;
 import lsh.ext.gson.ext.java.lang.RecordTypeAdapterFactory;
 
 /**

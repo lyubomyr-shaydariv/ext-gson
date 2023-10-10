@@ -8,7 +8,7 @@ import jakarta.json.JsonValue;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractTypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonValueTypeAdapterFactory

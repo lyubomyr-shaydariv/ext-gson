@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import lsh.ext.gson.adapters.AbstractTypeAdapterFactoryTest;
+import lsh.ext.gson.AbstractTypeAdapterFactoryTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonPathTypeAdapterFactoryTest

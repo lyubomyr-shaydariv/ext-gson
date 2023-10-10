@@ -14,8 +14,8 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lsh.ext.gson.AbstractTypeAdapterTest;
 import lsh.ext.gson.Gsons;
-import lsh.ext.gson.adapters.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonPathTypeAdapterTest

@@ -9,7 +9,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractTypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTemporalAccessorTypeAdapterFactory<T extends TemporalAccessor>

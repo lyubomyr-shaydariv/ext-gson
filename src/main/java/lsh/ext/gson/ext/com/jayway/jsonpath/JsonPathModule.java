@@ -7,8 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
-import lsh.ext.gson.adapters.AbstractModule;
-import lsh.ext.gson.adapters.IModule;
+import lsh.ext.gson.AbstractModule;
+import lsh.ext.gson.IModule;
 
 /**
  * Implements a Jayway JsonPath module registering the following type adapter factories:

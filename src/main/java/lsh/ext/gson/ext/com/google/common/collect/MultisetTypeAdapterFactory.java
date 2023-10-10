@@ -12,8 +12,8 @@ import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
-import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Multiset} from Google Guava.

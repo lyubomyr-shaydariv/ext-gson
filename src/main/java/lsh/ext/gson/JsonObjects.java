@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.internal.UnmodifiableIterator;
 
 /**
  * Provides miscellaneous {@link JsonObject} utility methods.

@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
 import com.google.gson.TypeAdapter;
-import lsh.ext.gson.adapters.AbstractOptionalTypeAdapter;
+import lsh.ext.gson.AbstractOptionalTypeAdapter;
 
 /**
  * Represents a type adapter for {@link Optional} from Google Guava.

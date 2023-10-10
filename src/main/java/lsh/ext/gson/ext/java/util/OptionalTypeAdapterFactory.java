@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractOptionalTypeAdapterFactory;
+import lsh.ext.gson.AbstractOptionalTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Optional} from Google Guava.

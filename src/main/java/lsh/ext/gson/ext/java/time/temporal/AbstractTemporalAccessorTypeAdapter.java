@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractStringTypeAdapter;
+import lsh.ext.gson.AbstractStringTypeAdapter;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTemporalAccessorTypeAdapter<T extends TemporalAccessor>

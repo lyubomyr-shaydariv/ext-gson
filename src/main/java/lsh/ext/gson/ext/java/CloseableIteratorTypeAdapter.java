@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import lsh.ext.gson.adapters.AbstractCursorTypeAdapter;
+import lsh.ext.gson.AbstractCursorTypeAdapter;
 
 /**
  * Type adapter for {@link Iterator}. Iterators are supposed to read and write JSON arrays only.

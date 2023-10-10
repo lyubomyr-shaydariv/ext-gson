@@ -12,7 +12,6 @@ import com.google.gson.internal.ConstructorConstructor;
 import com.google.gson.internal.ObjectConstructor;
 import com.google.gson.reflect.TypeToken;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.internal.ConstructorConstructors;
 
 /**
  * Provides miscellaneous {@link TypeAdapter} utility methods.

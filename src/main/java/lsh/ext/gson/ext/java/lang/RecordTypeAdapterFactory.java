@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.adapters.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory that can handle {@link Record} initially introduced in Java 16.
