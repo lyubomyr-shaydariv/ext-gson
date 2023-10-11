@@ -20,6 +20,7 @@ import com.jayway.jsonpath.PathNotFoundException;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -70,13 +71,8 @@ import lombok.RequiredArgsConstructor;
 public final class JsonPathTypeAdapterFactory
 		implements TypeAdapterFactory {
 
-	private static final TypeAdapterFactory instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
-	private static final TypeAdapterFactory instanceWithGlobalDefaults = new JsonPathTypeAdapterFactory(gson -> Configuration.defaultConfiguration());
-
-	private final Function<? super Gson, ? extends Configuration> configurationProvider;
-
 	/**
-	 * @return A {@link JsonPathTypeAdapterFactory} instance that is configured with the predefined JsonPath configuration. The default JsonPath configuration
+	 * A {@link JsonPathTypeAdapterFactory} instance that is configured with the predefined JsonPath configuration. The default JsonPath configuration
 	 * used for this instance uses {@link Configuration.Defaults} with an internally defined {@link GsonJsonProvider} bound to the {@link Gson} instance
 	 * provided in {@link #create(Gson, TypeToken)}, an internally defined {@link GsonMappingProvider} bound to the {@link Gson} instance provided in {@link
 	 * #create(Gson, TypeToken)}, and empty options set.
@@ -85,9 +81,8 @@ public final class JsonPathTypeAdapterFactory
 	 * @see Configuration.Defaults#jsonProvider()
 	 * @see Configuration.Defaults#mappingProvider()
 	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
-	}
+	@Getter
+	private static final TypeAdapterFactory instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
 
 	/**
 	 * <pre>
@@ -109,16 +104,14 @@ public final class JsonPathTypeAdapterFactory
 	 *         }
 	 *     });
 	 * }
-	 *
 	 * </pre>
-	 *
-	 * @return A {@link JsonPathTypeAdapterFactory} instance that is configured with the default global JsonPath configuration.
 	 *
 	 * @see Configuration#setDefaults(Configuration.Defaults)
 	 */
-	public static TypeAdapterFactory getWithGlobalDefaults() {
-		return instanceWithGlobalDefaults;
-	}
+	@Getter
+	private static final TypeAdapterFactory instanceWithGlobalDefaults = new JsonPathTypeAdapterFactory(gson -> Configuration.defaultConfiguration());
+
+	private final Function<? super Gson, ? extends Configuration> configurationProvider;
 
 	/**
 	 * @param configurationProvider
@@ -165,6 +158,7 @@ public final class JsonPathTypeAdapterFactory
 					final Object innerValue = fieldInfo.typeAdapter.fromJsonTree(innerJsonElement);
 					fieldInfo.field.set(value, innerValue);
 				} catch ( final PathNotFoundException ignored ) {
+					// do nothing
 				} catch ( final IllegalAccessException ex ) {
 					throw new IOException(ex);
 				}

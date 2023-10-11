@@ -52,7 +52,7 @@ public final class JsonPathTypeAdapterTest
 						new WrapperWithNotExistingPath(null)
 				),
 				makeTestCase(
-						JsonPathTypeAdapterFactory.getWithGlobalDefaults().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						JsonPathTypeAdapterFactory.getInstanceWithGlobalDefaults().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)
