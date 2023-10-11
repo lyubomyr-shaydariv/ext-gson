@@ -11,7 +11,6 @@ import com.google.gson.stream.JsonToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@SuppressWarnings("checkstyle:MissingJavadocType")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonReaderIterator<E>
 		implements Iterator<E> {
@@ -21,7 +20,6 @@ public final class JsonReaderIterator<E>
 
 	private ReadingIteratorState state = ReadingIteratorState.BEFORE_ARRAY;
 
-	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static <E> Iterator<E> getInstance(final TypeAdapter<? extends E> elementTypeAdapter, @WillNotClose final JsonReader in) {
 		return new JsonReaderIterator<>(elementTypeAdapter, in);
 	}

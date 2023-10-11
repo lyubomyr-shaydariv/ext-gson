@@ -17,12 +17,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
-/**
- * Represents a type adapter factory for {@link Optional}.
- *
- * @param <T>
- * 		Type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OptionalTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<Optional<T>>
@@ -44,26 +38,12 @@ public final class OptionalTypeAdapterFactory<T>
 		return Adapter.getInstance(typeAdapter);
 	}
 
-	/**
-	 * Represents a type adapter for {@link Optional}.
-	 *
-	 * @param <T>
-	 * 		Type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<T>
 			extends TypeAdapter<Optional<T>> {
 
 		private final TypeAdapter<T> valueTypeAdapter;
 
-		/**
-		 * @param valueTypeAdapter
-		 *        {@link Optional} backed value type adapter
-		 * @param <T>
-		 * 		Optional value type
-		 *
-		 * @return An {@link Adapter} instance.
-		 */
 		public static <T> TypeAdapter<Optional<T>> getInstance(final TypeAdapter<T> valueTypeAdapter) {
 			return new Adapter<>(valueTypeAdapter)
 					.nullSafe();

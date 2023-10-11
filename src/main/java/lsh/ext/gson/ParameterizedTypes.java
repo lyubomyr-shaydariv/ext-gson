@@ -6,14 +6,10 @@ import javax.annotation.Nullable;
 
 import lombok.experimental.UtilityClass;
 
-/**
- * Provides miscellaneous {@link ParameterizedType} utility methods.
- */
 @UtilityClass
 public final class ParameterizedTypes {
 
 	@Nullable
-	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static Type getTypeArgument(final Type type, final int index) {
 		if ( type instanceof final ParameterizedType parameterizedType ) {
 			final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();

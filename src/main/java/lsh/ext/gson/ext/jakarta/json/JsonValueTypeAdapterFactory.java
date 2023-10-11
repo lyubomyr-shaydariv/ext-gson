@@ -28,7 +28,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@SuppressWarnings("checkstyle:MissingJavadocType")
 public final class JsonValueTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<JsonValue>
 		implements ITypeAdapterFactory<JsonValue> {
@@ -45,9 +44,6 @@ public final class JsonValueTypeAdapterFactory
 		return Adapter.getInstance();
 	}
 
-	/**
-	 * Represents a type adapter for {@code jakarta.json} JSON values.
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter
 			extends TypeAdapter<JsonValue> {
@@ -62,12 +58,6 @@ public final class JsonValueTypeAdapterFactory
 		private final TypeAdapter<JsonObject> jsonObjectTypeAdapter = new JsonObjectTypeAdapter();
 		private final TypeAdapter<JsonArray> jsonArrayTypeAdapter = new JsonArrayTypeAdapter();
 
-		/**
-		 * @param jsonProvider
-		 * 		JSON provider
-		 *
-		 * @return An instance of {@link Adapter}.
-		 */
 		public static TypeAdapter<JsonValue> getInstance(final JsonProvider jsonProvider) {
 			return new Adapter(new JsonNumberTypeAdapter(jsonProvider), new JsonStringTypeAdapter(jsonProvider))
 					.nullSafe();

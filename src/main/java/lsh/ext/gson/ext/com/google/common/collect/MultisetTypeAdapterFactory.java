@@ -17,12 +17,6 @@ import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
-/**
- * Represents a type adapter factory for {@link Multiset} from Google Guava.
- *
- * @param <E>
- * 		Element type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultisetTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Multiset<E>>
@@ -30,14 +24,6 @@ public final class MultisetTypeAdapterFactory<E>
 
 	private final IInstanceFactory.IProvider<? extends Multiset<E>> newMultimapFactoryProvider;
 
-	/**
-	 * @param newMultisetFactory
-	 * 		Multiset factory
-	 * @param <E>
-	 * 		Element type
-	 *
-	 * @return An instance of {@link MultisetTypeAdapterFactory} with a custom new {@link Multiset} factory.
-	 */
 	public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(final IInstanceFactory.IProvider<? extends Multiset<E>> newMultisetFactory) {
 		return new MultisetTypeAdapterFactory<>(newMultisetFactory);
 	}
@@ -59,12 +45,6 @@ public final class MultisetTypeAdapterFactory<E>
 		return Adapter.getInstance(elementTypeAdapter, castNewMultisetFactoryProvider.provide(castTypeToken));
 	}
 
-	/**
-	 * Represents a type adapter for {@link Multiset} from Google Guava.
-	 *
-	 * @param <E>
-	 * 		Element type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<E>
 			extends TypeAdapter<Multiset<E>> {
@@ -72,16 +52,6 @@ public final class MultisetTypeAdapterFactory<E>
 		private final TypeAdapter<E> elementTypeAdapter;
 		private final IInstanceFactory<? extends Multiset<E>> newMultisetInstanceFactory;
 
-		/**
-		 * @param valueTypeAdapter
-		 * 		Multiset value type adapter
-		 * @param newMultisetInstanceFactory
-		 * 		A {@link Multiset} factory to create instance used while deserialization
-		 * @param <E>
-		 * 		Multiset element type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <E> TypeAdapter<Multiset<E>> getInstance(final TypeAdapter<E> valueTypeAdapter,
 				final IInstanceFactory<? extends Multiset<E>> newMultisetInstanceFactory) {
 			return new Adapter<>(valueTypeAdapter, newMultisetInstanceFactory)

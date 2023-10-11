@@ -19,39 +19,16 @@ import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IInstanceFactory;
 
-/**
- * Represents a type adapter factory for single values that can be converted to a collection or keep an existing collection of multiple elements.
- *
- * @param <E>
- * 		Collection element type
- * @param <C>
- * 		Collection type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E>>
 		extends AbstractTypeAdapterFactory<C> {
 
-	/**
-	 * An instance of {@link CoercedCollectionTypeAdapterFactory} based on {@link List} and {@link ArrayList}.
-	 */
 	@Getter
 	private static final TypeAdapterFactory instance = new CoercedCollectionTypeAdapterFactory<>(List.class, ArrayList::new);
 
 	private final Class<? super C> baseCollectionType;
 	private final IInstanceFactory<? extends C> collectionFactory;
 
-	/**
-	 * @param baseCollectionType
-	 * 		Collection super type to start with
-	 * @param collectionFactory
-	 * 		Collection factory
-	 * @param <E>
-	 * 		Collection element type
-	 * @param <C>
-	 * 		Collection type based on the element type
-	 *
-	 * @return An instance of {@link CoercedCollectionTypeAdapterFactory} based on {@link List} and {@link ArrayList}.
-	 */
 	public static <E, C extends Collection<E>> TypeAdapterFactory getInstance(final Class<? super C> baseCollectionType,
 			final IInstanceFactory<? extends C> collectionFactory) {
 		return new CoercedCollectionTypeAdapterFactory<>(baseCollectionType, collectionFactory);
@@ -67,14 +44,6 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 		return Adapter.getInstance(elementTypeAdapter, collectionFactory);
 	}
 
-	/**
-	 * Represents a type adapter that can convert a single value to a collection or keep an existing collection of multiple elements.
-	 *
-	 * @param <E>
-	 * 		Element type
-	 * @param <C>
-	 * 		Collection type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<E, C extends Collection<E>>
 			extends TypeAdapter<C> {
@@ -82,18 +51,6 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 		private final TypeAdapter<E> elementTypeAdapter;
 		private final IInstanceFactory<? extends C> collectionFactory;
 
-		/**
-		 * @param elementTypeAdapter
-		 * 		Element type adapter for every list element
-		 * @param collectionFactory
-		 * 		A factory to create a new collection
-		 * @param <E>
-		 * 		Element type
-		 * @param <C>
-		 * 		Collection type
-		 *
-		 * @return An instance of {@link Adapter}.
-		 */
 		public static <E, C extends Collection<E>> TypeAdapter<C> getInstance(final TypeAdapter<E> elementTypeAdapter, final IInstanceFactory<? extends C> collectionFactory) {
 			return new Adapter<E, C>(elementTypeAdapter, collectionFactory)
 					.nullSafe();

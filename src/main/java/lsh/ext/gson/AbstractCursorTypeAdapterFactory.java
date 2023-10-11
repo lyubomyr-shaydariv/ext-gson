@@ -13,12 +13,6 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Represents a base type adapter factory for cursor classes like iterators and streams.
- *
- * @param <E>
- * 		Element type
- */
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractCursorTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<E> {
@@ -41,14 +35,6 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 		return castTypeAdapter;
 	}
 
-	/**
-	 * Represents a base type adapter for cursor classes like iterators and streams.
-	 *
-	 * @param <C>
-	 * 		Cursor type
-	 * @param <E>
-	 * 		Element type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 	protected abstract static class AbstractAdapter<C, E>
 			extends TypeAdapter<C> {

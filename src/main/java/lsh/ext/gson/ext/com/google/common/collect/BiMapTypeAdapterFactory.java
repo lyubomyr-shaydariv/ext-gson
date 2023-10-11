@@ -18,12 +18,6 @@ import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
-/**
- * Represents a type adapter factory for {@link BiMap} from Google Guava.
- *
- * @param <V>
- * 		Value type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BiMapTypeAdapterFactory<V>
 		extends AbstractTypeAdapterFactory<BiMap<String, V>>
@@ -31,14 +25,6 @@ public final class BiMapTypeAdapterFactory<V>
 
 	private final IInstanceFactory.IProvider<? extends BiMap<String, V>> newBiMapFactoryProvider;
 
-	/**
-	 * @param newBiMapFactoryProvider
-	 * 		New bidirectional map factory
-	 * @param <V>
-	 * 		Value type
-	 *
-	 * @return An instance of {@link BiMapTypeAdapterFactory} with a custom new {@link BiMap} factory.
-	 */
 	public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
 			final IInstanceFactory.IProvider<? extends BiMap<String, V>> newBiMapFactoryProvider
 	) {
@@ -63,12 +49,6 @@ public final class BiMapTypeAdapterFactory<V>
 		return Adapter.getInstance(valueTypeAdapter, castNewBimapFactoryProvider.provide(castTypeToken));
 	}
 
-	/**
-	 * Represents a type adapter for {@link BiMap} from Google Guava.
-	 *
-	 * @param <V>
-	 * 		Value type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<V>
 			extends TypeAdapter<BiMap<String, V>> {
@@ -76,16 +56,6 @@ public final class BiMapTypeAdapterFactory<V>
 		private final TypeAdapter<V> valueTypeAdapter;
 		private final IInstanceFactory<? extends BiMap<String, V>> newBiMapInstanceFactory;
 
-		/**
-		 * @param valueTypeAdapter
-		 * 		Bidirectional map value type adapter
-		 * @param newBiMapInstanceFactory
-		 * 		A {@link BiMap} factory to create instance used while deserialization
-		 * @param <V>
-		 * 		Bidirectional map value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <V> TypeAdapter<BiMap<String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
 				final IInstanceFactory<? extends BiMap<String, V>> newBiMapInstanceFactory

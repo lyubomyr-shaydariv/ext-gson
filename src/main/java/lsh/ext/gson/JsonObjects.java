@@ -13,27 +13,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
-/**
- * Provides miscellaneous {@link JsonObject} utility methods.
- */
 @UtilityClass
 public final class JsonObjects {
 
-	/**
-	 * @return A new empty JSON object.
-	 */
 	public static JsonObject of() {
 		return new JsonObject();
 	}
 
-	/**
-	 * @param k1
-	 * 		Key 1 name.
-	 * @param v1
-	 * 		Value 1.
-	 *
-	 * @return A new JSON object with one key-value pair.
-	 */
 	public static JsonObject of(
 			final String k1, @Nullable final JsonElement v1
 	) {
@@ -42,18 +28,6 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	/**
-	 * @param k1
-	 * 		Key 1 name.
-	 * @param v1
-	 * 		Value 1.
-	 * @param k2
-	 * 		Key 2 name.
-	 * @param v2
-	 * 		Value 2.
-	 *
-	 * @return A new JSON object with two key-value pairs.
-	 */
 	public static JsonObject of(
 			final String k1, @Nullable final JsonElement v1,
 			final String k2, @Nullable final JsonElement v2
@@ -64,22 +38,6 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	/**
-	 * @param k1
-	 * 		Key 1 name.
-	 * @param v1
-	 * 		Value 1.
-	 * @param k2
-	 * 		Key 2 name.
-	 * @param v2
-	 * 		Value 2.
-	 * @param k3
-	 * 		Key 3 name.
-	 * @param v3
-	 * 		Value 3.
-	 *
-	 * @return A new JSON object with three key-value pairs.
-	 */
 	public static JsonObject of(
 			final String k1, @Nullable final JsonElement v1,
 			final String k2, @Nullable final JsonElement v2,
@@ -92,26 +50,6 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	/**
-	 * @param k1
-	 * 		Key 1 name.
-	 * @param v1
-	 * 		Value 1.
-	 * @param k2
-	 * 		Key 2 name.
-	 * @param v2
-	 * 		Value 2.
-	 * @param k3
-	 * 		Key 3 name.
-	 * @param v3
-	 * 		Value 3.
-	 * @param k4
-	 * 		Key 4 name.
-	 * @param v4
-	 * 		Value 4.
-	 *
-	 * @return A new JSON object with four key-value pairs.
-	 */
 	public static JsonObject of(
 			final String k1, @Nullable final JsonElement v1,
 			final String k2, @Nullable final JsonElement v2,
@@ -126,30 +64,6 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	/**
-	 * @param k1
-	 * 		Key 1 name.
-	 * @param v1
-	 * 		Value 1.
-	 * @param k2
-	 * 		Key 2 name.
-	 * @param v2
-	 * 		Value 2.
-	 * @param k3
-	 * 		Key 3 name.
-	 * @param v3
-	 * 		Value 3.
-	 * @param k4
-	 * 		Key 4 name.
-	 * @param v4
-	 * 		Value 4.
-	 * @param k5
-	 * 		Key 5 name.
-	 * @param v5
-	 * 		Value 5.
-	 *
-	 * @return A new JSON object with five key-value pairs.
-	 */
 	@SuppressWarnings("checkstyle:ParameterNumber")
 	public static JsonObject of(
 			final String k1, @Nullable final JsonElement v1,
@@ -167,7 +81,6 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static JsonObject from(final Map<String, ? extends JsonElement> map) {
 		final JsonObject jsonObject = new JsonObject();
 		for ( final Map.Entry<String, ? extends JsonElement> e : map.entrySet() ) {
@@ -176,28 +89,10 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	/**
-	 * @param left
-	 * 		Left
-	 * @param right
-	 * 		Right
-	 *
-	 * @return A new {@link JsonObject} containing a merged result of both {@link JsonObject} arguments.
-	 */
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right) {
 		return mergeIntoNew(left, right, IJsonObjectMergePredicate.replace);
 	}
 
-	/**
-	 * @param left
-	 * 		Left
-	 * @param right
-	 * 		Right
-	 * @param predicate
-	 * 		Predicate
-	 *
-	 * @return A new {@link JsonObject} containing a merged result of both {@link JsonObject} arguments.
-	 */
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
 		final JsonObject merged = new JsonObject();
 		for ( final Map.Entry<String, JsonElement> leftEntry : left.entrySet() ) {
@@ -207,28 +102,10 @@ public final class JsonObjects {
 		return merged;
 	}
 
-	/**
-	 * @param left
-	 * 		Left
-	 * @param right
-	 * 		Right
-	 *
-	 * @return The {@code left} object with the {@code right} object merged into.
-	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right) {
 		return mergeIntoLeft(left, right, IJsonObjectMergePredicate.replace);
 	}
 
-	/**
-	 * @param left
-	 * 		Left
-	 * @param right
-	 * 		Right
-	 * @param predicate
-	 * 		Predicate
-	 *
-	 * @return The {@code left} object with the {@code right} object merged into.
-	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
 		for ( final Map.Entry<String, JsonElement> rightEntry : right.entrySet() ) {
 			final String key = rightEntry.getKey();
@@ -241,22 +118,10 @@ public final class JsonObjects {
 		return left;
 	}
 
-	/**
-	 * @param jsonObject
-	 * 		JSON object to put into the view
-	 *
-	 * @return An immutable map view for the given JSON object
-	 */
 	public static Map<String, JsonElement> asImmutableMap(final JsonObject jsonObject) {
 		return new ImmutableJsonObjectMap(jsonObject);
 	}
 
-	/**
-	 * @param jsonObject
-	 * 		JSON object to put into the view
-	 *
-	 * @return A mutable map view for the given JSON object
-	 */
 	public static Map<String, JsonElement> asMutableMap(final JsonObject jsonObject) {
 		return new MutableJsonObjectMap(jsonObject);
 	}

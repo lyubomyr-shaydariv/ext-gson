@@ -8,42 +8,14 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lombok.experimental.UtilityClass;
 
-/**
- * Provides miscellaneous utility methods for JSON streams.
- */
 @UtilityClass
 public final class JsonStreams {
 
-	/**
-	 * Copies the given {@link JsonReader} stream to normalized JSON output via {@link JsonWriter} not ignoring incoming JSON stream trailing tokens.
-	 *
-	 * @param reader
-	 * 		JSON reader. The reader must have {@link JsonReader#setLenient(boolean)} set to {@code} in order to read not normalized JSON streams.
-	 * @param writer
-	 * 		JSON writer
-	 *
-	 * @throws IOException
-	 * 		A rethrown exception
-	 */
 	public static void copyTo(final JsonReader reader, final JsonWriter writer)
 			throws IOException {
 		copyTo(reader, writer, true);
 	}
 
-	/**
-	 * Copies the given {@link JsonReader} content to normalized JSON output via {@link JsonWriter}.
-	 *
-	 * @param reader
-	 * 		JSON reader. The reader must have {@link JsonReader#setLenient(boolean)} set to {@code} in order to read not normalized JSON
-	 * 		streams.
-	 * @param writer
-	 * 		JSON writer
-	 * @param ignoreTrailingTokens
-	 * 		Ignore incoming JSON stream trailing tokens
-	 *
-	 * @throws IOException
-	 * 		A rethrown exception
-	 */
 	@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:JavaNCSS" })
 	public static void copyTo(final JsonReader reader, final JsonWriter writer, final boolean ignoreTrailingTokens)
 			throws IOException {

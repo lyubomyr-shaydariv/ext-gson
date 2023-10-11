@@ -8,9 +8,6 @@ import lombok.Getter;
 import lsh.ext.gson.AbstractStringTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link DayOfWeek}.
- */
 public final class DayOfWeekTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<DayOfWeek>
 		implements ITypeAdapterFactory<DayOfWeek> {
@@ -22,9 +19,6 @@ public final class DayOfWeekTypeAdapterFactory
 		super(DayOfWeek.class, typeAdapter);
 	}
 
-	/**
-	 * A type adapter for {@link DayOfWeek}.
-	 */
 	public static final class Adapter
 			extends AbstractStringTypeAdapter<DayOfWeek> {
 

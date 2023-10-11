@@ -9,9 +9,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link LocalDate}.
- */
 public final class LocalDateTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<LocalDate>
 		implements ITypeAdapterFactory<LocalDate> {
@@ -23,12 +20,6 @@ public final class LocalDateTypeAdapterFactory
 		super(LocalDate.class, typeAdapter);
 	}
 
-	/**
-	 * @param dateTimeFormatter
-	 * 		Date/time formatter
-	 *
-	 * @return An instance of {@link LocalDateTypeAdapterFactory}.
-	 */
 	public static ITypeAdapterFactory<LocalDate> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
@@ -36,9 +27,6 @@ public final class LocalDateTypeAdapterFactory
 		return new LocalDateTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
-	/**
-	 * A formatted type adapter for {@link LocalDate}.
-	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapter<LocalDate> {
 
@@ -49,7 +37,6 @@ public final class LocalDateTypeAdapterFactory
 			super(dateTimeFormatter, LocalDate::from);
 		}
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<LocalDate> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

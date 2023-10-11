@@ -18,12 +18,6 @@ import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiMap;
 
-/**
- * Represents a type adapter factory for {@link MultiMap} from Apache Commons Collections 4.
- *
- * @param <V>
- * 		Value type
- */
 @SuppressWarnings("deprecation")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiMapTypeAdapterFactory<V>
@@ -32,14 +26,6 @@ public final class MultiMapTypeAdapterFactory<V>
 
 	private final IInstanceFactory.IProvider<? extends MultiMap<String, V>> newMultiMapFactoryProvider;
 
-	/**
-	 * @param newMultiMapFactoryProvider
-	 * 		MultiMap factory provider
-	 * @param <V>
-	 * 		Value type
-	 *
-	 * @return An instance of {@link MultiMapTypeAdapterFactory} with a custom new {@link MultiMap} factory.
-	 */
 	public static <V> ITypeAdapterFactory<MultiMap<String, V>> getInstance(
 			final IInstanceFactory.IProvider<? extends MultiMap<String, V>> newMultiMapFactoryProvider
 	) {
@@ -63,12 +49,6 @@ public final class MultiMapTypeAdapterFactory<V>
 		return Adapter.getInstance(valueTypeAdapter, castNewMultiMapFactoryProvider.provide(castTypeToken));
 	}
 
-	/**
-	 * Represents a type adapter for {@link MultiMap} from Apache Commons Collections 4.
-	 *
-	 * @param <V>
-	 * 		Value type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<V>
 			extends TypeAdapter<MultiMap<String, V>> {
@@ -76,16 +56,6 @@ public final class MultiMapTypeAdapterFactory<V>
 		private final TypeAdapter<V> valueTypeAdapter;
 		private final IInstanceFactory<? extends MultiMap<String, V>> newMultiMapFactory;
 
-		/**
-		 * @param valueTypeAdapter
-		 * 		MultiMap value type adapter
-		 * @param newMultiMapFactory
-		 * 		A {@link MultiMap} factory to create instance used while deserialization
-		 * @param <V>
-		 * 		MultiMap value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <V> TypeAdapter<MultiMap<String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
 				final IInstanceFactory<? extends MultiMap<String, V>> newMultiMapFactory

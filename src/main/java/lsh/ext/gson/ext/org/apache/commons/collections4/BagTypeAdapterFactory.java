@@ -18,12 +18,6 @@ import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Transformer;
 
-/**
- * Represents a type adapter factory for {@link Bag} from Apache Commons Collection 4.
- *
- * @param <E>
- * 		Element type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BagTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Bag<E>>
@@ -32,16 +26,6 @@ public final class BagTypeAdapterFactory<E>
 	private final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider;
 	private final IKeyMapperFactory<E> keyMapperFactory;
 
-	/**
-	 * @param newBagFactoryProvider
-	 * 		Bag factory provider
-	 * @param keyMapperFactory
-	 * 		Key mapper factory
-	 * @param <E>
-	 * 		Element type
-	 *
-	 * @return An instance of {@link BagTypeAdapterFactory} with a custom new {@link Bag} factory.
-	 */
 	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
 			final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider,
 			final IKeyMapperFactory<E> keyMapperFactory
@@ -66,23 +50,14 @@ public final class BagTypeAdapterFactory<E>
 		return Adapter.getInstance(castNewBagFactoryProvider.provide(castTypeToken), keyMapperFactory.createKeyMapper(elementTypeToken), keyMapperFactory.createReverseKeyMapper(elementTypeToken));
 	}
 
-	@SuppressWarnings("checkstyle:MissingJavadocType")
 	public interface IKeyMapperFactory<E> {
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		Transformer<E, String> createKeyMapper(TypeToken<E> typeToken);
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		Transformer<String, E> createReverseKeyMapper(TypeToken<E> typeToken);
 
 	}
 
-	/**
-	 * Represents a type adapter for {@link Bag} from Apache Commons Collection 4.
-	 *
-	 * @param <E>
-	 * 		Element type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<E>
 			extends TypeAdapter<Bag<E>> {
@@ -91,18 +66,6 @@ public final class BagTypeAdapterFactory<E>
 		private final Transformer<? super E, String> keyMapper;
 		private final Transformer<? super String, ? extends E> keyReverseMapper;
 
-		/**
-		 * @param newBagFactory
-		 * 		A {@link Bag} factory to create instance used while deserialization
-		 * @param keyMapper
-		 * 		Key mapper
-		 * @param keyReverseMapper
-		 * 		Key reverse mapper
-		 * @param <E>
-		 * 		Bag element type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <E> TypeAdapter<Bag<E>> getInstance(
 				final IInstanceFactory<? extends Bag<E>> newBagFactory,
 				final Transformer<? super E, String> keyMapper,

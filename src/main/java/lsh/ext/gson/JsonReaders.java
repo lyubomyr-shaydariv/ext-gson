@@ -15,21 +15,9 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
-/**
- * Provides miscellaneous {@link JsonReader} utility methods.
- */
 @UtilityClass
 public final class JsonReaders {
 
-	/**
-	 * @param jsonReader
-	 * 		JSON reader
-	 *
-	 * @return {@code true} if the given JSON reader represents a valid JSON, otherwise {@code false}.
-	 *
-	 * @throws IOException
-	 * 		A rethrown exception
-	 */
 	public static boolean isValid(final JsonReader jsonReader)
 			throws IOException {
 		try {
@@ -43,58 +31,10 @@ public final class JsonReaders {
 		}
 	}
 
-	/**
-	 * <p>
-	 * Google Gson does not fail on empty strings since version 1.5:
-	 * </p>
-	 *
-	 * <pre>
-	 * public &lt;T&gt; T fromJson(JsonReader reader, Type typeOfT) throws JsonIOException, JsonSyntaxException {
-	 *   boolean isEmpty = true;
-	 *   ...
-	 *   try {
-	 *     reader.peek();
-	 *     ...
-	 *   } catch (EOFException e) {
-	 *     /*
-	 *      * For compatibility with JSON 1.5 and earlier, we return null for empty
-	 *      * documents instead of throwing.
-	 *     {@literal *}/
-	 *     if (isEmpty) {
-	 *       return null;
-	 *     }
-	 *     throw new JsonSyntaxException(e);
-	 * </pre>
-	 *
-	 * <p>
-	 * In some cases it can be undesirable.
-	 * </p>
-	 *
-	 * @param reader
-	 * 		Reader
-	 *
-	 * @return An empty content fail-fast JSON reader.
-	 */
 	public static JsonReader getEmptyStringFailFastJsonReader(final Reader reader) {
 		return new EmptyStringFailFastJsonReader(reader);
 	}
 
-	/**
-	 * Skips a token of any type for the given {@link JsonReader}. Unlike {@link JsonReader#skipValue()}, this method can also skip tokens such as:
-	 *
-	 * <ul>
-	 * <li>{@link JsonToken#BEGIN_OBJECT} and {@link JsonToken#END_OBJECT}</li>
-	 * <li>{@link JsonToken#BEGIN_ARRAY} and {@link JsonToken#END_ARRAY}</li>
-	 * <li>{@link JsonToken#NAME}</li>
-	 * <li>{@link JsonToken#END_DOCUMENT} (ignored)</li>
-	 * </ul>
-	 *
-	 * @param reader
-	 * 		Reader any token to read and skip from
-	 *
-	 * @throws IOException
-	 * 		A rethrown exception
-	 */
 	@SuppressWarnings("checkstyle:CyclomaticComplexity")
 	public static void skipToken(final JsonReader reader)
 			throws IOException {
@@ -127,15 +67,6 @@ public final class JsonReaders {
 		}
 	}
 
-	/**
-	 * @param jsonReader
-	 * 		JSON reader
-	 *
-	 * @return A valued JSON token from the JSON reader
-	 *
-	 * @throws IOException
-	 * 		A rethrown exception
-	 */
 	@SuppressWarnings("checkstyle:CyclomaticComplexity")
 	public static ValuedJsonToken<?> readValuedJsonToken(final JsonReader jsonReader)
 			throws IOException {
@@ -187,12 +118,6 @@ public final class JsonReaders {
 		return valuedJsonToken;
 	}
 
-	/**
-	 * @param jsonReader
-	 * 		JSON reader
-	 *
-	 * @return An iterator of a single value JSON tokens: either single primitives, either single object/arrays.
-	 */
 	public static Iterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(@WillNotClose final JsonReader jsonReader) {
 		return new RecursiveIterator(jsonReader);
 	}

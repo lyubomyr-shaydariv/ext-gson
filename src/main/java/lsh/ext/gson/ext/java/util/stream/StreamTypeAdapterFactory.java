@@ -8,12 +8,6 @@ import lombok.Getter;
 import lsh.ext.gson.AbstractCursorTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Represents a type adapter factory for {@link Stream}.
- *
- * @param <E>
- * 		Element type
- */
 public final class StreamTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E>
 		implements ITypeAdapterFactory<Stream<E>> {
@@ -30,12 +24,6 @@ public final class StreamTypeAdapterFactory<E>
 		return Adapter.getInstance(elementTypeAdapter);
 	}
 
-	/**
-	 * Type adapter for {@link Stream}. Streams are supposed to read and write JSON arrays only.
-	 *
-	 * @param <E>
-	 * 		Element type
-	 */
 	public static final class Adapter<E>
 			extends AbstractAdapter<Stream<E>, E> {
 
@@ -43,14 +31,6 @@ public final class StreamTypeAdapterFactory<E>
 			super(elementTypeAdapter);
 		}
 
-		/**
-		 * @param elementTypeAdapter
-		 * 		Element type adapter
-		 * @param <E>
-		 * 		Iterator element type
-		 *
-		 * @return An instance of {@link Adapter}.
-		 */
 		public static <E> TypeAdapter<Stream<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 			return new Adapter<>(elementTypeAdapter)
 					.nullSafe();

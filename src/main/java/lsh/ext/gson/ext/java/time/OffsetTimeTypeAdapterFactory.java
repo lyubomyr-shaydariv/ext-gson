@@ -9,9 +9,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link OffsetTime}.
- */
 public final class OffsetTimeTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<OffsetTime>
 		implements ITypeAdapterFactory<OffsetTime> {
@@ -23,12 +20,6 @@ public final class OffsetTimeTypeAdapterFactory
 		super(OffsetTime.class, typeAdapter);
 	}
 
-	/**
-	 * @param dateTimeFormatter
-	 * 		Date/time formatter
-	 *
-	 * @return An instance of {@link OffsetTimeTypeAdapterFactory}.
-	 */
 	public static ITypeAdapterFactory<OffsetTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
@@ -36,9 +27,6 @@ public final class OffsetTimeTypeAdapterFactory
 		return new OffsetTimeTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
-	/**
-	 * A formatted type adapter for {@link OffsetTime}.
-	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapter<OffsetTime> {
 
@@ -49,7 +37,6 @@ public final class OffsetTimeTypeAdapterFactory
 			super(dateTimeFormatter, OffsetTime::from);
 		}
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<OffsetTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

@@ -8,9 +8,6 @@ import lombok.Getter;
 import lsh.ext.gson.AbstractStringTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link Duration}.
- */
 public final class DurationTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<Duration>
 		implements ITypeAdapterFactory<Duration> {
@@ -22,9 +19,6 @@ public final class DurationTypeAdapterFactory
 		super(Duration.class, typeAdapter);
 	}
 
-	/**
-	 * A type adapter for {@link Duration}.
-	 */
 	public static final class Adapter
 			extends AbstractStringTypeAdapter<Duration> {
 

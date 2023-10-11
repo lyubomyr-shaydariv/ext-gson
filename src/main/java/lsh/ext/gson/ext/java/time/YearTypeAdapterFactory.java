@@ -12,9 +12,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link Year}.
- */
 public final class YearTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<Year>
 		implements ITypeAdapterFactory<Year> {
@@ -26,12 +23,6 @@ public final class YearTypeAdapterFactory
 		super(Year.class, typeAdapter);
 	}
 
-	/**
-	 * @param dateTimeFormatter
-	 * 		Date/time formatter
-	 *
-	 * @return An instance of {@link YearTypeAdapterFactory}.
-	 */
 	public static ITypeAdapterFactory<Year> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
@@ -39,9 +30,6 @@ public final class YearTypeAdapterFactory
 		return new YearTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
-	/**
-	 * A formatted type adapter for {@link Year}.
-	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapter<Year> {
 
@@ -57,7 +45,6 @@ public final class YearTypeAdapterFactory
 			super(dateTimeFormatter, Year::from);
 		}
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<Year> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

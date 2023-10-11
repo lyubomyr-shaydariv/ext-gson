@@ -11,13 +11,6 @@ import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
 
-/**
- * Implements a Jayway JsonPath module registering the following type adapter factories:
- *
- * <ul>
- * <li>{@link JsonPathTypeAdapterFactory}</li>
- * </ul>
- */
 public final class JsonPathModule
 		extends AbstractModule {
 
@@ -29,16 +22,10 @@ public final class JsonPathModule
 		super(typeAdapterFactories);
 	}
 
-	/**
-	 * @return A builder to build a new instance of the module.
-	 */
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	/**
-	 * A builder to configure a new module instance.
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
 	public static final class Builder {
@@ -46,9 +33,6 @@ public final class JsonPathModule
 		@Setter
 		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapterFactory.getInstance();
 
-		/**
-		 * @return A new module instance.
-		 */
 		public IModule build() {
 			return new JsonPathModule(UnmodifiableIterable.copyOf(
 					jsonPathTypeAdapterFactory

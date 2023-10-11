@@ -13,25 +13,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
-/**
- * Provides miscellaneous {@link JsonArray} utility methods.
- */
 @UtilityClass
 public final class JsonArrays {
 
-	/**
-	 * @return A new empty JSON array.
-	 */
 	public static JsonArray of() {
 		return new JsonArray();
 	}
 
-	/**
-	 * @param e1
-	 * 		Element 1.
-	 *
-	 * @return A new JSON array with one element.
-	 */
 	public static JsonArray of(
 			@Nullable final JsonElement e1
 	) {
@@ -40,14 +28,6 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	/**
-	 * @param e1
-	 * 		Element 1.
-	 * @param e2
-	 * 		Element 2.
-	 *
-	 * @return A new JSON array with two elements.
-	 */
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2
@@ -58,16 +38,6 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	/**
-	 * @param e1
-	 * 		Element 1.
-	 * @param e2
-	 * 		Element 2.
-	 * @param e3
-	 * 		Element 3.
-	 *
-	 * @return A new JSON array with three elements.
-	 */
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -80,18 +50,6 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	/**
-	 * @param e1
-	 * 		Element 1.
-	 * @param e2
-	 * 		Element 2.
-	 * @param e3
-	 * 		Element 3.
-	 * @param e4
-	 * 		Element 4.
-	 *
-	 * @return A new JSON array with four elements.
-	 */
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -106,20 +64,6 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	/**
-	 * @param e1
-	 * 		Element 1.
-	 * @param e2
-	 * 		Element 2.
-	 * @param e3
-	 * 		Element 3.
-	 * @param e4
-	 * 		Element 4.
-	 * @param e5
-	 * 		Element 5.
-	 *
-	 * @return A new JSON array with five elements.
-	 */
 	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
@@ -136,12 +80,6 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	/**
-	 * @param jsonElements
-	 * 		Elements.
-	 *
-	 * @return A new JSON array with new elements.
-	 */
 	public static JsonArray of(final JsonElement... jsonElements) {
 		final JsonArray jsonArray = new JsonArray(jsonElements.length);
 		for ( final JsonElement e : jsonElements ) {
@@ -150,7 +88,6 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static JsonArray from(final Iterable<? extends JsonElement> jsonElements) {
 		final JsonArray jsonArray = new JsonArray();
 		for ( final JsonElement jsonElement : jsonElements ) {
@@ -159,22 +96,10 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	/**
-	 * @param jsonArray
-	 * 		JSON array to put into the view
-	 *
-	 * @return An immutable list view for the given JSON array
-	 */
 	public static List<JsonElement> asImmutableList(final JsonArray jsonArray) {
 		return new ImmutableJsonArrayList(jsonArray);
 	}
 
-	/**
-	 * @param jsonArray
-	 * 		JSON array to put into the view
-	 *
-	 * @return A mutable list view for the given JSON array
-	 */
 	public static List<JsonElement> asMutableList(final JsonArray jsonArray) {
 		return new MutableJsonArrayList(jsonArray);
 	}

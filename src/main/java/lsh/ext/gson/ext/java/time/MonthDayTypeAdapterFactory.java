@@ -11,9 +11,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link MonthDay}.
- */
 public final class MonthDayTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<MonthDay>
 		implements ITypeAdapterFactory<MonthDay> {
@@ -25,12 +22,6 @@ public final class MonthDayTypeAdapterFactory
 		super(MonthDay.class, typeAdapter);
 	}
 
-	/**
-	 * @param dateTimeFormatter
-	 * 		Date/time formatter
-	 *
-	 * @return An instance of {@link MonthDayTypeAdapterFactory}.
-	 */
 	public static ITypeAdapterFactory<MonthDay> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
@@ -38,9 +29,6 @@ public final class MonthDayTypeAdapterFactory
 		return new MonthDayTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
-	/**
-	 * A formatted type adapter for {@link MonthDay}.
-	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapter<MonthDay> {
 
@@ -57,7 +45,6 @@ public final class MonthDayTypeAdapterFactory
 			super(dateTimeFormatter, MonthDay::from);
 		}
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<MonthDay> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

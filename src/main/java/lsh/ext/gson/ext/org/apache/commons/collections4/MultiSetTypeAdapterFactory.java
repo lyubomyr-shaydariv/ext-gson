@@ -18,12 +18,6 @@ import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiSet;
 
-/**
- * Represents a type adapter factory for {@link MultiSet} from Apache Commons Collection 4.
- *
- * @param <E>
- * 		Element type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiSetTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<MultiSet<E>>
@@ -31,14 +25,6 @@ public final class MultiSetTypeAdapterFactory<E>
 
 	private final IInstanceFactory.IProvider<? extends MultiSet<E>> newMultiSetFactoryProvider;
 
-	/**
-	 * @param newMultiSetFactoryProvider
-	 * 		MultiSet factory provider
-	 * @param <E>
-	 * 		Element type
-	 *
-	 * @return An instance of {@link MultiSetTypeAdapterFactory} with a custom new {@link MultiSet} factory.
-	 */
 	public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(final IInstanceFactory.IProvider<? extends MultiSet<E>> newMultiSetFactoryProvider) {
 		return new MultiSetTypeAdapterFactory<>(newMultiSetFactoryProvider);
 	}
@@ -60,12 +46,6 @@ public final class MultiSetTypeAdapterFactory<E>
 		return Adapter.getInstance(elementTypeAdapter, castNewMultiSetFactoryProvider.provide(castTypeToken));
 	}
 
-	/**
-	 * Represents a type adapter for {@link MultiSet} from Apache Commons Collection 4.
-	 *
-	 * @param <E>
-	 * 		Element type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<E>
 			extends TypeAdapter<MultiSet<E>> {
@@ -73,16 +53,6 @@ public final class MultiSetTypeAdapterFactory<E>
 		private final TypeAdapter<E> elementTypeAdapter;
 		private final IInstanceFactory<? extends MultiSet<E>> newMultiSetFactory;
 
-		/**
-		 * @param valueTypeAdapter
-		 * 		MultiSet value type adapter
-		 * @param newMultiSetFactory
-		 * 		A {@link MultiSet} factory to create instance used while deserialization
-		 * @param <V>
-		 * 		MultiSet element type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <V> TypeAdapter<MultiSet<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 				final IInstanceFactory<? extends MultiSet<V>> newMultiSetFactory) {
 			return new Adapter<>(valueTypeAdapter, newMultiSetFactory)

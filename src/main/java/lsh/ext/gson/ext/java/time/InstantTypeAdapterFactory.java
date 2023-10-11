@@ -10,9 +10,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link Instant}.
- */
 public final class InstantTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<Instant>
 		implements ITypeAdapterFactory<Instant> {
@@ -24,7 +21,6 @@ public final class InstantTypeAdapterFactory
 		super(Instant.class, typeAdapter);
 	}
 
-	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
@@ -32,9 +28,6 @@ public final class InstantTypeAdapterFactory
 		return new InstantTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
-	/**
-	 * A type adapter for {@link Instant}.
-	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapter<Instant> {
 
@@ -45,7 +38,6 @@ public final class InstantTypeAdapterFactory
 			super(dateTimeFormatter, Instant::from);
 		}
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<Instant> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

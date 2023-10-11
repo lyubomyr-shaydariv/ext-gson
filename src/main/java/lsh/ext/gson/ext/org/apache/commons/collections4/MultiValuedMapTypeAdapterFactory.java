@@ -18,12 +18,6 @@ import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiValuedMap;
 
-/**
- * Represents a type adapter factory for {@link MultiValuedMap} from Apache Commons Collections 4.
- *
- * @param <V>
- * 		Value type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiValuedMapTypeAdapterFactory<V>
 		extends AbstractTypeAdapterFactory<MultiValuedMap<String, V>>
@@ -31,14 +25,6 @@ public final class MultiValuedMapTypeAdapterFactory<V>
 
 	private final IInstanceFactory.IProvider<? extends MultiValuedMap<String, V>> newMultiValuedMapFactoryProvider;
 
-	/**
-	 * @param newMultiValuedMapFactoryProvider
-	 * 		MultiValuedMap factory provider
-	 * @param <V>
-	 * 		Value type
-	 *
-	 * @return An instance of {@link MultiValuedMapTypeAdapterFactory} with a custom new {@link MultiValuedMap} factory.
-	 */
 	public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
 			final IInstanceFactory.IProvider<? extends MultiValuedMap<String, V>> newMultiValuedMapFactoryProvider
 	) {
@@ -62,12 +48,6 @@ public final class MultiValuedMapTypeAdapterFactory<V>
 		return Adapter.getInstance(valueTypeAdapter, castNewMultiValuedMapFactoryProvider.provide(castTypeToken));
 	}
 
-	/**
-	 * Represents a type adapter for {@link MultiValuedMap} from Apache Commons Collections 4.
-	 *
-	 * @param <V>
-	 * 		Value type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<V>
 			extends TypeAdapter<MultiValuedMap<String, V>> {
@@ -75,16 +55,6 @@ public final class MultiValuedMapTypeAdapterFactory<V>
 		private final TypeAdapter<V> valueTypeAdapter;
 		private final IInstanceFactory<? extends MultiValuedMap<String, V>> newMultiValuedMapFactory;
 
-		/**
-		 * @param valueTypeAdapter
-		 * 		MultiValuedMap value type adapter
-		 * @param newMultiValuedMapFactory
-		 * 		A {@link MultiValuedMap} factory to create instance used while deserialization
-		 * @param <V>
-		 * 		MultiValuedMap value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <V> TypeAdapter<MultiValuedMap<String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
 				final IInstanceFactory<? extends MultiValuedMap<String, V>> newMultiValuedMapFactory

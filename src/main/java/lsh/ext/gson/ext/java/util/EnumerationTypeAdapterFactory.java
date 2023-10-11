@@ -8,12 +8,6 @@ import com.google.gson.TypeAdapterFactory;
 import lombok.Getter;
 import lsh.ext.gson.AbstractCursorTypeAdapterFactory;
 
-/**
- * Represents a type adapter factory for {@link Iterator}.
- *
- * @param <E>
- * 		Element type
- */
 public final class EnumerationTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
 
@@ -29,12 +23,6 @@ public final class EnumerationTypeAdapterFactory<E>
 		return Adapter.getInstance(elementTypeAdapter);
 	}
 
-	/**
-	 * Type adapter for {@link Enumeration}. Enumerations are supposed to read and write JSON arrays only.
-	 *
-	 * @param <E>
-	 * 		Element type
-	 */
 	public static final class Adapter<E>
 			extends AbstractAdapter<Enumeration<E>, E> {
 
@@ -42,14 +30,6 @@ public final class EnumerationTypeAdapterFactory<E>
 			super(elementTypeAdapter);
 		}
 
-		/**
-		 * @param elementTypeAdapter
-		 * 		Element type adapter
-		 * @param <E>
-		 * 		Element type
-		 *
-		 * @return An instance of {@link Adapter}.
-		 */
 		public static <E> TypeAdapter<Enumeration<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 			return new Adapter<>(elementTypeAdapter)
 					.nullSafe();

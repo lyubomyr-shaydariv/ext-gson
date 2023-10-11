@@ -18,12 +18,6 @@ import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
-/**
- * Represents a type adapter factory for {@link Multimap} from Google Guava.
- *
- * @param <V>
- * 		Value type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultimapTypeAdapterFactory<V>
 		extends AbstractTypeAdapterFactory<Multimap<String, V>>
@@ -31,14 +25,6 @@ public final class MultimapTypeAdapterFactory<V>
 
 	private final IInstanceFactory.IProvider<? extends Multimap<String, V>> newMultimapFactoryProvider;
 
-	/**
-	 * @param newMultimapFactoryProvider
-	 * 		Multimap factory factory
-	 * @param <V>
-	 * 		Value type
-	 *
-	 * @return An instance of {@link MultimapTypeAdapterFactory} with a custom new {@link Multimap} factory.
-	 */
 	public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
 			final IInstanceFactory.IProvider<? extends Multimap<String, V>> newMultimapFactoryProvider
 	) {
@@ -62,12 +48,6 @@ public final class MultimapTypeAdapterFactory<V>
 		return Adapter.getInstance(valueTypeAdapter, castNewMultimapFactoryProvider.provide(castTypeToken));
 	}
 
-	/**
-	 * Represents a type adapter for {@link Multimap} from Google Guava.
-	 *
-	 * @param <V>
-	 * 		Value type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<V>
 			extends TypeAdapter<Multimap<String, V>> {
@@ -75,16 +55,6 @@ public final class MultimapTypeAdapterFactory<V>
 		private final TypeAdapter<V> valueTypeAdapter;
 		private final IInstanceFactory<? extends Multimap<String, V>> newMultimapFactory;
 
-		/**
-		 * @param valueTypeAdapter
-		 * 		Multimap value type adapter
-		 * @param newMultimapFactory
-		 * 		A {@link Multimap} factory to create instance used while deserialization
-		 * @param <V>
-		 * 		Multimap value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <V> TypeAdapter<Multimap<String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
 				final IInstanceFactory<? extends Multimap<String, V>> newMultimapFactory

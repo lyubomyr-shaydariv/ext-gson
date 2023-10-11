@@ -18,12 +18,6 @@ import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
-/**
- * Represents a type adapter factory for {@link Table} from Google Guava.
- *
- * @param <V>
- * 		Value type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TableTypeAdapterFactory<V>
 		extends AbstractTypeAdapterFactory<Table<String, String, V>>
@@ -31,14 +25,6 @@ public final class TableTypeAdapterFactory<V>
 
 	private final IInstanceFactory.IProvider<? extends Table<String, String, V>> newTableFactoryProvider;
 
-	/**
-	 * @param newTableFactoryProvider
-	 * 		New table factory factory
-	 * @param <V>
-	 * 		Value type
-	 *
-	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
-	 */
 	public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
 			final IInstanceFactory.IProvider<? extends Table<String, String, V>> newTableFactoryProvider
 	) {
@@ -62,12 +48,6 @@ public final class TableTypeAdapterFactory<V>
 		return Adapter.getInstance(valueTypeAdapter, castNewTableFactoryProvider.provide(castTypeToken));
 	}
 
-	/**
-	 * Represents a type adapter for {@link Table} from Google Guava.
-	 *
-	 * @param <V>
-	 * 		Value type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<V>
 			extends TypeAdapter<Table<String, String, V>> {
@@ -75,16 +55,6 @@ public final class TableTypeAdapterFactory<V>
 		private final TypeAdapter<V> valueTypeAdapter;
 		private final IInstanceFactory<? extends Table<String, String, V>> newTableFactory;
 
-		/**
-		 * @param valueTypeAdapter
-		 * 		Table value type adapter
-		 * @param newTableFactory
-		 * 		A {@link Table} factory to create instance used while deserialization
-		 * @param <V>
-		 * 		Table value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <V> TypeAdapter<Table<String, String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
 				final IInstanceFactory<? extends Table<String, String, V>> newTableFactory

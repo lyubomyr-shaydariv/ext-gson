@@ -21,22 +21,9 @@ import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
 
-/**
- * Implements a Google Guava module registering the following type adapter factories:
- *
- * <ul>
- * <li>{@link BiMapTypeAdapterFactory}</li>
- * <li>{@link MultimapTypeAdapterFactory}</li>
- * <li>{@link MultisetTypeAdapterFactory}</li>
- * <li>{@link TableTypeAdapterFactory}</li>
- * </ul>
- */
 public final class GuavaCollectModule
 		extends AbstractModule {
 
-	/**
-	 * Provides a default bidirectional map object.
-	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<BiMap<String, Object>> defaultBiMapFactoryProvider = typeToken -> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -47,9 +34,6 @@ public final class GuavaCollectModule
 		return HashBiMap::create;
 	};
 
-	/**
-	 * Provides a default multimap object.
-	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<Multimap<String, Object>> defaultMultimapFactoryProvider = typeToken -> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -60,9 +44,6 @@ public final class GuavaCollectModule
 		return LinkedHashMultimap::create;
 	};
 
-	/**
-	 * Provides a default multiset object.
-	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<? extends Multiset<Object>> defaultMultisetFactoryProvider = typeToken -> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -73,9 +54,6 @@ public final class GuavaCollectModule
 		return LinkedHashMultiset::create;
 	};
 
-	/**
-	 * Provides a default table object.
-	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<Table<String, String, Object>> defaultTableFactoryProvider = typeToken -> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -94,16 +72,10 @@ public final class GuavaCollectModule
 		super(typeAdapterFactories);
 	}
 
-	/**
-	 * @return A builder to build a new instance of the module.
-	 */
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	/**
-	 * A builder to configure a new module instance.
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
 	public static final class Builder {
@@ -120,9 +92,6 @@ public final class GuavaCollectModule
 		@Setter
 		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapterFactory.getInstance(defaultTableFactoryProvider);
 
-		/**
-		 * @return A new module instance.
-		 */
 		public IModule build() {
 			return new GuavaCollectModule(UnmodifiableIterable.copyOf(
 					biMapTypeAdapterFactory,

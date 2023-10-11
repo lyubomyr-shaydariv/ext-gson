@@ -9,9 +9,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link ZonedDateTime}.
- */
 public final class ZonedDateTimeTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<ZonedDateTime>
 		implements ITypeAdapterFactory<ZonedDateTime> {
@@ -23,12 +20,6 @@ public final class ZonedDateTimeTypeAdapterFactory
 		super(ZonedDateTime.class, typeAdapter);
 	}
 
-	/**
-	 * @param dateTimeFormatter
-	 * 		Date/time formatter
-	 *
-	 * @return An instance of {@link ZonedDateTimeTypeAdapterFactory}.
-	 */
 	public static ITypeAdapterFactory<ZonedDateTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
@@ -36,9 +27,6 @@ public final class ZonedDateTimeTypeAdapterFactory
 		return new ZonedDateTimeTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
-	/**
-	 * A formatted type adapter for {@link ZonedDateTime}.
-	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapter<ZonedDateTime> {
 
@@ -49,7 +37,6 @@ public final class ZonedDateTimeTypeAdapterFactory
 			super(dateTimeFormatter, ZonedDateTime::from);
 		}
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<ZonedDateTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

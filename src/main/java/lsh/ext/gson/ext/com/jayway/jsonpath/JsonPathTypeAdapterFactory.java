@@ -24,101 +24,18 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * <p>
- * Represents a type adapter factory that can deserialize object fields using {@link JsonPathExpression}-annotations in JSON mappings. Example of use, the
- * following JSON:
- * </p>
- *
- * <pre>
- *     {
- *         "l1": {
- *             "l2": {
- *                 "l3": {
- *                     "foo": "Foo!"
- *                 }
- *             }
- *         }
- *     }
- * </pre>
- *
- * <p>
- * can be mapped to the following mapping using this type adapter factory:
- * </p>
- *
- * <pre>
- *     public final class Foo {
- *
- *        {@code @}JsonPathExpression("$.l1.l2.l3.foo")
- *         public final String fooRef = null;
- *
- *     }
- * </pre>
- *
- * <p>
- * So, the following code outputs {@code Foo!} to stdout:
- * </p>
- *
- * <pre>
- *     final Gson gson = new GsonBuilder()
- *         .registerTypeAdapterFactory(getJsonPathTypeAdapterFactory())
- *         .create();
- *     final Foo foo = gson.fromJson("{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\"}}}}", Foo.class);
- *     System.out.println(foo.fooRef);
- * </pre>
- *
- * <p>
- * JSON path expressions that point to not existing paths are ignored.
- * </p>
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapterFactory
 		implements ITypeAdapterFactory<Object> {
 
-	/**
-	 * A {@link JsonPathTypeAdapterFactory} instance that is configured with the predefined JsonPath configuration. The default JsonPath configuration
-	 * used for this instance uses {@link Configuration.Defaults} with an internally defined {@link GsonJsonProvider} bound to the {@link Gson} instance
-	 * provided in {@link #create(Gson, TypeToken)}, an internally defined {@link GsonMappingProvider} bound to the {@link Gson} instance provided in {@link
-	 * #create(Gson, TypeToken)}, and empty options set.
-	 */
 	@Getter
 	private static final ITypeAdapterFactory<?> instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
 
-	/**
-	 * Example of use:
-	 *
-	 * <pre>
-	 * private static void configureJsonPathGlobally(final JsonProvider gsonJsonProvider, final MappingProvider gsonMappingProvider) {
-	 *     Configuration.setDefaults(new Configuration.Defaults() {
-	 *        {@code @}Override
-	 *         public JsonProvider jsonProvider() {
-	 *             return gsonJsonProvider;
-	 *         }
-	 *
-	 *        {@code @}Override
-	 *         public MappingProvider mappingProvider() {
-	 *             return gsonMappingProvider;
-	 *         }
-	 *
-	 *        {@code @}Override
-	 *         public Set&lt;Option&gt; options() {
-	 *             return EnumSet.noneOf(Option.class);
-	 *         }
-	 *     });
-	 * }
-	 * </pre>
-	 */
 	@Getter
 	private static final TypeAdapterFactory instanceWithGlobalDefaults = new JsonPathTypeAdapterFactory(gson -> Configuration.defaultConfiguration());
 
 	private final Function<? super Gson, ? extends Configuration> configurationProvider;
 
-	/**
-	 * @param configurationProvider
-	 * 		A function (strategy) to return a JsonPath {@link Configuration}.
-	 *
-	 * @return A {@link JsonPathTypeAdapterFactory} instance that can be configured with the given strategy.
-	 */
 	public static TypeAdapterFactory getInstance(final Function<? super Gson, ? extends Configuration> configurationProvider) {
 		return new JsonPathTypeAdapterFactory(configurationProvider);
 	}

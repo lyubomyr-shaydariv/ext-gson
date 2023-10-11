@@ -14,9 +14,6 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Represents a pre/post type adapter factory to perform pre/post checks for a serializable/deserializable values respectively.
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PrePostTypeAdapterFactory
 		implements TypeAdapterFactory {
@@ -24,14 +21,6 @@ public final class PrePostTypeAdapterFactory
 	private final Iterable<? extends IProcessorFactory<?>> preProcessorFactories;
 	private final Iterable<? extends IProcessorFactory<?>> postProcessorFactories;
 
-	/**
-	 * @param preProcessorFactories
-	 * 		A sequence of pre processor factories.
-	 * @param postProcessorFactories
-	 * 		A sequence of post processor factories.
-	 *
-	 * @return A {@link PrePostTypeAdapterFactory} instance.
-	 */
 	public static TypeAdapterFactory getInstance(final Iterable<? extends IProcessorFactory<?>> preProcessorFactories,
 			final Iterable<? extends IProcessorFactory<?>> postProcessorFactories) {
 		return new PrePostTypeAdapterFactory(preProcessorFactories, postProcessorFactories);
@@ -76,7 +65,6 @@ public final class PrePostTypeAdapterFactory
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	@SuppressWarnings("checkstyle:MissingJavadocType")
 	public static final class Adapter<T>
 			extends TypeAdapter<T> {
 
@@ -86,7 +74,6 @@ public final class PrePostTypeAdapterFactory
 		private final Iterable<? extends IProcessor<? super T>> postProcessors;
 		private final TypeAdapter<T> delegateTypeAdapter;
 
-		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static <T> TypeAdapter<T> getInstance(
 				@Nullable final Iterable<? extends IProcessor<? super T>> preProcessors,
 				@Nullable final Iterable<? extends IProcessor<? super T>> postProcessors,

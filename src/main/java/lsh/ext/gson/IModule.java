@@ -7,9 +7,6 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
-/**
- * A type adapter factory that can add multiple {@link TypeAdapterFactory} instances at once.
- */
 public interface IModule
 		extends TypeAdapterFactory {
 

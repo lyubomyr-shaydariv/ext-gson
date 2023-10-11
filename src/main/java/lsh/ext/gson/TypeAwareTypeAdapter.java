@@ -11,19 +11,6 @@ import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Represents a type adapter to hold both object type name and object value. Example result JSON document:
- *
- * <pre>
- * {
- *     "$T": "foo.bar.Baz",
- *     "$V": {}
- * }
- * </pre>
- *
- * @param <T>
- * 		Type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TypeAwareTypeAdapter<T>
 		extends TypeAdapter<T> {
@@ -32,18 +19,6 @@ public final class TypeAwareTypeAdapter<T>
 	private final String typePropertyName;
 	private final String valuePropertyName;
 
-	/**
-	 * @param gson
-	 * 		Gson instance
-	 * @param typePropertyName
-	 * 		Type property name
-	 * @param valuePropertyName
-	 * 		Value property name
-	 * @param <T>
-	 * 		Any type
-	 *
-	 * @return An instance of {@link TypeAwareTypeAdapter}.
-	 */
 	public static <T> TypeAdapter<T> getInstance(final Gson gson, final String typePropertyName, final String valuePropertyName) {
 		return new TypeAwareTypeAdapter<T>(gson, typePropertyName, valuePropertyName)
 				.nullSafe();

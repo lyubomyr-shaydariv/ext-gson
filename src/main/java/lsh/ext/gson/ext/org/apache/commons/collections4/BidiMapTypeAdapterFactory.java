@@ -18,12 +18,6 @@ import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
 
-/**
- * Represents a type adapter factory for {@link BidiMap} from Apache Commons Collections 4.
- *
- * @param <V>
- * 		Value type
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BidiMapTypeAdapterFactory<V>
 		extends AbstractTypeAdapterFactory<BidiMap<String, V>>
@@ -31,14 +25,6 @@ public final class BidiMapTypeAdapterFactory<V>
 
 	private final IInstanceFactory.IProvider<? extends BidiMap<String, V>> newBidiMapFactoryProvider;
 
-	/**
-	 * @param newBidiMapFactoryProvider
-	 * 		New bidirectional map factory provider
-	 * @param <V>
-	 * 		Value type
-	 *
-	 * @return An instance of {@link BidiMapTypeAdapterFactory} with a custom new {@link BidiMap} factory provider.
-	 */
 	public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
 			final IInstanceFactory.IProvider<? extends BidiMap<String, V>> newBidiMapFactoryProvider
 	) {
@@ -62,12 +48,6 @@ public final class BidiMapTypeAdapterFactory<V>
 		return Adapter.getInstance(valueTypeAdapter, castNewBidiMapFactoryProvider.provide(castTypeToken));
 	}
 
-	/**
-	 * Represents a type adapter for {@link BidiMap} from Apache Commons Collections 4.
-	 *
-	 * @param <V>
-	 * 		Value type
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<V>
 			extends TypeAdapter<BidiMap<String, V>> {
@@ -75,16 +55,6 @@ public final class BidiMapTypeAdapterFactory<V>
 		private final TypeAdapter<V> valueTypeAdapter;
 		private final IInstanceFactory<? extends BidiMap<String, V>> newBidiMapFactory;
 
-		/**
-		 * @param valueTypeAdapter
-		 * 		Bidirectional map value type adapter
-		 * @param newBidiMapFactory
-		 * 		A {@link BidiMap} factory to create instance used while deserialization
-		 * @param <V>
-		 * 		Bidirectional map value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
 		public static <V> TypeAdapter<BidiMap<String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
 				final IInstanceFactory<? extends BidiMap<String, V>> newBidiMapFactory

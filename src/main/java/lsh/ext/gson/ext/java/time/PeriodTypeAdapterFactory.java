@@ -8,9 +8,6 @@ import lombok.Getter;
 import lsh.ext.gson.AbstractStringTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Implements a type adapter factory for {@link Period}.
- */
 public final class PeriodTypeAdapterFactory
 		extends AbstractBaseTypeAdapterFactory<Period>
 		implements ITypeAdapterFactory<Period> {
@@ -22,9 +19,6 @@ public final class PeriodTypeAdapterFactory
 		super(Period.class, typeAdapter);
 	}
 
-	/**
-	 * A type adapter for {@link Period}.
-	 */
 	public static final class Adapter
 			extends AbstractStringTypeAdapter<Period> {
 

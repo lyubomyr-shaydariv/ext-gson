@@ -10,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@SuppressWarnings("checkstyle:MissingJavadocType")
 public final class UnmodifiableIterable<T>
 		implements Iterable<T> {
 
@@ -18,7 +17,6 @@ public final class UnmodifiableIterable<T>
 
 	private final Iterable<? extends T> iterable;
 
-	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static <T> Iterable<T> of(final Iterable<? extends T> iterable) {
 		if ( iterable instanceof UnmodifiableIterable<? extends T> ) {
 			@SuppressWarnings("unchecked")
@@ -28,7 +26,6 @@ public final class UnmodifiableIterable<T>
 		return new UnmodifiableIterable<>(iterable);
 	}
 
-	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static <T> Iterable<T> copyOf(final Iterable<? extends T> iterable) {
 		final Collection<T> copy;
 		if ( iterable instanceof final Collection<? extends T> collection ) {
@@ -48,7 +45,6 @@ public final class UnmodifiableIterable<T>
 	}
 
 	@SafeVarargs
-	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static <T> Iterable<T> copyOf(final T... array) {
 		if ( array.length == 0 ) {
 			@SuppressWarnings("unchecked")

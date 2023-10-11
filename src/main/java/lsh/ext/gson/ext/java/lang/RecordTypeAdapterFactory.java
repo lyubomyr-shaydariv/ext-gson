@@ -9,12 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-/**
- * Represents a type adapter factory that can handle {@link Record} initially introduced in Java 16.
- *
- * @param <T>
- * 		Record type to handle
- */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RecordTypeAdapterFactory<T extends Record>
 		extends AbstractTypeAdapterFactory<T>

@@ -9,9 +9,6 @@ import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Implements an abstract module with modules found in linear manner (from first to last).
- */
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractModule
 		implements IModule {

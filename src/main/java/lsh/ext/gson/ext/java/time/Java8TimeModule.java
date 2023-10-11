@@ -25,26 +25,6 @@ import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
 
-/**
- * Implements a Java 8 Time API module registering the following type adapter factories:
- *
- * <ul>
- * <li>{@link DayOfWeekTypeAdapterFactory}</li>
- * <li>{@link DurationTypeAdapterFactory}</li>
- * <li>{@link InstantTypeAdapterFactory}</li>
- * <li>{@link LocalDateTimeTypeAdapterFactory}</li>
- * <li>{@link LocalDateTypeAdapterFactory}</li>
- * <li>{@link LocalTimeTypeAdapterFactory}</li>
- * <li>{@link MonthDayTypeAdapterFactory}</li>
- * <li>{@link MonthTypeAdapterFactory}</li>
- * <li>{@link OffsetDateTimeTypeAdapterFactory}</li>
- * <li>{@link OffsetTimeTypeAdapterFactory}</li>
- * <li>{@link PeriodTypeAdapterFactory}</li>
- * <li>{@link YearMonthTypeAdapterFactory}</li>
- * <li>{@link YearTypeAdapterFactory}</li>
- * <li>{@link ZonedDateTimeTypeAdapterFactory}</li>
- * </ul>
- */
 public final class Java8TimeModule
 		extends AbstractModule {
 
@@ -52,16 +32,10 @@ public final class Java8TimeModule
 		super(typeAdapterFactories);
 	}
 
-	/**
-	 * @return A builder to build a new instance of the module.
-	 */
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	/**
-	 * A builder to configure a new module instance.
-	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
 	public static final class Builder {
@@ -108,9 +82,6 @@ public final class Java8TimeModule
 		@Setter
 		private ITypeAdapterFactory<ZonedDateTime> zonedDateTimeTypeAdapterFactory = ZonedDateTimeTypeAdapterFactory.getInstance();
 
-		/**
-		 * @return A new module instance.
-		 */
 		public IModule build() {
 			return new Java8TimeModule(UnmodifiableIterable.copyOf(
 					dayOfWeekTypeAdapterFactory,

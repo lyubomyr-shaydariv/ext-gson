@@ -14,43 +14,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-/**
- * <p>
- * This type adapter is designed to "pack" child JSON properties as strings. For example, suppose the following mapping:
- * </p>
- *
- * <pre>
- * final class Outer {
- *    {@literal @}JsonAdapter(PackedJsonTypeAdapter.class)
- *     final String inner = null;
- * }
- * </pre>
- *
- * <p>
- * and the following JSON document:
- * </p>
- *
- * <pre>
- * {
- *     "inner": {
- *         "foo": 1,
- *         "bar": 2
- *     }
- * }
- * </pre>
- *
- * <p>
- * After the {@code inner} field is deserialized, if the whole JSON document is deserialized as {@code Outer}, its value is
- * </p>
- *
- * <pre>
- * "{\"foo\":1,\"bar\":2}"
- * </pre>
- *
- * <p>
- * Thus, the {@code inner} field can hold arbitrary data.
- * </p>
- */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PackedJsonTypeAdapter
 		extends TypeAdapter<String> {
