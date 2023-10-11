@@ -10,6 +10,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
@@ -23,17 +24,14 @@ import lsh.ext.gson.ParameterizedTypes;
 public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E>>
 		extends AbstractTypeAdapterFactory<C> {
 
+	/**
+	 * An instance of {@link CoercedCollectionTypeAdapterFactory} based on {@link List} and {@link ArrayList}.
+	 */
+	@Getter
 	private static final TypeAdapterFactory instance = new CoercedCollectionTypeAdapterFactory<>(List.class, ArrayList::new);
 
 	private final Class<? super C> baseCollectionType;
 	private final CoercedCollectionTypeAdapter.IFactory<? extends E, C> collectionFactory;
-
-	/**
-	 * @return An instance of {@link CoercedCollectionTypeAdapterFactory} based on {@link List} and {@link ArrayList}.
-	 */
-	public static TypeAdapterFactory getInstance() {
-		return instance;
-	}
 
 	/**
 	 * @param baseCollectionType
