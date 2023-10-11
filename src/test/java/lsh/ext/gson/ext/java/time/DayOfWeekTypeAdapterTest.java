@@ -20,12 +20,12 @@ public final class DayOfWeekTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						DayOfWeekTypeAdapter.getInstance(),
+						DayOfWeekTypeAdapterFactory.Adapter.getInstance(),
 						"\"MONDAY\"",
 						DayOfWeek.MONDAY
 				),
 				makeTestCase(
-						DayOfWeekTypeAdapter.getInstance(),
+						DayOfWeekTypeAdapterFactory.Adapter.getInstance(),
 						"\"FRIDAY\"",
 						DayOfWeek.FRIDAY
 				)

@@ -40,12 +40,54 @@ public final class LocalTimeTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<LocalTime> create() {
-		return LocalTimeTypeAdapter.getInstance();
+		return LocalTimeTypeAdapterFactory.Adapter.getInstance();
 	}
 
 	@Override
 	protected TypeAdapter<LocalTime> create(final DateTimeFormatter dateTimeFormatter) {
-		return LocalTimeTypeAdapter.getInstance(dateTimeFormatter);
+		return LocalTimeTypeAdapterFactory.Adapter.getInstance(dateTimeFormatter);
+	}
+
+	/**
+	 * A type adapter for {@link LocalTime}.
+	 *
+	 * @author Lyubomyr Shaydariv
+	 */
+	public static final class Adapter
+			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<LocalTime> {
+
+		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+		private static final TypeAdapter<LocalTime> instance = new Adapter(null)
+				.nullSafe();
+
+		private Adapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
+			super(dateTimeFormatter);
+		}
+
+		/**
+		 * @param dateTimeFormatter
+		 * 		Date/time formatter
+		 *
+		 * @return An instance of {@link Adapter} with a custom {@link DateTimeFormatter}.
+		 */
+		@SuppressFBWarnings("MS_EXPOSE_REP")
+		public static TypeAdapter<LocalTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
+			if ( dateTimeFormatter == null ) {
+				return instance;
+			}
+			return new Adapter(dateTimeFormatter);
+		}
+
+		@Override
+		protected LocalTime doFromString(final String text) {
+			return LocalTime.parse(text);
+		}
+
+		@Override
+		protected LocalTime doFromString(final String text, final DateTimeFormatter formatter) {
+			return LocalTime.parse(text, formatter);
+		}
+
 	}
 
 }

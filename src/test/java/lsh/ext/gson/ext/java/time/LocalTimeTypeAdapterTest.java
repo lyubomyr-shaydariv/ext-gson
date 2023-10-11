@@ -21,12 +21,12 @@ public final class LocalTimeTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						LocalTimeTypeAdapter.getInstance(),
+						LocalTimeTypeAdapterFactory.Adapter.getInstance(),
 						"\"10:10\"",
 						LocalTime.of(10, 10, 0)
 				),
 				makeTestCase(
-						LocalTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_TIME),
+						LocalTimeTypeAdapterFactory.Adapter.getInstance(DateTimeFormatter.ISO_TIME),
 						"\"19:23:33\"",
 						LocalTime.of(19, 23, 33)
 				)

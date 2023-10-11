@@ -25,7 +25,7 @@ public final class CloseableEnumerationTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						CloseableEnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
+						CloseableEnumerationTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
 						CloseableEnumerations.from(CloseableIterators.asCloseable(List.of(1, 2, 4, 8).iterator()))
 				)

@@ -22,12 +22,12 @@ public final class OffsetTimeTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						OffsetTimeTypeAdapter.getInstance(),
+						OffsetTimeTypeAdapterFactory.Adapter.getInstance(),
 						"\"12:34:56Z\"",
 						OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
 				),
 				makeTestCase(
-						OffsetTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_OFFSET_TIME),
+						OffsetTimeTypeAdapterFactory.Adapter.getInstance(DateTimeFormatter.ISO_OFFSET_TIME),
 						"\"12:34:56Z\"",
 						OffsetTime.of(12, 34, 56, 0, ZoneOffset.UTC)
 				)

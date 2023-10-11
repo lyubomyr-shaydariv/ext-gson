@@ -25,7 +25,7 @@ public final class BiMapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						BiMapTypeAdapter.getInstance(gson.getAdapter(String.class)),
+						BiMapTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class)),
 						"{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}",
 						ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz")
 				)

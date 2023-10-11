@@ -20,12 +20,12 @@ public final class InstantTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						InstantTypeAdapter.getInstance(),
+						InstantTypeAdapterFactory.Adapter.getInstance(),
 						"\"1970-01-01T00:00:00Z\"",
 						Instant.ofEpochMilli(0)
 				),
 				makeTestCase(
-						InstantTypeAdapter.getInstance(),
+						InstantTypeAdapterFactory.Adapter.getInstance(),
 						"\"2061-08-14T09:37:12.837Z\"",
 						Instant.ofEpochMilli(2891237832837L)
 				)

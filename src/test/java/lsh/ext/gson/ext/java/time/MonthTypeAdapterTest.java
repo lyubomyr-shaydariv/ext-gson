@@ -20,7 +20,7 @@ public final class MonthTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MonthTypeAdapter.getInstance(),
+						MonthTypeAdapterFactory.Adapter.getInstance(),
 						"\"SEPTEMBER\"",
 						Month.SEPTEMBER
 				)

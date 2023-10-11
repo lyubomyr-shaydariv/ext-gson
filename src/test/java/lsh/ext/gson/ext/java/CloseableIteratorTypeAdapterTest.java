@@ -25,7 +25,7 @@ public final class CloseableIteratorTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						CloseableIteratorTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
+						CloseableIteratorTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
 						CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator())
 				)

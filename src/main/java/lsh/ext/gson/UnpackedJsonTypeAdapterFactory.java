@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  * </pre>
  *
  * @author Lyubomyr Shaydariv
- * @see UnpackedJsonTypeAdapter
+ * @see Adapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UnpackedJsonTypeAdapterFactory
@@ -42,11 +42,11 @@ public final class UnpackedJsonTypeAdapterFactory
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		final TypeAdapter<T> delegateTypeAdapter = gson.getAdapter(typeToken);
-		return new UnpackedJsonTypeAdapter<>(delegateTypeAdapter);
+		return new Adapter<>(delegateTypeAdapter);
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	private static final class UnpackedJsonTypeAdapter<T>
+	private static final class Adapter<T>
 			extends TypeAdapter<T> {
 
 		private final TypeAdapter<T> typeAdapter;

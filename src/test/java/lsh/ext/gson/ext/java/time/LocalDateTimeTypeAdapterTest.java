@@ -21,12 +21,12 @@ public final class LocalDateTimeTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						LocalDateTimeTypeAdapter.getInstance(),
+						LocalDateTimeTypeAdapterFactory.Adapter.getInstance(),
 						"\"2018-01-01T15:31\"",
 						LocalDateTime.of(2018, 01, 01, 15, 31)
 				),
 				makeTestCase(
-						LocalDateTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+						LocalDateTimeTypeAdapterFactory.Adapter.getInstance(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
 						"\"2018-01-01T15:31:00\"",
 						LocalDateTime.of(2018, 01, 01, 15, 31)
 				)
