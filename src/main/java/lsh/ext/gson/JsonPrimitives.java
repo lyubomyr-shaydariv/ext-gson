@@ -1,5 +1,9 @@
 package lsh.ext.gson;
 
+import javax.annotation.Nullable;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonPrimitive;
 import lombok.experimental.UtilityClass;
 
@@ -21,6 +25,10 @@ public final class JsonPrimitives {
 		return new JsonPrimitive(b);
 	}
 
+	public static JsonElement ofNullable(@Nullable final Boolean b) {
+		return b != null ? new JsonPrimitive(b) : JsonNull.INSTANCE;
+	}
+
 	/**
 	 * @param n
 	 * 		A numeric value.
@@ -29,6 +37,10 @@ public final class JsonPrimitives {
 	 */
 	public static JsonPrimitive of(final Number n) {
 		return new JsonPrimitive(n);
+	}
+
+	public static JsonElement ofNullable(@Nullable final Number n) {
+		return n != null ? new JsonPrimitive(n) : JsonNull.INSTANCE;
 	}
 
 	/**
@@ -41,6 +53,10 @@ public final class JsonPrimitives {
 		return new JsonPrimitive(s);
 	}
 
+	public static JsonElement ofNullable(@Nullable final String s) {
+		return s != null ? new JsonPrimitive(s) : JsonNull.INSTANCE;
+	}
+
 	/**
 	 * @param c
 	 * 		A character value.
@@ -49,6 +65,10 @@ public final class JsonPrimitives {
 	 */
 	public static JsonPrimitive of(final Character c) {
 		return new JsonPrimitive(c);
+	}
+
+	public static JsonElement ofNullable(@Nullable final Character c) {
+		return c != null ? new JsonPrimitive(c) : JsonNull.INSTANCE;
 	}
 
 }

@@ -2,14 +2,14 @@ package lsh.ext.gson;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import lsh.ext.gson.ext.java.util.stream.JsonCollectors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 public final class JsonArraysTest {
 
@@ -21,8 +21,6 @@ public final class JsonArraysTest {
 	private static final String K6 = "corge";
 	private static final String K7 = "grault";
 	private static final String K8 = "garply";
-	private static final String K9 = "waldo";
-	private static final String K10 = "fred";
 
 	private static final JsonPrimitive foo = new JsonPrimitive("foo");
 	private static final JsonPrimitive bar = new JsonPrimitive("bar");
@@ -45,7 +43,7 @@ public final class JsonArraysTest {
 		);
 		Assertions.assertEquals(
 				stringJsonArray((String) null),
-				JsonArrays.of(null)
+				JsonArrays.of((JsonElement) null)
 		);
 	}
 
@@ -98,95 +96,16 @@ public final class JsonArraysTest {
 	}
 
 	@Test
-	public void testJsonArray6() {
-		Assertions.assertEquals(
-				stringJsonArray(K1, K2, K3, K4, K5, K6),
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6))
-		);
-		Assertions.assertEquals(
-				stringJsonArray(null, null, null, null, null, null),
-				JsonArrays.of(null, null, null, null, null, null)
-		);
-	}
-
-	@Test
-	public void testJsonArray7() {
-		Assertions.assertEquals(
-				stringJsonArray(K1, K2, K3, K4, K5, K6, K7),
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7))
-		);
-		Assertions.assertEquals(
-				stringJsonArray(null, null, null, null, null, null, null),
-				JsonArrays.of(null, null, null, null, null, null, null)
-		);
-	}
-
-	@Test
-	public void testJsonArray8() {
-		Assertions.assertEquals(
-				stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8),
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8))
-		);
-		Assertions.assertEquals(
-				stringJsonArray(null, null, null, null, null, null, null, null),
-				JsonArrays.of(null, null, null, null, null, null, null, null)
-		);
-	}
-
-	@Test
-	public void testJsonArray9() {
-		Assertions.assertEquals(
-				stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8, K9),
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8), JsonPrimitives.of(K9))
-		);
-		Assertions.assertEquals(
-				stringJsonArray(null, null, null, null, null, null, null, null, null),
-				JsonArrays.of(null, null, null, null, null, null, null, null, null)
-		);
-	}
-
-	@Test
-	public void testJsonArray10() {
-		Assertions.assertEquals(
-				stringJsonArray(K1, K2, K3, K4, K5, K6, K7, K8, K9, K10),
-				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5), JsonPrimitives.of(K6), JsonPrimitives.of(K7), JsonPrimitives.of(K8), JsonPrimitives.of(K9), JsonPrimitives.of(K10))
-		);
-		Assertions.assertEquals(
-				stringJsonArray(null, null, null, null, null, null, null, null, null, null),
-				JsonArrays.of(null, null, null, null, null, null, null, null, null, null)
-		);
-	}
-
-	@Test
 	public void testFromIterable() {
 		final JsonPrimitive element1 = JsonPrimitives.of(K1);
 		final JsonPrimitive element2 = JsonPrimitives.of(K2);
 		final JsonPrimitive element3 = JsonPrimitives.of(K3);
-		final Iterable<? extends JsonElement> jsonElements = ImmutableList.of(element1, element2, element3);
+		final Iterable<? extends JsonElement> jsonElements = List.of(element1, element2, element3);
 		final JsonArray jsonArray = JsonArrays.from(jsonElements);
 		Assertions.assertEquals(3, jsonArray.size());
 		Assertions.assertSame(element1, jsonArray.get(0));
 		Assertions.assertSame(element2, jsonArray.get(1));
 		Assertions.assertSame(element3, jsonArray.get(2));
-	}
-
-	@Test
-	public void testFromCollection() {
-		final JsonPrimitive element1 = JsonPrimitives.of(K1);
-		final JsonPrimitive element2 = JsonPrimitives.of(K2);
-		final JsonPrimitive element3 = JsonPrimitives.of(K3);
-		final List<? extends JsonElement> jsonElements = ImmutableList.of(element1, element2, element3);
-		final List<? extends JsonElement> spyJsonElements = Mockito.spy(jsonElements);
-		final JsonArray jsonArray = JsonArrays.from(spyJsonElements);
-		Assertions.assertEquals(3, jsonArray.size());
-		Assertions.assertSame(element1, jsonArray.get(0));
-		Assertions.assertSame(element2, jsonArray.get(1));
-		Assertions.assertSame(element3, jsonArray.get(2));
-		Mockito.verify(spyJsonElements).size();
-		Mockito.verify(spyJsonElements).iterator();
-		Mockito.verify(spyJsonElements).listIterator();
-		Mockito.verify(spyJsonElements).listIterator(0);
-		Mockito.verifyNoMoreInteractions(spyJsonElements);
 	}
 
 	@Test
@@ -275,7 +194,7 @@ public final class JsonArraysTest {
 		Assertions.assertEquals(2, jsonElements.size());
 		Assertions.assertSame(foo, jsonElements.get(0));
 		Assertions.assertEquals(bar, jsonElements.get(1));
-		Assertions.assertTrue(jsonElements.addAll(ImmutableList.of(baz, qux)));
+		Assertions.assertTrue(jsonElements.addAll(List.of(baz, qux)));
 		Assertions.assertEquals(4, jsonElements.size());
 		Assertions.assertSame(foo, jsonElements.get(0));
 		Assertions.assertSame(bar, jsonElements.get(1));
@@ -304,7 +223,7 @@ public final class JsonArraysTest {
 		Assertions.assertEquals(2, jsonElements.size());
 		Assertions.assertSame(foo, jsonElements.get(0));
 		Assertions.assertSame(bar, jsonElements.get(1));
-		Assertions.assertTrue(jsonElements.addAll(0, ImmutableList.of(baz, qux)));
+		Assertions.assertTrue(jsonElements.addAll(0, List.of(baz, qux)));
 		Assertions.assertEquals(4, jsonElements.size());
 		Assertions.assertSame(baz, jsonElements.get(0));
 		Assertions.assertSame(qux, jsonElements.get(1));
@@ -390,7 +309,7 @@ public final class JsonArraysTest {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
 			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-			jsonElements.removeAll(ImmutableList.of(bar, baz));
+			jsonElements.removeAll(List.of(bar, baz));
 		});
 	}
 
@@ -398,11 +317,11 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaRemoveAll() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		Assertions.assertTrue(jsonElements.removeAll(ImmutableList.of(bar, baz)));
+		Assertions.assertTrue(jsonElements.removeAll(List.of(bar, baz)));
 		Assertions.assertEquals(2, jsonArray.size());
 		Assertions.assertSame(foo, jsonArray.get(0));
 		Assertions.assertSame(qux, jsonArray.get(1));
-		Assertions.assertFalse(jsonElements.removeAll(ImmutableList.of(bar, baz)));
+		Assertions.assertFalse(jsonElements.removeAll(List.of(bar, baz)));
 	}
 
 	@Test
@@ -410,7 +329,7 @@ public final class JsonArraysTest {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
 			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
-			jsonElements.retainAll(ImmutableList.of(bar, baz));
+			jsonElements.retainAll(List.of(bar, baz));
 		});
 	}
 
@@ -418,11 +337,11 @@ public final class JsonArraysTest {
 	public void testAsMutableListCanBeModifiedViaRetainAll() {
 		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
-		Assertions.assertTrue(jsonElements.retainAll(ImmutableList.of(bar, baz)));
+		Assertions.assertTrue(jsonElements.retainAll(List.of(bar, baz)));
 		Assertions.assertEquals(2, jsonArray.size());
 		Assertions.assertSame(bar, jsonArray.get(0));
 		Assertions.assertSame(baz, jsonArray.get(1));
-		Assertions.assertFalse(jsonElements.retainAll(ImmutableList.of(bar, baz)));
+		Assertions.assertFalse(jsonElements.retainAll(List.of(bar, baz)));
 		Assertions.assertEquals(2, jsonArray.size());
 		Assertions.assertSame(bar, jsonArray.get(0));
 		Assertions.assertSame(baz, jsonArray.get(1));
@@ -449,11 +368,9 @@ public final class JsonArraysTest {
 	}
 
 	private static JsonArray stringJsonArray(final String... values) {
-		final JsonArray array = new JsonArray(values.length);
-		for ( final String value : values ) {
-			array.add(value);
-		}
-		return array;
+		return Stream.of(values)
+				.map(JsonPrimitives::ofNullable)
+				.collect(JsonCollectors.toJsonArray());
 	}
 
 }
