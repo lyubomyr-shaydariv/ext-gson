@@ -18,19 +18,19 @@ import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapterFactory;
  * Implements a Java 8 module registering the following type adapter factories:
  *
  * <ul>
- * <li>{@link OptionalTypeAdapterFactory}</li>
+ * <li>{@link StreamTypeAdapterFactory}</li>
  * </ul>
  *
  * @author Lyubomyr Shaydariv
  */
-public final class Java8Module
+public final class Java8UtilStreamModule
 		extends AbstractModule {
 
 	@Getter
 	private static final IModule instance = builder()
 			.build();
 
-	private Java8Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private Java8UtilStreamModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -49,7 +49,6 @@ public final class Java8Module
 	public static final class Builder {
 
 		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(
-						OptionalTypeAdapterFactory.getInstance(),
 						StreamTypeAdapterFactory.getInstance()
 				)
 				.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
@@ -58,7 +57,7 @@ public final class Java8Module
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			return new Java8Module(defaultTypeAdapterFactories);
+			return new Java8UtilStreamModule(defaultTypeAdapterFactories);
 		}
 
 	}
