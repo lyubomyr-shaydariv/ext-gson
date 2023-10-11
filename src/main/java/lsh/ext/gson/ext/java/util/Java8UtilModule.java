@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.java;
+package lsh.ext.gson.ext.java.util;
 
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -11,26 +11,24 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
-import lsh.ext.gson.ext.java.util.OptionalTypeAdapterFactory;
-import lsh.ext.gson.ext.java.util.stream.StreamTypeAdapterFactory;
 
 /**
  * Implements a Java 8 module registering the following type adapter factories:
  *
  * <ul>
- * <li>{@link StreamTypeAdapterFactory}</li>
+ * <li>{@link OptionalTypeAdapterFactory}</li>
  * </ul>
  *
  * @author Lyubomyr Shaydariv
  */
-public final class Java8UtilStreamModule
+public final class Java8UtilModule
 		extends AbstractModule {
 
 	@Getter
 	private static final IModule instance = builder()
 			.build();
 
-	private Java8UtilStreamModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private Java8UtilModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -49,7 +47,7 @@ public final class Java8UtilStreamModule
 	public static final class Builder {
 
 		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(
-						StreamTypeAdapterFactory.getInstance()
+						OptionalTypeAdapterFactory.getInstance()
 				)
 				.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
 
@@ -57,7 +55,7 @@ public final class Java8UtilStreamModule
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			return new Java8UtilStreamModule(defaultTypeAdapterFactories);
+			return new Java8UtilModule(defaultTypeAdapterFactories);
 		}
 
 	}

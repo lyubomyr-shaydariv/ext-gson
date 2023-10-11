@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.java;
+package lsh.ext.gson.ext.java.time;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -14,20 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
-import lsh.ext.gson.ext.java.time.DayOfWeekTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.DurationTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.InstantTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.LocalDateTimeTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.LocalDateTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.LocalTimeTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.MonthDayTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.MonthTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.OffsetDateTimeTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.OffsetTimeTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.PeriodTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.YearMonthTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.YearTypeAdapterFactory;
-import lsh.ext.gson.ext.java.time.ZonedDateTimeTypeAdapterFactory;
 
 /**
  * Implements a Java 8 Time API module registering the following type adapter factories:

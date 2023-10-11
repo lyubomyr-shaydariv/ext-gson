@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.java;
+package lsh.ext.gson.ext.java.lang;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
-import lsh.ext.gson.ext.java.lang.RecordTypeAdapterFactory;
 
 /**
  * Implements a Java 16 module registering the following type adapter factories:
