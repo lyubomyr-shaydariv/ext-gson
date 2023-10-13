@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
  * </pre>
  *
  * @author Lyubomyr Shaydariv
- * @see AbstractClassTypeAdapterFactory
+ * @see PolymorphicAbstractClassTypeAdapterFactory
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TypeAwareTypeAdapter<T>

@@ -5,10 +5,10 @@ import com.google.gson.JsonSyntaxException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public final class AbstractClassTypeAdapterFactoryTest {
+public final class PolymorphicAbstractClassTypeAdapterFactoryTest {
 
 	private static final Gson gson = Gsons.Builders.createNormalized()
-			.registerTypeAdapterFactory(AbstractClassTypeAdapterFactory.getInstance("$T", "$V"))
+			.registerTypeAdapterFactory(PolymorphicAbstractClassTypeAdapterFactory.getInstance("$T", "$V"))
 			.create();
 
 	@Test

@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
  * @see TypeAwareTypeAdapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class AbstractClassTypeAdapterFactory<T>
+public final class PolymorphicAbstractClassTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<T> {
 
 	private final String typePropertyName;
@@ -28,10 +28,10 @@ public final class AbstractClassTypeAdapterFactory<T>
 	 * @param valuePropertyName
 	 * 		Value property name
 	 *
-	 * @return An instance of {@link AbstractClassTypeAdapterFactory}
+	 * @return An instance of {@link PolymorphicAbstractClassTypeAdapterFactory}
 	 */
 	public static TypeAdapterFactory getInstance(final String typePropertyName, final String valuePropertyName) {
-		return new AbstractClassTypeAdapterFactory<>(typePropertyName, valuePropertyName);
+		return new PolymorphicAbstractClassTypeAdapterFactory<>(typePropertyName, valuePropertyName);
 	}
 
 	@Override
