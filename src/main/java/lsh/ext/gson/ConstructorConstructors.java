@@ -35,7 +35,7 @@ final class ConstructorConstructors {
 		return create(instanceCreators, true);
 	}
 
-	static ConstructorConstructor create(final Map<Type, InstanceCreator<?>> instanceCreators, final boolean useJdkUnsafe) {
+	private static ConstructorConstructor create(final Map<Type, InstanceCreator<?>> instanceCreators, final boolean useJdkUnsafe) {
 		if ( gsonPost291Constructor != null ) {
 			try {
 				return gsonPost291Constructor.newInstance(instanceCreators, useJdkUnsafe, Collections.emptyList());
