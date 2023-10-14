@@ -37,6 +37,7 @@ public final class MultisetTypeAdapterFactory<E>
 	private static final TypeAdapterFactory instance = new MultisetTypeAdapterFactory<>(null);
 
 	@Nullable
+	@SuppressWarnings("Guava")
 	private final Supplier<? extends Multiset<E>> newMultisetFactory;
 
 	/**
@@ -47,7 +48,7 @@ public final class MultisetTypeAdapterFactory<E>
 	 *
 	 * @return An instance of {@link MultisetTypeAdapterFactory} with a custom new {@link Multiset} factory.
 	 */
-	public static <E> TypeAdapterFactory getInstance(@Nullable final Supplier<? extends Multiset<E>> newMultisetFactory) {
+	public static <E> TypeAdapterFactory getInstance(@Nullable @SuppressWarnings("Guava") final Supplier<? extends Multiset<E>> newMultisetFactory) {
 		if ( newMultisetFactory == null ) {
 			return instance;
 		}
@@ -85,6 +86,7 @@ public final class MultisetTypeAdapterFactory<E>
 			extends TypeAdapter<Multiset<E>> {
 
 		private final TypeAdapter<E> elementTypeAdapter;
+		@SuppressWarnings("Guava")
 		private final Supplier<? extends Multiset<E>> newMultisetFactory;
 
 		/**
@@ -114,7 +116,7 @@ public final class MultisetTypeAdapterFactory<E>
 		 * @see #getInstance(TypeAdapter)
 		 */
 		public static <V> TypeAdapter<Multiset<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				final Supplier<? extends Multiset<V>> newMultisetFactory) {
+				@SuppressWarnings("Guava") final Supplier<? extends Multiset<V>> newMultisetFactory) {
 			return new Adapter<>(valueTypeAdapter, newMultisetFactory);
 		}
 

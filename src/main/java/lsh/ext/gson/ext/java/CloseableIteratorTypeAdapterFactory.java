@@ -29,7 +29,7 @@ public final class CloseableIteratorTypeAdapterFactory<E>
 
 	@Override
 	protected TypeAdapter<?> createCursorTypeAdapter(final TypeAdapter<?> elementTypeAdapter) {
-		return CloseableIteratorTypeAdapterFactory.Adapter.getInstance(elementTypeAdapter);
+		return Adapter.getInstance(elementTypeAdapter);
 	}
 
 	/**

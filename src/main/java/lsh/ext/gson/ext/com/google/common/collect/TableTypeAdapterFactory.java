@@ -35,6 +35,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 	private static final TypeAdapterFactory instance = new TableTypeAdapterFactory<>(null, null, null);
 
 	@Nullable
+	@SuppressWarnings("Guava")
 	private final Supplier<? extends Table<R, C, V>> newTableFactory;
 
 	@Nullable
@@ -60,7 +61,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
 	 */
 	@SuppressWarnings("OverlyComplexBooleanExpression")
-	public static <R, C, V> TypeAdapterFactory getInstance(@Nullable final Supplier<? extends Table<R, C, V>> newTableFactory,
+	public static <R, C, V> TypeAdapterFactory getInstance(@Nullable @SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
 			@Nullable final Converter<R, String> rowKeyConverter, @Nullable final Converter<C, String> columnKeyConverter) {
 		if ( newTableFactory == null && rowKeyConverter == null && columnKeyConverter == null ) {
 			return instance;
@@ -91,7 +92,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 			return castTableTypeAdapter;
 		}
 		if ( newTableFactory != null && lacksKeyConverters ) {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@SuppressWarnings({ "unchecked", "rawtypes", "Guava" })
 			final Supplier<? extends Table<String, String, V>> castNewTableFactory = (Supplier) newTableFactory;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) Adapter.getInstance(valueTypeAdapter, castNewTableFactory);
@@ -112,18 +113,24 @@ public final class TableTypeAdapterFactory<R, C, V>
 	public static final class Adapter<R, C, V>
 			extends TypeAdapter<Table<R, C, V>> {
 
+		@SuppressWarnings("Guava")
 		private static final Supplier<? extends Table<?, ?, ?>> defaultNewTableFactory = HashBasedTable::create;
 		private static final Converter<?, ?> defaultKeyConverter = Converter.identity();
 
 		private final TypeAdapter<V> valueTypeAdapter;
+		@SuppressWarnings("Guava")
 		private final Supplier<? extends Table<R, C, V>> newTableFactory;
-		private final Converter<R, String> rowKeyConverter;
-		private final Converter<String, R> reverseRowKeyConverter;
-		private final Converter<C, String> forwardColumnKeyConverter;
-		private final Converter<String, C> columnKeyConverter;
+		private final Converter<? super R, String> rowKeyConverter;
+		private final Converter<? super String, ? extends R> reverseRowKeyConverter;
+		private final Converter<? super C, String> forwardColumnKeyConverter;
+		private final Converter<? super String, ? extends C> columnKeyConverter;
 
-		private Adapter(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Table<R, C, V>> newTableFactory,
-				final Converter<R, String> rowKeyConverter, final Converter<C, String> forwardColumnKeyConverter) {
+		private Adapter(
+				final TypeAdapter<V> valueTypeAdapter,
+				@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
+				@SuppressWarnings("BoundedWildcard") final Converter<R, String> rowKeyConverter,
+				@SuppressWarnings("BoundedWildcard") final Converter<C, String> forwardColumnKeyConverter
+		) {
 			this.valueTypeAdapter = valueTypeAdapter;
 			this.newTableFactory = newTableFactory;
 			this.rowKeyConverter = rowKeyConverter;
@@ -141,7 +148,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <V> TypeAdapter<Table<String, String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter) {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "Guava" })
 			final Supplier<? extends Table<String, String, V>> newTableFactory = (Supplier<? extends Table<String, String, V>>) defaultNewTableFactory;
 			@SuppressWarnings("unchecked")
 			final Converter<String, String> rowKeyConverter = (Converter<String, String>) defaultKeyConverter;
@@ -161,7 +168,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <V> TypeAdapter<Table<String, String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				final Supplier<? extends Table<String, String, V>> newTableFactory) {
+				@SuppressWarnings("Guava") final Supplier<? extends Table<String, String, V>> newTableFactory) {
 			@SuppressWarnings("unchecked")
 			final Converter<String, String> rowKeyConverter = (Converter<String, String>) defaultKeyConverter;
 			@SuppressWarnings("unchecked")
@@ -187,7 +194,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 		 */
 		public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(final TypeAdapter<V> valueTypeAdapter, final Converter<R, String> rowKeyConverter,
 				final Converter<C, String> columnKeyConverter) {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "Guava" })
 			final Supplier<? extends Table<R, C, V>> newTableFactory = (Supplier<? extends Table<R, C, V>>) defaultNewTableFactory;
 			return getInstance(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 		}
@@ -211,7 +218,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				final Supplier<? extends Table<R, C, V>> newTableFactory,
+				@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
 				final Converter<R, String> rowKeyConverter, final Converter<C, String> columnKeyConverter) {
 			return new Adapter<>(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 		}

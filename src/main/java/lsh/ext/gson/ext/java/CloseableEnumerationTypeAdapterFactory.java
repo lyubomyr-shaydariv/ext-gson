@@ -30,7 +30,7 @@ public final class CloseableEnumerationTypeAdapterFactory<E>
 
 	@Override
 	protected TypeAdapter<?> createCursorTypeAdapter(final TypeAdapter<?> elementTypeAdapter) {
-		return CloseableEnumerationTypeAdapterFactory.Adapter.getInstance(elementTypeAdapter);
+		return Adapter.getInstance(elementTypeAdapter);
 	}
 
 	/**

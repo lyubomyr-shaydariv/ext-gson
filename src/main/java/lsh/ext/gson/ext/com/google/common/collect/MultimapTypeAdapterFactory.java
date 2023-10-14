@@ -48,11 +48,11 @@ public final class MultimapTypeAdapterFactory<K, V>
 	 * @param <K>
 	 * 		Key type
 	 * @param <V>
-	 * 		Vqlue type
+	 * 		Value type
 	 *
 	 * @return An instance of {@link MultimapTypeAdapterFactory} with a custom new {@link Multimap} factory.
 	 */
-	public static <K, V> TypeAdapterFactory getInstance(@Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
+	public static <K, V> TypeAdapterFactory getInstance(@SuppressWarnings("Guava") @Nullable final Supplier<? extends Multimap<K, V>> newMultimapFactory,
 			@Nullable final Converter<K, String> keyConverter) {
 		if ( newMultimapFactory == null && keyConverter == null ) {
 			return instance;
@@ -78,7 +78,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 			return castMultimapTypeAdapter;
 		}
 		if ( newMultimapFactory != null && keyConverter == null ) {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@SuppressWarnings({ "unchecked", "rawtypes", "Guava" })
 			final Supplier<? extends Multimap<String, V>> castNewMultimapFactory = (Supplier) newMultimapFactory;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final TypeAdapter<Multimap<K, V>> castMultimapTypeAdapter = (TypeAdapter) Adapter.getInstance(valueTypeAdapter, castNewMultimapFactory);
@@ -99,16 +99,21 @@ public final class MultimapTypeAdapterFactory<K, V>
 	public static final class Adapter<K, V>
 			extends TypeAdapter<Multimap<K, V>> {
 
+		@SuppressWarnings("Guava")
 		private static final Supplier<? extends Multimap<?, ?>> defaultNewMultimapFactory = ArrayListMultimap::create;
 		private static final Converter<?, String> defaultKeyConverter = Converter.identity();
 
 		private final TypeAdapter<V> valueTypeAdapter;
+		@SuppressWarnings("Guava")
 		private final Supplier<? extends Multimap<K, V>> newMultimapFactory;
-		private final Converter<K, String> keyConverter;
-		private final Converter<String, K> reverseKeyConverter;
+		private final Converter<? super K, String> keyConverter;
+		private final Converter<? super String, ? extends K> reverseKeyConverter;
 
-		private Adapter(final TypeAdapter<V> valueTypeAdapter, final Supplier<? extends Multimap<K, V>> newMultimapFactory,
-				final Converter<K, String> keyConverter) {
+		private Adapter(
+				final TypeAdapter<V> valueTypeAdapter,
+				@SuppressWarnings("Guava") final Supplier<? extends Multimap<K, V>> newMultimapFactory,
+				@SuppressWarnings("BoundedWildcard") final Converter<K, String> keyConverter
+		) {
 			this.valueTypeAdapter = valueTypeAdapter;
 			this.newMultimapFactory = newMultimapFactory;
 			this.keyConverter = keyConverter;
@@ -124,7 +129,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 		 * @return A {@link Adapter} instance whose multimap factory is {@link ArrayListMultimap#create()}.
 		 */
 		public static <V> TypeAdapter<Multimap<String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter) {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "Guava" })
 			final Supplier<? extends Multimap<String, V>> newMultimapFactory = (Supplier<? extends Multimap<String, V>>) defaultNewMultimapFactory;
 			@SuppressWarnings("unchecked")
 			final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
@@ -142,7 +147,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <V> TypeAdapter<Multimap<String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				final Supplier<? extends Multimap<String, V>> newMultimapFactory) {
+				@SuppressWarnings("Guava") final Supplier<? extends Multimap<String, V>> newMultimapFactory) {
 			@SuppressWarnings("unchecked")
 			final Converter<String, String> keyConverter = (Converter<String, String>) defaultKeyConverter;
 			return getInstance(valueTypeAdapter, newMultimapFactory, keyConverter);
@@ -161,7 +166,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter, final Converter<K, String> keyConverter) {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "Guava" })
 			final Supplier<? extends Multimap<K, V>> newMultimapFactory = (Supplier<? extends Multimap<K, V>>) defaultNewMultimapFactory;
 			return getInstance(valueTypeAdapter, newMultimapFactory, keyConverter);
 		}
@@ -181,7 +186,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				final Supplier<? extends Multimap<K, V>> newMultimapFactory, final Converter<K, String> keyConverter) {
+				@SuppressWarnings("Guava") final Supplier<? extends Multimap<K, V>> newMultimapFactory, final Converter<K, String> keyConverter) {
 			return new Adapter<>(valueTypeAdapter, newMultimapFactory, keyConverter);
 		}
 

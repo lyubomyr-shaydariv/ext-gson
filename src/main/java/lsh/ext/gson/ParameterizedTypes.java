@@ -28,19 +28,17 @@ public final class ParameterizedTypes {
 	public static Type[][] getTypeArguments(final Type type) {
 		if ( type instanceof final ParameterizedType parameterizedType ) {
 			final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-			final int length = actualTypeArguments.length;
-			final Type[][] resultTypeArguments = new Type[length][];
-			for ( int i = 0; i < length; i++ ) {
+			final Type[][] resultTypeArguments = new Type[actualTypeArguments.length][];
+			for ( int i = 0; i < actualTypeArguments.length; i++ ) {
 				resultTypeArguments[i] = new Type[] { actualTypeArguments[i] };
 			}
 			return resultTypeArguments;
 		}
 		if ( type instanceof final GenericDeclaration genericDeclaration ) {
 			final TypeVariable<?>[] typeParameters = genericDeclaration.getTypeParameters();
-			final int length = typeParameters.length;
-			if ( length != 0 ) {
-				final Type[][] resultTypeParameters = new Type[length][];
-				for ( int i = 0; i < length; i++ ) {
+			if ( typeParameters.length != 0 ) {
+				final Type[][] resultTypeParameters = new Type[typeParameters.length][];
+				for ( int i = 0; i < typeParameters.length; i++ ) {
 					final TypeVariable<?> typeParameter = typeParameters[i];
 					resultTypeParameters[i] = typeParameter.getBounds();
 				}
