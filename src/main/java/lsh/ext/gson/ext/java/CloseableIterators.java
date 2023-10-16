@@ -29,11 +29,10 @@ public final class CloseableIterators {
 	 * @see #asCloseable(ICloseableIterator)
 	 */
 	public static <E> ICloseableIterator<E> asCloseable(final Iterator<? extends E> iterator) {
-		if ( iterator instanceof ICloseableIterator ) {
-			// ha-ha, Java 14, because `if ( iterator instanceof @SuppressWarnings("unchecked") final ICloseableIterator<E> closeableIterator ) {` is illegal
+		if ( iterator instanceof final ICloseableIterator<?> closeableIterator ) {
 			@SuppressWarnings("unchecked")
-			final ICloseableIterator<E> closeableIterator = (ICloseableIterator<E>) iterator;
-			return closeableIterator;
+			final ICloseableIterator<E> castCloseableIterator = (ICloseableIterator<E>) closeableIterator;
+			return castCloseableIterator;
 		}
 		return new CloseableIterator<>(iterator);
 	}
