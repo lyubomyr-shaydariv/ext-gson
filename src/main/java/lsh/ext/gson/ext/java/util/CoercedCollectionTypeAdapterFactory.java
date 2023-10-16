@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.util;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +17,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.ParameterizedTypes;
 
 /**
  * Represents a type adapter factory for single values that can be converted to a collection or keep an existing collection of multiple elements.
@@ -62,9 +60,8 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 
 	@Override
 	protected TypeAdapter<C> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		final Type elementType = ParameterizedTypes.getTypeArguments(typeToken.getType())[0][0];
 		@SuppressWarnings("unchecked")
-		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
+		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(Object.class));
 		return Adapter.getInstance(elementTypeAdapter, collectionFactory);
 	}
 

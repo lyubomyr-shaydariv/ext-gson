@@ -1,9 +1,7 @@
 package lsh.ext.gson;
 
-import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 
 import lombok.experimental.UtilityClass;
 
@@ -19,8 +17,7 @@ public final class ParameterizedTypes {
 
 	/**
 	 * @param type
-	 * 		Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned. If {@code
-	 * 		type} is just {@link GenericDeclaration}, type bounds are extracted.
+	 * 		Type to inspect. If {@code type} is {@link ParameterizedType}, then {@link ParameterizedType#getActualTypeArguments()} is returned.
 	 *
 	 * @return A two-dimensional array where each element is an array of a {@link Type} instance or {@code Object.class} but never {@code null}, otherwise an
 	 * empty array if no type parameters are available.
@@ -33,17 +30,6 @@ public final class ParameterizedTypes {
 				resultTypeArguments[i] = new Type[] { actualTypeArguments[i] };
 			}
 			return resultTypeArguments;
-		}
-		if ( type instanceof final GenericDeclaration genericDeclaration ) {
-			final TypeVariable<?>[] typeParameters = genericDeclaration.getTypeParameters();
-			if ( typeParameters.length != 0 ) {
-				final Type[][] resultTypeParameters = new Type[typeParameters.length][];
-				for ( int i = 0; i < typeParameters.length; i++ ) {
-					final TypeVariable<?> typeParameter = typeParameters[i];
-					resultTypeParameters[i] = typeParameter.getBounds();
-				}
-				return resultTypeParameters;
-			}
 		}
 		return emptyType2dArray;
 	}
