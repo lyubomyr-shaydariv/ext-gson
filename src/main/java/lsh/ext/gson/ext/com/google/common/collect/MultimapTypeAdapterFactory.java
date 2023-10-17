@@ -68,8 +68,8 @@ public final class MultimapTypeAdapterFactory<K, V>
 	@Override
 	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<Multimap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final Type valueType = typeArguments[1][0];
+		final Type[] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
+		final Type valueType = typeArguments[1];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		if ( newMultimapFactory == null && keyConverter == null ) {

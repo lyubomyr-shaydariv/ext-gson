@@ -14,8 +14,8 @@ public final class ParameterizedTypesTest {
 
 	@Test
 	public void testResolveTypeArgumentsForParameterizedTypes() {
-		Assertions.assertArrayEquals(new Type[][] { new Type[] { String.class } }, ParameterizedTypes.getTypeArguments(TypeToken.getParameterized(List.class, String.class).getType()));
-		Assertions.assertArrayEquals(new Type[][] { new Type[] { Integer.class }, new Type[] { Float.class } }, ParameterizedTypes.getTypeArguments(TypeToken.getParameterized(Map.class, Integer.class, Float.class).getType()));
+		Assertions.assertArrayEquals(new Type[] { String.class }, ParameterizedTypes.getTypeArguments(TypeToken.getParameterized(List.class, String.class).getType()));
+		Assertions.assertArrayEquals(new Type[] { Integer.class, Float.class }, ParameterizedTypes.getTypeArguments(TypeToken.getParameterized(Map.class, Integer.class, Float.class).getType()));
 	}
 
 	@Test

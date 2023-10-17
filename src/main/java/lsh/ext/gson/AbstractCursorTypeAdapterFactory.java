@@ -37,8 +37,8 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 
 	@Override
 	protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0][0]));
+		final Type[] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
+		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0]));
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> castTypeAdapter = (TypeAdapter<E>) createCursorTypeAdapter(elementTypeAdapter);
 		return castTypeAdapter;

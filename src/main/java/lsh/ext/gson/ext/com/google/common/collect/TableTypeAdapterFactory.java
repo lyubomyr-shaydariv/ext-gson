@@ -81,8 +81,8 @@ public final class TableTypeAdapterFactory<R, C, V>
 	@Override
 	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<Table<R, C, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final Type valueType = typeArguments[2][0];
+		final Type[] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
+		final Type valueType = typeArguments[2];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		final boolean lacksKeyConverters = rowKeyConverter == null && columnKeyConverter == null;

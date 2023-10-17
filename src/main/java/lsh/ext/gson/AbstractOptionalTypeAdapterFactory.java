@@ -35,8 +35,8 @@ public abstract class AbstractOptionalTypeAdapterFactory<O, T>
 
 	@Override
 	protected final TypeAdapter<O> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		final Type[][] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final Type parameterType = typeArguments[0][0];
+		final Type[] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
+		final Type parameterType = typeArguments[0];
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<T> typeAdapter = (TypeAdapter<T>) gson.getAdapter(TypeToken.get(parameterType));
 		return from(typeAdapter);
