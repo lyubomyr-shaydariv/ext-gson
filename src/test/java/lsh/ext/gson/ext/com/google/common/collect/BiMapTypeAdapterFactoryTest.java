@@ -3,7 +3,9 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import com.google.common.base.Converter;
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterFactoryTest;
@@ -18,7 +20,7 @@ public final class BiMapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return BiMapTypeAdapterFactory.getInstance();
+		return BiMapTypeAdapterFactory.getInstance(HashBiMap::create, Converter.identity());
 	}
 
 	@Override

@@ -1,10 +1,12 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
-import javax.annotation.Nullable;
-
 import com.google.common.base.Converter;
 import com.google.common.base.Supplier;
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Table;
@@ -31,7 +33,12 @@ public final class GuavaCollectModule
 		extends AbstractModule {
 
 	@Getter
-	private static final IModule instance = builder()
+	private static final IModule instance = builder(
+			HashBiMap::create, Converter.identity(),
+			LinkedHashMultiset::create,
+			HashMultimap::create, Converter.identity(),
+			HashBasedTable::create, Converter.identity(), Converter.identity()
+	)
 			.build();
 
 	private GuavaCollectModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
@@ -41,8 +48,13 @@ public final class GuavaCollectModule
 	/**
 	 * @return A builder to build a new instance of the module.
 	 */
-	public static Builder builder() {
-		return new Builder();
+	public static <BMK, BMV, MSE, MMK, MMV, TTR, TTC, TTV> Builder<BMK, BMV, MSE, MMK, MMV, TTR, TTC, TTV> builder(
+			@SuppressWarnings("Guava") final Supplier<? extends BiMap<BMK, BMV>> newBiMapFactory, final Converter<BMK, String> biMapKeyConverter,
+			@SuppressWarnings("Guava") final Supplier<? extends Multiset<MSE>> newMultisetFactory,
+			@SuppressWarnings("Guava") final Supplier<? extends Multimap<MMK, MMV>> newMultimapFactory, final Converter<MMK, String> multimapKeyConverter,
+			@SuppressWarnings("Guava") final Supplier<? extends Table<TTR, TTC, TTV>> newTableFactory, final Converter<TTR, String> tableRowKeyConverter, final Converter<TTC, String> tableColumnKeyConverter
+	) {
+		return new Builder<>(newBiMapFactory, biMapKeyConverter, newMultisetFactory, newMultimapFactory, multimapKeyConverter, newTableFactory, tableRowKeyConverter, tableColumnKeyConverter);
 	}
 
 	/**
@@ -50,55 +62,30 @@ public final class GuavaCollectModule
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true, prefix = "with")
-	public static final class Builder {
+	public static final class Builder<BMK, BMV, MSE, MMK, MMV, TTR, TTC, TTV> {
 
-		@Nullable
-		private Supplier<? extends BiMap<?, ?>> newBiMapFactory;
-
-		@Nullable
-		private Converter<?, String> biMapKeyConverter;
-
-		@Nullable
-		private Supplier<? extends Multiset<?>> newMultisetFactory;
-
-		@Nullable
-		private Supplier<? extends Multimap<?, ?>> newMultimapFactory;
-
-		@Nullable
-		private Converter<?, String> multimapKeyConverter;
-
-		@Nullable
-		private Supplier<? extends Table<String, String, Object>> newTableFactory;
-
-		@Nullable
-		private Converter<?, String> tableRowKeyConverter;
-
-		@Nullable
-		private Converter<?, String> tableColumnKeyConverter;
+		@SuppressWarnings("Guava")
+		private final Supplier<? extends BiMap<BMK, BMV>> newBiMapFactory;
+		private final Converter<BMK, String> biMapKeyConverter;
+		@SuppressWarnings("Guava")
+		private final Supplier<? extends Multiset<MSE>> newMultisetFactory;
+		@SuppressWarnings("Guava")
+		private final Supplier<? extends Multimap<MMK, MMV>> newMultimapFactory;
+		private final Converter<MMK, String> multimapKeyConverter;
+		@SuppressWarnings("Guava")
+		private final Supplier<? extends Table<TTR, TTC, TTV>> newTableFactory;
+		private final Converter<TTR, String> tableRowKeyConverter;
+		private final Converter<TTC, String> tableColumnKeyConverter;
 
 		/**
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			@SuppressWarnings("unchecked")
-			final Supplier<? extends BiMap<String, Object>> castNewBiMapFactory = (Supplier<? extends BiMap<String, Object>>) newBiMapFactory;
-			@SuppressWarnings("unchecked")
-			final Converter<String, String> castBiMapKeyConverter = (Converter<String, String>) biMapKeyConverter;
-			@SuppressWarnings("unchecked")
-			final Supplier<? extends Multimap<Object, Object>> castNewMultimapFactory = (Supplier<? extends Multimap<Object, Object>>) newMultimapFactory;
-			@SuppressWarnings("unchecked")
-			final Converter<Object, String> castMultimapKeyConverter = (Converter<Object, String>) multimapKeyConverter;
-			@SuppressWarnings("unchecked")
-			final Supplier<? extends Multiset<Object>> castNewMultisetFactory = (Supplier<? extends Multiset<Object>>) newMultisetFactory;
-			@SuppressWarnings("unchecked")
-			final Converter<String, String> castTableRowKeyConverter = (Converter<String, String>) tableRowKeyConverter;
-			@SuppressWarnings("unchecked")
-			final Converter<String, String> castTableColumnKeyConverter = (Converter<String, String>) tableColumnKeyConverter;
 			return new GuavaCollectModule(UnmodifiableIterable.copyOf(
-					BiMapTypeAdapterFactory.getInstance(castNewBiMapFactory, castBiMapKeyConverter),
-					MultimapTypeAdapterFactory.getInstance(castNewMultimapFactory, castMultimapKeyConverter),
-					MultisetTypeAdapterFactory.getInstance(castNewMultisetFactory),
-					TableTypeAdapterFactory.getInstance(newTableFactory, castTableRowKeyConverter, castTableColumnKeyConverter)
+					BiMapTypeAdapterFactory.getInstance(newBiMapFactory, biMapKeyConverter),
+					MultimapTypeAdapterFactory.getInstance(newMultimapFactory, multimapKeyConverter),
+					MultisetTypeAdapterFactory.getInstance(newMultisetFactory),
+					TableTypeAdapterFactory.getInstance(newTableFactory, tableRowKeyConverter, tableColumnKeyConverter)
 			));
 		}
 

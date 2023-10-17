@@ -3,11 +3,9 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import javax.annotation.Nullable;
 
 import com.google.common.base.Converter;
 import com.google.common.base.Supplier;
-import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -16,7 +14,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
@@ -28,17 +25,9 @@ import lsh.ext.gson.ParameterizedTypes;
 public final class TableTypeAdapterFactory<R, C, V>
 		extends AbstractTypeAdapterFactory<Table<R, C, V>> {
 
-	@Getter
-	private static final TypeAdapterFactory instance = new TableTypeAdapterFactory<>(null, null, null);
-
-	@Nullable
 	@SuppressWarnings("Guava")
 	private final Supplier<? extends Table<R, C, V>> newTableFactory;
-
-	@Nullable
 	private final Converter<R, String> rowKeyConverter;
-
-	@Nullable
 	private final Converter<C, String> columnKeyConverter;
 
 	/**
@@ -57,16 +46,8 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 *
 	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
 	 */
-	@SuppressWarnings("OverlyComplexBooleanExpression")
-	public static <R, C, V> TypeAdapterFactory getInstance(@Nullable @SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
-			@Nullable final Converter<R, String> rowKeyConverter, @Nullable final Converter<C, String> columnKeyConverter) {
-		if ( newTableFactory == null && rowKeyConverter == null && columnKeyConverter == null ) {
-			return instance;
-		}
-		if ( rowKeyConverter == null && columnKeyConverter != null
-				|| rowKeyConverter != null && columnKeyConverter == null ) {
-			throw new NullPointerException("Row and column key converter must both be not null or both be null");
-		}
+	public static <R, C, V> TypeAdapterFactory getInstance(@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
+			final Converter<R, String> rowKeyConverter, final Converter<C, String> columnKeyConverter) {
 		return new TableTypeAdapterFactory<>(newTableFactory, rowKeyConverter, columnKeyConverter);
 	}
 
@@ -81,22 +62,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 2);
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
-		final boolean lacksKeyConverters = rowKeyConverter == null && columnKeyConverter == null;
-		if ( newTableFactory == null && lacksKeyConverters ) {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) Adapter.getInstance(valueTypeAdapter);
-			return castTableTypeAdapter;
-		}
-		if ( newTableFactory != null && lacksKeyConverters ) {
-			@SuppressWarnings({ "unchecked", "rawtypes", "Guava" })
-			final Supplier<? extends Table<String, String, V>> castNewTableFactory = (Supplier) newTableFactory;
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final TypeAdapter<Table<R, C, V>> castTableTypeAdapter = (TypeAdapter) Adapter.getInstance(valueTypeAdapter, castNewTableFactory);
-			return castTableTypeAdapter;
-		}
-		if ( newTableFactory == null && !lacksKeyConverters ) {
-			return Adapter.getInstance(valueTypeAdapter, rowKeyConverter, columnKeyConverter);
-		}
 		return Adapter.getInstance(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 	}
 
@@ -105,10 +70,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 */
 	public static final class Adapter<R, C, V>
 			extends TypeAdapter<Table<R, C, V>> {
-
-		@SuppressWarnings("Guava")
-		private static final Supplier<? extends Table<?, ?, ?>> defaultNewTableFactory = HashBasedTable::create;
-		private static final Converter<?, ?> defaultKeyConverter = Converter.identity();
 
 		private final TypeAdapter<V> valueTypeAdapter;
 		@SuppressWarnings("Guava")
@@ -130,66 +91,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 			reverseRowKeyConverter = rowKeyConverter.reverse();
 			this.forwardColumnKeyConverter = forwardColumnKeyConverter;
 			columnKeyConverter = forwardColumnKeyConverter.reverse();
-		}
-
-		/**
-		 * @param valueTypeAdapter
-		 * 		Table value type adapter
-		 * @param <V>
-		 * 		Table value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
-		public static <V> TypeAdapter<Table<String, String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter) {
-			@SuppressWarnings({ "unchecked", "Guava" })
-			final Supplier<? extends Table<String, String, V>> newTableFactory = (Supplier<? extends Table<String, String, V>>) defaultNewTableFactory;
-			@SuppressWarnings("unchecked")
-			final Converter<String, String> rowKeyConverter = (Converter<String, String>) defaultKeyConverter;
-			@SuppressWarnings("unchecked")
-			final Converter<String, String> columnKeyConverter = (Converter<String, String>) defaultKeyConverter;
-			return getInstance(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
-		}
-
-		/**
-		 * @param valueTypeAdapter
-		 * 		Table value type adapter
-		 * @param newTableFactory
-		 * 		A {@link Table} factory to create instance used while deserialization
-		 * @param <V>
-		 * 		Table value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
-		public static <V> TypeAdapter<Table<String, String, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				@SuppressWarnings("Guava") final Supplier<? extends Table<String, String, V>> newTableFactory) {
-			@SuppressWarnings("unchecked")
-			final Converter<String, String> rowKeyConverter = (Converter<String, String>) defaultKeyConverter;
-			@SuppressWarnings("unchecked")
-			final Converter<String, String> columnKeyConverter = (Converter<String, String>) defaultKeyConverter;
-			return getInstance(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
-		}
-
-		/**
-		 * @param valueTypeAdapter
-		 * 		Table value type adapter
-		 * @param rowKeyConverter
-		 * 		A converter to convert row key to JSON object property names
-		 * @param columnKeyConverter
-		 * 		A converter to convert column key to JSON object property names
-		 * @param <R>
-		 * 		Table row type
-		 * @param <C>
-		 * 		Table column type
-		 * @param <V>
-		 * 		Table value type
-		 *
-		 * @return A {@link Adapter} instance.
-		 */
-		public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(final TypeAdapter<V> valueTypeAdapter, final Converter<R, String> rowKeyConverter,
-				final Converter<C, String> columnKeyConverter) {
-			@SuppressWarnings({ "unchecked", "Guava" })
-			final Supplier<? extends Table<R, C, V>> newTableFactory = (Supplier<? extends Table<R, C, V>>) defaultNewTableFactory;
-			return getInstance(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
 		}
 
 		/**

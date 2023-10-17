@@ -2,6 +2,7 @@ package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.util.stream.Stream;
 
+import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +18,7 @@ public final class MultisetTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultisetTypeAdapterFactory.getInstance();
+		return MultisetTypeAdapterFactory.getInstance(LinkedHashMultiset::create);
 	}
 
 	@Override

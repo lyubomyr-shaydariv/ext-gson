@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMultiset;
+import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.gson.Gson;
 import lsh.ext.gson.AbstractTypeAdapterTest;
@@ -25,7 +26,7 @@ public final class MultisetTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultisetTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class)),
+						MultisetTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class), LinkedHashMultiset::create),
 						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
 						ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
 				)

@@ -5,7 +5,6 @@ import java.lang.reflect.Type;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Supplier;
-import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -14,7 +13,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
@@ -29,10 +27,6 @@ import lsh.ext.gson.ParameterizedTypes;
 public final class MultisetTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Multiset<E>> {
 
-	@Getter
-	private static final TypeAdapterFactory instance = new MultisetTypeAdapterFactory<>(null);
-
-	@Nullable
 	@SuppressWarnings("Guava")
 	private final Supplier<? extends Multiset<E>> newMultisetFactory;
 
@@ -44,10 +38,7 @@ public final class MultisetTypeAdapterFactory<E>
 	 *
 	 * @return An instance of {@link MultisetTypeAdapterFactory} with a custom new {@link Multiset} factory.
 	 */
-	public static <E> TypeAdapterFactory getInstance(@Nullable @SuppressWarnings("Guava") final Supplier<? extends Multiset<E>> newMultisetFactory) {
-		if ( newMultisetFactory == null ) {
-			return instance;
-		}
+	public static <E> TypeAdapterFactory getInstance(@SuppressWarnings("Guava") final Supplier<? extends Multiset<E>> newMultisetFactory) {
 		return new MultisetTypeAdapterFactory<>(newMultisetFactory);
 	}
 
@@ -63,9 +54,6 @@ public final class MultisetTypeAdapterFactory<E>
 		assert elementType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
-		if ( newMultisetFactory == null ) {
-			return Adapter.getInstance(elementTypeAdapter);
-		}
 		return Adapter.getInstance(elementTypeAdapter, newMultisetFactory);
 	}
 
@@ -82,18 +70,6 @@ public final class MultisetTypeAdapterFactory<E>
 		private final TypeAdapter<E> elementTypeAdapter;
 		@SuppressWarnings("Guava")
 		private final Supplier<? extends Multiset<E>> newMultisetFactory;
-
-		/**
-		 * @param elementTypeAdapter
-		 * 		Multiset element type adapter
-		 * @param <E>
-		 * 		Multiset element type
-		 *
-		 * @return A {@link Adapter} instance whose multiset factory is {@link LinkedHashMultiset#create()}.
-		 */
-		public static <E> TypeAdapter<Multiset<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
-			return getInstance(elementTypeAdapter, (Supplier<? extends Multiset<E>>) LinkedHashMultiset::create);
-		}
 
 		/**
 		 * @param valueTypeAdapter
