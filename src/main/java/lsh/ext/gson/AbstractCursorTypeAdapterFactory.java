@@ -3,6 +3,7 @@ package lsh.ext.gson;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Iterator;
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -37,8 +38,10 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 
 	@Override
 	protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		final Type[] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArguments[0]));
+		@Nullable
+		final Type typeArgument = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
+		assert typeArgument != null;
+		final TypeAdapter<?> elementTypeAdapter = gson.getAdapter(TypeToken.get(typeArgument));
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> castTypeAdapter = (TypeAdapter<E>) createCursorTypeAdapter(elementTypeAdapter);
 		return castTypeAdapter;

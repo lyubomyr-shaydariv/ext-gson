@@ -68,8 +68,7 @@ public final class BiMapTypeAdapterFactory<K, V>
 	@Override
 	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<BiMap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		final Type[] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final Type valueType = typeArguments[1];
+		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		if ( newBiMapFactory == null && keyConverter == null ) {

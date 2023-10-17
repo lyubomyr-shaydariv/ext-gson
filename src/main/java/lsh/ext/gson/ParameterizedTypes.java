@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
+import javax.annotation.Nullable;
 
 import lombok.experimental.UtilityClass;
 
@@ -16,6 +17,25 @@ import lombok.experimental.UtilityClass;
 public final class ParameterizedTypes {
 
 	private static final Type[] emptyTypeArray = {};
+
+	@Nullable
+	public static Type getTypeArgument(final Type type, final int index) {
+		if ( type instanceof final ParameterizedType parameterizedType ) {
+			final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+			if ( actualTypeArguments.length == 0 ) {
+				return null;
+			}
+			return actualTypeArguments[index];
+		}
+		if ( type instanceof final Class<?> klass ) {
+			final TypeVariable<?>[] typeParameters = klass.getTypeParameters();
+			if ( typeParameters.length == 0 ) {
+				return null;
+			}
+			return Object.class;
+		}
+		return null;
+	}
 
 	/**
 	 * @param type

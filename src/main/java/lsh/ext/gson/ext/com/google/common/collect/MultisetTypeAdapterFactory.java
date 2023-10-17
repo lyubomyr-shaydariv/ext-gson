@@ -62,8 +62,9 @@ public final class MultisetTypeAdapterFactory<E>
 
 	@Override
 	protected TypeAdapter<Multiset<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		final Type[] typeArguments = ParameterizedTypes.getTypeArguments(typeToken.getType());
-		final Type elementType = typeArguments[0];
+		@Nullable
+		final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
+		assert elementType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
 		if ( newMultisetFactory == null ) {
