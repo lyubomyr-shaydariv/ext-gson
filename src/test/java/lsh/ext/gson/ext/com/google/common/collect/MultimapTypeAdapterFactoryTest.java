@@ -3,7 +3,7 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import com.google.common.base.Converter;
+import com.google.common.base.Functions;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
@@ -21,7 +21,7 @@ public final class MultimapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultimapTypeAdapterFactory.getInstance(LinkedHashMultimap::create, Converter.identity());
+		return MultimapTypeAdapterFactory.getInstance(LinkedHashMultimap::create, Functions.identity(), Functions.identity());
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import com.google.common.base.Converter;
+import com.google.common.base.Functions;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.gson.TypeAdapterFactory;
@@ -22,7 +22,7 @@ public final class TableTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return TableTypeAdapterFactory.getInstance(HashBasedTable::create, Converter.identity(), Converter.identity());
+		return TableTypeAdapterFactory.getInstance(HashBasedTable::create, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity());
 	}
 
 	@Override

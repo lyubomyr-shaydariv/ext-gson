@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import com.google.common.base.Converter;
+import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
@@ -27,13 +27,18 @@ public final class MultimapTypeAdapterFactory<K, V>
 
 	@SuppressWarnings("Guava")
 	private final Supplier<? extends Multimap<K, V>> newMultimapFactory;
-	private final Converter<K, String> keyConverter;
+	@SuppressWarnings("Guava")
+	private final Function<? super K, String> keyMapper;
+	@SuppressWarnings("Guava")
+	private final Function<? super String, ? extends K> keyReverseMapper;
 
 	/**
 	 * @param newMultimapFactory
 	 * 		Multimap factory
-	 * @param keyConverter
-	 * 		Key converter
+	 * @param keyMapper
+	 * 		Key mapper
+	 * @param keyReverseMapper
+	 * 		Key reverse mapper
 	 * @param <K>
 	 * 		Key type
 	 * @param <V>
@@ -41,9 +46,12 @@ public final class MultimapTypeAdapterFactory<K, V>
 	 *
 	 * @return An instance of {@link MultimapTypeAdapterFactory} with a custom new {@link Multimap} factory.
 	 */
-	public static <K, V> TypeAdapterFactory getInstance(@SuppressWarnings("Guava") final Supplier<? extends Multimap<K, V>> newMultimapFactory,
-			final Converter<K, String> keyConverter) {
-		return new MultimapTypeAdapterFactory<>(newMultimapFactory, keyConverter);
+	public static <K, V> TypeAdapterFactory getInstance(
+			@SuppressWarnings("Guava") final Supplier<? extends Multimap<K, V>> newMultimapFactory,
+			@SuppressWarnings("Guava") final Function<? super K, String> keyMapper,
+			@SuppressWarnings("Guava") final Function<? super String, ? extends K> keyReverseMapper
+	) {
+		return new MultimapTypeAdapterFactory<>(newMultimapFactory, keyMapper, keyReverseMapper);
 	}
 
 	@Override
@@ -57,39 +65,33 @@ public final class MultimapTypeAdapterFactory<K, V>
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
-		return Adapter.getInstance(valueTypeAdapter, newMultimapFactory, keyConverter);
+		return Adapter.getInstance(valueTypeAdapter, newMultimapFactory, keyMapper, keyReverseMapper);
 	}
 
 	/**
 	 * Represents a type adapter for {@link Multimap} from Google Guava.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<K, V>
 			extends TypeAdapter<Multimap<K, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
 		@SuppressWarnings("Guava")
 		private final Supplier<? extends Multimap<K, V>> newMultimapFactory;
-		private final Converter<? super K, String> keyConverter;
-		private final Converter<? super String, ? extends K> reverseKeyConverter;
-
-		private Adapter(
-				final TypeAdapter<V> valueTypeAdapter,
-				@SuppressWarnings("Guava") final Supplier<? extends Multimap<K, V>> newMultimapFactory,
-				@SuppressWarnings("BoundedWildcard") final Converter<K, String> keyConverter
-		) {
-			this.valueTypeAdapter = valueTypeAdapter;
-			this.newMultimapFactory = newMultimapFactory;
-			this.keyConverter = keyConverter;
-			reverseKeyConverter = keyConverter.reverse();
-		}
+		@SuppressWarnings("Guava")
+		private final Function<? super K, String> keyMapper;
+		@SuppressWarnings("Guava")
+		private final Function<? super String, ? extends K> keyReverseMapper;
 
 		/**
 		 * @param valueTypeAdapter
 		 * 		Multimap value type adapter
 		 * @param newMultimapFactory
 		 * 		A {@link Multimap} factory to create instance used while deserialization
-		 * @param keyConverter
-		 * 		A converter to convert key to JSON object property names
+		 * @param keyMapper
+		 * 		A mapper to convert key to JSON object property names
+		 * @param keyReverseMapper
+		 * 		A mapper to convert key to JSON object property names in reverse
 		 * @param <K>
 		 * 		Multimap key type
 		 * @param <V>
@@ -97,9 +99,13 @@ public final class MultimapTypeAdapterFactory<K, V>
 		 *
 		 * @return A {@link Adapter} instance.
 		 */
-		public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				@SuppressWarnings("Guava") final Supplier<? extends Multimap<K, V>> newMultimapFactory, final Converter<K, String> keyConverter) {
-			return new Adapter<>(valueTypeAdapter, newMultimapFactory, keyConverter);
+		public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(
+				final TypeAdapter<V> valueTypeAdapter,
+				@SuppressWarnings("Guava") final Supplier<? extends Multimap<K, V>> newMultimapFactory,
+				@SuppressWarnings("Guava") final Function<? super K, String> keyMapper,
+				@SuppressWarnings("Guava") final Function<? super String, ? extends K> keyReverseMapper
+		) {
+			return new Adapter<>(valueTypeAdapter, newMultimapFactory, keyMapper, keyReverseMapper);
 		}
 
 		@Override
@@ -107,7 +113,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 				throws IOException {
 			out.beginObject();
 			for ( final Map.Entry<K, V> e : multimap.entries() ) {
-				final String key = keyConverter.convert(e.getKey());
+				final String key = keyMapper.apply(e.getKey());
 				final V value = e.getValue();
 				out.name(key);
 				valueTypeAdapter.write(out, value);
@@ -121,7 +127,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 			final Multimap<K, V> multimap = newMultimapFactory.get();
 			in.beginObject();
 			while ( in.hasNext() ) {
-				final K key = reverseKeyConverter.convert(in.nextName());
+				final K key = keyReverseMapper.apply(in.nextName());
 				final V value = valueTypeAdapter.read(in);
 				multimap.put(key, value);
 			}

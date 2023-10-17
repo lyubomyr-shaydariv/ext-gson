@@ -3,7 +3,7 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.google.common.base.Converter;
+import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
@@ -27,7 +27,7 @@ public final class MultimapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultimapTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class), LinkedHashMultimap::create, Converter.identity()),
+						MultimapTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class), LinkedHashMultimap::create, Functions.identity(), Functions.identity()),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
 						LinkedHashMultimap.create(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
 				)

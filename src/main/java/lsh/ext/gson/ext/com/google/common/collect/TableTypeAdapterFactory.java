@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import com.google.common.base.Converter;
+import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
@@ -27,16 +27,26 @@ public final class TableTypeAdapterFactory<R, C, V>
 
 	@SuppressWarnings("Guava")
 	private final Supplier<? extends Table<R, C, V>> newTableFactory;
-	private final Converter<R, String> rowKeyConverter;
-	private final Converter<C, String> columnKeyConverter;
+	@SuppressWarnings("Guava")
+	private final Function<? super R, String> rowKeyMapper;
+	@SuppressWarnings("Guava")
+	private final Function<? super String, ? extends R> rowKeyReverseMapper;
+	@SuppressWarnings("Guava")
+	private final Function<? super C, String> columnKeyMapper;
+	@SuppressWarnings("Guava")
+	private final Function<? super String, ? extends C> columnKeyReverseMapper;
 
 	/**
 	 * @param newTableFactory
 	 * 		New table factory
-	 * @param rowKeyConverter
-	 * 		Row key converter
-	 * @param columnKeyConverter
-	 * 		Column key converter
+	 * @param rowKeyMapper
+	 * 		Row key mapper
+	 * @param rowKeyReverseMapper
+	 * 		Row key reverse mapper
+	 * @param columnKeyMapper
+	 * 		Column key mapper
+	 * @param columnKeyReverseMapper
+	 * 		Column key reverse mapper
 	 * @param <R>
 	 * 		Row type
 	 * @param <C>
@@ -46,9 +56,14 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 *
 	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
 	 */
-	public static <R, C, V> TypeAdapterFactory getInstance(@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
-			final Converter<R, String> rowKeyConverter, final Converter<C, String> columnKeyConverter) {
-		return new TableTypeAdapterFactory<>(newTableFactory, rowKeyConverter, columnKeyConverter);
+	public static <R, C, V> TypeAdapterFactory getInstance(
+			@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
+			@SuppressWarnings("Guava") final Function<? super R, String> rowKeyMapper,
+			@SuppressWarnings("Guava") final Function<? super String, ? extends R> rowKeyReverseMapper,
+			@SuppressWarnings("Guava") final Function<? super C, String> columnKeyMapper,
+			@SuppressWarnings("Guava") final Function<? super String, ? extends C> columnKeyReverseMapper
+	) {
+		return new TableTypeAdapterFactory<>(newTableFactory, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);
 	}
 
 	@Override
@@ -62,46 +77,41 @@ public final class TableTypeAdapterFactory<R, C, V>
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 2);
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
-		return Adapter.getInstance(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
+		return Adapter.getInstance(valueTypeAdapter, newTableFactory, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);
 	}
 
 	/**
 	 * Represents a type adapter for {@link Table} from Google Guava.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<R, C, V>
 			extends TypeAdapter<Table<R, C, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
 		@SuppressWarnings("Guava")
 		private final Supplier<? extends Table<R, C, V>> newTableFactory;
-		private final Converter<? super R, String> rowKeyConverter;
-		private final Converter<? super String, ? extends R> reverseRowKeyConverter;
-		private final Converter<? super C, String> forwardColumnKeyConverter;
-		private final Converter<? super String, ? extends C> columnKeyConverter;
-
-		private Adapter(
-				final TypeAdapter<V> valueTypeAdapter,
-				@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
-				@SuppressWarnings("BoundedWildcard") final Converter<R, String> rowKeyConverter,
-				@SuppressWarnings("BoundedWildcard") final Converter<C, String> forwardColumnKeyConverter
-		) {
-			this.valueTypeAdapter = valueTypeAdapter;
-			this.newTableFactory = newTableFactory;
-			this.rowKeyConverter = rowKeyConverter;
-			reverseRowKeyConverter = rowKeyConverter.reverse();
-			this.forwardColumnKeyConverter = forwardColumnKeyConverter;
-			columnKeyConverter = forwardColumnKeyConverter.reverse();
-		}
+		@SuppressWarnings("Guava")
+		private final Function<? super R, String> rowKeyMapper;
+		@SuppressWarnings("Guava")
+		private final Function<? super String, ? extends R> rowKeyReverseMapper;
+		@SuppressWarnings("Guava")
+		private final Function<? super C, String> columnKeyMapper;
+		@SuppressWarnings("Guava")
+		private final Function<? super String, ? extends C> columnKeyReverseMapper;
 
 		/**
 		 * @param valueTypeAdapter
 		 * 		Table value type adapter
 		 * @param newTableFactory
 		 * 		A {@link Table} factory to create instance used while deserialization
-		 * @param rowKeyConverter
-		 * 		A converter to convert row key to JSON object property names
-		 * @param columnKeyConverter
-		 * 		A converter to convert column key to JSON object property names
+		 * @param rowKeyMapper
+		 * 		A mapper to map row key to JSON object property names
+		 * @param rowKeyReverseMapper
+		 * 		A mapper to map row key to JSON object property names in reverse
+		 * @param columnKeyMapper
+		 * 		A mapper to map column key to JSON object property names
+		 * @param columnKeyReverseMapper
+		 * 		A mapper to map column key to JSON object property names in reverse
 		 * @param <R>
 		 * 		Table row type
 		 * @param <C>
@@ -111,10 +121,15 @@ public final class TableTypeAdapterFactory<R, C, V>
 		 *
 		 * @return A {@link Adapter} instance.
 		 */
-		public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
+		public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(
+				final TypeAdapter<V> valueTypeAdapter,
 				@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
-				final Converter<R, String> rowKeyConverter, final Converter<C, String> columnKeyConverter) {
-			return new Adapter<>(valueTypeAdapter, newTableFactory, rowKeyConverter, columnKeyConverter);
+				@SuppressWarnings("Guava") final Function<? super R, String> rowKeyMapper,
+				@SuppressWarnings("Guava") final Function<? super String, ? extends R> rowKeyReverseMapper,
+				@SuppressWarnings("Guava") final Function<? super C, String> columnKeyMapper,
+				@SuppressWarnings("Guava") final Function<? super String, ? extends C> columnKeyReverseMapper
+		) {
+			return new Adapter<>(valueTypeAdapter, newTableFactory, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);
 		}
 
 		@Override
@@ -123,12 +138,12 @@ public final class TableTypeAdapterFactory<R, C, V>
 			out.beginObject();
 			final Map<R, Map<C, V>> rowMap = table.rowMap();
 			for ( final Map.Entry<R, Map<C, V>> rowEntry : rowMap.entrySet() ) {
-				final String rowKey = rowKeyConverter.convert(rowEntry.getKey());
+				final String rowKey = rowKeyMapper.apply(rowEntry.getKey());
 				out.name(rowKey);
 				out.beginObject();
 				final Map<C, V> columnMap = rowEntry.getValue();
 				for ( final Map.Entry<C, V> columnEntry : columnMap.entrySet() ) {
-					final String columnKey = forwardColumnKeyConverter.convert(columnEntry.getKey());
+					final String columnKey = columnKeyMapper.apply(columnEntry.getKey());
 					final V value = columnEntry.getValue();
 					out.name(columnKey);
 					valueTypeAdapter.write(out, value);
@@ -144,10 +159,10 @@ public final class TableTypeAdapterFactory<R, C, V>
 			final Table<R, C, V> table = newTableFactory.get();
 			in.beginObject();
 			while ( in.hasNext() ) {
-				final R rowKey = reverseRowKeyConverter.convert(in.nextName());
+				final R rowKey = rowKeyReverseMapper.apply(in.nextName());
 				in.beginObject();
 				while ( in.hasNext() ) {
-					final C columnKey = columnKeyConverter.convert(in.nextName());
+					final C columnKey = columnKeyReverseMapper.apply(in.nextName());
 					final V value = valueTypeAdapter.read(in);
 					table.put(rowKey, columnKey, value);
 				}
