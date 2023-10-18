@@ -12,6 +12,11 @@ final class UnmodifiableIterator<T>
 	private final Iterator<? extends T> iterator;
 
 	static <T> Iterator<T> of(final Iterator<? extends T> iterator) {
+		if ( iterator instanceof UnmodifiableIterator<? extends T> ) {
+			@SuppressWarnings("unchecked")
+			final Iterator<T> castIterator = (Iterator<T>) iterator;
+			return castIterator;
+		}
 		return new UnmodifiableIterator<>(iterator);
 	}
 
