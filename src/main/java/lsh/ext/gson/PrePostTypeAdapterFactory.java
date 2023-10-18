@@ -3,7 +3,6 @@ package lsh.ext.gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -22,60 +21,70 @@ import lombok.RequiredArgsConstructor;
 public final class PrePostTypeAdapterFactory
 		implements TypeAdapterFactory {
 
-	private final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories;
+	private final Iterable<? extends IPreProcessorFactory<?>> preProcessorFactories;
+	private final Iterable<? extends IPostProcessorFactory<?>> postProcessorFactories;
 
 	/**
-	 * @param processorFactories
-	 * 		A sequence of processor factories.
+	 * @param preProcessorFactories
+	 * 		A sequence of pre processor factories.
+	 * @param postProcessorFactories
+	 * 		A sequence of post processor factories.
 	 *
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
 	 */
-	public static TypeAdapterFactory getInstance(final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories) {
-		return new PrePostTypeAdapterFactory(processorFactories);
-	}
-
-	/**
-	 * @param processorFactory
-	 * 		A single processor factory.
-	 *
-	 * @return A {@link PrePostTypeAdapterFactory} instance.
-	 */
-	public static TypeAdapterFactory getInstance(final IPrePostProcessorFactory<?> processorFactory) {
-		return new PrePostTypeAdapterFactory(Collections.singleton(processorFactory));
+	public static TypeAdapterFactory getInstance(final Iterable<? extends IPreProcessorFactory<?>> preProcessorFactories,
+			final Iterable<? extends IPostProcessorFactory<?>> postProcessorFactories) {
+		return new PrePostTypeAdapterFactory(preProcessorFactories, postProcessorFactories);
 	}
 
 	@Override
 	@Nullable
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-		Collection<IPrePostProcessor<?>> processors = null;
-		for ( final IPrePostProcessorFactory<?> factory : processorFactories ) {
-			if ( factory.supports(typeToken) ) {
-				if ( processors == null ) {
-					processors = new ArrayList<>();
-				}
-				processors.add(factory.createProcessor());
+		@Nullable
+		Collection<IPreProcessor<?>> preProcessors = null;
+		for ( final IPreProcessorFactory<?> factory : preProcessorFactories ) {
+			if ( !factory.supports(typeToken) ) {
+				continue;
 			}
+			if ( preProcessors == null ) {
+				preProcessors = new ArrayList<>();
+			}
+			preProcessors.add(factory.createPreProcessor());
 		}
-		if ( processors == null ) {
+		@Nullable
+		Collection<IPostProcessor<?>> postProcessors = null;
+		for ( final IPostProcessorFactory<?> factory : postProcessorFactories ) {
+			if ( !factory.supports(typeToken) ) {
+				continue;
+			}
+			if ( postProcessors == null ) {
+				postProcessors = new ArrayList<>();
+			}
+			postProcessors.add(factory.createPostProcessor());
+		}
+		if ( preProcessors == null && postProcessors == null ) {
 			return null;
 		}
 		final TypeAdapter<T> delegateTypeAdapter = gson.getDelegateAdapter(this, typeToken);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		final Iterable<? extends IPrePostProcessor<? super T>> castProcessors = (Iterable) processors;
-		return new PrePostTypeAdapter<>(castProcessors, delegateTypeAdapter);
+		final Iterable<? extends IPreProcessor<? super T>> castPreProcessors = (Iterable) preProcessors;
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final Iterable<? extends IPostProcessor<? super T>> castPostProcessors = (Iterable) postProcessors;
+		return new PrePostTypeAdapter<>(castPreProcessors, castPostProcessors, delegateTypeAdapter);
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class PrePostTypeAdapter<T>
 			extends TypeAdapter<T> {
 
-		private final Iterable<? extends IPrePostProcessor<? super T>> processors;
+		private final Iterable<? extends IPreProcessor<? super T>> preProcessors;
+		private final Iterable<? extends IPostProcessor<? super T>> postProcessors;
 		private final TypeAdapter<T> delegateTypeAdapter;
 
 		@Override
 		public void write(final JsonWriter out, final T value)
 				throws IOException {
-			for ( final IPrePostProcessor<? super T> processor : processors ) {
+			for ( final IPreProcessor<? super T> processor : preProcessors ) {
 				processor.pre(value);
 			}
 			delegateTypeAdapter.write(out, value);
@@ -85,7 +94,7 @@ public final class PrePostTypeAdapterFactory
 		public T read(final JsonReader in)
 				throws IOException {
 			final T value = delegateTypeAdapter.read(in);
-			for ( final IPrePostProcessor<? super T> processor : processors ) {
+			for ( final IPostProcessor<? super T> processor : postProcessors ) {
 				processor.post(value);
 			}
 			return value;

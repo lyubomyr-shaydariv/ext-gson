@@ -13,20 +13,20 @@ public final class PrePostTypeAdapterFactoryTest {
 	@Test
 	public void testPreConstruct() {
 		@SuppressWarnings("unchecked")
-		final IPrePostProcessor<User> userProcessor = Mockito.mock(IPrePostProcessor.class);
-		final IPrePostProcessorFactory<User> userProcessorFactory = new IPrePostProcessorFactory<>() {
+		final IPreProcessor<User> userProcessor = Mockito.mock(IPreProcessor.class);
+		final IPreProcessorFactory<User> userProcessorFactory = new IPreProcessorFactory<>() {
 			@Override
 			public boolean supports(final TypeToken<?> typeToken) {
 				return typeToken.getRawType() == User.class;
 			}
 
 			@Override
-			public IPrePostProcessor<User> createProcessor() {
+			public IPreProcessor<User> createPreProcessor() {
 				return userProcessor;
 			}
 		};
 		final Gson gson = Gsons.Builders.createNormalized()
-				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(userProcessorFactory)))
+				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(userProcessorFactory), List.of()))
 				.create();
 		gson.toJson(new User("John", "Doe"));
 		Mockito.verify(userProcessor).pre(ArgumentMatchers.eq(new User("John", "Doe")));
@@ -35,20 +35,20 @@ public final class PrePostTypeAdapterFactoryTest {
 	@Test
 	public void testPostConstruct() {
 		@SuppressWarnings("unchecked")
-		final IPrePostProcessor<User> userProcessor = Mockito.mock(IPrePostProcessor.class);
-		final IPrePostProcessorFactory<User> userProcessorFactory = new IPrePostProcessorFactory<>() {
+		final IPostProcessor<User> userProcessor = Mockito.mock(IPostProcessor.class);
+		final IPostProcessorFactory<User> userProcessorFactory = new IPostProcessorFactory<>() {
 			@Override
 			public boolean supports(final TypeToken<?> typeToken) {
 				return typeToken.getRawType() == User.class;
 			}
 
 			@Override
-			public IPrePostProcessor<User> createProcessor() {
+			public IPostProcessor<User> createPostProcessor() {
 				return userProcessor;
 			}
 		};
 		final Gson gson = Gsons.Builders.createNormalized()
-				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(userProcessorFactory)))
+				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(), List.of(userProcessorFactory)))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);
 		Mockito.verify(userProcessor).post(ArgumentMatchers.eq(new User("John", "Doe")));

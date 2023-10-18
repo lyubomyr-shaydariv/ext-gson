@@ -3,12 +3,12 @@ package lsh.ext.gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * A factory to return a pre/post processor.
+ * A factory to return a post processor.
  *
  * @param <T>
  * 		Type the processor is implemented for.
  */
-public interface IPrePostProcessorFactory<T> {
+public interface IPostProcessorFactory<T> {
 
 	/**
 	 * @param typeToken
@@ -19,8 +19,8 @@ public interface IPrePostProcessorFactory<T> {
 	boolean supports(TypeToken<?> typeToken);
 
 	/**
-	 * @return A pre/post processor for the given type.
+	 * @return A post processor for the given type.
 	 */
-	IPrePostProcessor<T> createProcessor();
+	IPostProcessor<T> createPostProcessor();
 
 }
