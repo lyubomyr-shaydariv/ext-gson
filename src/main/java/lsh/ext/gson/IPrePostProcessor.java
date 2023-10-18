@@ -5,8 +5,6 @@ package lsh.ext.gson;
  *
  * @param <T>
  * 		Type the processor is implemented for.
- *
- * @author Lyubomyr Shaydariv
  */
 public interface IPrePostProcessor<T> {
 

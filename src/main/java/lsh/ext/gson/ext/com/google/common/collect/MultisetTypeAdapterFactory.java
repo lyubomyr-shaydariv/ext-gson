@@ -24,8 +24,6 @@ import lsh.ext.gson.ParameterizedTypes;
  *
  * @param <E>
  * 		Element type
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultisetTypeAdapterFactory<E>
@@ -76,8 +74,6 @@ public final class MultisetTypeAdapterFactory<E>
 	 *
 	 * @param <E>
 	 * 		Element type
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<E>

@@ -19,8 +19,6 @@ import lsh.ext.gson.ext.java.ICloseableIterator;
  *
  * @param <E>
  * 		Element type
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractCursorTypeAdapterFactory<E>
@@ -53,8 +51,6 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 	 * 		Cursor type
 	 * @param <E>
 	 * 		Element type
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 	protected abstract static class Adapter<C, E>

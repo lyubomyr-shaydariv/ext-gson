@@ -15,8 +15,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link Instant}.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class InstantTypeAdapterFactory
@@ -40,8 +38,6 @@ public final class InstantTypeAdapterFactory
 
 	/**
 	 * A type adapter for {@link Instant}.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter

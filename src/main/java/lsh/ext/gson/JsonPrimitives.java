@@ -9,8 +9,6 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous {@link JsonPrimitive} utility methods.
- *
- * @author Lyubomyr Shaydariv
  */
 @UtilityClass
 public final class JsonPrimitives {

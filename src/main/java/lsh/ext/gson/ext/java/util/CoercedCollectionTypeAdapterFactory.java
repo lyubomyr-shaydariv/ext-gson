@@ -20,8 +20,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for single values that can be converted to a collection or keep an existing collection of multiple elements.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E>>
@@ -70,8 +68,6 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	 *
 	 * @param <E>
 	 * 		Element type
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<E, C extends Collection<E>>

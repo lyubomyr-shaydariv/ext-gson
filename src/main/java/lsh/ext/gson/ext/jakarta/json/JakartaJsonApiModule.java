@@ -15,8 +15,6 @@ import lsh.ext.gson.UnmodifiableIterable;
  * <ul>
  * <li>{@link JsonValueTypeAdapterFactory}</li>
  * </ul>
- *
- * @author Lyubomyr Shaydariv
  */
 public final class JakartaJsonApiModule
 		extends AbstractModule {

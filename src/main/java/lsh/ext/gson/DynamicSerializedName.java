@@ -25,8 +25,6 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * In this case the {@code User.username} JSON property name will be looked up by the {@code gson.names.user.username} key in system properties.
- *
- * @author Lyubomyr Shaydariv
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

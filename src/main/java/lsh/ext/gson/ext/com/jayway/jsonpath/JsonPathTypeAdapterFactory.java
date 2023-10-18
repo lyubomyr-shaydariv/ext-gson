@@ -61,8 +61,6 @@ import lombok.RequiredArgsConstructor;
  * </pre>
  *
  * JSON path expressions that point to not existing paths are ignored.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapterFactory

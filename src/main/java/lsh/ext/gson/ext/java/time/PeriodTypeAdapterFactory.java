@@ -15,8 +15,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link Period}.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PeriodTypeAdapterFactory
@@ -37,8 +35,6 @@ public final class PeriodTypeAdapterFactory
 
 	/**
 	 * A type adapter for {@link Period}.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter

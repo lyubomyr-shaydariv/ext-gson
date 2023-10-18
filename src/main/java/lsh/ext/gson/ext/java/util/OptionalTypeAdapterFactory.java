@@ -13,8 +13,6 @@ import lsh.ext.gson.AbstractOptionalTypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Optional} from Google Guava.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OptionalTypeAdapterFactory<T>
@@ -35,8 +33,6 @@ public final class OptionalTypeAdapterFactory<T>
 
 	/**
 	 * Represents a type adapter for {@link Optional} from Google Guava.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	public static final class Adapter<T>
 			extends AbstractOptionalTypeAdapterFactory.Adapter<Optional<T>, T> {

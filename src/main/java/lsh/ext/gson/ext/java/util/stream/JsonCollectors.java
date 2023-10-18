@@ -11,8 +11,6 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Contains various implementations of {@link Collector} for {@link JsonElement}.
- *
- * @author Lyubomyr Shaydariv
  */
 @UtilityClass
 public final class JsonCollectors {

@@ -13,8 +13,6 @@ import lsh.ext.gson.AbstractCursorTypeAdapterFactory;
  *
  * @param <E>
  * 		Element type
- *
- * @author Lyubomyr Shaydariv
  */
 public final class CloseableIteratorTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
@@ -37,8 +35,6 @@ public final class CloseableIteratorTypeAdapterFactory<E>
 	 * <p>
 	 * <b>CAUTION</b> Note that the {@link #read(JsonReader)} method returns a closeable iterator that must be closed manually.
 	 * </p>
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	public static final class Adapter<E>
 			extends AbstractCursorTypeAdapterFactory.Adapter<ICloseableIterator<E>, E> {

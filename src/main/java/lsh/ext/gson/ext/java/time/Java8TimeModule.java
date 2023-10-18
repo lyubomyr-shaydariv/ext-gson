@@ -30,8 +30,6 @@ import lsh.ext.gson.UnmodifiableIterable;
  * <li>{@link YearTypeAdapterFactory}</li>
  * <li>{@link ZonedDateTimeTypeAdapterFactory}</li>
  * </ul>
- *
- * @author Lyubomyr Shaydariv
  */
 public final class Java8TimeModule
 		extends AbstractModule {

@@ -10,8 +10,6 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous utility methods for JSON streams.
- *
- * @author Lyubomyr Shaydariv
  */
 @UtilityClass
 public final class JsonStreams {

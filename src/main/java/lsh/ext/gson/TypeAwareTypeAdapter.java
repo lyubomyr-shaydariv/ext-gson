@@ -20,8 +20,6 @@ import lombok.RequiredArgsConstructor;
  *     "$V": {}
  * }
  * </pre>
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TypeAwareTypeAdapter<T>

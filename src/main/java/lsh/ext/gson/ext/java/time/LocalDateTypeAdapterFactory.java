@@ -12,8 +12,6 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 
 /**
  * Implements a type adapter factory for {@link LocalDate}.
- *
- * @author Lyubomyr Shaydariv
  */
 public final class LocalDateTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<LocalDate> {
@@ -50,8 +48,6 @@ public final class LocalDateTypeAdapterFactory
 
 	/**
 	 * A type adapter for {@link LocalDate}.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<LocalDate> {

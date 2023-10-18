@@ -17,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a pre/post type adapter factory to perform pre/post checks for a serializable/deserializable values respectively.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PrePostTypeAdapterFactory

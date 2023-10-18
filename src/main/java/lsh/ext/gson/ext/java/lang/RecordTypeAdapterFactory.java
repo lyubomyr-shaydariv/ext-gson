@@ -14,8 +14,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
  *
  * @param <T>
  * 		Record type to handle
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RecordTypeAdapterFactory<T extends Record>

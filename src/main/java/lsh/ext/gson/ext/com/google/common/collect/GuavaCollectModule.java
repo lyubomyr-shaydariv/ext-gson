@@ -26,8 +26,6 @@ import lsh.ext.gson.UnmodifiableIterable;
  * <li>{@link MultisetTypeAdapterFactory}</li>
  * <li>{@link TableTypeAdapterFactory}</li>
  * </ul>
- *
- * @author Lyubomyr Shaydariv
  */
 public final class GuavaCollectModule
 		extends AbstractModule {

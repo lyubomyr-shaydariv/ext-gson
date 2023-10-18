@@ -7,8 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * Holds a {@link com.jayway.jsonpath.JsonPath} path.
- *
- * @author Lyubomyr Shaydariv
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

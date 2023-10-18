@@ -15,8 +15,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link Duration}.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DurationTypeAdapterFactory
@@ -37,8 +35,6 @@ public final class DurationTypeAdapterFactory
 
 	/**
 	 * A type adapter for {@link Duration}.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter

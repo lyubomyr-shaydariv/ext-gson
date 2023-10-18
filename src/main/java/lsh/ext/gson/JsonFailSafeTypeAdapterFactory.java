@@ -30,8 +30,6 @@ import lombok.RequiredArgsConstructor;
  * </pre>
  *
  * The {@code bar} cannot be an array, therefore adding the type adapter factory will assign {@code null} to the `bar` field once JSON parsing fails.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonFailSafeTypeAdapterFactory

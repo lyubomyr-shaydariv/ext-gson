@@ -12,8 +12,6 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 
 /**
  * Implements a type adapter factory for {@link OffsetTime}.
- *
- * @author Lyubomyr Shaydariv
  */
 public final class OffsetTimeTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<OffsetTime> {
@@ -50,8 +48,6 @@ public final class OffsetTimeTypeAdapterFactory
 
 	/**
 	 * A type adapter for {@link OffsetTime}.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<OffsetTime> {

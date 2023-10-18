@@ -19,8 +19,6 @@ import lombok.RequiredArgsConstructor;
  * 		Optional type
  * @param <T>
  * 		Value held by optional type
- *
- * @author Lyubomyr Shaydariv
  */
 public abstract class AbstractOptionalTypeAdapterFactory<O, T>
 		extends AbstractTypeAdapterFactory<O> {
@@ -50,8 +48,6 @@ public abstract class AbstractOptionalTypeAdapterFactory<O, T>
 	 * 		Optional type
 	 * @param <T>
 	 * 		Value held by optional type
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 	protected abstract static class Adapter<O, T>

@@ -31,8 +31,6 @@ public final class UnixTimeDateTypeAdapterFactory
 	/**
 	 * a
 	 * Represents the epoch to {@link Date} and vice versa type adapter.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter

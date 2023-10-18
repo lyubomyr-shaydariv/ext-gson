@@ -15,8 +15,6 @@ import lsh.ext.gson.UnmodifiableIterable;
  * <ul>
  * <li>{@link JsonPathTypeAdapterFactory}</li>
  * </ul>
- *
- * @author Lyubomyr Shaydariv
  */
 public final class JsonPathModule
 		extends AbstractModule {

@@ -11,8 +11,6 @@ import com.google.gson.stream.JsonWriter;
  *
  * @param <T>
  * 		Any type
- *
- * @author Lyubomyr Shaydariv
  */
 public abstract class AbstractStringTypeAdapter<T>
 		extends TypeAdapter<T> {

@@ -15,8 +15,6 @@ import lsh.ext.gson.UnmodifiableIterable;
  * <ul>
  * <li>{@link OptionalTypeAdapterFactory}</li>
  * </ul>
- *
- * @author Lyubomyr Shaydariv
  */
 public final class GuavaBaseModule
 		extends AbstractModule {

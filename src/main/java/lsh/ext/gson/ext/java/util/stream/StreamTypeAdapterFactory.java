@@ -15,8 +15,6 @@ import lsh.ext.gson.ext.java.ICloseableIterator;
  *
  * @param <E>
  * 		Element type
- *
- * @author Lyubomyr Shaydariv
  */
 public final class StreamTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
@@ -39,8 +37,6 @@ public final class StreamTypeAdapterFactory<E>
 	 * <p>
 	 * <b>CAUTION</b> Note that the {@link #read(JsonReader)} method returns a closeable iterator that must be closed manually.
 	 * </p>
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	public static final class Adapter<E>
 			extends AbstractCursorTypeAdapterFactory.Adapter<Stream<E>, E> {

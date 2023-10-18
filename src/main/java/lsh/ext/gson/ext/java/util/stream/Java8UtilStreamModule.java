@@ -15,8 +15,6 @@ import lsh.ext.gson.UnmodifiableIterable;
  * <ul>
  * <li>{@link StreamTypeAdapterFactory}</li>
  * </ul>
- *
- * @author Lyubomyr Shaydariv
  */
 public final class Java8UtilStreamModule
 		extends AbstractModule {

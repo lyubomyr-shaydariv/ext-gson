@@ -29,8 +29,6 @@ import com.google.gson.reflect.TypeToken;
  *
  * @param <CT>
  * 		Concrete type
- *
- * @author Lyubomyr Shaydariv
  */
 public abstract class AbstractTypeAdapterFactory<CT>
 		implements TypeAdapterFactory {

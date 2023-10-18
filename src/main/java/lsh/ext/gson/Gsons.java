@@ -8,8 +8,6 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Contains methods to maintain {@link Gson} instances.
- *
- * @author Lyubomyr Shaydariv
  */
 @UtilityClass
 public final class Gsons {
@@ -20,8 +18,6 @@ public final class Gsons {
 
 	/**
 	 * Contains methods to maintain {@link GsonBuilder} instances.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@UtilityClass
 	public static final class Builders {

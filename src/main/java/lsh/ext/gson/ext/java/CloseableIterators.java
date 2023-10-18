@@ -10,8 +10,6 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Provides closeable iterators utility methods.
- *
- * @author Lyubomyr Shaydariv
  */
 @UtilityClass
 public final class CloseableIterators {

@@ -12,8 +12,6 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 
 /**
  * Implements a type adapter factory for {@link Year}.
- *
- * @author Lyubomyr Shaydariv
  */
 public final class YearTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<Year> {
@@ -50,8 +48,6 @@ public final class YearTypeAdapterFactory
 
 	/**
 	 * A type adapter for {@link Year}.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<Year> {

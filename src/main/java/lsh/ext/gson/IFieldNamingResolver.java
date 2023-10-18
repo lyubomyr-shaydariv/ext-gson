@@ -4,8 +4,6 @@ import javax.annotation.Nullable;
 
 /**
  * A strategy to resolve a name by the given value.
- *
- * @author Lyubomyr Shaydariv
  */
 public interface IFieldNamingResolver {
 

@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Implements an abstract module with modules found in linear manner (from first to last).
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractModule

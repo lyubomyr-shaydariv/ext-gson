@@ -14,8 +14,6 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Provides miscellaneous {@link TypeAdapter} utility methods.
- *
- * @author Lyubomyr Shaydariv
  */
 @UtilityClass
 public final class TypeAdapters {

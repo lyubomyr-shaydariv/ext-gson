@@ -16,8 +16,6 @@ import lsh.ext.gson.ext.java.ICloseableIterator;
 
 /**
  * Provides miscellaneous {@link JsonReader} utility methods.
- *
- * @author Lyubomyr Shaydariv
  */
 @UtilityClass
 public final class JsonReaders {

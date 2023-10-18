@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a field naming strategy where field names must be evaluated dynamically.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DynamicSerializedNameFieldNamingStrategy

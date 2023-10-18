@@ -12,8 +12,6 @@ import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFa
 
 /**
  * Implements a type adapter factory for {@link ZonedDateTime}.
- *
- * @author Lyubomyr Shaydariv
  */
 public final class ZonedDateTimeTypeAdapterFactory
 		extends AbstractTemporalAccessorTypeAdapterFactory<ZonedDateTime> {
@@ -50,8 +48,6 @@ public final class ZonedDateTimeTypeAdapterFactory
 
 	/**
 	 * A type adapter for {@link ZonedDateTime}.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	public static final class Adapter
 			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<ZonedDateTime> {

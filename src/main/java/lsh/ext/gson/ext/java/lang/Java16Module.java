@@ -16,7 +16,6 @@ import lsh.ext.gson.UnmodifiableIterable;
  * <li>{@link RecordTypeAdapterFactory}</li>
  * </ul>
  *
- * @author Lyubomyr Shaydariv
  * @version 0-SNAPSHOT
  */
 public final class Java16Module

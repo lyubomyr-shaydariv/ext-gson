@@ -15,8 +15,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link DayOfWeek}.
- *
- * @author Lyubomyr Shaydariv
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DayOfWeekTypeAdapterFactory
@@ -37,8 +35,6 @@ public final class DayOfWeekTypeAdapterFactory
 
 	/**
 	 * A type adapter for {@link DayOfWeek}.
-	 *
-	 * @author Lyubomyr Shaydariv
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter
