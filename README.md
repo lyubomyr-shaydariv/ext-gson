@@ -48,3 +48,11 @@ No `ext-gson` dependencies are bundled or planned to be bundled, so all dependen
 * [`com.google.common.collect.Multimap`](https://github.com/google/guava/blob/master/android/guava/src/com/google/common/collect/Multimap.java)
 * [`com.google.common.collect.Multiset`](https://github.com/google/guava/blob/master/android/guava/src/com/google/common/collect/Multiset.java)
 * [`com.google.common.collect.Table`](https://github.com/google/guava/blob/master/android/guava/src/com/google/common/collect/Table.java)
+
+#### Apache Commons Collections 4
+
+* [`org.apache.commons.collections4.Bag`](https://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/Bag.html)
+* [`org.apache.commons.collections4.BidiMap`](https://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/BidiMap.html)
+* [`org.apache.commons.collections4.MultiMap`](https://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/MultiMap.html)
+* [`org.apache.commons.collections4.MultiSet`](https://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/MultiSet.html)
+* [`org.apache.commons.collections4.MultiValuedMap`](https://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/MultiValuedMap.html)
