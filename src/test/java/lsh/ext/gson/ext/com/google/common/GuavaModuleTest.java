@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.com.google;
+package lsh.ext.gson.ext.com.google.common;
 
 import java.util.stream.Stream;
 
@@ -10,6 +10,7 @@ import com.google.common.collect.Table;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractModuleTest;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.ext.com.google.common.GuavaModule;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class GuavaModuleTest

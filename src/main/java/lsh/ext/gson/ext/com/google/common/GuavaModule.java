@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.com.google;
+package lsh.ext.gson.ext.com.google.common;
 
 import javax.annotation.Nullable;
 
