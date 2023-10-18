@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.com.google.common;
+package lsh.ext.gson.ext.com.google.common.base;
 
 import java.util.stream.Stream;
 

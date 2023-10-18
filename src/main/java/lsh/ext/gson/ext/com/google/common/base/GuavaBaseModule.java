@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.com.google.common;
+package lsh.ext.gson.ext.com.google.common.base;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.UnmodifiableIterable;
-import lsh.ext.gson.ext.com.google.common.base.OptionalTypeAdapterFactory;
 
 /**
  * Implements a Google Guava module registering the following type adapter factories:

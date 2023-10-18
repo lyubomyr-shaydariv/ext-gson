@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.com.google.common;
+package lsh.ext.gson.ext.com.google.common.collect;
 
 import javax.annotation.Nullable;
 
@@ -16,10 +16,6 @@ import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.UnmodifiableIterable;
-import lsh.ext.gson.ext.com.google.common.collect.BiMapTypeAdapterFactory;
-import lsh.ext.gson.ext.com.google.common.collect.MultimapTypeAdapterFactory;
-import lsh.ext.gson.ext.com.google.common.collect.MultisetTypeAdapterFactory;
-import lsh.ext.gson.ext.com.google.common.collect.TableTypeAdapterFactory;
 
 /**
  * Implements a Google Guava module registering the following type adapter factories:
