@@ -12,7 +12,6 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -140,7 +139,7 @@ public final class MultisetTypeAdapterFactory<E>
 				throws IOException {
 			final Multiset<E> multiset = newMultisetFactory.get();
 			in.beginArray();
-			while ( in.peek() != JsonToken.END_ARRAY ) {
+			while ( in.hasNext() ) {
 				final E element = elementTypeAdapter.read(in);
 				multiset.add(element);
 			}
