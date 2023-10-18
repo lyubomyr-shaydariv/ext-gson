@@ -16,7 +16,6 @@ import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.UnmodifiableIterable;
-import lsh.ext.gson.ext.com.google.common.base.OptionalTypeAdapterFactory;
 import lsh.ext.gson.ext.com.google.common.collect.BiMapTypeAdapterFactory;
 import lsh.ext.gson.ext.com.google.common.collect.MultimapTypeAdapterFactory;
 import lsh.ext.gson.ext.com.google.common.collect.MultisetTypeAdapterFactory;
@@ -29,20 +28,19 @@ import lsh.ext.gson.ext.com.google.common.collect.TableTypeAdapterFactory;
  * <li>{@link BiMapTypeAdapterFactory}</li>
  * <li>{@link MultimapTypeAdapterFactory}</li>
  * <li>{@link MultisetTypeAdapterFactory}</li>
- * <li>{@link OptionalTypeAdapterFactory}</li>
  * <li>{@link TableTypeAdapterFactory}</li>
  * </ul>
  *
  * @author Lyubomyr Shaydariv
  */
-public final class GuavaModule
+public final class GuavaCollectModule
 		extends AbstractModule {
 
 	@Getter
 	private static final IModule instance = builder()
 			.build();
 
-	private GuavaModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private GuavaCollectModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -102,8 +100,7 @@ public final class GuavaModule
 			final Converter<String, String> castTableRowKeyConverter = (Converter<String, String>) tableRowKeyConverter;
 			@SuppressWarnings("unchecked")
 			final Converter<String, String> castTableColumnKeyConverter = (Converter<String, String>) tableColumnKeyConverter;
-			return new GuavaModule(UnmodifiableIterable.copyOf(
-					OptionalTypeAdapterFactory.getInstance(),
+			return new GuavaCollectModule(UnmodifiableIterable.copyOf(
 					BiMapTypeAdapterFactory.getInstance(castNewBiMapFactory, castBiMapKeyConverter),
 					MultimapTypeAdapterFactory.getInstance(castNewMultimapFactory, castMultimapKeyConverter),
 					MultisetTypeAdapterFactory.getInstance(castNewMultisetFactory),
