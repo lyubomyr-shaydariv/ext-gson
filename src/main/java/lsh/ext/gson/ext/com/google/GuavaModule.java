@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import com.google.common.base.Converter;
 import com.google.common.base.Supplier;
 import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Table;
@@ -16,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.UnmodifiableIterable;
 import lsh.ext.gson.ext.com.google.common.base.OptionalTypeAdapterFactory;
 import lsh.ext.gson.ext.com.google.common.collect.BiMapTypeAdapterFactory;
 import lsh.ext.gson.ext.com.google.common.collect.MultimapTypeAdapterFactory;
@@ -102,14 +102,13 @@ public final class GuavaModule
 			final Converter<String, String> castTableRowKeyConverter = (Converter<String, String>) tableRowKeyConverter;
 			@SuppressWarnings("unchecked")
 			final Converter<String, String> castTableColumnKeyConverter = (Converter<String, String>) tableColumnKeyConverter;
-			final Iterable<TypeAdapterFactory> typeAdapterFactories = ImmutableList.<TypeAdapterFactory>builder()
-					.add(OptionalTypeAdapterFactory.getInstance())
-					.add(BiMapTypeAdapterFactory.getInstance(castNewBiMapFactory, castBiMapKeyConverter))
-					.add(MultimapTypeAdapterFactory.getInstance(castNewMultimapFactory, castMultimapKeyConverter))
-					.add(MultisetTypeAdapterFactory.getInstance(castNewMultisetFactory))
-					.add(TableTypeAdapterFactory.getInstance(newTableFactory, castTableRowKeyConverter, castTableColumnKeyConverter))
-					.build();
-			return new GuavaModule(typeAdapterFactories);
+			return new GuavaModule(UnmodifiableIterable.copyOf(
+					OptionalTypeAdapterFactory.getInstance(),
+					BiMapTypeAdapterFactory.getInstance(castNewBiMapFactory, castBiMapKeyConverter),
+					MultimapTypeAdapterFactory.getInstance(castNewMultimapFactory, castMultimapKeyConverter),
+					MultisetTypeAdapterFactory.getInstance(castNewMultisetFactory),
+					TableTypeAdapterFactory.getInstance(newTableFactory, castTableRowKeyConverter, castTableColumnKeyConverter)
+			));
 		}
 
 	}

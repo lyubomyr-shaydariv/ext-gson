@@ -1,11 +1,6 @@
 package lsh.ext.gson.ext.java.time;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapterFactory;
@@ -14,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.UnmodifiableIterable;
 
 /**
  * Implements a Java 8 Time API module registering the following type adapter factories:
@@ -58,16 +54,6 @@ public final class Java8TimeModule
 	@Accessors(fluent = true, chain = true, prefix = "with")
 	public static final class Builder {
 
-		private static final Collection<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Collections.unmodifiableList(
-				Arrays.asList(
-						DayOfWeekTypeAdapterFactory.getInstance(),
-						DurationTypeAdapterFactory.getInstance(),
-						InstantTypeAdapterFactory.getInstance(),
-						MonthTypeAdapterFactory.getInstance(),
-						PeriodTypeAdapterFactory.getInstance()
-				)
-		);
-
 		@Nullable
 		private DateTimeFormatter localDateTimeFormatter;
 
@@ -99,22 +85,22 @@ public final class Java8TimeModule
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			final Iterable<? extends TypeAdapterFactory> typeAdapterFactories = Stream.concat(
-							defaultTypeAdapterFactories
-									.stream(),
-							Stream.of(
-									LocalDateTimeTypeAdapterFactory.getInstance(localDateTimeFormatter),
-									LocalDateTypeAdapterFactory.getInstance(localDateFormatter),
-									LocalTimeTypeAdapterFactory.getInstance(localTimeFormatter),
-									MonthDayTypeAdapterFactory.getInstance(monthDayFormatter),
-									OffsetDateTimeTypeAdapterFactory.getInstance(offsetDateTimeFormatter),
-									OffsetTimeTypeAdapterFactory.getInstance(offsetTimeFormatter),
-									YearMonthTypeAdapterFactory.getInstance(yearMonthFormatter),
-									YearTypeAdapterFactory.getInstance(yearFormatter),
-									ZonedDateTimeTypeAdapterFactory.getInstance(zonedDateTimeFormatter)
-							))
-					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
-			return new Java8TimeModule(typeAdapterFactories);
+			return new Java8TimeModule(UnmodifiableIterable.copyOf(
+					DayOfWeekTypeAdapterFactory.getInstance(),
+					DurationTypeAdapterFactory.getInstance(),
+					InstantTypeAdapterFactory.getInstance(),
+					MonthTypeAdapterFactory.getInstance(),
+					PeriodTypeAdapterFactory.getInstance(),
+					LocalDateTimeTypeAdapterFactory.getInstance(localDateTimeFormatter),
+					LocalDateTypeAdapterFactory.getInstance(localDateFormatter),
+					LocalTimeTypeAdapterFactory.getInstance(localTimeFormatter),
+					MonthDayTypeAdapterFactory.getInstance(monthDayFormatter),
+					OffsetDateTimeTypeAdapterFactory.getInstance(offsetDateTimeFormatter),
+					OffsetTimeTypeAdapterFactory.getInstance(offsetTimeFormatter),
+					YearMonthTypeAdapterFactory.getInstance(yearMonthFormatter),
+					YearTypeAdapterFactory.getInstance(yearFormatter),
+					ZonedDateTimeTypeAdapterFactory.getInstance(zonedDateTimeFormatter)
+			));
 		}
 
 	}

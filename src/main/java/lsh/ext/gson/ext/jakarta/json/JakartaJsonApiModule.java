@@ -1,7 +1,5 @@
 package lsh.ext.gson.ext.jakarta.json;
 
-import java.util.Collections;
-
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.UnmodifiableIterable;
 
 /**
  * Implements a Java JSON API module registering the following type adapter factories:
@@ -44,9 +43,9 @@ public final class JakartaJsonApiModule
 	@Accessors(fluent = true, chain = true, prefix = "with")
 	public static final class Builder {
 
-		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Collections.unmodifiableList(Collections.singletonList(
+		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = UnmodifiableIterable.copyOf(
 				JsonValueTypeAdapterFactory.getInstance()
-		));
+		);
 
 		/**
 		 * @return A new module instance.

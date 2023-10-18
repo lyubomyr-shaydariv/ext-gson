@@ -1,9 +1,5 @@
 package lsh.ext.gson.ext.java.util.stream;
 
-import java.util.Collections;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.UnmodifiableIterable;
 
 /**
  * Implements a Java 8 module registering the following type adapter factories:
@@ -46,16 +43,13 @@ public final class Java8UtilStreamModule
 	@Accessors(fluent = true, chain = true, prefix = "with")
 	public static final class Builder {
 
-		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = Stream.of(
-						StreamTypeAdapterFactory.getInstance()
-				)
-				.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
-
 		/**
 		 * @return A new module instance.
 		 */
 		public IModule build() {
-			return new Java8UtilStreamModule(defaultTypeAdapterFactories);
+			return new Java8UtilStreamModule(UnmodifiableIterable.copyOf(
+					StreamTypeAdapterFactory.getInstance()
+			));
 		}
 
 	}

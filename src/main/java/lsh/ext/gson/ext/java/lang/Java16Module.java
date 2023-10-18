@@ -1,7 +1,5 @@
 package lsh.ext.gson.ext.java.lang;
 
-import java.util.List;
-
 import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
@@ -9,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.UnmodifiableIterable;
 
 /**
  * Implements a Java 16 module registering the following type adapter factories:
@@ -44,9 +43,9 @@ public final class Java16Module
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Builder {
 
-		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = List.of(
-						RecordTypeAdapterFactory.getInstance()
-				);
+		private static final Iterable<? extends TypeAdapterFactory> defaultTypeAdapterFactories = UnmodifiableIterable.copyOf(
+				RecordTypeAdapterFactory.getInstance()
+		);
 
 		/**
 		 * @return A new module instance.

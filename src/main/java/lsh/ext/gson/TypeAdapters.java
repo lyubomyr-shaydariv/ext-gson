@@ -2,7 +2,6 @@ package lsh.ext.gson;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
-import java.util.List;
 
 import com.google.gson.InstanceCreator;
 import com.google.gson.JsonDeserializer;
@@ -21,13 +20,13 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class TypeAdapters {
 
-	private static final Iterable<Class<?>> supportedTypeAdapterClasses = List.of(
-					TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class, InstanceCreator.class
-			);
+	private static final Iterable<Class<?>> supportedTypeAdapterClasses = UnmodifiableIterable.copyOf(
+			TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class, InstanceCreator.class
+	);
 
-	private static final Iterable<Class<?>> supportedTypeHierarchyAdapterClasses = List.of(
-					TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class
-			);
+	private static final Iterable<Class<?>> supportedTypeHierarchyAdapterClasses = UnmodifiableIterable.copyOf(
+			TypeAdapter.class, JsonSerializer.class, JsonDeserializer.class
+	);
 
 	private static final ConstructorConstructor constructorConstructor = ConstructorConstructors.create(Collections.emptyMap());
 
