@@ -1,14 +1,16 @@
 package lsh.ext.gson;
 
+import java.util.function.Consumer;
+
 import com.google.gson.reflect.TypeToken;
 
 /**
- * A factory to return a post processor.
+ * A factory to return a processor.
  *
  * @param <T>
  * 		Type the processor is implemented for.
  */
-public interface IPostProcessorFactory<T> {
+public interface IProcessorFactory<T> {
 
 	/**
 	 * @param typeToken
@@ -19,8 +21,8 @@ public interface IPostProcessorFactory<T> {
 	boolean supports(TypeToken<?> typeToken);
 
 	/**
-	 * @return A post processor for the given type.
+	 * @return A processor for the given type.
 	 */
-	IPostProcessor<T> createPostProcessor();
+	Consumer<T> createProcessor();
 
 }
