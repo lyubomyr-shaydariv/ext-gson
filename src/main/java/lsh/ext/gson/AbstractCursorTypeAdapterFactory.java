@@ -21,7 +21,6 @@ import lsh.ext.gson.ext.java.ICloseableIterator;
  * 		Element type
  *
  * @author Lyubomyr Shaydariv
- * @see StreamTypeAdapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractCursorTypeAdapterFactory<E>
@@ -56,7 +55,6 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 	 * 		Element type
 	 *
 	 * @author Lyubomyr Shaydariv
-	 * @see StreamTypeAdapter
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 	protected abstract static class Adapter<C, E>

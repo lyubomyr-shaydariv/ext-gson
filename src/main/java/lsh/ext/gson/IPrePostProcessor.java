@@ -7,8 +7,6 @@ package lsh.ext.gson;
  * 		Type the processor is implemented for.
  *
  * @author Lyubomyr Shaydariv
- * @see IPrePostProcessorFactory
- * @see PrePostTypeAdapterFactory
  */
 public interface IPrePostProcessor<T> {
 
@@ -17,8 +15,6 @@ public interface IPrePostProcessor<T> {
 	 *
 	 * @param value
 	 * 		Any value
-	 *
-	 * @see com.google.gson.TypeAdapter#write(com.google.gson.stream.JsonWriter, Object)
 	 */
 	default void pre(@SuppressWarnings("unused") final T value) {
 	}
@@ -28,8 +24,6 @@ public interface IPrePostProcessor<T> {
 	 *
 	 * @param value
 	 * 		Any value
-	 *
-	 * @see com.google.gson.TypeAdapter#read(com.google.gson.stream.JsonReader)
 	 */
 	default void post(@SuppressWarnings("unused") final T value) {
 	}

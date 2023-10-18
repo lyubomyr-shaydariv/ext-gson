@@ -214,8 +214,6 @@ public final class JsonObjects {
 	 * 		Right
 	 *
 	 * @return The {@code left} object with the {@code right} object merged into.
-	 *
-	 * @see #mergeIntoLeft(JsonObject, JsonObject, IJsonObjectMergePredicate)
 	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right) {
 		return mergeIntoLeft(left, right, IJsonObjectMergePredicate.replace);
@@ -230,8 +228,6 @@ public final class JsonObjects {
 	 * 		Predicate
 	 *
 	 * @return The {@code left} object with the {@code right} object merged into.
-	 *
-	 * @see #mergeIntoLeft(JsonObject, JsonObject)
 	 */
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
 		for ( final Map.Entry<String, JsonElement> rightEntry : right.entrySet() ) {

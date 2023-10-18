@@ -12,8 +12,6 @@ import lombok.experimental.UtilityClass;
  * Provides closeable iterators utility methods.
  *
  * @author Lyubomyr Shaydariv
- * @see CloseableIteratorTypeAdapter
- * @see CloseableIteratorTypeAdapterFactory
  */
 @UtilityClass
 public final class CloseableIterators {
@@ -25,8 +23,6 @@ public final class CloseableIterators {
 	 * 		Iterator element type
 	 *
 	 * @return A new iterator if the iterator is not {@link ICloseableIterator}, otherwise self.
-	 *
-	 * @see #asCloseable(ICloseableIterator)
 	 */
 	public static <E> ICloseableIterator<E> asCloseable(final Iterator<? extends E> iterator) {
 		if ( iterator instanceof final ICloseableIterator<?> closeableIterator ) {

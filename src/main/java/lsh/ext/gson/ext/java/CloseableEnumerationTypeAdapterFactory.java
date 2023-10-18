@@ -16,7 +16,6 @@ import lsh.ext.gson.AbstractCursorTypeAdapterFactory;
  * 		Element type
  *
  * @author Lyubomyr Shaydariv
- * @see Adapter
  */
 public final class CloseableEnumerationTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
@@ -41,7 +40,6 @@ public final class CloseableEnumerationTypeAdapterFactory<E>
 	 * </p>
 	 *
 	 * @author Lyubomyr Shaydariv
-	 * @see CloseableEnumerationTypeAdapterFactory
 	 */
 	public static final class Adapter<E>
 			extends AbstractCursorTypeAdapterFactory.Adapter<ICloseableEnumeration<E>, E> {

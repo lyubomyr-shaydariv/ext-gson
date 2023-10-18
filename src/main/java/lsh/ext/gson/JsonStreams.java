@@ -26,7 +26,6 @@ public final class JsonStreams {
 	 *
 	 * @throws IOException
 	 * 		A rethrown exception
-	 * @see #copyTo(JsonReader, JsonWriter, boolean)
 	 */
 	public static void copyTo(final JsonReader reader, final JsonWriter writer)
 			throws IOException {
@@ -46,7 +45,6 @@ public final class JsonStreams {
 	 *
 	 * @throws IOException
 	 * 		A rethrown exception
-	 * @see #copyTo(JsonReader, JsonWriter)
 	 */
 	public static void copyTo(final JsonReader reader, final JsonWriter writer, final boolean ignoreTrailingTokens)
 			throws IOException {

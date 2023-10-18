@@ -17,7 +17,6 @@ import lsh.ext.gson.ext.java.ICloseableIterator;
  * 		Element type
  *
  * @author Lyubomyr Shaydariv
- * @see Adapter
  */
 public final class StreamTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
@@ -42,7 +41,6 @@ public final class StreamTypeAdapterFactory<E>
 	 * </p>
 	 *
 	 * @author Lyubomyr Shaydariv
-	 * @see StreamTypeAdapterFactory
 	 */
 	public static final class Adapter<E>
 			extends AbstractCursorTypeAdapterFactory.Adapter<Stream<E>, E> {

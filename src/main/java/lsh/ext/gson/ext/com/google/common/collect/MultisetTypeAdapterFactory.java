@@ -26,7 +26,6 @@ import lsh.ext.gson.ParameterizedTypes;
  * 		Element type
  *
  * @author Lyubomyr Shaydariv
- * @see Adapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultisetTypeAdapterFactory<E>
@@ -79,7 +78,6 @@ public final class MultisetTypeAdapterFactory<E>
 	 * 		Element type
 	 *
 	 * @author Lyubomyr Shaydariv
-	 * @see MultisetTypeAdapterFactory
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<E>
@@ -96,8 +94,6 @@ public final class MultisetTypeAdapterFactory<E>
 		 * 		Multiset element type
 		 *
 		 * @return A {@link Adapter} instance whose multiset factory is {@link LinkedHashMultiset#create()}.
-		 *
-		 * @see #getInstance(TypeAdapter, Supplier)
 		 */
 		public static <E> TypeAdapter<Multiset<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 			return getInstance(elementTypeAdapter, (Supplier<? extends Multiset<E>>) LinkedHashMultiset::create);
@@ -112,8 +108,6 @@ public final class MultisetTypeAdapterFactory<E>
 		 * 		Multiset element type
 		 *
 		 * @return A {@link Adapter} instance.
-		 *
-		 * @see #getInstance(TypeAdapter)
 		 */
 		public static <V> TypeAdapter<Multiset<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 				@SuppressWarnings("Guava") final Supplier<? extends Multiset<V>> newMultisetFactory) {

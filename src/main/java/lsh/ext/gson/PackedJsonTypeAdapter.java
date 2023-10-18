@@ -44,7 +44,6 @@ import lombok.Getter;
  * Thus, the {@code inner} field can hold arbitrary data.
  *
  * @author Lyubomyr Shaydariv
- * @see UnpackedJsonTypeAdapterFactory
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PackedJsonTypeAdapter

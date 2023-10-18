@@ -47,11 +47,6 @@ public final class JsonValueTypeAdapterFactory
 	 * Represents a type adapter for {@code javax.json} JSON values.
 	 *
 	 * @author Lyubomyr Shaydariv
-	 * @see JsonValue
-	 * @see JsonNumber
-	 * @see JsonString
-	 * @see JsonObject
-	 * @see JsonArray
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter

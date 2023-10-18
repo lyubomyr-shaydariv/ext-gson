@@ -33,7 +33,6 @@ import lombok.RequiredArgsConstructor;
  * </pre>
  *
  * @author Lyubomyr Shaydariv
- * @see Adapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UnpackedJsonTypeAdapterFactory

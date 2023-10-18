@@ -25,7 +25,6 @@ import lsh.ext.gson.ParameterizedTypes;
  * Represents a type adapter factory for {@link Table} from Google Guava.
  *
  * @author Lyubomyr Shaydariv
- * @see Adapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TableTypeAdapterFactory<R, C, V>
@@ -107,7 +106,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 * Represents a type adapter for {@link Table} from Google Guava.
 	 *
 	 * @author Lyubomyr Shaydariv
-	 * @see TableTypeAdapterFactory
 	 */
 	public static final class Adapter<R, C, V>
 			extends TypeAdapter<Table<R, C, V>> {

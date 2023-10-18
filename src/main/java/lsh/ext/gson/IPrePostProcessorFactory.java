@@ -9,7 +9,6 @@ import com.google.gson.reflect.TypeToken;
  * 		Type the processor is implemented for.
  *
  * @author Lyubomyr Shaydariv
- * @see IPrePostProcessor
  */
 public interface IPrePostProcessorFactory<T> {
 

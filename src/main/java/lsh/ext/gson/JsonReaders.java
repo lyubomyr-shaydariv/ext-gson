@@ -91,8 +91,6 @@ public final class JsonReaders {
 	 *
 	 * @throws IOException
 	 * 		A rethrown exception
-	 * @see JsonReader#skipValue()
-	 * @see #readValuedJsonToken(JsonReader)
 	 */
 	public static void skipToken(final JsonReader reader)
 			throws IOException {
@@ -133,8 +131,6 @@ public final class JsonReaders {
 	 *
 	 * @throws IOException
 	 * 		A rethrown exception
-	 * @see #skipToken(JsonReader)
-	 * @see #readValuedJsonTokenRecursively(JsonReader)
 	 */
 	public static ValuedJsonToken<?> readValuedJsonToken(final JsonReader jsonReader)
 			throws IOException {
@@ -191,8 +187,6 @@ public final class JsonReaders {
 	 * 		JSON reader
 	 *
 	 * @return An iterator of a single value JSON tokens: either single primitives, either single object/arrays.
-	 *
-	 * @see #readValuedJsonToken(JsonReader)
 	 */
 	public static ICloseableIterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(final JsonReader jsonReader) {
 		return new RecursiveCloseableIterator(jsonReader);

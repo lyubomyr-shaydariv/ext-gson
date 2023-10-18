@@ -63,9 +63,6 @@ import lombok.RequiredArgsConstructor;
  * JSON path expressions that point to not existing paths are ignored.
  *
  * @author Lyubomyr Shaydariv
- * @see #getInstance()
- * @see #getInstance(Function)
- * @see #getWithGlobalDefaults()
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapterFactory
@@ -76,10 +73,6 @@ public final class JsonPathTypeAdapterFactory
 	 * used for this instance uses {@link Configuration.Defaults} with an internally defined {@link GsonJsonProvider} bound to the {@link Gson} instance
 	 * provided in {@link #create(Gson, TypeToken)}, an internally defined {@link GsonMappingProvider} bound to the {@link Gson} instance provided in {@link
 	 * #create(Gson, TypeToken)}, and empty options set.
-	 *
-	 * @see Configuration.Defaults#options()
-	 * @see Configuration.Defaults#jsonProvider()
-	 * @see Configuration.Defaults#mappingProvider()
 	 */
 	@Getter
 	private static final TypeAdapterFactory instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
@@ -105,8 +98,6 @@ public final class JsonPathTypeAdapterFactory
 	 *     });
 	 * }
 	 * </pre>
-	 *
-	 * @see Configuration#setDefaults(Configuration.Defaults)
 	 */
 	@Getter
 	private static final TypeAdapterFactory instanceWithGlobalDefaults = new JsonPathTypeAdapterFactory(gson -> Configuration.defaultConfiguration());

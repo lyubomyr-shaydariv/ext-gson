@@ -25,7 +25,6 @@ import lsh.ext.gson.ParameterizedTypes;
  * Represents a type adapter factory for {@link BiMap} from Google Guava.
  *
  * @author Lyubomyr Shaydariv
- * @see Adapter
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BiMapTypeAdapterFactory<K, V>
@@ -93,7 +92,6 @@ public final class BiMapTypeAdapterFactory<K, V>
 	 * Represents a type adapter for {@link BiMap} from Google Guava.
 	 *
 	 * @author Lyubomyr Shaydariv
-	 * @see BiMapTypeAdapterFactory
 	 */
 	public static final class Adapter<K, V>
 			extends TypeAdapter<BiMap<K, V>> {

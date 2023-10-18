@@ -31,8 +31,6 @@ public final class PrePostTypeAdapterFactory
 	 * 		A sequence of processor factories.
 	 *
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
-	 *
-	 * @see #getInstance(IPrePostProcessorFactory)
 	 */
 	public static TypeAdapterFactory getInstance(final Iterable<? extends IPrePostProcessorFactory<?>> processorFactories) {
 		return new PrePostTypeAdapterFactory(processorFactories);
@@ -43,8 +41,6 @@ public final class PrePostTypeAdapterFactory
 	 * 		A single processor factory.
 	 *
 	 * @return A {@link PrePostTypeAdapterFactory} instance.
-	 *
-	 * @see #getInstance(Iterable)
 	 */
 	public static TypeAdapterFactory getInstance(final IPrePostProcessorFactory<?> processorFactory) {
 		return new PrePostTypeAdapterFactory(Collections.singleton(processorFactory));
