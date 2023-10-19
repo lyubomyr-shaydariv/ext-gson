@@ -2,8 +2,6 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -17,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.Factory;
+import org.apache.commons.collections4.Transformer;
 
 /**
  * Represents a type adapter factory for {@link Bag} from Apache Commons Collection 4.
@@ -28,9 +28,9 @@ import org.apache.commons.collections4.Bag;
 public final class BagTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Bag<E>> {
 
-	private final Supplier<? extends Bag<E>> newBagFactory;
-	private final Function<? super E, String> keyMapper;
-	private final Function<? super String, ? extends E> keyReverseMapper;
+	private final Factory<? extends Bag<E>> newBagFactory;
+	private final Transformer<? super E, String> keyMapper;
+	private final Transformer<? super String, ? extends E> keyReverseMapper;
 
 	/**
 	 * @param newBagFactory
@@ -40,8 +40,8 @@ public final class BagTypeAdapterFactory<E>
 	 *
 	 * @return An instance of {@link BagTypeAdapterFactory} with a custom new {@link Bag} factory.
 	 */
-	public static <E> TypeAdapterFactory getInstance(final Supplier<? extends Bag<E>> newBagFactory,
-			final Function<? super E, String> keyMapper, final Function<? super String, ? extends E> keyReverseMapper
+	public static <E> TypeAdapterFactory getInstance(final Factory<? extends Bag<E>> newBagFactory,
+			final Transformer<? super E, String> keyMapper, final Transformer<? super String, ? extends E> keyReverseMapper
 	) {
 		return new BagTypeAdapterFactory<>(newBagFactory, keyMapper, keyReverseMapper);
 	}
@@ -69,9 +69,9 @@ public final class BagTypeAdapterFactory<E>
 	public static final class Adapter<E>
 			extends TypeAdapter<Bag<E>> {
 
-		private final Supplier<? extends Bag<E>> newBagFactory;
-		private final Function<? super E, String> keyMapper;
-		private final Function<? super String, ? extends E> keyReverseMapper;
+		private final Factory<? extends Bag<E>> newBagFactory;
+		private final Transformer<? super E, String> keyMapper;
+		private final Transformer<? super String, ? extends E> keyReverseMapper;
 
 		/**
 		 * @param newBagFactory
@@ -82,9 +82,9 @@ public final class BagTypeAdapterFactory<E>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <V> TypeAdapter<Bag<V>> getInstance(
-				final Supplier<? extends Bag<V>> newBagFactory,
-				final Function<? super V, String> keyMapper,
-				final Function<? super String, ? extends V> keyReverseMapper
+				final Factory<? extends Bag<V>> newBagFactory,
+				final Transformer<? super V, String> keyMapper,
+				final Transformer<? super String, ? extends V> keyReverseMapper
 		) {
 			return new Adapter<>(newBagFactory, keyMapper, keyReverseMapper);
 		}
@@ -94,7 +94,7 @@ public final class BagTypeAdapterFactory<E>
 				throws IOException {
 			out.beginObject();
 			for ( final E e : bag ) {
-				out.name(keyMapper.apply(e));
+				out.name(keyMapper.transform(e));
 				out.value(bag.getCount(e));
 			}
 			out.endObject();
@@ -103,10 +103,10 @@ public final class BagTypeAdapterFactory<E>
 		@Override
 		public Bag<E> read(final JsonReader in)
 				throws IOException {
-			final Bag<E> bag = newBagFactory.get();
+			final Bag<E> bag = newBagFactory.create();
 			in.beginObject();
 			while ( in.hasNext() ) {
-				bag.add(keyReverseMapper.apply(in.nextName()), in.nextInt());
+				bag.add(keyReverseMapper.transform(in.nextName()), in.nextInt());
 			}
 			in.endObject();
 			return bag;

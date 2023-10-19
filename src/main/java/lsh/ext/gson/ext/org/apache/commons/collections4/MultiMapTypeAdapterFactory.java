@@ -3,8 +3,6 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -16,7 +14,9 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
+import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.MultiMap;
+import org.apache.commons.collections4.Transformer;
 
 /**
  * Represents a type adapter factory for {@link MultiMap} from Apache Commons Collections 4.
@@ -26,9 +26,9 @@ import org.apache.commons.collections4.MultiMap;
 public final class MultiMapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<MultiMap<K, V>> {
 
-	private final Supplier<? extends MultiMap<K, V>> newMultiMapFactory;
-	private final Function<? super K, String> keyMapper;
-	private final Function<? super String, ? extends K> keyReverseMapper;
+	private final Factory<? extends MultiMap<K, V>> newMultiMapFactory;
+	private final Transformer<? super K, String> keyMapper;
+	private final Transformer<? super String, ? extends K> keyReverseMapper;
 
 	/**
 	 * @param newMultiMapFactory
@@ -45,9 +45,9 @@ public final class MultiMapTypeAdapterFactory<K, V>
 	 * @return An instance of {@link MultiMapTypeAdapterFactory} with a custom new {@link MultiMap} factory.
 	 */
 	public static <K, V> TypeAdapterFactory getInstance(
-			final Supplier<? extends MultiMap<K, V>> newMultiMapFactory,
-			final Function<? super K, String> keyMapper,
-			final Function<? super String, ? extends K> keyReverseMapper
+			final Factory<? extends MultiMap<K, V>> newMultiMapFactory,
+			final Transformer<? super K, String> keyMapper,
+			final Transformer<? super String, ? extends K> keyReverseMapper
 	) {
 		return new MultiMapTypeAdapterFactory<>(newMultiMapFactory, keyMapper, keyReverseMapper);
 	}
@@ -74,9 +74,9 @@ public final class MultiMapTypeAdapterFactory<K, V>
 			extends TypeAdapter<MultiMap<K, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
-		private final Supplier<? extends MultiMap<K, V>> newMultiMapFactory;
-		private final Function<? super K, String> keyMapper;
-		private final Function<? super String, ? extends K> keyReverseMapper;
+		private final Factory<? extends MultiMap<K, V>> newMultiMapFactory;
+		private final Transformer<? super K, String> keyMapper;
+		private final Transformer<? super String, ? extends K> keyReverseMapper;
 
 		/**
 		 * @param valueTypeAdapter
@@ -96,9 +96,9 @@ public final class MultiMapTypeAdapterFactory<K, V>
 		 */
 		public static <K, V> TypeAdapter<MultiMap<K, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
-				final Supplier<? extends MultiMap<K, V>> newMultiMapFactory,
-				final Function<? super K, String> keyMapper,
-				final Function<? super String, ? extends K> keyReverseMapper
+				final Factory<? extends MultiMap<K, V>> newMultiMapFactory,
+				final Transformer<? super K, String> keyMapper,
+				final Transformer<? super String, ? extends K> keyReverseMapper
 		) {
 			return new Adapter<>(valueTypeAdapter, newMultiMapFactory, keyMapper, keyReverseMapper);
 		}
@@ -108,7 +108,7 @@ public final class MultiMapTypeAdapterFactory<K, V>
 				throws IOException {
 			out.beginObject();
 			for ( final Map.Entry<K, Object> e : multiMap.entrySet() ) {
-				final String key = keyMapper.apply(e.getKey());
+				final String key = keyMapper.transform(e.getKey());
 				@SuppressWarnings("unchecked")
 				final V value = (V) e.getValue();
 				out.name(key);
@@ -120,10 +120,10 @@ public final class MultiMapTypeAdapterFactory<K, V>
 		@Override
 		public MultiMap<K, V> read(final JsonReader in)
 				throws IOException {
-			final MultiMap<K, V> multiMap = newMultiMapFactory.get();
+			final MultiMap<K, V> multiMap = newMultiMapFactory.create();
 			in.beginObject();
 			while ( in.hasNext() ) {
-				final K key = keyReverseMapper.apply(in.nextName());
+				final K key = keyReverseMapper.transform(in.nextName());
 				final V value = valueTypeAdapter.read(in);
 				multiMap.put(key, value);
 			}

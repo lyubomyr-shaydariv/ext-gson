@@ -1,8 +1,5 @@
 package lsh.ext.gson.ext.org.apache.commons.collections4;
 
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,9 +10,11 @@ import lsh.ext.gson.IModule;
 import lsh.ext.gson.UnmodifiableIterable;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bidimap.DualLinkedHashBidiMap;
 import org.apache.commons.collections4.map.MultiValueMap;
@@ -39,11 +38,11 @@ public final class ApacheCommonsCollections4Module
 	@Getter
 	@SuppressWarnings("deprecation")
 	private static final IModule instance = builder(
-			DualLinkedHashBidiMap::new, Function.identity(), Function.identity(),
+			DualLinkedHashBidiMap::new, Transformers.identity(), Transformers.identity(),
 			HashMultiSet::new,
-			MultiValueMap::new, Function.identity(), Function.identity(),
-			ArrayListValuedHashMap::new, Function.identity(), Function.identity(),
-			HashBag::new, Function.identity(), Function.identity()
+			MultiValueMap::new, Transformers.identity(), Transformers.identity(),
+			ArrayListValuedHashMap::new, Transformers.identity(), Transformers.identity(),
+			HashBag::new, Transformers.identity(), Transformers.identity()
 	)
 			.build();
 
@@ -55,11 +54,11 @@ public final class ApacheCommonsCollections4Module
 	 * @return A builder to build a new instance of the module.
 	 */
 	public static <BMK, BMV, MSE, MMK, MMV, MMMK, MMMV, BE> Builder<BMK, BMV, MSE, MMK, MMV, MMMK, MMMV, BE> builder(
-			final Supplier<? extends BidiMap<BMK, BMV>> newBidiMapFactory, final Function<? super BMK, String> bidiMapKeyMapper, final Function<? super String, ? extends BMK> bidiMapKeyReverseMapper,
-			final Supplier<? extends MultiSet<MSE>> newMultiSetFactory,
-			@SuppressWarnings("deprecation") final Supplier<? extends MultiMap<MMK, MMV>> newMultiMapFactory, final Function<? super MMK, String> multiMapKeyMapper, final Function<? super String, ? extends MMK> multiMapKeyReverseMapper,
-			final Supplier<? extends MultiValuedMap<MMMK, MMMV>> newMultiValuedMapFactory, final Function<? super MMMK, String> multiValuedMapKeyMapper, final Function<? super String, ? extends MMMK> multiValuedMapKeyReverseMapper,
-			final Supplier<? extends Bag<BE>> newBagFactory, final Function<? super BE, String> keyMapper, final Function<? super String, ? extends BE> keyReverseMapper
+			final Factory<? extends BidiMap<BMK, BMV>> newBidiMapFactory, final Transformer<? super BMK, String> bidiMapKeyMapper, final Transformer<? super String, ? extends BMK> bidiMapKeyReverseMapper,
+			final Factory<? extends MultiSet<MSE>> newMultiSetFactory,
+			@SuppressWarnings("deprecation") final Factory<? extends MultiMap<MMK, MMV>> newMultiMapFactory, final Transformer<? super MMK, String> multiMapKeyMapper, final Transformer<? super String, ? extends MMK> multiMapKeyReverseMapper,
+			final Factory<? extends MultiValuedMap<MMMK, MMMV>> newMultiValuedMapFactory, final Transformer<? super MMMK, String> multiValuedMapKeyMapper, final Transformer<? super String, ? extends MMMK> multiValuedMapKeyReverseMapper,
+			final Factory<? extends Bag<BE>> newBagFactory, final Transformer<? super BE, String> keyMapper, final Transformer<? super String, ? extends BE> keyReverseMapper
 	) {
 		return new Builder<>(newBidiMapFactory, bidiMapKeyMapper, bidiMapKeyReverseMapper, newMultiSetFactory, newMultiMapFactory, multiMapKeyMapper, multiMapKeyReverseMapper, newMultiValuedMapFactory, multiValuedMapKeyMapper, multiValuedMapKeyReverseMapper, newBagFactory, keyMapper, keyReverseMapper);
 	}
@@ -71,20 +70,20 @@ public final class ApacheCommonsCollections4Module
 	@Accessors(fluent = true, chain = true, prefix = "with")
 	public static final class Builder<BMK, BMV, MSE, MMK, MMV, MMMK, MMMV, BE> {
 
-		private final Supplier<? extends BidiMap<BMK, BMV>> newBidiMapFactory;
-		private final Function<? super BMK, String> bidiMapKeyMapper;
-		private final Function<? super String, ? extends BMK> bidiMapKeyReverseMapper;
-		private final Supplier<? extends MultiSet<MSE>> newMultiSetFactory;
+		private final Factory<? extends BidiMap<BMK, BMV>> newBidiMapFactory;
+		private final Transformer<? super BMK, String> bidiMapKeyMapper;
+		private final Transformer<? super String, ? extends BMK> bidiMapKeyReverseMapper;
+		private final Factory<? extends MultiSet<MSE>> newMultiSetFactory;
 		@SuppressWarnings("deprecation")
-		private final Supplier<? extends MultiMap<MMK, MMV>> newMultiMapFactory;
-		private final Function<? super MMK, String> multiMapKeyMapper;
-		private final Function<? super String, ? extends MMK> multiMapKeyReverseMapper;
-		private final Supplier<? extends MultiValuedMap<MMMK, MMMV>> newMultiValuedMapFactory;
-		private final Function<? super MMMK, String> multiValuedMapKeyMapper;
-		private final Function<? super String, ? extends MMMK> multiValuedMapKeyReverseMapper;
-		private final Supplier<? extends Bag<BE>> newBagFactory;
-		private final Function<? super BE, String> keyMapper;
-		private final Function<? super String, ? extends BE> keyReverseMapper;
+		private final Factory<? extends MultiMap<MMK, MMV>> newMultiMapFactory;
+		private final Transformer<? super MMK, String> multiMapKeyMapper;
+		private final Transformer<? super String, ? extends MMK> multiMapKeyReverseMapper;
+		private final Factory<? extends MultiValuedMap<MMMK, MMMV>> newMultiValuedMapFactory;
+		private final Transformer<? super MMMK, String> multiValuedMapKeyMapper;
+		private final Transformer<? super String, ? extends MMMK> multiValuedMapKeyReverseMapper;
+		private final Factory<? extends Bag<BE>> newBagFactory;
+		private final Transformer<? super BE, String> keyMapper;
+		private final Transformer<? super String, ? extends BE> keyReverseMapper;
 
 		/**
 		 * @return A new module instance.
