@@ -18,9 +18,6 @@ public final class JsonArraysTest {
 	private static final String K3 = "baz";
 	private static final String K4 = "qux";
 	private static final String K5 = "quux";
-	private static final String K6 = "corge";
-	private static final String K7 = "grault";
-	private static final String K8 = "garply";
 
 	private static final JsonPrimitive foo = new JsonPrimitive("foo");
 	private static final JsonPrimitive bar = new JsonPrimitive("bar");

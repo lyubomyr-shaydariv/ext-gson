@@ -66,14 +66,11 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	}
 
 	private static String resolve(final String value) {
-		switch ( value ) {
-		case "#foo":
-			return "FOO1";
-		case "#bar":
-			return "BAR2";
-		default:
-			throw new AssertionError(value);
-		}
+		return switch ( value ) {
+			case "#foo" -> "FOO1";
+			case "#bar" -> "BAR2";
+			default -> throw new AssertionError(value);
+		};
 	}
 
 	private record StaticFooBar(

@@ -1,6 +1,8 @@
 package lsh.ext.gson;
 
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -24,5 +26,19 @@ public interface IProcessorFactory<T> {
 	 * @return A processor for the given type.
 	 */
 	Consumer<T> createProcessor();
+
+	static <T> IProcessorFactory<T> create(final Predicate<? super TypeToken<?>> supports, final Supplier<? extends Consumer<T>> createProcessor) {
+		return new IProcessorFactory<>() {
+			@Override
+			public boolean supports(final TypeToken<?> typeToken) {
+				return supports.test(typeToken);
+			}
+
+			@Override
+			public Consumer<T> createProcessor() {
+				return createProcessor.get();
+			}
+		};
+	}
 
 }

@@ -12,25 +12,25 @@ public final class CloseableIteratorsTest {
 	@Test
 	@SuppressWarnings("resource")
 	public void testAsCloseableDispatcherForCloseableIterator() {
-		final Iterator<?> iterator = Mockito.mock(ICloseableIterator.class);
-		Assertions.assertSame(iterator, CloseableIterators.asCloseable(iterator));
-		Mockito.verifyNoMoreInteractions(iterator);
+		final Iterator<?> mockIterator = Mockito.mock(ICloseableIterator.class);
+		Assertions.assertSame(mockIterator, CloseableIterators.asCloseable(mockIterator));
+		Mockito.verifyNoMoreInteractions(mockIterator);
 	}
 
 	@Test
 	@SuppressWarnings("resource")
 	public void testAsCloseableDispatcherForIterator()
 			throws Exception {
-		final Iterator<?> iterator = Mockito.mock(Iterator.class);
-		final ICloseableIterator<?> closeableIterator = CloseableIterators.asCloseable(iterator);
+		final Iterator<?> mockIterator = Mockito.mock(Iterator.class);
+		final ICloseableIterator<?> closeableIterator = CloseableIterators.asCloseable(mockIterator);
 		Assertions.assertInstanceOf(Iterator.class, closeableIterator);
 		Assertions.assertInstanceOf(Closeable.class, closeableIterator);
 		closeableIterator.hasNext();
-		Mockito.verify(iterator).hasNext();
+		Mockito.verify(mockIterator).hasNext();
 		closeableIterator.next();
-		Mockito.verify(iterator).next();
+		Mockito.verify(mockIterator).next();
 		closeableIterator.close();
-		Mockito.verifyNoMoreInteractions(iterator);
+		Mockito.verifyNoMoreInteractions(mockIterator);
 	}
 
 }
