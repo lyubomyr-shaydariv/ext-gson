@@ -2,6 +2,7 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import javax.annotation.WillCloseWhenClosed;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -19,7 +20,7 @@ public final class JsonReaderIterator<E>
 
 	private ReadingIteratorState state = ReadingIteratorState.BEFORE_ARRAY;
 
-	public static <E> ICloseableIterator<E> getInstance(final TypeAdapter<? extends E> elementTypeAdapter, final JsonReader in) {
+	public static <E> ICloseableIterator<E> getInstance(final TypeAdapter<? extends E> elementTypeAdapter, @WillCloseWhenClosed final JsonReader in) {
 		return new JsonReaderIterator<>(elementTypeAdapter, in);
 	}
 
