@@ -1,11 +1,8 @@
 package lsh.ext.gson;
 
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -16,7 +13,7 @@ public final class PrePostTypeAdapterFactoryTest {
 	public void testPreConstruct() {
 		@SuppressWarnings("unchecked")
 		final IProcessor<User> mockUserProcessor = Mockito.mock(IProcessor.class);
-		final IProcessorFactory<User> userProcessorFactory = createProcessorFactory(typeToken -> typeToken.getRawType() == User.class, () -> mockUserProcessor);
+		final IProcessorFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? mockUserProcessor : null;
 		final Gson gson = Gsons.Builders.createNormalized()
 				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(userProcessorFactory), List.of()))
 				.create();
@@ -29,7 +26,7 @@ public final class PrePostTypeAdapterFactoryTest {
 	public void testPostConstruct() {
 		@SuppressWarnings("unchecked")
 		final IProcessor<User> mockUserProcessor = Mockito.mock(IProcessor.class);
-		final IProcessorFactory<User> userProcessorFactory = createProcessorFactory(typeToken -> typeToken.getRawType() == User.class, () -> mockUserProcessor);
+		final IProcessorFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? mockUserProcessor : null;
 		final Gson gson = Gsons.Builders.createNormalized()
 				.registerTypeAdapterFactory(PrePostTypeAdapterFactory.getInstance(List.of(), List.of(userProcessorFactory)))
 				.create();
@@ -44,20 +41,6 @@ public final class PrePostTypeAdapterFactoryTest {
 			String firstName,
 			String lastName
 	) {
-	}
-
-	private static <T> IProcessorFactory<T> createProcessorFactory(final Predicate<? super TypeToken<?>> supports, final Supplier<? extends IProcessor<T>> createProcessor) {
-		return new IProcessorFactory<>() {
-			@Override
-			public boolean supports(final TypeToken<?> typeToken) {
-				return supports.test(typeToken);
-			}
-
-			@Override
-			public IProcessor<T> createProcessor() {
-				return createProcessor.get();
-			}
-		};
 	}
 
 }

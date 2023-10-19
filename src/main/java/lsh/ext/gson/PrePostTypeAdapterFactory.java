@@ -43,24 +43,28 @@ public final class PrePostTypeAdapterFactory
 		@Nullable
 		Collection<IProcessor<?>> preProcessors = null;
 		for ( final IProcessorFactory<?> factory : preProcessorFactories ) {
-			if ( !factory.supports(typeToken) ) {
+			@Nullable
+			final IProcessor<?> processor = factory.createProcessor(typeToken);
+			if ( processor == null ) {
 				continue;
 			}
 			if ( preProcessors == null ) {
 				preProcessors = new ArrayList<>();
 			}
-			preProcessors.add(factory.createProcessor());
+			preProcessors.add(processor);
 		}
 		@Nullable
 		Collection<IProcessor<?>> postProcessors = null;
 		for ( final IProcessorFactory<?> factory : postProcessorFactories ) {
-			if ( !factory.supports(typeToken) ) {
+			@Nullable
+			final IProcessor<?> processor = factory.createProcessor(typeToken);
+			if ( processor == null ) {
 				continue;
 			}
 			if ( postProcessors == null ) {
 				postProcessors = new ArrayList<>();
 			}
-			postProcessors.add(factory.createProcessor());
+			postProcessors.add(processor);
 		}
 		if ( preProcessors == null && postProcessors == null ) {
 			return null;
