@@ -12,7 +12,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.ext.java.ICloseableIterator;
 
 /**
  * Represents a base type adapter factory for cursor classes like iterators and streams.
@@ -60,7 +59,7 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 
 		protected abstract Iterator<E> toIterator(C cursor);
 
-		protected abstract C fromIterator(ICloseableIterator<E> iterator);
+		protected abstract C fromIterator(Iterator<E> iterator);
 
 		@Override
 		public final void write(final JsonWriter out, final C cursor)
@@ -76,8 +75,7 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 
 		@Override
 		public final C read(final JsonReader in) {
-			final ICloseableIterator<E> closeableIterator = JsonReaderIterator.getInstance(elementTypeAdapter, in);
-			return fromIterator(closeableIterator);
+			return fromIterator(JsonReaderIterator.getInstance(elementTypeAdapter, in));
 		}
 
 	}

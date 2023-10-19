@@ -1,7 +1,7 @@
-package lsh.ext.gson.ext.java.util.stream;
+package lsh.ext.gson.ext.java.util;
 
+import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
@@ -9,19 +9,19 @@ import lombok.Getter;
 import lsh.ext.gson.AbstractCursorTypeAdapterFactory;
 
 /**
- * Represents a type adapter factory for {@link Stream}.
+ * Represents a type adapter factory for {@link Iterator}.
  *
  * @param <E>
  * 		Element type
  */
-public final class StreamTypeAdapterFactory<E>
+public final class EnumerationTypeAdapterFactory<E>
 		extends AbstractCursorTypeAdapterFactory<E> {
 
 	@Getter
-	private static final TypeAdapterFactory instance = new StreamTypeAdapterFactory<>();
+	private static final TypeAdapterFactory instance = new EnumerationTypeAdapterFactory<>();
 
-	private StreamTypeAdapterFactory() {
-		super(Stream.class);
+	private EnumerationTypeAdapterFactory() {
+		super(Enumeration.class);
 	}
 
 	@Override
@@ -30,10 +30,10 @@ public final class StreamTypeAdapterFactory<E>
 	}
 
 	/**
-	 * Type adapter for {@link Stream}. Streams are supposed to read and write JSON arrays only.
+	 * Type adapter for {@link Enumeration}. Enumerations are supposed to read and write JSON arrays only.
 	 */
 	public static final class Adapter<E>
-			extends AbstractCursorTypeAdapterFactory.Adapter<Stream<E>, E> {
+			extends AbstractCursorTypeAdapterFactory.Adapter<Enumeration<E>, E> {
 
 		private Adapter(final TypeAdapter<E> elementTypeAdapter) {
 			super(elementTypeAdapter);
@@ -47,18 +47,18 @@ public final class StreamTypeAdapterFactory<E>
 		 *
 		 * @return An instance of {@link Adapter}.
 		 */
-		public static <E> TypeAdapter<Stream<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
+		public static <E> TypeAdapter<Enumeration<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 			return new Adapter<>(elementTypeAdapter);
 		}
 
 		@Override
-		protected Iterator<E> toIterator(final Stream<E> stream) {
-			return stream.iterator();
+		protected Iterator<E> toIterator(final Enumeration<E> enumeration) {
+			return Iterators.from(enumeration);
 		}
 
 		@Override
-		protected Stream<E> fromIterator(final Iterator<E> iterator) {
-			return Streams.from(iterator);
+		protected Enumeration<E> fromIterator(final Iterator<E> iterator) {
+			return Enumerations.from(iterator);
 		}
 
 	}

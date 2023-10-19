@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import lsh.ext.gson.ext.java.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -28,12 +27,10 @@ public final class JsonReaderIteratorTest {
 	}
 
 	@Test
-	public void testEmpty()
-			throws Exception {
+	public void testEmpty() {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
-		try ( final ICloseableIterator<?> unit = JsonReaderIterator.getInstance(gson.getAdapter(FooBar.class), in) ) {
-			Assertions.assertFalse(unit.hasNext());
-		}
+		final Iterator<?> unit = JsonReaderIterator.getInstance(gson.getAdapter(FooBar.class), in);
+		Assertions.assertFalse(unit.hasNext());
 	}
 
 	private record FooBar(

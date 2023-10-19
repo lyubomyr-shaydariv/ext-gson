@@ -1,5 +1,6 @@
-package lsh.ext.gson.ext.java;
+package lsh.ext.gson.ext.java.util;
 
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nullable;
 
@@ -9,14 +10,14 @@ import lsh.ext.gson.AbstractTypeAdapterTest;
 import lsh.ext.gson.Gsons;
 import org.junit.jupiter.params.provider.Arguments;
 
-public final class CloseableIteratorTypeAdapterTest
-		extends AbstractTypeAdapterTest<ICloseableIterator<?>, List<?>> {
+public final class IteratorTypeAdapterTest
+		extends AbstractTypeAdapterTest<Iterator<?>, List<?>> {
 
 	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
-	protected List<?> normalize(@Nullable final ICloseableIterator<?> value) {
+	protected List<?> normalize(@Nullable final Iterator<?> value) {
 		return value != null ? ImmutableList.copyOf(value) : null;
 	}
 
@@ -25,9 +26,9 @@ public final class CloseableIteratorTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						CloseableIteratorTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
+						IteratorTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
-						CloseableIterators.asCloseable(ImmutableList.of(1, 2, 4, 8).iterator())
+						List.of(1, 2, 4, 8).iterator()
 				)
 		);
 	}

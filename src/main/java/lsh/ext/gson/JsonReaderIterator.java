@@ -1,26 +1,26 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
-import javax.annotation.WillCloseWhenClosed;
+import javax.annotation.WillNotClose;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.ext.java.ICloseableIterator;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonReaderIterator<E>
-		implements ICloseableIterator<E> {
+		implements Iterator<E> {
 
 	private final TypeAdapter<? extends E> elementTypeAdapter;
 	private final JsonReader in;
 
 	private ReadingIteratorState state = ReadingIteratorState.BEFORE_ARRAY;
 
-	public static <E> ICloseableIterator<E> getInstance(final TypeAdapter<? extends E> elementTypeAdapter, @WillCloseWhenClosed final JsonReader in) {
+	public static <E> Iterator<E> getInstance(final TypeAdapter<? extends E> elementTypeAdapter, @WillNotClose final JsonReader in) {
 		return new JsonReaderIterator<>(elementTypeAdapter, in);
 	}
 
@@ -102,12 +102,6 @@ public final class JsonReaderIterator<E>
 		} catch ( final IOException ex ) {
 			throw new RuntimeException(ex);
 		}
-	}
-
-	@Override
-	public void close()
-			throws IOException {
-		in.close();
 	}
 
 	private enum ReadingIteratorState {

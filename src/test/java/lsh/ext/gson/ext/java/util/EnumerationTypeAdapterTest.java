@@ -1,6 +1,7 @@
-package lsh.ext.gson.ext.java;
+package lsh.ext.gson.ext.java.util;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 import javax.annotation.Nullable;
 
@@ -9,14 +10,14 @@ import lsh.ext.gson.AbstractTypeAdapterTest;
 import lsh.ext.gson.Gsons;
 import org.junit.jupiter.params.provider.Arguments;
 
-public final class CloseableEnumerationTypeAdapterTest
-		extends AbstractTypeAdapterTest<ICloseableEnumeration<?>, List<?>> {
+public final class EnumerationTypeAdapterTest
+		extends AbstractTypeAdapterTest<Enumeration<?>, List<?>> {
 
 	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
-	protected List<?> normalize(@Nullable final ICloseableEnumeration<?> value) {
+	protected List<?> normalize(@Nullable final Enumeration<?> value) {
 		return value != null ? List.copyOf(Collections.list(value)) : null;
 	}
 
@@ -25,9 +26,9 @@ public final class CloseableEnumerationTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						CloseableEnumerationTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
+						EnumerationTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
-						CloseableEnumerations.from(CloseableIterators.asCloseable(List.of(1, 2, 4, 8).iterator()))
+						Enumerations.from(List.of(1, 2, 4, 8).iterator())
 				)
 		);
 	}
