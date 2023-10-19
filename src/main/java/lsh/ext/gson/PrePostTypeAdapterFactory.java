@@ -41,44 +41,40 @@ public final class PrePostTypeAdapterFactory
 	@Nullable
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		@Nullable
-		Collection<IProcessor<?>> preProcessors = null;
-		for ( final IProcessorFactory<?> factory : preProcessorFactories ) {
-			@Nullable
-			final IProcessor<?> processor = factory.createProcessor(typeToken);
-			if ( processor == null ) {
-				continue;
-			}
-			if ( preProcessors == null ) {
-				preProcessors = new ArrayList<>();
-			}
-			preProcessors.add(processor);
-		}
+		final Iterable<? extends IProcessor<?>> preProcessors = getProcessors(typeToken, preProcessorFactories);
 		@Nullable
-		Collection<IProcessor<?>> postProcessors = null;
-		for ( final IProcessorFactory<?> factory : postProcessorFactories ) {
-			@Nullable
-			final IProcessor<?> processor = factory.createProcessor(typeToken);
-			if ( processor == null ) {
-				continue;
-			}
-			if ( postProcessors == null ) {
-				postProcessors = new ArrayList<>();
-			}
-			postProcessors.add(processor);
-		}
+		final Iterable<? extends IProcessor<?>> postProcessors = getProcessors(typeToken, postProcessorFactories);
 		if ( preProcessors == null && postProcessors == null ) {
 			return null;
 		}
 		final TypeAdapter<T> delegateTypeAdapter = gson.getDelegateAdapter(this, typeToken);
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@SuppressWarnings({ "unchecked", "rawtypes", "DataFlowIssue" })
 		final Iterable<? extends IProcessor<? super T>> castPreProcessors = (Iterable) preProcessors;
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@SuppressWarnings({ "unchecked", "rawtypes", "DataFlowIssue" })
 		final Iterable<? extends IProcessor<? super T>> castPostProcessors = (Iterable) postProcessors;
-		return new PrePostTypeAdapter<>(castPreProcessors, castPostProcessors, delegateTypeAdapter);
+		return new Adapter<>(castPreProcessors, castPostProcessors, delegateTypeAdapter);
+	}
+
+	@Nullable
+	private static Iterable<? extends IProcessor<?>> getProcessors(final TypeToken<?> typeToken, final Iterable<? extends IProcessorFactory<?>> factories) {
+		@Nullable
+		Collection<IProcessor<?>> processors = null;
+		for ( final IProcessorFactory<?> factory : factories ) {
+			@Nullable
+			final IProcessor<?> processor = factory.createProcessor(typeToken);
+			if ( processor == null ) {
+				continue;
+			}
+			if ( processors == null ) {
+				processors = new ArrayList<>();
+			}
+			processors.add(processor);
+		}
+		return processors;
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	private static final class PrePostTypeAdapter<T>
+	private static final class Adapter<T>
 			extends TypeAdapter<T> {
 
 		private final Iterable<? extends IProcessor<? super T>> preProcessors;
