@@ -2,86 +2,63 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.SignStyle;
+import java.time.temporal.ChronoField;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link YearMonth}.
  */
 public final class YearMonthTypeAdapterFactory
-		extends AbstractTemporalAccessorTypeAdapterFactory<YearMonth> {
+		extends AbstractBaseTypeAdapterFactory<YearMonth> {
 
-	@Getter
-	private static final TypeAdapterFactory instance = new YearMonthTypeAdapterFactory(null);
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	private static final TypeAdapterFactory instance = new YearMonthTypeAdapterFactory(Adapter.getInstance());
 
-	private YearMonthTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
-		super(YearMonth.class, dateTimeFormatter);
+	private YearMonthTypeAdapterFactory(final TypeAdapter<YearMonth> typeAdapter) {
+		super(YearMonth.class, typeAdapter);
 	}
 
 	/**
 	 * @param dateTimeFormatter
 	 * 		Date/time formatter
 	 *
-	 * @return An instance of {@link YearMonthTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
+	 * @return An instance of {@link YearMonthTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}
-		return new YearMonthTypeAdapterFactory(dateTimeFormatter);
-	}
-
-	@Override
-	protected TypeAdapter<YearMonth> create() {
-		return YearMonthTypeAdapterFactory.Adapter.getInstance();
-	}
-
-	@Override
-	protected TypeAdapter<YearMonth> create(final DateTimeFormatter dateTimeFormatter) {
-		return YearMonthTypeAdapterFactory.Adapter.getInstance(dateTimeFormatter);
+		return new YearMonthTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
 	/**
-	 * A type adapter for {@link YearMonth}.
+	 * A formatted type adapter for {@link YearMonth}.
 	 */
 	public static final class Adapter
-			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<YearMonth> {
+			extends AbstractTemporalAccessorTypeAdapter<YearMonth> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-		private static final TypeAdapter<YearMonth> instance = new Adapter(null)
-				.nullSafe();
+		private static final TypeAdapter<YearMonth> instance = getInstance(new DateTimeFormatterBuilder()
+				.appendValue(ChronoField.YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
+				.appendLiteral('-')
+				.appendValue(ChronoField.MONTH_OF_YEAR, 2)
+				.toFormatter()
+		);
 
-		private Adapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			super(dateTimeFormatter);
+		private Adapter(final DateTimeFormatter dateTimeFormatter) {
+			super(dateTimeFormatter, YearMonth::from);
 		}
 
-		/**
-		 * @param dateTimeFormatter
-		 * 		Date/time formatter
-		 *
-		 * @return An instance of {@link Adapter} with a custom {@link DateTimeFormatter}.
-		 */
-		@SuppressFBWarnings("MS_EXPOSE_REP")
-		public static TypeAdapter<YearMonth> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
-			return new Adapter(dateTimeFormatter);
-		}
-
-		@Override
-		protected YearMonth doFromString(final String text) {
-			return YearMonth.parse(text);
-		}
-
-		@Override
-		protected YearMonth doFromString(final String text, final DateTimeFormatter formatter) {
-			return YearMonth.parse(text, formatter);
+		public static TypeAdapter<YearMonth> getInstance(final DateTimeFormatter dateTimeFormatter) {
+			return new Adapter(dateTimeFormatter)
+					.nullSafe();
 		}
 
 	}

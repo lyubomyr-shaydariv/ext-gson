@@ -8,80 +8,49 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link LocalDate}.
  */
 public final class LocalDateTypeAdapterFactory
-		extends AbstractTemporalAccessorTypeAdapterFactory<LocalDate> {
+		extends AbstractBaseTypeAdapterFactory<LocalDate> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapterFactory instance = new LocalDateTypeAdapterFactory(null);
+	private static final TypeAdapterFactory instance = new LocalDateTypeAdapterFactory(Adapter.getInstance());
 
-	private LocalDateTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
-		super(LocalDate.class, dateTimeFormatter);
+	private LocalDateTypeAdapterFactory(final TypeAdapter<LocalDate> typeAdapter) {
+		super(LocalDate.class, typeAdapter);
 	}
 
 	/**
 	 * @param dateTimeFormatter
-	 * 		Date/time formatter instance
+	 * 		Date/time formatter
 	 *
-	 * @return An instance of {@link LocalDateTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
+	 * @return An instance of {@link LocalDateTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}
-		return new LocalDateTypeAdapterFactory(dateTimeFormatter);
-	}
-
-	@Override
-	protected TypeAdapter<LocalDate> create() {
-		return LocalDateTypeAdapterFactory.Adapter.getInstance();
-	}
-
-	@Override
-	protected TypeAdapter<LocalDate> create(final DateTimeFormatter dateTimeFormatter) {
-		return LocalDateTypeAdapterFactory.Adapter.getInstance(dateTimeFormatter);
+		return new LocalDateTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
 	/**
-	 * A type adapter for {@link LocalDate}.
+	 * A formatted type adapter for {@link LocalDate}.
 	 */
 	public static final class Adapter
-			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<LocalDate> {
+			extends AbstractTemporalAccessorTypeAdapter<LocalDate> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-		private static final TypeAdapter<LocalDate> instance = new Adapter(null)
-				.nullSafe();
+		private static final TypeAdapter<LocalDate> instance = getInstance(DateTimeFormatter.ISO_LOCAL_DATE);
 
-		private Adapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			super(dateTimeFormatter);
+		private Adapter(final DateTimeFormatter dateTimeFormatter) {
+			super(dateTimeFormatter, LocalDate::from);
 		}
 
-		/**
-		 * @param dateTimeFormatter
-		 * 		Date/time formatter
-		 *
-		 * @return An instance of {@link Adapter} with a custom {@link DateTimeFormatter}.
-		 */
-		@SuppressFBWarnings("MS_EXPOSE_REP")
-		public static TypeAdapter<LocalDate> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
-			return new Adapter(dateTimeFormatter);
-		}
-
-		@Override
-		protected LocalDate doFromString(final String text) {
-			return LocalDate.parse(text);
-		}
-
-		@Override
-		protected LocalDate doFromString(final String text, final DateTimeFormatter formatter) {
-			return LocalDate.parse(text, formatter);
+		public static TypeAdapter<LocalDate> getInstance(final DateTimeFormatter dateTimeFormatter) {
+			return new Adapter(dateTimeFormatter)
+					.nullSafe();
 		}
 
 	}

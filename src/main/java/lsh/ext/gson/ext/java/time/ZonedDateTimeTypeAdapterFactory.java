@@ -8,80 +8,49 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link ZonedDateTime}.
  */
 public final class ZonedDateTimeTypeAdapterFactory
-		extends AbstractTemporalAccessorTypeAdapterFactory<ZonedDateTime> {
+		extends AbstractBaseTypeAdapterFactory<ZonedDateTime> {
 
-	@Getter
-	private static final TypeAdapterFactory instance = new ZonedDateTimeTypeAdapterFactory(null);
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	private static final TypeAdapterFactory instance = new ZonedDateTimeTypeAdapterFactory(Adapter.getInstance());
 
-	private ZonedDateTimeTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
-		super(ZonedDateTime.class, dateTimeFormatter);
+	private ZonedDateTimeTypeAdapterFactory(final TypeAdapter<ZonedDateTime> typeAdapter) {
+		super(ZonedDateTime.class, typeAdapter);
 	}
 
 	/**
 	 * @param dateTimeFormatter
 	 * 		Date/time formatter
 	 *
-	 * @return An instance of {@link ZonedDateTimeTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
+	 * @return An instance of {@link ZonedDateTimeTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}
-		return new ZonedDateTimeTypeAdapterFactory(dateTimeFormatter);
-	}
-
-	@Override
-	protected TypeAdapter<ZonedDateTime> create() {
-		return ZonedDateTimeTypeAdapterFactory.Adapter.getInstance();
-	}
-
-	@Override
-	protected TypeAdapter<ZonedDateTime> create(final DateTimeFormatter dateTimeFormatter) {
-		return ZonedDateTimeTypeAdapterFactory.Adapter.getInstance(dateTimeFormatter);
+		return new ZonedDateTimeTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
 	/**
-	 * A type adapter for {@link ZonedDateTime}.
+	 * A formatted type adapter for {@link ZonedDateTime}.
 	 */
 	public static final class Adapter
-			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<ZonedDateTime> {
+			extends AbstractTemporalAccessorTypeAdapter<ZonedDateTime> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-		private static final TypeAdapter<ZonedDateTime> instance = new Adapter(null)
-				.nullSafe();
+		private static final TypeAdapter<ZonedDateTime> instance = getInstance(DateTimeFormatter.ISO_ZONED_DATE_TIME);
 
-		private Adapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			super(dateTimeFormatter);
+		private Adapter(final DateTimeFormatter dateTimeFormatter) {
+			super(dateTimeFormatter, ZonedDateTime::from);
 		}
 
-		/**
-		 * @param dateTimeFormatter
-		 * 		Date/time formatter
-		 *
-		 * @return An instance of {@link Adapter} with a custom {@link DateTimeFormatter}.
-		 */
-		@SuppressFBWarnings("MS_EXPOSE_REP")
-		public static TypeAdapter<ZonedDateTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
-			return new Adapter(dateTimeFormatter);
-		}
-
-		@Override
-		protected ZonedDateTime doFromString(final String text) {
-			return ZonedDateTime.parse(text);
-		}
-
-		@Override
-		protected ZonedDateTime doFromString(final String text, final DateTimeFormatter formatter) {
-			return ZonedDateTime.parse(text, formatter);
+		public static TypeAdapter<ZonedDateTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
+			return new Adapter(dateTimeFormatter)
+					.nullSafe();
 		}
 
 	}

@@ -22,7 +22,7 @@ public final class LocalDateTimeTypeAdapterTest
 		return List.of(
 				makeTestCase(
 						LocalDateTimeTypeAdapterFactory.Adapter.getInstance(),
-						"\"2018-01-01T15:31\"",
+						"\"2018-01-01T15:31:00\"",
 						LocalDateTime.of(2018, 01, 01, 15, 31)
 				),
 				makeTestCase(

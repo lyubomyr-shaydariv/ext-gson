@@ -8,80 +8,49 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.ext.java.time.temporal.AbstractTemporalAccessorTypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link OffsetDateTime}.
  */
 public final class OffsetDateTimeTypeAdapterFactory
-		extends AbstractTemporalAccessorTypeAdapterFactory<OffsetDateTime> {
+		extends AbstractBaseTypeAdapterFactory<OffsetDateTime> {
 
-	@Getter
-	private static final TypeAdapterFactory instance = new OffsetDateTimeTypeAdapterFactory(null);
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	private static final TypeAdapterFactory instance = new OffsetDateTimeTypeAdapterFactory(Adapter.getInstance());
 
-	private OffsetDateTimeTypeAdapterFactory(@Nullable final DateTimeFormatter dateTimeFormatter) {
-		super(OffsetDateTime.class, dateTimeFormatter);
+	private OffsetDateTimeTypeAdapterFactory(final TypeAdapter<OffsetDateTime> typeAdapter) {
+		super(OffsetDateTime.class, typeAdapter);
 	}
 
 	/**
 	 * @param dateTimeFormatter
 	 * 		Date/time formatter
 	 *
-	 * @return An instance of {@link OffsetDateTimeTypeAdapterFactory} with a custom {@link DateTimeFormatter}.
+	 * @return An instance of {@link OffsetDateTimeTypeAdapterFactory}.
 	 */
 	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}
-		return new OffsetDateTimeTypeAdapterFactory(dateTimeFormatter);
-	}
-
-	@Override
-	protected TypeAdapter<OffsetDateTime> create() {
-		return OffsetDateTimeTypeAdapterFactory.Adapter.getInstance();
-	}
-
-	@Override
-	protected TypeAdapter<OffsetDateTime> create(final DateTimeFormatter dateTimeFormatter) {
-		return OffsetDateTimeTypeAdapterFactory.Adapter.getInstance(dateTimeFormatter);
+		return new OffsetDateTimeTypeAdapterFactory(Adapter.getInstance(dateTimeFormatter));
 	}
 
 	/**
-	 * A type adapter for {@link OffsetDateTime}.
+	 * A formatted type adapter for {@link OffsetDateTime}.
 	 */
 	public static final class Adapter
-			extends AbstractTemporalAccessorTypeAdapterFactory.Adapter<OffsetDateTime> {
+			extends AbstractTemporalAccessorTypeAdapter<OffsetDateTime> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-		private static final TypeAdapter<OffsetDateTime> instance = new Adapter(null)
-				.nullSafe();
+		private static final TypeAdapter<OffsetDateTime> instance = getInstance(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
-		private Adapter(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			super(dateTimeFormatter);
+		private Adapter(final DateTimeFormatter dateTimeFormatter) {
+			super(dateTimeFormatter, OffsetDateTime::from);
 		}
 
-		/**
-		 * @param dateTimeFormatter
-		 * 		Date/time formatter
-		 *
-		 * @return An instance of {@link Adapter} with a custom {@link DateTimeFormatter}.
-		 */
-		@SuppressFBWarnings("MS_EXPOSE_REP")
-		public static TypeAdapter<OffsetDateTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
-			return new Adapter(dateTimeFormatter);
-		}
-
-		@Override
-		protected OffsetDateTime doFromString(final String text) {
-			return OffsetDateTime.parse(text);
-		}
-
-		@Override
-		protected OffsetDateTime doFromString(final String text, final DateTimeFormatter formatter) {
-			return OffsetDateTime.parse(text, formatter);
+		public static TypeAdapter<OffsetDateTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
+			return new Adapter(dateTimeFormatter)
+					.nullSafe();
 		}
 
 	}

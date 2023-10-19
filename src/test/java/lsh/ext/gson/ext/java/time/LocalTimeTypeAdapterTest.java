@@ -22,7 +22,7 @@ public final class LocalTimeTypeAdapterTest
 		return List.of(
 				makeTestCase(
 						LocalTimeTypeAdapterFactory.Adapter.getInstance(),
-						"\"10:10\"",
+						"\"10:10:00\"",
 						LocalTime.of(10, 10, 0)
 				),
 				makeTestCase(
