@@ -3,7 +3,9 @@ package lsh.ext.gson;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
+import javax.annotation.WillNotClose;
 
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
@@ -12,7 +14,6 @@ import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.ext.java.ICloseableIterator;
 
 /**
  * Provides miscellaneous {@link JsonReader} utility methods.
@@ -186,23 +187,18 @@ public final class JsonReaders {
 	 *
 	 * @return An iterator of a single value JSON tokens: either single primitives, either single object/arrays.
 	 */
-	public static ICloseableIterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(final JsonReader jsonReader) {
-		return new RecursiveCloseableIterator(jsonReader);
+	public static Iterator<ValuedJsonToken<?>> readValuedJsonTokenRecursively(@WillNotClose final JsonReader jsonReader) {
+		return new RecursiveIterator(jsonReader);
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	private static final class RecursiveCloseableIterator
-			implements ICloseableIterator<ValuedJsonToken<?>> {
+	private static final class RecursiveIterator
+			implements Iterator<ValuedJsonToken<?>> {
 
+		@WillNotClose
 		private final JsonReader jsonReader;
 
 		private int level;
-
-		@Override
-		public void close()
-				throws IOException {
-			jsonReader.close();
-		}
 
 		@Override
 		public boolean hasNext() {

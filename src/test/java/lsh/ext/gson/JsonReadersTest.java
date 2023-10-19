@@ -3,6 +3,7 @@ package lsh.ext.gson;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import com.google.common.collect.ImmutableList;
@@ -10,7 +11,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import lsh.ext.gson.ext.java.ICloseableIterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -151,8 +151,7 @@ public final class JsonReadersTest {
 			throws IOException {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("\"foo\" \"bar\"")) ) {
 			jsonReader.setLenient(true);
-			@SuppressWarnings("resource")
-			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value("foo")), ImmutableList.copyOf(iterator));
 		}
 	}
@@ -162,8 +161,7 @@ public final class JsonReadersTest {
 			throws IOException {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("100 300")) ) {
 			jsonReader.setLenient(true);
-			@SuppressWarnings("resource")
-			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value(100D)), ImmutableList.copyOf(iterator));
 		}
 	}
@@ -173,8 +171,7 @@ public final class JsonReadersTest {
 			throws IOException {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("true false")) ) {
 			jsonReader.setLenient(true);
-			@SuppressWarnings("resource")
-			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value(true)), ImmutableList.copyOf(iterator));
 		}
 	}
@@ -184,8 +181,7 @@ public final class JsonReadersTest {
 			throws IOException {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("null false")) ) {
 			jsonReader.setLenient(true);
-			@SuppressWarnings("resource")
-			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value()), ImmutableList.copyOf(iterator));
 		}
 	}
@@ -195,8 +191,7 @@ public final class JsonReadersTest {
 			throws IOException {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("[1,2,3] false")) ) {
 			jsonReader.setLenient(true);
-			@SuppressWarnings("resource")
-			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(1D), ValuedJsonToken.value(2D), ValuedJsonToken.value(3D), ValuedJsonToken.arrayEnd()), ImmutableList.copyOf(iterator));
 		}
 	}
@@ -206,8 +201,7 @@ public final class JsonReadersTest {
 			throws IOException {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("{\"foo\":1,\"bar\":2} 300")) ) {
 			jsonReader.setLenient(true);
-			@SuppressWarnings("resource")
-			final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.objectBegin(), ValuedJsonToken.name("foo"), ValuedJsonToken.value(1D), ValuedJsonToken.name("bar"), ValuedJsonToken.value(2D), ValuedJsonToken.objectEnd()), ImmutableList.copyOf(iterator));
 		}
 	}
@@ -217,8 +211,7 @@ public final class JsonReadersTest {
 		Assertions.assertThrows(NoSuchElementException.class, () -> {
 			try ( final JsonReader jsonReader = new JsonReader(new StringReader("100 300")) ) {
 				jsonReader.setLenient(true);
-				@SuppressWarnings("resource")
-				final ICloseableIterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
+				final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
 				Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value(100D)), ImmutableList.copyOf(iterator));
 				iterator.next();
 			}
