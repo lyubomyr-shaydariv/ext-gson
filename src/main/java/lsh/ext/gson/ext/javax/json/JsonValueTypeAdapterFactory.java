@@ -34,12 +34,10 @@ public final class JsonValueTypeAdapterFactory
 	private static final TypeAdapterFactory instance = new JsonValueTypeAdapterFactory();
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return JsonValue.class.isAssignableFrom(typeToken.getRawType());
-	}
-
-	@Override
 	protected TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !JsonValue.class.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
 		return Adapter.getInstance();
 	}
 

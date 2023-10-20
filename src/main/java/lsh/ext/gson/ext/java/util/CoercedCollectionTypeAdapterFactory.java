@@ -52,12 +52,10 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	}
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return baseCollectionType.isAssignableFrom(typeToken.getRawType());
-	}
-
-	@Override
 	protected TypeAdapter<C> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !baseCollectionType.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(Object.class));
 		return Adapter.getInstance(elementTypeAdapter, collectionFactory);

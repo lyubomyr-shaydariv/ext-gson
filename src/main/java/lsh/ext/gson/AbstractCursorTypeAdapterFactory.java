@@ -28,12 +28,10 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 	protected abstract TypeAdapter<?> createCursorTypeAdapter(TypeAdapter<?> elementTypeAdapter);
 
 	@Override
-	protected final boolean supports(final TypeToken<?> typeToken) {
-		return cursorClass.isAssignableFrom(typeToken.getRawType());
-	}
-
-	@Override
 	protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !cursorClass.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
 		@Nullable
 		final Type typeArgument = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 		assert typeArgument != null;

@@ -1,8 +1,10 @@
 package lsh.ext.gson.ext.java.util;
 
+import java.lang.reflect.Type;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
@@ -10,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractOptionalTypeAdapterFactory;
+import lsh.ext.gson.ParameterizedTypes;
 
 /**
  * Represents a type adapter factory for {@link Optional}.
@@ -22,13 +25,16 @@ public final class OptionalTypeAdapterFactory<T>
 	private static final TypeAdapterFactory instance = new OptionalTypeAdapterFactory<>();
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return typeToken.getRawType() == Optional.class;
-	}
-
-	@Override
-	protected TypeAdapter<Optional<T>> from(final TypeAdapter<T> valueTypeAdapter) {
-		return OptionalTypeAdapterFactory.Adapter.getInstance(valueTypeAdapter);
+	protected TypeAdapter<Optional<T>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( typeToken.getRawType() != Optional.class ) {
+			return null;
+		}
+		@Nullable
+		final Type parameterType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
+		assert parameterType != null;
+		@SuppressWarnings("unchecked")
+		final TypeAdapter<T> typeAdapter = (TypeAdapter<T>) gson.getAdapter(TypeToken.get(parameterType));
+		return Adapter.getInstance(typeAdapter);
 	}
 
 	/**

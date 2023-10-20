@@ -23,12 +23,10 @@ public final class UnixTimeDateTypeAdapterFactory
 	private static final TypeAdapterFactory instance = new UnixTimeDateTypeAdapterFactory();
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return typeToken.getRawType() == Date.class;
-	}
-
-	@Override
 	protected TypeAdapter<Date> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( typeToken.getRawType() != Date.class ) {
+			return null;
+		}
 		return Adapter.getInstance();
 	}
 

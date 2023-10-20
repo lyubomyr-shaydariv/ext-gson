@@ -67,13 +67,11 @@ public final class TableTypeAdapterFactory<R, C, V>
 	}
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return Table.class.isAssignableFrom(typeToken.getRawType());
-	}
-
-	@Override
 	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<Table<R, C, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !Table.class.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 2);
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));

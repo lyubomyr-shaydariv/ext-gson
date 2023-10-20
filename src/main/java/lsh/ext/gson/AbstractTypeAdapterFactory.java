@@ -34,14 +34,6 @@ public abstract class AbstractTypeAdapterFactory<CT>
 		implements TypeAdapterFactory {
 
 	/**
-	 * @param typeToken
-	 * 		Type token
-	 *
-	 * @return {@code true} if the given type token hold type is supported, otherwise {@code false}.
-	 */
-	protected abstract boolean supports(TypeToken<?> typeToken);
-
-	/**
 	 * @param gson
 	 * 		Actual Gson instance
 	 * @param typeToken
@@ -49,15 +41,17 @@ public abstract class AbstractTypeAdapterFactory<CT>
 	 *
 	 * @return A type adapter for the given concrete type.
 	 */
+	@Nullable
 	protected abstract TypeAdapter<CT> createTypeAdapter(Gson gson, TypeToken<?> typeToken);
 
 	@Override
 	@Nullable
 	public final <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-		if ( !supports(typeToken) ) {
+		@Nullable
+		final TypeAdapter<CT> typeAdapter = createTypeAdapter(gson, typeToken);
+		if ( typeAdapter == null ) {
 			return null;
 		}
-		final TypeAdapter<CT> typeAdapter = createTypeAdapter(gson, typeToken);
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) typeAdapter;
 		return castTypeAdapter;

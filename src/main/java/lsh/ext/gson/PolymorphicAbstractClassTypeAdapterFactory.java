@@ -32,12 +32,10 @@ public final class PolymorphicAbstractClassTypeAdapterFactory<T>
 	}
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return Modifier.isAbstract(typeToken.getRawType().getModifiers());
-	}
-
-	@Override
 	protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !Modifier.isAbstract(typeToken.getRawType().getModifiers()) ) {
+			return null;
+		}
 		return TypeAwareTypeAdapter.getInstance(gson, typePropertyName, valuePropertyName);
 	}
 

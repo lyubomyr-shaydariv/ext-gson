@@ -1,5 +1,7 @@
 package lsh.ext.gson.ext.java.time;
 
+import javax.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -15,12 +17,11 @@ abstract class AbstractBaseTypeAdapterFactory<T>
 	private final TypeAdapter<T> typeAdapter;
 
 	@Override
-	protected final boolean supports(final TypeToken<?> typeToken) {
-		return typeToken.getRawType() == clazz;
-	}
-
-	@Override
+	@Nullable
 	protected final TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( typeToken.getRawType() != clazz ) {
+			return null;
+		}
 		return typeAdapter;
 	}
 

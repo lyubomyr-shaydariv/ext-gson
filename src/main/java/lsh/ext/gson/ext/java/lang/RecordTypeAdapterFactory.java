@@ -23,12 +23,10 @@ public final class RecordTypeAdapterFactory<T extends Record>
 	private static final TypeAdapterFactory instance = new RecordTypeAdapterFactory<>();
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return Record.class.isAssignableFrom(typeToken.getRawType());
-	}
-
-	@Override
 	protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !Record.class.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
 		@SuppressWarnings("unchecked")
 		final Class<T> recordClass = (Class<T>) typeToken.getRawType();
 		return gson.getAdapter(recordClass);

@@ -1,12 +1,9 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
@@ -22,24 +19,6 @@ import lombok.RequiredArgsConstructor;
  */
 public abstract class AbstractOptionalTypeAdapterFactory<O, T>
 		extends AbstractTypeAdapterFactory<O> {
-
-	/**
-	 * @param valueTypeAdapter
-	 * 		Value type adapter
-	 *
-	 * @return A type adapter for the optional values that can be held by the given type adapter
-	 */
-	protected abstract TypeAdapter<O> from(TypeAdapter<T> valueTypeAdapter);
-
-	@Override
-	protected final TypeAdapter<O> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		@Nullable
-		final Type parameterType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
-		assert parameterType != null;
-		@SuppressWarnings("unchecked")
-		final TypeAdapter<T> typeAdapter = (TypeAdapter<T>) gson.getAdapter(TypeToken.get(parameterType));
-		return from(typeAdapter);
-	}
 
 	/**
 	 * Represents an abstract type adapter factory for <i>optional</i> wrappers.

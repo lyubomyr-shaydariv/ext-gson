@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
 import com.google.common.base.Supplier;
@@ -55,13 +56,12 @@ public final class BiMapTypeAdapterFactory<K, V>
 	}
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return BiMap.class.isAssignableFrom(typeToken.getRawType());
-	}
-
-	@Override
+	@Nullable
 	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<BiMap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !BiMap.class.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));

@@ -53,13 +53,11 @@ public final class MultiMapTypeAdapterFactory<K, V>
 	}
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return MultiMap.class.isAssignableFrom(typeToken.getRawType());
-	}
-
-	@Override
 	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<MultiMap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !MultiMap.class.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));

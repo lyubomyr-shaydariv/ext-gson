@@ -43,12 +43,10 @@ public final class MultiSetTypeAdapterFactory<E>
 	}
 
 	@Override
-	protected boolean supports(final TypeToken<?> typeToken) {
-		return MultiSet.class.isAssignableFrom(typeToken.getRawType());
-	}
-
-	@Override
 	protected TypeAdapter<MultiSet<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !MultiSet.class.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
 		@Nullable
 		final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 		assert elementType != null;
