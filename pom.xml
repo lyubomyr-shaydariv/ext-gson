@@ -167,7 +167,10 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version>
 				<configuration>
+					<failOnWarning>false</failOnWarning>
 					<source>19</source>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
 					<target>19</target>
 				</configuration>
 			</plugin>
