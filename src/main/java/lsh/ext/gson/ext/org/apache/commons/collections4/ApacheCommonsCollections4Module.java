@@ -68,6 +68,7 @@ public final class ApacheCommonsCollections4Module
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true, prefix = "with")
+	@SuppressWarnings("deprecation")
 	public static final class Builder<BMK, BMV, MSE, MMK, MMV, MMMK, MMMV, BE> {
 
 		private final Factory<? extends BidiMap<BMK, BMV>> newBidiMapFactory;

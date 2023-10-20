@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.jakarta.json;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
-
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
