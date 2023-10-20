@@ -1,5 +1,6 @@
 package lsh.ext.gson.ext.com.google.common.base;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import javax.annotation.Nullable;
 
@@ -8,10 +9,12 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractOptionalTypeAdapterFactory;
+import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
 /**
@@ -19,7 +22,7 @@ import lsh.ext.gson.ParameterizedTypes;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OptionalTypeAdapterFactory<T>
-		extends AbstractOptionalTypeAdapterFactory<Optional<T>, T> {
+		extends AbstractTypeAdapterFactory<Optional<T>> {
 
 	@Getter
 	private static final TypeAdapterFactory instance = new OptionalTypeAdapterFactory<>();
@@ -40,12 +43,11 @@ public final class OptionalTypeAdapterFactory<T>
 	/**
 	 * Represents a type adapter for {@link Optional} from Google Guava.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<T>
-			extends AbstractOptionalTypeAdapterFactory.Adapter<Optional<T>, T> {
+			extends TypeAdapter<Optional<T>> {
 
-		private Adapter(final TypeAdapter<T> valueTypeAdapter) {
-			super(valueTypeAdapter);
-		}
+		private final TypeAdapter<T> valueTypeAdapter;
 
 		/**
 		 * @param valueTypeAdapter
@@ -59,15 +61,24 @@ public final class OptionalTypeAdapterFactory<T>
 			return new Adapter<>(valueTypeAdapter);
 		}
 
-		@Nullable
 		@Override
-		protected T fromOptional(@SuppressWarnings("Guava") final Optional<T> optional) {
-			return optional.orNull();
+		public void write(final JsonWriter out, @SuppressWarnings("Guava") final Optional<T> optional)
+				throws IOException {
+			@Nullable
+			final T value = optional.orNull();
+			if ( value == null ) {
+				out.nullValue();
+				return;
+			}
+			valueTypeAdapter.write(out, value);
 		}
 
 		@Override
-		@SuppressWarnings("Guava")
-		protected Optional<T> toOptional(@Nullable final T value) {
+		@SuppressWarnings({ "Guava", "OptionalOfNullableMisuse" })
+		public Optional<T> read(final JsonReader in)
+				throws IOException {
+			@Nullable
+			final T value = valueTypeAdapter.read(in);
 			return Optional.fromNullable(value);
 		}
 
