@@ -127,7 +127,8 @@ public final class TableTypeAdapterFactory<R, C, V>
 				@SuppressWarnings("Guava") final Function<? super C, String> columnKeyMapper,
 				@SuppressWarnings("Guava") final Function<? super String, ? extends C> columnKeyReverseMapper
 		) {
-			return new Adapter<>(valueTypeAdapter, newTableFactory, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);
+			return new Adapter<>(valueTypeAdapter, newTableFactory, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper)
+					.nullSafe();
 		}
 
 		@Override

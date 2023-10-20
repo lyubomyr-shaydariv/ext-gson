@@ -48,7 +48,8 @@ public final class EnumerationTypeAdapterFactory<E>
 		 * @return An instance of {@link Adapter}.
 		 */
 		public static <E> TypeAdapter<Enumeration<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
-			return new Adapter<>(elementTypeAdapter);
+			return new Adapter<>(elementTypeAdapter)
+					.nullSafe();
 		}
 
 		@Override

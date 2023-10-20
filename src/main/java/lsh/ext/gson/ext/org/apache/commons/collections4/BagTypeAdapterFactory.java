@@ -84,7 +84,8 @@ public final class BagTypeAdapterFactory<E>
 				final Transformer<? super V, String> keyMapper,
 				final Transformer<? super String, ? extends V> keyReverseMapper
 		) {
-			return new Adapter<>(newBagFactory, keyMapper, keyReverseMapper);
+			return new Adapter<>(newBagFactory, keyMapper, keyReverseMapper)
+					.nullSafe();
 		}
 
 		@Override

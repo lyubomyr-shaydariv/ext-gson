@@ -103,7 +103,8 @@ public final class MultimapTypeAdapterFactory<K, V>
 				@SuppressWarnings("Guava") final Function<? super K, String> keyMapper,
 				@SuppressWarnings("Guava") final Function<? super String, ? extends K> keyReverseMapper
 		) {
-			return new Adapter<>(valueTypeAdapter, newMultimapFactory, keyMapper, keyReverseMapper);
+			return new Adapter<>(valueTypeAdapter, newMultimapFactory, keyMapper, keyReverseMapper)
+					.nullSafe();
 		}
 
 		@Override

@@ -97,7 +97,8 @@ public final class MultiValuedMapTypeAdapterFactory<K, V>
 				final Transformer<? super K, String> keyMapper,
 				final Transformer<? super String, ? extends K> keyReverseMapper
 		) {
-			return new Adapter<>(valueTypeAdapter, newMultiValuedMapFactory, keyMapper, keyReverseMapper);
+			return new Adapter<>(valueTypeAdapter, newMultiValuedMapFactory, keyMapper, keyReverseMapper)
+					.nullSafe();
 		}
 
 		@Override

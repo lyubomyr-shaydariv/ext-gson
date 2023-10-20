@@ -39,14 +39,19 @@ public final class UnpackedJsonTypeAdapterFactory
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 		final TypeAdapter<T> delegateTypeAdapter = gson.getAdapter(typeToken);
-		return new Adapter<>(delegateTypeAdapter);
+		return Adapter.getInstance(delegateTypeAdapter);
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	private static final class Adapter<T>
+	public static final class Adapter<T>
 			extends TypeAdapter<T> {
 
 		private final TypeAdapter<T> typeAdapter;
+
+		public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter) {
+			return new Adapter<>(typeAdapter)
+					.nullSafe();
+		}
 
 		@Override
 		public void write(final JsonWriter out, final T value)

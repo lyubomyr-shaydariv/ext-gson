@@ -48,7 +48,8 @@ public final class StreamTypeAdapterFactory<E>
 		 * @return An instance of {@link Adapter}.
 		 */
 		public static <E> TypeAdapter<Stream<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
-			return new Adapter<>(elementTypeAdapter);
+			return new Adapter<>(elementTypeAdapter)
+					.nullSafe();
 		}
 
 		@Override

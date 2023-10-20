@@ -81,7 +81,8 @@ public final class MultisetTypeAdapterFactory<E>
 		 */
 		public static <V> TypeAdapter<Multiset<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 				@SuppressWarnings("Guava") final Supplier<? extends Multiset<V>> newMultisetFactory) {
-			return new Adapter<>(valueTypeAdapter, newMultisetFactory);
+			return new Adapter<>(valueTypeAdapter, newMultisetFactory)
+					.nullSafe();
 		}
 
 		@Override

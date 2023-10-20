@@ -90,8 +90,9 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 		 *
 		 * @return An instance of {@link Adapter}.
 		 */
-		public static <E, C extends Collection<E>> TypeAdapter<C> getInstance(final TypeAdapter<E> elementTypeAdapter, final IFactory<? extends E, ? extends C> collectionFactory) {
-			return new Adapter<>(elementTypeAdapter, collectionFactory);
+		public static <E, C extends Collection<E>> TypeAdapter<C> getInstance(final TypeAdapter<E> elementTypeAdapter, final IFactory<? extends E, C> collectionFactory) {
+			return new Adapter<>(elementTypeAdapter, collectionFactory)
+					.nullSafe();
 		}
 
 		@Override

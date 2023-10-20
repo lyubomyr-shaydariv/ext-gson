@@ -105,7 +105,8 @@ public final class BiMapTypeAdapterFactory<K, V>
 				@SuppressWarnings("Guava") final Function<? super K, String> keyMapper,
 				@SuppressWarnings("Guava") final Function<? super String, ? extends K> keyReverseMapper
 		) {
-			return new Adapter<>(valueTypeAdapter, newBiMapFactory, keyMapper, keyReverseMapper);
+			return new Adapter<>(valueTypeAdapter, newBiMapFactory, keyMapper, keyReverseMapper)
+					.nullSafe();
 		}
 
 		@Override

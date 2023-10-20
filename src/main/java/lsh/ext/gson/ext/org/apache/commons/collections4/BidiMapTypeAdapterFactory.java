@@ -97,7 +97,8 @@ public final class BidiMapTypeAdapterFactory<K, V>
 				final Transformer<? super K, String> keyMapper,
 				final Transformer<? super String, ? extends K> keyReverseMapper
 		) {
-			return new Adapter<>(valueTypeAdapter, newBidiMapFactory, keyMapper, keyReverseMapper);
+			return new Adapter<>(valueTypeAdapter, newBidiMapFactory, keyMapper, keyReverseMapper)
+					.nullSafe();
 		}
 
 		@Override

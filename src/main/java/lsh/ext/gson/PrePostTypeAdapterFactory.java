@@ -48,11 +48,13 @@ public final class PrePostTypeAdapterFactory
 			return null;
 		}
 		final TypeAdapter<T> delegateTypeAdapter = gson.getDelegateAdapter(this, typeToken);
-		@SuppressWarnings({ "unchecked", "rawtypes", "DataFlowIssue" })
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@Nullable
 		final Iterable<? extends IProcessor<? super T>> castPreProcessors = (Iterable) preProcessors;
-		@SuppressWarnings({ "unchecked", "rawtypes", "DataFlowIssue" })
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@Nullable
 		final Iterable<? extends IProcessor<? super T>> castPostProcessors = (Iterable) postProcessors;
-		return new Adapter<>(castPreProcessors, castPostProcessors, delegateTypeAdapter);
+		return Adapter.getInstance(castPreProcessors, castPostProcessors, delegateTypeAdapter);
 	}
 
 	@Nullable
@@ -74,18 +76,30 @@ public final class PrePostTypeAdapterFactory
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	private static final class Adapter<T>
+	public static final class Adapter<T>
 			extends TypeAdapter<T> {
 
+		@Nullable
 		private final Iterable<? extends IProcessor<? super T>> preProcessors;
+		@Nullable
 		private final Iterable<? extends IProcessor<? super T>> postProcessors;
 		private final TypeAdapter<T> delegateTypeAdapter;
+
+		public static <T> TypeAdapter<T> getInstance(
+				@Nullable final Iterable<? extends IProcessor<? super T>> preProcessors,
+				@Nullable final Iterable<? extends IProcessor<? super T>> postProcessors,
+				final TypeAdapter<T> delegateTypeAdapter) {
+			return new Adapter<>(preProcessors, postProcessors, delegateTypeAdapter)
+					.nullSafe();
+		}
 
 		@Override
 		public void write(final JsonWriter out, final T value)
 				throws IOException {
-			for ( final IProcessor<? super T> processor : preProcessors ) {
-				processor.process(value);
+			if ( preProcessors != null ) {
+				for ( final IProcessor<? super T> processor : preProcessors ) {
+					processor.process(value);
+				}
 			}
 			delegateTypeAdapter.write(out, value);
 		}
@@ -94,8 +108,10 @@ public final class PrePostTypeAdapterFactory
 		public T read(final JsonReader in)
 				throws IOException {
 			final T value = delegateTypeAdapter.read(in);
-			for ( final IProcessor<? super T> processor : postProcessors ) {
-				processor.process(value);
+			if ( postProcessors != null ) {
+				for ( final IProcessor<? super T> processor : postProcessors ) {
+					processor.process(value);
+				}
 			}
 			return value;
 		}

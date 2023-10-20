@@ -65,7 +65,8 @@ public final class JsonValueTypeAdapterFactory
 		 * @return An instance of {@link Adapter}.
 		 */
 		public static TypeAdapter<JsonValue> getInstance(final JsonProvider jsonProvider) {
-			return new Adapter(new JsonNumberTypeAdapter(jsonProvider), new JsonStringTypeAdapter(jsonProvider));
+			return new Adapter(new JsonNumberTypeAdapter(jsonProvider), new JsonStringTypeAdapter(jsonProvider))
+					.nullSafe();
 		}
 
 		@Override

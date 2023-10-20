@@ -47,7 +47,8 @@ public final class IteratorTypeAdapterFactory<E>
 		 * @return An instance of {@link Adapter}.
 		 */
 		public static <E> TypeAdapter<Iterator<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
-			return new Adapter<>(elementTypeAdapter);
+			return new Adapter<>(elementTypeAdapter)
+					.nullSafe();
 		}
 
 		@Override

@@ -80,7 +80,8 @@ public final class MultiSetTypeAdapterFactory<E>
 		 */
 		public static <V> TypeAdapter<MultiSet<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
 				final Factory<? extends MultiSet<V>> newMultiSetFactory) {
-			return new Adapter<>(valueTypeAdapter, newMultiSetFactory);
+			return new Adapter<>(valueTypeAdapter, newMultiSetFactory)
+					.nullSafe();
 		}
 
 		@Override
