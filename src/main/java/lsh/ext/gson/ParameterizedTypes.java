@@ -25,8 +25,8 @@ public final class ParameterizedTypes {
 			}
 			return actualTypeArguments[index];
 		}
-		if ( type instanceof final Class<?> klass ) {
-			final TypeVariable<?>[] typeParameters = klass.getTypeParameters();
+		if ( type instanceof final Class<?> clazz ) {
+			final TypeVariable<?>[] typeParameters = clazz.getTypeParameters();
 			if ( typeParameters.length == 0 ) {
 				return null;
 			}
@@ -52,8 +52,8 @@ public final class ParameterizedTypes {
 			System.arraycopy(actualTypeArguments, 0, resultTypeArguments, 0, actualTypeArguments.length);
 			return resultTypeArguments;
 		}
-		if ( type instanceof final Class<?> klass ) {
-			final TypeVariable<?>[] typeParameters = klass.getTypeParameters();
+		if ( type instanceof final Class<?> clazz ) {
+			final TypeVariable<?>[] typeParameters = clazz.getTypeParameters();
 			if ( typeParameters.length == 0 ) {
 				return emptyTypeArray;
 			}
