@@ -58,7 +58,8 @@ public final class OptionalTypeAdapterFactory<T>
 		 * @return An {@link Adapter} instance
 		 */
 		public static <T> TypeAdapter<Optional<T>> getInstance(final TypeAdapter<T> valueTypeAdapter) {
-			return new Adapter<>(valueTypeAdapter);
+			return new Adapter<>(valueTypeAdapter)
+					.nullSafe();
 		}
 
 		@Override
