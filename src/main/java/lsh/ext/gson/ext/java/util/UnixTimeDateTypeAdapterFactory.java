@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -18,6 +19,9 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 public final class UnixTimeDateTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<Date> {
 
+	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	private static final TypeAdapterFactory instance = new UnixTimeDateTypeAdapterFactory();
+
 	@Override
 	protected boolean supports(final TypeToken<?> typeToken) {
 		return typeToken.getRawType() == Date.class;
@@ -25,7 +29,7 @@ public final class UnixTimeDateTypeAdapterFactory
 
 	@Override
 	protected TypeAdapter<Date> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		return Adapter.instance;
+		return Adapter.getInstance();
 	}
 
 	/**
