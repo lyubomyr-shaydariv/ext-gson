@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import javax.annotation.Nullable;
 
-import com.google.common.base.Supplier;
 import com.google.common.collect.Multiset;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -14,6 +13,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -28,8 +28,7 @@ public final class MultisetTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Multiset<E>>
 		implements ITypeAdapterFactory<Multiset<E>> {
 
-	@SuppressWarnings("Guava")
-	private final Supplier<? extends Multiset<E>> newMultisetFactory;
+	private final IInstanceFactory.IProvider<? extends Multiset<E>> newMultimapFactoryProvider;
 
 	/**
 	 * @param newMultisetFactory
@@ -39,7 +38,7 @@ public final class MultisetTypeAdapterFactory<E>
 	 *
 	 * @return An instance of {@link MultisetTypeAdapterFactory} with a custom new {@link Multiset} factory.
 	 */
-	public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(@SuppressWarnings("Guava") final Supplier<? extends Multiset<E>> newMultisetFactory) {
+	public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(final IInstanceFactory.IProvider<? extends Multiset<E>> newMultisetFactory) {
 		return new MultisetTypeAdapterFactory<>(newMultisetFactory);
 	}
 
@@ -53,7 +52,11 @@ public final class MultisetTypeAdapterFactory<E>
 		assert elementType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
-		return Adapter.getInstance(elementTypeAdapter, newMultisetFactory);
+		@SuppressWarnings("unchecked")
+		final TypeToken<Multiset<E>> castTypeToken = (TypeToken<Multiset<E>>) typeToken;
+		@SuppressWarnings("unchecked")
+		final IInstanceFactory.IProvider<Multiset<E>> castNewMultisetFactoryProvider = (IInstanceFactory.IProvider<Multiset<E>>) newMultimapFactoryProvider;
+		return Adapter.getInstance(elementTypeAdapter, castNewMultisetFactoryProvider.provide(castTypeToken));
 	}
 
 	/**
@@ -67,22 +70,21 @@ public final class MultisetTypeAdapterFactory<E>
 			extends TypeAdapter<Multiset<E>> {
 
 		private final TypeAdapter<E> elementTypeAdapter;
-		@SuppressWarnings("Guava")
-		private final Supplier<? extends Multiset<E>> newMultisetFactory;
+		private final IInstanceFactory<? extends Multiset<E>> newMultisetInstanceFactory;
 
 		/**
 		 * @param valueTypeAdapter
 		 * 		Multiset value type adapter
-		 * @param newMultisetFactory
+		 * @param newMultisetInstanceFactory
 		 * 		A {@link Multiset} factory to create instance used while deserialization
-		 * @param <V>
+		 * @param <E>
 		 * 		Multiset element type
 		 *
 		 * @return A {@link Adapter} instance.
 		 */
-		public static <V> TypeAdapter<Multiset<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				@SuppressWarnings("Guava") final Supplier<? extends Multiset<V>> newMultisetFactory) {
-			return new Adapter<>(valueTypeAdapter, newMultisetFactory)
+		public static <E> TypeAdapter<Multiset<E>> getInstance(final TypeAdapter<E> valueTypeAdapter,
+				final IInstanceFactory<? extends Multiset<E>> newMultisetInstanceFactory) {
+			return new Adapter<>(valueTypeAdapter, newMultisetInstanceFactory)
 					.nullSafe();
 		}
 
@@ -103,7 +105,7 @@ public final class MultisetTypeAdapterFactory<E>
 		@Override
 		public Multiset<E> read(final JsonReader in)
 				throws IOException {
-			final Multiset<E> multiset = newMultisetFactory.get();
+			final Multiset<E> multiset = newMultisetInstanceFactory.createInstance();
 			in.beginArray();
 			while ( in.hasNext() ) {
 				final E element = elementTypeAdapter.read(in);

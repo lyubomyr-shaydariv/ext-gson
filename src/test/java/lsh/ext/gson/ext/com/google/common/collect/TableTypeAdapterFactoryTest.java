@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import com.google.common.base.Functions;
-import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
@@ -22,7 +21,7 @@ public final class TableTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return TableTypeAdapterFactory.getInstance(HashBasedTable::create, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity());
+		return TableTypeAdapterFactory.getInstance(GuavaCollectModule.defaultTableFactoryProvider, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity());
 	}
 
 	@Override

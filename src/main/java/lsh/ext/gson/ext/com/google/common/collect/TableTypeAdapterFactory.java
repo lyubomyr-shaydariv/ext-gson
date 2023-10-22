@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
-import com.google.common.base.Supplier;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -16,6 +15,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -27,8 +27,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 		extends AbstractTypeAdapterFactory<Table<R, C, V>>
 		implements ITypeAdapterFactory<Table<R, C, V>> {
 
-	@SuppressWarnings("Guava")
-	private final Supplier<? extends Table<R, C, V>> newTableFactory;
+	private final IInstanceFactory.IProvider<? extends Table<R, C, V>> newTableFactoryProvider;
 	@SuppressWarnings("Guava")
 	private final Function<? super R, String> rowKeyMapper;
 	@SuppressWarnings("Guava")
@@ -39,8 +38,8 @@ public final class TableTypeAdapterFactory<R, C, V>
 	private final Function<? super String, ? extends C> columnKeyReverseMapper;
 
 	/**
-	 * @param newTableFactory
-	 * 		New table factory
+	 * @param newTableFactoryProvider
+	 * 		New table factory factory
 	 * @param rowKeyMapper
 	 * 		Row key mapper
 	 * @param rowKeyReverseMapper
@@ -59,13 +58,13 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
 	 */
 	public static <R, C, V> ITypeAdapterFactory<Table<R, C, V>> getInstance(
-			@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
+			final IInstanceFactory.IProvider<? extends Table<R, C, V>> newTableFactoryProvider,
 			@SuppressWarnings("Guava") final Function<? super R, String> rowKeyMapper,
 			@SuppressWarnings("Guava") final Function<? super String, ? extends R> rowKeyReverseMapper,
 			@SuppressWarnings("Guava") final Function<? super C, String> columnKeyMapper,
 			@SuppressWarnings("Guava") final Function<? super String, ? extends C> columnKeyReverseMapper
 	) {
-		return new TableTypeAdapterFactory<>(newTableFactory, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);
+		return new TableTypeAdapterFactory<>(newTableFactoryProvider, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);
 	}
 
 	@Override
@@ -79,7 +78,11 @@ public final class TableTypeAdapterFactory<R, C, V>
 		assert valueType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
-		return Adapter.getInstance(valueTypeAdapter, newTableFactory, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);
+		@SuppressWarnings("unchecked")
+		final TypeToken<Table<R, C, V>> castTypeToken = (TypeToken<Table<R, C, V>>) typeToken;
+		@SuppressWarnings("unchecked")
+		final IInstanceFactory.IProvider<Table<R, C, V>> castNewTableFactoryProvider = (IInstanceFactory.IProvider<Table<R, C, V>>) newTableFactoryProvider;
+		return Adapter.getInstance(valueTypeAdapter, castNewTableFactoryProvider.provide(castTypeToken), rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);
 	}
 
 	/**
@@ -90,8 +93,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 			extends TypeAdapter<Table<R, C, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
-		@SuppressWarnings("Guava")
-		private final Supplier<? extends Table<R, C, V>> newTableFactory;
+		private final IInstanceFactory<? extends Table<R, C, V>> newTableFactory;
 		@SuppressWarnings("Guava")
 		private final Function<? super R, String> rowKeyMapper;
 		@SuppressWarnings("Guava")
@@ -125,7 +127,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 		 */
 		public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
-				@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
+				final IInstanceFactory<? extends Table<R, C, V>> newTableFactory,
 				@SuppressWarnings("Guava") final Function<? super R, String> rowKeyMapper,
 				@SuppressWarnings("Guava") final Function<? super String, ? extends R> rowKeyReverseMapper,
 				@SuppressWarnings("Guava") final Function<? super C, String> columnKeyMapper,
@@ -159,7 +161,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 		@Override
 		public Table<R, C, V> read(final JsonReader in)
 				throws IOException {
-			final Table<R, C, V> table = newTableFactory.get();
+			final Table<R, C, V> table = newTableFactory.createInstance();
 			in.beginObject();
 			while ( in.hasNext() ) {
 				final R rowKey = rowKeyReverseMapper.apply(in.nextName());

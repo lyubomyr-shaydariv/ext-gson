@@ -1,9 +1,10 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashBiMap;
-import com.google.common.collect.HashMultimap;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
@@ -31,6 +33,46 @@ import lsh.ext.gson.UnmodifiableIterable;
  */
 public final class GuavaCollectModule
 		extends AbstractModule {
+
+	// TODO improve
+	public static final IInstanceFactory.IProvider<BiMap<String, Object>> defaultBiMapFactoryProvider = typeToken -> {
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final Class<? extends BiMap> rawType = (Class<? extends BiMap>) typeToken.getRawType();
+		if ( rawType == HashBiMap.class ) {
+			return HashBiMap::create;
+		}
+		return HashBiMap::create;
+	};
+
+	// TODO improve
+	public static final IInstanceFactory.IProvider<Multimap<String, Object>> defaultMultimapFactoryProvider = typeToken -> {
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final Class<? extends Multimap> rawType = (Class<? extends Multimap>) typeToken.getRawType();
+		if ( rawType == ArrayListMultimap.class ) {
+			return ArrayListMultimap::create;
+		}
+		return LinkedHashMultimap::create;
+	};
+
+	// TODO improve
+	public static final IInstanceFactory.IProvider<? extends Multiset<Object>> defaultMultisetFactoryProvider = typeToken -> {
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final Class<? extends Multiset> rawType = (Class<? extends Multiset>) typeToken.getRawType();
+		if ( rawType == LinkedHashMultiset.class ) {
+			return LinkedHashMultiset::create;
+		}
+		return LinkedHashMultiset::create;
+	};
+
+	// TODO improve
+	public static final IInstanceFactory.IProvider<Table<String, String, Object>> defaultTableFactoryProvider = typeToken -> {
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final Class<? extends Table> rawType = (Class<? extends Table>) typeToken.getRawType();
+		if ( rawType == HashBasedTable.class ) {
+			return HashBasedTable::create;
+		}
+		return HashBasedTable::create;
+	};
 
 	@Getter
 	private static final IModule instance = builder()
@@ -55,16 +97,16 @@ public final class GuavaCollectModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapterFactory.getInstance(HashBiMap::create, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapterFactory.getInstance(defaultBiMapFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multimap<?, ?>> multimapTypeAdapterFactory = MultimapTypeAdapterFactory.getInstance(HashMultimap::create, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends Multimap<?, ?>> multimapTypeAdapterFactory = MultimapTypeAdapterFactory.getInstance(defaultMultimapFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapterFactory.getInstance(LinkedHashMultiset::create);
+		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapterFactory.getInstance(defaultMultisetFactoryProvider);
 
 		@Setter
-		private ITypeAdapterFactory<? extends Table<?, ?, ?>> tableTypeAdapterFactory = TableTypeAdapterFactory.getInstance(HashBasedTable::create, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends Table<?, ?, ?>> tableTypeAdapterFactory = TableTypeAdapterFactory.getInstance(defaultTableFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
 
 		/**
 		 * @return A new module instance.

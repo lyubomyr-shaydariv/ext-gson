@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
-import com.google.common.base.Supplier;
 import com.google.common.collect.BiMap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -16,6 +15,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -27,15 +27,14 @@ public final class BiMapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<BiMap<K, V>>
 		implements ITypeAdapterFactory<BiMap<K, V>> {
 
-	@SuppressWarnings("Guava")
-	private final Supplier<? extends BiMap<K, V>> newBiMapFactory;
+	private final IInstanceFactory.IProvider<? extends BiMap<K, V>> newBiMapFactoryProvider;
 	@SuppressWarnings("Guava")
 	private final Function<? super K, String> keyMapper;
 	@SuppressWarnings("Guava")
 	private final Function<? super String, ? extends K> keyReverseMapper;
 
 	/**
-	 * @param newBiMapFactory
+	 * @param newBiMapFactoryProvider
 	 * 		New bidirectional map factory
 	 * @param keyMapper
 	 * 		Key mapper
@@ -49,11 +48,11 @@ public final class BiMapTypeAdapterFactory<K, V>
 	 * @return An instance of {@link BiMapTypeAdapterFactory} with a custom new {@link BiMap} factory.
 	 */
 	public static <K, V> ITypeAdapterFactory<BiMap<K, V>> getInstance(
-			@SuppressWarnings("Guava") final Supplier<? extends BiMap<K, V>> newBiMapFactory,
+			final IInstanceFactory.IProvider<? extends BiMap<K, V>> newBiMapFactoryProvider,
 			@SuppressWarnings("Guava") final Function<? super K, String> keyMapper,
 			@SuppressWarnings("Guava") final Function<? super String, ? extends K> keyReverseMapper
 	) {
-		return new BiMapTypeAdapterFactory<>(newBiMapFactory, keyMapper, keyReverseMapper);
+		return new BiMapTypeAdapterFactory<>(newBiMapFactoryProvider, keyMapper, keyReverseMapper);
 	}
 
 	@Override
@@ -68,7 +67,11 @@ public final class BiMapTypeAdapterFactory<K, V>
 		assert valueType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
-		return Adapter.getInstance(valueTypeAdapter, newBiMapFactory, keyMapper, keyReverseMapper);
+		@SuppressWarnings("unchecked")
+		final TypeToken<BiMap<K, V>> castTypeToken = (TypeToken<BiMap<K, V>>) typeToken;
+		@SuppressWarnings("unchecked")
+		final IInstanceFactory.IProvider<BiMap<K, V>> castNewBimapFactoryProvider = (IInstanceFactory.IProvider<BiMap<K, V>>) newBiMapFactoryProvider;
+		return Adapter.getInstance(valueTypeAdapter, castNewBimapFactoryProvider.provide(castTypeToken), keyMapper, keyReverseMapper);
 	}
 
 	/**
@@ -79,8 +82,7 @@ public final class BiMapTypeAdapterFactory<K, V>
 			extends TypeAdapter<BiMap<K, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
-		@SuppressWarnings("Guava")
-		private final Supplier<? extends BiMap<K, V>> newBiMapFactory;
+		private final IInstanceFactory<? extends BiMap<K, V>> newBiMapInstanceFactory;
 		@SuppressWarnings("Guava")
 		private final Function<? super K, String> keyMapper;
 		@SuppressWarnings("Guava")
@@ -89,7 +91,7 @@ public final class BiMapTypeAdapterFactory<K, V>
 		/**
 		 * @param valueTypeAdapter
 		 * 		Bidirectional map value type adapter
-		 * @param newBiMapFactory
+		 * @param newBiMapInstanceFactory
 		 * 		A {@link BiMap} factory to create instance used while deserialization
 		 * @param keyMapper
 		 * 		A mapper to map key to JSON object property names
@@ -104,11 +106,11 @@ public final class BiMapTypeAdapterFactory<K, V>
 		 */
 		public static <K, V> TypeAdapter<BiMap<K, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
-				@SuppressWarnings("Guava") final Supplier<? extends BiMap<K, V>> newBiMapFactory,
+				final IInstanceFactory<? extends BiMap<K, V>> newBiMapInstanceFactory,
 				@SuppressWarnings("Guava") final Function<? super K, String> keyMapper,
 				@SuppressWarnings("Guava") final Function<? super String, ? extends K> keyReverseMapper
 		) {
-			return new Adapter<>(valueTypeAdapter, newBiMapFactory, keyMapper, keyReverseMapper)
+			return new Adapter<>(valueTypeAdapter, newBiMapInstanceFactory, keyMapper, keyReverseMapper)
 					.nullSafe();
 		}
 
@@ -128,7 +130,7 @@ public final class BiMapTypeAdapterFactory<K, V>
 		@Override
 		public BiMap<K, V> read(final JsonReader in)
 				throws IOException {
-			final BiMap<K, V> biMap = newBiMapFactory.get();
+			final BiMap<K, V> biMap = newBiMapInstanceFactory.createInstance();
 			in.beginObject();
 			while ( in.hasNext() ) {
 				final K key = keyReverseMapper.apply(in.nextName());
