@@ -1,6 +1,7 @@
 package lsh.ext.gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -50,8 +51,7 @@ public final class UnmodifiableIterable<T>
 			final Iterable<T> castEmptyUnmodifiableIterable = (Iterable<T>) emptyUnmodifiableIterable;
 			return castEmptyUnmodifiableIterable;
 		}
-		final Collection<T> copy = new ArrayList<>(array.length);
-		Collections.addAll(copy, array);
+		final Collection<T> copy = Arrays.asList(array);
 		return new UnmodifiableIterable<>(copy);
 	}
 
