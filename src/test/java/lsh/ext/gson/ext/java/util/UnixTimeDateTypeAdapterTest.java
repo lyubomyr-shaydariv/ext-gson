@@ -20,7 +20,7 @@ public final class UnixTimeDateTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						UnixTimeDateTypeAdapterFactory.Adapter.getInstance(),
+						UnixTimeDateTypeAdapterFactory.Adapter.getInstance(Date::new),
 						"1488929283",
 						new Date(1488929283000L)
 				)

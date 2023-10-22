@@ -1,39 +1,70 @@
 package lsh.ext.gson.ext.java.util;
 
+import java.io.IOException;
 import java.util.Date;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-public final class UnixTimeDateTypeAdapterFactory
-		extends AbstractUnixTimeDateTypeAdapterFactory<Date>
-		implements ITypeAdapterFactory<Date> {
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public final class UnixTimeDateTypeAdapterFactory<T extends Date>
+		extends AbstractTypeAdapterFactory<T>
+		implements ITypeAdapterFactory<T> {
 
-	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final ITypeAdapterFactory<Date> instance = new UnixTimeDateTypeAdapterFactory(Adapter.getInstance());
+	public static final IInstanceFactory.IProvider<Date> defaultDateFactoryProvider = typeToken -> Date::new;
 
-	private UnixTimeDateTypeAdapterFactory(final TypeAdapter<Date> dateTypeAdapter) {
-		super(Date.class, dateTypeAdapter);
+	private final IInstanceFactory.IProvider<? extends T> dateFactoryProvider;
+
+	public static <T extends Date> ITypeAdapterFactory<T> getInstance(final IInstanceFactory.IProvider<? extends T> dateFactoryProvider) {
+		return new UnixTimeDateTypeAdapterFactory<>(dateFactoryProvider);
 	}
 
-	/**
-	 * Represents the epoch to {@link Date} and vice versa type adapter.
-	 */
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class Adapter
-			extends AbstractAdapter<Date> {
+	@Override
+	@Nullable
+	protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		if ( !Date.class.isAssignableFrom(typeToken.getRawType()) ) {
+			return null;
+		}
+		@SuppressWarnings("unchecked")
+		final TypeToken<T> castTypeToken = (TypeToken<T>) typeToken;
+		@SuppressWarnings("unchecked")
+		final IInstanceFactory.IProvider<T> castDateFactoryProvider = (IInstanceFactory.IProvider<T>) dateFactoryProvider;
+		return new Adapter<>(castDateFactoryProvider.provide(castTypeToken));
+	}
 
-		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-		private static final TypeAdapter<Date> instance = new Adapter()
-				.nullSafe();
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	public static final class Adapter<T extends Date>
+			extends TypeAdapter<T> {
+
+		private final IInstanceFactory<? extends T> instanceFactory;
+
+		public static <T extends Date> TypeAdapter<T> getInstance(final IInstanceFactory<? extends T> instanceFactory) {
+			return new Adapter<T>(instanceFactory)
+					.nullSafe();
+		}
 
 		@Override
-		protected Date createInstance(final long date) {
-			return new Date(date);
+		public T read(final JsonReader in)
+				throws IOException {
+			final long time = in.nextLong() * 1000;
+			final T value = instanceFactory.createInstance();
+			value.setTime(time);
+			return value;
+		}
+
+		@Override
+		public void write(final JsonWriter out, final T value)
+				throws IOException {
+			out.value(value.getTime() / 1000);
 		}
 
 	}
