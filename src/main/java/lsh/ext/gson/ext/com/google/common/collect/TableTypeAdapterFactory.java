@@ -68,7 +68,6 @@ public final class TableTypeAdapterFactory<R, C, V>
 	}
 
 	@Override
-	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<Table<R, C, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		if ( !Table.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;

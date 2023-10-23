@@ -33,6 +33,7 @@ import org.apache.commons.collections4.multiset.HashMultiSet;
  * <li>{@link MultiSetTypeAdapterFactory}</li>
  * </ul>
  */
+@SuppressWarnings("deprecation")
 public final class ApacheCommonsCollections4Module
 		extends AbstractModule {
 
@@ -71,7 +72,6 @@ public final class ApacheCommonsCollections4Module
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
-	@SuppressWarnings("deprecation")
 	public static final class Builder {
 
 		@Setter

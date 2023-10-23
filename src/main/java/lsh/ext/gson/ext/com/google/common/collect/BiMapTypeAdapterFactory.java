@@ -57,7 +57,6 @@ public final class BiMapTypeAdapterFactory<K, V>
 
 	@Override
 	@Nullable
-	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<BiMap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		if ( !BiMap.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;

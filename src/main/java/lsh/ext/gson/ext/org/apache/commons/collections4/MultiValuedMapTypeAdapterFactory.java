@@ -54,7 +54,6 @@ public final class MultiValuedMapTypeAdapterFactory<K, V>
 	}
 
 	@Override
-	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<MultiValuedMap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		if ( !MultiValuedMap.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;

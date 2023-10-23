@@ -54,7 +54,6 @@ public final class BidiMapTypeAdapterFactory<K, V>
 	}
 
 	@Override
-	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<BidiMap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		if ( !BidiMap.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;

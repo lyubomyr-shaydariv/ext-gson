@@ -56,7 +56,6 @@ public final class MultimapTypeAdapterFactory<K, V>
 	}
 
 	@Override
-	@SuppressWarnings("ConstantConditions")
 	protected TypeAdapter<Multimap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		if ( !Multimap.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;
