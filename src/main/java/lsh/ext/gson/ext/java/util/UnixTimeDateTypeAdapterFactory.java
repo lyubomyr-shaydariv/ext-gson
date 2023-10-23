@@ -3,17 +3,18 @@ package lsh.ext.gson.ext.java.util;
 import java.util.Date;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class UnixTimeDateTypeAdapterFactory
-		extends AbstractUnixTimeDateTypeAdapterFactory<Date> {
+		extends AbstractUnixTimeDateTypeAdapterFactory<Date>
+		implements ITypeAdapterFactory<Date> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapterFactory instance = new UnixTimeDateTypeAdapterFactory(Adapter.getInstance());
+	private static final ITypeAdapterFactory<Date> instance = new UnixTimeDateTypeAdapterFactory(Adapter.getInstance());
 
 	private UnixTimeDateTypeAdapterFactory(final TypeAdapter<Date> dateTypeAdapter) {
 		super(Date.class, dateTypeAdapter);

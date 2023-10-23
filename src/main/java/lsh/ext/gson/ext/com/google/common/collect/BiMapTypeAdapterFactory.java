@@ -10,13 +10,13 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.BiMap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
 /**
@@ -24,7 +24,8 @@ import lsh.ext.gson.ParameterizedTypes;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BiMapTypeAdapterFactory<K, V>
-		extends AbstractTypeAdapterFactory<BiMap<K, V>> {
+		extends AbstractTypeAdapterFactory<BiMap<K, V>>
+		implements ITypeAdapterFactory<BiMap<K, V>> {
 
 	@SuppressWarnings("Guava")
 	private final Supplier<? extends BiMap<K, V>> newBiMapFactory;
@@ -47,7 +48,7 @@ public final class BiMapTypeAdapterFactory<K, V>
 	 *
 	 * @return An instance of {@link BiMapTypeAdapterFactory} with a custom new {@link BiMap} factory.
 	 */
-	public static <K, V> TypeAdapterFactory getInstance(
+	public static <K, V> ITypeAdapterFactory<BiMap<K, V>> getInstance(
 			@SuppressWarnings("Guava") final Supplier<? extends BiMap<K, V>> newBiMapFactory,
 			@SuppressWarnings("Guava") final Function<? super K, String> keyMapper,
 			@SuppressWarnings("Guava") final Function<? super String, ? extends K> keyReverseMapper

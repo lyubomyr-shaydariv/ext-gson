@@ -1,12 +1,16 @@
 package lsh.ext.gson.ext.java.util;
 
+import java.util.Optional;
+
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
 
 /**
@@ -38,15 +42,18 @@ public final class Java8UtilModule
 	 * A builder to configure a new module instance.
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	@Accessors(fluent = true, chain = true, prefix = "with")
+	@Accessors(fluent = true, chain = true)
 	public static final class Builder {
+
+		@Setter
+		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapterFactory.getInstance();
 
 		/**
 		 * @return A new module instance.
 		 */
 		public IModule build() {
 			return new Java8UtilModule(UnmodifiableIterable.copyOf(
-					OptionalTypeAdapterFactory.getInstance()
+					optionalTypeAdapterFactory
 			));
 		}
 

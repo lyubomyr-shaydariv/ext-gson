@@ -3,18 +3,19 @@ package lsh.ext.gson.ext.java.sql;
 import java.sql.Timestamp;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ext.java.util.AbstractUnixTimeDateTypeAdapterFactory;
 
 public final class UnixTimeSqlTimestampTypeAdapterFactory
-		extends AbstractUnixTimeDateTypeAdapterFactory<Timestamp> {
+		extends AbstractUnixTimeDateTypeAdapterFactory<Timestamp>
+		implements ITypeAdapterFactory<Timestamp> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapterFactory instance = new UnixTimeSqlTimestampTypeAdapterFactory(Adapter.getInstance());
+	private static final ITypeAdapterFactory<Timestamp> instance = new UnixTimeSqlTimestampTypeAdapterFactory(Adapter.getInstance());
 
 	private UnixTimeSqlTimestampTypeAdapterFactory(final TypeAdapter<Timestamp> dateTypeAdapter) {
 		super(Timestamp.class, dateTypeAdapter);

@@ -6,13 +6,13 @@ import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Factory;
@@ -26,7 +26,8 @@ import org.apache.commons.collections4.Transformer;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BagTypeAdapterFactory<E>
-		extends AbstractTypeAdapterFactory<Bag<E>> {
+		extends AbstractTypeAdapterFactory<Bag<E>>
+		implements ITypeAdapterFactory<Bag<E>> {
 
 	private final Factory<? extends Bag<E>> newBagFactory;
 	private final Transformer<? super E, String> keyMapper;
@@ -40,7 +41,7 @@ public final class BagTypeAdapterFactory<E>
 	 *
 	 * @return An instance of {@link BagTypeAdapterFactory} with a custom new {@link Bag} factory.
 	 */
-	public static <E> TypeAdapterFactory getInstance(final Factory<? extends Bag<E>> newBagFactory,
+	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(final Factory<? extends Bag<E>> newBagFactory,
 			final Transformer<? super E, String> keyMapper, final Transformer<? super String, ? extends E> keyReverseMapper
 	) {
 		return new BagTypeAdapterFactory<>(newBagFactory, keyMapper, keyReverseMapper);

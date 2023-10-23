@@ -9,13 +9,13 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
 /**
@@ -23,7 +23,8 @@ import lsh.ext.gson.ParameterizedTypes;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultimapTypeAdapterFactory<K, V>
-		extends AbstractTypeAdapterFactory<Multimap<K, V>> {
+		extends AbstractTypeAdapterFactory<Multimap<K, V>>
+		implements ITypeAdapterFactory<Multimap<K, V>> {
 
 	@SuppressWarnings("Guava")
 	private final Supplier<? extends Multimap<K, V>> newMultimapFactory;
@@ -46,7 +47,7 @@ public final class MultimapTypeAdapterFactory<K, V>
 	 *
 	 * @return An instance of {@link MultimapTypeAdapterFactory} with a custom new {@link Multimap} factory.
 	 */
-	public static <K, V> TypeAdapterFactory getInstance(
+	public static <K, V> ITypeAdapterFactory<Multimap<K, V>> getInstance(
 			@SuppressWarnings("Guava") final Supplier<? extends Multimap<K, V>> newMultimapFactory,
 			@SuppressWarnings("Guava") final Function<? super K, String> keyMapper,
 			@SuppressWarnings("Guava") final Function<? super String, ? extends K> keyReverseMapper

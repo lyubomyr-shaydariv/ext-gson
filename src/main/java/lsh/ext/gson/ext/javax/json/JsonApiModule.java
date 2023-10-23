@@ -1,12 +1,16 @@
 package lsh.ext.gson.ext.javax.json;
 
+import javax.json.JsonValue;
+
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
 
 /**
@@ -38,15 +42,18 @@ public final class JsonApiModule
 	 * A builder to configure a new module instance.
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	@Accessors(fluent = true, chain = true, prefix = "with")
+	@Accessors(fluent = true, chain = true)
 	public static final class Builder {
+
+		@Setter
+		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapterFactory.getInstance();
 
 		/**
 		 * @return A new module instance.
 		 */
 		public IModule build() {
 			return new JsonApiModule(UnmodifiableIterable.copyOf(
-					JsonValueTypeAdapterFactory.getInstance()
+					jsonValueTypeAdapterFactory
 			));
 		}
 

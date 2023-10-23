@@ -5,18 +5,19 @@ import java.time.format.DateTimeFormatter;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link LocalTime}.
  */
 public final class LocalTimeTypeAdapterFactory
-		extends AbstractBaseTypeAdapterFactory<LocalTime> {
+		extends AbstractBaseTypeAdapterFactory<LocalTime>
+		implements ITypeAdapterFactory<LocalTime> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapterFactory instance = new LocalTimeTypeAdapterFactory(Adapter.getInstance());
+	private static final ITypeAdapterFactory<LocalTime> instance = new LocalTimeTypeAdapterFactory(Adapter.getInstance());
 
 	private LocalTimeTypeAdapterFactory(final TypeAdapter<LocalTime> typeAdapter) {
 		super(LocalTime.class, typeAdapter);
@@ -28,7 +29,7 @@ public final class LocalTimeTypeAdapterFactory
 	 *
 	 * @return An instance of {@link LocalTimeTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static ITypeAdapterFactory<LocalTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}

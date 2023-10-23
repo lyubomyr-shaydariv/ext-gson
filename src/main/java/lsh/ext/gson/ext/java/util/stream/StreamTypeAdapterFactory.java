@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import lombok.Getter;
 import lsh.ext.gson.AbstractCursorTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 /**
  * Represents a type adapter factory for {@link Stream}.
@@ -15,10 +15,11 @@ import lsh.ext.gson.AbstractCursorTypeAdapterFactory;
  * 		Element type
  */
 public final class StreamTypeAdapterFactory<E>
-		extends AbstractCursorTypeAdapterFactory<E> {
+		extends AbstractCursorTypeAdapterFactory<E>
+		implements ITypeAdapterFactory<Stream<E>> {
 
 	@Getter
-	private static final TypeAdapterFactory instance = new StreamTypeAdapterFactory<>();
+	private static final ITypeAdapterFactory<? extends Stream<?>> instance = new StreamTypeAdapterFactory<>();
 
 	private StreamTypeAdapterFactory() {
 		super(Stream.class);

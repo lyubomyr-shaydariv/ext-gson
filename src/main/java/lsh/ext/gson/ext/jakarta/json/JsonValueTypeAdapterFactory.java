@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -26,13 +25,15 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonValueTypeAdapterFactory
-		extends AbstractTypeAdapterFactory<JsonValue> {
+		extends AbstractTypeAdapterFactory<JsonValue>
+		implements ITypeAdapterFactory<JsonValue> {
 
 	@Getter
-	private static final TypeAdapterFactory instance = new JsonValueTypeAdapterFactory();
+	private static final ITypeAdapterFactory<JsonValue> instance = new JsonValueTypeAdapterFactory();
 
 	@Override
 	@Nullable

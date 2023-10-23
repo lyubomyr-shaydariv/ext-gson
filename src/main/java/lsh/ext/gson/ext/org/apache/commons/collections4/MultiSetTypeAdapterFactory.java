@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -14,6 +13,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.MultiSet;
@@ -26,7 +26,8 @@ import org.apache.commons.collections4.MultiSet;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiSetTypeAdapterFactory<E>
-		extends AbstractTypeAdapterFactory<MultiSet<E>> {
+		extends AbstractTypeAdapterFactory<MultiSet<E>>
+		implements ITypeAdapterFactory<MultiSet<E>> {
 
 	private final Factory<? extends MultiSet<E>> newMultiSetFactory;
 
@@ -38,7 +39,7 @@ public final class MultiSetTypeAdapterFactory<E>
 	 *
 	 * @return An instance of {@link MultiSetTypeAdapterFactory} with a custom new {@link MultiSet} factory.
 	 */
-	public static <E> TypeAdapterFactory getInstance(final Factory<? extends MultiSet<E>> newMultiSetFactory) {
+	public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(final Factory<? extends MultiSet<E>> newMultiSetFactory) {
 		return new MultiSetTypeAdapterFactory<>(newMultiSetFactory);
 	}
 

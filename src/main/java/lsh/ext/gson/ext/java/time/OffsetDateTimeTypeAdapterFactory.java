@@ -5,18 +5,19 @@ import java.time.format.DateTimeFormatter;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link OffsetDateTime}.
  */
 public final class OffsetDateTimeTypeAdapterFactory
-		extends AbstractBaseTypeAdapterFactory<OffsetDateTime> {
+		extends AbstractBaseTypeAdapterFactory<OffsetDateTime>
+		implements ITypeAdapterFactory<OffsetDateTime> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapterFactory instance = new OffsetDateTimeTypeAdapterFactory(Adapter.getInstance());
+	private static final ITypeAdapterFactory<OffsetDateTime> instance = new OffsetDateTimeTypeAdapterFactory(Adapter.getInstance());
 
 	private OffsetDateTimeTypeAdapterFactory(final TypeAdapter<OffsetDateTime> typeAdapter) {
 		super(OffsetDateTime.class, typeAdapter);
@@ -28,7 +29,7 @@ public final class OffsetDateTimeTypeAdapterFactory
 	 *
 	 * @return An instance of {@link OffsetDateTimeTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static ITypeAdapterFactory<OffsetDateTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}

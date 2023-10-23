@@ -8,18 +8,19 @@ import java.time.temporal.ChronoField;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link YearMonth}.
  */
 public final class YearMonthTypeAdapterFactory
-		extends AbstractBaseTypeAdapterFactory<YearMonth> {
+		extends AbstractBaseTypeAdapterFactory<YearMonth>
+		implements ITypeAdapterFactory<YearMonth> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapterFactory instance = new YearMonthTypeAdapterFactory(Adapter.getInstance());
+	private static final ITypeAdapterFactory<YearMonth> instance = new YearMonthTypeAdapterFactory(Adapter.getInstance());
 
 	private YearMonthTypeAdapterFactory(final TypeAdapter<YearMonth> typeAdapter) {
 		super(YearMonth.class, typeAdapter);
@@ -31,7 +32,7 @@ public final class YearMonthTypeAdapterFactory
 	 *
 	 * @return An instance of {@link YearMonthTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static ITypeAdapterFactory<YearMonth> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}

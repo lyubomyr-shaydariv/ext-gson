@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -15,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
 /**
@@ -22,10 +22,11 @@ import lsh.ext.gson.ParameterizedTypes;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OptionalTypeAdapterFactory<T>
-		extends AbstractTypeAdapterFactory<Optional<T>> {
+		extends AbstractTypeAdapterFactory<Optional<T>>
+		implements ITypeAdapterFactory<Optional<T>> {
 
 	@Getter
-	private static final TypeAdapterFactory instance = new OptionalTypeAdapterFactory<>();
+	private static final ITypeAdapterFactory<? extends Optional<?>> instance = new OptionalTypeAdapterFactory<>();
 
 	@Override
 	protected TypeAdapter<Optional<T>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
@@ -49,14 +50,6 @@ public final class OptionalTypeAdapterFactory<T>
 
 		private final TypeAdapter<T> valueTypeAdapter;
 
-		/**
-		 * @param valueTypeAdapter
-		 *        {@link Optional} backed value type adapter
-		 * @param <T>
-		 * 		Optional value type
-		 *
-		 * @return An {@link Adapter} instance
-		 */
 		public static <T> TypeAdapter<Optional<T>> getInstance(final TypeAdapter<T> valueTypeAdapter) {
 			return new Adapter<>(valueTypeAdapter)
 					.nullSafe();

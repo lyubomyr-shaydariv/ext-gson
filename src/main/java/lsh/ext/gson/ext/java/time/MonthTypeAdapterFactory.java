@@ -3,19 +3,20 @@ package lsh.ext.gson.ext.java.time;
 import java.time.Month;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lsh.ext.gson.AbstractStringTypeAdapter;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link Month}.
  */
 public final class MonthTypeAdapterFactory
-		extends AbstractBaseTypeAdapterFactory<Month> {
+		extends AbstractBaseTypeAdapterFactory<Month>
+		implements ITypeAdapterFactory<Month> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapterFactory instance = new MonthTypeAdapterFactory(Adapter.getInstance());
+	private static final ITypeAdapterFactory<Month> instance = new MonthTypeAdapterFactory(Adapter.getInstance());
 
 	private MonthTypeAdapterFactory(final TypeAdapter<Month> typeAdapter) {
 		super(Month.class, typeAdapter);

@@ -6,13 +6,13 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.MultiMap;
@@ -24,7 +24,8 @@ import org.apache.commons.collections4.Transformer;
 @SuppressWarnings("deprecation")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiMapTypeAdapterFactory<K, V>
-		extends AbstractTypeAdapterFactory<MultiMap<K, V>> {
+		extends AbstractTypeAdapterFactory<MultiMap<K, V>>
+		implements ITypeAdapterFactory<MultiMap<K, V>> {
 
 	private final Factory<? extends MultiMap<K, V>> newMultiMapFactory;
 	private final Transformer<? super K, String> keyMapper;
@@ -44,7 +45,7 @@ public final class MultiMapTypeAdapterFactory<K, V>
 	 *
 	 * @return An instance of {@link MultiMapTypeAdapterFactory} with a custom new {@link MultiMap} factory.
 	 */
-	public static <K, V> TypeAdapterFactory getInstance(
+	public static <K, V> ITypeAdapterFactory<MultiMap<K, V>> getInstance(
 			final Factory<? extends MultiMap<K, V>> newMultiMapFactory,
 			final Transformer<? super K, String> keyMapper,
 			final Transformer<? super String, ? extends K> keyReverseMapper

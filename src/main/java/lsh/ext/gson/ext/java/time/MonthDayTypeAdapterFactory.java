@@ -7,18 +7,19 @@ import java.time.temporal.ChronoField;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 /**
  * Implements a type adapter factory for {@link MonthDay}.
  */
 public final class MonthDayTypeAdapterFactory
-		extends AbstractBaseTypeAdapterFactory<MonthDay> {
+		extends AbstractBaseTypeAdapterFactory<MonthDay>
+		implements ITypeAdapterFactory<MonthDay> {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final TypeAdapterFactory instance = new MonthDayTypeAdapterFactory(Adapter.getInstance());
+	private static final ITypeAdapterFactory<MonthDay> instance = new MonthDayTypeAdapterFactory(Adapter.getInstance());
 
 	private MonthDayTypeAdapterFactory(final TypeAdapter<MonthDay> typeAdapter) {
 		super(MonthDay.class, typeAdapter);
@@ -30,7 +31,7 @@ public final class MonthDayTypeAdapterFactory
 	 *
 	 * @return An instance of {@link MonthDayTypeAdapterFactory}.
 	 */
-	public static TypeAdapterFactory getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
+	public static ITypeAdapterFactory<MonthDay> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
 		if ( dateTimeFormatter == null ) {
 			return instance;
 		}

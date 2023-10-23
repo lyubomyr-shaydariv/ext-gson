@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Function;
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -22,6 +23,7 @@ import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 /**
  * Represents a type adapter factory that can deserialize object fields using {@link JsonPathExpression}-annotations in JSON mappings. Example of use, the
@@ -64,7 +66,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapterFactory
-		implements TypeAdapterFactory {
+		implements ITypeAdapterFactory<Object> {
 
 	/**
 	 * A {@link JsonPathTypeAdapterFactory} instance that is configured with the predefined JsonPath configuration. The default JsonPath configuration
@@ -73,7 +75,7 @@ public final class JsonPathTypeAdapterFactory
 	 * #create(Gson, TypeToken)}, and empty options set.
 	 */
 	@Getter
-	private static final TypeAdapterFactory instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
+	private static final ITypeAdapterFactory<?> instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
 
 	/**
 	 * <pre>
@@ -167,15 +169,17 @@ public final class JsonPathTypeAdapterFactory
 		private static Collection<FieldInfo> of(final Class<?> clazz, final Gson gson) {
 			Collection<FieldInfo> collection = Collections.emptyList();
 			for ( final Field field : clazz.getDeclaredFields() ) {
+				@Nullable
 				final JsonPathExpression jsonPathExpression = field.getAnnotation(JsonPathExpression.class);
-				if ( jsonPathExpression != null ) {
-					if ( collection.isEmpty() ) {
-						collection = new ArrayList<>();
-					}
-					field.setAccessible(true);
-					final TypeAdapter<?> typeAdapter = gson.getAdapter(TypeToken.get(field.getType()));
-					collection.add(new FieldInfo(field, JsonPath.compile(jsonPathExpression.value()), typeAdapter));
+				if ( jsonPathExpression == null ) {
+					continue;
 				}
+				if ( collection.isEmpty() ) {
+					collection = new ArrayList<>();
+				}
+				field.setAccessible(true);
+				final TypeAdapter<?> typeAdapter = gson.getAdapter(TypeToken.get(field.getType()));
+				collection.add(new FieldInfo(field, JsonPath.compile(jsonPathExpression.value()), typeAdapter));
 			}
 			return collection;
 		}

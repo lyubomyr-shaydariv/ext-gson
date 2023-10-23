@@ -6,13 +6,13 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.Factory;
@@ -23,7 +23,8 @@ import org.apache.commons.collections4.Transformer;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BidiMapTypeAdapterFactory<K, V>
-		extends AbstractTypeAdapterFactory<BidiMap<K, V>> {
+		extends AbstractTypeAdapterFactory<BidiMap<K, V>>
+		implements ITypeAdapterFactory<BidiMap<K, V>> {
 
 	private final Factory<? extends BidiMap<K, V>> newBidiMapFactory;
 	private final Transformer<? super K, String> keyMapper;
@@ -43,7 +44,7 @@ public final class BidiMapTypeAdapterFactory<K, V>
 	 *
 	 * @return An instance of {@link BidiMapTypeAdapterFactory} with a custom new {@link BidiMap} factory.
 	 */
-	public static <K, V> TypeAdapterFactory getInstance(
+	public static <K, V> ITypeAdapterFactory<BidiMap<K, V>> getInstance(
 			final Factory<? extends BidiMap<K, V>> newBidiMapFactory,
 			final Transformer<? super K, String> keyMapper,
 			final Transformer<? super String, ? extends K> keyReverseMapper

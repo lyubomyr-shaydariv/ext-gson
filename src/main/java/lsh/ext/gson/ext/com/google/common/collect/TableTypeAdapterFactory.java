@@ -9,13 +9,13 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
 /**
@@ -23,7 +23,8 @@ import lsh.ext.gson.ParameterizedTypes;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TableTypeAdapterFactory<R, C, V>
-		extends AbstractTypeAdapterFactory<Table<R, C, V>> {
+		extends AbstractTypeAdapterFactory<Table<R, C, V>>
+		implements ITypeAdapterFactory<Table<R, C, V>> {
 
 	@SuppressWarnings("Guava")
 	private final Supplier<? extends Table<R, C, V>> newTableFactory;
@@ -56,7 +57,7 @@ public final class TableTypeAdapterFactory<R, C, V>
 	 *
 	 * @return An instance of {@link TableTypeAdapterFactory} with a custom new {@link Table} factory.
 	 */
-	public static <R, C, V> TypeAdapterFactory getInstance(
+	public static <R, C, V> ITypeAdapterFactory<Table<R, C, V>> getInstance(
 			@SuppressWarnings("Guava") final Supplier<? extends Table<R, C, V>> newTableFactory,
 			@SuppressWarnings("Guava") final Function<? super R, String> rowKeyMapper,
 			@SuppressWarnings("Guava") final Function<? super String, ? extends R> rowKeyReverseMapper,
