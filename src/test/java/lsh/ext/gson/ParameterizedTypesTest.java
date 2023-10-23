@@ -2,7 +2,6 @@ package lsh.ext.gson;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.Assertions;
@@ -10,22 +9,27 @@ import org.junit.jupiter.api.Test;
 
 public final class ParameterizedTypesTest {
 
-	private static final Type[] emptyTypeArray = {};
+	private static final Type listOfStringsType = TypeToken.getParameterized(List.class, String.class)
+			.getType();
 
 	@Test
-	public void testResolveTypeArgumentsForParameterizedTypes() {
-		Assertions.assertArrayEquals(new Type[] { String.class }, ParameterizedTypes.getTypeArguments(TypeToken.getParameterized(List.class, String.class).getType()));
-		Assertions.assertArrayEquals(new Type[] { Integer.class, Float.class }, ParameterizedTypes.getTypeArguments(TypeToken.getParameterized(Map.class, Integer.class, Float.class).getType()));
+	public void testGetTypeArgumentForParameterizedType() {
+		Assertions.assertEquals(String.class, ParameterizedTypes.getTypeArgument(listOfStringsType, 0));
+	}
+
+	@Test
+	public void testGetTypeArgumentForParameterizedTypeGoesBeyond() {
+		Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> ParameterizedTypes.getTypeArgument(listOfStringsType, 1));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForNonGenericType() {
-		Assertions.assertArrayEquals(emptyTypeArray, ParameterizedTypes.getTypeArguments(String.class));
+		Assertions.assertNull(ParameterizedTypes.getTypeArgument(String.class, 0));
 	}
 
 	@Test
 	public void testResolveTypeArgumentsForGenericType() {
-		Assertions.assertArrayEquals(emptyTypeArray, ParameterizedTypes.getTypeArguments(Object.class));
+		Assertions.assertNull(ParameterizedTypes.getTypeArgument(Object.class, 0));
 	}
 
 }
