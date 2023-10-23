@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
 import com.google.common.base.Supplier;
@@ -73,7 +74,9 @@ public final class TableTypeAdapterFactory<R, C, V>
 		if ( !Table.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;
 		}
+		@Nullable
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 2);
+		assert valueType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		return Adapter.getInstance(valueTypeAdapter, newTableFactory, rowKeyMapper, rowKeyReverseMapper, columnKeyMapper, columnKeyReverseMapper);

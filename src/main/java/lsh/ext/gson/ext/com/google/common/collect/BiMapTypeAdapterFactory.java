@@ -63,7 +63,9 @@ public final class BiMapTypeAdapterFactory<K, V>
 		if ( !BiMap.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;
 		}
+		@Nullable
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
+		assert valueType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		return Adapter.getInstance(valueTypeAdapter, newBiMapFactory, keyMapper, keyReverseMapper);

@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -58,7 +59,9 @@ public final class BidiMapTypeAdapterFactory<K, V>
 		if ( !BidiMap.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;
 		}
+		@Nullable
 		final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
+		assert valueType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		return Adapter.getInstance(valueTypeAdapter, newBidiMapFactory, keyMapper, keyReverseMapper);
