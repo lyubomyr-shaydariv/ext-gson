@@ -48,12 +48,12 @@ public final class PrePostTypeAdapterFactory
 			return null;
 		}
 		final TypeAdapter<T> delegateTypeAdapter = gson.getDelegateAdapter(this, typeToken);
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@SuppressWarnings("unchecked")
 		@Nullable
-		final Iterable<? extends IProcessor<? super T>> castPreProcessors = (Iterable) preProcessors;
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final Iterable<IProcessor<? super T>> castPreProcessors = (Iterable<IProcessor<? super T>>) preProcessors;
+		@SuppressWarnings("unchecked")
 		@Nullable
-		final Iterable<? extends IProcessor<? super T>> castPostProcessors = (Iterable) postProcessors;
+		final Iterable<IProcessor<? super T>> castPostProcessors = (Iterable<IProcessor<? super T>>) postProcessors;
 		return Adapter.getInstance(castPreProcessors, castPostProcessors, delegateTypeAdapter);
 	}
 
