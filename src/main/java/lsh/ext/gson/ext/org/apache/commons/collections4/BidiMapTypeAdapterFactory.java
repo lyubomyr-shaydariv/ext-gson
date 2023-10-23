@@ -13,10 +13,10 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 
 /**
@@ -27,13 +27,13 @@ public final class BidiMapTypeAdapterFactory<K, V>
 		extends AbstractTypeAdapterFactory<BidiMap<K, V>>
 		implements ITypeAdapterFactory<BidiMap<K, V>> {
 
-	private final Factory<? extends BidiMap<K, V>> newBidiMapFactory;
+	private final IInstanceFactory.IProvider<? extends BidiMap<K, V>> newBidiMapFactoryProvider;
 	private final Transformer<? super K, String> keyMapper;
 	private final Transformer<? super String, ? extends K> keyReverseMapper;
 
 	/**
-	 * @param newBidiMapFactory
-	 * 		New bidirectional map factory
+	 * @param newBidiMapFactoryProvider
+	 * 		New bidirectional map factory provider
 	 * @param keyMapper
 	 * 		Key mapper
 	 * @param keyReverseMapper
@@ -43,14 +43,14 @@ public final class BidiMapTypeAdapterFactory<K, V>
 	 * @param <V>
 	 * 		Value type
 	 *
-	 * @return An instance of {@link BidiMapTypeAdapterFactory} with a custom new {@link BidiMap} factory.
+	 * @return An instance of {@link BidiMapTypeAdapterFactory} with a custom new {@link BidiMap} factory provider.
 	 */
 	public static <K, V> ITypeAdapterFactory<BidiMap<K, V>> getInstance(
-			final Factory<? extends BidiMap<K, V>> newBidiMapFactory,
+			final IInstanceFactory.IProvider<? extends BidiMap<K, V>> newBidiMapFactoryProvider,
 			final Transformer<? super K, String> keyMapper,
 			final Transformer<? super String, ? extends K> keyReverseMapper
 	) {
-		return new BidiMapTypeAdapterFactory<>(newBidiMapFactory, keyMapper, keyReverseMapper);
+		return new BidiMapTypeAdapterFactory<>(newBidiMapFactoryProvider, keyMapper, keyReverseMapper);
 	}
 
 	@Override
@@ -64,7 +64,11 @@ public final class BidiMapTypeAdapterFactory<K, V>
 		assert valueType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
-		return Adapter.getInstance(valueTypeAdapter, newBidiMapFactory, keyMapper, keyReverseMapper);
+		@SuppressWarnings("unchecked")
+		final TypeToken<BidiMap<K, V>> castTypeToken = (TypeToken<BidiMap<K, V>>) typeToken;
+		@SuppressWarnings("unchecked")
+		final IInstanceFactory.IProvider<BidiMap<K, V>> castNewBidiMapFactoryProvider = (IInstanceFactory.IProvider<BidiMap<K, V>>) newBidiMapFactoryProvider;
+		return Adapter.getInstance(valueTypeAdapter, castNewBidiMapFactoryProvider.provide(castTypeToken), keyMapper, keyReverseMapper);
 	}
 
 	/**
@@ -75,7 +79,7 @@ public final class BidiMapTypeAdapterFactory<K, V>
 			extends TypeAdapter<BidiMap<K, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
-		private final Factory<? extends BidiMap<K, V>> newBidiMapFactory;
+		private final IInstanceFactory<? extends BidiMap<K, V>> newBidiMapFactory;
 		private final Transformer<? super K, String> keyMapper;
 		private final Transformer<? super String, ? extends K> keyReverseMapper;
 
@@ -97,7 +101,7 @@ public final class BidiMapTypeAdapterFactory<K, V>
 		 */
 		public static <K, V> TypeAdapter<BidiMap<K, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
-				final Factory<? extends BidiMap<K, V>> newBidiMapFactory,
+				final IInstanceFactory<? extends BidiMap<K, V>> newBidiMapFactory,
 				final Transformer<? super K, String> keyMapper,
 				final Transformer<? super String, ? extends K> keyReverseMapper
 		) {
@@ -121,7 +125,7 @@ public final class BidiMapTypeAdapterFactory<K, V>
 		@Override
 		public BidiMap<K, V> read(final JsonReader in)
 				throws IOException {
-			final BidiMap<K, V> bidiMap = newBidiMapFactory.create();
+			final BidiMap<K, V> bidiMap = newBidiMapFactory.createInstance();
 			in.beginObject();
 			while ( in.hasNext() ) {
 				final K key = keyReverseMapper.transform(in.nextName());

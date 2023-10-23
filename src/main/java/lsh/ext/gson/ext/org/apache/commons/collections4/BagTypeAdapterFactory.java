@@ -12,10 +12,10 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 
 /**
@@ -29,22 +29,22 @@ public final class BagTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Bag<E>>
 		implements ITypeAdapterFactory<Bag<E>> {
 
-	private final Factory<? extends Bag<E>> newBagFactory;
+	private final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider;
 	private final Transformer<? super E, String> keyMapper;
 	private final Transformer<? super String, ? extends E> keyReverseMapper;
 
 	/**
-	 * @param newBagFactory
-	 * 		Bag factory
+	 * @param newBagFactoryProvider
+	 * 		Bag factory provider
 	 * @param <E>
 	 * 		Element type
 	 *
 	 * @return An instance of {@link BagTypeAdapterFactory} with a custom new {@link Bag} factory.
 	 */
-	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(final Factory<? extends Bag<E>> newBagFactory,
+	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider,
 			final Transformer<? super E, String> keyMapper, final Transformer<? super String, ? extends E> keyReverseMapper
 	) {
-		return new BagTypeAdapterFactory<>(newBagFactory, keyMapper, keyReverseMapper);
+		return new BagTypeAdapterFactory<>(newBagFactoryProvider, keyMapper, keyReverseMapper);
 	}
 
 	@Override
@@ -55,7 +55,11 @@ public final class BagTypeAdapterFactory<E>
 		@Nullable
 		final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 		assert elementType != null;
-		return Adapter.getInstance(newBagFactory, keyMapper, keyReverseMapper);
+		@SuppressWarnings("unchecked")
+		final TypeToken<Bag<E>> castTypeToken = (TypeToken<Bag<E>>) typeToken;
+		@SuppressWarnings("unchecked")
+		final IInstanceFactory.IProvider<Bag<E>> castNewBagFactoryProvider = (IInstanceFactory.IProvider<Bag<E>>) newBagFactoryProvider;
+		return Adapter.getInstance(castNewBagFactoryProvider.provide(castTypeToken), keyMapper, keyReverseMapper);
 	}
 
 	/**
@@ -68,7 +72,7 @@ public final class BagTypeAdapterFactory<E>
 	public static final class Adapter<E>
 			extends TypeAdapter<Bag<E>> {
 
-		private final Factory<? extends Bag<E>> newBagFactory;
+		private final IInstanceFactory<? extends Bag<E>> newBagFactory;
 		private final Transformer<? super E, String> keyMapper;
 		private final Transformer<? super String, ? extends E> keyReverseMapper;
 
@@ -81,7 +85,7 @@ public final class BagTypeAdapterFactory<E>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <V> TypeAdapter<Bag<V>> getInstance(
-				final Factory<? extends Bag<V>> newBagFactory,
+				final IInstanceFactory<? extends Bag<V>> newBagFactory,
 				final Transformer<? super V, String> keyMapper,
 				final Transformer<? super String, ? extends V> keyReverseMapper
 		) {
@@ -103,7 +107,7 @@ public final class BagTypeAdapterFactory<E>
 		@Override
 		public Bag<E> read(final JsonReader in)
 				throws IOException {
-			final Bag<E> bag = newBagFactory.create();
+			final Bag<E> bag = newBagFactory.createInstance();
 			in.beginObject();
 			while ( in.hasNext() ) {
 				bag.add(keyReverseMapper.transform(in.nextName()), in.nextInt());

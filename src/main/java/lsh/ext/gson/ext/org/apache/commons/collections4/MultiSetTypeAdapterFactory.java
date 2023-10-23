@@ -13,9 +13,9 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
-import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.MultiSet;
 
 /**
@@ -29,18 +29,18 @@ public final class MultiSetTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<MultiSet<E>>
 		implements ITypeAdapterFactory<MultiSet<E>> {
 
-	private final Factory<? extends MultiSet<E>> newMultiSetFactory;
+	private final IInstanceFactory.IProvider<? extends MultiSet<E>> newMultiSetFactoryProvider;
 
 	/**
-	 * @param newMultiSetFactory
-	 * 		MultiSet factory
+	 * @param newMultiSetFactoryProvider
+	 * 		MultiSet factory provider
 	 * @param <E>
 	 * 		Element type
 	 *
 	 * @return An instance of {@link MultiSetTypeAdapterFactory} with a custom new {@link MultiSet} factory.
 	 */
-	public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(final Factory<? extends MultiSet<E>> newMultiSetFactory) {
-		return new MultiSetTypeAdapterFactory<>(newMultiSetFactory);
+	public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(final IInstanceFactory.IProvider<? extends MultiSet<E>> newMultiSetFactoryProvider) {
+		return new MultiSetTypeAdapterFactory<>(newMultiSetFactoryProvider);
 	}
 
 	@Override
@@ -53,7 +53,11 @@ public final class MultiSetTypeAdapterFactory<E>
 		assert elementType != null;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
-		return Adapter.getInstance(elementTypeAdapter, newMultiSetFactory);
+		@SuppressWarnings("unchecked")
+		final TypeToken<MultiSet<E>> castTypeToken = (TypeToken<MultiSet<E>>) typeToken;
+		@SuppressWarnings("unchecked")
+		final IInstanceFactory.IProvider<MultiSet<E>> castNewMultiSetFactoryProvider = (IInstanceFactory.IProvider<MultiSet<E>>) newMultiSetFactoryProvider;
+		return Adapter.getInstance(elementTypeAdapter, castNewMultiSetFactoryProvider.provide(castTypeToken));
 	}
 
 	/**
@@ -67,7 +71,7 @@ public final class MultiSetTypeAdapterFactory<E>
 			extends TypeAdapter<MultiSet<E>> {
 
 		private final TypeAdapter<E> elementTypeAdapter;
-		private final Factory<? extends MultiSet<E>> newMultiSetFactory;
+		private final IInstanceFactory<? extends MultiSet<E>> newMultiSetFactory;
 
 		/**
 		 * @param valueTypeAdapter
@@ -80,7 +84,7 @@ public final class MultiSetTypeAdapterFactory<E>
 		 * @return A {@link Adapter} instance.
 		 */
 		public static <V> TypeAdapter<MultiSet<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				final Factory<? extends MultiSet<V>> newMultiSetFactory) {
+				final IInstanceFactory<? extends MultiSet<V>> newMultiSetFactory) {
 			return new Adapter<>(valueTypeAdapter, newMultiSetFactory)
 					.nullSafe();
 		}
@@ -102,7 +106,7 @@ public final class MultiSetTypeAdapterFactory<E>
 		@Override
 		public MultiSet<E> read(final JsonReader in)
 				throws IOException {
-			final MultiSet<E> multiSet = newMultiSetFactory.create();
+			final MultiSet<E> multiSet = newMultiSetFactory.createInstance();
 			in.beginArray();
 			while ( in.peek() != JsonToken.END_ARRAY ) {
 				final E element = elementTypeAdapter.read(in);

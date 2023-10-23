@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
+import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
@@ -35,6 +36,21 @@ import org.apache.commons.collections4.multiset.HashMultiSet;
 public final class ApacheCommonsCollections4Module
 		extends AbstractModule {
 
+	// TODO improve
+	public static final IInstanceFactory.IProvider<Bag<Object>> defaultBagFactoryProvider = typeToken -> HashBag::new;
+
+	// TODO improve
+	public static final IInstanceFactory.IProvider<BidiMap<String, Object>> defaultBidiMapFactoryProvider = typeToken -> DualLinkedHashBidiMap::new;
+
+	// TODO improve
+	public static final IInstanceFactory.IProvider<MultiSet<Object>> defaultMultiSetFactoryProvider = typeToken -> HashMultiSet::new;
+
+	// TODO improve
+	public static final IInstanceFactory.IProvider<MultiMap<String, Object>> defaultMultiMapFactoryProvider = typeToken -> MultiValueMap::new;
+
+	// TODO improve
+	public static final IInstanceFactory.IProvider<MultiValuedMap<String, Object>> defaultMultiValuedFactoryProvider = typeToken -> ArrayListValuedHashMap::new;
+
 	@Getter
 	private static final IModule instance = builder()
 			.build();
@@ -59,19 +75,19 @@ public final class ApacheCommonsCollections4Module
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapterFactory.getInstance(HashBag::new, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapterFactory.getInstance(defaultBagFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
 
 		@Setter
-		private ITypeAdapterFactory<? extends BidiMap<String, Object>> bidiMapTypeAdapterFactory = BidiMapTypeAdapterFactory.getInstance(DualLinkedHashBidiMap::new, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends BidiMap<String, Object>> bidiMapTypeAdapterFactory = BidiMapTypeAdapterFactory.getInstance(defaultBidiMapFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiSet<?>> multiSetTypeAdapterFactory = MultiSetTypeAdapterFactory.getInstance(HashMultiSet::new);
+		private ITypeAdapterFactory<? extends MultiSet<?>> multiSetTypeAdapterFactory = MultiSetTypeAdapterFactory.getInstance(defaultMultiSetFactoryProvider);
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiMap<String, ?>> multiMapTypeAdapterFactory = MultiMapTypeAdapterFactory.getInstance(MultiValueMap::new, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends MultiMap<String, ?>> multiMapTypeAdapterFactory = MultiMapTypeAdapterFactory.getInstance(defaultMultiMapFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiValuedMap<String, Object>> multiValuedMapTypeAdapterFactory = MultiValuedMapTypeAdapterFactory.getInstance(ArrayListValuedHashMap::new, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends MultiValuedMap<String, Object>> multiValuedMapTypeAdapterFactory = MultiValuedMapTypeAdapterFactory.getInstance(defaultMultiValuedFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
 
 		/**
 		 * @return A new module instance.
