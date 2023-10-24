@@ -138,19 +138,19 @@ public final class JsonReaders {
 		switch ( jsonToken ) {
 		case BEGIN_ARRAY:
 			jsonReader.beginArray();
-			valuedJsonToken = ValuedJsonToken.arrayBegin();
+			valuedJsonToken = ValuedJsonToken.arrayBegin;
 			break;
 		case END_ARRAY:
 			jsonReader.endArray();
-			valuedJsonToken = ValuedJsonToken.arrayEnd();
+			valuedJsonToken = ValuedJsonToken.arrayEnd;
 			break;
 		case BEGIN_OBJECT:
 			jsonReader.beginObject();
-			valuedJsonToken = ValuedJsonToken.objectBegin();
+			valuedJsonToken = ValuedJsonToken.objectBegin;
 			break;
 		case END_OBJECT:
 			jsonReader.endObject();
-			valuedJsonToken = ValuedJsonToken.objectEnd();
+			valuedJsonToken = ValuedJsonToken.objectEnd;
 			break;
 		case NAME:
 			final String name = jsonReader.nextName();
@@ -170,10 +170,10 @@ public final class JsonReaders {
 			break;
 		case NULL:
 			jsonReader.nextNull();
-			valuedJsonToken = ValuedJsonToken.value();
+			valuedJsonToken = ValuedJsonToken.nullValue;
 			break;
 		case END_DOCUMENT:
-			valuedJsonToken = ValuedJsonToken.documentEnd();
+			valuedJsonToken = ValuedJsonToken.documentEnd;
 			break;
 		default:
 			throw new AssertionError(jsonToken);

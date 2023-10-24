@@ -136,13 +136,13 @@ public final class JsonReadersTest {
 	public void testReadValuedJsonToken()
 			throws IOException {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("[]")) ) {
-			assertSequence(jsonReader, ValuedJsonToken.arrayBegin(), ValuedJsonToken.arrayEnd(), ValuedJsonToken.documentEnd());
+			assertSequence(jsonReader, ValuedJsonToken.arrayBegin, ValuedJsonToken.arrayEnd, ValuedJsonToken.documentEnd);
 		}
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("{}")) ) {
-			assertSequence(jsonReader, ValuedJsonToken.objectBegin(), ValuedJsonToken.objectEnd(), ValuedJsonToken.documentEnd());
+			assertSequence(jsonReader, ValuedJsonToken.objectBegin, ValuedJsonToken.objectEnd, ValuedJsonToken.documentEnd);
 		}
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("{\"string\":\"fifty\",\"number\":900,\"boolean\":true,\"\":null}")) ) {
-			assertSequence(jsonReader, ValuedJsonToken.objectBegin(), ValuedJsonToken.name("string"), ValuedJsonToken.value("fifty"), ValuedJsonToken.name("number"), ValuedJsonToken.value(900D), ValuedJsonToken.name("boolean"), ValuedJsonToken.value(true), ValuedJsonToken.name(""), ValuedJsonToken.value(), ValuedJsonToken.objectEnd(), ValuedJsonToken.documentEnd());
+			assertSequence(jsonReader, ValuedJsonToken.objectBegin, ValuedJsonToken.name("string"), ValuedJsonToken.value("fifty"), ValuedJsonToken.name("number"), ValuedJsonToken.value(900D), ValuedJsonToken.name("boolean"), ValuedJsonToken.value(true), ValuedJsonToken.name(""), ValuedJsonToken.nullValue, ValuedJsonToken.objectEnd, ValuedJsonToken.documentEnd);
 		}
 	}
 
@@ -182,7 +182,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("null false")) ) {
 			jsonReader.setLenient(true);
 			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.value()), ImmutableList.copyOf(iterator));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.nullValue), ImmutableList.copyOf(iterator));
 		}
 	}
 
@@ -192,7 +192,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("[1,2,3] false")) ) {
 			jsonReader.setLenient(true);
 			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.arrayBegin(), ValuedJsonToken.value(1D), ValuedJsonToken.value(2D), ValuedJsonToken.value(3D), ValuedJsonToken.arrayEnd()), ImmutableList.copyOf(iterator));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.arrayBegin, ValuedJsonToken.value(1D), ValuedJsonToken.value(2D), ValuedJsonToken.value(3D), ValuedJsonToken.arrayEnd), ImmutableList.copyOf(iterator));
 		}
 	}
 
@@ -202,7 +202,7 @@ public final class JsonReadersTest {
 		try ( final JsonReader jsonReader = new JsonReader(new StringReader("{\"foo\":1,\"bar\":2} 300")) ) {
 			jsonReader.setLenient(true);
 			final Iterator<ValuedJsonToken<?>> iterator = JsonReaders.readValuedJsonTokenRecursively(jsonReader);
-			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.objectBegin(), ValuedJsonToken.name("foo"), ValuedJsonToken.value(1D), ValuedJsonToken.name("bar"), ValuedJsonToken.value(2D), ValuedJsonToken.objectEnd()), ImmutableList.copyOf(iterator));
+			Assertions.assertEquals(ImmutableList.of(ValuedJsonToken.objectBegin, ValuedJsonToken.name("foo"), ValuedJsonToken.value(1D), ValuedJsonToken.name("bar"), ValuedJsonToken.value(2D), ValuedJsonToken.objectEnd), ImmutableList.copyOf(iterator));
 		}
 	}
 
