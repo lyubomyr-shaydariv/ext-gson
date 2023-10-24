@@ -20,7 +20,7 @@ public final class UnixTimeDateTypeAdapterFactory<T extends Date>
 		extends AbstractTypeAdapterFactory<T>
 		implements ITypeAdapterFactory<T> {
 
-	public static final IInstanceFactory.IProvider<Date> defaultDateFactoryProvider = typeToken -> Date::new;
+	public static final IInstanceFactory.IProvider<Date> defaultDateFactoryProvider = typeToken -> () -> new Date(0);
 
 	private final IInstanceFactory.IProvider<? extends T> dateFactoryProvider;
 
