@@ -45,7 +45,8 @@ public final class TypeAwareTypeAdapter<T>
 	 * @return An instance of {@link TypeAwareTypeAdapter}.
 	 */
 	public static <T> TypeAdapter<T> getInstance(final Gson gson, final String typePropertyName, final String valuePropertyName) {
-		return new TypeAwareTypeAdapter<>(gson, typePropertyName, valuePropertyName);
+		return new TypeAwareTypeAdapter<T>(gson, typePropertyName, valuePropertyName)
+				.nullSafe();
 	}
 
 	@Override

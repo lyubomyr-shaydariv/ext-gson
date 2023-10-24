@@ -13,7 +13,7 @@ import lombok.experimental.UtilityClass;
 public final class Gsons {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final Gson normalized = Builders.createNormalized()
+	private static final Gson normalized = Builders.builder()
 			.create();
 
 	/**
@@ -32,7 +32,7 @@ public final class Gsons {
 		 *
 		 * @return Normalized Gson instance builder with disabled defaults.
 		 */
-		public static GsonBuilder createNormalized() {
+		public static GsonBuilder builder() {
 			return new GsonBuilder()
 					.disableInnerClassSerialization()
 					.disableHtmlEscaping();

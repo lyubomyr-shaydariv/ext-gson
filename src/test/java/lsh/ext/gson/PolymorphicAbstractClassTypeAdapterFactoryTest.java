@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public final class PolymorphicAbstractClassTypeAdapterFactoryTest {
 
-	private static final Gson gson = Gsons.Builders.createNormalized()
+	private static final Gson gson = Gsons.Builders.builder()
 			.registerTypeAdapterFactory(PolymorphicAbstractClassTypeAdapterFactory.getInstance("$T", "$V"))
 			.create();
 

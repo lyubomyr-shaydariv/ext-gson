@@ -50,27 +50,33 @@ public final class JsonFailSafeTypeAdapterFactory
 		if ( typeToken.getRawType().isPrimitive() ) {
 			return null;
 		}
-		final TypeAdapter<T> delegateTypeAdapter = gson.getAdapter(typeToken);
-		return new JsonFailSafeTypeAdapter<>(delegateTypeAdapter);
+		final TypeAdapter<T> typeAdapter = gson.getAdapter(typeToken);
+		return JsonFailSafeTypeAdapter.getInstance(typeAdapter);
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class JsonFailSafeTypeAdapter<T>
 			extends TypeAdapter<T> {
 
-		private final TypeAdapter<T> delegateTypeAdapter;
+		private final TypeAdapter<T> typeAdapter;
+
+		private static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter) {
+			return new JsonFailSafeTypeAdapter<T>(typeAdapter)
+					.nullSafe();
+		}
 
 		@Override
 		public void write(final JsonWriter out, final T value)
 				throws IOException {
-			delegateTypeAdapter.write(out, value);
+			typeAdapter.write(out, value);
 		}
 
 		@Override
+		@Nullable
 		public T read(final JsonReader in)
 				throws IOException {
 			try {
-				return delegateTypeAdapter.read(in);
+				return typeAdapter.read(in);
 			} catch ( final MalformedJsonException | RuntimeException ignored ) {
 				return fallback(in);
 			}
