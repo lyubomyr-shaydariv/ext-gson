@@ -76,6 +76,7 @@ public final class PrePostTypeAdapterFactory
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	@SuppressWarnings("checkstyle:MissingJavadocType")
 	public static final class Adapter<T>
 			extends TypeAdapter<T> {
 
@@ -85,6 +86,7 @@ public final class PrePostTypeAdapterFactory
 		private final Iterable<? extends IProcessor<? super T>> postProcessors;
 		private final TypeAdapter<T> delegateTypeAdapter;
 
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static <T> TypeAdapter<T> getInstance(
 				@Nullable final Iterable<? extends IProcessor<? super T>> preProcessors,
 				@Nullable final Iterable<? extends IProcessor<? super T>> postProcessors,

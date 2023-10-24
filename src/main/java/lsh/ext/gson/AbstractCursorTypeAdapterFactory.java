@@ -50,7 +50,7 @@ public abstract class AbstractCursorTypeAdapterFactory<E>
 	 * 		Element type
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-	protected abstract static class Adapter<C, E>
+	protected abstract static class AbstractAdapter<C, E>
 			extends TypeAdapter<C> {
 
 		private final TypeAdapter<E> elementTypeAdapter;

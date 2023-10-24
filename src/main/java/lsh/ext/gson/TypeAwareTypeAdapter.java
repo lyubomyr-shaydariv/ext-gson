@@ -20,6 +20,9 @@ import lombok.RequiredArgsConstructor;
  *     "$V": {}
  * }
  * </pre>
+ *
+ * @param <T>
+ * 		Type
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TypeAwareTypeAdapter<T>
@@ -58,6 +61,7 @@ public final class TypeAwareTypeAdapter<T>
 	}
 
 	@Override
+	@SuppressWarnings("checkstyle:CyclomaticComplexity")
 	public T read(final JsonReader in)
 			throws IOException {
 		final JsonToken token = in.peek();

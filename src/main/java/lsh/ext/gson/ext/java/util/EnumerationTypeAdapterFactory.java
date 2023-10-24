@@ -31,9 +31,12 @@ public final class EnumerationTypeAdapterFactory<E>
 
 	/**
 	 * Type adapter for {@link Enumeration}. Enumerations are supposed to read and write JSON arrays only.
+	 *
+	 * @param <E>
+	 * 		Element type
 	 */
 	public static final class Adapter<E>
-			extends AbstractCursorTypeAdapterFactory.Adapter<Enumeration<E>, E> {
+			extends AbstractAdapter<Enumeration<E>, E> {
 
 		private Adapter(final TypeAdapter<E> elementTypeAdapter) {
 			super(elementTypeAdapter);
@@ -43,7 +46,7 @@ public final class EnumerationTypeAdapterFactory<E>
 		 * @param elementTypeAdapter
 		 * 		Element type adapter
 		 * @param <E>
-		 * 		Iterator element type
+		 * 		Element type
 		 *
 		 * @return An instance of {@link Adapter}.
 		 */

@@ -44,6 +44,7 @@ public final class JsonStreams {
 	 * @throws IOException
 	 * 		A rethrown exception
 	 */
+	@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:JavaNCSS" })
 	public static void copyTo(final JsonReader reader, final JsonWriter writer, final boolean ignoreTrailingTokens)
 			throws IOException {
 		int level = 0;

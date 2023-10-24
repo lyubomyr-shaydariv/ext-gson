@@ -37,18 +37,33 @@ import org.apache.commons.collections4.multiset.HashMultiSet;
 public final class ApacheCommonsCollections4Module
 		extends AbstractModule {
 
+	/**
+	 * Provides a default bag object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<Bag<Object>> defaultBagFactoryProvider = typeToken -> HashBag::new;
 
+	/**
+	 * Provides a default bidirectional map object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<BidiMap<String, Object>> defaultBidiMapFactoryProvider = typeToken -> DualLinkedHashBidiMap::new;
 
+	/**
+	 * Provides a default multiset object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<MultiSet<Object>> defaultMultiSetFactoryProvider = typeToken -> HashMultiSet::new;
 
+	/**
+	 * Provides a default multimap object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<MultiMap<String, Object>> defaultMultiMapFactoryProvider = typeToken -> MultiValueMap::new;
 
+	/**
+	 * Provides a default multi-valued map object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<MultiValuedMap<String, Object>> defaultMultiValuedFactoryProvider = typeToken -> ArrayListValuedHashMap::new;
 

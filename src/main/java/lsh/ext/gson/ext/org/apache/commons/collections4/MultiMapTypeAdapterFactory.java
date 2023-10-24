@@ -21,6 +21,11 @@ import org.apache.commons.collections4.Transformer;
 
 /**
  * Represents a type adapter factory for {@link MultiMap} from Apache Commons Collections 4.
+ *
+ * @param <K>
+ * 		Key type
+ * @param <V>
+ * 		Value type
  */
 @SuppressWarnings("deprecation")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -73,6 +78,11 @@ public final class MultiMapTypeAdapterFactory<K, V>
 
 	/**
 	 * Represents a type adapter for {@link MultiMap} from Apache Commons Collections 4.
+	 *
+	 * @param <K>
+	 * 		Key type
+	 * @param <V>
+	 * 		Value type
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<K, V>

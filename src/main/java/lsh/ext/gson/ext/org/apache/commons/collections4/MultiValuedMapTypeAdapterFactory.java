@@ -21,6 +21,11 @@ import org.apache.commons.collections4.Transformer;
 
 /**
  * Represents a type adapter factory for {@link MultiValuedMap} from Apache Commons Collections 4.
+ *
+ * @param <K>
+ * 		Key type
+ * @param <V>
+ * 		Value type
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiValuedMapTypeAdapterFactory<K, V>
@@ -72,6 +77,11 @@ public final class MultiValuedMapTypeAdapterFactory<K, V>
 
 	/**
 	 * Represents a type adapter for {@link MultiValuedMap} from Apache Commons Collections 4.
+	 *
+	 * @param <K>
+	 * 		Key type
+	 * @param <V>
+	 * 		Value type
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<K, V>

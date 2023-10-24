@@ -21,6 +21,11 @@ import lsh.ext.gson.IInstanceFactory;
 
 /**
  * Represents a type adapter factory for single values that can be converted to a collection or keep an existing collection of multiple elements.
+ *
+ * @param <E>
+ * 		Collection element type
+ * @param <C>
+ * 		Collection type
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E>>
@@ -67,6 +72,8 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	 *
 	 * @param <E>
 	 * 		Element type
+	 * @param <C>
+	 * 		Collection type
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<E, C extends Collection<E>>
@@ -82,6 +89,8 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 		 * 		A factory to create a new collection
 		 * @param <E>
 		 * 		Element type
+		 * @param <C>
+		 * 		Collection type
 		 *
 		 * @return An instance of {@link Adapter}.
 		 */
@@ -112,6 +121,7 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 		}
 
 		@Override
+		@SuppressWarnings("checkstyle:CyclomaticComplexity")
 		public C read(final JsonReader in)
 				throws IOException {
 			final C collection = collectionFactory.createInstance();

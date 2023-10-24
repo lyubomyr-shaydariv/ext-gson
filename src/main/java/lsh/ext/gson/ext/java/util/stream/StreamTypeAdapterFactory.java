@@ -32,9 +32,12 @@ public final class StreamTypeAdapterFactory<E>
 
 	/**
 	 * Type adapter for {@link Stream}. Streams are supposed to read and write JSON arrays only.
+	 *
+	 * @param <E>
+	 * 		Element type
 	 */
 	public static final class Adapter<E>
-			extends AbstractCursorTypeAdapterFactory.Adapter<Stream<E>, E> {
+			extends AbstractAdapter<Stream<E>, E> {
 
 		private Adapter(final TypeAdapter<E> elementTypeAdapter) {
 			super(elementTypeAdapter);

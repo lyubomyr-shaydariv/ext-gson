@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,21 +28,11 @@ import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapterFactory;
 public final class JavaSqlModule
 		extends AbstractModule {
 
+	/**
+	 * Provides a default date object depending on its type.
+	 */
 	// TODO improve
-	public static final IInstanceFactory.IProvider<Date> defaultDateFactoryProvider = typeToken -> {
-		@SuppressWarnings("unchecked")
-		final Class<? extends Date> rawType = (Class<? extends Date>) typeToken.getRawType();
-		if ( rawType == java.sql.Date.class ) {
-			return () -> new java.sql.Date(0);
-		}
-		if ( rawType == Time.class ) {
-			return () -> new Time(0);
-		}
-		if ( rawType == Timestamp.class ) {
-			return () -> new Timestamp(0);
-		}
-		return UnixTimeDateTypeAdapterFactory.defaultDateFactoryProvider.provide(typeToken);
-	};
+	public static final IInstanceFactory.IProvider<Date> defaultDateFactoryProvider = JavaSqlModule::provideInstanceFactory;
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 	private static final IModule defaultInstance = builder()
@@ -56,6 +47,21 @@ public final class JavaSqlModule
 	 */
 	public static Builder builder() {
 		return new Builder();
+	}
+
+	private static IInstanceFactory<Date> provideInstanceFactory(final TypeToken<Date> typeToken) {
+		@SuppressWarnings("unchecked")
+		final Class<? extends Date> rawType = (Class<? extends Date>) typeToken.getRawType();
+		if ( rawType == java.sql.Date.class ) {
+			return () -> new java.sql.Date(0);
+		}
+		if ( rawType == Time.class ) {
+			return () -> new Time(0);
+		}
+		if ( rawType == Timestamp.class ) {
+			return () -> new Timestamp(0);
+		}
+		return UnixTimeDateTypeAdapterFactory.defaultDateFactoryProvider.provide(typeToken);
 	}
 
 	/**

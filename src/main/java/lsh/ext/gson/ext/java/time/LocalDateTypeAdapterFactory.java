@@ -49,6 +49,7 @@ public final class LocalDateTypeAdapterFactory
 			super(dateTimeFormatter, LocalDate::from);
 		}
 
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<LocalDate> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

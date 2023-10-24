@@ -7,9 +7,19 @@ import com.google.gson.JsonObject;
 
 /**
  * Predicate that specifies merging strategy for {@link JsonObjects#mergeIntoLeft(JsonObject, JsonObject, IJsonObjectMergePredicate)} and {@link
- * JsonObjects#mergeIntoNew(JsonObject, JsonObject, IJsonObjectMergePredicate)}
+ * JsonObjects#mergeIntoNew(JsonObject, JsonObject, IJsonObjectMergePredicate)}.
  */
 public interface IJsonObjectMergePredicate {
+
+	/**
+	 * Defines a predicate that always merges objects.
+	 */
+	IJsonObjectMergePredicate replace = (key, leftObject, leftValue, rightObject, rightValue) -> true;
+
+	/**
+	 * Defines a predicate that never merges objects.
+	 */
+	IJsonObjectMergePredicate retain = (key, leftObject, leftValue, rightObject, rightValue) -> false;
 
 	/**
 	 * Determines if the left object value can be replaced with the right object value.
@@ -28,9 +38,5 @@ public interface IJsonObjectMergePredicate {
 	 * @return {@code true} if the left object value can be replaced with the right object value, otherwise {@code false}.
 	 */
 	boolean canReplace(String key, JsonObject leftObject, @Nullable JsonElement leftValue, JsonObject rightObject, @Nullable JsonElement rightValue);
-
-	IJsonObjectMergePredicate replace = (key, leftObject, leftValue, rightObject, rightValue) -> true;
-
-	IJsonObjectMergePredicate retain = (key, leftObject, leftValue, rightObject, rightValue) -> false;
 
 }

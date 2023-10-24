@@ -150,6 +150,7 @@ public final class JsonObjects {
 	 *
 	 * @return A new JSON object with five key-value pairs.
 	 */
+	@SuppressWarnings("checkstyle:ParameterNumber")
 	public static JsonObject of(
 			final String k1, @Nullable final JsonElement v1,
 			final String k2, @Nullable final JsonElement v2,
@@ -166,6 +167,7 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
+	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static JsonObject from(final Map<String, ? extends JsonElement> map) {
 		final JsonObject jsonObject = new JsonObject();
 		for ( final Map.Entry<String, ? extends JsonElement> e : map.entrySet() ) {

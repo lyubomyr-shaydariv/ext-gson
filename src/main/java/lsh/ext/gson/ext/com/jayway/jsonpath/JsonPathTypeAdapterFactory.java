@@ -26,8 +26,10 @@ import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 /**
+ * <p>
  * Represents a type adapter factory that can deserialize object fields using {@link JsonPathExpression}-annotations in JSON mappings. Example of use, the
  * following JSON:
+ * </p>
  *
  * <pre>
  *     {
@@ -41,7 +43,9 @@ import lsh.ext.gson.ITypeAdapterFactory;
  *     }
  * </pre>
  *
+ * <p>
  * can be mapped to the following mapping using this type adapter factory:
+ * </p>
  *
  * <pre>
  *     public final class Foo {
@@ -52,7 +56,9 @@ import lsh.ext.gson.ITypeAdapterFactory;
  *     }
  * </pre>
  *
+ * <p>
  * So, the following code outputs {@code Foo!} to stdout:
+ * </p>
  *
  * <pre>
  *     final Gson gson = new GsonBuilder()
@@ -62,7 +68,9 @@ import lsh.ext.gson.ITypeAdapterFactory;
  *     System.out.println(foo.fooRef);
  * </pre>
  *
+ * <p>
  * JSON path expressions that point to not existing paths are ignored.
+ * </p>
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapterFactory
@@ -78,6 +86,8 @@ public final class JsonPathTypeAdapterFactory
 	private static final ITypeAdapterFactory<?> instance = new JsonPathTypeAdapterFactory(JsonPathTypeAdapterFactory::buildDefaultConfiguration);
 
 	/**
+	 * Example of use:
+	 *
 	 * <pre>
 	 * private static void configureJsonPathGlobally(final JsonProvider gsonJsonProvider, final MappingProvider gsonMappingProvider) {
 	 *     Configuration.setDefaults(new Configuration.Defaults() {
@@ -121,6 +131,13 @@ public final class JsonPathTypeAdapterFactory
 		return fieldInfos.isEmpty()
 				? delegateAdapter
 				: new JsonPathTypeAdapter<>(delegateAdapter, gson.getAdapter(JsonElement.class), fieldInfos, configurationProvider.apply(gson));
+	}
+
+	private static Configuration buildDefaultConfiguration(final Gson gson) {
+		return Configuration.builder()
+				.jsonProvider(new GsonJsonProvider(gson))
+				.mappingProvider(new GsonMappingProvider(gson))
+				.build();
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -184,13 +201,6 @@ public final class JsonPathTypeAdapterFactory
 			return collection;
 		}
 
-	}
-
-	private static Configuration buildDefaultConfiguration(final Gson gson) {
-		return Configuration.builder()
-				.jsonProvider(new GsonJsonProvider(gson))
-				.mappingProvider(new GsonMappingProvider(gson))
-				.build();
 	}
 
 }

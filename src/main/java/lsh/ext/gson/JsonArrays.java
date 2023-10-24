@@ -150,6 +150,7 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
+	@SuppressWarnings("checkstyle:MissingJavadocMethod")
 	public static JsonArray from(final Iterable<? extends JsonElement> jsonElements) {
 		final JsonArray jsonArray = new JsonArray();
 		for ( final JsonElement jsonElement : jsonElements ) {

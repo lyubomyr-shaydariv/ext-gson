@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a type adapter factory for {@code abstract} classes. {@link TypeAwareTypeAdapter} is used behind the scenes.
+ *
+ * @param <T>
+ * 		Type
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PolymorphicAbstractClassTypeAdapterFactory<T>

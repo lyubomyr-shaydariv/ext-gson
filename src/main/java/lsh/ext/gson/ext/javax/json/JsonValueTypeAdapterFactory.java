@@ -27,6 +27,7 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("checkstyle:MissingJavadocType")
 public final class JsonValueTypeAdapterFactory
 		extends AbstractTypeAdapterFactory<JsonValue>
 		implements ITypeAdapterFactory<JsonValue> {
@@ -71,6 +72,7 @@ public final class JsonValueTypeAdapterFactory
 		}
 
 		@Override
+		@SuppressWarnings("checkstyle:CyclomaticComplexity")
 		public void write(final JsonWriter out, final JsonValue jsonValue)
 				throws IOException {
 			final JsonValue.ValueType valueType = jsonValue.getValueType();
@@ -100,6 +102,7 @@ public final class JsonValueTypeAdapterFactory
 		}
 
 		@Override
+		@SuppressWarnings("checkstyle:CyclomaticComplexity")
 		public JsonValue read(final JsonReader in)
 				throws IOException {
 			final JsonToken jsonToken = in.peek();
@@ -251,6 +254,7 @@ public final class JsonValueTypeAdapterFactory
 			}
 
 			@Override
+			@SuppressWarnings("checkstyle:CyclomaticComplexity")
 			public JsonObject read(final JsonReader in)
 					throws IOException {
 				final JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
@@ -312,6 +316,7 @@ public final class JsonValueTypeAdapterFactory
 			}
 
 			@Override
+			@SuppressWarnings("checkstyle:CyclomaticComplexity")
 			public JsonArray read(final JsonReader in)
 					throws IOException {
 				final JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();

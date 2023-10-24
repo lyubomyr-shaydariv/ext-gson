@@ -19,6 +19,9 @@ import lsh.ext.gson.ParameterizedTypes;
 
 /**
  * Represents a type adapter factory for {@link Optional}.
+ *
+ * @param <T>
+ * 		Type
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OptionalTypeAdapterFactory<T>
@@ -43,6 +46,9 @@ public final class OptionalTypeAdapterFactory<T>
 
 	/**
 	 * Represents a type adapter for {@link Optional}.
+	 *
+	 * @param <T>
+	 * 		Type
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<T>

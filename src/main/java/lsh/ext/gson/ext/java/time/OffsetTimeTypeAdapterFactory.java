@@ -49,6 +49,7 @@ public final class OffsetTimeTypeAdapterFactory
 			super(dateTimeFormatter, OffsetTime::from);
 		}
 
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<OffsetTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

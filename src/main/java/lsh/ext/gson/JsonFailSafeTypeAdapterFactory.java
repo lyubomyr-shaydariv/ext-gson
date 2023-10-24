@@ -16,20 +16,26 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
+ * <p>
  * This type adapter factory skips malformed JSON values. For example, consider the following mapping:
+ * </p>
  *
  * <pre>
  *     class Foo { Bar bar; }
  *     class Bar { }
  * </pre>
  *
+ * <p>
  * And the following JSON:
+ * </p>
  *
  * <pre>
  *     {"bar": []}
  * </pre>
  *
+ * <p>
  * The {@code bar} cannot be an array, therefore adding the type adapter factory will assign {@code null} to the `bar` field once JSON parsing fails.
+ * </p>
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonFailSafeTypeAdapterFactory
@@ -71,6 +77,7 @@ public final class JsonFailSafeTypeAdapterFactory
 		}
 
 		@Nullable
+		@SuppressWarnings("checkstyle:CyclomaticComplexity")
 		private static <T> T fallback(final JsonReader in)
 				throws IOException {
 			final JsonToken jsonToken = in.peek();

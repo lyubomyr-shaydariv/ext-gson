@@ -21,8 +21,9 @@ import javax.annotation.meta.TypeQualifierDefault;
 		ElementType.TYPE_PARAMETER,
 		ElementType.TYPE_USE,
 		ElementType.MODULE,
-		ElementType.RECORD_COMPONENT,
+		ElementType.RECORD_COMPONENT
 })
 @Nonnull
+@SuppressWarnings("checkstyle:MissingJavadocType")
 public @interface NonnullByDefault {
 }

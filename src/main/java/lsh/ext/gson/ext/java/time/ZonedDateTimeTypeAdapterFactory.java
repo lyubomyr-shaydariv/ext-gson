@@ -49,6 +49,7 @@ public final class ZonedDateTimeTypeAdapterFactory
 			super(dateTimeFormatter, ZonedDateTime::from);
 		}
 
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<ZonedDateTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

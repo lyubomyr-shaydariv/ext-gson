@@ -30,9 +30,12 @@ public final class IteratorTypeAdapterFactory<E>
 
 	/**
 	 * Type adapter for {@link Iterator}. Iterators are supposed to read and write JSON arrays only.
+	 *
+	 * @param <E>
+	 * 		Element type
 	 */
 	public static final class Adapter<E>
-			extends AbstractCursorTypeAdapterFactory.Adapter<Iterator<E>, E> {
+			extends AbstractAdapter<Iterator<E>, E> {
 
 		private Adapter(final TypeAdapter<E> elementTypeAdapter) {
 			super(elementTypeAdapter);

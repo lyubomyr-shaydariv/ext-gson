@@ -34,6 +34,9 @@ import lsh.ext.gson.UnmodifiableIterable;
 public final class GuavaCollectModule
 		extends AbstractModule {
 
+	/**
+	 * Provides a default bidirectional map object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<BiMap<String, Object>> defaultBiMapFactoryProvider = typeToken -> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -44,6 +47,9 @@ public final class GuavaCollectModule
 		return HashBiMap::create;
 	};
 
+	/**
+	 * Provides a default multimap object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<Multimap<String, Object>> defaultMultimapFactoryProvider = typeToken -> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -54,6 +60,9 @@ public final class GuavaCollectModule
 		return LinkedHashMultimap::create;
 	};
 
+	/**
+	 * Provides a default multiset object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<? extends Multiset<Object>> defaultMultisetFactoryProvider = typeToken -> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -64,6 +73,9 @@ public final class GuavaCollectModule
 		return LinkedHashMultiset::create;
 	};
 
+	/**
+	 * Provides a default table object.
+	 */
 	// TODO improve
 	public static final IInstanceFactory.IProvider<Table<String, String, Object>> defaultTableFactoryProvider = typeToken -> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })

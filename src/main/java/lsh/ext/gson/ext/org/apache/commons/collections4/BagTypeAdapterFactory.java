@@ -36,6 +36,10 @@ public final class BagTypeAdapterFactory<E>
 	/**
 	 * @param newBagFactoryProvider
 	 * 		Bag factory provider
+	 * @param keyMapper
+	 * 		Key mapper
+	 * @param keyReverseMapper
+	 * 		Key reverse mapper
 	 * @param <E>
 	 * 		Element type
 	 *
@@ -79,6 +83,10 @@ public final class BagTypeAdapterFactory<E>
 		/**
 		 * @param newBagFactory
 		 * 		A {@link Bag} factory to create instance used while deserialization
+		 * @param keyMapper
+		 * 		Key mapper
+		 * @param keyReverseMapper
+		 * 		Key reverse mapper
 		 * @param <V>
 		 * 		Bag element type
 		 *

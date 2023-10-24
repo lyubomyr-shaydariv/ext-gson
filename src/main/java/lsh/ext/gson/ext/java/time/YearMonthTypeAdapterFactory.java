@@ -46,6 +46,7 @@ public final class YearMonthTypeAdapterFactory
 			extends AbstractTemporalAccessorTypeAdapter<YearMonth> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+		@SuppressWarnings("checkstyle:magicnumber")
 		private static final TypeAdapter<YearMonth> instance = getInstance(new DateTimeFormatterBuilder()
 				.appendValue(ChronoField.YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
 				.appendLiteral('-')
@@ -57,6 +58,7 @@ public final class YearMonthTypeAdapterFactory
 			super(dateTimeFormatter, YearMonth::from);
 		}
 
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<YearMonth> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

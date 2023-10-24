@@ -44,7 +44,9 @@ public final class JsonReaders {
 	}
 
 	/**
+	 * <p>
 	 * Google Gson does not fail on empty strings since version 1.5:
+	 * </p>
 	 *
 	 * <pre>
 	 * public &lt;T&gt; T fromJson(JsonReader reader, Type typeOfT) throws JsonIOException, JsonSyntaxException {
@@ -64,7 +66,9 @@ public final class JsonReaders {
 	 *     throw new JsonSyntaxException(e);
 	 * </pre>
 	 *
+	 * <p>
 	 * In some cases it can be undesirable.
+	 * </p>
 	 *
 	 * @param reader
 	 * 		Reader
@@ -91,6 +95,7 @@ public final class JsonReaders {
 	 * @throws IOException
 	 * 		A rethrown exception
 	 */
+	@SuppressWarnings("checkstyle:CyclomaticComplexity")
 	public static void skipToken(final JsonReader reader)
 			throws IOException {
 		final JsonToken token = reader.peek();
@@ -131,6 +136,7 @@ public final class JsonReaders {
 	 * @throws IOException
 	 * 		A rethrown exception
 	 */
+	@SuppressWarnings("checkstyle:CyclomaticComplexity")
 	public static ValuedJsonToken<?> readValuedJsonToken(final JsonReader jsonReader)
 			throws IOException {
 		final JsonToken jsonToken = jsonReader.peek();
@@ -214,6 +220,7 @@ public final class JsonReaders {
 		}
 
 		@Override
+		@SuppressWarnings("checkstyle:CyclomaticComplexity")
 		public ValuedJsonToken<?> next() {
 			try {
 				if ( level < 0 ) {

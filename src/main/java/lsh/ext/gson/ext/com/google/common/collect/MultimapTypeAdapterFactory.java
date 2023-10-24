@@ -21,6 +21,11 @@ import lsh.ext.gson.ParameterizedTypes;
 
 /**
  * Represents a type adapter factory for {@link Multimap} from Google Guava.
+ *
+ * @param <K>
+ * 		Key type
+ * @param <V>
+ * 		Value type
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultimapTypeAdapterFactory<K, V>
@@ -74,6 +79,11 @@ public final class MultimapTypeAdapterFactory<K, V>
 
 	/**
 	 * Represents a type adapter for {@link Multimap} from Google Guava.
+	 *
+	 * @param <K>
+	 * 		Key type
+	 * @param <V>
+	 * 		Value type
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Adapter<K, V>

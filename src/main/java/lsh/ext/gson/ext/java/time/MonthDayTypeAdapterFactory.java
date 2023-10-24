@@ -57,6 +57,7 @@ public final class MonthDayTypeAdapterFactory
 			super(dateTimeFormatter, MonthDay::from);
 		}
 
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static TypeAdapter<MonthDay> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Adapter(dateTimeFormatter)
 					.nullSafe();

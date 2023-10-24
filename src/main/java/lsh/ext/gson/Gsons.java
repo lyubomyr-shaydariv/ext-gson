@@ -29,6 +29,8 @@ public final class Gsons {
 		 *     <li>{@link GsonBuilder#disableInnerClassSerialization()}</li>
 		 *     <li>{@link GsonBuilder#disableHtmlEscaping()}</li>
 		 * </ul>
+		 *
+		 * @return Normalized Gson instance builder with disabled defaults.
 		 */
 		public static GsonBuilder createNormalized() {
 			return new GsonBuilder()

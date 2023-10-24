@@ -12,8 +12,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 /**
+ * <p>
  * Represents a type adapter factory to "unpack" string-packed JSON documents. Can be used with {@link com.google.gson.annotations.JsonAdapter} only. An example
  * JSON document
+ * </p>
  *
  * <pre>
  * {
@@ -21,7 +23,9 @@ import lombok.RequiredArgsConstructor;
  * }
  * </pre>
  *
+ * <p>
  * can have the following mapping:
+ * </p>
  *
  * <pre>
  * final class Wrapper {
@@ -43,11 +47,13 @@ public final class UnpackedJsonTypeAdapterFactory
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	@SuppressWarnings("checkstyle:MissingJavadocType")
 	public static final class Adapter<T>
 			extends TypeAdapter<T> {
 
 		private final TypeAdapter<T> typeAdapter;
 
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
 		public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter) {
 			return new Adapter<>(typeAdapter)
 					.nullSafe();
