@@ -20,7 +20,7 @@ public final class TableTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return TableTypeAdapterFactory.getInstance(GuavaCollectModule.defaultTableFactoryProvider);
+		return TableTypeAdapterFactory.getInstance();
 	}
 
 	@Override

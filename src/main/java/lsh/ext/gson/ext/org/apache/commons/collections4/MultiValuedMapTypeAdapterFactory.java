@@ -13,9 +13,11 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IInstanceFactory;
+import lsh.ext.gson.IBuilder2;
+import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
+import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.MultiValuedMap;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -23,12 +25,44 @@ public final class MultiValuedMapTypeAdapterFactory<V>
 		extends AbstractTypeAdapterFactory<MultiValuedMap<String, V>>
 		implements ITypeAdapterFactory<MultiValuedMap<String, V>> {
 
-	private final IInstanceFactory.IProvider<? extends MultiValuedMap<String, V>> newMultiValuedMapFactoryProvider;
+	private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> multiValuedMapBuilderFactory;
+
+	public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance() {
+		return getInstance((IFactory0.IFactory<MultiValuedMap<String, V>>) typeToken -> {
+			throw new UnsupportedOperationException(String.valueOf(typeToken));
+		});
+	}
 
 	public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
-			final IInstanceFactory.IProvider<? extends MultiValuedMap<String, V>> newMultiValuedMapFactoryProvider
+			final IFactory0.IFactory<MultiValuedMap<String, V>> factoryFactory
 	) {
-		return new MultiValuedMapTypeAdapterFactory<>(newMultiValuedMapFactoryProvider);
+		return getInstance((IBuilder2.IFactory<String, V, MultiValuedMap<String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+	}
+
+	public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
+			final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> multiValuedMapBuilderFactory
+	) {
+		return new MultiValuedMapTypeAdapterFactory<>(multiValuedMapBuilderFactory);
+	}
+
+	public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> createBuilder(
+			final TypeToken<MultiValuedMap<String, V>> typeToken,
+			final IFactory0.IFactory<MultiValuedMap<String, V>> factoryFactory
+	) {
+		final IFactory0<MultiValuedMap<String, V>> factory = factoryFactory.create(typeToken);
+		return new IBuilder2<>() {
+			private final MultiValuedMap<String, V> multiValuedMap = factory.create();
+
+			@Override
+			public void modify(final String k, final V v) {
+				multiValuedMap.put(k, v);
+			}
+
+			@Override
+			public MultiValuedMap<String, V> build() {
+				return multiValuedMap;
+			}
+		};
 	}
 
 	@Override
@@ -44,8 +78,8 @@ public final class MultiValuedMapTypeAdapterFactory<V>
 		@SuppressWarnings("unchecked")
 		final TypeToken<MultiValuedMap<String, V>> castTypeToken = (TypeToken<MultiValuedMap<String, V>>) typeToken;
 		@SuppressWarnings("unchecked")
-		final IInstanceFactory.IProvider<MultiValuedMap<String, V>> castNewMultiValuedMapFactoryProvider = (IInstanceFactory.IProvider<MultiValuedMap<String, V>>) newMultiValuedMapFactoryProvider;
-		return Adapter.getInstance(valueTypeAdapter, castNewMultiValuedMapFactoryProvider.provide(castTypeToken));
+		final IBuilder2.IFactory<String, V, MultiValuedMap<String, V>> castMultiValuedMapBuilderFactory = (IBuilder2.IFactory<String, V, MultiValuedMap<String, V>>) multiValuedMapBuilderFactory;
+		return Adapter.getInstance(valueTypeAdapter, () -> castMultiValuedMapBuilderFactory.create(castTypeToken));
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -53,13 +87,13 @@ public final class MultiValuedMapTypeAdapterFactory<V>
 			extends TypeAdapter<MultiValuedMap<String, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
-		private final IInstanceFactory<? extends MultiValuedMap<String, V>> newMultiValuedMapFactory;
+		private final Factory<? extends IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>>> multiValuedMapBuilderFactory;
 
 		public static <V> TypeAdapter<MultiValuedMap<String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
-				final IInstanceFactory<? extends MultiValuedMap<String, V>> newMultiValuedMapFactory
+				final Factory<? extends IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>>> multiValuedMapBuilderFactory
 		) {
-			return new Adapter<>(valueTypeAdapter, newMultiValuedMapFactory)
+			return new Adapter<>(valueTypeAdapter, multiValuedMapBuilderFactory)
 					.nullSafe();
 		}
 
@@ -79,15 +113,15 @@ public final class MultiValuedMapTypeAdapterFactory<V>
 		@Override
 		public MultiValuedMap<String, V> read(final JsonReader in)
 				throws IOException {
-			final MultiValuedMap<String, V> multiValuedMap = newMultiValuedMapFactory.createInstance();
 			in.beginObject();
+			final IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>> builder = multiValuedMapBuilderFactory.create();
 			while ( in.hasNext() ) {
 				final String key = in.nextName();
 				final V value = valueTypeAdapter.read(in);
-				multiValuedMap.put(key, value);
+				builder.modify(key, value);
 			}
 			in.endObject();
-			return multiValuedMap;
+			return builder.build();
 		}
 
 	}

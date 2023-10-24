@@ -13,22 +13,57 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IInstanceFactory;
+import lsh.ext.gson.IBuilder2;
+import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.Factory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BidiMapTypeAdapterFactory<V>
 		extends AbstractTypeAdapterFactory<BidiMap<String, V>>
 		implements ITypeAdapterFactory<BidiMap<String, V>> {
 
-	private final IInstanceFactory.IProvider<? extends BidiMap<String, V>> newBidiMapFactoryProvider;
+	private final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> bidiMapBuilderFactory;
 
 	public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
-			final IInstanceFactory.IProvider<? extends BidiMap<String, V>> newBidiMapFactoryProvider
 	) {
-		return new BidiMapTypeAdapterFactory<>(newBidiMapFactoryProvider);
+		return getInstance((IFactory0.IFactory<BidiMap<String, V>>) typeToken -> {
+			throw new UnsupportedOperationException(String.valueOf(typeToken));
+		});
+	}
+
+	public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
+			final IFactory0.IFactory<BidiMap<String, V>> factoryFactory
+	) {
+		return getInstance((IBuilder2.IFactory<String, V, BidiMap<String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+	}
+
+	public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
+			final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> bidiMapBuilderFactory
+	) {
+		return new BidiMapTypeAdapterFactory<>(bidiMapBuilderFactory);
+	}
+
+	public static <V> IBuilder2<String, V, BidiMap<String, V>> createBuilder(
+			final TypeToken<BidiMap<String, V>> typeToken,
+			final IFactory0.IFactory<BidiMap<String, V>> factoryFactory
+	) {
+		final IFactory0<BidiMap<String, V>> factory = factoryFactory.create(typeToken);
+		return new IBuilder2<>() {
+			private final BidiMap<String, V> bidiMap = factory.create();
+
+			@Override
+			public void modify(final String k, final V v) {
+				bidiMap.put(k, v);
+			}
+
+			@Override
+			public BidiMap<String, V> build() {
+				return bidiMap;
+			}
+		};
 	}
 
 	@Override
@@ -44,8 +79,8 @@ public final class BidiMapTypeAdapterFactory<V>
 		@SuppressWarnings("unchecked")
 		final TypeToken<BidiMap<String, V>> castTypeToken = (TypeToken<BidiMap<String, V>>) typeToken;
 		@SuppressWarnings("unchecked")
-		final IInstanceFactory.IProvider<BidiMap<String, V>> castNewBidiMapFactoryProvider = (IInstanceFactory.IProvider<BidiMap<String, V>>) newBidiMapFactoryProvider;
-		return Adapter.getInstance(valueTypeAdapter, castNewBidiMapFactoryProvider.provide(castTypeToken));
+		final IBuilder2.IFactory<String, V, BidiMap<String, V>> castMultiMapBuilderFactory = (IBuilder2.IFactory<String, V, BidiMap<String, V>>) bidiMapBuilderFactory;
+		return Adapter.getInstance(valueTypeAdapter, () -> castMultiMapBuilderFactory.create(castTypeToken));
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -53,13 +88,13 @@ public final class BidiMapTypeAdapterFactory<V>
 			extends TypeAdapter<BidiMap<String, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
-		private final IInstanceFactory<? extends BidiMap<String, V>> newBidiMapFactory;
+		private final Factory<? extends IBuilder2<? super String, ? super V, ? extends BidiMap<String, V>>> bidiMapBuilderFactory;
 
 		public static <V> TypeAdapter<BidiMap<String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
-				final IInstanceFactory<? extends BidiMap<String, V>> newBidiMapFactory
+				final Factory<? extends IBuilder2<? super String, ? super V, ? extends BidiMap<String, V>>> bidiMapBuilderFactory
 		) {
-			return new Adapter<>(valueTypeAdapter, newBidiMapFactory)
+			return new Adapter<>(valueTypeAdapter, bidiMapBuilderFactory)
 					.nullSafe();
 		}
 
@@ -79,15 +114,15 @@ public final class BidiMapTypeAdapterFactory<V>
 		@Override
 		public BidiMap<String, V> read(final JsonReader in)
 				throws IOException {
-			final BidiMap<String, V> bidiMap = newBidiMapFactory.createInstance();
 			in.beginObject();
+			final IBuilder2<? super String, ? super V, ? extends BidiMap<String, V>> builder = bidiMapBuilderFactory.create();
 			while ( in.hasNext() ) {
 				final String key = in.nextName();
 				final V value = valueTypeAdapter.read(in);
-				bidiMap.put(key, value);
+				builder.modify(key, value);
 			}
 			in.endObject();
-			return bidiMap;
+			return builder.build();
 		}
 
 	}

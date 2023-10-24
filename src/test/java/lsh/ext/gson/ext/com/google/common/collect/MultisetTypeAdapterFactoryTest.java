@@ -17,7 +17,7 @@ public final class MultisetTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultisetTypeAdapterFactory.getInstance(GuavaCollectModule.defaultMultisetFactoryProvider);
+		return MultisetTypeAdapterFactory.getInstance();
 	}
 
 	@Override

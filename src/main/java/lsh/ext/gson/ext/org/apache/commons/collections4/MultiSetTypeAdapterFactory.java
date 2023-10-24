@@ -13,9 +13,11 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IInstanceFactory;
+import lsh.ext.gson.IBuilder1;
+import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
+import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.MultiSet;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -23,10 +25,44 @@ public final class MultiSetTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<MultiSet<E>>
 		implements ITypeAdapterFactory<MultiSet<E>> {
 
-	private final IInstanceFactory.IProvider<? extends MultiSet<E>> newMultiSetFactoryProvider;
+	private final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> multiSetBuilderFactory;
 
-	public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(final IInstanceFactory.IProvider<? extends MultiSet<E>> newMultiSetFactoryProvider) {
-		return new MultiSetTypeAdapterFactory<>(newMultiSetFactoryProvider);
+	public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance() {
+		return getInstance((IFactory0.IFactory<MultiSet<E>>) typeToken -> {
+			throw new UnsupportedOperationException(String.valueOf(typeToken));
+		});
+	}
+
+	public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
+			final IFactory0.IFactory<MultiSet<E>> factoryFactory
+	) {
+		return getInstance((IBuilder1.IFactory<E, MultiSet<E>>) typeToken -> createBuilder(typeToken, factoryFactory));
+	}
+
+	public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
+			final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> multiSetBuilderFactory
+	) {
+		return new MultiSetTypeAdapterFactory<>(multiSetBuilderFactory);
+	}
+
+	public static <E> IBuilder1<E, MultiSet<E>> createBuilder(
+			final TypeToken<MultiSet<E>> typeToken,
+			final IFactory0.IFactory<MultiSet<E>> factoryFactory
+	) {
+		final IFactory0<MultiSet<E>> factory = factoryFactory.create(typeToken);
+		return new IBuilder1<>() {
+			private final MultiSet<E> multiSet = factory.create();
+
+			@Override
+			public void modify(final E e) {
+				multiSet.add(e);
+			}
+
+			@Override
+			public MultiSet<E> build() {
+				return multiSet;
+			}
+		};
 	}
 
 	@Override
@@ -42,8 +78,8 @@ public final class MultiSetTypeAdapterFactory<E>
 		@SuppressWarnings("unchecked")
 		final TypeToken<MultiSet<E>> castTypeToken = (TypeToken<MultiSet<E>>) typeToken;
 		@SuppressWarnings("unchecked")
-		final IInstanceFactory.IProvider<MultiSet<E>> castNewMultiSetFactoryProvider = (IInstanceFactory.IProvider<MultiSet<E>>) newMultiSetFactoryProvider;
-		return Adapter.getInstance(elementTypeAdapter, castNewMultiSetFactoryProvider.provide(castTypeToken));
+		final IBuilder1.IFactory<E, MultiSet<E>> castMultiSetBuilderFactory = (IBuilder1.IFactory<E, MultiSet<E>>) multiSetBuilderFactory;
+		return Adapter.getInstance(elementTypeAdapter, () -> castMultiSetBuilderFactory.create(castTypeToken));
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -51,11 +87,13 @@ public final class MultiSetTypeAdapterFactory<E>
 			extends TypeAdapter<MultiSet<E>> {
 
 		private final TypeAdapter<E> elementTypeAdapter;
-		private final IInstanceFactory<? extends MultiSet<E>> newMultiSetFactory;
+		private final Factory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> multiSetBuilderFactory;
 
-		public static <V> TypeAdapter<MultiSet<V>> getInstance(final TypeAdapter<V> valueTypeAdapter,
-				final IInstanceFactory<? extends MultiSet<V>> newMultiSetFactory) {
-			return new Adapter<>(valueTypeAdapter, newMultiSetFactory)
+		public static <E> TypeAdapter<MultiSet<E>> getInstance(
+				final TypeAdapter<E> valueTypeAdapter,
+				final Factory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> multiSetBuilderFactory
+		) {
+			return new Adapter<>(valueTypeAdapter, multiSetBuilderFactory)
 					.nullSafe();
 		}
 
@@ -76,14 +114,14 @@ public final class MultiSetTypeAdapterFactory<E>
 		@Override
 		public MultiSet<E> read(final JsonReader in)
 				throws IOException {
-			final MultiSet<E> multiSet = newMultiSetFactory.createInstance();
 			in.beginArray();
+			final IBuilder1<? super E, ? extends MultiSet<E>> builder = multiSetBuilderFactory.create();
 			while ( in.peek() != JsonToken.END_ARRAY ) {
 				final E element = elementTypeAdapter.read(in);
-				multiSet.add(element);
+				builder.modify(element);
 			}
 			in.endArray();
-			return multiSet;
+			return builder.build();
 		}
 
 	}

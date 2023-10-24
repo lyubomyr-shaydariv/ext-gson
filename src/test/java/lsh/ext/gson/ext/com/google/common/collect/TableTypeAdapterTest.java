@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Multiset;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,6 +18,9 @@ public final class TableTypeAdapterTest
 
 	private static final Gson gson = Gsons.getNormalized();
 
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Table<String, String, Integer>> stringToStringToIntegerTableType = (TypeToken<Table<String, String, Integer>>) TypeToken.getParameterized(Multiset.class, String.class);
+
 	@Nullable
 	@Override
 	protected Table<String, String, ?> normalize(@Nullable final Table<String, String, ?> value) {
@@ -27,7 +31,7 @@ public final class TableTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						TableTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(TypeToken.get(Integer.class)), HashBasedTable::create),
+						TableTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(TypeToken.get(Integer.class)), () -> TableTypeAdapterFactory.createBuilder(stringToStringToIntegerTableType, typeToken -> HashBasedTable::create)),
 						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
 						ImmutableTable.<String, String, Integer>builder()
 								.put("A", "1", 1)

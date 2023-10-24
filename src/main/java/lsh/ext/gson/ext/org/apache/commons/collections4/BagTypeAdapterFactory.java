@@ -12,10 +12,12 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IInstanceFactory;
+import lsh.ext.gson.IBuilder2;
+import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -23,14 +25,63 @@ public final class BagTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Bag<E>>
 		implements ITypeAdapterFactory<Bag<E>> {
 
-	private final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider;
+	private final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory;
 	private final IKeyMapperFactory<E> keyMapperFactory;
 
+	public static <E> ITypeAdapterFactory<Bag<E>> getInstance() {
+		return getInstance(new IKeyMapperFactory<E>() {
+			@Override
+			public Transformer<E, String> createKeyMapper(final TypeToken<E> typeToken) {
+				throw new UnsupportedOperationException(String.valueOf(typeToken));
+			}
+
+			@Override
+			public Transformer<String, E> createReverseKeyMapper(final TypeToken<E> typeToken) {
+				throw new UnsupportedOperationException(String.valueOf(typeToken));
+			}
+		});
+	}
+
 	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-			final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider,
 			final IKeyMapperFactory<E> keyMapperFactory
 	) {
-		return new BagTypeAdapterFactory<>(newBagFactoryProvider, keyMapperFactory);
+		return getInstance((IFactory0.IFactory<Bag<E>>) typeToken -> {
+			throw new UnsupportedOperationException(String.valueOf(typeToken));
+		}, keyMapperFactory);
+	}
+
+	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
+			final IFactory0.IFactory<Bag<E>> factoryFactory,
+			final IKeyMapperFactory<E> keyMapperFactory
+	) {
+		return getInstance((IBuilder2.IFactory<E, Integer, Bag<E>>) typeToken -> createBuilder(typeToken, factoryFactory), keyMapperFactory);
+	}
+
+	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
+			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory,
+			final IKeyMapperFactory<E> keyMapperFactory
+	) {
+		return new BagTypeAdapterFactory<>(bagBuilderFactory, keyMapperFactory);
+	}
+
+	public static <E> IBuilder2<E, Integer, Bag<E>> createBuilder(
+			final TypeToken<Bag<E>> typeToken,
+			final IFactory0.IFactory<Bag<E>> factoryFactory
+	) {
+		final IFactory0<Bag<E>> factory = factoryFactory.create(typeToken);
+		return new IBuilder2<>() {
+			private final Bag<E> hashBag = factory.create();
+
+			@Override
+			public void modify(final E e, final Integer n) {
+				hashBag.add(e, n);
+			}
+
+			@Override
+			public Bag<E> build() {
+				return hashBag;
+			}
+		};
 	}
 
 	@Override
@@ -46,8 +97,8 @@ public final class BagTypeAdapterFactory<E>
 		@SuppressWarnings("unchecked")
 		final TypeToken<Bag<E>> castTypeToken = (TypeToken<Bag<E>>) typeToken;
 		@SuppressWarnings("unchecked")
-		final IInstanceFactory.IProvider<Bag<E>> castNewBagFactoryProvider = (IInstanceFactory.IProvider<Bag<E>>) newBagFactoryProvider;
-		return Adapter.getInstance(castNewBagFactoryProvider.provide(castTypeToken), keyMapperFactory.createKeyMapper(elementTypeToken), keyMapperFactory.createReverseKeyMapper(elementTypeToken));
+		final IBuilder2.IFactory<E, Integer, Bag<E>> castBagBuilderFactory = (IBuilder2.IFactory<E, Integer, Bag<E>>) bagBuilderFactory;
+		return Adapter.getInstance(() -> castBagBuilderFactory.create(castTypeToken), keyMapperFactory.createKeyMapper(elementTypeToken), keyMapperFactory.createReverseKeyMapper(elementTypeToken));
 	}
 
 	public interface IKeyMapperFactory<E> {
@@ -62,16 +113,16 @@ public final class BagTypeAdapterFactory<E>
 	public static final class Adapter<E>
 			extends TypeAdapter<Bag<E>> {
 
-		private final IInstanceFactory<? extends Bag<E>> newBagFactory;
+		private final Factory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> bagBuilderFactory;
 		private final Transformer<? super E, String> keyMapper;
 		private final Transformer<? super String, ? extends E> keyReverseMapper;
 
 		public static <E> TypeAdapter<Bag<E>> getInstance(
-				final IInstanceFactory<? extends Bag<E>> newBagFactory,
+				final Factory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> bagBuilderFactory,
 				final Transformer<? super E, String> keyMapper,
 				final Transformer<? super String, ? extends E> keyReverseMapper
 		) {
-			return new Adapter<>(newBagFactory, keyMapper, keyReverseMapper)
+			return new Adapter<>(bagBuilderFactory, keyMapper, keyReverseMapper)
 					.nullSafe();
 		}
 
@@ -89,13 +140,13 @@ public final class BagTypeAdapterFactory<E>
 		@Override
 		public Bag<E> read(final JsonReader in)
 				throws IOException {
-			final Bag<E> bag = newBagFactory.createInstance();
 			in.beginObject();
+			final IBuilder2<? super E, ? super Integer, ? extends Bag<E>> builder = bagBuilderFactory.create();
 			while ( in.hasNext() ) {
-				bag.add(keyReverseMapper.transform(in.nextName()), in.nextInt());
+				builder.modify(keyReverseMapper.transform(in.nextName()), in.nextInt());
 			}
 			in.endObject();
-			return bag;
+			return builder.build();
 		}
 
 	}

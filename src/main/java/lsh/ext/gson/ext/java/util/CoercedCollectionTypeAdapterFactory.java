@@ -1,7 +1,9 @@
 package lsh.ext.gson.ext.java.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Supplier;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -14,7 +16,7 @@ import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IInstanceFactory;
+import lsh.ext.gson.IBuilder1;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapterFactory<E>
@@ -22,14 +24,25 @@ public final class CoercedCollectionTypeAdapterFactory<E>
 
 	private final Class<? super Collection<E>> baseCollectionType;
 	private final TypeToken<E> elementTypeToken;
-	private final IInstanceFactory<? extends Collection<E>> collectionFactory;
+	private final IBuilder1.IFactory<? super E, ? extends Collection<E>> collectionBuilderFactory;
+
+	public static <E> TypeAdapterFactory getInstance(
+			final Class<? super Collection<E>> baseCollectionType,
+			final TypeToken<E> elementTypeToken
+	) {
+		return getInstance(baseCollectionType, elementTypeToken, CoercedCollectionTypeAdapterFactory::createBuilder);
+	}
 
 	public static <E> TypeAdapterFactory getInstance(
 			final Class<? super Collection<E>> baseCollectionType,
 			final TypeToken<E> elementTypeToken,
-			final IInstanceFactory<? extends Collection<E>> collectionFactory
+			final IBuilder1.IFactory<? super E, ? extends Collection<E>> collectionBuilderFactory
 	) {
-		return new CoercedCollectionTypeAdapterFactory<>(baseCollectionType, elementTypeToken, collectionFactory);
+		return new CoercedCollectionTypeAdapterFactory<>(baseCollectionType, elementTypeToken, collectionBuilderFactory);
+	}
+
+	public static <E> IBuilder1<E, Collection<E>> createBuilder(@SuppressWarnings("unused") final TypeToken<Collection<E>> typeToken) {
+		return new MutableCollectionBuilder<>(new ArrayList<>());
 	}
 
 	@Override
@@ -38,7 +51,11 @@ public final class CoercedCollectionTypeAdapterFactory<E>
 			return null;
 		}
 		final TypeAdapter<E> elementTypeAdapter = gson.getAdapter(elementTypeToken);
-		return Adapter.getInstance(elementTypeAdapter, collectionFactory);
+		@SuppressWarnings("unchecked")
+		final TypeToken<Collection<E>> castTypeToken = (TypeToken<Collection<E>>) typeToken;
+		@SuppressWarnings("unchecked")
+		final IBuilder1.IFactory<E, Collection<E>> castCollectionBuilderFactory = (IBuilder1.IFactory<E, Collection<E>>) collectionBuilderFactory;
+		return Adapter.getInstance(elementTypeAdapter, () -> castCollectionBuilderFactory.create(castTypeToken));
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -46,11 +63,11 @@ public final class CoercedCollectionTypeAdapterFactory<E>
 			extends TypeAdapter<Collection<E>> {
 
 		private final TypeAdapter<E> elementTypeAdapter;
-		private final IInstanceFactory<? extends Collection<E>> collectionFactory;
+		private final Supplier<? extends IBuilder1<? super E, ? extends Collection<E>>> collectionBuilderFactory;
 
 		public static <E> TypeAdapter<Collection<E>> getInstance(
 				final TypeAdapter<E> elementTypeAdapter,
-				final IInstanceFactory<? extends Collection<E>> collectionFactory
+				final Supplier<? extends IBuilder1<? super E, ? extends Collection<E>>> collectionFactory
 		) {
 			return new Adapter<E>(elementTypeAdapter, collectionFactory)
 					.nullSafe();
@@ -81,13 +98,13 @@ public final class CoercedCollectionTypeAdapterFactory<E>
 		@SuppressWarnings("checkstyle:CyclomaticComplexity")
 		public Collection<E> read(final JsonReader in)
 				throws IOException {
-			final Collection<E> collection = collectionFactory.createInstance();
+			final IBuilder1<? super E, ? extends Collection<E>> builder = collectionBuilderFactory.get();
 			final JsonToken token = in.peek();
 			switch ( token ) {
 			case BEGIN_ARRAY:
 				in.beginArray();
 				while ( in.hasNext() ) {
-					collection.add(elementTypeAdapter.read(in));
+					builder.modify(elementTypeAdapter.read(in));
 				}
 				in.endArray();
 				break;
@@ -95,7 +112,7 @@ public final class CoercedCollectionTypeAdapterFactory<E>
 			case STRING:
 			case NUMBER:
 			case BOOLEAN:
-				collection.add(elementTypeAdapter.read(in));
+				builder.modify(elementTypeAdapter.read(in));
 				break;
 			case NULL:
 				throw new AssertionError();
@@ -107,6 +124,24 @@ public final class CoercedCollectionTypeAdapterFactory<E>
 			default:
 				throw new AssertionError(token);
 			}
+			return builder.build();
+		}
+
+	}
+
+	@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+	private static final class MutableCollectionBuilder<E>
+			implements IBuilder1<E, Collection<E>> {
+
+		private final Collection<E> collection;
+
+		@Override
+		public void modify(final E e) {
+			collection.add(e);
+		}
+
+		@Override
+		public Collection<E> build() {
 			return collection;
 		}
 

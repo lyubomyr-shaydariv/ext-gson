@@ -18,7 +18,7 @@ public final class BiMapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return BiMapTypeAdapterFactory.getInstance(GuavaCollectModule.defaultBiMapFactoryProvider);
+		return BiMapTypeAdapterFactory.getInstance();
 	}
 
 	@Override

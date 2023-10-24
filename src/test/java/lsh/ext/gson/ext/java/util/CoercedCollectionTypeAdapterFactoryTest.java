@@ -1,6 +1,5 @@
 package lsh.ext.gson.ext.java.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,13 +12,15 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class CoercedCollectionTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
+	private static final TypeToken<Object> objectTypeToken = TypeToken.get(Object.class);
+
 	public CoercedCollectionTypeAdapterFactoryTest() {
 		super(false);
 	}
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return CoercedCollectionTypeAdapterFactory.getInstance(Collection.class, TypeToken.get(Object.class), ArrayList::new);
+		return CoercedCollectionTypeAdapterFactory.getInstance(Collection.class, objectTypeToken);
 	}
 
 	@Override

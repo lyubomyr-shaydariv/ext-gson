@@ -3,8 +3,10 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -14,21 +16,49 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IInstanceFactory;
+import lsh.ext.gson.IBuilder3;
+import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("Guava")
 public final class TableTypeAdapterFactory<V>
 		extends AbstractTypeAdapterFactory<Table<String, String, V>>
 		implements ITypeAdapterFactory<Table<String, String, V>> {
 
-	private final IInstanceFactory.IProvider<? extends Table<String, String, V>> newTableFactoryProvider;
+	private final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> tableBuilderFactory;
 
 	public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
-			final IInstanceFactory.IProvider<? extends Table<String, String, V>> newTableFactoryProvider
 	) {
-		return new TableTypeAdapterFactory<>(newTableFactoryProvider);
+		return getInstance((IFactory0.IFactory<Table<String, String, V>>) typeToken -> {
+			throw new UnsupportedOperationException(String.valueOf(typeToken));
+		});
+	}
+
+	public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
+			final IFactory0.IFactory<Table<String, String, V>> factoryFactory
+	) {
+		return getInstance((IBuilder3.IFactory<String, String, V, Table<String, String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+	}
+
+	public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
+			final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory
+	) {
+		return new TableTypeAdapterFactory<>(builderFactory);
+	}
+
+	public static <V> IBuilder3<String, String, V, Table<String, String, V>> createBuilder(
+			final TypeToken<Table<String, String, V>> typeToken,
+			final IFactory0.IFactory<Table<String, String, V>> factoryFactory
+	) {
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final Class<? extends Table> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
+		if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
+			return new ImmutableBuilder<>(ImmutableTable.builder());
+		}
+		final IFactory0<Table<String, String, V>> factory = factoryFactory.create(typeToken);
+		return new MutableBuilder<>(factory.create());
 	}
 
 	@Override
@@ -44,8 +74,8 @@ public final class TableTypeAdapterFactory<V>
 		@SuppressWarnings("unchecked")
 		final TypeToken<Table<String, String, V>> castTypeToken = (TypeToken<Table<String, String, V>>) typeToken;
 		@SuppressWarnings("unchecked")
-		final IInstanceFactory.IProvider<Table<String, String, V>> castNewTableFactoryProvider = (IInstanceFactory.IProvider<Table<String, String, V>>) newTableFactoryProvider;
-		return Adapter.getInstance(valueTypeAdapter, castNewTableFactoryProvider.provide(castTypeToken));
+		final IBuilder3.IFactory<String, String, V, Table<String, String, V>> castTableBuilderFactory = (IBuilder3.IFactory<String, String, V, Table<String, String, V>>) tableBuilderFactory;
+		return Adapter.getInstance(valueTypeAdapter, () -> castTableBuilderFactory.create(castTypeToken));
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -53,13 +83,13 @@ public final class TableTypeAdapterFactory<V>
 			extends TypeAdapter<Table<String, String, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
-		private final IInstanceFactory<? extends Table<String, String, V>> newTableFactory;
+		private final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> tableBuilderFactory;
 
 		public static <V> TypeAdapter<Table<String, String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
-				final IInstanceFactory<? extends Table<String, String, V>> newTableFactory
+				final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> tableBuilderFactory
 		) {
-			return new Adapter<>(valueTypeAdapter, newTableFactory)
+			return new Adapter<>(valueTypeAdapter, tableBuilderFactory)
 					.nullSafe();
 		}
 
@@ -87,20 +117,56 @@ public final class TableTypeAdapterFactory<V>
 		@Override
 		public Table<String, String, V> read(final JsonReader in)
 				throws IOException {
-			final Table<String, String, V> table = newTableFactory.createInstance();
 			in.beginObject();
+			final IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builder = tableBuilderFactory.get();
 			while ( in.hasNext() ) {
 				final String rowKey = in.nextName();
 				in.beginObject();
 				while ( in.hasNext() ) {
 					final String columnKey = in.nextName();
 					final V value = valueTypeAdapter.read(in);
-					table.put(rowKey, columnKey, value);
+					builder.modify(rowKey, columnKey, value);
 				}
 				in.endObject();
 			}
 			in.endObject();
+			return builder.build();
+		}
+
+	}
+
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	private static final class MutableBuilder<V>
+			implements IBuilder3<String, String, V, Table<String, String, V>> {
+
+		private final Table<String, String, V> table;
+
+		@Override
+		public void modify(final String k1, final String k2, final V v) {
+			table.put(k1, k2, v);
+		}
+
+		@Override
+		public Table<String, String, V> build() {
 			return table;
+		}
+
+	}
+
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	private static final class ImmutableBuilder<V>
+			implements IBuilder3<String, String, V, Table<String, String, V>> {
+
+		private final ImmutableTable.Builder<String, String, V> builder;
+
+		@Override
+		public void modify(final String k1, final String k2, final V v) {
+			builder.put(k1, k2, v);
+		}
+
+		@Override
+		public Table<String, String, V> build() {
+			return builder.build();
 		}
 
 	}

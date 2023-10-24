@@ -19,7 +19,7 @@ public final class MultimapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultimapTypeAdapterFactory.getInstance(GuavaCollectModule.defaultMultimapFactoryProvider);
+		return MultimapTypeAdapterFactory.getInstance();
 	}
 
 	@Override
