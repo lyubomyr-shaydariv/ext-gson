@@ -30,25 +30,23 @@ public final class BagTypeAdapterFactory<E>
 		implements ITypeAdapterFactory<Bag<E>> {
 
 	private final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider;
-	private final Transformer<? super E, String> keyMapper;
-	private final Transformer<? super String, ? extends E> keyReverseMapper;
+	private final IKeyMapperFactory<E> keyMapperFactory;
 
 	/**
 	 * @param newBagFactoryProvider
 	 * 		Bag factory provider
-	 * @param keyMapper
-	 * 		Key mapper
-	 * @param keyReverseMapper
-	 * 		Key reverse mapper
+	 * @param keyMapperFactory
+	 * 		Key mapper factory
 	 * @param <E>
 	 * 		Element type
 	 *
 	 * @return An instance of {@link BagTypeAdapterFactory} with a custom new {@link Bag} factory.
 	 */
-	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider,
-			final Transformer<? super E, String> keyMapper, final Transformer<? super String, ? extends E> keyReverseMapper
+	public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
+			final IInstanceFactory.IProvider<? extends Bag<E>> newBagFactoryProvider,
+			final IKeyMapperFactory<E> keyMapperFactory
 	) {
-		return new BagTypeAdapterFactory<>(newBagFactoryProvider, keyMapper, keyReverseMapper);
+		return new BagTypeAdapterFactory<>(newBagFactoryProvider, keyMapperFactory);
 	}
 
 	@Override
@@ -60,10 +58,23 @@ public final class BagTypeAdapterFactory<E>
 		final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 		assert elementType != null;
 		@SuppressWarnings("unchecked")
+		final TypeToken<E> elementTypeToken = (TypeToken<E>) TypeToken.get(elementType);
+		@SuppressWarnings("unchecked")
 		final TypeToken<Bag<E>> castTypeToken = (TypeToken<Bag<E>>) typeToken;
 		@SuppressWarnings("unchecked")
 		final IInstanceFactory.IProvider<Bag<E>> castNewBagFactoryProvider = (IInstanceFactory.IProvider<Bag<E>>) newBagFactoryProvider;
-		return Adapter.getInstance(castNewBagFactoryProvider.provide(castTypeToken), keyMapper, keyReverseMapper);
+		return Adapter.getInstance(castNewBagFactoryProvider.provide(castTypeToken), keyMapperFactory.createKeyMapper(elementTypeToken), keyMapperFactory.createReverseKeyMapper(elementTypeToken));
+	}
+
+	@SuppressWarnings("checkstyle:MissingJavadocType")
+	public interface IKeyMapperFactory<E> {
+
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
+		Transformer<E, String> createKeyMapper(TypeToken<E> typeToken);
+
+		@SuppressWarnings("checkstyle:MissingJavadocMethod")
+		Transformer<String, E> createReverseKeyMapper(TypeToken<E> typeToken);
+
 	}
 
 	/**
@@ -87,15 +98,15 @@ public final class BagTypeAdapterFactory<E>
 		 * 		Key mapper
 		 * @param keyReverseMapper
 		 * 		Key reverse mapper
-		 * @param <V>
+		 * @param <E>
 		 * 		Bag element type
 		 *
 		 * @return A {@link Adapter} instance.
 		 */
-		public static <V> TypeAdapter<Bag<V>> getInstance(
-				final IInstanceFactory<? extends Bag<V>> newBagFactory,
-				final Transformer<? super V, String> keyMapper,
-				final Transformer<? super String, ? extends V> keyReverseMapper
+		public static <E> TypeAdapter<Bag<E>> getInstance(
+				final IInstanceFactory<? extends Bag<E>> newBagFactory,
+				final Transformer<? super E, String> keyMapper,
+				final Transformer<? super String, ? extends E> keyReverseMapper
 		) {
 			return new Adapter<>(newBagFactory, keyMapper, keyReverseMapper)
 					.nullSafe();

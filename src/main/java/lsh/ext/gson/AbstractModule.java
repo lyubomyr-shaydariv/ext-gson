@@ -31,20 +31,4 @@ public abstract class AbstractModule
 		return null;
 	}
 
-	@Nullable
-	protected static String toStringOrNull(@Nullable final Object o) {
-		if ( o == null ) {
-			return null;
-		}
-		return o.toString();
-	}
-
-	@Nullable
-	protected static <T> T parseToNullOrFail(@Nullable final String s) {
-		if ( s == null ) {
-			return null;
-		}
-		throw new UnsupportedOperationException("Cannot parse: " + s);
-	}
-
 }

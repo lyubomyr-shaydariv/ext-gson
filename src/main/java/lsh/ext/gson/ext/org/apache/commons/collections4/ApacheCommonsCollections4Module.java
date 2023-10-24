@@ -1,6 +1,7 @@
 package lsh.ext.gson.ext.org.apache.commons.collections4;
 
 import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bidimap.DualLinkedHashBidiMap;
 import org.apache.commons.collections4.map.MultiValueMap;
@@ -90,7 +92,20 @@ public final class ApacheCommonsCollections4Module
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapterFactory.getInstance(defaultBagFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapterFactory.getInstance(
+				defaultBagFactoryProvider,
+				new BagTypeAdapterFactory.IKeyMapperFactory<>() {
+					@Override
+					public Transformer<Object, String> createKeyMapper(final TypeToken<Object> typeToken) {
+						throw new UnsupportedOperationException(typeToken.toString());
+					}
+
+					@Override
+					public Transformer<String, Object> createReverseKeyMapper(final TypeToken<Object> typeToken) {
+						throw new UnsupportedOperationException(typeToken.toString());
+					}
+				}
+		);
 
 		@Setter
 		private ITypeAdapterFactory<? extends BidiMap<String, Object>> bidiMapTypeAdapterFactory = BidiMapTypeAdapterFactory.getInstance(defaultBidiMapFactoryProvider);
