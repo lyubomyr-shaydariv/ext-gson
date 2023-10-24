@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IInstanceFactory;
 
 /**
  * Represents a type adapter factory for single values that can be converted to a collection or keep an existing collection of multiple elements.
@@ -32,7 +33,7 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	private static final TypeAdapterFactory instance = new CoercedCollectionTypeAdapterFactory<>(List.class, ArrayList::new);
 
 	private final Class<? super C> baseCollectionType;
-	private final Adapter.IFactory<? extends E, C> collectionFactory;
+	private final IInstanceFactory<? extends C> collectionFactory;
 
 	/**
 	 * @param baseCollectionType
@@ -47,7 +48,7 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	 * @return An instance of {@link CoercedCollectionTypeAdapterFactory} based on {@link List} and {@link ArrayList}.
 	 */
 	public static <E, C extends Collection<E>> TypeAdapterFactory getInstance(final Class<? super C> baseCollectionType,
-			final Adapter.IFactory<? extends E, C> collectionFactory) {
+			final IInstanceFactory<? extends C> collectionFactory) {
 		return new CoercedCollectionTypeAdapterFactory<>(baseCollectionType, collectionFactory);
 	}
 
@@ -71,14 +72,8 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	public static final class Adapter<E, C extends Collection<E>>
 			extends TypeAdapter<C> {
 
-		public interface IFactory<E, C extends Collection<E>> {
-
-			C createCollection();
-
-		}
-
 		private final TypeAdapter<E> elementTypeAdapter;
-		private final IFactory<? extends E, ? extends C> collectionFactory;
+		private final IInstanceFactory<? extends C> collectionFactory;
 
 		/**
 		 * @param elementTypeAdapter
@@ -90,8 +85,8 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 		 *
 		 * @return An instance of {@link Adapter}.
 		 */
-		public static <E, C extends Collection<E>> TypeAdapter<C> getInstance(final TypeAdapter<E> elementTypeAdapter, final IFactory<? extends E, C> collectionFactory) {
-			return new Adapter<>(elementTypeAdapter, collectionFactory)
+		public static <E, C extends Collection<E>> TypeAdapter<C> getInstance(final TypeAdapter<E> elementTypeAdapter, final IInstanceFactory<? extends C> collectionFactory) {
+			return new Adapter<E, C>(elementTypeAdapter, collectionFactory)
 					.nullSafe();
 		}
 
@@ -119,7 +114,7 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 		@Override
 		public C read(final JsonReader in)
 				throws IOException {
-			final C collection = collectionFactory.createCollection();
+			final C collection = collectionFactory.createInstance();
 			final JsonToken token = in.peek();
 			switch ( token ) {
 			case BEGIN_ARRAY:
