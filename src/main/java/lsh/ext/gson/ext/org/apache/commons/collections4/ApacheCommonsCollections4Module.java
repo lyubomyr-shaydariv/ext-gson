@@ -93,16 +93,16 @@ public final class ApacheCommonsCollections4Module
 		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapterFactory.getInstance(defaultBagFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
 
 		@Setter
-		private ITypeAdapterFactory<? extends BidiMap<String, Object>> bidiMapTypeAdapterFactory = BidiMapTypeAdapterFactory.getInstance(defaultBidiMapFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends BidiMap<String, Object>> bidiMapTypeAdapterFactory = BidiMapTypeAdapterFactory.getInstance(defaultBidiMapFactoryProvider);
 
 		@Setter
 		private ITypeAdapterFactory<? extends MultiSet<?>> multiSetTypeAdapterFactory = MultiSetTypeAdapterFactory.getInstance(defaultMultiSetFactoryProvider);
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiMap<String, ?>> multiMapTypeAdapterFactory = MultiMapTypeAdapterFactory.getInstance(defaultMultiMapFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends MultiMap<String, ?>> multiMapTypeAdapterFactory = MultiMapTypeAdapterFactory.getInstance(defaultMultiMapFactoryProvider);
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiValuedMap<String, Object>> multiValuedMapTypeAdapterFactory = MultiValuedMapTypeAdapterFactory.getInstance(defaultMultiValuedFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends MultiValuedMap<String, Object>> multiValuedMapTypeAdapterFactory = MultiValuedMapTypeAdapterFactory.getInstance(defaultMultiValuedFactoryProvider);
 
 		/**
 		 * @return A new module instance.

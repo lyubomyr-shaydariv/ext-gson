@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import com.google.common.base.Functions;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.google.gson.TypeAdapterFactory;
@@ -20,7 +19,7 @@ public final class MultimapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultimapTypeAdapterFactory.getInstance(GuavaCollectModule.defaultMultimapFactoryProvider, Functions.identity(), Functions.identity());
+		return MultimapTypeAdapterFactory.getInstance(GuavaCollectModule.defaultMultimapFactoryProvider);
 	}
 
 	@Override

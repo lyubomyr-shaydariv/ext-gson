@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.google.common.base.Functions;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
@@ -27,7 +26,7 @@ public final class BiMapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						BiMapTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class), HashBiMap::create, Functions.identity(), Functions.identity()),
+						BiMapTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class), HashBiMap::create),
 						"{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}",
 						ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz")
 				)

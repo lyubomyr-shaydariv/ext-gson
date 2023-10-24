@@ -109,16 +109,16 @@ public final class GuavaCollectModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapterFactory.getInstance(defaultBiMapFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends BiMap<String, ?>> biMapTypeAdapterFactory = BiMapTypeAdapterFactory.getInstance(defaultBiMapFactoryProvider);
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multimap<?, ?>> multimapTypeAdapterFactory = MultimapTypeAdapterFactory.getInstance(defaultMultimapFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = MultimapTypeAdapterFactory.getInstance(defaultMultimapFactoryProvider);
 
 		@Setter
 		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapterFactory.getInstance(defaultMultisetFactoryProvider);
 
 		@Setter
-		private ITypeAdapterFactory<? extends Table<?, ?, ?>> tableTypeAdapterFactory = TableTypeAdapterFactory.getInstance(defaultTableFactoryProvider, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail, AbstractModule::toStringOrNull, AbstractModule::parseToNullOrFail);
+		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapterFactory.getInstance(defaultTableFactoryProvider);
 
 		/**
 		 * @return A new module instance.

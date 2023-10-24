@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.google.common.base.Functions;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
@@ -28,7 +27,7 @@ public final class TableTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						TableTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(TypeToken.get(Integer.class)), HashBasedTable::create, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity()),
+						TableTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(TypeToken.get(Integer.class)), HashBasedTable::create),
 						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
 						ImmutableTable.<String, String, Integer>builder()
 								.put("A", "1", 1)

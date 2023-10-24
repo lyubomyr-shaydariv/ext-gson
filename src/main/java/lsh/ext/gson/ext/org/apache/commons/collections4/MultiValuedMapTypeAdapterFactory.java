@@ -17,49 +17,36 @@ import lsh.ext.gson.IInstanceFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.Transformer;
 
 /**
  * Represents a type adapter factory for {@link MultiValuedMap} from Apache Commons Collections 4.
  *
- * @param <K>
- * 		Key type
  * @param <V>
  * 		Value type
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class MultiValuedMapTypeAdapterFactory<K, V>
-		extends AbstractTypeAdapterFactory<MultiValuedMap<K, V>>
-		implements ITypeAdapterFactory<MultiValuedMap<K, V>> {
+public final class MultiValuedMapTypeAdapterFactory<V>
+		extends AbstractTypeAdapterFactory<MultiValuedMap<String, V>>
+		implements ITypeAdapterFactory<MultiValuedMap<String, V>> {
 
-	private final IInstanceFactory.IProvider<? extends MultiValuedMap<K, V>> newMultiValuedMapFactoryProvider;
-	private final Transformer<? super K, String> keyMapper;
-	private final Transformer<? super String, ? extends K> keyReverseMapper;
+	private final IInstanceFactory.IProvider<? extends MultiValuedMap<String, V>> newMultiValuedMapFactoryProvider;
 
 	/**
 	 * @param newMultiValuedMapFactoryProvider
 	 * 		MultiValuedMap factory provider
-	 * @param keyMapper
-	 * 		Key mapper
-	 * @param keyReverseMapper
-	 * 		Key reverse mapper
-	 * @param <K>
-	 * 		Key type
 	 * @param <V>
 	 * 		Value type
 	 *
 	 * @return An instance of {@link MultiValuedMapTypeAdapterFactory} with a custom new {@link MultiValuedMap} factory.
 	 */
-	public static <K, V> ITypeAdapterFactory<MultiValuedMap<K, V>> getInstance(
-			final IInstanceFactory.IProvider<? extends MultiValuedMap<K, V>> newMultiValuedMapFactoryProvider,
-			final Transformer<? super K, String> keyMapper,
-			final Transformer<? super String, ? extends K> keyReverseMapper
+	public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
+			final IInstanceFactory.IProvider<? extends MultiValuedMap<String, V>> newMultiValuedMapFactoryProvider
 	) {
-		return new MultiValuedMapTypeAdapterFactory<>(newMultiValuedMapFactoryProvider, keyMapper, keyReverseMapper);
+		return new MultiValuedMapTypeAdapterFactory<>(newMultiValuedMapFactoryProvider);
 	}
 
 	@Override
-	protected TypeAdapter<MultiValuedMap<K, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+	protected TypeAdapter<MultiValuedMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		if ( !MultiValuedMap.class.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;
 		}
@@ -69,61 +56,49 @@ public final class MultiValuedMapTypeAdapterFactory<K, V>
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 		@SuppressWarnings("unchecked")
-		final TypeToken<MultiValuedMap<K, V>> castTypeToken = (TypeToken<MultiValuedMap<K, V>>) typeToken;
+		final TypeToken<MultiValuedMap<String, V>> castTypeToken = (TypeToken<MultiValuedMap<String, V>>) typeToken;
 		@SuppressWarnings("unchecked")
-		final IInstanceFactory.IProvider<MultiValuedMap<K, V>> castNewMultiValuedMapFactoryProvider = (IInstanceFactory.IProvider<MultiValuedMap<K, V>>) newMultiValuedMapFactoryProvider;
-		return Adapter.getInstance(valueTypeAdapter, castNewMultiValuedMapFactoryProvider.provide(castTypeToken), keyMapper, keyReverseMapper);
+		final IInstanceFactory.IProvider<MultiValuedMap<String, V>> castNewMultiValuedMapFactoryProvider = (IInstanceFactory.IProvider<MultiValuedMap<String, V>>) newMultiValuedMapFactoryProvider;
+		return Adapter.getInstance(valueTypeAdapter, castNewMultiValuedMapFactoryProvider.provide(castTypeToken));
 	}
 
 	/**
 	 * Represents a type adapter for {@link MultiValuedMap} from Apache Commons Collections 4.
 	 *
-	 * @param <K>
-	 * 		Key type
 	 * @param <V>
 	 * 		Value type
 	 */
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class Adapter<K, V>
-			extends TypeAdapter<MultiValuedMap<K, V>> {
+	public static final class Adapter<V>
+			extends TypeAdapter<MultiValuedMap<String, V>> {
 
 		private final TypeAdapter<V> valueTypeAdapter;
-		private final IInstanceFactory<? extends MultiValuedMap<K, V>> newMultiValuedMapFactory;
-		private final Transformer<? super K, String> keyMapper;
-		private final Transformer<? super String, ? extends K> keyReverseMapper;
+		private final IInstanceFactory<? extends MultiValuedMap<String, V>> newMultiValuedMapFactory;
 
 		/**
 		 * @param valueTypeAdapter
 		 * 		MultiValuedMap value type adapter
 		 * @param newMultiValuedMapFactory
 		 * 		A {@link MultiValuedMap} factory to create instance used while deserialization
-		 * @param keyMapper
-		 * 		A mapper to convert key to JSON object property names
-		 * @param keyReverseMapper
-		 * 		A mapper to convert key to JSON object property names in reverse
-		 * @param <K>
-		 * 		MultiValuedMap key type
 		 * @param <V>
 		 * 		MultiValuedMap value type
 		 *
 		 * @return A {@link Adapter} instance.
 		 */
-		public static <K, V> TypeAdapter<MultiValuedMap<K, V>> getInstance(
+		public static <V> TypeAdapter<MultiValuedMap<String, V>> getInstance(
 				final TypeAdapter<V> valueTypeAdapter,
-				final IInstanceFactory<? extends MultiValuedMap<K, V>> newMultiValuedMapFactory,
-				final Transformer<? super K, String> keyMapper,
-				final Transformer<? super String, ? extends K> keyReverseMapper
+				final IInstanceFactory<? extends MultiValuedMap<String, V>> newMultiValuedMapFactory
 		) {
-			return new Adapter<>(valueTypeAdapter, newMultiValuedMapFactory, keyMapper, keyReverseMapper)
+			return new Adapter<>(valueTypeAdapter, newMultiValuedMapFactory)
 					.nullSafe();
 		}
 
 		@Override
-		public void write(final JsonWriter out, final MultiValuedMap<K, V> multiValuedMap)
+		public void write(final JsonWriter out, final MultiValuedMap<String, V> multiValuedMap)
 				throws IOException {
 			out.beginObject();
-			for ( final Map.Entry<K, V> e : multiValuedMap.entries() ) {
-				final String key = keyMapper.transform(e.getKey());
+			for ( final Map.Entry<String, V> e : multiValuedMap.entries() ) {
+				final String key = e.getKey();
 				final V value = e.getValue();
 				out.name(key);
 				valueTypeAdapter.write(out, value);
@@ -132,12 +107,12 @@ public final class MultiValuedMapTypeAdapterFactory<K, V>
 		}
 
 		@Override
-		public MultiValuedMap<K, V> read(final JsonReader in)
+		public MultiValuedMap<String, V> read(final JsonReader in)
 				throws IOException {
-			final MultiValuedMap<K, V> multiValuedMap = newMultiValuedMapFactory.createInstance();
+			final MultiValuedMap<String, V> multiValuedMap = newMultiValuedMapFactory.createInstance();
 			in.beginObject();
 			while ( in.hasNext() ) {
-				final K key = keyReverseMapper.transform(in.nextName());
+				final String key = in.nextName();
 				final V value = valueTypeAdapter.read(in);
 				multiValuedMap.put(key, value);
 			}
