@@ -1,3 +1,0 @@
-#!/bin/sh
-
-mvn -Dcheckstyle.config.location=checkstyle-rules.xml org.apache.maven.plugins:maven-checkstyle-plugin:3.3.0:check
