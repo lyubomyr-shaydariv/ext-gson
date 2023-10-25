@@ -166,14 +166,14 @@
 		<module name="AbstractClassName"/>
 		<module name="CatchParameterName"/>
 		<module name="ClassTypeParameterName">
-			<property name="format" value="^[A-Z]+$"/>
+			<property name="format" value="^[A-Z]+[0-9]*$"/>
 		</module>
 		<module name="ConstantName">
 			<property name="format" value="^[a-zA-Z][_a-zA-Z0-9]*$"/>
 		</module>
 		<module name="IllegalIdentifierName"/>
 		<module name="InterfaceTypeParameterName">
-			<property name="format" value="^[A-Z]+$"/>
+			<property name="format" value="^[A-Z]+[0-9]*$"/>
 		</module>
 		<module name="LambdaParameterName"/>
 		<module name="LocalFinalVariableName"/>
@@ -181,14 +181,14 @@
 		<module name="MemberName"/>
 		<module name="MethodName"/>
 		<module name="MethodTypeParameterName">
-			<property name="format" value="^[A-Z]+$"/>
+			<property name="format" value="^[A-Z]+[0-9]*$"/>
 		</module>
 		<module name="PackageName"/>
 		<module name="ParameterName"/>
 		<module name="PatternVariableName"/>
 		<module name="RecordComponentName"/>
 		<module name="RecordTypeParameterName">
-			<property name="format" value="^[A-Z]+$"/>
+			<property name="format" value="^[A-Z]+[0-9]*$"/>
 		</module>
 		<module name="StaticVariableName"/>
 		<module name="TypeName"/>
