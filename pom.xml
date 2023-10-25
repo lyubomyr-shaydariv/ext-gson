@@ -299,6 +299,42 @@
 
 		</profile>
 
+		<profile>
+
+			<id>pmd</id>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-pmd-plugin</artifactId>
+						<version>3.21.0</version>
+						<executions>
+							<execution>
+								<id>cpd-check</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>cpd-check</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>check</id>
+								<phase>process-classes</phase>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
 	</profiles>
 
 </project>

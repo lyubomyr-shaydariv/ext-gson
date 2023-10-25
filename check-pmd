@@ -1,3 +1,0 @@
-#!/bin/sh
-
-mvn org.apache.maven.plugins:maven-pmd-plugin:3.21.0:check
