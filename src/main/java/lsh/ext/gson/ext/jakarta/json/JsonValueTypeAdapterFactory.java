@@ -101,14 +101,8 @@ public final class JsonValueTypeAdapterFactory
 			switch ( jsonToken ) {
 			case BEGIN_ARRAY:
 				return jsonArrayTypeAdapter.read(in);
-			case END_ARRAY:
-				throw new AssertionError();
 			case BEGIN_OBJECT:
 				return jsonObjectTypeAdapter.read(in);
-			case END_OBJECT:
-				throw new AssertionError();
-			case NAME:
-				throw new AssertionError();
 			case STRING:
 				return jsonStringTypeAdapter.read(in);
 			case NUMBER:
@@ -117,7 +111,10 @@ public final class JsonValueTypeAdapterFactory
 				return jsonBooleanTypeAdapter.read(in);
 			case NULL:
 				return jsonNullTypeAdapter.read(in);
+			case END_ARRAY:
 			case END_DOCUMENT:
+			case END_OBJECT:
+			case NAME:
 				throw new AssertionError();
 			default:
 				throw new AssertionError(jsonToken);
@@ -256,17 +253,9 @@ public final class JsonValueTypeAdapterFactory
 					final JsonToken token = in.peek();
 					switch ( token ) {
 					case BEGIN_ARRAY:
-						jsonObjectBuilder.add(key, Adapter.this.read(in));
-						break;
-					case END_ARRAY:
-						throw new AssertionError();
 					case BEGIN_OBJECT:
 						jsonObjectBuilder.add(key, Adapter.this.read(in));
 						break;
-					case END_OBJECT:
-						throw new AssertionError();
-					case NAME:
-						throw new AssertionError();
 					case STRING:
 						jsonObjectBuilder.add(key, in.nextString());
 						break;
@@ -283,6 +272,10 @@ public final class JsonValueTypeAdapterFactory
 					case END_DOCUMENT:
 						// do nothing
 						break;
+					case END_ARRAY:
+					case END_OBJECT:
+					case NAME:
+						throw new AssertionError();
 					default:
 						throw new AssertionError(token);
 					}
@@ -317,17 +310,9 @@ public final class JsonValueTypeAdapterFactory
 					final JsonToken token = in.peek();
 					switch ( token ) {
 					case BEGIN_ARRAY:
-						jsonArrayBuilder.add(Adapter.this.read(in));
-						break;
-					case END_ARRAY:
-						throw new AssertionError();
 					case BEGIN_OBJECT:
 						jsonArrayBuilder.add(Adapter.this.read(in));
 						break;
-					case END_OBJECT:
-						throw new AssertionError();
-					case NAME:
-						throw new AssertionError();
 					case STRING:
 						jsonArrayBuilder.add(in.nextString());
 						break;
@@ -344,6 +329,10 @@ public final class JsonValueTypeAdapterFactory
 					case END_DOCUMENT:
 						// do nothing
 						break;
+					case END_ARRAY:
+					case END_OBJECT:
+					case NAME:
+						throw new AssertionError();
 					default:
 						throw new AssertionError(token);
 					}
