@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.java.util;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.google.gson.Gson;
@@ -13,7 +12,6 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IInstanceFactory;
@@ -22,17 +20,16 @@ import lsh.ext.gson.IInstanceFactory;
 public final class CoercedCollectionTypeAdapterFactory<E>
 		extends AbstractTypeAdapterFactory<Collection<E>> {
 
-	@Getter
-	private static final TypeAdapterFactory instance = new CoercedCollectionTypeAdapterFactory<>(Collection.class, ArrayList::new);
-
 	private final Class<? super Collection<E>> baseCollectionType;
+	private final TypeToken<E> elementTypeToken;
 	private final IInstanceFactory<? extends Collection<E>> collectionFactory;
 
 	public static <E> TypeAdapterFactory getInstance(
 			final Class<? super Collection<E>> baseCollectionType,
+			final TypeToken<E> elementTypeToken,
 			final IInstanceFactory<? extends Collection<E>> collectionFactory
 	) {
-		return new CoercedCollectionTypeAdapterFactory<>(baseCollectionType, collectionFactory);
+		return new CoercedCollectionTypeAdapterFactory<>(baseCollectionType, elementTypeToken, collectionFactory);
 	}
 
 	@Override
@@ -40,8 +37,7 @@ public final class CoercedCollectionTypeAdapterFactory<E>
 		if ( !baseCollectionType.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;
 		}
-		@SuppressWarnings("unchecked")
-		final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(Object.class));
+		final TypeAdapter<E> elementTypeAdapter = gson.getAdapter(elementTypeToken);
 		return Adapter.getInstance(elementTypeAdapter, collectionFactory);
 	}
 

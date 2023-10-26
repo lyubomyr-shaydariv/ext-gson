@@ -1,5 +1,7 @@
 package lsh.ext.gson.ext.java.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -17,7 +19,7 @@ public final class CoercedCollectionTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return CoercedCollectionTypeAdapterFactory.getInstance();
+		return CoercedCollectionTypeAdapterFactory.getInstance(Collection.class, TypeToken.get(Object.class), ArrayList::new);
 	}
 
 	@Override
