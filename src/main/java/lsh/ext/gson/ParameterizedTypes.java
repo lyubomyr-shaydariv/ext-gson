@@ -11,14 +11,11 @@ public final class ParameterizedTypes {
 
 	@Nullable
 	public static Type getTypeArgument(final Type type, final int index) {
-		if ( type instanceof final ParameterizedType parameterizedType ) {
-			final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-			if ( actualTypeArguments.length == 0 ) {
-				return null;
-			}
-			return actualTypeArguments[index];
+		if ( !(type instanceof final ParameterizedType parameterizedType) ) {
+			return null;
 		}
-		return null;
+		final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+		return actualTypeArguments[index];
 	}
 
 }

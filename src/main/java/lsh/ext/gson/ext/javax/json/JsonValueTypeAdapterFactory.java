@@ -199,8 +199,7 @@ public final class JsonValueTypeAdapterFactory
 			public JsonNumber read(final JsonReader in)
 					throws IOException {
 				final String rawValue = in.nextString();
-				final Number number = new BigDecimal(rawValue);
-				return jsonProvider.createValue((BigDecimal) number);
+				return jsonProvider.createValue(new BigDecimal(rawValue));
 			}
 
 		}

@@ -17,8 +17,8 @@ public final class UnpackedJsonTypeAdapterFactory
 
 	@Override
 	public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-		final TypeAdapter<T> delegateTypeAdapter = gson.getAdapter(typeToken);
-		return Adapter.getInstance(delegateTypeAdapter);
+		final TypeAdapter<T> typeAdapter = gson.getAdapter(typeToken);
+		return Adapter.getInstance(typeAdapter);
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
