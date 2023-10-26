@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.java.util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -20,22 +19,24 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IInstanceFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E>>
-		extends AbstractTypeAdapterFactory<C> {
+public final class CoercedCollectionTypeAdapterFactory<E>
+		extends AbstractTypeAdapterFactory<Collection<E>> {
 
 	@Getter
-	private static final TypeAdapterFactory instance = new CoercedCollectionTypeAdapterFactory<>(List.class, ArrayList::new);
+	private static final TypeAdapterFactory instance = new CoercedCollectionTypeAdapterFactory<>(Collection.class, ArrayList::new);
 
-	private final Class<? super C> baseCollectionType;
-	private final IInstanceFactory<? extends C> collectionFactory;
+	private final Class<? super Collection<E>> baseCollectionType;
+	private final IInstanceFactory<? extends Collection<E>> collectionFactory;
 
-	public static <E, C extends Collection<E>> TypeAdapterFactory getInstance(final Class<? super C> baseCollectionType,
-			final IInstanceFactory<? extends C> collectionFactory) {
+	public static <E> TypeAdapterFactory getInstance(
+			final Class<? super Collection<E>> baseCollectionType,
+			final IInstanceFactory<? extends Collection<E>> collectionFactory
+	) {
 		return new CoercedCollectionTypeAdapterFactory<>(baseCollectionType, collectionFactory);
 	}
 
 	@Override
-	protected TypeAdapter<C> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+	protected TypeAdapter<Collection<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 		if ( !baseCollectionType.isAssignableFrom(typeToken.getRawType()) ) {
 			return null;
 		}
@@ -45,19 +46,22 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class Adapter<E, C extends Collection<E>>
-			extends TypeAdapter<C> {
+	public static final class Adapter<E>
+			extends TypeAdapter<Collection<E>> {
 
 		private final TypeAdapter<E> elementTypeAdapter;
-		private final IInstanceFactory<? extends C> collectionFactory;
+		private final IInstanceFactory<? extends Collection<E>> collectionFactory;
 
-		public static <E, C extends Collection<E>> TypeAdapter<C> getInstance(final TypeAdapter<E> elementTypeAdapter, final IInstanceFactory<? extends C> collectionFactory) {
-			return new Adapter<E, C>(elementTypeAdapter, collectionFactory)
+		public static <E> TypeAdapter<Collection<E>> getInstance(
+				final TypeAdapter<E> elementTypeAdapter,
+				final IInstanceFactory<? extends Collection<E>> collectionFactory
+		) {
+			return new Adapter<E>(elementTypeAdapter, collectionFactory)
 					.nullSafe();
 		}
 
 		@Override
-		public void write(final JsonWriter out, final C collection)
+		public void write(final JsonWriter out, final Collection<E> collection)
 				throws IOException {
 			switch ( collection.size() ) {
 			case 0:
@@ -79,9 +83,9 @@ public final class CoercedCollectionTypeAdapterFactory<E, C extends Collection<E
 
 		@Override
 		@SuppressWarnings("checkstyle:CyclomaticComplexity")
-		public C read(final JsonReader in)
+		public Collection<E> read(final JsonReader in)
 				throws IOException {
-			final C collection = collectionFactory.createInstance();
+			final Collection<E> collection = collectionFactory.createInstance();
 			final JsonToken token = in.peek();
 			switch ( token ) {
 			case BEGIN_ARRAY:
