@@ -20,7 +20,7 @@ public final class PeriodTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						PeriodTypeAdapterFactory.Adapter.getInstance(),
+						PeriodTypeAdapter.getInstance(),
 						"\"P1Y8M20D\"",
 						Period.of(1, 8, 20)
 				)

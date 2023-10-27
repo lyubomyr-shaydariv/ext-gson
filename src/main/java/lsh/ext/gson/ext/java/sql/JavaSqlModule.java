@@ -16,7 +16,7 @@ import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.UnmodifiableIterable;
-import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapterFactory;
+import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
 
 public final class JavaSqlModule
 		extends AbstractModule {
@@ -45,7 +45,7 @@ public final class JavaSqlModule
 		if ( rawType == Timestamp.class ) {
 			return () -> new Timestamp(0);
 		}
-		return UnixTimeDateTypeAdapterFactory.createFactory(typeToken);
+		return UnixTimeDateTypeAdapter.Factory.createFactory(typeToken);
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -53,7 +53,7 @@ public final class JavaSqlModule
 	public static final class Builder {
 
 		@Setter
-		private TypeAdapterFactory unixTimeDateTypeAdapterFactory = UnixTimeDateTypeAdapterFactory.getInstance(JavaSqlModule::createFactory);
+		private TypeAdapterFactory unixTimeDateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(JavaSqlModule::createFactory);
 
 		public IModule build() {
 			return new JavaSqlModule(UnmodifiableIterable.copyOf(

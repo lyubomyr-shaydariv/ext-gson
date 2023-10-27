@@ -20,27 +20,27 @@ public final class DurationTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						DurationTypeAdapterFactory.Adapter.getInstance(),
+						DurationTypeAdapter.getInstance(),
 						"\"PT0.555S\"",
 						Duration.ofMillis(555)
 				),
 				makeTestCase(
-						DurationTypeAdapterFactory.Adapter.getInstance(),
+						DurationTypeAdapter.getInstance(),
 						"\"PT9M15S\"",
 						Duration.ofSeconds(555)
 				),
 				makeTestCase(
-						DurationTypeAdapterFactory.Adapter.getInstance(),
+						DurationTypeAdapter.getInstance(),
 						"\"PT9H15M\"",
 						Duration.ofMinutes(555)
 				),
 				makeTestCase(
-						DurationTypeAdapterFactory.Adapter.getInstance(),
+						DurationTypeAdapter.getInstance(),
 						"\"PT555H\"",
 						Duration.ofHours(555)
 				),
 				makeTestCase(
-						DurationTypeAdapterFactory.Adapter.getInstance(),
+						DurationTypeAdapter.getInstance(),
 						"\"PT13320H\"",
 						Duration.ofDays(555)
 				)

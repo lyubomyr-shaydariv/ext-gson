@@ -31,7 +31,7 @@ public final class JsonPathModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance();
 
 		public IModule build() {
 			return new JsonPathModule(UnmodifiableIterable.copyOf(

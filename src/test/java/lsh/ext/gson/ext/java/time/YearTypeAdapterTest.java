@@ -21,12 +21,12 @@ public final class YearTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						YearTypeAdapterFactory.Adapter.getInstance(),
+						YearTypeAdapter.getInstance(),
 						"\"2018\"",
 						Year.of(2018)
 				),
 				makeTestCase(
-						YearTypeAdapterFactory.Adapter.getInstance(DateTimeFormatter.ofPattern("y'-xx-xx'")),
+						YearTypeAdapter.getInstance(DateTimeFormatter.ofPattern("y'-xx-xx'")),
 						"\"2018-xx-xx\"",
 						Year.of(2018)
 				)

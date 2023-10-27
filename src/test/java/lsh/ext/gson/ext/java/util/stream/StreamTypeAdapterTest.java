@@ -24,7 +24,7 @@ public final class StreamTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						StreamTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
+						StreamTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
 						Stream.of(1, 2, 4, 8)
 				)

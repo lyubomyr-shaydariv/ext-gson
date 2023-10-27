@@ -30,7 +30,7 @@ public final class MultisetTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultisetTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class), () -> MultisetTypeAdapterFactory.createBuilder(stringMultisetType, typeToken -> LinkedHashMultiset::create)),
+						MultisetTypeAdapter.getInstance(gson.getAdapter(String.class), () -> MultisetTypeAdapter.Factory.createBuilder(stringMultisetType, typeToken -> LinkedHashMultiset::create)),
 						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
 						ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
 				)

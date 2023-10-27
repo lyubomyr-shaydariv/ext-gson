@@ -35,16 +35,16 @@ public final class GuavaCollectModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = MultimapTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = MultimapTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapter.Factory.getInstance();
 
 		public IModule build() {
 			return new GuavaCollectModule(UnmodifiableIterable.copyOf(

@@ -31,7 +31,7 @@ public final class MultimapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultimapTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class), () -> MultimapTypeAdapterFactory.createBuilder(stringToStringMultimapType, typeToken -> LinkedHashMultimap::create)),
+						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class), () -> MultimapTypeAdapter.Factory.createBuilder(stringToStringMultimapType, typeToken -> LinkedHashMultimap::create)),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
 						LinkedHashMultimap.create(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
 				)

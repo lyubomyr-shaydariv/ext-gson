@@ -24,7 +24,7 @@ public final class OptionalTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						OptionalTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(String.class)),
+						OptionalTypeAdapter.getInstance(gson.getAdapter(String.class)),
 						"\"foo\"",
 						Optional.of("foo")
 				)

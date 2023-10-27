@@ -13,7 +13,7 @@ public final class InstantTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return InstantTypeAdapterFactory.getInstance();
+		return InstantTypeAdapter.Factory.getInstance();
 	}
 
 }

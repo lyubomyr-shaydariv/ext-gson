@@ -22,12 +22,12 @@ public final class MonthDayTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MonthDayTypeAdapterFactory.Adapter.getInstance(),
+						MonthDayTypeAdapter.getInstance(),
 						"\"--07-13\"",
 						MonthDay.of(Month.JULY, 13)
 				),
 				makeTestCase(
-						MonthDayTypeAdapterFactory.Adapter.getInstance(DateTimeFormatter.ofPattern("M.d")),
+						MonthDayTypeAdapter.getInstance(DateTimeFormatter.ofPattern("M.d")),
 						"\"7.13\"",
 						MonthDay.of(Month.JULY, 13)
 				)

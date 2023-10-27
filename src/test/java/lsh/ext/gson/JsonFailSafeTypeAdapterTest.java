@@ -22,12 +22,12 @@ public final class JsonFailSafeTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.getParameterized(List.class, String.class)),
+						JsonFailSafeTypeAdapter.Factory.getInstance().create(gson, TypeToken.getParameterized(List.class, String.class)),
 						"[\"foo\",\"bar\"]",
 						List.of("foo", "bar")
 				),
 				makeTestCase(
-						JsonFailSafeTypeAdapterFactory.getInstance().create(gson, TypeToken.getParameterized(List.class, Integer.class)),
+						JsonFailSafeTypeAdapter.Factory.getInstance().create(gson, TypeToken.getParameterized(List.class, Integer.class)),
 						"[1000]",
 						List.of(1000)
 				)

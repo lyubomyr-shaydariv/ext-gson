@@ -32,7 +32,7 @@ public final class GuavaBaseModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapter.Factory.getInstance();
 
 		public IModule build() {
 			return new GuavaBaseModule(UnmodifiableIterable.copyOf(

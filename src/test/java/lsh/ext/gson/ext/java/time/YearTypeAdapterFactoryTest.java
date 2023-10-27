@@ -13,7 +13,7 @@ public final class YearTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return YearTypeAdapterFactory.getInstance();
+		return YearTypeAdapter.Factory.getInstance();
 	}
 
 }

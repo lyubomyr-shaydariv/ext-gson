@@ -28,7 +28,7 @@ public final class JsonPathTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapterFactory.getInstance();
+		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance();
 		return List.of(
 				makeTestCase(
 						typeAdapterFactory.create(gson, TypeToken.get(Wrapper.class)),
@@ -43,13 +43,13 @@ public final class JsonPathTypeAdapterTest
 						new WrapperWithNotExistingPath(null)
 				),
 				makeTestCase(
-						JsonPathTypeAdapterFactory.getInstance().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						JsonPathTypeAdapter.Factory.getInstance().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)
 				),
 				makeTestCase(
-						JsonPathTypeAdapterFactory.getInstanceWithGlobalDefaults().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						JsonPathTypeAdapter.Factory.getInstanceWithGlobalDefaults().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)

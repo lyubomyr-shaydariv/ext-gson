@@ -37,19 +37,19 @@ public final class ApacheCommonsCollections4Module
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends BidiMap<String, Object>> bidiMapTypeAdapterFactory = BidiMapTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends BidiMap<String, Object>> bidiMapTypeAdapterFactory = BidiMapTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiSet<?>> multiSetTypeAdapterFactory = MultiSetTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends MultiSet<?>> multiSetTypeAdapterFactory = MultiSetTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiMap<String, ?>> multiMapTypeAdapterFactory = MultiMapTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends MultiMap<String, ?>> multiMapTypeAdapterFactory = MultiMapTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiValuedMap<String, Object>> multiValuedMapTypeAdapterFactory = MultiValuedMapTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends MultiValuedMap<String, Object>> multiValuedMapTypeAdapterFactory = MultiValuedMapTypeAdapter.Factory.getInstance();
 
 		public IModule build() {
 			return new ApacheCommonsCollections4Module(UnmodifiableIterable.copyOf(

@@ -26,7 +26,7 @@ public final class IteratorTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						IteratorTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
+						IteratorTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
 						List.of(1, 2, 4, 8).iterator()
 				)

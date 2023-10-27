@@ -21,12 +21,12 @@ public final class YearMonthTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						YearMonthTypeAdapterFactory.Adapter.getInstance(),
+						YearMonthTypeAdapter.getInstance(),
 						"\"1999-09\"",
 						YearMonth.of(1999, 9)
 				),
 				makeTestCase(
-						YearMonthTypeAdapterFactory.Adapter.getInstance(DateTimeFormatter.ofPattern("M.y")),
+						YearMonthTypeAdapter.getInstance(DateTimeFormatter.ofPattern("M.y")),
 						"\"9.1999\"",
 						YearMonth.of(1999, 9)
 				)

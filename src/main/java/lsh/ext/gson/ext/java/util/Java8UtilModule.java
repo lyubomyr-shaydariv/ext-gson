@@ -33,7 +33,7 @@ public final class Java8UtilModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapter.Factory.getInstance();
 
 		public IModule build() {
 			return new Java8UtilModule(UnmodifiableIterable.copyOf(

@@ -26,7 +26,7 @@ public final class EnumerationTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						EnumerationTypeAdapterFactory.Adapter.getInstance(gson.getAdapter(Integer.class)),
+						EnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
 						"[1,2,4,8]",
 						Enumerations.from(List.of(1, 2, 4, 8).iterator())
 				)

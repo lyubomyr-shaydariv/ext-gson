@@ -33,7 +33,7 @@ public final class Java8UtilStreamModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Stream<?>> streamTypeAdapterFactory = StreamTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<? extends Stream<?>> streamTypeAdapterFactory = StreamTypeAdapter.Factory.getInstance();
 
 		public IModule build() {
 			return new Java8UtilStreamModule(UnmodifiableIterable.copyOf(

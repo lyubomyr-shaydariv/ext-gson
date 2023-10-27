@@ -33,7 +33,7 @@ public final class JsonApiModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapterFactory.getInstance();
+		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance();
 
 		public IModule build() {
 			return new JsonApiModule(UnmodifiableIterable.copyOf(
