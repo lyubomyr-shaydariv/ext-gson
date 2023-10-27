@@ -20,6 +20,9 @@ public final class JsonPathTypeAdapterTest
 
 	private static final Gson gson = Gsons.getNormalized();
 
+	private static final TypeToken<Wrapper> wrapperTypeToken = TypeToken.get(Wrapper.class);
+	private static final TypeToken<WrapperWithNotExistingPath> wrapperWithNotExistingPathTypeToken = TypeToken.get(WrapperWithNotExistingPath.class);
+
 	@Nullable
 	@Override
 	protected Object normalize(@Nullable final Object value) {
@@ -31,25 +34,25 @@ public final class JsonPathTypeAdapterTest
 		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance();
 		return List.of(
 				makeTestCase(
-						typeAdapterFactory.create(gson, TypeToken.get(Wrapper.class)),
+						typeAdapterFactory.create(gson, wrapperTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":\"Foo\",\"barRef\":\"A\",\"bazRef\":{\"k1\":\"v1\"}}",
 						new Wrapper("Foo", "A", Map.of("k1", "v1"))
 				),
 				makeTestCase(
-						typeAdapterFactory.create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						typeAdapterFactory.create(gson, wrapperWithNotExistingPathTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)
 				),
 				makeTestCase(
-						JsonPathTypeAdapter.Factory.getInstance().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						JsonPathTypeAdapter.Factory.getInstance().create(gson, wrapperWithNotExistingPathTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)
 				),
 				makeTestCase(
-						JsonPathTypeAdapter.Factory.getInstanceWithGlobalDefaults().create(gson, TypeToken.get(WrapperWithNotExistingPath.class)),
+						JsonPathTypeAdapter.Factory.getInstanceWithGlobalDefaults().create(gson, wrapperWithNotExistingPathTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)

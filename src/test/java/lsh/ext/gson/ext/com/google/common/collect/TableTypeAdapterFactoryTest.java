@@ -14,6 +14,17 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class TableTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Table<String, String, String>> stringToStringToStringTableTypeToken = (TypeToken<Table<String, String, String>>) TypeToken.getParameterized(Table.class, String.class, String.class, String.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Table<Float, Integer, Object>> floatToIntegerToObjectTableTypeToken = (TypeToken<Table<Float, Integer, Object>>) TypeToken.getParameterized(Table.class, Float.class, Integer.class, Object.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Table<Character, List<?>, Integer>> characterToListToIntegerTableTypeToken = (TypeToken<Table<Character, List<?>, Integer>>) TypeToken.getParameterized(Table.class, Character.class, List.class, Integer.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Map<Float, Integer>> floatToIntegerMapTypeToken = (TypeToken<Map<Float, Integer>>) TypeToken.getParameterized(Map.class, Float.class, Integer.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Set<String>> stringSetTypeToken = (TypeToken<Set<String>>) TypeToken.getParameterized(Set.class, String.class);
+
 	public TableTypeAdapterFactoryTest() {
 		super(false);
 	}
@@ -26,17 +37,17 @@ public final class TableTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.getParameterized(Table.class, String.class, String.class, String.class)),
-				Arguments.of(TypeToken.getParameterized(Table.class, Float.class, Integer.class, Object.class)),
-				Arguments.of(TypeToken.getParameterized(Table.class, Character.class, List.class, Integer.class))
+				Arguments.of(stringToStringToStringTableTypeToken),
+				Arguments.of(floatToIntegerToObjectTableTypeToken),
+				Arguments.of(characterToListToIntegerTableTypeToken)
 		);
 	}
 
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(TypeToken.getParameterized(Map.class, Float.class, Integer.class)),
-				Arguments.of(TypeToken.getParameterized(Set.class, String.class))
+				Arguments.of(floatToIntegerMapTypeToken),
+				Arguments.of(stringSetTypeToken)
 		);
 	}
 

@@ -12,6 +12,10 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class JavaSqlModuleTest
 		extends AbstractModuleTest {
 
+	private static final TypeToken<Date> dateTypeToken = TypeToken.get(Date.class);
+	private static final TypeToken<Timestamp> timestampTypeToken = TypeToken.get(Timestamp.class);
+	private static final TypeToken<Time> timeTypeToken = TypeToken.get(Time.class);
+
 	public JavaSqlModuleTest() {
 		super(JavaSqlModule.getDefaultInstance());
 	}
@@ -19,9 +23,9 @@ public final class JavaSqlModuleTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.get(Date.class)),
-				Arguments.of(TypeToken.get(Timestamp.class)),
-				Arguments.of(TypeToken.get(Time.class))
+				Arguments.of(dateTypeToken),
+				Arguments.of(timestampTypeToken),
+				Arguments.of(timeTypeToken)
 		);
 	}
 

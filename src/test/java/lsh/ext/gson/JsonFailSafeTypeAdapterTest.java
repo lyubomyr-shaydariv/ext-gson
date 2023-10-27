@@ -12,6 +12,11 @@ public final class JsonFailSafeTypeAdapterTest
 
 	private static final Gson gson = Gsons.getNormalized();
 
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<List<String>> stringListTypeToken = (TypeToken<List<String>>) TypeToken.getParameterized(List.class, String.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<List<Integer>> integerListTypeToken = (TypeToken<List<Integer>>) TypeToken.getParameterized(List.class, Integer.class);
+
 	@Nullable
 	@Override
 	protected Object normalize(@Nullable final Object value) {
@@ -22,12 +27,12 @@ public final class JsonFailSafeTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						JsonFailSafeTypeAdapter.Factory.getInstance().create(gson, TypeToken.getParameterized(List.class, String.class)),
+						JsonFailSafeTypeAdapter.Factory.getInstance().create(gson, stringListTypeToken),
 						"[\"foo\",\"bar\"]",
 						List.of("foo", "bar")
 				),
 				makeTestCase(
-						JsonFailSafeTypeAdapter.Factory.getInstance().create(gson, TypeToken.getParameterized(List.class, Integer.class)),
+						JsonFailSafeTypeAdapter.Factory.getInstance().create(gson, integerListTypeToken),
 						"[1000]",
 						List.of(1000)
 				)

@@ -78,7 +78,7 @@ public final class BidiMapTypeAdapter<V>
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
 				final IFactory0.IFactory<BidiMap<String, V>> factoryFactory
 		) {
-			return getInstance((IBuilder2.IFactory<String, V, BidiMap<String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+			return getInstance((IBuilder2.IFactory<String, V, BidiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
@@ -87,7 +87,7 @@ public final class BidiMapTypeAdapter<V>
 			return new Factory<>(bidiMapBuilderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, BidiMap<String, V>> createBuilder(
+		public static <V> IBuilder2<String, V, BidiMap<String, V>> builder(
 				final TypeToken<BidiMap<String, V>> typeToken,
 				final IFactory0.IFactory<BidiMap<String, V>> factoryFactory
 		) {

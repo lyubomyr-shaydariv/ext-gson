@@ -13,6 +13,15 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class GuavaCollectModuleTest
 		extends AbstractModuleTest {
 
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<BiMap<String, Integer>> stringToIntegerBiMapTypeToken = (TypeToken<BiMap<String, Integer>>) TypeToken.getParameterized(BiMap.class, String.class, Integer.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multiset<Integer>> integerMultisetTypeToken = (TypeToken<Multiset<Integer>>) TypeToken.getParameterized(Multiset.class, Integer.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multimap<String, Integer>> stringToIntegerMultiMapTypeToken = (TypeToken<Multimap<String, Integer>>) TypeToken.getParameterized(Multimap.class, String.class, Integer.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Table<String, String, Integer>> stringToStringToIntegerTableTypeToken = (TypeToken<Table<String, String, Integer>>) TypeToken.getParameterized(Table.class, String.class, String.class, Integer.class);
+
 	public GuavaCollectModuleTest() {
 		super(GuavaCollectModule.getInstance());
 	}
@@ -20,10 +29,10 @@ public final class GuavaCollectModuleTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.getParameterized(BiMap.class, String.class, Integer.class)),
-				Arguments.of(TypeToken.getParameterized(Multiset.class, Integer.class)),
-				Arguments.of(TypeToken.getParameterized(Multimap.class, String.class, Integer.class)),
-				Arguments.of(TypeToken.getParameterized(Table.class, String.class, String.class, Integer.class))
+				Arguments.of(stringToIntegerBiMapTypeToken),
+				Arguments.of(integerMultisetTypeToken),
+				Arguments.of(stringToIntegerMultiMapTypeToken),
+				Arguments.of(stringToStringToIntegerTableTypeToken)
 		);
 	}
 

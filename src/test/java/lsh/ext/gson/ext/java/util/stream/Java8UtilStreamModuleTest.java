@@ -9,6 +9,9 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class Java8UtilStreamModuleTest
 		extends AbstractModuleTest {
 
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Stream<Integer>> integerStreamTypeToken = (TypeToken<Stream<Integer>>) TypeToken.getParameterized(Stream.class, Integer.class);
+
 	public Java8UtilStreamModuleTest() {
 		super(Java8UtilStreamModule.getInstance());
 	}
@@ -16,7 +19,7 @@ public final class Java8UtilStreamModuleTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.getParameterized(Stream.class, Integer.class))
+				Arguments.of(integerStreamTypeToken)
 		);
 	}
 

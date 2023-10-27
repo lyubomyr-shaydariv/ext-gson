@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
+import lsh.ext.gson.IFactory0;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapter<E>
@@ -91,27 +92,40 @@ public final class CoercedCollectionTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Collection<E>> {
 
-		private final Class<? super Collection<E>> baseCollectionType;
+		private final Class<? extends Collection<E>> baseCollectionType;
 		private final TypeToken<E> elementTypeToken;
 		private final IBuilder1.IFactory<? super E, ? extends Collection<E>> collectionBuilderFactory;
 
 		public static <E> TypeAdapterFactory getInstance(
-				final Class<? super Collection<E>> baseCollectionType,
 				final TypeToken<E> elementTypeToken
 		) {
-			return getInstance(baseCollectionType, elementTypeToken, Factory::createBuilder);
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final Class<? extends Collection<E>> o = (Class) Collection.class;
+			return getInstance(o, elementTypeToken, (IFactory0.IFactory<Collection<E>>) typeToken -> ArrayList::new);
 		}
 
 		public static <E> TypeAdapterFactory getInstance(
-				final Class<? super Collection<E>> baseCollectionType,
+				final Class<? extends Collection<E>> baseCollectionType,
+				final TypeToken<E> elementTypeToken,
+				final IFactory0.IFactory<Collection<E>> factoryFactory
+		) {
+			return getInstance(baseCollectionType, elementTypeToken, (IBuilder1.IFactory<E, Collection<E>>) typeToken -> builder(typeToken, factoryFactory));
+		}
+
+		public static <E> TypeAdapterFactory getInstance(
+				final Class<? extends Collection<E>> baseCollectionType,
 				final TypeToken<E> elementTypeToken,
 				final IBuilder1.IFactory<? super E, ? extends Collection<E>> collectionBuilderFactory
 		) {
 			return new Factory<>(baseCollectionType, elementTypeToken, collectionBuilderFactory);
 		}
 
-		public static <E> IBuilder1<E, Collection<E>> createBuilder(@SuppressWarnings("unused") final TypeToken<Collection<E>> typeToken) {
-			return new MutableCollectionBuilder<>(new ArrayList<>());
+		public static <E> IBuilder1<E, Collection<E>> builder(
+				@SuppressWarnings("unused") final TypeToken<Collection<E>> typeToken,
+				final IFactory0.IFactory<Collection<E>> factoryFactory
+		) {
+			final IFactory0<Collection<E>> factory = factoryFactory.create(typeToken);
+			return new MutableCollectionBuilder<>(factory.create());
 		}
 
 		@Override

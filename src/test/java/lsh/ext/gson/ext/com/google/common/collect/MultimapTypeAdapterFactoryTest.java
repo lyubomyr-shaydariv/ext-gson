@@ -13,6 +13,17 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class MultimapTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(Multimap.class, String.class, String.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multimap<String, Object>> stringToObjectMultimapTypeToken = (TypeToken<Multimap<String, Object>>) TypeToken.getParameterized(Multimap.class, String.class, Object.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multimap<Integer, Integer>> integerToIntegerMultimapTypeToken = (TypeToken<Multimap<Integer, Integer>>) TypeToken.getParameterized(Multimap.class, Integer.class, Integer.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multiset<Object>> objectMultisetTypeToken = (TypeToken<Multiset<Object>>) TypeToken.getParameterized(Multiset.class, Object.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Map<Integer, String>> integerToStringMapTypeToken = (TypeToken<Map<Integer, String>>) TypeToken.getParameterized(Map.class, Integer.class, String.class);
+
 	public MultimapTypeAdapterFactoryTest() {
 		super(false);
 	}
@@ -25,17 +36,17 @@ public final class MultimapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.getParameterized(Multimap.class, String.class, String.class)),
-				Arguments.of(TypeToken.getParameterized(Multimap.class, String.class, Object.class)),
-				Arguments.of(TypeToken.getParameterized(Multimap.class, Integer.class, Integer.class))
+				Arguments.of(stringToStringMultimapTypeToken),
+				Arguments.of(stringToObjectMultimapTypeToken),
+				Arguments.of(integerToIntegerMultimapTypeToken)
 		);
 	}
 
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(TypeToken.getParameterized(Multiset.class, Object.class)),
-				Arguments.of(TypeToken.getParameterized(Map.class, Integer.class, String.class))
+				Arguments.of(objectMultisetTypeToken),
+				Arguments.of(integerToStringMapTypeToken)
 		);
 	}
 

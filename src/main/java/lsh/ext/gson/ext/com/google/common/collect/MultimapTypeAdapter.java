@@ -80,7 +80,7 @@ public final class MultimapTypeAdapter<V>
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
 				final IFactory0.IFactory<Multimap<String, V>> factoryFactory
 		) {
-			return getInstance((IBuilder2.IFactory<String, V, Multimap<String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+			return getInstance((IBuilder2.IFactory<String, V, Multimap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
@@ -89,7 +89,7 @@ public final class MultimapTypeAdapter<V>
 			return new Factory<>(builderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, Multimap<String, V>> createBuilder(
+		public static <V> IBuilder2<String, V, Multimap<String, V>> builder(
 				final TypeToken<Multimap<String, V>> typeToken,
 				final IFactory0.IFactory<Multimap<String, V>> factoryFactory
 		) {

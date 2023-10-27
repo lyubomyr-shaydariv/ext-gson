@@ -18,7 +18,7 @@ public final class MultisetTypeAdapterTest
 	private static final Gson gson = Gsons.getNormalized();
 
 	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multiset<String>> stringMultisetType = (TypeToken<Multiset<String>>) TypeToken.getParameterized(Multiset.class, String.class);
+	private static final TypeToken<Multiset<String>> stringMultisetTypeToken = (TypeToken<Multiset<String>>) TypeToken.getParameterized(Multiset.class, String.class);
 
 	@Nullable
 	@Override
@@ -30,7 +30,7 @@ public final class MultisetTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultisetTypeAdapter.getInstance(gson.getAdapter(String.class), () -> MultisetTypeAdapter.Factory.createBuilder(stringMultisetType, typeToken -> LinkedHashMultiset::create)),
+						MultisetTypeAdapter.getInstance(gson.getAdapter(String.class), () -> MultisetTypeAdapter.Factory.builder(stringMultisetTypeToken, typeToken -> LinkedHashMultiset::create)),
 						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
 						ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
 				)

@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -80,7 +79,7 @@ public final class MultiMapTypeAdapter<V>
 		public static <V> ITypeAdapterFactory<MultiMap<String, V>> getInstance(
 				final IFactory0.IFactory<MultiMap<String, V>> factoryFactory
 		) {
-			return getInstance((IBuilder2.IFactory<String, V, MultiMap<String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+			return getInstance((IBuilder2.IFactory<String, V, MultiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
 
 		public static <V> ITypeAdapterFactory<MultiMap<String, V>> getInstance(
@@ -89,7 +88,7 @@ public final class MultiMapTypeAdapter<V>
 			return new Factory<>(multiMapBuilderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, MultiMap<String, V>> createBuilder(
+		public static <V> IBuilder2<String, V, MultiMap<String, V>> builder(
 				final TypeToken<MultiMap<String, V>> typeToken,
 				final IFactory0.IFactory<MultiMap<String, V>> factoryFactory
 		) {

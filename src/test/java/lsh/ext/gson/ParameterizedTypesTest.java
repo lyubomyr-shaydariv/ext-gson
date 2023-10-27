@@ -1,6 +1,5 @@
 package lsh.ext.gson;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
@@ -9,17 +8,17 @@ import org.junit.jupiter.api.Test;
 
 public final class ParameterizedTypesTest {
 
-	private static final Type listOfStringsType = TypeToken.getParameterized(List.class, String.class)
-			.getType();
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<List<String>> stringListTypeToken = (TypeToken<List<String>>) TypeToken.getParameterized(List.class, String.class);
 
 	@Test
 	public void testGetTypeArgumentForParameterizedType() {
-		Assertions.assertEquals(String.class, ParameterizedTypes.getTypeArgument(listOfStringsType, 0));
+		Assertions.assertEquals(String.class, ParameterizedTypes.getTypeArgument(stringListTypeToken.getType(), 0));
 	}
 
 	@Test
 	public void testGetTypeArgumentForParameterizedTypeGoesBeyond() {
-		Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> ParameterizedTypes.getTypeArgument(listOfStringsType, 1));
+		Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> ParameterizedTypes.getTypeArgument(stringListTypeToken.getType(), 1));
 	}
 
 	@Test

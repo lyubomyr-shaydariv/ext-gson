@@ -23,11 +23,11 @@ public abstract class AbstractModuleTest {
 
 	private static final Gson gson = Gsons.getNormalized();
 
-	private static final Collection<TypeToken<?>> foreignClassTypeTokens = List.of(
-			TypeToken.get(Foo.class),
-			TypeToken.get(Bar.class),
-			TypeToken.get(Baz.class)
-	);
+	private static final TypeToken<Foo> fooTypeToken = TypeToken.get(Foo.class);
+	private static final TypeToken<Bar> barTypeToken = TypeToken.get(Bar.class);
+	private static final TypeToken<Baz> bazTypeToken = TypeToken.get(Baz.class);
+
+	private static final Collection<TypeToken<?>> foreignClassTypeTokens = List.of(fooTypeToken, barTypeToken, bazTypeToken);
 
 	private final IModule unit;
 

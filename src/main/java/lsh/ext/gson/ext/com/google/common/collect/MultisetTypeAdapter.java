@@ -79,7 +79,7 @@ public final class MultisetTypeAdapter<E>
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(
 				final IFactory0.IFactory<Multiset<E>> factoryFactory
 		) {
-			return getInstance((IBuilder1.IFactory<E, Multiset<E>>) typeToken -> createBuilder(typeToken, factoryFactory));
+			return getInstance((IBuilder1.IFactory<E, Multiset<E>>) typeToken -> builder(typeToken, factoryFactory));
 		}
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(
@@ -88,7 +88,7 @@ public final class MultisetTypeAdapter<E>
 			return new Factory<>(builderFactory);
 		}
 
-		public static <E> IBuilder1<E, Multiset<E>> createBuilder(
+		public static <E> IBuilder1<E, Multiset<E>> builder(
 				final TypeToken<Multiset<E>> typeToken,
 				final IFactory0.IFactory<Multiset<E>> factoryFactory
 		) {

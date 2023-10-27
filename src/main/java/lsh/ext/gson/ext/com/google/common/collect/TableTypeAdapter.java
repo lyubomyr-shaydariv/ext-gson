@@ -94,7 +94,7 @@ public final class TableTypeAdapter<V>
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
 				final IFactory0.IFactory<Table<String, String, V>> factoryFactory
 		) {
-			return getInstance((IBuilder3.IFactory<String, String, V, Table<String, String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+			return getInstance((IBuilder3.IFactory<String, String, V, Table<String, String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
@@ -103,7 +103,7 @@ public final class TableTypeAdapter<V>
 			return new Factory<>(builderFactory);
 		}
 
-		public static <V> IBuilder3<String, String, V, Table<String, String, V>> createBuilder(
+		public static <V> IBuilder3<String, String, V, Table<String, String, V>> builder(
 				final TypeToken<Table<String, String, V>> typeToken,
 				final IFactory0.IFactory<Table<String, String, V>> factoryFactory
 		) {

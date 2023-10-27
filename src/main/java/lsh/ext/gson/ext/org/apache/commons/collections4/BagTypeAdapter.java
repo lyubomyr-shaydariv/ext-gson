@@ -68,7 +68,7 @@ public final class BagTypeAdapter<E>
 		private final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory;
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance() {
-			return getInstance(new BagTypeAdapter.IKeyMapperFactory<E>() {
+			return getInstance(new BagTypeAdapter.IKeyMapperFactory<>() {
 				@Override
 				public Transformer<E, String> createKeyMapper(final TypeToken<E> typeToken) {
 					throw new UnsupportedOperationException(String.valueOf(typeToken));
@@ -93,7 +93,7 @@ public final class BagTypeAdapter<E>
 				final IFactory0.IFactory<Bag<E>> factoryFactory,
 				final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory
 		) {
-			return getInstance((IBuilder2.IFactory<E, Integer, Bag<E>>) typeToken -> createBuilder(typeToken, factoryFactory), keyMapperFactory);
+			return getInstance((IBuilder2.IFactory<E, Integer, Bag<E>>) typeToken -> builder(typeToken, factoryFactory), keyMapperFactory);
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
@@ -103,7 +103,7 @@ public final class BagTypeAdapter<E>
 			return new Factory<>(bagBuilderFactory, keyMapperFactory);
 		}
 
-		public static <E> IBuilder2<E, Integer, Bag<E>> createBuilder(
+		public static <E> IBuilder2<E, Integer, Bag<E>> builder(
 				final TypeToken<Bag<E>> typeToken,
 				final IFactory0.IFactory<Bag<E>> factoryFactory
 		) {

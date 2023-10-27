@@ -19,7 +19,7 @@ public final class MultimapTypeAdapterTest
 	private static final Gson gson = Gsons.getNormalized();
 
 	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multimap<String, String>> stringToStringMultimapType = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(BiMap.class, String.class, String.class);
+	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(BiMap.class, String.class, String.class);
 
 	@Nullable
 	@Override
@@ -31,7 +31,7 @@ public final class MultimapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class), () -> MultimapTypeAdapter.Factory.createBuilder(stringToStringMultimapType, typeToken -> LinkedHashMultimap::create)),
+						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class), () -> MultimapTypeAdapter.Factory.builder(stringToStringMultimapTypeToken, typeToken -> LinkedHashMultimap::create)),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
 						LinkedHashMultimap.create(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
 				)

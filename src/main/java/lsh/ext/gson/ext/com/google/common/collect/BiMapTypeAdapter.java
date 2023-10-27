@@ -80,7 +80,7 @@ public final class BiMapTypeAdapter<V>
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
 				final IFactory0.IFactory<BiMap<String, V>> factoryFactory
 		) {
-			return getInstance((IBuilder2.IFactory<String, V, BiMap<String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+			return getInstance((IBuilder2.IFactory<String, V, BiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
@@ -89,7 +89,7 @@ public final class BiMapTypeAdapter<V>
 			return new Factory<>(builderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, BiMap<String, V>> createBuilder(
+		public static <V> IBuilder2<String, V, BiMap<String, V>> builder(
 				final TypeToken<BiMap<String, V>> typeToken,
 				final IFactory0.IFactory<BiMap<String, V>> factoryFactory
 		) {

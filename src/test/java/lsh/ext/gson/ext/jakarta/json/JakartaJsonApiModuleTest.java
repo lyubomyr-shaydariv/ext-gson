@@ -10,6 +10,8 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class JakartaJsonApiModuleTest
 		extends AbstractModuleTest {
 
+	private static final TypeToken<JsonValue> jsonValueTypeToken = TypeToken.get(JsonValue.class);
+
 	public JakartaJsonApiModuleTest() {
 		super(JakartaJsonApiModule.getInstance());
 	}
@@ -17,7 +19,7 @@ public final class JakartaJsonApiModuleTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.get(JsonValue.class))
+				Arguments.of(jsonValueTypeToken)
 		);
 	}
 

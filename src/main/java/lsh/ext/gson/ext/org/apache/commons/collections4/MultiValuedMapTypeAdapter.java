@@ -77,7 +77,7 @@ public final class MultiValuedMapTypeAdapter<V>
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
 				final IFactory0.IFactory<MultiValuedMap<String, V>> factoryFactory
 		) {
-			return getInstance((IBuilder2.IFactory<String, V, MultiValuedMap<String, V>>) typeToken -> createBuilder(typeToken, factoryFactory));
+			return getInstance((IBuilder2.IFactory<String, V, MultiValuedMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
@@ -86,7 +86,7 @@ public final class MultiValuedMapTypeAdapter<V>
 			return new Factory<>(multiValuedMapBuilderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> createBuilder(
+		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> builder(
 				final TypeToken<MultiValuedMap<String, V>> typeToken,
 				final IFactory0.IFactory<MultiValuedMap<String, V>> factoryFactory
 		) {

@@ -6,10 +6,18 @@ import com.google.common.collect.Multiset;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterFactoryTest;
+import lsh.ext.gson.TypeTokens;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultisetTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
+
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multiset<String>> stringMultisetTypeToken = (TypeToken<Multiset<String>>) TypeToken.getParameterized(Multiset.class, String.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multiset<Object>> objectMultisetTypeToken = (TypeToken<Multiset<Object>>) TypeToken.getParameterized(Multiset.class, Object.class);
+	@SuppressWarnings("unchecked")
+	private static final TypeToken<Multiset<Integer>> integerMultisetTypeToken = (TypeToken<Multiset<Integer>>) TypeToken.getParameterized(Multiset.class, Integer.class);
 
 	public MultisetTypeAdapterFactoryTest() {
 		super(false);
@@ -23,16 +31,16 @@ public final class MultisetTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.getParameterized(Multiset.class, String.class)),
-				Arguments.of(TypeToken.getParameterized(Multiset.class, Object.class)),
-				Arguments.of(TypeToken.getParameterized(Multiset.class, Integer.class))
+				Arguments.of(stringMultisetTypeToken),
+				Arguments.of(objectMultisetTypeToken),
+				Arguments.of(integerMultisetTypeToken)
 		);
 	}
 
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(TypeToken.get(Void.class))
+				Arguments.of(TypeTokens.voidTypeToken)
 		);
 	}
 

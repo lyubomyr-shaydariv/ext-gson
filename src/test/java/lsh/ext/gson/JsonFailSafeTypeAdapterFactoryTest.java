@@ -3,7 +3,6 @@ package lsh.ext.gson;
 import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonFailSafeTypeAdapterFactoryTest
@@ -21,14 +20,14 @@ public final class JsonFailSafeTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.get(String.class))
+				Arguments.of(TypeTokens.stringTypeToken)
 		);
 	}
 
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(TypeToken.get(int.class))
+				Arguments.of(TypeTokens.primitiveIntTypeToken)
 		);
 	}
 

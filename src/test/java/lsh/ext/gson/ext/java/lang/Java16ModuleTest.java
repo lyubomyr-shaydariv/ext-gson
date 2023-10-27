@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class Java16ModuleTest
 		extends AbstractModuleTest {
 
+	private static final TypeToken<DummyRecord> dummyRecordTypeToken = TypeToken.get(DummyRecord.class);
+
 	public Java16ModuleTest() {
 		super(Java16Module.getDefaultInstance());
 	}
@@ -16,7 +18,7 @@ public final class Java16ModuleTest
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.get(DummyRecord.class))
+				Arguments.of(dummyRecordTypeToken)
 		);
 	}
 

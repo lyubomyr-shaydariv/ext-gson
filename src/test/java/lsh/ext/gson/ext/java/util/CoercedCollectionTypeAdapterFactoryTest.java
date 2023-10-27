@@ -1,18 +1,19 @@
 package lsh.ext.gson.ext.java.util;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterFactoryTest;
+import lsh.ext.gson.TypeTokens;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class CoercedCollectionTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	private static final TypeToken<Object> objectTypeToken = TypeToken.get(Object.class);
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static final TypeToken<List<?>> listTypeToken = (TypeToken) TypeToken.get(List.class);
 
 	public CoercedCollectionTypeAdapterFactoryTest() {
 		super(false);
@@ -20,20 +21,20 @@ public final class CoercedCollectionTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return CoercedCollectionTypeAdapter.Factory.getInstance(Collection.class, objectTypeToken);
+		return CoercedCollectionTypeAdapter.Factory.getInstance(TypeTokens.objectTypeToken);
 	}
 
 	@Override
 	protected Stream<Arguments> supported() {
 		return Stream.of(
-				Arguments.of(TypeToken.get(List.class))
+				Arguments.of(listTypeToken)
 		);
 	}
 
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(TypeToken.get(Void.class))
+				Arguments.of(TypeTokens.voidTypeToken)
 		);
 	}
 
