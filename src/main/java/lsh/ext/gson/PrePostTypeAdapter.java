@@ -59,11 +59,11 @@ public final class PrePostTypeAdapter<T>
 	public static final class Factory
 			implements TypeAdapterFactory {
 
-		private final Iterable<? extends IProcessorFactory<?>> preProcessorFactories;
-		private final Iterable<? extends IProcessorFactory<?>> postProcessorFactories;
+		private final Iterable<? extends IProcessor.IFactory<?>> preProcessorFactories;
+		private final Iterable<? extends IProcessor.IFactory<?>> postProcessorFactories;
 
-		public static TypeAdapterFactory getInstance(final Iterable<? extends IProcessorFactory<?>> preProcessorFactories,
-				final Iterable<? extends IProcessorFactory<?>> postProcessorFactories) {
+		public static TypeAdapterFactory getInstance(final Iterable<? extends IProcessor.IFactory<?>> preProcessorFactories,
+				final Iterable<? extends IProcessor.IFactory<?>> postProcessorFactories) {
 			return new Factory(preProcessorFactories, postProcessorFactories);
 		}
 
@@ -88,10 +88,10 @@ public final class PrePostTypeAdapter<T>
 		}
 
 		@Nullable
-		private static Iterable<? extends IProcessor<?>> getProcessors(final TypeToken<?> typeToken, final Iterable<? extends IProcessorFactory<?>> factories) {
+		private static Iterable<? extends IProcessor<?>> getProcessors(final TypeToken<?> typeToken, final Iterable<? extends IProcessor.IFactory<?>> factories) {
 			@Nullable
 			Collection<IProcessor<?>> processors = null;
-			for ( final IProcessorFactory<?> factory : factories ) {
+			for ( final IProcessor.IFactory<?> factory : factories ) {
 				@Nullable
 				final IProcessor<?> processor = factory.createProcessor(typeToken);
 				if ( processor == null ) {
