@@ -51,8 +51,7 @@ public final class OptionalTypeAdapter<T>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<T>
-			extends AbstractTypeAdapterFactory<Optional<T>>
-			implements ITypeAdapterFactory<Optional<T>> {
+			extends AbstractTypeAdapterFactory<Optional<T>> {
 
 		@Getter
 		private static final ITypeAdapterFactory<? extends Optional<?>> instance = new Factory<>();

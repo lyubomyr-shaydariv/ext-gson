@@ -79,8 +79,7 @@ public final class TableTypeAdapter<V>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<Table<String, String, V>>
-			implements ITypeAdapterFactory<Table<String, String, V>> {
+			extends AbstractTypeAdapterFactory<Table<String, String, V>> {
 
 		private final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> tableBuilderFactory;
 

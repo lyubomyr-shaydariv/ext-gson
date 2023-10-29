@@ -26,8 +26,7 @@ public final class InstantTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<Instant>
-			implements ITypeAdapterFactory<Instant> {
+			extends AbstractBaseTypeAdapterFactory<Instant> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 		private static final ITypeAdapterFactory<Instant> instance = new Factory(InstantTypeAdapter.getInstance());

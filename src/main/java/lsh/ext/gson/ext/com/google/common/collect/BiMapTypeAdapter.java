@@ -66,8 +66,7 @@ public final class BiMapTypeAdapter<V>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<BiMap<String, V>>
-			implements ITypeAdapterFactory<BiMap<String, V>> {
+			extends AbstractTypeAdapterFactory<BiMap<String, V>> {
 
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> biMapBuilderFactory;
 

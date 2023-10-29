@@ -4,11 +4,10 @@ import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
 public abstract class AbstractTypeAdapterFactory<CT>
-		implements TypeAdapterFactory {
+		implements ITypeAdapterFactory<CT> {
 
 	@Nullable
 	protected abstract TypeAdapter<CT> createTypeAdapter(Gson gson, TypeToken<?> typeToken);

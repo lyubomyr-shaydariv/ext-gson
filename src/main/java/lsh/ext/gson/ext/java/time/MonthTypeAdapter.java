@@ -26,8 +26,7 @@ public final class MonthTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<Month>
-			implements ITypeAdapterFactory<Month> {
+			extends AbstractBaseTypeAdapterFactory<Month> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 		private static final ITypeAdapterFactory<Month> instance = new Factory(MonthTypeAdapter.getInstance());

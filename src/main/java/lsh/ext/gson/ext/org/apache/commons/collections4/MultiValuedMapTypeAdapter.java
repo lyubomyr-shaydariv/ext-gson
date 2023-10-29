@@ -63,8 +63,7 @@ public final class MultiValuedMapTypeAdapter<V>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<MultiValuedMap<String, V>>
-			implements ITypeAdapterFactory<MultiValuedMap<String, V>> {
+			extends AbstractTypeAdapterFactory<MultiValuedMap<String, V>> {
 
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> multiValuedMapBuilderFactory;
 

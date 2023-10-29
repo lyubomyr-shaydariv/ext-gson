@@ -11,8 +11,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RecordTypeAdapterFactory<T extends Record>
-		extends AbstractTypeAdapterFactory<T>
-		implements ITypeAdapterFactory<T> {
+		extends AbstractTypeAdapterFactory<T> {
 
 	@Getter
 	private static final ITypeAdapterFactory<Record> instance = new RecordTypeAdapterFactory<>();

@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IFactory0;
+import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UnixTimeDateTypeAdapter<T extends Date>
@@ -48,7 +49,7 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 
 		private final IFactory0.IFactory<? extends T> dateFactoryFactory;
 
-		public static <T extends Date> AbstractTypeAdapterFactory<T> getInstance(
+		public static <T extends Date> ITypeAdapterFactory<T> getInstance(
 				final IFactory0.IFactory<? extends T> dateFactoryFactory
 		) {
 			return new Factory<>(dateFactoryFactory);

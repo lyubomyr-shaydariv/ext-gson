@@ -29,8 +29,7 @@ public final class DurationTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<Duration>
-			implements ITypeAdapterFactory<Duration> {
+			extends AbstractBaseTypeAdapterFactory<Duration> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 		private static final ITypeAdapterFactory<Duration> instance = new Factory(DurationTypeAdapter.getInstance());

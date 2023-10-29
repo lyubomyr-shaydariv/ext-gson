@@ -33,8 +33,7 @@ public final class YearTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<Year>
-			implements ITypeAdapterFactory<Year> {
+			extends AbstractBaseTypeAdapterFactory<Year> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 		private static final ITypeAdapterFactory<Year> instance = new Factory(YearTypeAdapter.getInstance());

@@ -63,8 +63,7 @@ public final class BidiMapTypeAdapter<V>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<BidiMap<String, V>>
-			implements ITypeAdapterFactory<BidiMap<String, V>> {
+			extends AbstractTypeAdapterFactory<BidiMap<String, V>> {
 
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> bidiMapBuilderFactory;
 

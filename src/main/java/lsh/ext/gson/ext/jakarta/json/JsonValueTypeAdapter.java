@@ -327,8 +327,7 @@ public final class JsonValueTypeAdapter
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory
-			extends AbstractTypeAdapterFactory<JsonValue>
-			implements ITypeAdapterFactory<JsonValue> {
+			extends AbstractTypeAdapterFactory<JsonValue> {
 
 		@Getter
 		private static final ITypeAdapterFactory<JsonValue> instance = new Factory();

@@ -25,8 +25,7 @@ public final class ZonedDateTimeTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<ZonedDateTime>
-			implements ITypeAdapterFactory<ZonedDateTime> {
+			extends AbstractBaseTypeAdapterFactory<ZonedDateTime> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 		private static final ITypeAdapterFactory<ZonedDateTime> instance = new Factory(ZonedDateTimeTypeAdapter.getInstance());

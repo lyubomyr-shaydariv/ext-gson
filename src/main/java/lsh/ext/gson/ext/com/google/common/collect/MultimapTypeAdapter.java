@@ -66,8 +66,7 @@ public final class MultimapTypeAdapter<V>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<Multimap<String, V>>
-			implements ITypeAdapterFactory<Multimap<String, V>> {
+			extends AbstractTypeAdapterFactory<Multimap<String, V>> {
 
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> multimapBuilderFactory;
 

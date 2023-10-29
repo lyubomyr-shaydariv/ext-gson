@@ -61,8 +61,7 @@ public final class BagTypeAdapter<E>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<E>
-			extends AbstractTypeAdapterFactory<Bag<E>>
-			implements ITypeAdapterFactory<Bag<E>> {
+			extends AbstractTypeAdapterFactory<Bag<E>> {
 
 		private final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory;
 		private final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory;

@@ -65,8 +65,7 @@ public final class MultisetTypeAdapter<E>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<E>
-			extends AbstractTypeAdapterFactory<Multiset<E>>
-			implements ITypeAdapterFactory<Multiset<E>> {
+			extends AbstractTypeAdapterFactory<Multiset<E>> {
 
 		private final IBuilder1.IFactory<? super E, ? extends Multiset<E>> multisetBuilderFactory;
 

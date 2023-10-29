@@ -31,8 +31,7 @@ public final class StreamTypeAdapter<E>
 	}
 
 	public static final class Factory<E>
-			extends AbstractCursorTypeAdapter.AbstractFactory<E>
-			implements ITypeAdapterFactory<Stream<E>> {
+			extends AbstractCursorTypeAdapter.AbstractFactory<E> {
 
 		@Getter
 		private static final ITypeAdapterFactory<? extends Stream<?>> instance = new Factory<>();

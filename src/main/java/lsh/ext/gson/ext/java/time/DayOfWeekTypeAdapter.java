@@ -29,8 +29,7 @@ public final class DayOfWeekTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<DayOfWeek>
-			implements ITypeAdapterFactory<DayOfWeek> {
+			extends AbstractBaseTypeAdapterFactory<DayOfWeek> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 		private static final ITypeAdapterFactory<DayOfWeek> instance = new Factory(DayOfWeekTypeAdapter.getInstance());

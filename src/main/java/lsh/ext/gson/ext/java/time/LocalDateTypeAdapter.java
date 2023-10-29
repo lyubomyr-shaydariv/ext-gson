@@ -25,8 +25,7 @@ public final class LocalDateTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<LocalDate>
-			implements ITypeAdapterFactory<LocalDate> {
+			extends AbstractBaseTypeAdapterFactory<LocalDate> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 		private static final ITypeAdapterFactory<LocalDate> instance = new Factory(LocalDateTypeAdapter.getInstance());

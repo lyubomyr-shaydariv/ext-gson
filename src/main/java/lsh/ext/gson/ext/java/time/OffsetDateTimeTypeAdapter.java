@@ -25,8 +25,7 @@ public final class OffsetDateTimeTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<OffsetDateTime>
-			implements ITypeAdapterFactory<OffsetDateTime> {
+			extends AbstractBaseTypeAdapterFactory<OffsetDateTime> {
 
 		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
 		private static final ITypeAdapterFactory<OffsetDateTime> instance = new Factory(OffsetDateTimeTypeAdapter.getInstance());
