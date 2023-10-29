@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import javax.annotation.WillNotClose;
 
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -140,7 +141,7 @@ public final class JsonReaders {
 				final JsonToken token = jsonReader.peek();
 				return token != JsonToken.END_DOCUMENT;
 			} catch ( final IOException ex ) {
-				throw new RuntimeException(ex);
+				throw new JsonIOException(ex);
 			}
 		}
 

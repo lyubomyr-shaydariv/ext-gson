@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import javax.annotation.WillNotClose;
 
+import com.google.gson.JsonIOException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -61,7 +62,7 @@ public final class JsonReaderIterator<E>
 			}
 			return hasNext;
 		} catch ( final IOException ex ) {
-			throw new RuntimeException(ex);
+			throw new JsonIOException(ex);
 		}
 	}
 
@@ -101,7 +102,7 @@ public final class JsonReaderIterator<E>
 			}
 			return element;
 		} catch ( final IOException ex ) {
-			throw new RuntimeException(ex);
+			throw new JsonIOException(ex);
 		}
 	}
 
