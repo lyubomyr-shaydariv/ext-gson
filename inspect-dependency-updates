@@ -2,7 +2,7 @@
 
 VERSION='2.16.1'
 
-mvn \
+mvn -U \
 	org.codehaus.mojo:versions-maven-plugin:"$VERSION":display-dependency-updates \
 	org.codehaus.mojo:versions-maven-plugin:"$VERSION":display-plugin-updates \
 	org.codehaus.mojo:versions-maven-plugin:"$VERSION":display-extension-updates \
