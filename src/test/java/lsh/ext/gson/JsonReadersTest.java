@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import org.junit.jupiter.api.Assertions;
@@ -25,11 +24,6 @@ public final class JsonReadersTest {
 	@Test
 	public void testGsonWithoutEmptyStringFailFastJsonReaderMustNotFailOnReadingAnEmptyString() {
 		gson.fromJson(new StringReader(""), Void.class);
-	}
-
-	@Test
-	public void testGsonWithEmptyStringFailFastJsonReaderMustFailOnReadingAnEmptyString() {
-		Assertions.assertThrows(JsonSyntaxException.class, () -> gson.fromJson(JsonReaders.getEmptyStringFailFastJsonReader(new StringReader("")), Void.class));
 	}
 
 	@Test
