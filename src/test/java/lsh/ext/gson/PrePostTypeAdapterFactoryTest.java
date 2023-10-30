@@ -18,7 +18,8 @@ public final class PrePostTypeAdapterFactoryTest {
 				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(List.of(userProcessorFactory), List.of()))
 				.create();
 		gson.toJson(user);
-		Mockito.verify(mockUserProcessor).process(ArgumentMatchers.eq(user));
+		Mockito.verify(mockUserProcessor)
+				.process(ArgumentMatchers.eq(user));
 		Mockito.verifyNoMoreInteractions(mockUserProcessor);
 	}
 
@@ -31,7 +32,8 @@ public final class PrePostTypeAdapterFactoryTest {
 				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(List.of(), List.of(userProcessorFactory)))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);
-		Mockito.verify(mockUserProcessor).process(ArgumentMatchers.eq(user));
+		Mockito.verify(mockUserProcessor)
+				.process(ArgumentMatchers.eq(user));
 		Mockito.verifyNoMoreInteractions(mockUserProcessor);
 	}
 

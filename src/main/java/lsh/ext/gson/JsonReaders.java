@@ -13,8 +13,7 @@ public final class JsonReaders {
 	public static boolean isValid(final JsonReader jsonReader)
 			throws IOException {
 		try {
-			JsonToken token;
-			while ( (token = jsonReader.peek()) != JsonToken.END_DOCUMENT && token != null ) {
+			for ( JsonToken token = jsonReader.peek(); token != JsonToken.END_DOCUMENT && token != null; token = jsonReader.peek() ) {
 				skipToken(jsonReader);
 			}
 			return true;

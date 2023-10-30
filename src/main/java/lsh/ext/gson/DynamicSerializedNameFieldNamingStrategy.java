@@ -27,12 +27,12 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	@Override
 	public String translateName(final Field field) {
 		@Nullable
-		final DynamicSerializedName annotation = field.getAnnotation(DynamicSerializedName.class);
-		if ( annotation == null ) {
+		final DynamicSerializedName dynamicSerializedName = field.getAnnotation(DynamicSerializedName.class);
+		if ( dynamicSerializedName == null ) {
 			return fallbackFieldNamingStrategy.translateName(field);
 		}
 		@Nullable
-		final String resolvedName = fieldNamingResolver.resolveName(annotation.value());
+		final String resolvedName = fieldNamingResolver.resolveName(dynamicSerializedName.value());
 		if ( resolvedName == null ) {
 			return fallbackFieldNamingStrategy.translateName(field);
 		}
