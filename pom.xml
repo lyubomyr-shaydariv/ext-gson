@@ -15,7 +15,12 @@
 	<developers>
 
 		<developer>
+			<id>lsh</id>
 			<name>Lyubomyr Shaydariv</name>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>Europe/Kyiv</timezone>
 		</developer>
 
 	</developers>
