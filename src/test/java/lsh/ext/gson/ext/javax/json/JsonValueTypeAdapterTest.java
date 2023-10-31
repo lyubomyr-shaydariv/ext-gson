@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class JsonValueTypeAdapterTest
 		extends AbstractTypeAdapterTest<JsonValue, JsonValue> {
 
-	@Nullable
 	@Override
 	protected JsonValue normalize(@Nullable final JsonValue value) {
 		return value != null ? value : JsonValue.NULL;

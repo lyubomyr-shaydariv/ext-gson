@@ -14,8 +14,8 @@ public final class OptionalTypeAdapterTest
 
 	private static final Gson gson = Gsons.getNormalized();
 
-	@Nullable
 	@Override
+	@SuppressWarnings("OptionalAssignedToNull")
 	protected Optional<?> normalize(@Nullable final Optional<?> value) {
 		return value != null ? value : Optional.absent();
 	}
