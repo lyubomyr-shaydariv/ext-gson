@@ -337,6 +337,39 @@
 
 		<profile>
 
+			<id>sonarqube</id>
+
+			<properties>
+				<sonar.projectKey>ext-gson</sonar.projectKey>
+				<sonar.projectName>ext-gson</sonar.projectName>
+			</properties>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.sonarsource.scanner.maven</groupId>
+						<artifactId>sonar-maven-plugin</artifactId>
+						<version>3.10.0.2594</version>
+						<executions>
+							<execution>
+								<phase>process-classes</phase>
+								<goals>
+									<goal>sonar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
+		<profile>
+
 			<id>spotbugs</id>
 
 			<build>
