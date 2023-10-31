@@ -14,7 +14,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class MonthDayTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<MonthDay> {
 
-	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 	private static final TypeAdapter<MonthDay> instance = getInstance(new DateTimeFormatterBuilder()
 			.appendLiteral("--")
 			.appendValue(ChronoField.MONTH_OF_YEAR, 2)
@@ -35,7 +35,7 @@ public final class MonthDayTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<MonthDay> {
 
-		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 		private static final ITypeAdapterFactory<MonthDay> instance = new Factory(MonthDayTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<MonthDay> typeAdapter) {

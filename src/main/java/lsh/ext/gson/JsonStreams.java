@@ -2,6 +2,7 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import javax.annotation.WillNotClose;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -11,13 +12,13 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class JsonStreams {
 
-	public static void copyTo(final JsonReader reader, final JsonWriter writer)
+	public static void copyTo(@WillNotClose final JsonReader reader, @WillNotClose final JsonWriter writer)
 			throws IOException {
 		copyTo(reader, writer, true);
 	}
 
 	@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:JavaNCSS" })
-	public static void copyTo(final JsonReader reader, final JsonWriter writer, final boolean ignoreTrailingTokens)
+	public static void copyTo(@WillNotClose final JsonReader reader, @WillNotClose final JsonWriter writer, final boolean ignoreTrailingTokens)
 			throws IOException {
 		int level = 0;
 		loop:

@@ -132,18 +132,18 @@ public final class JsonObjects {
 
 		private final JsonObject jsonObject;
 
-		protected abstract Set<Entry<String, JsonElement>> tryEntrySet(JsonObject jsonObject);
+		protected abstract Set<Entry<String, JsonElement>> doEntrySet(JsonObject jsonObject);
 
-		protected abstract JsonElement tryPut(JsonObject jsonObject, String key, JsonElement jsonElement);
+		protected abstract JsonElement doPut(JsonObject jsonObject, String key, JsonElement jsonElement);
 
 		@Override
 		public final Set<Entry<String, JsonElement>> entrySet() {
-			return tryEntrySet(jsonObject);
+			return doEntrySet(jsonObject);
 		}
 
 		@Override
 		public final JsonElement put(final String key, final JsonElement jsonElement) {
-			return tryPut(jsonObject, key, jsonElement);
+			return doPut(jsonObject, key, jsonElement);
 		}
 
 	}
@@ -156,12 +156,12 @@ public final class JsonObjects {
 		}
 
 		@Override
-		protected Set<Entry<String, JsonElement>> tryEntrySet(final JsonObject jsonObject) {
+		protected Set<Entry<String, JsonElement>> doEntrySet(final JsonObject jsonObject) {
 			return new ImmutableJsonObjectSet(jsonObject);
 		}
 
 		@Override
-		protected JsonElement tryPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
+		protected JsonElement doPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -175,12 +175,12 @@ public final class JsonObjects {
 		}
 
 		@Override
-		protected Set<Entry<String, JsonElement>> tryEntrySet(final JsonObject jsonObject) {
+		protected Set<Entry<String, JsonElement>> doEntrySet(final JsonObject jsonObject) {
 			return new MutableJsonObjectSet(jsonObject);
 		}
 
 		@Override
-		protected JsonElement tryPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
+		protected JsonElement doPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
 			final JsonElement previous = jsonObject.get(key);
 			jsonObject.add(key, jsonElement);
 			return previous;
@@ -194,11 +194,11 @@ public final class JsonObjects {
 
 		private final JsonObject jsonObject;
 
-		protected abstract Iterator<Map.Entry<String, JsonElement>> getIterator(JsonObject jsonObject);
+		protected abstract Iterator<Map.Entry<String, JsonElement>> doIterator(JsonObject jsonObject);
 
 		@Override
 		public final Iterator<Map.Entry<String, JsonElement>> iterator() {
-			return getIterator(jsonObject);
+			return doIterator(jsonObject);
 		}
 
 		@Override
@@ -216,8 +216,10 @@ public final class JsonObjects {
 		}
 
 		@Override
-		protected Iterator<Map.Entry<String, JsonElement>> getIterator(final JsonObject jsonObject) {
-			return UnmodifiableIterator.of(jsonObject.entrySet().iterator());
+		protected Iterator<Map.Entry<String, JsonElement>> doIterator(final JsonObject jsonObject) {
+			final Iterator<Map.Entry<String, JsonElement>> iterator = jsonObject.entrySet()
+					.iterator();
+			return UnmodifiableIterator.of(iterator);
 		}
 
 	}
@@ -230,8 +232,9 @@ public final class JsonObjects {
 		}
 
 		@Override
-		protected Iterator<Map.Entry<String, JsonElement>> getIterator(final JsonObject jsonObject) {
-			return jsonObject.entrySet().iterator();
+		protected Iterator<Map.Entry<String, JsonElement>> doIterator(final JsonObject jsonObject) {
+			return jsonObject.entrySet()
+					.iterator();
 		}
 
 	}

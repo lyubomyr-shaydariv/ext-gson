@@ -2,6 +2,8 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 
+import javax.annotation.WillNotClose;
+
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.MalformedJsonException;
@@ -10,7 +12,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class JsonReaders {
 
-	public static boolean isValid(final JsonReader jsonReader)
+	public static boolean isValid(@WillNotClose final JsonReader jsonReader)
 			throws IOException {
 		try {
 			for ( JsonToken token = jsonReader.peek(); token != JsonToken.END_DOCUMENT && token != null; token = jsonReader.peek() ) {
@@ -23,7 +25,7 @@ public final class JsonReaders {
 	}
 
 	@SuppressWarnings("checkstyle:CyclomaticComplexity")
-	public static void skipToken(final JsonReader reader)
+	public static void skipToken(@WillNotClose final JsonReader reader)
 			throws IOException {
 		final JsonToken token = reader.peek();
 		switch ( token ) {

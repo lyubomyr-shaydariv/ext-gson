@@ -14,7 +14,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class DurationTypeAdapter
 		extends AbstractStringTypeAdapter<Duration> {
 
-	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 	private static final TypeAdapter<Duration> instance = new DurationTypeAdapter()
 			.nullSafe();
 
@@ -31,7 +31,7 @@ public final class DurationTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<Duration> {
 
-		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 		private static final ITypeAdapterFactory<Duration> instance = new Factory(DurationTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<Duration> typeAdapter) {

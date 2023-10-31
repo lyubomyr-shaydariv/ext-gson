@@ -41,6 +41,11 @@ public final class UnmodifiableIterable<T>
 				copy.add(t);
 			}
 		}
+		if ( copy.isEmpty() ) {
+			@SuppressWarnings("unchecked")
+			final Iterable<T> castEmptyUnmodifiableIterable = (Iterable<T>) emptyUnmodifiableIterable;
+			return castEmptyUnmodifiableIterable;
+		}
 		return new UnmodifiableIterable<>(copy);
 	}
 

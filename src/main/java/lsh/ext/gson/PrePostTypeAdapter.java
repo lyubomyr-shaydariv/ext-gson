@@ -27,7 +27,8 @@ public final class PrePostTypeAdapter<T>
 	public static <T> TypeAdapter<T> getInstance(
 			@Nullable final Iterable<? extends IProcessor<? super T>> preProcessors,
 			@Nullable final Iterable<? extends IProcessor<? super T>> postProcessors,
-			final TypeAdapter<T> delegateTypeAdapter) {
+			final TypeAdapter<T> delegateTypeAdapter
+	) {
 		return new PrePostTypeAdapter<>(preProcessors, postProcessors, delegateTypeAdapter)
 				.nullSafe();
 	}

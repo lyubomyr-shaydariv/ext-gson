@@ -19,12 +19,12 @@ public final class DynamicSerializedNameFieldNamingStrategy
 		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, FieldNamingPolicy.IDENTITY);
 	}
 
-	public static FieldNamingStrategy getInstance(final IFieldNamingResolver fieldNamingResolver,
-			final FieldNamingStrategy fallbackFieldNamingStrategy) {
+	public static FieldNamingStrategy getInstance(final IFieldNamingResolver fieldNamingResolver, final FieldNamingStrategy fallbackFieldNamingStrategy) {
 		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, fallbackFieldNamingStrategy);
 	}
 
 	@Override
+	@SuppressWarnings("ConstantValue")
 	public String translateName(final Field field) {
 		@Nullable
 		final DynamicSerializedName dynamicSerializedName = field.getAnnotation(DynamicSerializedName.class);

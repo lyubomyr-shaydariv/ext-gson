@@ -15,7 +15,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class YearTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<Year> {
 
-	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final TypeAdapter<Year> instance = getInstance(new DateTimeFormatterBuilder()
 			.parseLenient()
@@ -35,7 +35,7 @@ public final class YearTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<Year> {
 
-		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 		private static final ITypeAdapterFactory<Year> instance = new Factory(YearTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<Year> typeAdapter) {

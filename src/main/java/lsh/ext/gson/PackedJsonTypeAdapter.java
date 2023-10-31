@@ -18,7 +18,7 @@ import lombok.Getter;
 public final class PackedJsonTypeAdapter
 		extends TypeAdapter<String> {
 
-	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 	private static final TypeAdapter<String> instance = new PackedJsonTypeAdapter()
 			.nullSafe();
 

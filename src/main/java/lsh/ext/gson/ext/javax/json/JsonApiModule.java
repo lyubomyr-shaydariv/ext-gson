@@ -1,6 +1,7 @@
 package lsh.ext.gson.ext.javax.json;
 
 import javax.json.JsonValue;
+import javax.json.spi.JsonProvider;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
@@ -33,7 +34,7 @@ public final class JsonApiModule
 	public static final class Builder {
 
 		@Setter
-		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance(JsonProvider.provider());
 
 		public IModule build() {
 			return new JsonApiModule(UnmodifiableIterable.copyOf(

@@ -12,7 +12,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class LocalTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<LocalTime> {
 
-	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 	private static final TypeAdapter<LocalTime> instance = getInstance(DateTimeFormatter.ISO_LOCAL_TIME);
 
 	private LocalTimeTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
@@ -27,7 +27,7 @@ public final class LocalTimeTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<LocalTime> {
 
-		@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 		private static final ITypeAdapterFactory<LocalTime> instance = new Factory(LocalTimeTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<LocalTime> typeAdapter) {

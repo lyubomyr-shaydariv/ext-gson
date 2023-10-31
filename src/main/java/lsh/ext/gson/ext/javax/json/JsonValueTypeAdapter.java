@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.javax.json;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
+import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -30,7 +31,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class JsonValueTypeAdapter
 		extends TypeAdapter<JsonValue> {
 
-	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 	private static final TypeAdapter<JsonValue> instance = getInstance(JsonProvider.provider());
 
 	private final TypeAdapter<JsonValue> jsonNullTypeAdapter = JsonNullTypeAdapter.instance;
@@ -40,7 +41,10 @@ public final class JsonValueTypeAdapter
 	private final TypeAdapter<JsonObject> jsonObjectTypeAdapter = new JsonObjectTypeAdapter();
 	private final TypeAdapter<JsonArray> jsonArrayTypeAdapter = new JsonArrayTypeAdapter();
 
-	public static TypeAdapter<JsonValue> getInstance(final JsonProvider jsonProvider) {
+	public static TypeAdapter<JsonValue> getInstance(@Nullable final JsonProvider jsonProvider) {
+		if ( jsonProvider == null ) {
+			return instance;
+		}
 		return new JsonValueTypeAdapter(new JsonNumberTypeAdapter(jsonProvider), new JsonStringTypeAdapter(jsonProvider))
 				.nullSafe();
 	}
@@ -328,15 +332,20 @@ public final class JsonValueTypeAdapter
 	public static final class Factory
 			extends AbstractTypeAdapterFactory<JsonValue> {
 
-		@Getter
-		private static final ITypeAdapterFactory<JsonValue> instance = new Factory();
+		@Nullable
+		private final JsonProvider jsonProvider;
+
+		public static ITypeAdapterFactory<JsonValue> getInstance(final JsonProvider jsonProvider) {
+			return new Factory(jsonProvider);
+		}
 
 		@Override
+		@Nullable
 		protected TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !JsonValue.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;
 			}
-			return JsonValueTypeAdapter.getInstance();
+			return JsonValueTypeAdapter.getInstance(jsonProvider);
 		}
 
 	}

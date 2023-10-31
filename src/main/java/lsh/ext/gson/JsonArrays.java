@@ -110,27 +110,27 @@ public final class JsonArrays {
 
 		private final JsonArray jsonArray;
 
-		protected abstract boolean tryAdd(JsonArray jsonArray, JsonElement jsonElement);
+		protected abstract boolean doAdd(JsonArray jsonArray, JsonElement jsonElement);
 
-		protected abstract void tryAdd(JsonArray jsonArray, int index, JsonElement jsonElement);
+		protected abstract void doAdd(JsonArray jsonArray, int index, JsonElement jsonElement);
 
-		protected abstract boolean tryAddAll(JsonArray jsonArray, Collection<? extends JsonElement> jsonElements);
+		protected abstract boolean doAddAll(JsonArray jsonArray, Collection<? extends JsonElement> jsonElements);
 
-		protected abstract boolean tryAddAll(JsonArray jsonArray, int index, Collection<? extends JsonElement> jsonElements);
+		protected abstract boolean doAddAll(JsonArray jsonArray, int index, Collection<? extends JsonElement> jsonElements);
 
-		protected abstract void tryClear(JsonArray jsonArray);
+		protected abstract void doClear(JsonArray jsonArray);
 
-		protected abstract boolean tryRemovePreflight(Object object);
+		protected abstract boolean doRemovePreflight(Object object);
 
-		protected abstract boolean tryRemove(JsonArray jsonArray, JsonElement jsonElement);
+		protected abstract boolean doRemove(JsonArray jsonArray, JsonElement jsonElement);
 
-		protected abstract JsonElement tryRemove(JsonArray jsonArray, int index);
+		protected abstract JsonElement doRemove(JsonArray jsonArray, int index);
 
-		protected abstract boolean tryRemoveAll(JsonArray jsonArray, Collection<?> objects);
+		protected abstract boolean doRemoveAll(JsonArray jsonArray, Collection<?> objects);
 
-		protected abstract boolean tryRetainAll(JsonArray jsonArray, Collection<?> objects);
+		protected abstract boolean doRetainAll(JsonArray jsonArray, Collection<?> objects);
 
-		protected abstract JsonElement trySet(JsonArray jsonArray, int index, JsonElement jsonElement);
+		protected abstract JsonElement doSet(JsonArray jsonArray, int index, JsonElement jsonElement);
 
 		@Override
 		public final JsonElement get(final int index) {
@@ -144,55 +144,55 @@ public final class JsonArrays {
 
 		@Override
 		public final boolean add(final JsonElement jsonElement) {
-			return tryAdd(jsonArray, jsonElement);
+			return doAdd(jsonArray, jsonElement);
 		}
 
 		@Override
 		public final void add(final int index, final JsonElement jsonElement) {
-			tryAdd(jsonArray, index, jsonElement);
+			doAdd(jsonArray, index, jsonElement);
 		}
 
 		@Override
 		public final boolean addAll(final Collection<? extends JsonElement> jsonElements) {
-			return tryAddAll(jsonArray, jsonElements);
+			return doAddAll(jsonArray, jsonElements);
 		}
 
 		@Override
 		public final boolean addAll(final int index, final Collection<? extends JsonElement> jsonElements) {
-			return tryAddAll(jsonArray, index, jsonElements);
+			return doAddAll(jsonArray, index, jsonElements);
 		}
 
 		@Override
 		public final void clear() {
-			tryClear(jsonArray);
+			doClear(jsonArray);
 		}
 
 		@Override
 		public final boolean remove(final Object object) {
-			if ( !tryRemovePreflight(object) ) {
+			if ( !doRemovePreflight(object) ) {
 				return false;
 			}
-			return tryRemove(jsonArray, (JsonElement) object);
+			return doRemove(jsonArray, (JsonElement) object);
 		}
 
 		@Override
 		public final JsonElement remove(final int index) {
-			return tryRemove(jsonArray, index);
+			return doRemove(jsonArray, index);
 		}
 
 		@Override
 		public final boolean removeAll(final Collection<?> objects) {
-			return tryRemoveAll(jsonArray, objects);
+			return doRemoveAll(jsonArray, objects);
 		}
 
 		@Override
 		public final boolean retainAll(final Collection<?> objects) {
-			return tryRetainAll(jsonArray, objects);
+			return doRetainAll(jsonArray, objects);
 		}
 
 		@Override
 		public final JsonElement set(final int index, final JsonElement jsonElement) {
-			return trySet(jsonArray, index, jsonElement);
+			return doSet(jsonArray, index, jsonElement);
 		}
 
 	}
@@ -205,57 +205,57 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected boolean tryAdd(final JsonArray jsonArray, final JsonElement jsonElement) {
+		protected boolean doAdd(final JsonArray jsonArray, final JsonElement jsonElement) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected void tryAdd(final JsonArray jsonArray, final int index, final JsonElement jsonElement) {
+		protected void doAdd(final JsonArray jsonArray, final int index, final JsonElement jsonElement) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected boolean tryAddAll(final JsonArray jsonArray, final Collection<? extends JsonElement> jsonElements) {
+		protected boolean doAddAll(final JsonArray jsonArray, final Collection<? extends JsonElement> jsonElements) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected boolean tryAddAll(final JsonArray jsonArray, final int index, final Collection<? extends JsonElement> jsonElements) {
+		protected boolean doAddAll(final JsonArray jsonArray, final int index, final Collection<? extends JsonElement> jsonElements) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected void tryClear(final JsonArray jsonArray) {
+		protected void doClear(final JsonArray jsonArray) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected boolean tryRemovePreflight(final Object object) {
+		protected boolean doRemovePreflight(final Object object) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected boolean tryRemove(final JsonArray jsonArray, final JsonElement jsonElement) {
+		protected boolean doRemove(final JsonArray jsonArray, final JsonElement jsonElement) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected JsonElement tryRemove(final JsonArray jsonArray, final int index) {
+		protected JsonElement doRemove(final JsonArray jsonArray, final int index) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected boolean tryRemoveAll(final JsonArray jsonArray, final Collection<?> objects) {
+		protected boolean doRemoveAll(final JsonArray jsonArray, final Collection<?> objects) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected boolean tryRetainAll(final JsonArray jsonArray, final Collection<?> objects) {
+		protected boolean doRetainAll(final JsonArray jsonArray, final Collection<?> objects) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected JsonElement trySet(final JsonArray jsonArray, final int index, final JsonElement jsonElement) {
+		protected JsonElement doSet(final JsonArray jsonArray, final int index, final JsonElement jsonElement) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -269,7 +269,7 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected boolean tryAdd(final JsonArray jsonArray, final JsonElement jsonElement) {
+		protected boolean doAdd(final JsonArray jsonArray, final JsonElement jsonElement) {
 			final int sizeBefore = jsonArray.size();
 			jsonArray.add(jsonElement);
 			final int sizeAfter = jsonArray.size();
@@ -280,7 +280,7 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected void tryAdd(final JsonArray jsonArray, final int index, final JsonElement jsonElement) {
+		protected void doAdd(final JsonArray jsonArray, final int index, final JsonElement jsonElement) {
 			final Iterator<JsonElement> iterator = jsonArray.iterator();
 			for ( int i = 0; i < index; i++ ) {
 				iterator.next();
@@ -297,7 +297,7 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected boolean tryAddAll(final JsonArray jsonArray, final Collection<? extends JsonElement> jsonElements) {
+		protected boolean doAddAll(final JsonArray jsonArray, final Collection<? extends JsonElement> jsonElements) {
 			final int sizeBefore = jsonArray.size();
 			jsonArray.addAll(from(jsonElements));
 			final int sizeAfter = jsonArray.size();
@@ -308,7 +308,7 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected boolean tryAddAll(final JsonArray jsonArray, final int index, final Collection<? extends JsonElement> jsonElements) {
+		protected boolean doAddAll(final JsonArray jsonArray, final int index, final Collection<? extends JsonElement> jsonElements) {
 			final Iterator<JsonElement> iterator = jsonArray.iterator();
 			for ( int i = 0; i < index; i++ ) {
 				iterator.next();
@@ -332,7 +332,7 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected void tryClear(final JsonArray jsonArray) {
+		protected void doClear(final JsonArray jsonArray) {
 			final int last = jsonArray.size() - 1;
 			for ( int i = last; i >= 0; i-- ) {
 				jsonArray.remove(i);
@@ -340,22 +340,22 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected boolean tryRemovePreflight(final Object object) {
+		protected boolean doRemovePreflight(final Object object) {
 			return object instanceof JsonElement;
 		}
 
 		@Override
-		protected boolean tryRemove(final JsonArray jsonArray, final JsonElement jsonElement) {
+		protected boolean doRemove(final JsonArray jsonArray, final JsonElement jsonElement) {
 			return jsonArray.remove(jsonElement);
 		}
 
 		@Override
-		protected JsonElement tryRemove(final JsonArray jsonArray, final int index) {
+		protected JsonElement doRemove(final JsonArray jsonArray, final int index) {
 			return jsonArray.remove(index);
 		}
 
 		@Override
-		protected boolean tryRemoveAll(final JsonArray jsonArray, final Collection<?> objects) {
+		protected boolean doRemoveAll(final JsonArray jsonArray, final Collection<?> objects) {
 			final int sizeBefore = jsonArray.size();
 			for ( final Object object : objects ) {
 				if ( object instanceof final JsonElement jsonElement ) {
@@ -367,7 +367,7 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected boolean tryRetainAll(final JsonArray jsonArray, final Collection<?> objects) {
+		protected boolean doRetainAll(final JsonArray jsonArray, final Collection<?> objects) {
 			final Collection<JsonElement> jsonElementsToRemove = new ArrayList<>();
 			for ( final JsonElement jsonElement : jsonArray ) {
 				if ( !objects.contains(jsonElement) ) {
@@ -378,7 +378,7 @@ public final class JsonArrays {
 		}
 
 		@Override
-		protected JsonElement trySet(final JsonArray jsonArray, final int index, final JsonElement jsonElement) {
+		protected JsonElement doSet(final JsonArray jsonArray, final int index, final JsonElement jsonElement) {
 			return jsonArray.set(index, jsonElement);
 		}
 
