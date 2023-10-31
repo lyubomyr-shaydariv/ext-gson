@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
 import com.google.gson.TypeAdapter;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -34,10 +33,7 @@ public final class InstantTypeAdapter
 			super(Instant.class, typeAdapter);
 		}
 
-		public static ITypeAdapterFactory<Instant> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
+		public static ITypeAdapterFactory<Instant> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Factory(InstantTypeAdapter.getInstance(dateTimeFormatter));
 		}
 

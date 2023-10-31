@@ -41,10 +41,7 @@ public final class JsonValueTypeAdapter
 	private final TypeAdapter<JsonObject> jsonObjectTypeAdapter = new JsonObjectTypeAdapter();
 	private final TypeAdapter<JsonArray> jsonArrayTypeAdapter = new JsonArrayTypeAdapter();
 
-	public static TypeAdapter<JsonValue> getInstance(@Nullable final JsonProvider jsonProvider) {
-		if ( jsonProvider == null ) {
-			return instance;
-		}
+	public static TypeAdapter<JsonValue> getInstance(final JsonProvider jsonProvider) {
 		return new JsonValueTypeAdapter(new JsonNumberTypeAdapter(jsonProvider), new JsonStringTypeAdapter(jsonProvider))
 				.nullSafe();
 	}

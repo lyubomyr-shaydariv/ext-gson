@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.OffsetTime;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -34,10 +33,7 @@ public final class OffsetTimeTypeAdapter
 			super(OffsetTime.class, typeAdapter);
 		}
 
-		public static ITypeAdapterFactory<OffsetTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
+		public static ITypeAdapterFactory<OffsetTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Factory(OffsetTimeTypeAdapter.getInstance(dateTimeFormatter));
 		}
 

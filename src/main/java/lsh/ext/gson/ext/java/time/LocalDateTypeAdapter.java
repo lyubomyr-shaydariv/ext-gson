@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -34,10 +33,7 @@ public final class LocalDateTypeAdapter
 			super(LocalDate.class, typeAdapter);
 		}
 
-		public static ITypeAdapterFactory<LocalDate> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
+		public static ITypeAdapterFactory<LocalDate> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Factory(LocalDateTypeAdapter.getInstance(dateTimeFormatter));
 		}
 

@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -34,10 +33,7 @@ public final class ZonedDateTimeTypeAdapter
 			super(ZonedDateTime.class, typeAdapter);
 		}
 
-		public static ITypeAdapterFactory<ZonedDateTime> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
+		public static ITypeAdapterFactory<ZonedDateTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Factory(ZonedDateTimeTypeAdapter.getInstance(dateTimeFormatter));
 		}
 

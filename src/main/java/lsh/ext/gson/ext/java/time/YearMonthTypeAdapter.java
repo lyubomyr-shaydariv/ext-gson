@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.SignStyle;
 import java.time.temporal.ChronoField;
-import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -43,10 +42,7 @@ public final class YearMonthTypeAdapter
 			super(YearMonth.class, typeAdapter);
 		}
 
-		public static ITypeAdapterFactory<YearMonth> getInstance(@Nullable final DateTimeFormatter dateTimeFormatter) {
-			if ( dateTimeFormatter == null ) {
-				return instance;
-			}
+		public static ITypeAdapterFactory<YearMonth> getInstance(final DateTimeFormatter dateTimeFormatter) {
 			return new Factory(YearMonthTypeAdapter.getInstance(dateTimeFormatter));
 		}
 

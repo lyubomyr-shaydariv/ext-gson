@@ -16,11 +16,11 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class JsonObjects {
 
-	public static JsonObject of() {
+	public static JsonObject create() {
 		return new JsonObject();
 	}
 
-	public static JsonObject of(
+	public static JsonObject create(
 			final String k1, @Nullable final JsonElement v1
 	) {
 		final JsonObject jsonObject = new JsonObject();
@@ -28,7 +28,7 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	public static JsonObject of(
+	public static JsonObject create(
 			final String k1, @Nullable final JsonElement v1,
 			final String k2, @Nullable final JsonElement v2
 	) {
@@ -38,7 +38,7 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	public static JsonObject of(
+	public static JsonObject create(
 			final String k1, @Nullable final JsonElement v1,
 			final String k2, @Nullable final JsonElement v2,
 			final String k3, @Nullable final JsonElement v3
@@ -50,7 +50,7 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	public static JsonObject of(
+	public static JsonObject create(
 			final String k1, @Nullable final JsonElement v1,
 			final String k2, @Nullable final JsonElement v2,
 			final String k3, @Nullable final JsonElement v3,
@@ -65,7 +65,7 @@ public final class JsonObjects {
 	}
 
 	@SuppressWarnings("checkstyle:ParameterNumber")
-	public static JsonObject of(
+	public static JsonObject create(
 			final String k1, @Nullable final JsonElement v1,
 			final String k2, @Nullable final JsonElement v2,
 			final String k3, @Nullable final JsonElement v3,
