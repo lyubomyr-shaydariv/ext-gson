@@ -22,15 +22,11 @@ public final class JavaSqlModule
 		extends AbstractModule {
 
 	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
-	private static final IModule defaultInstance = builder()
+	private static final IModule defaultInstance = Builder.create()
 			.build();
 
 	private JavaSqlModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
-	}
-
-	public static Builder builder() {
-		return new Builder();
 	}
 
 	public static IFactory0<java.util.Date> createFactory(final TypeToken<java.util.Date> typeToken) {
@@ -54,6 +50,10 @@ public final class JavaSqlModule
 
 		@Setter
 		private TypeAdapterFactory unixTimeDateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(JavaSqlModule::createFactory);
+
+		public static Builder create() {
+			return new Builder();
+		}
 
 		public IModule build() {
 			return new JavaSqlModule(UnmodifiableIterable.copyOf(

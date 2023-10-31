@@ -18,20 +18,20 @@ public final class JsonApiModule
 		extends AbstractModule {
 
 	@Getter
-	private static final IModule instance = builder()
+	private static final IModule instance = Builder.create()
 			.build();
 
 	private JsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
-	public static Builder builder() {
-		return new Builder();
-	}
-
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
 	public static final class Builder {
+
+		public static Builder create() {
+			return new Builder();
+		}
 
 		@Setter
 		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance(JsonProvider.provider());

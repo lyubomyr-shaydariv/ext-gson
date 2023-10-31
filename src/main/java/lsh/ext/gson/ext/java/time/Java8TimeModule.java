@@ -32,10 +32,6 @@ public final class Java8TimeModule
 		super(typeAdapterFactories);
 	}
 
-	public static Builder builder() {
-		return new Builder();
-	}
-
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
 	public static final class Builder {
@@ -81,6 +77,10 @@ public final class Java8TimeModule
 
 		@Setter
 		private ITypeAdapterFactory<ZonedDateTime> zonedDateTimeTypeAdapterFactory = ZonedDateTimeTypeAdapter.Factory.getInstance();
+
+		public static Builder create() {
+			return new Builder();
+		}
 
 		public IModule build() {
 			return new Java8TimeModule(UnmodifiableIterable.copyOf(

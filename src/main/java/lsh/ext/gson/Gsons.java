@@ -10,13 +10,13 @@ import lombok.experimental.UtilityClass;
 public final class Gsons {
 
 	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
-	private static final Gson normalized = Builders.builder()
+	private static final Gson normalized = Builders.createNormalized()
 			.create();
 
 	@UtilityClass
 	public static final class Builders {
 
-		public static GsonBuilder builder() {
+		public static GsonBuilder createNormalized() {
 			return new GsonBuilder()
 					.disableInnerClassSerialization()
 					.disableHtmlEscaping();

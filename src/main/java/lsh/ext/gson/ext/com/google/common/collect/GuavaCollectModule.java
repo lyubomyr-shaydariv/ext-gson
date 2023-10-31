@@ -19,15 +19,11 @@ public final class GuavaCollectModule
 		extends AbstractModule {
 
 	@Getter
-	private static final IModule instance = builder()
+	private static final IModule instance = Builder.create()
 			.build();
 
 	private GuavaCollectModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
-	}
-
-	public static Builder builder() {
-		return new Builder();
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -45,6 +41,10 @@ public final class GuavaCollectModule
 
 		@Setter
 		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapter.Factory.getInstance();
+
+		public static Builder create() {
+			return new Builder();
+		}
 
 		public IModule build() {
 			return new GuavaCollectModule(UnmodifiableIterable.copyOf(

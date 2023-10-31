@@ -21,15 +21,11 @@ public final class ApacheCommonsCollections4Module
 		extends AbstractModule {
 
 	@Getter
-	private static final IModule instance = builder()
+	private static final IModule instance = Builder.create()
 			.build();
 
 	private ApacheCommonsCollections4Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
-	}
-
-	public static Builder builder() {
-		return new Builder();
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -50,6 +46,10 @@ public final class ApacheCommonsCollections4Module
 
 		@Setter
 		private ITypeAdapterFactory<? extends MultiValuedMap<String, Object>> multiValuedMapTypeAdapterFactory = MultiValuedMapTypeAdapter.Factory.getInstance();
+
+		public static Builder create() {
+			return new Builder();
+		}
 
 		public IModule build() {
 			return new ApacheCommonsCollections4Module(UnmodifiableIterable.copyOf(

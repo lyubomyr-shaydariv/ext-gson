@@ -17,15 +17,11 @@ public final class Java8UtilModule
 		extends AbstractModule {
 
 	@Getter
-	private static final IModule instance = builder()
+	private static final IModule instance = Builder.create()
 			.build();
 
 	private Java8UtilModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
 		super(typeAdapterFactories);
-	}
-
-	public static Builder builder() {
-		return new Builder();
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -34,6 +30,10 @@ public final class Java8UtilModule
 
 		@Setter
 		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapter.Factory.getInstance();
+
+		public static Builder create() {
+			return new Builder();
+		}
 
 		public IModule build() {
 			return new Java8UtilModule(UnmodifiableIterable.copyOf(
