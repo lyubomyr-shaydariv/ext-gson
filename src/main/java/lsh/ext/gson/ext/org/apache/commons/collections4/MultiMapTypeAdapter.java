@@ -57,7 +57,7 @@ public final class MultiMapTypeAdapter<V>
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
-			builder.modify(key, value);
+			builder.accept(key, value);
 		}
 		in.endObject();
 		return builder.build();
@@ -96,7 +96,7 @@ public final class MultiMapTypeAdapter<V>
 					.create();
 			return new IBuilder2<>() {
 				@Override
-				public void modify(final String k, final V v) {
+				public void accept(final String k, final V v) {
 					multiMap.put(k, v);
 				}
 

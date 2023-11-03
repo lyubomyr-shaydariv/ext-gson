@@ -69,7 +69,7 @@ public final class TableTypeAdapter<V>
 			while ( in.hasNext() ) {
 				final String columnKey = in.nextName();
 				final V value = valueTypeAdapter.read(in);
-				builder.modify(rowKey, columnKey, value);
+				builder.accept(rowKey, columnKey, value);
 			}
 			in.endObject();
 		}
@@ -112,7 +112,7 @@ public final class TableTypeAdapter<V>
 				final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
 				return new IBuilder3<>() {
 					@Override
-					public void modify(final String rowKey, final String columnKey, final V v) {
+					public void accept(final String rowKey, final String columnKey, final V v) {
 						builder.put(rowKey, columnKey, v);
 					}
 
@@ -127,7 +127,7 @@ public final class TableTypeAdapter<V>
 					.create();
 			return new IBuilder3<>() {
 				@Override
-				public void modify(final String rowKey, final String columnKey, final V v) {
+				public void accept(final String rowKey, final String columnKey, final V v) {
 					table.put(rowKey, columnKey, v);
 				}
 

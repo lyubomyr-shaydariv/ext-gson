@@ -56,7 +56,7 @@ public final class BidiMapTypeAdapter<V>
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
-			builder.modify(key, value);
+			builder.accept(key, value);
 		}
 		in.endObject();
 		return builder.build();

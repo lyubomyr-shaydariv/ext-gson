@@ -16,7 +16,7 @@ public final class MapBuilder<K, V, M extends Map<K, V>>
 	}
 
 	@Override
-	public void modify(final K k, final V v) {
+	public void accept(final K k, final V v) {
 		map.put(k, v);
 	}
 

@@ -56,7 +56,7 @@ public final class MultiSetTypeAdapter<E>
 		final IBuilder1<? super E, ? extends MultiSet<E>> builder = multiSetBuilderFactory.create();
 		while ( in.peek() != JsonToken.END_ARRAY ) {
 			final E element = elementTypeAdapter.read(in);
-			builder.modify(element);
+			builder.accept(element);
 		}
 		in.endArray();
 		return builder.build();

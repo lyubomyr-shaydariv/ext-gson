@@ -16,7 +16,7 @@ public final class CollectionBuilder<E, C extends Collection<E>>
 	}
 
 	@Override
-	public void modify(final E e) {
+	public void accept(final E e) {
 		collection.add(e);
 	}
 

@@ -4,7 +4,7 @@ import com.google.gson.reflect.TypeToken;
 
 public interface IBuilder1<A1, T> {
 
-	void modify(A1 a1);
+	void accept(A1 a1);
 
 	T build();
 

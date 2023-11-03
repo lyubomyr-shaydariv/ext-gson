@@ -53,7 +53,7 @@ public final class BagTypeAdapter<E>
 		in.beginObject();
 		final IBuilder2<? super E, ? super Integer, ? extends Bag<E>> builder = bagBuilderFactory.create();
 		while ( in.hasNext() ) {
-			builder.modify(keyReverseMapper.transform(in.nextName()), in.nextInt());
+			builder.accept(keyReverseMapper.transform(in.nextName()), in.nextInt());
 		}
 		in.endObject();
 		return builder.build();
@@ -111,7 +111,7 @@ public final class BagTypeAdapter<E>
 					.create();
 			return new IBuilder2<>() {
 				@Override
-				public void modify(final E e, final Integer n) {
+				public void accept(final E e, final Integer n) {
 					bag.add(e, n);
 				}
 

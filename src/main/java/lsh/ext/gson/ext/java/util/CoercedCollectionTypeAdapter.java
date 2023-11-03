@@ -66,7 +66,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		case BEGIN_ARRAY:
 			in.beginArray();
 			while ( in.hasNext() ) {
-				builder.modify(elementTypeAdapter.read(in));
+				builder.accept(elementTypeAdapter.read(in));
 			}
 			in.endArray();
 			break;
@@ -74,7 +74,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		case STRING:
 		case NUMBER:
 		case BOOLEAN:
-			builder.modify(elementTypeAdapter.read(in));
+			builder.accept(elementTypeAdapter.read(in));
 			break;
 		case NULL:
 			throw new AssertionError();

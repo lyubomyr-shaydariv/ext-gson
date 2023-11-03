@@ -58,7 +58,7 @@ public final class MultisetTypeAdapter<E>
 		final IBuilder1<? super E, ? extends Multiset<E>> builder = multisetBuilderFactory.get();
 		while ( in.hasNext() ) {
 			final E element = elementTypeAdapter.read(in);
-			builder.modify(element);
+			builder.accept(element);
 		}
 		in.endArray();
 		return builder.build();
@@ -98,7 +98,7 @@ public final class MultisetTypeAdapter<E>
 				final ImmutableMultiset.Builder<E> builder = ImmutableMultiset.builder();
 				return new IBuilder1<>() {
 					@Override
-					public void modify(final E e) {
+					public void accept(final E e) {
 						builder.add(e);
 					}
 
