@@ -22,21 +22,21 @@ import lsh.ext.gson.IFactory0;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapter<E>
-		extends TypeAdapter<Collection<E>> {
+		extends TypeAdapter<Collection<? extends E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final Supplier<? extends IBuilder1<? super E, ? extends Collection<E>>> collectionBuilderFactory;
+	private final Supplier<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> collectionBuilderFactory;
 
-	public static <E> TypeAdapter<Collection<E>> getInstance(
+	public static <E> TypeAdapter<Collection<? extends E>> getInstance(
 			final TypeAdapter<E> elementTypeAdapter,
-			final Supplier<? extends IBuilder1<? super E, ? extends Collection<E>>> collectionBuilderFactory
+			final Supplier<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> collectionBuilderFactory
 	) {
 		return new CoercedCollectionTypeAdapter<E>(elementTypeAdapter, collectionBuilderFactory)
 				.nullSafe();
 	}
 
 	@Override
-	public void write(final JsonWriter out, final Collection<E> collection)
+	public void write(final JsonWriter out, final Collection<? extends E> collection)
 			throws IOException {
 		switch ( collection.size() ) {
 		case 0:
@@ -58,9 +58,9 @@ public final class CoercedCollectionTypeAdapter<E>
 
 	@Override
 	@SuppressWarnings("checkstyle:CyclomaticComplexity")
-	public Collection<E> read(final JsonReader in)
+	public Collection<? extends E> read(final JsonReader in)
 			throws IOException {
-		final IBuilder1<? super E, ? extends Collection<E>> builder = collectionBuilderFactory.get();
+		final IBuilder1<? super E, ? extends Collection<? extends E>> builder = collectionBuilderFactory.get();
 		final JsonToken token = in.peek();
 		switch ( token ) {
 		case BEGIN_ARRAY:
@@ -91,7 +91,7 @@ public final class CoercedCollectionTypeAdapter<E>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<E>
-			extends AbstractTypeAdapterFactory<Collection<E>> {
+			extends AbstractTypeAdapterFactory<Collection<? extends E>> {
 
 		private final Class<? extends Collection<E>> baseCollectionType;
 		private final TypeToken<E> elementTypeToken;
@@ -101,8 +101,8 @@ public final class CoercedCollectionTypeAdapter<E>
 				final TypeToken<E> elementTypeToken
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final Class<? extends Collection<E>> o = (Class) Collection.class;
-			return getInstance(o, elementTypeToken, (IFactory0.IFactory<Collection<E>>) typeToken -> ArrayList::new);
+			final Class<? extends Collection<E>> collectionClass = (Class) Collection.class;
+			return getInstance(collectionClass, elementTypeToken, (IFactory0.IFactory<Collection<E>>) typeToken -> ArrayList::new);
 		}
 
 		public static <E> TypeAdapterFactory getInstance(
@@ -128,7 +128,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		}
 
 		@Override
-		protected TypeAdapter<Collection<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
+		protected TypeAdapter<Collection<? extends E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !baseCollectionType.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;
 			}
