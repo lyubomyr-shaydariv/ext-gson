@@ -17,7 +17,7 @@ public final class JavaSqlModuleTest
 	private static final TypeToken<Time> timeTypeToken = TypeToken.get(Time.class);
 
 	public JavaSqlModuleTest() {
-		super(JavaSqlModule.getDefaultInstance());
+		super(JavaSqlModule.getInstance());
 	}
 
 	@Override

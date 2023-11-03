@@ -22,7 +22,7 @@ public final class JavaSqlModule
 		extends AbstractModule {
 
 	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
-	private static final IModule defaultInstance = Builder.create()
+	private static final IModule instance = Builder.create()
 			.build();
 
 	private JavaSqlModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
