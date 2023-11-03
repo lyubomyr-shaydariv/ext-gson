@@ -28,7 +28,7 @@ public final class JsonArraysTest {
 	public void testJsonArray() {
 		Assertions.assertEquals(
 				stringJsonArray(),
-				JsonArrays.create()
+				JsonArrays.of()
 		);
 	}
 
@@ -36,11 +36,11 @@ public final class JsonArraysTest {
 	public void testJsonArray1() {
 		Assertions.assertEquals(
 				stringJsonArray(K1),
-				JsonArrays.create(JsonPrimitives.create(K1))
+				JsonArrays.of(JsonPrimitives.of(K1))
 		);
 		Assertions.assertEquals(
 				stringJsonArray((String) null),
-				JsonArrays.create((JsonElement) null)
+				JsonArrays.of((JsonElement) null)
 		);
 	}
 
@@ -48,11 +48,11 @@ public final class JsonArraysTest {
 	public void testJsonArray2() {
 		Assertions.assertEquals(
 				stringJsonArray(K1, K2),
-				JsonArrays.create(JsonPrimitives.create(K1), JsonPrimitives.create(K2))
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2))
 		);
 		Assertions.assertEquals(
 				stringJsonArray(null, null),
-				JsonArrays.create(null, null)
+				JsonArrays.of(null, null)
 		);
 	}
 
@@ -60,11 +60,11 @@ public final class JsonArraysTest {
 	public void testJsonArray3() {
 		Assertions.assertEquals(
 				stringJsonArray(K1, K2, K3),
-				JsonArrays.create(JsonPrimitives.create(K1), JsonPrimitives.create(K2), JsonPrimitives.create(K3))
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3))
 		);
 		Assertions.assertEquals(
 				stringJsonArray(null, null, null),
-				JsonArrays.create(null, null, null)
+				JsonArrays.of(null, null, null)
 		);
 	}
 
@@ -72,11 +72,11 @@ public final class JsonArraysTest {
 	public void testJsonArray4() {
 		Assertions.assertEquals(
 				stringJsonArray(K1, K2, K3, K4),
-				JsonArrays.create(JsonPrimitives.create(K1), JsonPrimitives.create(K2), JsonPrimitives.create(K3), JsonPrimitives.create(K4))
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4))
 		);
 		Assertions.assertEquals(
 				stringJsonArray(null, null, null, null),
-				JsonArrays.create(null, null, null, null)
+				JsonArrays.of(null, null, null, null)
 		);
 	}
 
@@ -84,19 +84,19 @@ public final class JsonArraysTest {
 	public void testJsonArray5() {
 		Assertions.assertEquals(
 				stringJsonArray(K1, K2, K3, K4, K5),
-				JsonArrays.create(JsonPrimitives.create(K1), JsonPrimitives.create(K2), JsonPrimitives.create(K3), JsonPrimitives.create(K4), JsonPrimitives.create(K5))
+				JsonArrays.of(JsonPrimitives.of(K1), JsonPrimitives.of(K2), JsonPrimitives.of(K3), JsonPrimitives.of(K4), JsonPrimitives.of(K5))
 		);
 		Assertions.assertEquals(
 				stringJsonArray(null, null, null, null, null),
-				JsonArrays.create(null, null, null, null, null)
+				JsonArrays.of(null, null, null, null, null)
 		);
 	}
 
 	@Test
 	public void testFromIterable() {
-		final JsonPrimitive element1 = JsonPrimitives.create(K1);
-		final JsonPrimitive element2 = JsonPrimitives.create(K2);
-		final JsonPrimitive element3 = JsonPrimitives.create(K3);
+		final JsonPrimitive element1 = JsonPrimitives.of(K1);
+		final JsonPrimitive element2 = JsonPrimitives.of(K2);
+		final JsonPrimitive element3 = JsonPrimitives.of(K3);
 		final Iterable<? extends JsonElement> jsonElements = List.of(element1, element2, element3);
 		final JsonArray jsonArray = JsonArrays.from(jsonElements);
 		Assertions.assertEquals(3, jsonArray.size());
@@ -107,7 +107,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsImmutableList() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 		Assertions.assertEquals(3, jsonElements.size());
 		Assertions.assertSame(foo, jsonElements.get(0));
@@ -118,7 +118,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaAdd() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.add(qux);
 		});
@@ -126,7 +126,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaAdd() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertEquals(3, jsonElements.size());
 		Assertions.assertSame(foo, jsonElements.get(0));
@@ -148,7 +148,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaAddByIndex() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.add(0, qux);
 		});
@@ -156,7 +156,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaAddByIndex() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertEquals(3, jsonElements.size());
 		Assertions.assertSame(foo, jsonElements.get(0));
@@ -178,7 +178,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaAddAll() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.addAll(Collections.emptyList());
 		});
@@ -186,7 +186,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaAddAll() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertEquals(2, jsonElements.size());
 		Assertions.assertSame(foo, jsonElements.get(0));
@@ -207,7 +207,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaAddAllViaIndex() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.addAll(0, Collections.emptyList());
 		});
@@ -215,7 +215,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaAddAllViaIndex() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertEquals(2, jsonElements.size());
 		Assertions.assertSame(foo, jsonElements.get(0));
@@ -236,7 +236,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaClear() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.clear();
 		});
@@ -244,7 +244,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaClear() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		jsonElements.clear();
 		Assertions.assertEquals(0, jsonArray.size());
@@ -253,7 +253,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaRemove() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.remove(foo);
 		});
@@ -262,7 +262,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaRemoveEvenIfObjectIsNotJsonElement() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.remove("whatever");
 		});
@@ -270,7 +270,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaRemove() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertTrue(jsonElements.remove(foo));
 		Assertions.assertEquals(2, jsonArray.size());
@@ -285,7 +285,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaRemoveViaIndex() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.remove(1);
 		});
@@ -293,7 +293,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaRemoveViaIndex() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar, baz);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertSame(bar, jsonElements.remove(1));
 		Assertions.assertEquals(2, jsonArray.size());
@@ -304,7 +304,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaRemoveAll() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz, qux);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.removeAll(List.of(bar, baz));
 		});
@@ -312,7 +312,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaRemoveAll() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar, baz, qux);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertTrue(jsonElements.removeAll(List.of(bar, baz)));
 		Assertions.assertEquals(2, jsonArray.size());
@@ -324,7 +324,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaRetainAll() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(foo, bar, baz, qux);
+			final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.retainAll(List.of(bar, baz));
 		});
@@ -332,7 +332,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaRetainAll() {
-		final JsonArray jsonArray = JsonArrays.create(foo, bar, baz, qux);
+		final JsonArray jsonArray = JsonArrays.of(foo, bar, baz, qux);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertTrue(jsonElements.retainAll(List.of(bar, baz)));
 		Assertions.assertEquals(2, jsonArray.size());
@@ -347,7 +347,7 @@ public final class JsonArraysTest {
 	@Test
 	public void testAsImmutableListCannotBeModifiedViaSet() {
 		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonArray jsonArray = JsonArrays.create(bar, bar, baz, qux);
+			final JsonArray jsonArray = JsonArrays.of(bar, bar, baz, qux);
 			final List<JsonElement> jsonElements = JsonArrays.asImmutableList(jsonArray);
 			jsonElements.set(0, foo);
 		});
@@ -355,7 +355,7 @@ public final class JsonArraysTest {
 
 	@Test
 	public void testAsMutableListCanBeModifiedViaSet() {
-		final JsonArray jsonArray = JsonArrays.create(bar, bar, baz);
+		final JsonArray jsonArray = JsonArrays.of(bar, bar, baz);
 		final List<JsonElement> jsonElements = JsonArrays.asMutableList(jsonArray);
 		Assertions.assertSame(bar, jsonElements.set(0, foo));
 		Assertions.assertEquals(3, jsonArray.size());
@@ -366,7 +366,7 @@ public final class JsonArraysTest {
 
 	private static JsonArray stringJsonArray(final String... values) {
 		return Stream.of(values)
-				.map(JsonPrimitives::createOrNull)
+				.map(JsonPrimitives::orNull)
 				.collect(JsonCollectors.toJsonArray());
 	}
 

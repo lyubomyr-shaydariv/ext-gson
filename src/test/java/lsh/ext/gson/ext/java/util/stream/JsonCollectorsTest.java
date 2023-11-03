@@ -27,7 +27,7 @@ public final class JsonCollectorsTest {
 				.entrySet()
 				.stream()
 				.collect(JsonCollectors.toJsonObject());
-		final JsonObject expected = JsonObjects.create(K1, v1, K2, v2, K3, v3);
+		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
 		Assertions.assertEquals(expected, actual);
 	}
 
@@ -36,8 +36,8 @@ public final class JsonCollectorsTest {
 		final JsonObject actual = Map.of(K2, v2, K3, v3)
 				.entrySet()
 				.stream()
-				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.create(K1, v1)));
-		final JsonObject expected = JsonObjects.create(K1, v1, K2, v2, K3, v3);
+				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.of(K1, v1)));
+		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
 		Assertions.assertEquals(expected, actual);
 	}
 
@@ -46,8 +46,8 @@ public final class JsonCollectorsTest {
 		final JsonObject actual = Map.of(K1, v1, K2, v2, K3, v3)
 				.entrySet()
 				.stream()
-				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.create(K1, v2, K2, v3, K3, v2)));
-		final JsonObject expected = JsonObjects.create(K1, v1, K2, v2, K3, v3);
+				.collect(JsonCollectors.toJsonObject(() -> JsonObjects.of(K1, v2, K2, v3, K3, v2)));
+		final JsonObject expected = JsonObjects.of(K1, v1, K2, v2, K3, v3);
 		Assertions.assertEquals(expected, actual);
 	}
 
@@ -55,15 +55,15 @@ public final class JsonCollectorsTest {
 	public void testToNewJsonArray() {
 		final JsonArray actual = Stream.of(v1, v2, v3)
 				.collect(JsonCollectors.toJsonArray());
-		final JsonArray expected = JsonArrays.create(v1, v2, v3);
+		final JsonArray expected = JsonArrays.of(v1, v2, v3);
 		Assertions.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testToExistingJsonArray() {
 		final JsonArray actual = Stream.of(v2, v3)
-				.collect(JsonCollectors.toJsonArray(() -> JsonArrays.create(v1)));
-		final JsonArray expected = JsonArrays.create(v1, v2, v3);
+				.collect(JsonCollectors.toJsonArray(() -> JsonArrays.of(v1)));
+		final JsonArray expected = JsonArrays.of(v1, v2, v3);
 		Assertions.assertEquals(expected, actual);
 	}
 

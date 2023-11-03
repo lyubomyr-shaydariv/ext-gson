@@ -16,11 +16,11 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class JsonArrays {
 
-	public static JsonArray create() {
+	public static JsonArray of() {
 		return new JsonArray();
 	}
 
-	public static JsonArray create(
+	public static JsonArray of(
 			@Nullable final JsonElement e1
 	) {
 		final JsonArray jsonArray = new JsonArray();
@@ -28,7 +28,7 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	public static JsonArray create(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2
 	) {
@@ -38,7 +38,7 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	public static JsonArray create(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3
@@ -50,7 +50,7 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	public static JsonArray create(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -64,7 +64,7 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	public static JsonArray create(
+	public static JsonArray of(
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3,
@@ -80,7 +80,7 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	public static JsonArray create(final JsonElement... jsonElements) {
+	public static JsonArray of(final JsonElement... jsonElements) {
 		final JsonArray jsonArray = new JsonArray(jsonElements.length);
 		for ( final JsonElement e : jsonElements ) {
 			jsonArray.add(e);
