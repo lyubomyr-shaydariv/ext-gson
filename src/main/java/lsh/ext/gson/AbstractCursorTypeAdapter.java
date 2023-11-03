@@ -21,7 +21,7 @@ public abstract class AbstractCursorTypeAdapter<C, E>
 
 	protected abstract Iterator<E> toIterator(C cursor);
 
-	protected abstract C fromIterator(Iterator<E> iterator);
+	protected abstract C fromIterator(Iterator<? extends E> iterator);
 
 	@Override
 	public final void write(final JsonWriter out, final C cursor)

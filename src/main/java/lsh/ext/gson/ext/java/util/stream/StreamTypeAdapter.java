@@ -9,24 +9,26 @@ import lsh.ext.gson.AbstractCursorTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class StreamTypeAdapter<E>
-		extends AbstractCursorTypeAdapter<Stream<E>, E> {
+		extends AbstractCursorTypeAdapter<Stream<? extends E>, E> {
 
 	private StreamTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
 		super(elementTypeAdapter);
 	}
 
-	public static <E> TypeAdapter<Stream<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<Stream<? extends E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 		return new StreamTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
 	@Override
-	protected Iterator<E> toIterator(final Stream<E> stream) {
-		return stream.iterator();
+	protected Iterator<E> toIterator(final Stream<? extends E> stream) {
+		@SuppressWarnings("unchecked")
+		final Iterator<E> castIterator = (Iterator<E>) stream.iterator();
+		return castIterator;
 	}
 
 	@Override
-	protected Stream<E> fromIterator(final Iterator<E> iterator) {
+	protected Stream<E> fromIterator(final Iterator<? extends E> iterator) {
 		return Streams.from(iterator);
 	}
 

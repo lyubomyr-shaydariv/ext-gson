@@ -8,25 +8,29 @@ import lombok.Getter;
 import lsh.ext.gson.AbstractCursorTypeAdapter;
 
 public final class IteratorTypeAdapter<E>
-		extends AbstractCursorTypeAdapter<Iterator<E>, E> {
+		extends AbstractCursorTypeAdapter<Iterator<? extends E>, E> {
 
 	private IteratorTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
 		super(elementTypeAdapter);
 	}
 
-	public static <E> TypeAdapter<Iterator<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<Iterator<? extends E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 		return new IteratorTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
 	@Override
-	protected Iterator<E> toIterator(final Iterator<E> iterator) {
-		return iterator;
+	protected Iterator<E> toIterator(final Iterator<? extends E> iterator) {
+		@SuppressWarnings("unchecked")
+		final Iterator<E> castIterator = (Iterator<E>) iterator;
+		return castIterator;
 	}
 
 	@Override
-	protected Iterator<E> fromIterator(final Iterator<E> iterator) {
-		return iterator;
+	protected Iterator<E> fromIterator(final Iterator<? extends E> iterator) {
+		@SuppressWarnings("unchecked")
+		final Iterator<E> castIterator = (Iterator<E>) iterator;
+		return castIterator;
 	}
 
 	public static final class Factory<E>

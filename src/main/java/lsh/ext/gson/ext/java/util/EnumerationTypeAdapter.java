@@ -9,24 +9,24 @@ import lombok.Getter;
 import lsh.ext.gson.AbstractCursorTypeAdapter;
 
 public final class EnumerationTypeAdapter<E>
-		extends AbstractCursorTypeAdapter<Enumeration<E>, E> {
+		extends AbstractCursorTypeAdapter<Enumeration<? extends E>, E> {
 
 	private EnumerationTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
 		super(elementTypeAdapter);
 	}
 
-	public static <E> TypeAdapter<Enumeration<E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
+	public static <E> TypeAdapter<Enumeration<? extends E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
 		return new EnumerationTypeAdapter<>(elementTypeAdapter)
 				.nullSafe();
 	}
 
 	@Override
-	protected Iterator<E> toIterator(final Enumeration<E> enumeration) {
+	protected Iterator<E> toIterator(final Enumeration<? extends E> enumeration) {
 		return Iterators.from(enumeration);
 	}
 
 	@Override
-	protected Enumeration<E> fromIterator(final Iterator<E> iterator) {
+	protected Enumeration<E> fromIterator(final Iterator<? extends E> iterator) {
 		return Enumerations.from(iterator);
 	}
 
