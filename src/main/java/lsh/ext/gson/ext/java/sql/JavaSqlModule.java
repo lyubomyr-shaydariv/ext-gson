@@ -21,7 +21,7 @@ import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
 public final class JavaSqlModule
 		extends AbstractModule {
 
-	@Getter(onMethod_ = { @SuppressFBWarnings("MS_EXPOSE_REP") })
+	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
 	private static final IModule defaultInstance = Builder.create()
 			.build();
 
@@ -29,7 +29,7 @@ public final class JavaSqlModule
 		super(typeAdapterFactories);
 	}
 
-	public static IFactory0<java.util.Date> createFactory(final TypeToken<java.util.Date> typeToken) {
+	public static IFactory0<java.util.Date> createSqlDateTypesFactory(final TypeToken<java.util.Date> typeToken) {
 		@SuppressWarnings("unchecked")
 		final Class<? extends java.util.Date> rawType = (Class<? extends java.util.Date>) typeToken.getRawType();
 		if ( rawType == Date.class ) {
@@ -49,7 +49,7 @@ public final class JavaSqlModule
 	public static final class Builder {
 
 		@Setter
-		private TypeAdapterFactory unixTimeDateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(JavaSqlModule::createFactory);
+		private TypeAdapterFactory unixTimeDateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(JavaSqlModule::createSqlDateTypesFactory);
 
 		public static Builder create() {
 			return new Builder();

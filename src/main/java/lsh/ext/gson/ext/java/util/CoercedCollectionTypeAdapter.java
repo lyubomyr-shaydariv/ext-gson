@@ -28,9 +28,9 @@ public final class CoercedCollectionTypeAdapter<E>
 
 	public static <E> TypeAdapter<Collection<E>> getInstance(
 			final TypeAdapter<E> elementTypeAdapter,
-			final Supplier<? extends IBuilder1<? super E, ? extends Collection<E>>> collectionFactory
+			final Supplier<? extends IBuilder1<? super E, ? extends Collection<E>>> collectionBuilderFactory
 	) {
-		return new CoercedCollectionTypeAdapter<E>(elementTypeAdapter, collectionFactory)
+		return new CoercedCollectionTypeAdapter<E>(elementTypeAdapter, collectionBuilderFactory)
 				.nullSafe();
 	}
 
@@ -121,7 +121,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		}
 
 		public static <E> IBuilder1<E, Collection<E>> builder(
-				@SuppressWarnings("unused") final TypeToken<Collection<E>> typeToken,
+				final TypeToken<Collection<E>> typeToken,
 				final IFactory0.IFactory<Collection<E>> factoryFactory
 		) {
 			final IFactory0<Collection<E>> factory = factoryFactory.create(typeToken);

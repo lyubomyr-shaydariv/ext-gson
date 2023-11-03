@@ -13,7 +13,7 @@ abstract class AbstractTemporalAccessorTypeAdapter<T extends TemporalAccessor>
 		extends AbstractStringTypeAdapter<T> {
 
 	private final DateTimeFormatter dateTimeFormatter;
-	private final TemporalQuery<T> query;
+	private final TemporalQuery<? extends T> query;
 
 	@Override
 	protected final T fromString(final String text) {

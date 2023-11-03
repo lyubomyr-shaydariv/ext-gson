@@ -108,16 +108,16 @@ public final class BagTypeAdapter<E>
 		) {
 			final IFactory0<Bag<E>> factory = factoryFactory.create(typeToken);
 			return new IBuilder2<>() {
-				private final Bag<E> hashBag = factory.create();
+				private final Bag<E> bag = factory.create();
 
 				@Override
 				public void modify(final E e, final Integer n) {
-					hashBag.add(e, n);
+					bag.add(e, n);
 				}
 
 				@Override
 				public Bag<E> build() {
-					return hashBag;
+					return bag;
 				}
 			};
 		}
