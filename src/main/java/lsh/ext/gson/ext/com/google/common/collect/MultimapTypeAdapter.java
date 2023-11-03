@@ -95,12 +95,33 @@ public final class MultimapTypeAdapter<V>
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multimap> rawType = (Class<? extends Multimap<?, ?>>) typeToken.getRawType();
 			if ( ImmutableMultimap.class.isAssignableFrom(rawType) ) {
-				return new ImmutableBuilder<>(ImmutableMultimap.builder());
+				final ImmutableMultimap.Builder<String, V> builder = ImmutableMultimap.builder();
+				return new IBuilder2<>() {
+					@Override
+					public void modify(final String k, final V v) {
+						builder.put(k, v);
+					}
+
+					@Override
+					public Multimap<String, V> build() {
+						return builder.build();
+					}
+				};
 			}
-			final IFactory0<Multimap<String, V>> factory = factoryFactory.create(typeToken);
 			@SuppressWarnings("LawOfDemeter")
-			final Multimap<String, V> multimap = factory.create();
-			return new MutableBuilder<>(multimap);
+			final Multimap<String, V> multimap = factoryFactory.create(typeToken)
+					.create();
+			return new IBuilder2<>() {
+				@Override
+				public void modify(final String k, final V v) {
+					multimap.put(k, v);
+				}
+
+				@Override
+				public Multimap<String, V> build() {
+					return multimap;
+				}
+			};
 		}
 
 		@Override
@@ -118,42 +139,6 @@ public final class MultimapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final IBuilder2.IFactory<String, V, Multimap<String, V>> castMultimapBuilderFactory = (IBuilder2.IFactory<String, V, Multimap<String, V>>) multimapBuilderFactory;
 			return MultimapTypeAdapter.getInstance(valueTypeAdapter, () -> castMultimapBuilderFactory.create(castTypeToken));
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class MutableBuilder<V>
-				implements IBuilder2<String, V, Multimap<String, V>> {
-
-			private final Multimap<String, V> multimap;
-
-			@Override
-			public void modify(final String k, final V v) {
-				multimap.put(k, v);
-			}
-
-			@Override
-			public Multimap<String, V> build() {
-				return multimap;
-			}
-
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class ImmutableBuilder<V>
-				implements IBuilder2<String, V, Multimap<String, V>> {
-
-			private final ImmutableMultimap.Builder<String, V> builder;
-
-			@Override
-			public void modify(final String k, final V v) {
-				builder.put(k, v);
-			}
-
-			@Override
-			public Multimap<String, V> build() {
-				return builder.build();
-			}
-
 		}
 
 	}

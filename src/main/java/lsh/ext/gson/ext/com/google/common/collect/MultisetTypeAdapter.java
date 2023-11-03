@@ -15,6 +15,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.CollectionBuilder;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -94,12 +95,23 @@ public final class MultisetTypeAdapter<E>
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multiset> rawType = (Class<? extends Multiset<?>>) typeToken.getRawType();
 			if ( ImmutableMultiset.class.isAssignableFrom(rawType) ) {
-				return new ImmutableBuilder<>(ImmutableMultiset.builder());
+				final ImmutableMultiset.Builder<E> builder = ImmutableMultiset.builder();
+				return new IBuilder1<>() {
+					@Override
+					public void modify(final E e) {
+						builder.add(e);
+					}
+
+					@Override
+					public Multiset<E> build() {
+						return builder.build();
+					}
+				};
 			}
-			final IFactory0<Multiset<E>> factory = factoryFactory.create(typeToken);
 			@SuppressWarnings("LawOfDemeter")
-			final Multiset<E> multiset = factory.create();
-			return new MutableBuilder<>(multiset);
+			final Multiset<E> multiset = factoryFactory.create(typeToken)
+					.create();
+			return CollectionBuilder.getInstance(multiset);
 		}
 
 		@Override
@@ -117,42 +129,6 @@ public final class MultisetTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final IBuilder1.IFactory<E, Multiset<E>> castMultisetBuilderFactory = (IBuilder1.IFactory<E, Multiset<E>>) multisetBuilderFactory;
 			return MultisetTypeAdapter.getInstance(elementTypeAdapter, () -> castMultisetBuilderFactory.create(castTypeToken));
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class MutableBuilder<E>
-				implements IBuilder1<E, Multiset<E>> {
-
-			private final Multiset<E> multiset;
-
-			@Override
-			public void modify(final E v) {
-				multiset.add(v);
-			}
-
-			@Override
-			public Multiset<E> build() {
-				return multiset;
-			}
-
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class ImmutableBuilder<E>
-				implements IBuilder1<E, Multiset<E>> {
-
-			private final ImmutableMultiset.Builder<E> builder;
-
-			@Override
-			public void modify(final E v) {
-				builder.add(v);
-			}
-
-			@Override
-			public Multiset<E> build() {
-				return builder.build();
-			}
-
 		}
 
 	}

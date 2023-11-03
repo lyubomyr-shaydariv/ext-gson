@@ -16,6 +16,7 @@ import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.CollectionBuilder;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IFactory0;
 
@@ -123,7 +124,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		public static <E> IBuilder1<E, Collection<E>> builder(
 				final IFactory0<? extends Collection<E>> factory
 		) {
-			return new MutableCollectionBuilder<>(factory.create());
+			return CollectionBuilder.getInstance(factory.create());
 		}
 
 		@Override
@@ -137,24 +138,6 @@ public final class CoercedCollectionTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final IBuilder1.IFactory<E, Collection<E>> castCollectionBuilderFactory = (IBuilder1.IFactory<E, Collection<E>>) collectionBuilderFactory;
 			return CoercedCollectionTypeAdapter.getInstance(elementTypeAdapter, () -> castCollectionBuilderFactory.create(castTypeToken));
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-		private static final class MutableCollectionBuilder<E>
-				implements IBuilder1<E, Collection<E>> {
-
-			private final Collection<E> collection;
-
-			@Override
-			public void modify(final E e) {
-				collection.add(e);
-			}
-
-			@Override
-			public Collection<E> build() {
-				return collection;
-			}
-
 		}
 
 	}

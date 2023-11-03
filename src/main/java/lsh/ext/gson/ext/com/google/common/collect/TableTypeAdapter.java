@@ -109,12 +109,33 @@ public final class TableTypeAdapter<V>
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Table> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
 			if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
-				return new ImmutableBuilder<>(ImmutableTable.builder());
+				final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
+				return new IBuilder3<>() {
+					@Override
+					public void modify(final String rowKey, final String columnKey, final V v) {
+						builder.put(rowKey, columnKey, v);
+					}
+
+					@Override
+					public Table<String, String, V> build() {
+						return builder.build();
+					}
+				};
 			}
-			final IFactory0<Table<String, String, V>> factory = factoryFactory.create(typeToken);
 			@SuppressWarnings("LawOfDemeter")
-			final Table<String, String, V> table = factory.create();
-			return new MutableBuilder<>(table);
+			final Table<String, String, V> table = factoryFactory.create(typeToken)
+					.create();
+			return new IBuilder3<>() {
+				@Override
+				public void modify(final String rowKey, final String columnKey, final V v) {
+					table.put(rowKey, columnKey, v);
+				}
+
+				@Override
+				public Table<String, String, V> build() {
+					return table;
+				}
+			};
 		}
 
 		@Override
@@ -132,42 +153,6 @@ public final class TableTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final IBuilder3.IFactory<String, String, V, Table<String, String, V>> castTableBuilderFactory = (IBuilder3.IFactory<String, String, V, Table<String, String, V>>) tableBuilderFactory;
 			return TableTypeAdapter.getInstance(valueTypeAdapter, () -> castTableBuilderFactory.create(castTypeToken));
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class MutableBuilder<V>
-				implements IBuilder3<String, String, V, Table<String, String, V>> {
-
-			private final Table<String, String, V> table;
-
-			@Override
-			public void modify(final String k1, final String k2, final V v) {
-				table.put(k1, k2, v);
-			}
-
-			@Override
-			public Table<String, String, V> build() {
-				return table;
-			}
-
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class ImmutableBuilder<V>
-				implements IBuilder3<String, String, V, Table<String, String, V>> {
-
-			private final ImmutableTable.Builder<String, String, V> builder;
-
-			@Override
-			public void modify(final String k1, final String k2, final V v) {
-				builder.put(k1, k2, v);
-			}
-
-			@Override
-			public Table<String, String, V> build() {
-				return builder.build();
-			}
-
 		}
 
 	}

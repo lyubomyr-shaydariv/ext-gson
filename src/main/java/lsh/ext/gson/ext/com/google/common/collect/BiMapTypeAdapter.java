@@ -19,6 +19,7 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
+import lsh.ext.gson.MapBuilder;
 import lsh.ext.gson.ParameterizedTypes;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -95,12 +96,23 @@ public final class BiMapTypeAdapter<V>
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends BiMap> rawType = (Class<? extends BiMap<String, ?>>) typeToken.getRawType();
 			if ( ImmutableBiMap.class.isAssignableFrom(rawType) ) {
-				return new ImmutableBuilder<>(ImmutableBiMap.builder());
+				final ImmutableBiMap.Builder<String, V> builder = ImmutableBiMap.builder();
+				return new IBuilder2<>() {
+					@Override
+					public void modify(final String k, final V v) {
+						builder.put(k, v);
+					}
+
+					@Override
+					public BiMap<String, V> build() {
+						return builder.build();
+					}
+				};
 			}
-			final IFactory0<BiMap<String, V>> factory = factoryFactory.create(typeToken);
 			@SuppressWarnings("LawOfDemeter")
-			final BiMap<String, V> biMap = factory.create();
-			return new MutableBuilder<>(biMap);
+			final BiMap<String, V> biMap = factoryFactory.create(typeToken)
+					.create();
+			return MapBuilder.getInstance(biMap);
 		}
 
 		@Override
@@ -119,42 +131,6 @@ public final class BiMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final IBuilder2.IFactory<String, V, BiMap<String, V>> castNewBiMapBuilderFactory = (IBuilder2.IFactory<String, V, BiMap<String, V>>) biMapBuilderFactory;
 			return BiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castNewBiMapBuilderFactory.create(castTypeToken));
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class MutableBuilder<V>
-				implements IBuilder2<String, V, BiMap<String, V>> {
-
-			private final BiMap<String, V> biMap;
-
-			@Override
-			public void modify(final String k, final V v) {
-				biMap.put(k, v);
-			}
-
-			@Override
-			public BiMap<String, V> build() {
-				return biMap;
-			}
-
-		}
-
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class ImmutableBuilder<V>
-				implements IBuilder2<String, V, BiMap<String, V>> {
-
-			private final ImmutableBiMap.Builder<String, V> builder;
-
-			@Override
-			public void modify(final String k, final V v) {
-				builder.put(k, v);
-			}
-
-			@Override
-			public BiMap<String, V> build() {
-				return builder.build();
-			}
-
 		}
 
 	}

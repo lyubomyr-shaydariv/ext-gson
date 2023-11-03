@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.CollectionBuilder;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -89,20 +90,10 @@ public final class MultiSetTypeAdapter<E>
 				final TypeToken<MultiSet<E>> typeToken,
 				final IFactory0.IFactory<MultiSet<E>> factoryFactory
 		) {
-			final IFactory0<MultiSet<E>> factory = factoryFactory.create(typeToken);
 			@SuppressWarnings("LawOfDemeter")
-			final MultiSet<E> multiSet = factory.create();
-			return new IBuilder1<>() {
-				@Override
-				public void modify(final E e) {
-					multiSet.add(e);
-				}
-
-				@Override
-				public MultiSet<E> build() {
-					return multiSet;
-				}
-			};
+			final MultiSet<E> multiSet = factoryFactory.create(typeToken)
+					.create();
+			return CollectionBuilder.getInstance(multiSet);
 		}
 
 		@Override

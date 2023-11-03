@@ -106,9 +106,9 @@ public final class BagTypeAdapter<E>
 				final TypeToken<Bag<E>> typeToken,
 				final IFactory0.IFactory<Bag<E>> factoryFactory
 		) {
-			final IFactory0<Bag<E>> factory = factoryFactory.create(typeToken);
 			@SuppressWarnings("LawOfDemeter")
-			final Bag<E> bag = factory.create();
+			final Bag<E> bag = factoryFactory.create(typeToken)
+					.create();
 			return new IBuilder2<>() {
 				@Override
 				public void modify(final E e, final Integer n) {
