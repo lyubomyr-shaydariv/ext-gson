@@ -92,9 +92,9 @@ public final class MultiMapTypeAdapter<V>
 				final IFactory0.IFactory<MultiMap<String, V>> factoryFactory
 		) {
 			final IFactory0<MultiMap<String, V>> factory = factoryFactory.create(typeToken);
+			@SuppressWarnings("LawOfDemeter")
+			final MultiMap<String, V> multiMap = factory.create();
 			return new IBuilder2<>() {
-				private final MultiMap<String, V> multiMap = factory.create();
-
 				@Override
 				public void modify(final String k, final V v) {
 					multiMap.put(k, v);

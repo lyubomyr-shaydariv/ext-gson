@@ -97,7 +97,9 @@ public final class MultisetTypeAdapter<E>
 				return new ImmutableBuilder<>(ImmutableMultiset.builder());
 			}
 			final IFactory0<Multiset<E>> factory = factoryFactory.create(typeToken);
-			return new MutableBuilder<>(factory.create());
+			@SuppressWarnings("LawOfDemeter")
+			final Multiset<E> multiset = factory.create();
+			return new MutableBuilder<>(multiset);
 		}
 
 		@Override

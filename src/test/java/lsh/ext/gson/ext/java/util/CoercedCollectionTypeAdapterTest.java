@@ -37,42 +37,42 @@ public final class CoercedCollectionTypeAdapterTest
 		final TypeAdapter<Map<String, Integer>> stringToIntegerMapTypeAdapter = gson.getAdapter(stringToIntegerMapTypeToken);
 		return List.of(
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(Mockito.mock(), typeToken -> ArrayList::new)),
+						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(ArrayList::new)),
 						"{\"foo\":1,\"bar\":2}",
 						List.of(ImmutableMap.of("foo", 1, "bar", 2))
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(Mockito.mock(), typeToken -> ArrayList::new)),
+						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(ArrayList::new)),
 						"\"foo\"",
 						List.of("foo")
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(Mockito.mock(), typeToken -> ArrayList::new)),
+						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(ArrayList::new)),
 						"39",
 						List.of(39)
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(Mockito.mock(), typeToken -> ArrayList::new)),
+						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(ArrayList::new)),
 						"true",
 						List.of(true)
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(Mockito.mock(), typeToken -> ArrayList::new)),
+						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(ArrayList::new)),
 						"[{\"foo\":1,\"bar\":2},{\"bar\":3,\"qux\":4}]",
 						List.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4))
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(Mockito.mock(), typeToken -> ArrayList::new)),
+						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(ArrayList::new)),
 						"[\"foo\",\"bar\",\"baz\"]",
 						List.of("foo", "bar", "baz")
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(Mockito.mock(), typeToken -> ArrayList::new)),
+						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(ArrayList::new)),
 						"[39,42,100]",
 						List.of(39, 42, 100)
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(Mockito.mock(), typeToken -> ArrayList::new)),
+						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.builder(ArrayList::new)),
 						"[true,false,true]",
 						List.of(true, false, true)
 				)

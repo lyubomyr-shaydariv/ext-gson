@@ -98,7 +98,9 @@ public final class BiMapTypeAdapter<V>
 				return new ImmutableBuilder<>(ImmutableBiMap.builder());
 			}
 			final IFactory0<BiMap<String, V>> factory = factoryFactory.create(typeToken);
-			return new MutableBuilder<>(factory.create());
+			@SuppressWarnings("LawOfDemeter")
+			final BiMap<String, V> biMap = factory.create();
+			return new MutableBuilder<>(biMap);
 		}
 
 		@Override

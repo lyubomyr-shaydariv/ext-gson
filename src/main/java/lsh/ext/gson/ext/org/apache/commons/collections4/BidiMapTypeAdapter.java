@@ -91,9 +91,9 @@ public final class BidiMapTypeAdapter<V>
 				final IFactory0.IFactory<BidiMap<String, V>> factoryFactory
 		) {
 			final IFactory0<BidiMap<String, V>> factory = factoryFactory.create(typeToken);
+			@SuppressWarnings("LawOfDemeter")
+			final BidiMap<String, V> bidiMap = factory.create();
 			return new IBuilder2<>() {
-				private final BidiMap<String, V> bidiMap = factory.create();
-
 				@Override
 				public void modify(final String k, final V v) {
 					bidiMap.put(k, v);

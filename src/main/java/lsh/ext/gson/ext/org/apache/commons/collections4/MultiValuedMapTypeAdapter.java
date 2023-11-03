@@ -90,9 +90,9 @@ public final class MultiValuedMapTypeAdapter<V>
 				final IFactory0.IFactory<MultiValuedMap<String, V>> factoryFactory
 		) {
 			final IFactory0<MultiValuedMap<String, V>> factory = factoryFactory.create(typeToken);
+			@SuppressWarnings("LawOfDemeter")
+			final MultiValuedMap<String, V> multiValuedMap = factory.create();
 			return new IBuilder2<>() {
-				private final MultiValuedMap<String, V> multiValuedMap = factory.create();
-
 				@Override
 				public void modify(final String k, final V v) {
 					multiValuedMap.put(k, v);

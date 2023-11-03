@@ -90,9 +90,9 @@ public final class MultiSetTypeAdapter<E>
 				final IFactory0.IFactory<MultiSet<E>> factoryFactory
 		) {
 			final IFactory0<MultiSet<E>> factory = factoryFactory.create(typeToken);
+			@SuppressWarnings("LawOfDemeter")
+			final MultiSet<E> multiSet = factory.create();
 			return new IBuilder1<>() {
-				private final MultiSet<E> multiSet = factory.create();
-
 				@Override
 				public void modify(final E e) {
 					multiSet.add(e);

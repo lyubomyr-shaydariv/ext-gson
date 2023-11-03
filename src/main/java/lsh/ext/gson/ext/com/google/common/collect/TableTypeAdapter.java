@@ -112,7 +112,9 @@ public final class TableTypeAdapter<V>
 				return new ImmutableBuilder<>(ImmutableTable.builder());
 			}
 			final IFactory0<Table<String, String, V>> factory = factoryFactory.create(typeToken);
-			return new MutableBuilder<>(factory.create());
+			@SuppressWarnings("LawOfDemeter")
+			final Table<String, String, V> table = factory.create();
+			return new MutableBuilder<>(table);
 		}
 
 		@Override

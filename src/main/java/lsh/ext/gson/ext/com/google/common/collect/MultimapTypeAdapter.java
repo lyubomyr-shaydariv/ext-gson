@@ -98,7 +98,9 @@ public final class MultimapTypeAdapter<V>
 				return new ImmutableBuilder<>(ImmutableMultimap.builder());
 			}
 			final IFactory0<Multimap<String, V>> factory = factoryFactory.create(typeToken);
-			return new MutableBuilder<>(factory.create());
+			@SuppressWarnings("LawOfDemeter")
+			final Multimap<String, V> multimap = factory.create();
+			return new MutableBuilder<>(multimap);
 		}
 
 		@Override

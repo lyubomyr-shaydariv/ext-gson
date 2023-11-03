@@ -109,7 +109,7 @@ public final class CoercedCollectionTypeAdapter<E>
 				final TypeToken<E> elementTypeToken,
 				final IFactory0.IFactory<Collection<E>> factoryFactory
 		) {
-			return getInstance(baseCollectionType, elementTypeToken, (IBuilder1.IFactory<E, Collection<E>>) typeToken -> builder(typeToken, factoryFactory));
+			return getInstance(baseCollectionType, elementTypeToken, (IBuilder1.IFactory<E, Collection<E>>) typeToken -> builder(factoryFactory.create(typeToken)));
 		}
 
 		public static <E> TypeAdapterFactory getInstance(
@@ -121,10 +121,8 @@ public final class CoercedCollectionTypeAdapter<E>
 		}
 
 		public static <E> IBuilder1<E, Collection<E>> builder(
-				final TypeToken<Collection<E>> typeToken,
-				final IFactory0.IFactory<Collection<E>> factoryFactory
+				final IFactory0<? extends Collection<E>> factory
 		) {
-			final IFactory0<Collection<E>> factory = factoryFactory.create(typeToken);
 			return new MutableCollectionBuilder<>(factory.create());
 		}
 
