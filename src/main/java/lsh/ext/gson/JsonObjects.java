@@ -1,16 +1,11 @@
 package lsh.ext.gson;
 
-import java.util.AbstractMap;
-import java.util.AbstractSet;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -119,127 +114,11 @@ public final class JsonObjects {
 	}
 
 	public static Map<String, JsonElement> asImmutableMap(final JsonObject jsonObject) {
-		return new ImmutableJsonObjectMap(jsonObject);
+		return Collections.unmodifiableMap(jsonObject.asMap());
 	}
 
 	public static Map<String, JsonElement> asMutableMap(final JsonObject jsonObject) {
-		return new MutableJsonObjectMap(jsonObject);
-	}
-
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	private abstract static class AbstractJsonObjectMap
-			extends AbstractMap<String, JsonElement> {
-
-		private final JsonObject jsonObject;
-
-		protected abstract Set<Entry<String, JsonElement>> doEntrySet(JsonObject jsonObject);
-
-		@Nullable
-		protected abstract JsonElement doPut(JsonObject jsonObject, String key, JsonElement jsonElement);
-
-		@Override
-		public final Set<Entry<String, JsonElement>> entrySet() {
-			return doEntrySet(jsonObject);
-		}
-
-		@Override
-		public final JsonElement put(final String key, final JsonElement jsonElement) {
-			return doPut(jsonObject, key, jsonElement);
-		}
-
-	}
-
-	private static final class ImmutableJsonObjectMap
-			extends AbstractJsonObjectMap {
-
-		private ImmutableJsonObjectMap(final JsonObject jsonObject) {
-			super(jsonObject);
-		}
-
-		@Override
-		protected Set<Entry<String, JsonElement>> doEntrySet(final JsonObject jsonObject) {
-			return new ImmutableJsonObjectSet(jsonObject);
-		}
-
-		@Override
-		protected JsonElement doPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
-			throw new UnsupportedOperationException();
-		}
-
-	}
-
-	private static final class MutableJsonObjectMap
-			extends AbstractJsonObjectMap {
-
-		private MutableJsonObjectMap(final JsonObject jsonObject) {
-			super(jsonObject);
-		}
-
-		@Override
-		protected Set<Entry<String, JsonElement>> doEntrySet(final JsonObject jsonObject) {
-			return new MutableJsonObjectSet(jsonObject);
-		}
-
-		@Override
-		@Nullable
-		protected JsonElement doPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
-			@Nullable
-			final JsonElement previous = jsonObject.get(key);
-			jsonObject.add(key, jsonElement);
-			return previous;
-		}
-
-	}
-
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	private abstract static class AbstractJsonObjectSet
-			extends AbstractSet<Map.Entry<String, JsonElement>> {
-
-		private final JsonObject jsonObject;
-
-		protected abstract Iterator<Map.Entry<String, JsonElement>> doIterator(JsonObject jsonObject);
-
-		@Override
-		public final Iterator<Map.Entry<String, JsonElement>> iterator() {
-			return doIterator(jsonObject);
-		}
-
-		@Override
-		public final int size() {
-			return jsonObject.size();
-		}
-
-	}
-
-	private static final class ImmutableJsonObjectSet
-			extends AbstractJsonObjectSet {
-
-		private ImmutableJsonObjectSet(final JsonObject jsonObject) {
-			super(jsonObject);
-		}
-
-		@Override
-		protected Iterator<Map.Entry<String, JsonElement>> doIterator(final JsonObject jsonObject) {
-			final Iterator<Map.Entry<String, JsonElement>> iterator = jsonObject.entrySet()
-					.iterator();
-			return UnmodifiableIterator.of(iterator);
-		}
-
-	}
-
-	private static final class MutableJsonObjectSet
-			extends AbstractJsonObjectSet {
-
-		private MutableJsonObjectSet(final JsonObject jsonObject) {
-			super(jsonObject);
-		}
-
-		@Override
-		protected Iterator<Map.Entry<String, JsonElement>> doIterator(final JsonObject jsonObject) {
-			return jsonObject.entrySet()
-					.iterator();
-		}
-
+		return jsonObject.asMap();
 	}
 
 }
