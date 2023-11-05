@@ -1,7 +1,6 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
-
 import javax.annotation.WillNotClose;
 
 import com.google.gson.stream.JsonReader;

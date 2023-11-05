@@ -57,20 +57,19 @@ final class JsonFailSafeTypeAdapter<T>
 		case BOOLEAN:
 		case NULL:
 			in.skipValue();
-			break;
+			return null;
 		case END_ARRAY:
 			in.endArray();
-			break;
+			return null;
 		case END_OBJECT:
 			in.endObject();
-			break;
+			return null;
 		case END_DOCUMENT:
 			// do nothing
-			break;
+			return null;
 		default:
 			throw new AssertionError(jsonToken);
 		}
-		return null;
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)

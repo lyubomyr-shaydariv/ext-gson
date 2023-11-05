@@ -13,7 +13,6 @@ import lsh.ext.gson.AbstractTypeAdapterTest;
 import lsh.ext.gson.Gsons;
 import lsh.ext.gson.TypeTokens;
 import org.junit.jupiter.params.provider.Arguments;
-import org.mockito.Mockito;
 
 public final class CoercedCollectionTypeAdapterTest
 		extends AbstractTypeAdapterTest<List<?>, List<?>> {

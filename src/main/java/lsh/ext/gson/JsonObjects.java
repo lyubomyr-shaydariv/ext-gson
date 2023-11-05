@@ -134,6 +134,7 @@ public final class JsonObjects {
 
 		protected abstract Set<Entry<String, JsonElement>> doEntrySet(JsonObject jsonObject);
 
+		@Nullable
 		protected abstract JsonElement doPut(JsonObject jsonObject, String key, JsonElement jsonElement);
 
 		@Override
@@ -180,7 +181,9 @@ public final class JsonObjects {
 		}
 
 		@Override
+		@Nullable
 		protected JsonElement doPut(final JsonObject jsonObject, final String key, final JsonElement jsonElement) {
+			@Nullable
 			final JsonElement previous = jsonObject.get(key);
 			jsonObject.add(key, jsonElement);
 			return previous;
