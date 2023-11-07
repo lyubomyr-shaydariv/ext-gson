@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 
 public final class JsonPrimitivesTest {
 
-	private static final String K1 = "foo";
-	private static final String K2 = "bar";
-
 	@Test
 	public void testJsonPrimitiveForBooleans() {
 		Assertions.assertEquals(new JsonPrimitive(true), JsonPrimitives.of(Boolean.TRUE));
@@ -39,8 +36,8 @@ public final class JsonPrimitivesTest {
 
 	@Test
 	public void testJsonPrimitivesForStrings() {
-		Assertions.assertEquals(new JsonPrimitive(K1), JsonPrimitives.of(K1));
-		Assertions.assertEquals(new JsonPrimitive(K2), JsonPrimitives.of(K2));
+		Assertions.assertEquals(new JsonPrimitive("foo"), JsonPrimitives.of("foo"));
+		Assertions.assertEquals(new JsonPrimitive("bar"), JsonPrimitives.of("bar"));
 	}
 
 	@Test

@@ -2,6 +2,7 @@ package lsh.ext.gson;
 
 import java.io.StringReader;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -23,6 +24,7 @@ public final class JsonReaderIteratorTest {
 		Assertions.assertTrue(unit.hasNext());
 		Assertions.assertEquals(new FooBar(5, 6), unit.next());
 		Assertions.assertFalse(unit.hasNext());
+		Assertions.assertThrows(NoSuchElementException.class, unit::next);
 	}
 
 	@Test
@@ -30,6 +32,7 @@ public final class JsonReaderIteratorTest {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
 		final Iterator<?> unit = JsonReaderIterator.getInstance(gson.getAdapter(FooBar.class), in);
 		Assertions.assertFalse(unit.hasNext());
+		Assertions.assertThrows(NoSuchElementException.class, unit::next);
 	}
 
 	private record FooBar(

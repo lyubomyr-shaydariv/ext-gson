@@ -1,141 +1,142 @@
 package lsh.ext.gson;
 
 import java.util.Map;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
 public final class JsonObjectsTest {
 
-	private static final String K1 = "foo";
-	private static final String K2 = "bar";
-	private static final String K3 = "baz";
-	private static final String K4 = "qux";
-	private static final String K5 = "quux";
+	private static final Class<?> modifiableMapClass = new JsonObject()
+			.asMap()
+			.getClass();
+
+	private static final String[] ks = {
+			"foo", "bar", "baz", "qux", "quux"
+	};
+
+	private static final JsonPrimitive[] vs = IntStream.range(0, ks.length)
+			.mapToObj(JsonPrimitive::new)
+			.toArray(JsonPrimitive[]::new);
 
 	private static final JsonPrimitive l = new JsonPrimitive("L");
 	private static final JsonPrimitive r = new JsonPrimitive("R");
 
 	@Test
 	public void testJsonObject() {
-		Assertions.assertEquals(new JsonObject(), JsonObjects.of());
+		Assertions.assertEquals(
+				new JsonObject(),
+				JsonObjects.of()
+		);
 	}
 
 	@Test
 	public void testJsonObject1() {
-		final JsonObject o1 = new JsonObject();
-		o1.addProperty(K1, 1);
-		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1)));
-		final JsonObject o2 = new JsonObject();
-		o2.addProperty(K1, (String) null);
-		Assertions.assertEquals(o2, JsonObjects.of(K1, null));
+		Assertions.assertEquals(
+				generateJsonObject(1),
+				JsonObjects.of(ks[0], vs[0])
+		);
+		Assertions.assertEquals(
+				generateNullJsonObject(1),
+				JsonObjects.of(ks[0], null)
+		);
 	}
 
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject1AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1)));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0])));
 	}
 
 	@Test
 	public void testJsonObject2() {
-		final JsonObject o1 = new JsonObject();
-		o1.addProperty(K1, 1);
-		o1.addProperty(K2, 2);
-		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2)));
-		final JsonObject o2 = new JsonObject();
-		o2.addProperty(K1, (String) null);
-		o2.addProperty(K2, (String) null);
-		Assertions.assertEquals(o2, JsonObjects.of(K1, null, K2, null));
+		Assertions.assertEquals(
+				generateJsonObject(2),
+				JsonObjects.of(ks[0], vs[0], ks[1], vs[1])
+		);
+		Assertions.assertEquals(
+				generateNullJsonObject(2),
+				JsonObjects.of(ks[0], null, ks[1], null)
+		);
 	}
 
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject2AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2)));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0]), null, JsonPrimitives.of(ks[1])));
 	}
 
 	@Test
 	public void testJsonObject3() {
-		final JsonObject o1 = new JsonObject();
-		o1.addProperty(K1, 1);
-		o1.addProperty(K2, 2);
-		o1.addProperty(K3, 3);
-		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3)));
-		final JsonObject o2 = new JsonObject();
-		o2.addProperty(K1, (String) null);
-		o2.addProperty(K2, (String) null);
-		o2.addProperty(K3, (String) null);
-		Assertions.assertEquals(o2, JsonObjects.of(K1, null, K2, null, K3, null));
+		Assertions.assertEquals(
+				generateJsonObject(3),
+				JsonObjects.of(ks[0], vs[0], ks[1], vs[1], ks[2], vs[2])
+		);
+		Assertions.assertEquals(
+				generateNullJsonObject(3),
+				JsonObjects.of(ks[0], null, ks[1], null, ks[2], null)
+		);
 	}
 
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject3AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3)));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0]), null, JsonPrimitives.of(ks[1]), null, JsonPrimitives.of(ks[2])));
 	}
 
 	@Test
 	public void testJsonObject4() {
-		final JsonObject o1 = new JsonObject();
-		o1.addProperty(K1, 1);
-		o1.addProperty(K2, 2);
-		o1.addProperty(K3, 3);
-		o1.addProperty(K4, 4);
-		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3), K4, JsonPrimitives.of(4)));
-		final JsonObject o2 = new JsonObject();
-		o2.addProperty(K1, (String) null);
-		o2.addProperty(K2, (String) null);
-		o2.addProperty(K3, (String) null);
-		o2.addProperty(K4, (String) null);
-		Assertions.assertEquals(o2, JsonObjects.of(K1, null, K2, null, K3, null, K4, null));
+		Assertions.assertEquals(
+				generateJsonObject(4),
+				JsonObjects.of(ks[0], vs[0], ks[1], vs[1], ks[2], vs[2], ks[3], vs[3])
+		);
+		Assertions.assertEquals(
+				generateNullJsonObject(4),
+				JsonObjects.of(ks[0], null, ks[1], null, ks[2], null, ks[3], null)
+		);
 	}
 
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject4AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4)));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0]), null, JsonPrimitives.of(ks[1]), null, JsonPrimitives.of(ks[2]), null, JsonPrimitives.of(ks[3])));
 	}
 
 	@Test
 	public void testJsonObject5() {
-		final JsonObject o1 = new JsonObject();
-		o1.addProperty(K1, 1);
-		o1.addProperty(K2, 2);
-		o1.addProperty(K3, 3);
-		o1.addProperty(K4, 4);
-		o1.addProperty(K5, 5);
-		Assertions.assertEquals(o1, JsonObjects.of(K1, JsonPrimitives.of(1), K2, JsonPrimitives.of(2), K3, JsonPrimitives.of(3), K4, JsonPrimitives.of(4), K5, JsonPrimitives.of(5)));
-		final JsonObject o2 = new JsonObject();
-		o2.addProperty(K1, (String) null);
-		o2.addProperty(K2, (String) null);
-		o2.addProperty(K3, (String) null);
-		o2.addProperty(K4, (String) null);
-		o2.addProperty(K5, (String) null);
-		Assertions.assertEquals(o2, JsonObjects.of(K1, null, K2, null, K3, null, K4, null, K5, null));
+		Assertions.assertEquals(
+				generateJsonObject(5),
+				JsonObjects.of(ks[0], vs[0], ks[1], vs[1], ks[2], vs[2], ks[3], vs[3], ks[4], vs[4])
+		);
+		Assertions.assertEquals(
+				generateNullJsonObject(5),
+				JsonObjects.of(ks[0], null, ks[1], null, ks[2], null, ks[3], null, ks[4], null)
+		);
 	}
 
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject5AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(K1), null, JsonPrimitives.of(K2), null, JsonPrimitives.of(K3), null, JsonPrimitives.of(K4), null, JsonPrimitives.of(K5)));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0]), null, JsonPrimitives.of(ks[1]), null, JsonPrimitives.of(ks[2]), null, JsonPrimitives.of(ks[3]), null, JsonPrimitives.of(ks[4])));
 	}
 
 	@Test
 	public void testFrom() {
-		final JsonPrimitive element1 = JsonPrimitives.of(K1);
-		final JsonPrimitive element2 = JsonPrimitives.of(K2);
-		final JsonPrimitive element3 = JsonPrimitives.of(K3);
-		final Map<String, ? extends JsonElement> map = Map.of(K1, element1, K2, element2, K3, element3);
+		final Map<String, ? extends JsonElement> map = Map.of(ks[0], vs[0], ks[1], vs[1], ks[2], vs[2]);
 		final JsonObject jsonObject = JsonObjects.from(map);
-		Assertions.assertEquals(3, jsonObject.size());
-		Assertions.assertSame(element1, jsonObject.get(K1));
-		Assertions.assertSame(element2, jsonObject.get(K2));
-		Assertions.assertSame(element3, jsonObject.get(K3));
+		Assertions.assertEquals(map.size(), jsonObject.size());
+		Assertions.assertSame(vs[0], jsonObject.get(ks[0]));
+		Assertions.assertSame(vs[1], jsonObject.get(ks[1]));
+		Assertions.assertSame(vs[2], jsonObject.get(ks[2]));
 	}
 
 	@Test
@@ -155,11 +156,11 @@ public final class JsonObjectsTest {
 		final JsonObject result = JsonObjects.mergeIntoNew(left, right, mockPredicate);
 		assertRefersNone(result, left, right);
 		Mockito.verify(mockPredicate)
-				.canReplace(K1, left, l, right, r);
+				.canReplace(ks[0], left, l, right, r);
 		Mockito.verify(mockPredicate)
-				.canReplace(K2, left, l, right, r);
+				.canReplace(ks[1], left, l, right, r);
 		Mockito.verify(mockPredicate)
-				.canReplace(K3, left, l, right, r);
+				.canReplace(ks[2], left, l, right, r);
 		Mockito.verifyNoMoreInteractions(mockPredicate);
 	}
 
@@ -185,7 +186,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoNewWithCustomStrategy() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoNew(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(K1));
+		final JsonObject result = JsonObjects.mergeIntoNew(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(ks[0]));
 		assertRefersNone(result, left, right);
 		assertHasValues(result, l, r, r);
 	}
@@ -207,11 +208,11 @@ public final class JsonObjectsTest {
 		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, mockPredicate);
 		assertRefersFirst(result, left, right);
 		Mockito.verify(mockPredicate)
-				.canReplace(K1, left, l, right, r);
+				.canReplace(ks[0], left, l, right, r);
 		Mockito.verify(mockPredicate)
-				.canReplace(K2, left, l, right, r);
+				.canReplace(ks[1], left, l, right, r);
 		Mockito.verify(mockPredicate)
-				.canReplace(K3, left, l, right, r);
+				.canReplace(ks[2], left, l, right, r);
 		Mockito.verifyNoMoreInteractions(mockPredicate);
 	}
 
@@ -237,101 +238,64 @@ public final class JsonObjectsTest {
 	public void testMergeIntoLeftWithCustomStrategy() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(K1));
+		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(ks[0]));
 		assertRefersFirst(result, left, right);
 		assertHasValues(result, l, r, r);
 	}
 
-	@Test
-	public void testAsImmutableMapCannotBeChangedViaClear() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-		Assertions.assertThrows(UnsupportedOperationException.class, map::clear);
+	private static Stream<Arguments> testObjects() {
+		return Stream.of(
+						JsonObjects.of(),
+						JsonObjects.of(ks[0], l),
+						JsonObjects.of(ks[0], l, ks[1], r)
+				)
+				.map(Arguments::of);
 	}
 
-	@Test
-	public void testAsMutableMapCanBeChangedViaClear() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
-		Assertions.assertEquals(2, jsonObject.size());
-		map.clear();
-		Assertions.assertEquals(0, jsonObject.size());
+	@ParameterizedTest
+	@MethodSource("testObjects")
+	public void testAsMutableMap(final JsonObject jsonObject) {
+		final Class<?> actualClass = JsonObjects.asMutableMap(jsonObject)
+				.getClass();
+		Assertions.assertSame(modifiableMapClass, actualClass);
 	}
 
-	@Test
-	public void testAsImmutableMapCannotBeChangedViaPut() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-		Assertions.assertThrows(UnsupportedOperationException.class, () -> map.put(K3, l));
+	@ParameterizedTest
+	@MethodSource("testObjects")
+	public void testAsImutableMap(final JsonObject jsonObject) {
+		final Class<?> actualClass = JsonObjects.asImmutableMap(jsonObject)
+				.getClass();
+		Assertions.assertSame(Types.jdkUnmodifiableMapClass, actualClass);
 	}
 
-	@Test
-	public void testAsMutableMapCanBeChangedViaPut() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
-		Assertions.assertEquals(2, jsonObject.size());
-		Assertions.assertNull(map.put(K3, l));
-		Assertions.assertEquals(3, jsonObject.size());
-		Assertions.assertEquals(l, jsonObject.get(K1));
-		Assertions.assertEquals(r, jsonObject.get(K2));
-		Assertions.assertEquals(l, jsonObject.get(K3));
-		Assertions.assertEquals(l, map.put(K3, r));
-		Assertions.assertEquals(3, jsonObject.size());
-		Assertions.assertEquals(l, jsonObject.get(K1));
-		Assertions.assertEquals(r, jsonObject.get(K2));
-		Assertions.assertEquals(r, jsonObject.get(K3));
+	private static JsonObject generateNullJsonObject(final int size) {
+		final JsonObject jsonObject = new JsonObject();
+		for ( int i = 0; i < size; i++ ) {
+			jsonObject.add(ks[i], null);
+		}
+		return jsonObject;
 	}
 
-	@Test
-	public void testAsImmutableMapCannotBeChangedViaPutAll() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-		Assertions.assertThrows(UnsupportedOperationException.class, () -> map.putAll(Map.of(K3, l, K4, r)));
-	}
-
-	@Test
-	public void testAsMutableMapCanBeChangedViaPutAll() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
-		Assertions.assertEquals(2, jsonObject.size());
-		Assertions.assertEquals(l, jsonObject.get(K1));
-		Assertions.assertEquals(r, jsonObject.get(K2));
-		map.putAll(Map.of(K3, l, K4, r));
-		Assertions.assertEquals(4, jsonObject.size());
-		Assertions.assertEquals(l, jsonObject.get(K1));
-		Assertions.assertEquals(r, jsonObject.get(K2));
-		Assertions.assertEquals(l, jsonObject.get(K3));
-		Assertions.assertEquals(r, jsonObject.get(K4));
-	}
-
-	@Test
-	public void testAsImmutableMapCannotBeChangedViaRemove() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-		Assertions.assertThrows(UnsupportedOperationException.class, () -> map.remove(K1));
-	}
-
-	@Test
-	public void testAsMutableMapCanBeChangedViaRemove() {
-		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-		final Map<String, JsonElement> map = JsonObjects.asMutableMap(jsonObject);
-		Assertions.assertEquals(l, map.remove(K1));
-		Assertions.assertEquals(1, jsonObject.size());
-		Assertions.assertEquals(r, jsonObject.get(K2));
+	private static JsonObject generateJsonObject(final int size) {
+		final JsonObject jsonObject = new JsonObject();
+		for ( int i = 0; i < size; i++ ) {
+			jsonObject.add(ks[i], vs[i]);
+		}
+		return jsonObject;
 	}
 
 	private static JsonObject createLeftObject() {
-		return JsonObjects.of(K1, l, K2, l, K3, l);
+		return JsonObjects.of(ks[0], l, ks[1], l, ks[2], l);
 	}
 
 	private static JsonObject createRightObject() {
-		return JsonObjects.of(K1, r, K2, r, K3, r);
+		return JsonObjects.of(ks[0], r, ks[1], r, ks[2], r);
 	}
 
 	private static void assertHasValues(final JsonObject o, final JsonElement e1, final JsonElement e2, final JsonElement e3) {
-		Assertions.assertEquals(e1, o.get(K1));
-		Assertions.assertEquals(e2, o.get(K2));
-		Assertions.assertEquals(e3, o.get(K3));
+		Assertions.assertEquals(e1, o.get(ks[0]));
+		Assertions.assertEquals(e2, o.get(ks[1]));
+		Assertions.assertEquals(e3, o.get(ks[2]));
 	}
 
 	private static void assertRefersNone(final JsonElement o, final JsonElement... es) {

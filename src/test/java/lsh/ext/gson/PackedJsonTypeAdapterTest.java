@@ -28,8 +28,7 @@ public final class PackedJsonTypeAdapterTest {
 	public void testRead()
 			throws IOException {
 		final TypeAdapter<String> unit = PackedJsonTypeAdapter.getInstance();
-		final Reader reader = new StringReader(INNER_JSON);
-		final JsonReader jsonReader = new JsonReader(reader);
+		final JsonReader jsonReader = new JsonReader(new StringReader(INNER_JSON));
 		final String innerJson = unit.read(jsonReader);
 		Assertions.assertEquals(INNER_JSON, innerJson);
 	}
