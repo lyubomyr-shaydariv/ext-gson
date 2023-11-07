@@ -244,11 +244,9 @@ public final class JsonObjectsTest {
 
 	@Test
 	public void testAsImmutableMapCannotBeChangedViaClear() {
-		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-			map.clear();
-		});
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+		Assertions.assertThrows(UnsupportedOperationException.class, map::clear);
 	}
 
 	@Test
@@ -262,11 +260,9 @@ public final class JsonObjectsTest {
 
 	@Test
 	public void testAsImmutableMapCannotBeChangedViaPut() {
-		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-			map.put(K3, l);
-		});
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> map.put(K3, l));
 	}
 
 	@Test
@@ -288,11 +284,9 @@ public final class JsonObjectsTest {
 
 	@Test
 	public void testAsImmutableMapCannotBeChangedViaPutAll() {
-		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-			map.putAll(Map.of(K3, l, K4, r));
-		});
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> map.putAll(Map.of(K3, l, K4, r)));
 	}
 
 	@Test
@@ -312,11 +306,9 @@ public final class JsonObjectsTest {
 
 	@Test
 	public void testAsImmutableMapCannotBeChangedViaRemove() {
-		Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-			final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
-			final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
-			map.remove(K1);
-		});
+		final JsonObject jsonObject = JsonObjects.of(K1, l, K2, r);
+		final Map<String, JsonElement> map = JsonObjects.asImmutableMap(jsonObject);
+		Assertions.assertThrows(UnsupportedOperationException.class, () -> map.remove(K1));
 	}
 
 	@Test

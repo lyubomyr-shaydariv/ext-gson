@@ -64,12 +64,10 @@ public final class JsonStreamsTest {
 
 	@Test
 	public void testCopyToForMalformedJsonDisallowingLenient() {
-		Assertions.assertThrows(MalformedJsonException.class, () -> {
-			final Writer writer = new StringWriter();
-			final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
-			final JsonWriter jsonWriter = new JsonWriter(writer);
-			JsonStreams.copyTo(jsonReader, jsonWriter, false);
-		});
+		final Writer writer = new StringWriter();
+		final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
+		final JsonWriter jsonWriter = new JsonWriter(writer);
+		Assertions.assertThrows(MalformedJsonException.class, () -> JsonStreams.copyTo(jsonReader, jsonWriter, false));
 	}
 
 	private static Stream<Arguments> testCopyToForMultipleTopLevelValues() {

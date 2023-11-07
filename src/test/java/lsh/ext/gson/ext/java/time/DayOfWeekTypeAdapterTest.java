@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import com.google.gson.TypeAdapter;
 import lsh.ext.gson.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -18,14 +19,15 @@ public final class DayOfWeekTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
+		final TypeAdapter<DayOfWeek> unit = DayOfWeekTypeAdapter.getInstance();
 		return List.of(
 				makeTestCase(
-						DayOfWeekTypeAdapter.getInstance(),
+						unit,
 						"\"MONDAY\"",
 						DayOfWeek.MONDAY
 				),
 				makeTestCase(
-						DayOfWeekTypeAdapter.getInstance(),
+						unit,
 						"\"FRIDAY\"",
 						DayOfWeek.FRIDAY
 				)

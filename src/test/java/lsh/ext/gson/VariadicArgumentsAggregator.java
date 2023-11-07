@@ -4,11 +4,14 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Parameter;
 import java.util.stream.Stream;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.aggregator.ArgumentsAggregationException;
 import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
 
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class VariadicArgumentsAggregator
 		implements ArgumentsAggregator {
 

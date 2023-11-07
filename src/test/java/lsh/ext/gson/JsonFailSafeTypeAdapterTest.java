@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -25,14 +26,15 @@ public final class JsonFailSafeTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
+		final TypeAdapterFactory typeAdapterFactory = JsonFailSafeTypeAdapter.Factory.getInstance();
 		return List.of(
 				makeTestCase(
-						JsonFailSafeTypeAdapter.Factory.getInstance().create(gson, stringListTypeToken),
+						typeAdapterFactory.create(gson, stringListTypeToken),
 						"[\"foo\",\"bar\"]",
 						List.of("foo", "bar")
 				),
 				makeTestCase(
-						JsonFailSafeTypeAdapter.Factory.getInstance().create(gson, integerListTypeToken),
+						typeAdapterFactory.create(gson, integerListTypeToken),
 						"[1000]",
 						List.of(1000)
 				)

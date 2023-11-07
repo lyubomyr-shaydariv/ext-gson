@@ -4,6 +4,7 @@ import java.time.Month;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import com.google.gson.TypeAdapter;
 import lsh.ext.gson.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -18,9 +19,10 @@ public final class MonthTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
+		final TypeAdapter<Month> unit = MonthTypeAdapter.getInstance();
 		return List.of(
 				makeTestCase(
-						MonthTypeAdapter.getInstance(),
+						unit,
 						"\"SEPTEMBER\"",
 						Month.SEPTEMBER
 				)

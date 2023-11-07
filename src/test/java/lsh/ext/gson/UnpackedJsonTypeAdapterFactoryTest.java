@@ -22,8 +22,7 @@ public final class UnpackedJsonTypeAdapterFactoryTest {
 	}
 
 	private record Wrapper(
-			@JsonAdapter(UnpackedJsonTypeAdapter.Factory.class)
-			List<Integer> value
+			@JsonAdapter(UnpackedJsonTypeAdapter.Factory.class) List<Integer> value
 	) {
 	}
 

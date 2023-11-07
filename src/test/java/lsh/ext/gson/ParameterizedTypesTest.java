@@ -5,6 +5,8 @@ import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public final class ParameterizedTypesTest {
 
@@ -21,14 +23,15 @@ public final class ParameterizedTypesTest {
 		Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> ParameterizedTypes.getTypeArgument(stringListTypeToken.getType(), 1));
 	}
 
-	@Test
-	public void testResolveTypeArgumentsForNonGenericType() {
-		Assertions.assertNull(ParameterizedTypes.getTypeArgument(String.class, 0));
-	}
-
-	@Test
-	public void testResolveTypeArgumentsForGenericType() {
-		Assertions.assertNull(ParameterizedTypes.getTypeArgument(Object.class, 0));
+	@ValueSource(classes = {
+			void.class,
+			int.class,
+			Object.class,
+			String.class
+	})
+	@ParameterizedTest
+	public void testResolveTypeArgumentsForNonGenericType(final Class<?> clazz) {
+		Assertions.assertNull(ParameterizedTypes.getTypeArgument(clazz, 0));
 	}
 
 }

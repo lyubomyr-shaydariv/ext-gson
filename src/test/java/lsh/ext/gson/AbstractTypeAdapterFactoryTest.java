@@ -40,11 +40,12 @@ public abstract class AbstractTypeAdapterFactoryTest {
 	@ParameterizedTest
 	@MethodSource("unsupported")
 	public final void testCreateIfDoesNotSupport(final TypeToken<?> unsupportedTypeToken) {
-		if ( !supportsAll ) {
-			final TypeAdapterFactory unit = createUnit();
-			final TypeAdapter<?> typeAdapter = unit.create(gson, unsupportedTypeToken);
-			Assertions.assertNull(typeAdapter);
+		if ( supportsAll ) {
+			return;
 		}
+		final TypeAdapterFactory unit = createUnit();
+		final TypeAdapter<?> typeAdapter = unit.create(gson, unsupportedTypeToken);
+		Assertions.assertNull(typeAdapter);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import com.google.gson.TypeAdapter;
 import lsh.ext.gson.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -18,29 +19,30 @@ public final class DurationTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
+		final TypeAdapter<Duration> unit = DurationTypeAdapter.getInstance();
 		return List.of(
 				makeTestCase(
-						DurationTypeAdapter.getInstance(),
+						unit,
 						"\"PT0.555S\"",
 						Duration.ofMillis(555)
 				),
 				makeTestCase(
-						DurationTypeAdapter.getInstance(),
+						unit,
 						"\"PT9M15S\"",
 						Duration.ofSeconds(555)
 				),
 				makeTestCase(
-						DurationTypeAdapter.getInstance(),
+						unit,
 						"\"PT9H15M\"",
 						Duration.ofMinutes(555)
 				),
 				makeTestCase(
-						DurationTypeAdapter.getInstance(),
+						unit,
 						"\"PT555H\"",
 						Duration.ofHours(555)
 				),
 				makeTestCase(
-						DurationTypeAdapter.getInstance(),
+						unit,
 						"\"PT13320H\"",
 						Duration.ofDays(555)
 				)

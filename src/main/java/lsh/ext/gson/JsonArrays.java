@@ -1,5 +1,6 @@
 package lsh.ext.gson;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -12,13 +13,13 @@ import lombok.experimental.UtilityClass;
 public final class JsonArrays {
 
 	public static JsonArray of() {
-		return new JsonArray();
+		return new JsonArray(0);
 	}
 
 	public static JsonArray of(
 			@Nullable final JsonElement e1
 	) {
-		final JsonArray jsonArray = new JsonArray();
+		final JsonArray jsonArray = new JsonArray(1);
 		jsonArray.add(e1);
 		return jsonArray;
 	}
@@ -27,7 +28,7 @@ public final class JsonArrays {
 			@Nullable final JsonElement e1,
 			@Nullable final JsonElement e2
 	) {
-		final JsonArray jsonArray = new JsonArray();
+		final JsonArray jsonArray = new JsonArray(2);
 		jsonArray.add(e1);
 		jsonArray.add(e2);
 		return jsonArray;
@@ -38,7 +39,7 @@ public final class JsonArrays {
 			@Nullable final JsonElement e2,
 			@Nullable final JsonElement e3
 	) {
-		final JsonArray jsonArray = new JsonArray();
+		final JsonArray jsonArray = new JsonArray(3);
 		jsonArray.add(e1);
 		jsonArray.add(e2);
 		jsonArray.add(e3);
@@ -51,7 +52,7 @@ public final class JsonArrays {
 			@Nullable final JsonElement e3,
 			@Nullable final JsonElement e4
 	) {
-		final JsonArray jsonArray = new JsonArray();
+		final JsonArray jsonArray = new JsonArray(4);
 		jsonArray.add(e1);
 		jsonArray.add(e2);
 		jsonArray.add(e3);
@@ -66,7 +67,7 @@ public final class JsonArrays {
 			@Nullable final JsonElement e4,
 			@Nullable final JsonElement e5
 	) {
-		final JsonArray jsonArray = new JsonArray();
+		final JsonArray jsonArray = new JsonArray(5);
 		jsonArray.add(e1);
 		jsonArray.add(e2);
 		jsonArray.add(e3);
@@ -84,7 +85,12 @@ public final class JsonArrays {
 	}
 
 	public static JsonArray from(final Iterable<? extends JsonElement> jsonElements) {
-		final JsonArray jsonArray = new JsonArray();
+		final JsonArray jsonArray;
+		if ( jsonElements instanceof final Collection<?> collection ) {
+			jsonArray = new JsonArray(collection.size());
+		} else {
+			jsonArray = new JsonArray();
+		}
 		for ( final JsonElement jsonElement : jsonElements ) {
 			jsonArray.add(jsonElement);
 		}

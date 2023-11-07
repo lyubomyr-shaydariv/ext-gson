@@ -117,10 +117,8 @@ public final class JsonReadersTest {
 
 	@Test
 	public void testSkipTokenForEndOfDocument() {
-		Assertions.assertThrows(EOFException.class, () -> {
-			final JsonReader jsonReader = new JsonReader(new StringReader(""));
-			JsonReaders.skipToken(jsonReader);
-		});
+		final JsonReader jsonReader = new JsonReader(new StringReader(""));
+		Assertions.assertThrows(EOFException.class, () -> JsonReaders.skipToken(jsonReader));
 	}
 
 }

@@ -15,7 +15,6 @@ public final class JsonReaderIteratorTest {
 	@Test
 	public void testSome() {
 		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
-		@SuppressWarnings("resource")
 		final Iterator<?> unit = JsonReaderIterator.getInstance(gson.getAdapter(FooBar.class), in);
 		Assertions.assertTrue(unit.hasNext());
 		Assertions.assertEquals(new FooBar(1, 2), unit.next());

@@ -22,7 +22,6 @@ public final class EnumerationTypeAdapterTest
 	}
 
 	@Override
-	@SuppressWarnings("resource")
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
