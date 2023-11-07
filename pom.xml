@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>com.github.spotbugs</groupId>
 			<artifactId>spotbugs-annotations</artifactId>
-			<version>4.8.0</version>
+			<version>4.8.1</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -183,7 +183,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.2.2</version>
 			</plugin>
 
 		</plugins>
@@ -287,7 +287,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.6.0</version>
+						<version>3.6.2</version>
 						<executions>
 							<execution>
 								<phase>generate-sources</phase>
@@ -384,7 +384,7 @@
 					<plugin>
 						<groupId>com.github.spotbugs</groupId>
 						<artifactId>spotbugs-maven-plugin</artifactId>
-						<version>4.7.3.6</version>
+						<version>4.8.1.0</version>
 						<executions>
 							<execution>
 								<phase>process-classes</phase>
