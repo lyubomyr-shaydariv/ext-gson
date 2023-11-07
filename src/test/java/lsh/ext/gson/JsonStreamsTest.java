@@ -12,6 +12,7 @@ import com.google.gson.stream.MalformedJsonException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.aggregator.AggregateWith;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -73,16 +74,17 @@ public final class JsonStreamsTest {
 
 	private static Stream<Arguments> testCopyToForMultipleTopLevelValues() {
 		return Stream.of(
-						Arguments.of("false", "1000", "true"),
-						Arguments.of("1", "\"foo\"", "{}", "[1,2,3]"),
-						Arguments.of("\"only\"")
-				)
-				.map(JUnitArguments::makeVariadic);
+				Arguments.of("false", "1000", "true"),
+				Arguments.of("1", "\"foo\"", "{}", "[1,2,3]"),
+				Arguments.of("\"only\"")
+		);
 	}
 
 	@MethodSource
 	@ParameterizedTest
-	public void testCopyToForMultipleTopLevelValues(final String... jsonDocuments)
+	public void testCopyToForMultipleTopLevelValues(
+			@AggregateWith(VariadicArgumentsAggregator.class) final String... jsonDocuments
+	)
 			throws IOException {
 		assert jsonDocuments.length > 0;
 		final JsonReader jsonReader = newLenientJsonReader(String.join(" ", jsonDocuments));
