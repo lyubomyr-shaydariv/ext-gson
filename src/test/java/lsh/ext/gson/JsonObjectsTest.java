@@ -55,7 +55,7 @@ public final class JsonObjectsTest {
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject1AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0])));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, new JsonPrimitive(ks[0])));
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public final class JsonObjectsTest {
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject2AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0]), null, JsonPrimitives.of(ks[1])));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, new JsonPrimitive(ks[0]), null, new JsonPrimitive(ks[1])));
 	}
 
 	@Test
@@ -91,7 +91,7 @@ public final class JsonObjectsTest {
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject3AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0]), null, JsonPrimitives.of(ks[1]), null, JsonPrimitives.of(ks[2])));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, new JsonPrimitive(ks[0]), null, new JsonPrimitive(ks[1]), null, new JsonPrimitive(ks[2])));
 	}
 
 	@Test
@@ -109,7 +109,7 @@ public final class JsonObjectsTest {
 	@Test
 	@SuppressWarnings("ConstantConditions")
 	public void testJsonObject4AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0]), null, JsonPrimitives.of(ks[1]), null, JsonPrimitives.of(ks[2]), null, JsonPrimitives.of(ks[3])));
+		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, new JsonPrimitive(ks[0]), null, new JsonPrimitive(ks[1]), null, new JsonPrimitive(ks[2]), null, new JsonPrimitive(ks[3])));
 	}
 
 	@Test

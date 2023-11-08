@@ -129,7 +129,7 @@ public final class JsonArraysTest {
 	private static JsonArray generateJsonArray(final int length) {
 		final JsonArray jsonArray = new JsonArray(length);
 		for ( int i = 0; i < length && i < es.length; i++ ) {
-			jsonArray.add(JsonPrimitives.of(es[i]));
+			jsonArray.add(new JsonPrimitive(es[i]));
 		}
 		return jsonArray;
 	}
