@@ -60,22 +60,6 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	public static JsonArray of(
-			@Nullable final JsonElement e1,
-			@Nullable final JsonElement e2,
-			@Nullable final JsonElement e3,
-			@Nullable final JsonElement e4,
-			@Nullable final JsonElement e5
-	) {
-		final JsonArray jsonArray = new JsonArray(5);
-		jsonArray.add(e1);
-		jsonArray.add(e2);
-		jsonArray.add(e3);
-		jsonArray.add(e4);
-		jsonArray.add(e5);
-		return jsonArray;
-	}
-
 	public static JsonArray of(final JsonElement... jsonElements) {
 		final JsonArray jsonArray = new JsonArray(jsonElements.length);
 		for ( final JsonElement e : jsonElements ) {

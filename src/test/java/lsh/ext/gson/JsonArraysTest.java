@@ -83,18 +83,6 @@ public final class JsonArraysTest {
 	}
 
 	@Test
-	public void testJsonArray5() {
-		Assertions.assertEquals(
-				generateJsonArray(5),
-				JsonArrays.of(primitives[0], primitives[1], primitives[2], primitives[3], primitives[4])
-		);
-		Assertions.assertEquals(
-				generateNullJsonArray(5),
-				JsonArrays.of(null, null, null, null, null)
-		);
-	}
-
-	@Test
 	public void testFromIterable() {
 		final List<JsonPrimitive> list = List.of(primitives[0], primitives[1], primitives[2]);
 		final JsonArray jsonArray = JsonArrays.from(list);

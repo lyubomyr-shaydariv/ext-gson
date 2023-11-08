@@ -112,24 +112,6 @@ public final class JsonObjectsTest {
 	}
 
 	@Test
-	public void testJsonObject5() {
-		Assertions.assertEquals(
-				generateJsonObject(5),
-				JsonObjects.of(ks[0], vs[0], ks[1], vs[1], ks[2], vs[2], ks[3], vs[3], ks[4], vs[4])
-		);
-		Assertions.assertEquals(
-				generateNullJsonObject(5),
-				JsonObjects.of(ks[0], null, ks[1], null, ks[2], null, ks[3], null, ks[4], null)
-		);
-	}
-
-	@Test
-	@SuppressWarnings("ConstantConditions")
-	public void testJsonObject5AsNull() {
-		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, JsonPrimitives.of(ks[0]), null, JsonPrimitives.of(ks[1]), null, JsonPrimitives.of(ks[2]), null, JsonPrimitives.of(ks[3]), null, JsonPrimitives.of(ks[4])));
-	}
-
-	@Test
 	public void testFrom() {
 		final Map<String, ? extends JsonElement> map = Map.of(ks[0], vs[0], ks[1], vs[1], ks[2], vs[2]);
 		final JsonObject jsonObject = JsonObjects.from(map);

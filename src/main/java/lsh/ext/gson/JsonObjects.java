@@ -59,23 +59,6 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	@SuppressWarnings("checkstyle:ParameterNumber")
-	public static JsonObject of(
-			final String k1, @Nullable final JsonElement v1,
-			final String k2, @Nullable final JsonElement v2,
-			final String k3, @Nullable final JsonElement v3,
-			final String k4, @Nullable final JsonElement v4,
-			final String k5, @Nullable final JsonElement v5
-	) {
-		final JsonObject jsonObject = new JsonObject();
-		jsonObject.add(k1, v1);
-		jsonObject.add(k2, v2);
-		jsonObject.add(k3, v3);
-		jsonObject.add(k4, v4);
-		jsonObject.add(k5, v5);
-		return jsonObject;
-	}
-
 	public static JsonObject from(final Map<String, ? extends JsonElement> map) {
 		final JsonObject jsonObject = new JsonObject();
 		for ( final Map.Entry<String, ? extends JsonElement> e : map.entrySet() ) {
