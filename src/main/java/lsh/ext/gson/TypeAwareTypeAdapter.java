@@ -27,12 +27,12 @@ public final class TypeAwareTypeAdapter<T>
 	@Override
 	public void write(final JsonWriter out, final Object value)
 			throws IOException {
-		final Class<?> type = value.getClass();
 		out.beginObject();
 		out.name(typePropertyName);
-		out.value(type.getTypeName());
+		final Class<?> clazz = value.getClass();
+		out.value(typeResolver.unresolveType(clazz));
 		out.name(valuePropertyName);
-		gson.toJson(value, type, out);
+		gson.toJson(value, clazz, out);
 		out.endObject();
 	}
 
@@ -58,6 +58,8 @@ public final class TypeAwareTypeAdapter<T>
 	}
 
 	public interface ITypeResolver {
+
+		String unresolveType(Class<?> clazz);
 
 		Class<?> resolveType(String typeName);
 
