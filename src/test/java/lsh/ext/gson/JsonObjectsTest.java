@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 public final class JsonObjectsTest {
@@ -134,95 +135,99 @@ public final class JsonObjectsTest {
 	public void testMergeIntoNew() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final IJsonObjectMergePredicate mockPredicate = Mockito.mock(IJsonObjectMergePredicate.class);
-		final JsonObject result = JsonObjects.mergeIntoNew(left, right, mockPredicate);
+		final IJsonObjectMergePredicate predicateMock = Mockito.mock(IJsonObjectMergePredicate.class);
+		Mockito.when(predicateMock.canReplace(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any()))
+				.thenReturn(false);
+		final JsonObject result = JsonObjects.mergeIntoNew(left, right, predicateMock);
 		assertRefersNone(result, left, right);
-		Mockito.verify(mockPredicate)
+		Mockito.verify(predicateMock)
 				.canReplace(ks[0], left, l, right, r);
-		Mockito.verify(mockPredicate)
+		Mockito.verify(predicateMock)
 				.canReplace(ks[1], left, l, right, r);
-		Mockito.verify(mockPredicate)
+		Mockito.verify(predicateMock)
 				.canReplace(ks[2], left, l, right, r);
-		Mockito.verifyNoMoreInteractions(mockPredicate);
+		Mockito.verifyNoMoreInteractions(predicateMock);
 	}
 
 	@Test
 	public void testMergeIntoNewWithReplace() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoNew(left, right, IJsonObjectMergePredicate.replace);
-		assertRefersNone(result, left, right);
-		assertHasValues(result, r, r, r);
+		final JsonObject actual = JsonObjects.mergeIntoNew(left, right, IJsonObjectMergePredicate.replace);
+		assertRefersNone(actual, left, right);
+		assertHasValues(actual, r, r, r);
 	}
 
 	@Test
 	public void testMergeIntoNewWithRetain() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoNew(left, right, IJsonObjectMergePredicate.retain);
-		assertRefersNone(result, left, right);
-		assertHasValues(result, l, l, l);
+		final JsonObject actual = JsonObjects.mergeIntoNew(left, right, IJsonObjectMergePredicate.retain);
+		assertRefersNone(actual, left, right);
+		assertHasValues(actual, l, l, l);
 	}
 
 	@Test
 	public void testMergeIntoNewWithCustomStrategy() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoNew(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(ks[0]));
-		assertRefersNone(result, left, right);
-		assertHasValues(result, l, r, r);
+		final JsonObject actual = JsonObjects.mergeIntoNew(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(ks[0]));
+		assertRefersNone(actual, left, right);
+		assertHasValues(actual, l, r, r);
 	}
 
 	@Test
 	public void testMergeIntoLeftWithDefaultStrategy() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoLeft(left, right);
-		assertRefersFirst(result, left, right);
-		assertHasValues(result, r, r, r);
+		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right);
+		assertRefersFirst(actual, left, right);
+		assertHasValues(actual, r, r, r);
 	}
 
 	@Test
 	public void testMergeIntoLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final IJsonObjectMergePredicate mockPredicate = Mockito.mock(IJsonObjectMergePredicate.class);
-		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, mockPredicate);
-		assertRefersFirst(result, left, right);
-		Mockito.verify(mockPredicate)
+		final IJsonObjectMergePredicate predicateMock = Mockito.mock(IJsonObjectMergePredicate.class);
+		Mockito.when(predicateMock.canReplace(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any()))
+				.thenReturn(false);
+		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, predicateMock);
+		assertRefersFirst(actual, left, right);
+		Mockito.verify(predicateMock)
 				.canReplace(ks[0], left, l, right, r);
-		Mockito.verify(mockPredicate)
+		Mockito.verify(predicateMock)
 				.canReplace(ks[1], left, l, right, r);
-		Mockito.verify(mockPredicate)
+		Mockito.verify(predicateMock)
 				.canReplace(ks[2], left, l, right, r);
-		Mockito.verifyNoMoreInteractions(mockPredicate);
+		Mockito.verifyNoMoreInteractions(predicateMock);
 	}
 
 	@Test
 	public void testMergeIntoLeftWithAlwaysReplaceLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, IJsonObjectMergePredicate.replace);
-		assertRefersFirst(result, left, right);
-		assertHasValues(result, r, r, r);
+		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, IJsonObjectMergePredicate.replace);
+		assertRefersFirst(actual, left, right);
+		assertHasValues(actual, r, r, r);
 	}
 
 	@Test
 	public void testMergeIntoLeftWithNeverReplaceLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, IJsonObjectMergePredicate.retain);
-		assertRefersFirst(result, left, right);
-		assertHasValues(result, l, l, l);
+		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, IJsonObjectMergePredicate.retain);
+		assertRefersFirst(actual, left, right);
+		assertHasValues(actual, l, l, l);
 	}
 
 	@Test
 	public void testMergeIntoLeftWithCustomStrategy() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject result = JsonObjects.mergeIntoLeft(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(ks[0]));
-		assertRefersFirst(result, left, right);
-		assertHasValues(result, l, r, r);
+		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, (key, leftObject, leftValue, rightObject, rightValue) -> !key.equals(ks[0]));
+		assertRefersFirst(actual, left, right);
+		assertHasValues(actual, l, r, r);
 	}
 
 	private static Stream<Arguments> testObjects() {

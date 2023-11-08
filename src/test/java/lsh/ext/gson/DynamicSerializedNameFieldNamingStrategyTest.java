@@ -55,14 +55,14 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegrationWithSerializedNameThatHasHigherPriority() {
-		final IFieldNamingResolver mockNameResolver = Mockito.mock(IFieldNamingResolver.class);
+		final IFieldNamingResolver resolverMock = Mockito.mock(IFieldNamingResolver.class);
 		final Gson gson = Gsons.Builders.createNormalized()
-				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getInstance(mockNameResolver))
+				.setFieldNamingStrategy(DynamicSerializedNameFieldNamingStrategy.getInstance(resolverMock))
 				.create();
 		final MixedFooBar mixedFooBar = gson.fromJson("{\"staticFoo\":\"1\",\"staticBar\":\"2\"}", MixedFooBar.class);
 		Assertions.assertEquals("1", mixedFooBar.foo);
 		Assertions.assertEquals("2", mixedFooBar.bar);
-		Mockito.verifyNoMoreInteractions(mockNameResolver);
+		Mockito.verifyNoMoreInteractions(resolverMock);
 	}
 
 	private static String resolve(final String value) {

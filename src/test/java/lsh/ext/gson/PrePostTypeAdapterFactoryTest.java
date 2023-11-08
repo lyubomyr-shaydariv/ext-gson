@@ -12,29 +12,29 @@ public final class PrePostTypeAdapterFactoryTest {
 	@Test
 	public void testPreConstruct() {
 		@SuppressWarnings("unchecked")
-		final IProcessor<User> mockUserProcessor = Mockito.mock(IProcessor.class);
-		final IProcessor.IFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? mockUserProcessor : null;
+		final IProcessor<User> processorMock = Mockito.mock(IProcessor.class);
+		final IProcessor.IFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? processorMock : null;
 		final Gson gson = Gsons.Builders.createNormalized()
 				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(List.of(userProcessorFactory), List.of()))
 				.create();
 		gson.toJson(user);
-		Mockito.verify(mockUserProcessor)
+		Mockito.verify(processorMock)
 				.process(ArgumentMatchers.eq(user));
-		Mockito.verifyNoMoreInteractions(mockUserProcessor);
+		Mockito.verifyNoMoreInteractions(processorMock);
 	}
 
 	@Test
 	public void testPostConstruct() {
 		@SuppressWarnings("unchecked")
-		final IProcessor<User> mockUserProcessor = Mockito.mock(IProcessor.class);
-		final IProcessor.IFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? mockUserProcessor : null;
+		final IProcessor<User> processorMock = Mockito.mock(IProcessor.class);
+		final IProcessor.IFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? processorMock : null;
 		final Gson gson = Gsons.Builders.createNormalized()
 				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(List.of(), List.of(userProcessorFactory)))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);
-		Mockito.verify(mockUserProcessor)
+		Mockito.verify(processorMock)
 				.process(ArgumentMatchers.eq(user));
-		Mockito.verifyNoMoreInteractions(mockUserProcessor);
+		Mockito.verifyNoMoreInteractions(processorMock);
 	}
 
 	private static final User user = new User("John", "Doe");
