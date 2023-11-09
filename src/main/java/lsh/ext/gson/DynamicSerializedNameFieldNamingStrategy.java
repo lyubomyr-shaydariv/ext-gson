@@ -12,15 +12,15 @@ import lombok.RequiredArgsConstructor;
 public final class DynamicSerializedNameFieldNamingStrategy
 		implements FieldNamingStrategy {
 
-	private final IFieldNamingResolver fieldNamingResolver;
-	private final FieldNamingStrategy fallbackFieldNamingStrategy;
+	private final INamingStrategy namingStrategy;
+	private final FieldNamingStrategy fieldNamingStrategy;
 
-	public static FieldNamingStrategy getInstance(final IFieldNamingResolver fieldNamingResolver) {
-		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, FieldNamingPolicy.IDENTITY);
+	public static FieldNamingStrategy getInstance(final INamingStrategy namingStrategy) {
+		return getInstance(namingStrategy, FieldNamingPolicy.IDENTITY);
 	}
 
-	public static FieldNamingStrategy getInstance(final IFieldNamingResolver fieldNamingResolver, final FieldNamingStrategy fallbackFieldNamingStrategy) {
-		return new DynamicSerializedNameFieldNamingStrategy(fieldNamingResolver, fallbackFieldNamingStrategy);
+	public static FieldNamingStrategy getInstance(final INamingStrategy namingStrategy, final FieldNamingStrategy fieldNamingStrategy) {
+		return new DynamicSerializedNameFieldNamingStrategy(namingStrategy, fieldNamingStrategy);
 	}
 
 	@Override
@@ -29,14 +29,14 @@ public final class DynamicSerializedNameFieldNamingStrategy
 		@Nullable
 		final DynamicSerializedName dynamicSerializedName = field.getAnnotation(DynamicSerializedName.class);
 		if ( dynamicSerializedName == null ) {
-			return fallbackFieldNamingStrategy.translateName(field);
+			return fieldNamingStrategy.translateName(field);
 		}
 		@Nullable
-		final String resolvedName = fieldNamingResolver.resolveName(dynamicSerializedName.value());
-		if ( resolvedName == null ) {
-			return fallbackFieldNamingStrategy.translateName(field);
+		final String name = namingStrategy.translateName(dynamicSerializedName.value());
+		if ( name == null ) {
+			return fieldNamingStrategy.translateName(field);
 		}
-		return resolvedName;
+		return name;
 	}
 
 }
