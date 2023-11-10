@@ -1,5 +1,7 @@
 package lsh.ext.gson;
 
+import java.util.Collection;
+
 import com.google.gson.reflect.TypeToken;
 
 public interface IBuilder1<A1, T> {
@@ -12,6 +14,20 @@ public interface IBuilder1<A1, T> {
 
 		IBuilder1<A1, T> create(TypeToken<T> typeToken);
 
+	}
+
+	static <E, C extends Collection<E>> IBuilder1<E, C> of(final C collection) {
+		return new IBuilder1<>() {
+			@Override
+			public void accept(final E e) {
+				collection.add(e);
+			}
+
+			@Override
+			public C build() {
+				return collection;
+			}
+		};
 	}
 
 }

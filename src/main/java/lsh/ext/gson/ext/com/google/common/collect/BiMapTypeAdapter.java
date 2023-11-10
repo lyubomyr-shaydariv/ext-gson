@@ -19,7 +19,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.MapBuilder;
 import lsh.ext.gson.ParameterizedTypes;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -112,7 +111,7 @@ public final class BiMapTypeAdapter<V>
 			@SuppressWarnings("LawOfDemeter")
 			final BiMap<String, V> biMap = factoryFactory.create(typeToken)
 					.create();
-			return MapBuilder.getInstance(biMap);
+			return IBuilder2.of(biMap);
 		}
 
 		@Override

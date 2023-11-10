@@ -16,7 +16,6 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.MapBuilder;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
 
@@ -94,7 +93,7 @@ public final class BidiMapTypeAdapter<V>
 			@SuppressWarnings("LawOfDemeter")
 			final BidiMap<String, V> bidiMap = factoryFactory.create(typeToken)
 					.create();
-			return MapBuilder.getInstance(bidiMap);
+			return IBuilder2.of(bidiMap);
 		}
 
 		@Override

@@ -16,7 +16,6 @@ import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.CollectionBuilder;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IFactory0;
 
@@ -124,7 +123,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		public static <E> IBuilder1<E, Collection<E>> builder(
 				final IFactory0<? extends Collection<E>> factory
 		) {
-			return CollectionBuilder.getInstance(factory.create());
+			return IBuilder1.of(factory.create());
 		}
 
 		@Override
