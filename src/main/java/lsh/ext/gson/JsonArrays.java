@@ -61,20 +61,31 @@ public final class JsonArrays {
 	}
 
 	public static JsonArray of(final JsonElement... jsonElements) {
-		final JsonArray jsonArray = new JsonArray(jsonElements.length);
-		for ( final JsonElement e : jsonElements ) {
-			jsonArray.add(e);
+		final int length = jsonElements.length;
+		if ( length == 0 ) {
+			return new JsonArray();
+		}
+		final JsonArray jsonArray = new JsonArray(length);
+		for ( final JsonElement jsonElement : jsonElements ) {
+			jsonArray.add(jsonElement);
 		}
 		return jsonArray;
 	}
 
 	public static JsonArray from(final Iterable<? extends JsonElement> jsonElements) {
-		final JsonArray jsonArray;
-		if ( jsonElements instanceof final Collection<?> collection ) {
-			jsonArray = new JsonArray(collection.size());
-		} else {
-			jsonArray = new JsonArray();
+		final JsonArray jsonArray = new JsonArray();
+		for ( final JsonElement jsonElement : jsonElements ) {
+			jsonArray.add(jsonElement);
 		}
+		return jsonArray;
+	}
+
+	public static JsonArray from(final Collection<? extends JsonElement> jsonElements) {
+		final int size = jsonElements.size();
+		if ( size == 0 ) {
+			return new JsonArray();
+		}
+		final JsonArray jsonArray = new JsonArray(size);
 		for ( final JsonElement jsonElement : jsonElements ) {
 			jsonArray.add(jsonElement);
 		}
