@@ -68,10 +68,10 @@ public final class JsonObjects {
 	}
 
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right) {
-		return mergeIntoNew(left, right, IJsonObjectMergePredicate.replace);
+		return mergeIntoNew(left, right, IMergePredicate.replace);
 	}
 
-	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
+	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right, final IMergePredicate predicate) {
 		final JsonObject merged = new JsonObject();
 		for ( final Map.Entry<String, JsonElement> leftEntry : left.entrySet() ) {
 			merged.add(leftEntry.getKey(), leftEntry.getValue());
@@ -81,10 +81,10 @@ public final class JsonObjects {
 	}
 
 	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right) {
-		return mergeIntoLeft(left, right, IJsonObjectMergePredicate.replace);
+		return mergeIntoLeft(left, right, IMergePredicate.replace);
 	}
 
-	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right, final IJsonObjectMergePredicate predicate) {
+	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right, final IMergePredicate predicate) {
 		for ( final Map.Entry<String, JsonElement> rightEntry : right.entrySet() ) {
 			final String key = rightEntry.getKey();
 			final JsonElement leftValue = left.get(key);
@@ -102,6 +102,16 @@ public final class JsonObjects {
 
 	public static Map<String, JsonElement> asMutableMap(final JsonObject jsonObject) {
 		return jsonObject.asMap();
+	}
+
+	public interface IMergePredicate {
+
+		IMergePredicate replace = (key, leftObject, leftValue, rightObject, rightValue) -> true;
+
+		IMergePredicate retain = (key, leftObject, leftValue, rightObject, rightValue) -> false;
+
+		boolean canReplace(String key, JsonObject leftObject, @Nullable JsonElement leftValue, JsonObject rightObject, @Nullable JsonElement rightValue);
+
 	}
 
 }

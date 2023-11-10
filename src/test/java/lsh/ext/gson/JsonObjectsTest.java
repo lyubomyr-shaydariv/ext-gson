@@ -135,7 +135,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoNew() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final IJsonObjectMergePredicate predicateMock = Mockito.mock(IJsonObjectMergePredicate.class);
+		final JsonObjects.IMergePredicate predicateMock = Mockito.mock(JsonObjects.IMergePredicate.class);
 		Mockito.when(predicateMock.canReplace(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any()))
 				.thenReturn(false);
 		final JsonObject result = JsonObjects.mergeIntoNew(left, right, predicateMock);
@@ -153,7 +153,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoNewWithReplace() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject actual = JsonObjects.mergeIntoNew(left, right, IJsonObjectMergePredicate.replace);
+		final JsonObject actual = JsonObjects.mergeIntoNew(left, right, JsonObjects.IMergePredicate.replace);
 		assertRefersNone(actual, left, right);
 		assertHasValues(actual, r, r, r);
 	}
@@ -162,7 +162,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoNewWithRetain() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject actual = JsonObjects.mergeIntoNew(left, right, IJsonObjectMergePredicate.retain);
+		final JsonObject actual = JsonObjects.mergeIntoNew(left, right, JsonObjects.IMergePredicate.retain);
 		assertRefersNone(actual, left, right);
 		assertHasValues(actual, l, l, l);
 	}
@@ -189,7 +189,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final IJsonObjectMergePredicate predicateMock = Mockito.mock(IJsonObjectMergePredicate.class);
+		final JsonObjects.IMergePredicate predicateMock = Mockito.mock(JsonObjects.IMergePredicate.class);
 		Mockito.when(predicateMock.canReplace(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any()))
 				.thenReturn(false);
 		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, predicateMock);
@@ -207,7 +207,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoLeftWithAlwaysReplaceLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, IJsonObjectMergePredicate.replace);
+		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, JsonObjects.IMergePredicate.replace);
 		assertRefersFirst(actual, left, right);
 		assertHasValues(actual, r, r, r);
 	}
@@ -216,7 +216,7 @@ public final class JsonObjectsTest {
 	public void testMergeIntoLeftWithNeverReplaceLeft() {
 		final JsonObject left = createLeftObject();
 		final JsonObject right = createRightObject();
-		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, IJsonObjectMergePredicate.retain);
+		final JsonObject actual = JsonObjects.mergeIntoLeft(left, right, JsonObjects.IMergePredicate.retain);
 		assertRefersFirst(actual, left, right);
 		assertHasValues(actual, l, l, l);
 	}
