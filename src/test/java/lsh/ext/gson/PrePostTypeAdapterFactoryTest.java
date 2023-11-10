@@ -12,8 +12,8 @@ public final class PrePostTypeAdapterFactoryTest {
 	@Test
 	public void testPreConstruct() {
 		@SuppressWarnings("unchecked")
-		final IProcessor<User> processorMock = Mockito.mock(IProcessor.class);
-		final IProcessor.IFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? processorMock : null;
+		final PrePostTypeAdapter.IProcessor<User> processorMock = Mockito.mock(PrePostTypeAdapter.IProcessor.class);
+		final PrePostTypeAdapter.IProcessor.IFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? processorMock : null;
 		final Gson gson = Gsons.Builders.createNormalized()
 				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(List.of(userProcessorFactory), List.of()))
 				.create();
@@ -26,8 +26,8 @@ public final class PrePostTypeAdapterFactoryTest {
 	@Test
 	public void testPostConstruct() {
 		@SuppressWarnings("unchecked")
-		final IProcessor<User> processorMock = Mockito.mock(IProcessor.class);
-		final IProcessor.IFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? processorMock : null;
+		final PrePostTypeAdapter.IProcessor<User> processorMock = Mockito.mock(PrePostTypeAdapter.IProcessor.class);
+		final PrePostTypeAdapter.IProcessor.IFactory<User> userProcessorFactory = typeToken -> typeToken.getRawType() == User.class ? processorMock : null;
 		final Gson gson = Gsons.Builders.createNormalized()
 				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(List.of(), List.of(userProcessorFactory)))
 				.create();

@@ -108,4 +108,17 @@ public final class PrePostTypeAdapter<T>
 
 	}
 
+	public interface IProcessor<T> {
+
+		void process(T input);
+
+		interface IFactory<T> {
+
+			@Nullable
+			IProcessor<T> createProcessor(TypeToken<?> typeToken);
+
+		}
+
+	}
+
 }
