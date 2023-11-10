@@ -7,4 +7,4 @@ fi
 
 BASE_DIR="$(dirname "$(realpath "$0")")"
 
-"$IDEA_HOME/bin/idea.sh" inspect "$BASE_DIR" "$BASE_DIR/code-inspections.xml" "$BASE_DIR" -v0 -d "$BASE_DIR/src" -format xml
+"$IDEA_HOME/bin/idea.sh" format -s "$BASE_DIR/idea-code-style.xml" -r "$BASE_DIR/src" "$BASE_DIR/pom.xml"
