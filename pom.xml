@@ -429,6 +429,40 @@
 
 		</profile>
 
+		<!-- NOTE: optionally run with the -U flag -->
+
+		<profile>
+
+			<id>update-check</id>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>versions-maven-plugin</artifactId>
+						<version>2.16.1</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>display-dependency-updates</goal>
+									<goal>display-plugin-updates</goal>
+									<goal>display-extension-updates</goal>
+									<goal>display-parent-updates</goal>
+									<goal>display-property-updates</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
 	</profiles>
 
 </project>
