@@ -5,16 +5,16 @@ import java.util.stream.Stream;
 import com.google.gson.TypeAdapterFactory;
 import org.junit.jupiter.params.provider.Arguments;
 
-public final class JsonFailSafeTypeAdapterFactoryTest
+public final class FailSafeTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	public JsonFailSafeTypeAdapterFactoryTest() {
+	public FailSafeTypeAdapterFactoryTest() {
 		super(true);
 	}
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return JsonFailSafeTypeAdapter.Factory.getInstance();
+		return FailSafeTypeAdapter.Factory.getInstance();
 	}
 
 	@Override

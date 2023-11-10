@@ -16,13 +16,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-final class JsonFailSafeTypeAdapter<T>
+final class FailSafeTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	private final TypeAdapter<T> typeAdapter;
 
 	private static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter) {
-		return new JsonFailSafeTypeAdapter<T>(typeAdapter)
+		return new FailSafeTypeAdapter<T>(typeAdapter)
 				.nullSafe();
 	}
 
@@ -86,7 +86,7 @@ final class JsonFailSafeTypeAdapter<T>
 				return null;
 			}
 			final TypeAdapter<T> typeAdapter = gson.getAdapter(typeToken);
-			return JsonFailSafeTypeAdapter.getInstance(typeAdapter);
+			return FailSafeTypeAdapter.getInstance(typeAdapter);
 		}
 
 	}

@@ -8,7 +8,7 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.params.provider.Arguments;
 
-public final class JsonFailSafeTypeAdapterTest
+public final class FailSafeTypeAdapterTest
 		extends AbstractTypeAdapterTest<Object, Object> {
 
 	private static final Gson gson = Gsons.getNormalized();
@@ -26,7 +26,7 @@ public final class JsonFailSafeTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapterFactory typeAdapterFactory = JsonFailSafeTypeAdapter.Factory.getInstance();
+		final TypeAdapterFactory typeAdapterFactory = FailSafeTypeAdapter.Factory.getInstance();
 		return List.of(
 				makeTestCase(
 						typeAdapterFactory.create(gson, stringListTypeToken),
