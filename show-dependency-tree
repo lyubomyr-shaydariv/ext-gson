@@ -1,3 +1,0 @@
-#!/bin/sh
-
-mvn org.apache.maven.plugins:maven-dependency-plugin:3.6.1:tree
