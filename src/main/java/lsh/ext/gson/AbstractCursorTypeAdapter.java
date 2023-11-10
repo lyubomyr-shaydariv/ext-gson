@@ -37,7 +37,7 @@ public abstract class AbstractCursorTypeAdapter<C, E>
 
 	@Override
 	public final C read(final JsonReader in) {
-		return fromIterator(JsonReaderIterator.getInstance(elementTypeAdapter, in));
+		return fromIterator(JsonReaders.asIterator(in, elementTypeAdapter));
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)

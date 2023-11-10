@@ -3,6 +3,8 @@ package lsh.ext.gson;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -119,6 +121,34 @@ public final class JsonReadersTest {
 	public void testSkipTokenForEndOfDocument() {
 		final JsonReader jsonReader = new JsonReader(new StringReader(""));
 		Assertions.assertThrows(EOFException.class, () -> JsonReaders.skipToken(jsonReader));
+	}
+
+	@Test
+	public void testAsIteratorSome() {
+		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
+		final Iterator<?> unit = JsonReaders.asIterator(in, gson.getAdapter(FooBar.class));
+		Assertions.assertTrue(unit.hasNext());
+		Assertions.assertEquals(new FooBar(1, 2), unit.next());
+		Assertions.assertTrue(unit.hasNext());
+		Assertions.assertEquals(new FooBar(3, 4), unit.next());
+		Assertions.assertTrue(unit.hasNext());
+		Assertions.assertEquals(new FooBar(5, 6), unit.next());
+		Assertions.assertFalse(unit.hasNext());
+		Assertions.assertThrows(NoSuchElementException.class, unit::next);
+	}
+
+	@Test
+	public void testAsIteratorEmpty() {
+		final JsonReader in = new JsonReader(new StringReader("[]"));
+		final Iterator<?> unit = JsonReaders.asIterator(in, gson.getAdapter(FooBar.class));
+		Assertions.assertFalse(unit.hasNext());
+		Assertions.assertThrows(NoSuchElementException.class, unit::next);
+	}
+
+	private record FooBar(
+			int foo,
+			int bar
+	) {
 	}
 
 }
