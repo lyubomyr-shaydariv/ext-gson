@@ -60,7 +60,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegrationWithSerializedNameThatHasHigherPriority() {
-		final INamingStrategy namingStrategyMock = Mockito.mock(INamingStrategy.class);
+		final DynamicSerializedNameFieldNamingStrategy.INamingStrategy namingStrategyMock = Mockito.mock(DynamicSerializedNameFieldNamingStrategy.INamingStrategy.class);
 		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(namingStrategyMock);
 		final Gson gson = Gsons.Builders.createNormalized()
 				.setFieldNamingStrategy(unit)

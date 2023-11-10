@@ -39,4 +39,11 @@ public final class DynamicSerializedNameFieldNamingStrategy
 		return name;
 	}
 
+	public interface INamingStrategy {
+
+		@Nullable
+		String translateName(String name);
+
+	}
+
 }
