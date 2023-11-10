@@ -1,5 +1,9 @@
 package lsh.ext.gson;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import javax.annotation.Nullable;
 
@@ -9,7 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class DynamicSerializedNameFieldNamingStrategy
+public final class DynamicFieldNamingStrategy
 		implements FieldNamingStrategy {
 
 	private final INamingStrategy namingStrategy;
@@ -20,19 +24,19 @@ public final class DynamicSerializedNameFieldNamingStrategy
 	}
 
 	public static FieldNamingStrategy getInstance(final INamingStrategy namingStrategy, final FieldNamingStrategy fieldNamingStrategy) {
-		return new DynamicSerializedNameFieldNamingStrategy(namingStrategy, fieldNamingStrategy);
+		return new DynamicFieldNamingStrategy(namingStrategy, fieldNamingStrategy);
 	}
 
 	@Override
 	@SuppressWarnings("ConstantValue")
 	public String translateName(final Field field) {
 		@Nullable
-		final DynamicSerializedName dynamicSerializedName = field.getAnnotation(DynamicSerializedName.class);
-		if ( dynamicSerializedName == null ) {
+		final As as = field.getAnnotation(As.class);
+		if ( as == null ) {
 			return fieldNamingStrategy.translateName(field);
 		}
 		@Nullable
-		final String name = namingStrategy.translateName(dynamicSerializedName.value());
+		final String name = namingStrategy.translateName(as.value());
 		if ( name == null ) {
 			return fieldNamingStrategy.translateName(field);
 		}
@@ -43,6 +47,14 @@ public final class DynamicSerializedNameFieldNamingStrategy
 
 		@Nullable
 		String translateName(String name);
+
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.FIELD)
+	public @interface As {
+
+		String value();
 
 	}
 

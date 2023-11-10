@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public final class DynamicSerializedNameFieldNamingStrategyTest {
+public final class DynamicFieldNamingStrategyTest {
 
 	private static final String FOO_NAME = "#foo";
 	private static final String BAR_NAME = "#bar";
@@ -15,7 +15,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateNameForStaticMappings()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::translate);
+		final FieldNamingStrategy unit = DynamicFieldNamingStrategy.getInstance(DynamicFieldNamingStrategyTest::translate);
 		Assertions.assertEquals("foo", unit.translateName(StaticFooBar.class.getDeclaredField("foo")));
 		Assertions.assertEquals("bar", unit.translateName(StaticFooBar.class.getDeclaredField("bar")));
 	}
@@ -23,7 +23,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateNameForDynamicMappings()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::translate);
+		final FieldNamingStrategy unit = DynamicFieldNamingStrategy.getInstance(DynamicFieldNamingStrategyTest::translate);
 		Assertions.assertEquals("FOO1", unit.translateName(DynamicFooBar.class.getDeclaredField("foo")));
 		Assertions.assertEquals("BAR2", unit.translateName(DynamicFooBar.class.getDeclaredField("bar")));
 	}
@@ -31,14 +31,14 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	@Test
 	public void testTranslateForDynamicMappingsIfNull()
 			throws NoSuchFieldException {
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(name -> null);
+		final FieldNamingStrategy unit = DynamicFieldNamingStrategy.getInstance(name -> null);
 		Assertions.assertEquals("foo", unit.translateName(DynamicFooBar.class.getDeclaredField("foo")));
 		Assertions.assertEquals("bar", unit.translateName(DynamicFooBar.class.getDeclaredField("bar")));
 	}
 
 	@Test
 	public void testTranslateNameForStaticMappingsIntegration() {
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::translate);
+		final FieldNamingStrategy unit = DynamicFieldNamingStrategy.getInstance(DynamicFieldNamingStrategyTest::translate);
 		final Gson gson = Gsons.Builders.createNormalized()
 				.setFieldNamingStrategy(unit)
 				.create();
@@ -49,7 +49,7 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegration() {
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(DynamicSerializedNameFieldNamingStrategyTest::translate);
+		final FieldNamingStrategy unit = DynamicFieldNamingStrategy.getInstance(DynamicFieldNamingStrategyTest::translate);
 		final Gson gson = Gsons.Builders.createNormalized()
 				.setFieldNamingStrategy(unit)
 				.create();
@@ -60,8 +60,8 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegrationWithSerializedNameThatHasHigherPriority() {
-		final DynamicSerializedNameFieldNamingStrategy.INamingStrategy namingStrategyMock = Mockito.mock(DynamicSerializedNameFieldNamingStrategy.INamingStrategy.class);
-		final FieldNamingStrategy unit = DynamicSerializedNameFieldNamingStrategy.getInstance(namingStrategyMock);
+		final DynamicFieldNamingStrategy.INamingStrategy namingStrategyMock = Mockito.mock(DynamicFieldNamingStrategy.INamingStrategy.class);
+		final FieldNamingStrategy unit = DynamicFieldNamingStrategy.getInstance(namingStrategyMock);
 		final Gson gson = Gsons.Builders.createNormalized()
 				.setFieldNamingStrategy(unit)
 				.create();
@@ -86,14 +86,14 @@ public final class DynamicSerializedNameFieldNamingStrategyTest {
 	}
 
 	private record DynamicFooBar(
-			@DynamicSerializedName(FOO_NAME) String foo,
-			@DynamicSerializedName(BAR_NAME) String bar
+			@DynamicFieldNamingStrategy.As(FOO_NAME) String foo,
+			@DynamicFieldNamingStrategy.As(BAR_NAME) String bar
 	) {
 	}
 
 	private record MixedFooBar(
-			@SerializedName("staticFoo") @DynamicSerializedName(FOO_NAME) String foo,
-			@SerializedName("staticBar") @DynamicSerializedName(BAR_NAME) String bar
+			@SerializedName("staticFoo") @DynamicFieldNamingStrategy.As(FOO_NAME) String foo,
+			@SerializedName("staticBar") @DynamicFieldNamingStrategy.As(BAR_NAME) String bar
 	) {
 	}
 
