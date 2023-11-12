@@ -52,9 +52,11 @@ public final class PackedJsonTypeAdapterTest {
 
 	private static final class Outer {
 
+		@SuppressWarnings({ "UnnecessaryBoxing", "FieldMayBeStatic" })
 		private final int id = Integer.valueOf(0);
 
 		@JsonAdapter(PackedJsonTypeAdapter.class)
+		@SuppressWarnings({ "DataFlowIssue", "FieldMayBeStatic" })
 		private final String inner = null;
 
 	}

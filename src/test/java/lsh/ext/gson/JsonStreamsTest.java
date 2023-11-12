@@ -20,7 +20,7 @@ public final class JsonStreamsTest {
 
 	private static final String NORMALIZED_JSON = "{\"foo\":\"foo\",\"bar\":\"bar\",\"baz\":3.141592653589793238462643383279}";
 	private static final String UNNORMALIZED_JSON = "{\n\t\"foo\": \"foo\",\n\tbar: \"bar\"\n,\t\"baz\": 3.141592653589793238462643383279\n}";
-	private static final String UNNORMALIZED_JSON_WITH_TRAILING_BRACE = UNNORMALIZED_JSON + "}";
+	private static final String UNNORMALIZED_JSON_WITH_TRAILING_BRACE = UNNORMALIZED_JSON + '}';
 
 	@Test
 	public void testCopyToWithDefault()
@@ -63,10 +63,12 @@ public final class JsonStreamsTest {
 	}
 
 	@Test
-	public void testCopyToForMalformedJsonDisallowingLenient() {
-		final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
-		final JsonWriter jsonWriter = new JsonWriter(new StringWriter());
-		Assertions.assertThrows(MalformedJsonException.class, () -> JsonStreams.copyTo(jsonReader, jsonWriter, false));
+	public void testCopyToForMalformedJsonDisallowingLenient()
+			throws IOException {
+		try ( JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
+			  JsonWriter jsonWriter = new JsonWriter(new StringWriter()) ) {
+			Assertions.assertThrows(MalformedJsonException.class, () -> JsonStreams.copyTo(jsonReader, jsonWriter, false));
+		}
 	}
 
 	private static Stream<Arguments> testCopyToForMultipleTopLevelValues() {
@@ -85,10 +87,10 @@ public final class JsonStreamsTest {
 			throws IOException {
 		assert jsonDocuments.length > 0;
 		final JsonReader jsonReader = newLenientJsonReader(String.join(" ", jsonDocuments));
-		for ( int i = 0; i < jsonDocuments.length; i++ ) {
+		for ( final String jsonDocument : jsonDocuments ) {
 			final Writer writer = new StringWriter();
 			JsonStreams.copyTo(jsonReader, new JsonWriter(writer), true);
-			Assertions.assertEquals(jsonDocuments[i], writer.toString());
+			Assertions.assertEquals(jsonDocument, writer.toString());
 		}
 	}
 

@@ -39,13 +39,13 @@ final class FailSafeTypeAdapter<T>
 		try {
 			return typeAdapter.read(in);
 		} catch ( final MalformedJsonException | RuntimeException ignored ) {
-			return fallback(in);
+			skip(in);
+			return null;
 		}
 	}
 
-	@Nullable
 	@SuppressWarnings("checkstyle:CyclomaticComplexity")
-	private static <T> T fallback(final JsonReader in)
+	private static void skip(final JsonReader in)
 			throws IOException {
 		final JsonToken jsonToken = in.peek();
 		switch ( jsonToken ) {
@@ -57,16 +57,16 @@ final class FailSafeTypeAdapter<T>
 		case BOOLEAN:
 		case NULL:
 			in.skipValue();
-			return null;
+			return;
 		case END_ARRAY:
 			in.endArray();
-			return null;
+			return;
 		case END_OBJECT:
 			in.endObject();
-			return null;
+			return;
 		case END_DOCUMENT:
 			// do nothing
-			return null;
+			return;
 		default:
 			throw new AssertionError(jsonToken);
 		}

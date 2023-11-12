@@ -17,7 +17,7 @@ public final class JsonReadersTest {
 	private static final Gson gson = Gsons.getNormalized();
 
 	@Test
-	public void isJsonValid()
+	public void testIsJsonValid()
 			throws IOException {
 		Assertions.assertTrue(JsonReaders.isValid(new JsonReader(new StringReader("{\"foo\": \"bar\"}"))));
 		Assertions.assertFalse(JsonReaders.isValid(new JsonReader(new StringReader("foobar"))));
@@ -118,9 +118,11 @@ public final class JsonReadersTest {
 	}
 
 	@Test
-	public void testSkipTokenForEndOfDocument() {
-		final JsonReader jsonReader = new JsonReader(new StringReader(""));
-		Assertions.assertThrows(EOFException.class, () -> JsonReaders.skipToken(jsonReader));
+	public void testSkipTokenForEndOfDocument()
+			throws IOException {
+		try ( JsonReader jsonReader = new JsonReader(new StringReader("")) ) {
+			Assertions.assertThrows(EOFException.class, () -> JsonReaders.skipToken(jsonReader));
+		}
 	}
 
 	@Test

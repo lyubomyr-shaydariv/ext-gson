@@ -1,6 +1,5 @@
 package lsh.ext.gson;
 
-import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
@@ -22,9 +21,7 @@ public abstract class AbstractModuleTest {
 
 	private static final Gson gson = Gsons.getNormalized();
 
-	private static final Collection<TypeToken<?>> foreignClassTypeTokens = Stream.of(Foo.class, Bar.class, Baz.class)
-			.<TypeToken<?>>map(TypeToken::get)
-			.toList();
+	private static final TypeToken<?>[] foreignClassTypeTokens = new TypeToken<?>[] { TypeToken.get(Foo.class), TypeToken.get(Bar.class) };
 
 	private final IModule unit;
 
@@ -36,16 +33,14 @@ public abstract class AbstractModuleTest {
 		@Nullable
 		final TypeAdapter<?> typeAdapter = unit.create(gson, supportedTypeToken);
 		Assertions.assertNotNull(typeAdapter);
-		final boolean supportsForeignClass = foreignClassTypeTokens.stream()
+		final boolean supportsForeignClass = Stream.of(foreignClassTypeTokens)
 				.map(typeToken -> unit.create(gson, typeToken))
 				.anyMatch(Objects::nonNull);
 		Assertions.assertFalse(supportsForeignClass);
 	}
 
-	private static final class Foo {}
+	private record Foo() {}
 
-	private static final class Bar {}
-
-	private static final class Baz {}
+	private record Bar() {}
 
 }

@@ -77,7 +77,7 @@ public final class JsonPathTypeAdapterTest
 	}
 
 	private record WrapperWithNotExistingPath(
-			@JsonPathExpression("$.nowhere") String fooRef
+			@Nullable @JsonPathExpression("$.nowhere") String fooRef
 	) {
 	}
 

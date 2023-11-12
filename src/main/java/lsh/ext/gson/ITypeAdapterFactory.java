@@ -2,7 +2,7 @@ package lsh.ext.gson;
 
 import com.google.gson.TypeAdapterFactory;
 
-@SuppressWarnings("unused") // for type parameter only
+@SuppressWarnings({ "unused", "MarkerInterface" })
 public interface ITypeAdapterFactory<T>
 		extends TypeAdapterFactory {
 }

@@ -342,6 +342,9 @@ public final class JsonValueTypeAdapter
 			if ( !JsonValue.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;
 			}
+			if ( jsonProvider == null ) {
+				return JsonValueTypeAdapter.getInstance();
+			}
 			return JsonValueTypeAdapter.getInstance(jsonProvider);
 		}
 

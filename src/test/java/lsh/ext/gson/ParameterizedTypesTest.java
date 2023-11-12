@@ -1,5 +1,6 @@
 package lsh.ext.gson;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
@@ -30,7 +31,7 @@ public final class ParameterizedTypesTest {
 			String.class
 	})
 	@ParameterizedTest
-	public void testResolveTypeArgumentsForNonGenericType(final Class<?> clazz) {
+	public void testResolveTypeArgumentsForNonGenericType(final Type clazz) {
 		Assertions.assertNull(ParameterizedTypes.getTypeArgument(clazz, 0));
 	}
 

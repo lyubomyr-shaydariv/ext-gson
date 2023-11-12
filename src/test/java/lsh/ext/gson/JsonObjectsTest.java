@@ -53,7 +53,7 @@ public final class JsonObjectsTest {
 	}
 
 	@Test
-	@SuppressWarnings("ConstantConditions")
+	@SuppressWarnings("DataFlowIssue")
 	public void testJsonObject1AsNull() {
 		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, new JsonPrimitive(ks[0])));
 	}
@@ -71,7 +71,7 @@ public final class JsonObjectsTest {
 	}
 
 	@Test
-	@SuppressWarnings("ConstantConditions")
+	@SuppressWarnings("DataFlowIssue")
 	public void testJsonObject2AsNull() {
 		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, new JsonPrimitive(ks[0]), null, new JsonPrimitive(ks[1])));
 	}
@@ -89,7 +89,7 @@ public final class JsonObjectsTest {
 	}
 
 	@Test
-	@SuppressWarnings("ConstantConditions")
+	@SuppressWarnings("DataFlowIssue")
 	public void testJsonObject3AsNull() {
 		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, new JsonPrimitive(ks[0]), null, new JsonPrimitive(ks[1]), null, new JsonPrimitive(ks[2])));
 	}
@@ -107,7 +107,7 @@ public final class JsonObjectsTest {
 	}
 
 	@Test
-	@SuppressWarnings("ConstantConditions")
+	@SuppressWarnings("DataFlowIssue")
 	public void testJsonObject4AsNull() {
 		Assertions.assertThrows(NullPointerException.class, () -> JsonObjects.of(null, new JsonPrimitive(ks[0]), null, new JsonPrimitive(ks[1]), null, new JsonPrimitive(ks[2]), null, new JsonPrimitive(ks[3])));
 	}
