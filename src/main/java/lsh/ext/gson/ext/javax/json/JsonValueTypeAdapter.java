@@ -169,22 +169,13 @@ public final class JsonValueTypeAdapter
 		@Override
 		public void write(final JsonWriter out, final JsonNumber jsonNumber)
 				throws IOException {
-			try {
-				out.value(jsonNumber.intValueExact());
-			} catch ( final ArithmeticException exIntExact ) {
-				try {
-					out.value(jsonNumber.longValueExact());
-				} catch ( final ArithmeticException exLongExact ) {
-					out.value(jsonNumber.bigDecimalValue());
-				}
-			}
+			out.value(jsonNumber.numberValue());
 		}
 
 		@Override
 		public JsonNumber read(final JsonReader in)
 				throws IOException {
-			final String rawValue = in.nextString();
-			return jsonProvider.createValue(new BigDecimal(rawValue));
+			return jsonProvider.createValue(new BigDecimal(in.nextString()));
 		}
 
 	}
