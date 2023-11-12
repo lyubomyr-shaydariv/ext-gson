@@ -271,6 +271,10 @@
 
 				<plugins>
 
+					<!--
+					TODO exclude never-executing code blocks
+					See more: https://github.com/jacoco/jacoco/wiki/FilteringOptions#filters-for-code-where-test-execution-is-questionable-or-impossible-by-design
+					-->
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
