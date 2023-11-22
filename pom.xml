@@ -345,15 +345,40 @@
 				<plugins>
 
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-enforcer-plugin</artifactId>
+						<version>3.4.1</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>enforce</goal>
+								</goals>
+								<configuration>
+									<fail>true</fail>
+									<rules>
+										<requireEnvironmentVariable>
+											<variableName>NVD_API_KEY</variableName>
+										</requireEnvironmentVariable>
+									</rules>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>8.4.3</version>
+						<version>9.0.0</version>
 						<executions>
 							<execution>
 								<phase>validate</phase>
 								<goals>
 									<goal>check</goal>
 								</goals>
+								<configuration>
+									<nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
