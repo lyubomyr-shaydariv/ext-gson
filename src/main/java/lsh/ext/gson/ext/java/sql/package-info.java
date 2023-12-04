@@ -1,4 +1,4 @@
-@NonnullByDefault
+@Nonnull
 package lsh.ext.gson.ext.java.sql;
 
-import lsh.NonnullByDefault;
+import javax.annotation.Nonnull;

@@ -3,7 +3,7 @@
 // - A pure OOP approach (requires multiple (+abstract) classes, complicates design by exploding the number of required types)
 // - A codegen for generate-sources?
 // - A post-compilation processing for the class files (the maven-shade-plugin does not seem to be an option here)?
-@NonnullByDefault
+@Nonnull
 package lsh.ext.gson.ext.jakarta.json;
 
-import lsh.NonnullByDefault;
+import javax.annotation.Nonnull;

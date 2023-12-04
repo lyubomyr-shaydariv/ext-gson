@@ -1,4 +1,4 @@
-@NonnullByDefault
+@Nonnull
 package lsh.ext.gson.ext.org.apache.commons.collections4;
 
-import lsh.NonnullByDefault;
+import javax.annotation.Nonnull;
