@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>com.github.spotbugs</groupId>
 			<artifactId>spotbugs-annotations</artifactId>
-			<version>4.8.2</version>
+			<version>4.8.3</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -183,7 +183,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.2.2</version>
+				<version>3.2.3</version>
 			</plugin>
 
 		</plugins>
@@ -369,7 +369,7 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>9.0.4</version>
+						<version>9.0.5</version>
 						<executions>
 							<execution>
 								<phase>validate</phase>
