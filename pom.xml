@@ -520,6 +520,34 @@
 
 		</profile>
 
+		<profile>
+
+			<id>upgrade-dependencies</id>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>versions-maven-plugin</artifactId>
+						<version>2.16.2</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>use-latest-versions</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
 	</profiles>
 
 </project>
