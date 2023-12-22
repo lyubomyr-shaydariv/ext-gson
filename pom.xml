@@ -206,7 +206,125 @@
 
 		<profile>
 
-			<id>checkstyle</id>
+			<id>generate-javadoc</id>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.6.3</version>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>javadoc</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
+		<profile>
+
+			<id>show-dependency-tree</id>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>3.6.1</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>tree</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
+		<!-- NOTE: optionally run with the -U flag -->
+
+		<profile>
+
+			<id>show-dependency-updates</id>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>versions-maven-plugin</artifactId>
+						<version>2.16.2</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>display-dependency-updates</goal>
+									<goal>display-plugin-updates</goal>
+									<goal>display-extension-updates</goal>
+									<goal>display-parent-updates</goal>
+									<goal>display-property-updates</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
+		<profile>
+
+			<id>upgrade-dependencies</id>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>versions-maven-plugin</artifactId>
+						<version>2.16.2</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>use-latest-versions</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
+		<profile>
+
+			<id>use-checkstyle</id>
 
 			<build>
 
@@ -237,35 +355,7 @@
 
 		<profile>
 
-			<id>dependency-tree</id>
-
-			<build>
-
-				<plugins>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-dependency-plugin</artifactId>
-						<version>3.6.1</version>
-						<executions>
-							<execution>
-								<phase>validate</phase>
-								<goals>
-									<goal>tree</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-
-			</build>
-
-		</profile>
-
-		<profile>
-
-			<id>jacoco</id>
+			<id>use-jacoco</id>
 
 			<build>
 
@@ -310,35 +400,7 @@
 
 		<profile>
 
-			<id>javadoc</id>
-
-			<build>
-
-				<plugins>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.6.3</version>
-						<executions>
-							<execution>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>javadoc</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-
-			</build>
-
-		</profile>
-
-		<profile>
-
-			<id>owasp-dependency-check</id>
+			<id>use-owasp</id>
 
 			<build>
 
@@ -391,7 +453,7 @@
 
 		<profile>
 
-			<id>pmd</id>
+			<id>use-pmd</id>
 
 			<build>
 
@@ -427,7 +489,7 @@
 
 		<profile>
 
-			<id>sonarqube</id>
+			<id>use-sonarqube</id>
 
 			<properties>
 				<sonar.projectKey>ext-gson</sonar.projectKey>
@@ -460,7 +522,7 @@
 
 		<profile>
 
-			<id>spotbugs</id>
+			<id>use-spotbugs</id>
 
 			<build>
 
@@ -475,68 +537,6 @@
 								<phase>process-classes</phase>
 								<goals>
 									<goal>check</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-
-			</build>
-
-		</profile>
-
-		<!-- NOTE: optionally run with the -U flag -->
-
-		<profile>
-
-			<id>update-check</id>
-
-			<build>
-
-				<plugins>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>versions-maven-plugin</artifactId>
-						<version>2.16.2</version>
-						<executions>
-							<execution>
-								<phase>validate</phase>
-								<goals>
-									<goal>display-dependency-updates</goal>
-									<goal>display-plugin-updates</goal>
-									<goal>display-extension-updates</goal>
-									<goal>display-parent-updates</goal>
-									<goal>display-property-updates</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-
-			</build>
-
-		</profile>
-
-		<profile>
-
-			<id>upgrade-dependencies</id>
-
-			<build>
-
-				<plugins>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>versions-maven-plugin</artifactId>
-						<version>2.16.2</version>
-						<executions>
-							<execution>
-								<phase>validate</phase>
-								<goals>
-									<goal>use-latest-versions</goal>
 								</goals>
 							</execution>
 						</executions>
