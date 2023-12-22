@@ -492,8 +492,10 @@
 			<id>use-sonarqube</id>
 
 			<properties>
-				<sonar.projectKey>ext-gson</sonar.projectKey>
-				<sonar.projectName>ext-gson</sonar.projectName>
+				<sonar.host.url>${env.SONAR_HOST_URL}</sonar.host.url>
+				<sonar.projectKey>${env.SONAR_PROJECT_KEY}</sonar.projectKey>
+				<sonar.projectName>${env.SONAR_PROJECT_NAME}</sonar.projectName>
+				<sonar.token>${env.SONAR_TOKEN}</sonar.token>
 			</properties>
 
 			<build>
