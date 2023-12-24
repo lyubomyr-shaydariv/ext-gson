@@ -241,16 +241,16 @@ public final class JsonObjectsTest {
 
 	@ParameterizedTest
 	@MethodSource("testObjects")
-	public void testAsMutableMap(final JsonObject jsonObject) {
-		final Class<?> actualClass = JsonObjects.asMutableMap(jsonObject)
+	public void testAsModifiableMap(final JsonObject jsonObject) {
+		final Class<?> actualClass = JsonObjects.asModifiableMap(jsonObject)
 				.getClass();
 		Assertions.assertSame(modifiableMapClass, actualClass);
 	}
 
 	@ParameterizedTest
 	@MethodSource("testObjects")
-	public void testAsImutableMap(final JsonObject jsonObject) {
-		final Class<?> actualClass = JsonObjects.asImmutableMap(jsonObject)
+	public void testAsUnmodifiableMap(final JsonObject jsonObject) {
+		final Class<?> actualClass = JsonObjects.asUnmodifiableMap(jsonObject)
 				.getClass();
 		Assertions.assertSame(Types.jdkUnmodifiableMapClass, actualClass);
 	}

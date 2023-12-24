@@ -104,16 +104,16 @@ public final class JsonArraysTest {
 
 	@ParameterizedTest
 	@MethodSource("testArrays")
-	public void testAsMutableList(final JsonArray jsonArray) {
-		final Class<?> actualClass = JsonArrays.asMutableList(jsonArray)
+	public void testAsModifiableList(final JsonArray jsonArray) {
+		final Class<?> actualClass = JsonArrays.asModifiableList(jsonArray)
 				.getClass();
 		Assertions.assertSame(modifiableListClass, actualClass);
 	}
 
 	@ParameterizedTest
 	@MethodSource("testArrays")
-	public void testAsImmutableList(final JsonArray jsonArray) {
-		final Class<?> actualClass = JsonArrays.asImmutableList(jsonArray)
+	public void testAsUnmodifiableList(final JsonArray jsonArray) {
+		final Class<?> actualClass = JsonArrays.asUnmodifiableList(jsonArray)
 				.getClass();
 		Assertions.assertSame(Types.jdkUnmodifiableListClass, actualClass);
 	}

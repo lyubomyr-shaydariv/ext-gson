@@ -92,11 +92,11 @@ public final class JsonArrays {
 		return jsonArray;
 	}
 
-	public static List<JsonElement> asImmutableList(final JsonArray jsonArray) {
+	public static List<JsonElement> asUnmodifiableList(final JsonArray jsonArray) {
 		return Collections.unmodifiableList(jsonArray.asList());
 	}
 
-	public static List<JsonElement> asMutableList(final JsonArray jsonArray) {
+	public static List<JsonElement> asModifiableList(final JsonArray jsonArray) {
 		return jsonArray.asList();
 	}
 

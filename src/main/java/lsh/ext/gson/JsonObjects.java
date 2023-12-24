@@ -96,11 +96,11 @@ public final class JsonObjects {
 		return left;
 	}
 
-	public static Map<String, JsonElement> asImmutableMap(final JsonObject jsonObject) {
+	public static Map<String, JsonElement> asUnmodifiableMap(final JsonObject jsonObject) {
 		return Collections.unmodifiableMap(jsonObject.asMap());
 	}
 
-	public static Map<String, JsonElement> asMutableMap(final JsonObject jsonObject) {
+	public static Map<String, JsonElement> asModifiableMap(final JsonObject jsonObject) {
 		return jsonObject.asMap();
 	}
 
