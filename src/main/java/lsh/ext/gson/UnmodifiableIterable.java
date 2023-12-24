@@ -26,20 +26,24 @@ public final class UnmodifiableIterable<T>
 		return new UnmodifiableIterable<>(iterable);
 	}
 
+	public static <T> Iterable<T> copyOf(final Collection<? extends T> collection) {
+		if ( collection.isEmpty() ) {
+			@SuppressWarnings("unchecked")
+			final Iterable<T> castEmptyUnmodifiableIterable = (Iterable<T>) emptyUnmodifiableIterable;
+			return castEmptyUnmodifiableIterable;
+		}
+		final ArrayList<T> copy = new ArrayList<>(collection);
+		return new UnmodifiableIterable<>(copy);
+	}
+
+	// TODO consider deprecated since Iterable is actually of unknown, probably infinite, size?
 	public static <T> Iterable<T> copyOf(final Iterable<? extends T> iterable) {
-		final Collection<T> copy;
 		if ( iterable instanceof final Collection<? extends T> collection ) {
-			if ( collection.isEmpty() ) {
-				@SuppressWarnings("unchecked")
-				final Iterable<T> castEmptyUnmodifiableIterable = (Iterable<T>) emptyUnmodifiableIterable;
-				return castEmptyUnmodifiableIterable;
-			}
-			copy = new ArrayList<>(collection);
-		} else {
-			copy = new ArrayList<>();
-			for ( final T t : iterable ) {
-				copy.add(t);
-			}
+			return copyOf(collection);
+		}
+		final Collection<T> copy = new ArrayList<>();
+		for ( final T t : iterable ) {
+			copy.add(t);
 		}
 		if ( copy.isEmpty() ) {
 			@SuppressWarnings("unchecked")
