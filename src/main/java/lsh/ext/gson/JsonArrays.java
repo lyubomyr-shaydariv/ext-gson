@@ -1,5 +1,6 @@
 package lsh.ext.gson;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -98,6 +99,10 @@ public final class JsonArrays {
 
 	public static List<JsonElement> asModifiableList(final JsonArray jsonArray) {
 		return jsonArray.asList();
+	}
+
+	public static List<JsonElement> toImmutableList(final JsonArray jsonArray) {
+		return Collections.unmodifiableList(new ArrayList<>(jsonArray.asList()));
 	}
 
 }
