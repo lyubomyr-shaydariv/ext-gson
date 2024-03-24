@@ -61,6 +61,34 @@ public final class JsonReaders {
 		}
 	}
 
+	@SuppressWarnings("checkstyle:CyclomaticComplexity")
+	public static void skipValue(@WillNotClose final JsonReader jsonReader)
+			throws IOException {
+		final JsonToken jsonToken = jsonReader.peek();
+		switch ( jsonToken ) {
+		case BEGIN_ARRAY:
+		case BEGIN_OBJECT:
+		case NAME:
+		case STRING:
+		case NUMBER:
+		case BOOLEAN:
+		case NULL:
+			jsonReader.skipValue();
+			return;
+		case END_ARRAY:
+			jsonReader.endArray();
+			return;
+		case END_OBJECT:
+			jsonReader.endObject();
+			return;
+		case END_DOCUMENT:
+			// do nothing
+			return;
+		default:
+			throw new AssertionError(jsonToken);
+		}
+	}
+
 	public static <E> Iterator<E> asIterator(@WillNotClose final JsonReader jsonReader, final TypeAdapter<? extends E> elementTypeAdapter) {
 		return JsonReaderIterator.getInstance(jsonReader, elementTypeAdapter);
 	}

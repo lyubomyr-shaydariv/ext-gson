@@ -8,7 +8,6 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
@@ -39,36 +38,8 @@ final class FailSafeTypeAdapter<T>
 		try {
 			return typeAdapter.read(in);
 		} catch ( final MalformedJsonException | RuntimeException ignored ) {
-			skip(in);
+			JsonReaders.skipValue(in);
 			return null;
-		}
-	}
-
-	@SuppressWarnings("checkstyle:CyclomaticComplexity")
-	private static void skip(final JsonReader in)
-			throws IOException {
-		final JsonToken jsonToken = in.peek();
-		switch ( jsonToken ) {
-		case BEGIN_ARRAY:
-		case BEGIN_OBJECT:
-		case NAME:
-		case STRING:
-		case NUMBER:
-		case BOOLEAN:
-		case NULL:
-			in.skipValue();
-			return;
-		case END_ARRAY:
-			in.endArray();
-			return;
-		case END_OBJECT:
-			in.endObject();
-			return;
-		case END_DOCUMENT:
-			// do nothing
-			return;
-		default:
-			throw new AssertionError(jsonToken);
 		}
 	}
 
