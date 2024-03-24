@@ -10,12 +10,6 @@ public interface IBuilder2<A1, A2, T> {
 
 	T build();
 
-	interface IFactory<A1, A2, T> {
-
-		IBuilder2<A1, A2, T> create(TypeToken<T> typeToken);
-
-	}
-
 	static <K, V, M extends Map<K, V>> IBuilder2<K, V, M> of(final M map) {
 		return new IBuilder2<>() {
 			@Override
@@ -28,6 +22,12 @@ public interface IBuilder2<A1, A2, T> {
 				return map;
 			}
 		};
+	}
+
+	interface IFactory<A1, A2, T> {
+
+		IBuilder2<A1, A2, T> create(TypeToken<T> typeToken);
+
 	}
 
 }

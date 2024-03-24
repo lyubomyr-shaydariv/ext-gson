@@ -10,12 +10,6 @@ public interface IBuilder1<A1, T> {
 
 	T build();
 
-	interface IFactory<A1, T> {
-
-		IBuilder1<A1, T> create(TypeToken<T> typeToken);
-
-	}
-
 	static <E, C extends Collection<E>> IBuilder1<E, C> of(final C collection) {
 		return new IBuilder1<>() {
 			@Override
@@ -28,6 +22,12 @@ public interface IBuilder1<A1, T> {
 				return collection;
 			}
 		};
+	}
+
+	interface IFactory<A1, T> {
+
+		IBuilder1<A1, T> create(TypeToken<T> typeToken);
+
 	}
 
 }

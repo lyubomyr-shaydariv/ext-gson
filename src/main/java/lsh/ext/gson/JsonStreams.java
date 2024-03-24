@@ -17,7 +17,7 @@ public final class JsonStreams {
 		copyTo(reader, writer, true);
 	}
 
-	@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:JavaNCSS" })
+	@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:JavaNCSS", "checkstyle:ExecutableStatementCount" })
 	public static void copyTo(@WillNotClose final JsonReader reader, @WillNotClose final JsonWriter writer, final boolean ignoreTrailingTopLevelValues)
 			throws IOException {
 		int level = 0;

@@ -29,12 +29,12 @@ public final class JsonApiModule
 	@Accessors(fluent = true, chain = true)
 	public static final class Builder {
 
+		@Setter
+		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance(JsonProvider.provider());
+
 		public static Builder create() {
 			return new Builder();
 		}
-
-		@Setter
-		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance(JsonProvider.provider());
 
 		public IModule build() {
 			return new JsonApiModule(UnmodifiableIterable.copyOf(
