@@ -12,6 +12,7 @@ import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.functors.FalsePredicate;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 final class FailSafeTypeAdapter<T>
@@ -20,8 +21,11 @@ final class FailSafeTypeAdapter<T>
 	private final TypeAdapter<T> typeAdapter;
 	private final boolean ignoreRuntimeException;
 
-	private static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException) {
-		return new FailSafeTypeAdapter<T>(typeAdapter, ignoreRuntimeException)
+	@Nullable
+	private final T defaultValue;
+
+	private static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException, @Nullable final T defaultValue) {
+		return new FailSafeTypeAdapter<T>(typeAdapter, ignoreRuntimeException, defaultValue)
 				.nullSafe();
 	}
 
@@ -42,10 +46,10 @@ final class FailSafeTypeAdapter<T>
 				throw ex;
 			}
 			JsonReaders.skipValue(in);
-			return null;
+			return defaultValue;
 		} catch ( final MalformedJsonException ignored ) {
 			JsonReaders.skipValue(in);
-			return null;
+			return defaultValue;
 		}
 	}
 
@@ -72,7 +76,38 @@ final class FailSafeTypeAdapter<T>
 				return null;
 			}
 			final TypeAdapter<T> typeAdapter = gson.getAdapter(typeToken);
-			return FailSafeTypeAdapter.getInstance(typeAdapter, catchRuntimeException);
+			final T defaultValue = getDefaultValue(typeToken.getRawType());
+			return FailSafeTypeAdapter.getInstance(typeAdapter, catchRuntimeException, defaultValue);
+		}
+
+		@Nullable
+		private static <T> T getDefaultValue(final Class<?> clazz) {
+			if ( !clazz.isPrimitive() || clazz == void.class ) {
+				return null;
+			}
+			final Object result;
+			if ( clazz == boolean.class ) {
+				result = false;
+			} else if ( clazz == byte.class ) {
+				result = (byte) 0;
+			} else if ( clazz == short.class ) {
+				result = (short) 0;
+			} else if ( clazz == int.class ) {
+				result = 0;
+			} else if ( clazz == long.class ) {
+				result = 0L;
+			} else if ( clazz == float.class ) {
+				result = 0.0F;
+			} else if ( clazz == double.class ) {
+				result = 0.0D;
+			} else if ( clazz == char.class ) {
+				result = '\u0000';
+			} else {
+				throw new AssertionError(clazz);
+			}
+			@SuppressWarnings("unchecked")
+			final T castResult = (T) result;
+			return castResult;
 		}
 
 	}
