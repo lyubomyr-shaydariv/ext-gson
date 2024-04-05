@@ -18,10 +18,10 @@ final class FailSafeTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	private final TypeAdapter<T> typeAdapter;
-	private final boolean catchRuntimeException;
+	private final boolean ignoreRuntimeException;
 
-	private static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean catchRuntimeException) {
-		return new FailSafeTypeAdapter<T>(typeAdapter, catchRuntimeException)
+	private static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException) {
+		return new FailSafeTypeAdapter<T>(typeAdapter, ignoreRuntimeException)
 				.nullSafe();
 	}
 
@@ -36,16 +36,13 @@ final class FailSafeTypeAdapter<T>
 	public T read(final JsonReader in)
 			throws IOException {
 		try {
-			if ( catchRuntimeException ) {
-				try {
-					return typeAdapter.read(in);
-				} catch ( final RuntimeException ignored ) {
-					JsonReaders.skipValue(in);
-					return null;
-				}
-			} else {
-				return typeAdapter.read(in);
+			return typeAdapter.read(in);
+		} catch ( final RuntimeException ex ) {
+			if ( !ignoreRuntimeException ) {
+				throw ex;
 			}
+			JsonReaders.skipValue(in);
+			return null;
 		} catch ( final MalformedJsonException ignored ) {
 			JsonReaders.skipValue(in);
 			return null;
