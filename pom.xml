@@ -172,6 +172,13 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.13.0</version>
 				<configuration>
+					<annotationProcessorPaths>
+						<annotationProcessorPath>
+							<artifactId>lombok</artifactId>
+							<groupId>org.projectlombok</groupId>
+							<version>1.18.34</version>
+						</annotationProcessorPath>
+					</annotationProcessorPaths>
 					<failOnWarning>false</failOnWarning>
 					<source>19</source>
 					<showDeprecation>true</showDeprecation>
