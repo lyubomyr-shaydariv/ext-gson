@@ -13,8 +13,8 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
@@ -69,13 +69,13 @@ public final class BidiMapTypeAdapter<V>
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
 		) {
-			return getInstance((IFactory0.IFactory<BidiMap<String, V>>) typeToken -> {
+			return getInstance((IBuilder0.IFactory<BidiMap<String, V>>) typeToken -> {
 				throw new UnsupportedOperationException(String.valueOf(typeToken));
 			});
 		}
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
-				final IFactory0.IFactory<BidiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<BidiMap<String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder2.IFactory<String, V, BidiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -88,11 +88,11 @@ public final class BidiMapTypeAdapter<V>
 
 		public static <V> IBuilder2<String, V, BidiMap<String, V>> builder(
 				final TypeToken<BidiMap<String, V>> typeToken,
-				final IFactory0.IFactory<BidiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<BidiMap<String, V>> factoryFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
 			final BidiMap<String, V> bidiMap = factoryFactory.create(typeToken)
-					.create();
+					.build();
 			return IBuilder2.of(bidiMap);
 		}
 

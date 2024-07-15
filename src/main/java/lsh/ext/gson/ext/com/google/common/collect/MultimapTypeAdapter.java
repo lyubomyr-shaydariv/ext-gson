@@ -16,8 +16,8 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -71,13 +71,13 @@ public final class MultimapTypeAdapter<V>
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> multimapBuilderFactory;
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance() {
-			return getInstance((IFactory0.IFactory<Multimap<String, V>>) typeToken -> {
+			return getInstance((IBuilder0.IFactory<Multimap<String, V>>) typeToken -> {
 				throw new UnsupportedOperationException(String.valueOf(typeToken));
 			});
 		}
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
-				final IFactory0.IFactory<Multimap<String, V>> factoryFactory
+				final IBuilder0.IFactory<Multimap<String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder2.IFactory<String, V, Multimap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -90,7 +90,7 @@ public final class MultimapTypeAdapter<V>
 
 		public static <V> IBuilder2<String, V, Multimap<String, V>> builder(
 				final TypeToken<Multimap<String, V>> typeToken,
-				final IFactory0.IFactory<Multimap<String, V>> factoryFactory
+				final IBuilder0.IFactory<Multimap<String, V>> factoryFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multimap> rawType = (Class<? extends Multimap<?, ?>>) typeToken.getRawType();
@@ -110,7 +110,7 @@ public final class MultimapTypeAdapter<V>
 			}
 			@SuppressWarnings("LawOfDemeter")
 			final Multimap<String, V> multimap = factoryFactory.create(typeToken)
-					.create();
+					.build();
 			return new IBuilder2<>() {
 				@Override
 				public void accept(final String k, final V v) {

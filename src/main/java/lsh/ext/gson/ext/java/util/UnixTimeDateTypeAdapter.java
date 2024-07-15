@@ -12,7 +12,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IFactory0;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -21,9 +21,9 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 
 	private static final int MS_IN_S = 1000;
 
-	private final IFactory0<? extends T> instanceFactory;
+	private final IBuilder0<? extends T> instanceFactory;
 
-	public static <T extends Date> TypeAdapter<T> getInstance(final IFactory0<? extends T> instanceFactory) {
+	public static <T extends Date> TypeAdapter<T> getInstance(final IBuilder0<? extends T> instanceFactory) {
 		return new UnixTimeDateTypeAdapter<T>(instanceFactory)
 				.nullSafe();
 	}
@@ -32,7 +32,7 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 	public T read(final JsonReader in)
 			throws IOException {
 		final long time = in.nextLong() * MS_IN_S;
-		final T value = instanceFactory.create();
+		final T value = instanceFactory.build();
 		value.setTime(time);
 		return value;
 	}
@@ -47,15 +47,15 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 	public static final class Factory<T extends Date>
 			extends AbstractTypeAdapterFactory<T> {
 
-		private final IFactory0.IFactory<? extends T> dateFactoryFactory;
+		private final IBuilder0.IFactory<? extends T> dateFactoryFactory;
 
 		public static <T extends Date> ITypeAdapterFactory<T> getInstance(
-				final IFactory0.IFactory<? extends T> dateFactoryFactory
+				final IBuilder0.IFactory<? extends T> dateFactoryFactory
 		) {
 			return new Factory<>(dateFactoryFactory);
 		}
 
-		public static IFactory0<Date> createFactory(@SuppressWarnings("unused") final TypeToken<Date> typeToken) {
+		public static IBuilder0<Date> createFactory(@SuppressWarnings("unused") final TypeToken<Date> typeToken) {
 			return Date::new;
 		}
 
@@ -68,7 +68,7 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 			@SuppressWarnings("unchecked")
 			final TypeToken<T> castTypeToken = (TypeToken<T>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IFactory0.IFactory<T> castDateFactoryFactory = (IFactory0.IFactory<T>) dateFactoryFactory;
+			final IBuilder0.IFactory<T> castDateFactoryFactory = (IBuilder0.IFactory<T>) dateFactoryFactory;
 			return UnixTimeDateTypeAdapter.getInstance(castDateFactoryFactory.create(castTypeToken));
 		}
 

@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
-import lsh.ext.gson.IFactory0;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.UnmodifiableIterable;
 import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
@@ -29,7 +29,7 @@ public final class JavaSqlModule
 		super(typeAdapterFactories);
 	}
 
-	public static IFactory0<java.util.Date> createSqlDateTypesFactory(final TypeToken<java.util.Date> typeToken) {
+	public static IBuilder0<java.util.Date> createSqlDateTypesFactory(final TypeToken<java.util.Date> typeToken) {
 		@SuppressWarnings("unchecked")
 		final Class<? extends java.util.Date> rawType = (Class<? extends java.util.Date>) typeToken.getRawType();
 		if ( rawType == Date.class ) {

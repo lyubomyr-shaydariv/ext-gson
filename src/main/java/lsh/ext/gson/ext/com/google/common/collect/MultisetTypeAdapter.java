@@ -15,8 +15,8 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder1;
-import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -70,13 +70,13 @@ public final class MultisetTypeAdapter<E>
 		private final IBuilder1.IFactory<? super E, ? extends Multiset<E>> multisetBuilderFactory;
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance() {
-			return getInstance((IFactory0.IFactory<Multiset<E>>) typeToken -> {
+			return getInstance((IBuilder0.IFactory<Multiset<E>>) typeToken -> {
 				throw new UnsupportedOperationException(String.valueOf(typeToken));
 			});
 		}
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(
-				final IFactory0.IFactory<Multiset<E>> factoryFactory
+				final IBuilder0.IFactory<Multiset<E>> factoryFactory
 		) {
 			return getInstance((IBuilder1.IFactory<E, Multiset<E>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -89,7 +89,7 @@ public final class MultisetTypeAdapter<E>
 
 		public static <E> IBuilder1<E, Multiset<E>> builder(
 				final TypeToken<Multiset<E>> typeToken,
-				final IFactory0.IFactory<Multiset<E>> factoryFactory
+				final IBuilder0.IFactory<Multiset<E>> factoryFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multiset> rawType = (Class<? extends Multiset<?>>) typeToken.getRawType();
@@ -109,7 +109,7 @@ public final class MultisetTypeAdapter<E>
 			}
 			@SuppressWarnings("LawOfDemeter")
 			final Multiset<E> multiset = factoryFactory.create(typeToken)
-					.create();
+					.build();
 			return IBuilder1.of(multiset);
 		}
 

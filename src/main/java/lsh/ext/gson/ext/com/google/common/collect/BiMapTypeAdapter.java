@@ -16,8 +16,8 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -71,13 +71,13 @@ public final class BiMapTypeAdapter<V>
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> biMapBuilderFactory;
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance() {
-			return getInstance((IFactory0.IFactory<BiMap<String, V>>) typeToken -> {
+			return getInstance((IBuilder0.IFactory<BiMap<String, V>>) typeToken -> {
 				throw new UnsupportedOperationException(String.valueOf(typeToken));
 			});
 		}
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
-				final IFactory0.IFactory<BiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<BiMap<String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder2.IFactory<String, V, BiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -90,7 +90,7 @@ public final class BiMapTypeAdapter<V>
 
 		public static <V> IBuilder2<String, V, BiMap<String, V>> builder(
 				final TypeToken<BiMap<String, V>> typeToken,
-				final IFactory0.IFactory<BiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<BiMap<String, V>> factoryFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends BiMap> rawType = (Class<? extends BiMap<String, ?>>) typeToken.getRawType();
@@ -110,7 +110,7 @@ public final class BiMapTypeAdapter<V>
 			}
 			@SuppressWarnings("LawOfDemeter")
 			final BiMap<String, V> biMap = factoryFactory.create(typeToken)
-					.create();
+					.build();
 			return IBuilder2.of(biMap);
 		}
 

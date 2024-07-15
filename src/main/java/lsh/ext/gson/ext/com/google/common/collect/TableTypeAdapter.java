@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IFactory0;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -84,13 +84,13 @@ public final class TableTypeAdapter<V>
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
 		) {
-			return getInstance((IFactory0.IFactory<Table<String, String, V>>) typeToken -> {
+			return getInstance((IBuilder0.IFactory<Table<String, String, V>>) typeToken -> {
 				throw new UnsupportedOperationException(String.valueOf(typeToken));
 			});
 		}
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
-				final IFactory0.IFactory<Table<String, String, V>> factoryFactory
+				final IBuilder0.IFactory<Table<String, String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder3.IFactory<String, String, V, Table<String, String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -103,7 +103,7 @@ public final class TableTypeAdapter<V>
 
 		public static <V> IBuilder3<String, String, V, Table<String, String, V>> builder(
 				final TypeToken<Table<String, String, V>> typeToken,
-				final IFactory0.IFactory<Table<String, String, V>> factoryFactory
+				final IBuilder0.IFactory<Table<String, String, V>> factoryFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Table> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
@@ -123,7 +123,7 @@ public final class TableTypeAdapter<V>
 			}
 			@SuppressWarnings("LawOfDemeter")
 			final Table<String, String, V> table = factoryFactory.create(typeToken)
-					.create();
+					.build();
 			return new IBuilder3<>() {
 				@Override
 				public void accept(final String rowKey, final String columnKey, final V v) {

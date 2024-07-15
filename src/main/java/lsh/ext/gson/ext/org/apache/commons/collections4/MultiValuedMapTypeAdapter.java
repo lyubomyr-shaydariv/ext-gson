@@ -13,8 +13,8 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -68,13 +68,13 @@ public final class MultiValuedMapTypeAdapter<V>
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> multiValuedMapBuilderFactory;
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance() {
-			return getInstance((IFactory0.IFactory<MultiValuedMap<String, V>>) typeToken -> {
+			return getInstance((IBuilder0.IFactory<MultiValuedMap<String, V>>) typeToken -> {
 				throw new UnsupportedOperationException(String.valueOf(typeToken));
 			});
 		}
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
-				final IFactory0.IFactory<MultiValuedMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<MultiValuedMap<String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder2.IFactory<String, V, MultiValuedMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -87,11 +87,11 @@ public final class MultiValuedMapTypeAdapter<V>
 
 		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> builder(
 				final TypeToken<MultiValuedMap<String, V>> typeToken,
-				final IFactory0.IFactory<MultiValuedMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<MultiValuedMap<String, V>> factoryFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
 			final MultiValuedMap<String, V> multiValuedMap = factoryFactory.create(typeToken)
-					.create();
+					.build();
 			return new IBuilder2<>() {
 				@Override
 				public void accept(final String k, final V v) {

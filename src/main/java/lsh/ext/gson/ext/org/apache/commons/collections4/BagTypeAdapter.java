@@ -12,8 +12,8 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory0;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
@@ -83,13 +83,13 @@ public final class BagTypeAdapter<E>
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
 				final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory
 		) {
-			return getInstance((IFactory0.IFactory<Bag<E>>) typeToken -> {
+			return getInstance((IBuilder0.IFactory<Bag<E>>) typeToken -> {
 				throw new UnsupportedOperationException(String.valueOf(typeToken));
 			}, keyMapperFactory);
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final IFactory0.IFactory<Bag<E>> factoryFactory,
+				final IBuilder0.IFactory<Bag<E>> factoryFactory,
 				final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory
 		) {
 			return getInstance((IBuilder2.IFactory<E, Integer, Bag<E>>) typeToken -> builder(typeToken, factoryFactory), keyMapperFactory);
@@ -104,11 +104,11 @@ public final class BagTypeAdapter<E>
 
 		public static <E> IBuilder2<E, Integer, Bag<E>> builder(
 				final TypeToken<Bag<E>> typeToken,
-				final IFactory0.IFactory<Bag<E>> factoryFactory
+				final IBuilder0.IFactory<Bag<E>> factoryFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
 			final Bag<E> bag = factoryFactory.create(typeToken)
-					.create();
+					.build();
 			return new IBuilder2<>() {
 				@Override
 				public void accept(final E e, final Integer n) {

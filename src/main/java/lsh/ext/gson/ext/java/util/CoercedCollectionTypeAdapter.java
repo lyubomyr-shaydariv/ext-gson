@@ -16,8 +16,8 @@ import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder1;
-import lsh.ext.gson.IFactory0;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapter<E>
@@ -101,13 +101,13 @@ public final class CoercedCollectionTypeAdapter<E>
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Collection<E>> collectionClass = (Class) Collection.class;
-			return getInstance(collectionClass, elementTypeToken, (IFactory0.IFactory<Collection<E>>) typeToken -> ArrayList::new);
+			return getInstance(collectionClass, elementTypeToken, (IBuilder0.IFactory<Collection<E>>) typeToken -> ArrayList::new);
 		}
 
 		public static <E> TypeAdapterFactory getInstance(
 				final Class<? extends Collection<E>> baseCollectionType,
 				final TypeToken<E> elementTypeToken,
-				final IFactory0.IFactory<Collection<E>> factoryFactory
+				final IBuilder0.IFactory<Collection<E>> factoryFactory
 		) {
 			return getInstance(baseCollectionType, elementTypeToken, (IBuilder1.IFactory<E, Collection<E>>) typeToken -> builder(factoryFactory.create(typeToken)));
 		}
@@ -121,9 +121,9 @@ public final class CoercedCollectionTypeAdapter<E>
 		}
 
 		public static <E> IBuilder1<E, Collection<E>> builder(
-				final IFactory0<? extends Collection<E>> factory
+				final IBuilder0<? extends Collection<E>> factory
 		) {
-			return IBuilder1.of(factory.create());
+			return IBuilder1.of(factory.build());
 		}
 
 		@Override
