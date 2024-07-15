@@ -12,7 +12,6 @@ import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.functors.FalsePredicate;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 final class FailSafeTypeAdapter<T>
