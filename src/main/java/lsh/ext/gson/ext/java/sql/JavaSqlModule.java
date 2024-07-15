@@ -46,7 +46,8 @@ public final class JavaSqlModule
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
-	public static final class Builder {
+	public static final class Builder
+			implements IBuilder0<IModule> {
 
 		@Setter
 		private TypeAdapterFactory unixTimeDateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(JavaSqlModule::createSqlDateTypesFactory);
@@ -55,6 +56,7 @@ public final class JavaSqlModule
 			return new Builder();
 		}
 
+		@Override
 		public IModule build() {
 			return new JavaSqlModule(UnmodifiableIterable.copyOf(
 					unixTimeDateTypeAdapterFactory

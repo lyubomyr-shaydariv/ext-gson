@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
@@ -25,7 +26,8 @@ public final class GuavaBaseModule
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
-	public static final class Builder {
+	public static final class Builder
+			implements IBuilder0<IModule> {
 
 		@Setter
 		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapter.Factory.getInstance();
@@ -34,6 +36,7 @@ public final class GuavaBaseModule
 			return new Builder();
 		}
 
+		@Override
 		public IModule build() {
 			return new GuavaBaseModule(UnmodifiableIterable.copyOf(
 					optionalTypeAdapterFactory

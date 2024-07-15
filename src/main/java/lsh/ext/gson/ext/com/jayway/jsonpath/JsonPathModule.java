@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
+import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.UnmodifiableIterable;
@@ -24,7 +25,8 @@ public final class JsonPathModule
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
-	public static final class Builder {
+	public static final class Builder
+			implements IBuilder0<IModule> {
 
 		@Setter
 		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance();
@@ -33,6 +35,7 @@ public final class JsonPathModule
 			return new Builder();
 		}
 
+		@Override
 		public IModule build() {
 			return new JsonPathModule(UnmodifiableIterable.copyOf(
 					jsonPathTypeAdapterFactory
