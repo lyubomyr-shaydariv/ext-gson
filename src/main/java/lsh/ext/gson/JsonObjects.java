@@ -105,7 +105,7 @@ public final class JsonObjects {
 		return jsonObject.asMap();
 	}
 
-	public static Map<String, JsonElement> toImmutableMap(final JsonObject jsonObject) {
+	public static Map<String, JsonElement> toUnmodifiableMap(final JsonObject jsonObject) {
 		return Collections.unmodifiableMap(new LinkedHashMap<>(jsonObject.asMap()));
 	}
 
