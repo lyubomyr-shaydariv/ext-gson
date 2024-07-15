@@ -64,7 +64,7 @@ public final class JsonArrays {
 	public static JsonArray of(final JsonElement... jsonElements) {
 		final int length = jsonElements.length;
 		if ( length == 0 ) {
-			return new JsonArray();
+			return new JsonArray(0);
 		}
 		final JsonArray jsonArray = new JsonArray(length);
 		for ( final JsonElement jsonElement : jsonElements ) {
@@ -84,7 +84,7 @@ public final class JsonArrays {
 	public static JsonArray from(final Collection<? extends JsonElement> jsonElements) {
 		final int size = jsonElements.size();
 		if ( size == 0 ) {
-			return new JsonArray();
+			return new JsonArray(0);
 		}
 		final JsonArray jsonArray = new JsonArray(size);
 		for ( final JsonElement jsonElement : jsonElements ) {
