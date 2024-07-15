@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext.com.google.common.collect;
+package lsh.ext.gson;
 
 import com.google.gson.reflect.TypeToken;
 
