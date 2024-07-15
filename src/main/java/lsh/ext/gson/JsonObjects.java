@@ -68,6 +68,23 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
+	@SafeVarargs
+	public static JsonObject from(final Map.Entry<String, ? extends JsonElement>... entries) {
+		final JsonObject jsonObject = new JsonObject();
+		for ( final Map.Entry<String, ? extends JsonElement> e : entries ) {
+			jsonObject.add(e.getKey(), e.getValue());
+		}
+		return jsonObject;
+	}
+
+	public static JsonObject from(final Iterable<? extends Map.Entry<String, ? extends JsonElement>> entries) {
+		final JsonObject jsonObject = new JsonObject();
+		for ( final Map.Entry<String, ? extends JsonElement> e : entries ) {
+			jsonObject.add(e.getKey(), e.getValue());
+		}
+		return jsonObject;
+	}
+
 	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right) {
 		return mergeIntoNew(left, right, IMergePredicate.replace);
 	}
