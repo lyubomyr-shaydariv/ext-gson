@@ -49,6 +49,7 @@ public abstract class AbstractCursorTypeAdapter<C, E>
 		protected abstract TypeAdapter<?> createCursorTypeAdapter(TypeAdapter<?> elementTypeAdapter);
 
 		@Override
+		@Nullable
 		protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !cursorClass.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;

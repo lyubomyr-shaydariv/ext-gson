@@ -148,7 +148,7 @@ public final class JsonReaders {
 		}
 
 		@Override
-		@SuppressWarnings("checkstyle:CyclomaticComplexity")
+		@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "ForLoopReplaceableByWhile" })
 		public E next() {
 			try {
 				if ( !in.hasNext() || state == ReadingIteratorState.END_OF_STREAM ) {

@@ -28,7 +28,6 @@ public final class DynamicFieldNamingStrategy
 	}
 
 	@Override
-	@SuppressWarnings("ConstantValue")
 	public String translateName(final Field field) {
 		@Nullable
 		final As as = field.getAnnotation(As.class);
