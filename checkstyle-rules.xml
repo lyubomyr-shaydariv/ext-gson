@@ -13,7 +13,9 @@
 		<module name="SuppressWarnings"/>
 		<module name="SuppressWarningsHolder"/>
 		<!-- block checks -->
-		<module name="AvoidNestedBlocks"/>
+		<module name="AvoidNestedBlocks">
+			<property name="allowInSwitchCase" value="true"/>
+		</module>
 		<module name="EmptyBlock"/>
 		<module name="EmptyCatchBlock"/>
 		<module name="LeftCurly"/>
@@ -45,6 +47,7 @@
 		<module name="FinalLocalVariable"/>
 		<module name="HiddenField">
 			<property name="ignoreAbstractMethods" value="true"/>
+			<property name="ignoreConstructorParameter" value="true"/>
 		</module>
 		<module name="IllegalCatch">
 			<property name="illegalClassNames" value="java.lang.Error"/>
@@ -166,7 +169,7 @@
 		<module name="AbstractClassName"/>
 		<module name="CatchParameterName"/>
 		<module name="ClassTypeParameterName">
-			<property name="format" value="^[A-Z]+[0-9]*$"/>
+			<property name="format" value="^[A-Z]+[A-Za-z]*[0-9]*$"/>
 		</module>
 		<module name="ConstantName">
 			<property name="format" value="^[a-zA-Z][_a-zA-Z0-9]*$"/>

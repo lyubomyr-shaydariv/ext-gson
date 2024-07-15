@@ -116,7 +116,7 @@ public abstract class AbstractJsonValueTypeAdapter<
 	}
 
 	@Override
-	@SuppressWarnings({ "NestedSwitchStatement", "checkstyle:CyclomaticComplexity" })
+	@SuppressWarnings({ "NestedSwitchStatement", "checkstyle:CyclomaticComplexity", "checkstyle:JavaNCSS" })
 	public final JsonValue read(final JsonReader in)
 			throws IOException {
 		final JsonToken jsonToken = in.peek();
@@ -195,7 +195,7 @@ public abstract class AbstractJsonValueTypeAdapter<
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-	protected abstract static class Factory<JsonValue, JsonProvider>
+	protected abstract static class AbstractFactory<JsonValue, JsonProvider>
 			extends AbstractTypeAdapterFactory<JsonValue> {
 
 		private final Class<? extends JsonValue> jsonValueClass;

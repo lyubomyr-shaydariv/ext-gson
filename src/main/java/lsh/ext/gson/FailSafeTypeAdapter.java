@@ -80,6 +80,7 @@ final class FailSafeTypeAdapter<T>
 		}
 
 		@Nullable
+		@SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:AvoidEscapedUnicodeCharacters"})
 		private static <T> T getDefaultValue(final Class<?> clazz) {
 			if ( !clazz.isPrimitive() || clazz == void.class ) {
 				return null;

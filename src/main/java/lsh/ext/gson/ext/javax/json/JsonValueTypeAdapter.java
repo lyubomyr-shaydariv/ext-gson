@@ -108,7 +108,7 @@ public final class JsonValueTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractJsonValueTypeAdapter.Factory<JsonValue, JsonProvider> {
+			extends AbstractFactory<JsonValue, JsonProvider> {
 
 		private Factory(final JsonProvider jsonProvider) {
 			super(JsonValue.class, jsonProvider);
