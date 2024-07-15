@@ -17,23 +17,23 @@ public final class JsonPrimitives {
 		return b ? trueJsonPrimitive : falseJsonPrimitive;
 	}
 
-	public static JsonElement orNull(@Nullable final Boolean b) {
+	public static JsonElement orNullable(@Nullable final Boolean b) {
 		return b != null ? of(b) : JsonNull.INSTANCE;
 	}
 
-	public static JsonElement orNull(@Nullable final Number n) {
+	public static JsonElement orNullable(@Nullable final Number n) {
 		return n != null ? new JsonPrimitive(n) : JsonNull.INSTANCE;
 	}
 
-	public static JsonElement orNull(@Nullable final String s) {
+	public static JsonElement orNullable(@Nullable final String s) {
 		return s != null ? new JsonPrimitive(s) : JsonNull.INSTANCE;
 	}
 
-	public static JsonElement orNull(@Nullable final Character c) {
+	public static JsonElement orNullable(@Nullable final Character c) {
 		return c != null ? new JsonPrimitive(c) : JsonNull.INSTANCE;
 	}
 
-	public static JsonElement orNull(@Nullable final JsonElement jsonElement) {
+	public static JsonElement orNullable(@Nullable final JsonElement jsonElement) {
 		return jsonElement != null ? jsonElement : JsonNull.INSTANCE;
 	}
 
