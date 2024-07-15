@@ -141,7 +141,6 @@ public abstract class AbstractJsonValueTypeAdapter<
 				case END_ARRAY:
 				case END_OBJECT:
 				case NAME:
-					throw new AssertionError();
 				default:
 					throw new AssertionError(token);
 				}
@@ -170,7 +169,6 @@ public abstract class AbstractJsonValueTypeAdapter<
 				case END_ARRAY:
 				case END_OBJECT:
 				case NAME:
-					throw new AssertionError();
 				default:
 					throw new AssertionError(token);
 				}
@@ -191,7 +189,6 @@ public abstract class AbstractJsonValueTypeAdapter<
 		case END_DOCUMENT:
 		case END_OBJECT:
 		case NAME:
-			throw new AssertionError();
 		default:
 			throw new AssertionError(jsonToken);
 		}
