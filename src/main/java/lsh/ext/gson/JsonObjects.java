@@ -126,6 +126,10 @@ public final class JsonObjects {
 		return Collections.unmodifiableMap(new LinkedHashMap<>(jsonObject.asMap()));
 	}
 
+	public static Map<String, JsonElement> toImmutableMap(final JsonObject jsonObject) {
+		return Map.copyOf(jsonObject.asMap());
+	}
+
 	public interface IMergePredicate {
 
 		IMergePredicate replace = (key, leftObject, leftValue, rightObject, rightValue) -> true;

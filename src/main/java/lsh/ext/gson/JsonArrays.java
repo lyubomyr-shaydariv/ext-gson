@@ -105,4 +105,8 @@ public final class JsonArrays {
 		return Collections.unmodifiableList(new ArrayList<>(jsonArray.asList()));
 	}
 
+	public static List<JsonElement> toImmutableList(final JsonArray jsonArray) {
+		return List.copyOf(jsonArray.asList());
+	}
+
 }
