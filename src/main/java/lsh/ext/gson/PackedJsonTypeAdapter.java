@@ -25,7 +25,7 @@ public final class PackedJsonTypeAdapter
 	@Override
 	public void write(final JsonWriter out, final String json)
 			throws IOException {
-		try ( Reader reader = new StringReader(json) ) {
+		try ( final Reader reader = new StringReader(json) ) {
 			JsonStreams.copyTo(new JsonReader(reader), out);
 		}
 	}
@@ -33,7 +33,7 @@ public final class PackedJsonTypeAdapter
 	@Override
 	public String read(final JsonReader in)
 			throws IOException {
-		try ( Writer writer = new StringWriter() ) {
+		try ( final Writer writer = new StringWriter() ) {
 			JsonStreams.copyTo(in, new JsonWriter(writer));
 			return writer.toString();
 		}

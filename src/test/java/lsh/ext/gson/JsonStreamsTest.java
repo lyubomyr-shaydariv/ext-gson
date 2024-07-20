@@ -65,7 +65,7 @@ public final class JsonStreamsTest {
 	@Test
 	public void testCopyToForMalformedJsonDisallowingLenient()
 			throws IOException {
-		try ( JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
+		try ( final JsonReader jsonReader = newLenientJsonReader(UNNORMALIZED_JSON_WITH_TRAILING_BRACE);
 			  JsonWriter jsonWriter = new JsonWriter(new StringWriter()) ) {
 			Assertions.assertThrows(MalformedJsonException.class, () -> JsonStreams.copyTo(jsonReader, jsonWriter, false));
 		}

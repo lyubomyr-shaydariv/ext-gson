@@ -120,7 +120,7 @@ public final class JsonReadersTest {
 	@Test
 	public void testSkipTokenForEndOfDocument()
 			throws IOException {
-		try ( JsonReader jsonReader = new JsonReader(new StringReader("")) ) {
+		try ( final JsonReader jsonReader = new JsonReader(new StringReader("")) ) {
 			Assertions.assertThrows(EOFException.class, () -> JsonReaders.skipToken(jsonReader));
 		}
 	}
