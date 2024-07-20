@@ -36,7 +36,6 @@ public final class UnmodifiableIterable<T>
 		return new UnmodifiableIterable<>(copy);
 	}
 
-	// TODO consider deprecated since Iterable is actually of unknown, probably infinite, size?
 	public static <T> Iterable<T> copyOf(final Iterable<? extends T> iterable) {
 		if ( iterable instanceof final Collection<? extends T> collection ) {
 			return copyOf(collection);

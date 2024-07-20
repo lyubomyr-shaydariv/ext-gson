@@ -22,12 +22,32 @@ public final class EnumerationTypeAdapter<E>
 
 	@Override
 	protected Iterator<E> toIterator(final Enumeration<? extends E> enumeration) {
-		return Iterators.from(enumeration);
+		return new Iterator<>() {
+			@Override
+			public boolean hasNext() {
+				return enumeration.hasMoreElements();
+			}
+
+			@Override
+			public E next() {
+				return enumeration.nextElement();
+			}
+		};
 	}
 
 	@Override
 	protected Enumeration<E> fromIterator(final Iterator<? extends E> iterator) {
-		return Enumerations.from(iterator);
+		return new Enumeration<>() {
+			@Override
+			public boolean hasMoreElements() {
+				return iterator.hasNext();
+			}
+
+			@Override
+			public E nextElement() {
+				return iterator.next();
+			}
+		};
 	}
 
 	public static final class Factory<E>
