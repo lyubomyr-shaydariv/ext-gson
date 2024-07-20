@@ -11,7 +11,8 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class InstantTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<Instant> {
 
-	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final TypeAdapter<Instant> instance = getInstance(DateTimeFormatter.ISO_INSTANT);
 
 	private InstantTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
@@ -26,7 +27,8 @@ public final class InstantTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<Instant> {
 
-		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+		@Getter
+		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<Instant> instance = new Factory(InstantTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<Instant> typeAdapter) {

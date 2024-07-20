@@ -11,7 +11,8 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class OffsetTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<OffsetTime> {
 
-	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final TypeAdapter<OffsetTime> instance = getInstance(DateTimeFormatter.ISO_OFFSET_TIME);
 
 	private OffsetTimeTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
@@ -26,7 +27,8 @@ public final class OffsetTimeTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<OffsetTime> {
 
-		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+		@Getter
+		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<OffsetTime> instance = new Factory(OffsetTimeTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<OffsetTime> typeAdapter) {

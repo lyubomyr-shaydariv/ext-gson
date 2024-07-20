@@ -20,7 +20,8 @@ import lsh.ext.gson.extshared.jakarta.json.x.javax.json.AbstractJsonValueTypeAda
 public final class JsonValueTypeAdapter
 		extends AbstractJsonValueTypeAdapter<JsonValue, JsonArray, JsonObject, JsonString, JsonNumber, JsonValue, JsonValue> {
 
-	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final TypeAdapter<JsonValue> instance = getInstance(JsonProvider.provider());
 
 	private final JsonProvider jsonProvider;

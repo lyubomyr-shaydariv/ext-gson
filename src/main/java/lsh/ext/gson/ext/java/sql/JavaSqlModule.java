@@ -21,7 +21,8 @@ import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
 public final class JavaSqlModule
 		extends AbstractModule {
 
-	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final IModule instance = Builder.create()
 			.build();
 

@@ -11,7 +11,8 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class MonthTypeAdapter
 		extends AbstractStringTypeAdapter<Month> {
 
-	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final TypeAdapter<Month> instance = new MonthTypeAdapter()
 			.nullSafe();
 
@@ -28,7 +29,8 @@ public final class MonthTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<Month> {
 
-		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+		@Getter
+		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<Month> instance = new Factory(MonthTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<Month> typeAdapter) {

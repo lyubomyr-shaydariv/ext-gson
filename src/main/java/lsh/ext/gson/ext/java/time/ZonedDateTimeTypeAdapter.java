@@ -11,7 +11,8 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class ZonedDateTimeTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<ZonedDateTime> {
 
-	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final TypeAdapter<ZonedDateTime> instance = getInstance(DateTimeFormatter.ISO_ZONED_DATE_TIME);
 
 	private ZonedDateTimeTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
@@ -26,7 +27,8 @@ public final class ZonedDateTimeTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<ZonedDateTime> {
 
-		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+		@Getter
+		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<ZonedDateTime> instance = new Factory(ZonedDateTimeTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<ZonedDateTime> typeAdapter) {

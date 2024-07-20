@@ -14,7 +14,8 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class YearMonthTypeAdapter
 		extends AbstractTemporalAccessorTypeAdapter<YearMonth> {
 
-	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final TypeAdapter<YearMonth> instance = getInstance(new DateTimeFormatterBuilder()
 			.appendValue(ChronoField.YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
@@ -35,7 +36,8 @@ public final class YearMonthTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<YearMonth> {
 
-		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+		@Getter
+		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<YearMonth> instance = new Factory(YearMonthTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<YearMonth> typeAdapter) {

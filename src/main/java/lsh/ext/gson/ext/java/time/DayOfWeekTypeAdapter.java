@@ -14,7 +14,8 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class DayOfWeekTypeAdapter
 		extends AbstractStringTypeAdapter<DayOfWeek> {
 
-	@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final TypeAdapter<DayOfWeek> instance = new DayOfWeekTypeAdapter()
 			.nullSafe();
 
@@ -31,7 +32,8 @@ public final class DayOfWeekTypeAdapter
 	public static final class Factory
 			extends AbstractBaseTypeAdapterFactory<DayOfWeek> {
 
-		@Getter(onMethod_ = @SuppressFBWarnings("MS_EXPOSE_REP"))
+		@Getter
+		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<DayOfWeek> instance = new Factory(DayOfWeekTypeAdapter.getInstance());
 
 		private Factory(final TypeAdapter<DayOfWeek> typeAdapter) {
