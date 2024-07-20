@@ -96,6 +96,7 @@ public final class MultiSetTypeAdapter<E>
 		}
 
 		@Override
+		@Nullable
 		protected TypeAdapter<MultiSet<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !MultiSet.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;

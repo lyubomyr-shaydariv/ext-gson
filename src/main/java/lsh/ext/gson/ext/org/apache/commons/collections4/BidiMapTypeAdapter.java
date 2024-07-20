@@ -97,6 +97,7 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		@Override
+		@Nullable
 		protected TypeAdapter<BidiMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !BidiMap.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;

@@ -123,6 +123,7 @@ public final class BagTypeAdapter<E>
 		}
 
 		@Override
+		@Nullable
 		protected TypeAdapter<Bag<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !Bag.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;

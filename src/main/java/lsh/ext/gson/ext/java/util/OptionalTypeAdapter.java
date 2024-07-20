@@ -57,6 +57,7 @@ public final class OptionalTypeAdapter<T>
 		private static final ITypeAdapterFactory<? extends Optional<?>> instance = new Factory<>();
 
 		@Override
+		@Nullable
 		protected TypeAdapter<Optional<T>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( typeToken.getRawType() != Optional.class ) {
 				return null;

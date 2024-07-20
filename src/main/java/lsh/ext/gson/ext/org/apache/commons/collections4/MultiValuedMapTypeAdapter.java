@@ -106,6 +106,7 @@ public final class MultiValuedMapTypeAdapter<V>
 		}
 
 		@Override
+		@Nullable
 		protected TypeAdapter<MultiValuedMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !MultiValuedMap.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;

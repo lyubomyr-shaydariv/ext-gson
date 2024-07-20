@@ -41,7 +41,7 @@ public final class OptionalTypeAdapter<T>
 	}
 
 	@Override
-	@SuppressWarnings({ "Guava", "OptionalOfNullableMisuse" })
+	@SuppressWarnings("Guava")
 	public Optional<T> read(final JsonReader in)
 			throws IOException {
 		@Nullable
@@ -57,6 +57,7 @@ public final class OptionalTypeAdapter<T>
 		private static final ITypeAdapterFactory<? extends Optional<?>> instance = new Factory<>();
 
 		@Override
+		@Nullable
 		protected TypeAdapter<Optional<T>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !Optional.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;

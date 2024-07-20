@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Supplier;
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -127,6 +128,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		}
 
 		@Override
+		@Nullable
 		protected TypeAdapter<Collection<? extends E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !baseCollectionType.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;

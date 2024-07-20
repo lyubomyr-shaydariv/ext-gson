@@ -125,6 +125,7 @@ public final class MultimapTypeAdapter<V>
 		}
 
 		@Override
+		@Nullable
 		protected TypeAdapter<Multimap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !Multimap.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;

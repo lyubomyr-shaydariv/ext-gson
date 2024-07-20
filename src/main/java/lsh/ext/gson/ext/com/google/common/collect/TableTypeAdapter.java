@@ -139,6 +139,7 @@ public final class TableTypeAdapter<V>
 		}
 
 		@Override
+		@Nullable
 		protected TypeAdapter<Table<String, String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
 			if ( !Table.class.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;
