@@ -107,6 +107,7 @@ public final class JsonReaders {
 		}
 
 		@Override
+		@SuppressWarnings("checkstyle:IllegalToken")
 		public boolean hasNext() {
 			try {
 				if ( state == ReadingIteratorState.END_OF_STREAM ) {
@@ -148,7 +149,7 @@ public final class JsonReaders {
 		}
 
 		@Override
-		@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "ForLoopReplaceableByWhile" })
+		@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:IllegalToken", "ForLoopReplaceableByWhile" })
 		public E next() {
 			try {
 				if ( !in.hasNext() || state == ReadingIteratorState.END_OF_STREAM ) {

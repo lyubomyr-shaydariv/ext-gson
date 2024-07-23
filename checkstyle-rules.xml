@@ -58,7 +58,7 @@
 		<module name="IllegalThrows">
 			<property name="illegalClassNames" value="java.lang.Error,java.lang.Throwable"/>
 		</module>
-		<!--module name="IllegalToken"/-->
+		<module name="IllegalToken"/>
 		<module name="IllegalTokenText"/>
 		<module name="IllegalType"/>
 		<module name="InnerAssignment"/>
