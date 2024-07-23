@@ -111,32 +111,32 @@
 		<module name="RedundantImport"/>
 		<module name="UnusedImports"/>
 		<!-- Javadoc comments -->
-		<!--module name="AtclauseOrder"/-->
-		<!--module name="InvalidJavadocPosition"/-->
-		<!--module name="JavadocBlockTagLocation"/-->
-		<!--module name="JavadocContentLocation"/-->
-		<!--module name="JavadocMethod"/-->
-		<!--module name="JavadocMissingLeadingAsterisk"/-->
-		<!--module name="JavadocMissingWhitespaceAfterAsterisk"/-->
-		<!--module name="JavadocParagraph"/-->
-		<!--module name="JavadocStyle">
+		<module name="AtclauseOrder"/>
+		<module name="InvalidJavadocPosition"/>
+		<module name="JavadocBlockTagLocation"/>
+		<module name="JavadocContentLocation"/>
+		<module name="JavadocMethod"/>
+		<module name="JavadocMissingLeadingAsterisk"/>
+		<module name="JavadocMissingWhitespaceAfterAsterisk"/>
+		<module name="JavadocParagraph"/>
+		<module name="JavadocStyle">
 			<property name="endOfSentenceFormat" value="([.?!:][ \t\n\r\f&lt;])|([.?!:]$)"/>
-		</module-->
-		<!--module name="JavadocTagContinuationIndentation">
+		</module>
+		<module name="JavadocTagContinuationIndentation">
 			<property name="offset" value="0"/>
-		</module-->
-		<!--module name="JavadocType"/-->
-		<!--module name="JavadocVariable">
+		</module>
+		<module name="JavadocType"/>
+		<module name="JavadocVariable">
 			<property name="scope" value="public"/>
-		</module-->
-		<!--module name="MissingJavadocMethod"/-->
-		<!--module name="MissingJavadocPackage"/-->
-		<!--module name="MissingJavadocType"/-->
-		<!--module name="NonEmptyAtclauseDescription"/-->
-		<!--module name="RequireEmptyLineBeforeBlockTagGroup"/-->
-		<!--module name="SingleLineJavadoc"/-->
-		<!--module name="SummaryJavadoc"/-->
-		<!--module name="WriteTag"/-->
+		</module>
+		<!--<module name="MissingJavadocMethod"/>-->
+		<!--<module name="MissingJavadocPackage"/>-->
+		<!--<module name="MissingJavadocType"/>-->
+		<module name="NonEmptyAtclauseDescription"/>
+		<module name="RequireEmptyLineBeforeBlockTagGroup"/>
+		<module name="SingleLineJavadoc"/>
+		<module name="SummaryJavadoc"/>
+		<!--<module name="WriteTag"/>-->
 		<!-- metrics -->
 		<module name="BooleanExpressionComplexity"/>
 		<module name="ClassDataAbstractionCoupling"/>

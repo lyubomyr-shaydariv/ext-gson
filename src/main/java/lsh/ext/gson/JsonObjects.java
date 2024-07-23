@@ -132,8 +132,14 @@ public final class JsonObjects {
 
 	public interface IMergePredicate {
 
+		/**
+		 * Represents a merge predicate that always replaces keys in the "left" object.
+		 */
 		IMergePredicate replace = (key, leftObject, leftValue, rightObject, rightValue) -> true;
 
+		/**
+		 * Represents a merge predicate that always retains keys in the "left" object.
+		 */
 		IMergePredicate retain = (key, leftObject, leftValue, rightObject, rightValue) -> false;
 
 		boolean canReplace(String key, JsonObject leftObject, @Nullable JsonElement leftValue, JsonObject rightObject, @Nullable JsonElement rightValue);

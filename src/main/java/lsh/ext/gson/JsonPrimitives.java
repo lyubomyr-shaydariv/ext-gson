@@ -10,7 +10,14 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class JsonPrimitives {
 
+	/**
+	 * Represents the `false` constant JSON primitive instance.
+	 */
 	public static final JsonPrimitive falseJsonPrimitive = new JsonPrimitive(false);
+
+	/**
+	 * Represents the `false` constant JSON primitive instance.
+	 */
 	public static final JsonPrimitive trueJsonPrimitive = new JsonPrimitive(true);
 
 	public static JsonPrimitive of(final boolean b) {
