@@ -14,27 +14,45 @@ public final class JsonPrimitives {
 	public static final JsonPrimitive trueJsonPrimitive = new JsonPrimitive(true);
 
 	public static JsonPrimitive of(final boolean b) {
-		return b ? trueJsonPrimitive : falseJsonPrimitive;
+		if ( !b ) {
+			return falseJsonPrimitive;
+		}
+		return trueJsonPrimitive;
 	}
 
 	public static JsonElement orNullable(@Nullable final Boolean b) {
-		return b != null ? of(b) : JsonNull.INSTANCE;
+		if ( b == null ) {
+			return JsonNull.INSTANCE;
+		}
+		return of(b);
 	}
 
 	public static JsonElement orNullable(@Nullable final Number n) {
-		return n != null ? new JsonPrimitive(n) : JsonNull.INSTANCE;
+		if ( n == null ) {
+			return JsonNull.INSTANCE;
+		}
+		return new JsonPrimitive(n);
 	}
 
 	public static JsonElement orNullable(@Nullable final String s) {
-		return s != null ? new JsonPrimitive(s) : JsonNull.INSTANCE;
+		if ( s == null ) {
+			return JsonNull.INSTANCE;
+		}
+		return new JsonPrimitive(s);
 	}
 
 	public static JsonElement orNullable(@Nullable final Character c) {
-		return c != null ? new JsonPrimitive(c) : JsonNull.INSTANCE;
+		if ( c == null ) {
+			return JsonNull.INSTANCE;
+		}
+		return new JsonPrimitive(c);
 	}
 
 	public static JsonElement orNullable(@Nullable final JsonElement jsonElement) {
-		return jsonElement != null ? jsonElement : JsonNull.INSTANCE;
+		if ( jsonElement == null ) {
+			return JsonNull.INSTANCE;
+		}
+		return jsonElement;
 	}
 
 }

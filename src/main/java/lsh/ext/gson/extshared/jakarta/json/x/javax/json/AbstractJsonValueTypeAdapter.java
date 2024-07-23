@@ -181,7 +181,10 @@ public abstract class AbstractJsonValueTypeAdapter<
 		case NUMBER:
 			return toJsonNumberFromString(in.nextString());
 		case BOOLEAN:
-			return in.nextBoolean() ? trueValue : falseValue;
+			if ( !in.nextBoolean() ) {
+				return falseValue;
+			}
+			return trueValue;
 		case NULL:
 			in.nextNull();
 			return nullValue;
