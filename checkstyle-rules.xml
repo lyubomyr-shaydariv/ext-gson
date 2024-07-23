@@ -163,7 +163,9 @@
 		<!--module name="ClassMemberImpliedModifier"/-->
 		<!--module name="InterfaceMemberImpliedModifier"/-->
 		<module name="ModifierOrder"/>
-		<module name="RedundantModifier"/>
+		<module name="RedundantModifier">
+			<property name="tokens" value="ANNOTATION_FIELD_DEF,CLASS_DEF,CTOR_DEF,ENUM_DEF,INTERFACE_DEF,METHOD_DEF,RECORD_DEF,VARIABLE_DEF"/>
+		</module>
 		<!-- naming conventions -->
 		<module name="AbbreviationAsWordInName"/>
 		<module name="AbstractClassName"/>
