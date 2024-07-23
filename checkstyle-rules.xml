@@ -63,7 +63,7 @@
 		<module name="IllegalType"/>
 		<module name="InnerAssignment"/>
 		<module name="MagicNumber"/>
-		<!--module name="MatchXpath"/-->
+		<module name="MatchXpath"/>
 		<!--module name="MissingCtor"/-->
 		<module name="MissingSwitchDefault"/>
 		<module name="ModifiedControlVariable"/>
