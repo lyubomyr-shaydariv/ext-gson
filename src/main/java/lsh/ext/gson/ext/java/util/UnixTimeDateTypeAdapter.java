@@ -16,6 +16,7 @@ import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("UseOfObsoleteDateTimeApi")
 public final class UnixTimeDateTypeAdapter<T extends Date>
 		extends TypeAdapter<T> {
 

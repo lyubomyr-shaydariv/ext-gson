@@ -18,6 +18,7 @@ import lsh.ext.gson.IModule;
 import lsh.ext.gson.UnmodifiableIterable;
 import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
 
+@SuppressWarnings("UseOfObsoleteDateTimeApi")
 public final class JavaSqlModule
 		extends AbstractModule {
 
