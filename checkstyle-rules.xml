@@ -81,7 +81,10 @@
 		<module name="PackageDeclaration"/>
 		<module name="ParameterAssignment"/>
 		<module name="RequireThis"/>
-		<!--module name="ReturnCount"/-->
+		<module name="ReturnCount">
+			<property name="max" value="8"/>
+			<property name="maxForVoid" value="8"/>
+		</module>
 		<module name="SimplifyBooleanExpression"/>
 		<module name="SimplifyBooleanReturn"/>
 		<module name="StringLiteralEquality"/>
@@ -101,7 +104,7 @@
 			<property name="customImportOrderRules" value="STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE"/>
 		</module>
 		<module name="IllegalImport"/>
-		<!--module name="ImportControl"/-->
+		<!--<module name="ImportControl"/>-->
 		<module name="ImportOrder">
 			<property name="groups" value="/^javax?\./"/>
 			<property name="option" value="above"/>
@@ -148,9 +151,9 @@
 		<module name="ArrayTypeStyle"/>
 		<module name="AvoidEscapedUnicodeCharacters"/>
 		<module name="CommentsIndentation"/>
-		<!--module name="DescendantToken"/-->
+		<module name="DescendantToken"/>
 		<module name="FinalParameters"/>
-		<!--module name="Indentation"/-->
+		<!--<module name="Indentation"/>-->
 		<module name="NoCodeInFile"/>
 		<module name="OuterTypeFilename"/>
 		<!--module name="TodoComment">
@@ -160,8 +163,20 @@
 		<module name="UncommentedMain"/>
 		<module name="UpperEll"/>
 		<!-- modifiers -->
-		<!--module name="ClassMemberImpliedModifier"/-->
-		<!--module name="InterfaceMemberImpliedModifier"/-->
+		<module name="ClassMemberImpliedModifier">
+			<property name="violateImpliedStaticOnNestedEnum" value="false"/>
+			<property name="violateImpliedStaticOnNestedInterface" value="false"/>
+			<property name="violateImpliedStaticOnNestedRecord" value="false"/>
+		</module>
+		<module name="InterfaceMemberImpliedModifier">
+			<property name="violateImpliedAbstractMethod" value="false"/>
+			<property name="violateImpliedFinalField" value="false"/>
+			<property name="violateImpliedPublicField" value="false"/>
+			<property name="violateImpliedPublicMethod" value="false"/>
+			<property name="violateImpliedPublicNested" value="false"/>
+			<property name="violateImpliedStaticField" value="false"/>
+			<property name="violateImpliedStaticNested" value="false"/>
+		</module>
 		<module name="ModifierOrder"/>
 		<module name="RedundantModifier">
 			<property name="tokens" value="ANNOTATION_FIELD_DEF,CLASS_DEF,CTOR_DEF,ENUM_DEF,INTERFACE_DEF,METHOD_DEF,RECORD_DEF,VARIABLE_DEF"/>
@@ -198,8 +213,8 @@
 		<module name="StaticVariableName"/>
 		<module name="TypeName"/>
 		<!-- regexp -->
-		<!--module name="Regexp"/-->
-		<!--module name="RegexpSinglelineJava"/-->
+		<module name="Regexp"/>
+		<module name="RegexpSinglelineJava"/>
 		<!-- size violations -->
 		<module name="AnonInnerLength"/>
 		<module name="ExecutableStatementCount"/>
@@ -235,7 +250,9 @@
 			<property name="option" value="space"/>
 			<property name="tokens" value="ANNOTATION_FIELD_DEF,CTOR_CALL,LITERAL_CATCH,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_WHILE,QUESTION"/>
 		</module>
-		<!--module name="SeparatorWrap"/-->
+		<module name="SeparatorWrap">
+			<property name="tokens" value="ARRAY_DECLARATOR,COMMA,ELLIPSIS,METHOD_REF,RBRACK,SEMI"/>
+		</module>
 		<module name="SingleSpaceSeparator"/>
 		<module name="TypecastParenPad"/>
 		<module name="WhitespaceAfter"/>
@@ -252,12 +269,14 @@
 	<module name="Translation"/>
 	<module name="UniqueProperties"/>
 	<!-- regexp -->
-	<!--module name="RegexpMultiline"/-->
-	<!--module name="RegexpOnFilename"/-->
-	<!--module name="RegexpSingleline"/-->
+	<module name="RegexpMultiline"/>
+	<module name="RegexpOnFilename"/>
+	<module name="RegexpSingleline"/>
 	<!-- size violations -->
 	<module name="FileLength"/>
-	<!--module name="LineLength"/-->
+	<module name="LineLength">
+		<property name="max" value="256"/>
+	</module>
 	<!-- whitespace -->
-	<!--module name="FileTabCharacter"/-->
+	<!--<module name="FileTabCharacter"/>-->
 </module>
