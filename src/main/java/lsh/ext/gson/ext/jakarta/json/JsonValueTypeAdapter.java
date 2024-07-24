@@ -14,7 +14,7 @@ import jakarta.json.JsonValue;
 import jakarta.json.spi.JsonProvider;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.extshared.jakarta.json.x.javax.json.AbstractJsonValueTypeAdapter;
+import lsh.ext.gson.x.jakarta.json.x.javax.json.AbstractJsonValueTypeAdapter;
 
 @SuppressWarnings("CPD-START")
 public final class JsonValueTypeAdapter

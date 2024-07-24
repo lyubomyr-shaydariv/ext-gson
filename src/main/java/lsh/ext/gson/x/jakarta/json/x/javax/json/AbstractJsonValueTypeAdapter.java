@@ -1,4 +1,4 @@
-package lsh.ext.gson.extshared.jakarta.json.x.javax.json;
+package lsh.ext.gson.x.jakarta.json.x.javax.json;
 
 import java.io.IOException;
 import java.util.ArrayList;
