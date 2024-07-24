@@ -1,6 +1,7 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.Nullable;
@@ -71,10 +72,11 @@ public final class PrePostTypeAdapter<T>
 		@Override
 		@Nullable
 		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
+			final Type type = typeToken.getType();
 			@Nullable
-			final Iterable<? extends IProcessor<?>> preProcessors = getProcessors(typeToken, preProcessorFactories);
+			final Iterable<? extends IProcessor<?>> preProcessors = getProcessors(type, preProcessorFactories);
 			@Nullable
-			final Iterable<? extends IProcessor<?>> postProcessors = getProcessors(typeToken, postProcessorFactories);
+			final Iterable<? extends IProcessor<?>> postProcessors = getProcessors(type, postProcessorFactories);
 			if ( preProcessors == null && postProcessors == null ) {
 				return null;
 			}
@@ -89,12 +91,12 @@ public final class PrePostTypeAdapter<T>
 		}
 
 		@Nullable
-		private static Iterable<? extends IProcessor<?>> getProcessors(final TypeToken<?> typeToken, final Iterable<? extends IProcessor.IFactory<?>> factories) {
+		private static Iterable<? extends IProcessor<?>> getProcessors(final Type type, final Iterable<? extends IProcessor.IFactory<?>> factories) {
 			@Nullable
 			Collection<IProcessor<?>> processors = null;
 			for ( final IProcessor.IFactory<?> factory : factories ) {
 				@Nullable
-				final IProcessor<?> processor = factory.createProcessor(typeToken);
+				final IProcessor<?> processor = factory.createProcessor(type);
 				if ( processor == null ) {
 					continue;
 				}
@@ -115,7 +117,7 @@ public final class PrePostTypeAdapter<T>
 		interface IFactory<T> {
 
 			@Nullable
-			IProcessor<T> createProcessor(TypeToken<?> typeToken);
+			IProcessor<T> createProcessor(Type type);
 
 		}
 
