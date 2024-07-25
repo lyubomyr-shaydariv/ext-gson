@@ -1,5 +1,8 @@
 package lsh.ext.gson.ext.java.util.stream;
 
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
@@ -33,6 +36,15 @@ public final class Java8UtilStreamModule
 		@Setter
 		private ITypeAdapterFactory<? extends Stream<?>> streamTypeAdapterFactory = StreamTypeAdapter.Factory.getInstance();
 
+		@Setter
+		private ITypeAdapterFactory<? extends IntStream> intStreamTypeAdapterFactory = IntStreamTypeAdapter.Factory.getInstance();
+
+		@Setter
+		private ITypeAdapterFactory<? extends LongStream> longStreamTypeAdapterFactory = LongStreamTypeAdapter.Factory.getInstance();
+
+		@Setter
+		private ITypeAdapterFactory<? extends DoubleStream> doubleStreamTypeAdapterFactory = DoubleStreamTypeAdapter.Factory.getInstance();
+
 		public static Builder create() {
 			return new Builder();
 		}
@@ -40,7 +52,10 @@ public final class Java8UtilStreamModule
 		@Override
 		public IModule build() {
 			return new Java8UtilStreamModule(UnmodifiableIterable.copyOf(
-					streamTypeAdapterFactory
+					streamTypeAdapterFactory,
+					intStreamTypeAdapterFactory,
+					longStreamTypeAdapterFactory,
+					doubleStreamTypeAdapterFactory
 			));
 		}
 

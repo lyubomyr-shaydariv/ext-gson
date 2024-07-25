@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonWriter;
 
 public abstract class AbstractCursorTypeAdapterTest<C>
 		extends AbstractTypeAdapterTest<C, List<?>> {
+
 	@Override
 	protected final void initialize(final JsonReader jsonReader)
 			throws IOException {
