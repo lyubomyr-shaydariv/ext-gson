@@ -1,6 +1,9 @@
 package lsh.ext.gson.ext.java.util;
 
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
@@ -33,6 +36,15 @@ public final class Java8UtilModule
 		@Setter
 		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapter.Factory.getInstance();
 
+		@Setter
+		private ITypeAdapterFactory<OptionalInt> optionalIntTypeAdapterFactory = OptionalIntTypeAdapter.Factory.getInstance();
+
+		@Setter
+		private ITypeAdapterFactory<OptionalLong> optionalLongTypeAdapterFactory = OptionalLongTypeAdapter.Factory.getInstance();
+
+		@Setter
+		private ITypeAdapterFactory<OptionalDouble> optionalDoubleTypeAdapterFactory = OptionalDoubleTypeAdapter.Factory.getInstance();
+
 		public static Builder create() {
 			return new Builder();
 		}
@@ -40,7 +52,10 @@ public final class Java8UtilModule
 		@Override
 		public IModule build() {
 			return new Java8UtilModule(UnmodifiableIterable.copyOf(
-					optionalTypeAdapterFactory
+					optionalTypeAdapterFactory,
+					optionalIntTypeAdapterFactory,
+					optionalLongTypeAdapterFactory,
+					optionalDoubleTypeAdapterFactory
 			));
 		}
 
