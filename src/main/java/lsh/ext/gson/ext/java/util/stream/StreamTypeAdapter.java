@@ -1,7 +1,9 @@
 package lsh.ext.gson.ext.java.util.stream;
 
 import java.util.Iterator;
+import java.util.Spliterators;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import com.google.gson.TypeAdapter;
 import lombok.Getter;
@@ -29,7 +31,7 @@ public final class StreamTypeAdapter<E>
 
 	@Override
 	protected Stream<E> fromIterator(final Iterator<? extends E> iterator) {
-		return Streams.from(iterator);
+		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, 0), false);
 	}
 
 	public static final class Factory<E>
