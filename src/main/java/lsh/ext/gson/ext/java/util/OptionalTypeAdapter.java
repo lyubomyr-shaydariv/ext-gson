@@ -24,13 +24,17 @@ public final class OptionalTypeAdapter<T>
 	private final TypeAdapter<T> valueTypeAdapter;
 
 	public static <T> TypeAdapter<Optional<T>> getInstance(final TypeAdapter<T> valueTypeAdapter) {
-		return new OptionalTypeAdapter<>(valueTypeAdapter)
-				.nullSafe();
+		return new OptionalTypeAdapter<>(valueTypeAdapter);
 	}
 
 	@Override
-	public void write(final JsonWriter out, final Optional<T> optional)
+	@SuppressWarnings("OptionalAssignedToNull")
+	public void write(final JsonWriter out, @Nullable final Optional<T> optional)
 			throws IOException {
+		if ( optional == null ) {
+			out.nullValue();
+			return;
+		}
 		@Nullable
 		final T value = optional.orElse(null);
 		if ( value == null ) {
