@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 public abstract class AbstractCursorTypeAdapterTest<C>
 		extends AbstractTypeAdapterTest<C, List<?>> {
@@ -19,6 +20,20 @@ public abstract class AbstractCursorTypeAdapterTest<C>
 			throws IOException {
 		jsonReader.endArray();
 		super.finalize(jsonReader);
+	}
+
+	@Override
+	protected final void initialize(final JsonWriter jsonWriter)
+			throws IOException {
+		super.initialize(jsonWriter);
+		jsonWriter.beginArray();
+	}
+
+	@Override
+	protected final void finalize(final JsonWriter jsonWriter)
+			throws IOException {
+		jsonWriter.endArray();
+		super.finalize(jsonWriter);
 	}
 
 }

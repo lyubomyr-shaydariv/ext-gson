@@ -2,11 +2,14 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +34,16 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 			throws IOException {
 	}
 
+	@SuppressWarnings("NoopMethodInAbstractClass")
+	protected void initialize(@SuppressWarnings("unused") final JsonWriter jsonWriter)
+			throws IOException {
+	}
+
+	@SuppressWarnings("NoopMethodInAbstractClass")
+	protected void finalize(@SuppressWarnings("unused") final JsonWriter jsonWriter)
+			throws IOException {
+	}
+
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
 	public final void testRead(final TypeAdapter<? extends T> unit, final JsonReader jsonReader, @SuppressWarnings("unused") final String writeJson, final T value)
@@ -42,8 +55,14 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final JsonReader jsonReader, final String writeJson, final T value) {
-		Assertions.assertEquals(writeJson, unit.toJson(value));
+	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final JsonReader jsonReader, final String writeJson, final T value)
+			throws IOException {
+		final Writer actualWriter = new StringWriter();
+		final JsonWriter jsonWriter = new JsonWriter(actualWriter);
+		initialize(jsonWriter);
+		unit.write(jsonWriter, value);
+		finalize(jsonWriter);
+		Assertions.assertEquals(writeJson, actualWriter.toString());
 	}
 
 	protected final Arguments makeTestCase(final TypeAdapter<?> unit, final String json, final T value) {

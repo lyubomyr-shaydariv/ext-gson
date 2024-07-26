@@ -26,13 +26,11 @@ public abstract class AbstractCursorTypeAdapter<C, E>
 	@Override
 	public final void write(final JsonWriter out, final C cursor)
 			throws IOException {
-		out.beginArray();
 		final Iterator<? extends E> iterator = toIterator(cursor);
 		while ( iterator.hasNext() ) {
 			final E element = iterator.next();
 			elementTypeAdapter.write(out, element);
 		}
-		out.endArray();
 	}
 
 	@Override
