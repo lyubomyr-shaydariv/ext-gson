@@ -56,7 +56,7 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 			return new Factory<>(dateFactoryFactory);
 		}
 
-		public static IBuilder0<Date> createFactory(@SuppressWarnings("unused") final TypeToken<Date> typeToken) {
+		public static IBuilder0<Date> createFactory() {
 			return Date::new;
 		}
 

@@ -43,7 +43,7 @@ public final class JavaSqlModule
 		if ( rawType == Timestamp.class ) {
 			return () -> new Timestamp(0);
 		}
-		return UnixTimeDateTypeAdapter.Factory.createFactory(typeToken);
+		return UnixTimeDateTypeAdapter.Factory.createFactory();
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
