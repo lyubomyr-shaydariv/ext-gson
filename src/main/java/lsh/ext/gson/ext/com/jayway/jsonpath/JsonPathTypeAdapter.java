@@ -1,8 +1,6 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
 import javax.annotation.Nullable;
@@ -10,28 +8,25 @@ import javax.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.PathNotFoundException;
-import com.jayway.jsonpath.spi.json.GsonJsonProvider;
-import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
+import com.jayway.jsonpath.JsonPathException;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ITypeAdapterFactory;
 
+// TODO consider reimplementing this as a post-processor
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapter<T>
 		extends TypeAdapter<T> {
 
+	private final Configuration configuration;
 	private final TypeAdapter<T> delegateAdapter;
 	private final TypeAdapter<? extends JsonElement> jsonElementTypeAdapter;
-	private final Collection<Factory.FieldDatum> fieldData;
-	private final Configuration configuration;
+	private final Item<?>[] items;
 
 	@Override
 	public void write(final JsonWriter out, final T value)
@@ -42,84 +37,63 @@ public final class JsonPathTypeAdapter<T>
 	@Override
 	public T read(final JsonReader in)
 			throws IOException {
-		final JsonElement outerJsonElement = jsonElementTypeAdapter.read(in);
-		final T value = delegateAdapter.fromJsonTree(outerJsonElement);
-		for ( final Factory.FieldDatum fieldDatum : fieldData ) {
+		final JsonElement superElement = jsonElementTypeAdapter.read(in);
+		final T superValue = delegateAdapter.fromJsonTree(superElement);
+		for ( final Item<?> item : items ) {
 			try {
-				final JsonElement innerJsonElement = fieldDatum.jsonPath.read(outerJsonElement, configuration);
-				final Object innerValue = fieldDatum.typeAdapter.fromJsonTree(innerJsonElement);
-				fieldDatum.field.set(value, innerValue);
-			} catch ( final PathNotFoundException ignored ) {
+				final JsonElement foundSubElement = item.jsonPath.read(superElement, configuration);
+				final TypeAdapter<?> typeAdapter = item.typeAdapter;
+				final Object subValue = typeAdapter.fromJsonTree(foundSubElement);
+				item.accessor.assign(superValue, subValue);
+			} catch ( final JsonPathException ignored ) {
 				// do nothing
-			} catch ( final IllegalAccessException ex ) {
-				throw new IOException(ex);
 			}
 		}
-		return value;
+		return superValue;
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class Factory
+	public static final class Factory<S>
 			implements ITypeAdapterFactory<Object> {
 
-		@Getter
-		private static final ITypeAdapterFactory<?> instance = new Factory(Factory::buildDefaultConfiguration);
+		private final Function<? super Gson, ? extends Configuration> provideConfiguration;
+		private final Function<? super TypeToken<?>, ? extends Collection<? extends S>> provideSources;
+		private final IAccessor.IFactory<S> accessorsFactory;
 
-		@Getter
-		private static final TypeAdapterFactory instanceWithGlobalDefaults = new Factory(gson -> Configuration.defaultConfiguration());
-
-		private final Function<? super Gson, ? extends Configuration> configurationProvider;
-
-		public static TypeAdapterFactory getInstance(final Function<? super Gson, ? extends Configuration> configurationProvider) {
-			return new Factory(configurationProvider);
+		public static <T> ITypeAdapterFactory<?> getInstance(
+				final Function<? super Gson, ? extends Configuration> provideConfiguration,
+				final Function<? super TypeToken<?>, ? extends Collection<? extends T>> provideSources,
+				final IAccessor.IFactory<T> accessorsFactory
+		) {
+			return new Factory<>(provideConfiguration, provideSources, accessorsFactory);
 		}
 
 		@Override
-		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-			final TypeAdapter<T> delegateAdapter = gson.getDelegateAdapter(this, typeToken);
-			@Nullable
-			final Collection<FieldDatum> fieldData = findFields(typeToken.getRawType(), gson);
-			if ( fieldData == null ) {
-				return delegateAdapter;
-			}
-			return new JsonPathTypeAdapter<>(delegateAdapter, gson.getAdapter(JsonElement.class), fieldData, configurationProvider.apply(gson));
-		}
-
-		private static Configuration buildDefaultConfiguration(final Gson gson) {
-			return Configuration.builder()
-					.jsonProvider(new GsonJsonProvider(gson))
-					.mappingProvider(new GsonMappingProvider(gson))
-					.build();
-		}
-
 		@Nullable
-		private static Collection<FieldDatum> findFields(final Class<?> klass, final Gson gson) {
-			@Nullable
-			Collection<FieldDatum> collection = null;
-			for ( final Field field : klass.getDeclaredFields() ) {
-				@Nullable
-				final JsonPathExpression jsonPathExpression = field.getAnnotation(JsonPathExpression.class);
-				if ( jsonPathExpression == null ) {
-					continue;
-				}
-				if ( collection == null ) {
-					collection = new ArrayList<>();
-				}
-				field.setAccessible(true);
-				final TypeAdapter<?> typeAdapter = gson.getAdapter(TypeToken.get(field.getType()));
-				collection.add(new FieldDatum(field, JsonPath.compile(jsonPathExpression.value()), typeAdapter));
+		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
+			final Collection<? extends S> sources = provideSources.apply(typeToken);
+			final Collection<IAccessor<? super Object, ? super Object>> accessors = accessorsFactory.create(sources);
+			if ( accessors.isEmpty() ) {
+				return null;
 			}
-			return collection;
+			return new JsonPathTypeAdapter<>(
+					provideConfiguration.apply(gson),
+					gson.getDelegateAdapter(this, typeToken),
+					gson.getAdapter(JsonElement.class),
+					accessors.stream()
+							.map(accessor -> new Item<>(accessor, accessor.getJsonPath(), gson.getAdapter(TypeToken.get(accessor.getType()))))
+							.toArray(Item[]::new)
+			);
 		}
 
-		@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-		private static final class FieldDatum {
+	}
 
-			private final Field field;
-			private final JsonPath jsonPath;
-			private final TypeAdapter<?> typeAdapter;
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	private static final class Item<T> {
 
-		}
+		private final IAccessor<? super Object, ? super Object> accessor;
+		private final JsonPath jsonPath;
+		private final TypeAdapter<? super T> typeAdapter;
 
 	}
 

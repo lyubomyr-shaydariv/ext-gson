@@ -1,5 +1,6 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -31,28 +32,28 @@ public final class JsonPathTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapterFactory typeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance();
+		final TypeAdapterFactory declaredFieldsTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Field>getInstance(Configurations::getDefault, Sources::toDeclaredFields, Accessors::getFieldAccessors);
 		return List.of(
 				makeTestCase(
-						typeAdapterFactory.create(gson, wrapperTypeToken),
+						declaredFieldsTypeAdapterFactory.create(gson, wrapperTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":\"Foo\",\"barRef\":\"A\",\"bazRef\":{\"k1\":\"v1\"}}",
 						new Wrapper("Foo", "A", Map.of("k1", "v1"))
 				),
 				makeTestCase(
-						typeAdapterFactory.create(gson, wrapperWithNotExistingPathTypeToken),
+						declaredFieldsTypeAdapterFactory.create(gson, wrapperWithNotExistingPathTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)
 				),
 				makeTestCase(
-						JsonPathTypeAdapter.Factory.getInstance().create(gson, wrapperWithNotExistingPathTypeToken),
+						declaredFieldsTypeAdapterFactory.create(gson, wrapperWithNotExistingPathTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)
 				),
 				makeTestCase(
-						JsonPathTypeAdapter.Factory.getInstanceWithGlobalDefaults().create(gson, wrapperWithNotExistingPathTypeToken),
+						declaredFieldsTypeAdapterFactory.create(gson, wrapperWithNotExistingPathTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new WrapperWithNotExistingPath(null)

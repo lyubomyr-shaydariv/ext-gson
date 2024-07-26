@@ -1,5 +1,7 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
+import java.lang.reflect.Field;
+
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,7 +30,11 @@ public final class JsonPathModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Field>getInstance(
+				Configurations::getDefault,
+				Sources::toDeclaredFields,
+				lsh.ext.gson.ext.com.jayway.jsonpath.Accessors::getFieldAccessors
+		);
 
 		public static Builder create() {
 			return new Builder();
