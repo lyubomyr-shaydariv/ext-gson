@@ -20,14 +20,14 @@ public final class PrePostTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	@Nullable
-	private final Iterable<? extends IProcessor<? super T>> preProcessors;
+	private final Iterable<? extends IPreProcessor<? super T>> preProcessors;
 	@Nullable
-	private final Iterable<? extends IProcessor<? super T>> postProcessors;
+	private final Iterable<? extends IPostProcessor<? super T>> postProcessors;
 	private final TypeAdapter<T> delegateTypeAdapter;
 
 	public static <T> TypeAdapter<T> getInstance(
-			@Nullable final Iterable<? extends IProcessor<? super T>> preProcessors,
-			@Nullable final Iterable<? extends IProcessor<? super T>> postProcessors,
+			@Nullable final Iterable<? extends IPreProcessor<? super T>> preProcessors,
+			@Nullable final Iterable<? extends IPostProcessor<? super T>> postProcessors,
 			final TypeAdapter<T> delegateTypeAdapter
 	) {
 		return new PrePostTypeAdapter<>(preProcessors, postProcessors, delegateTypeAdapter)
@@ -38,8 +38,8 @@ public final class PrePostTypeAdapter<T>
 	public void write(final JsonWriter out, final T value)
 			throws IOException {
 		if ( preProcessors != null ) {
-			for ( final IProcessor<? super T> processor : preProcessors ) {
-				processor.process(value);
+			for ( final IPreProcessor<? super T> processor : preProcessors ) {
+				processor.preProcess(value);
 			}
 		}
 		delegateTypeAdapter.write(out, value);
@@ -50,8 +50,8 @@ public final class PrePostTypeAdapter<T>
 			throws IOException {
 		final T value = delegateTypeAdapter.read(in);
 		if ( postProcessors != null ) {
-			for ( final IProcessor<? super T> processor : postProcessors ) {
-				processor.process(value);
+			for ( final IPostProcessor<? super T> processor : postProcessors ) {
+				processor.postProcess(value);
 			}
 		}
 		return value;
@@ -61,11 +61,13 @@ public final class PrePostTypeAdapter<T>
 	public static final class Factory
 			implements TypeAdapterFactory {
 
-		private final Iterable<? extends IProcessor.IFactory<?>> preProcessorFactories;
-		private final Iterable<? extends IProcessor.IFactory<?>> postProcessorFactories;
+		private final Iterable<? extends IPreProcessor.IFactory<?>> preProcessorFactories;
+		private final Iterable<? extends IPostProcessor.IFactory<?>> postProcessorFactories;
 
-		public static TypeAdapterFactory getInstance(final Iterable<? extends IProcessor.IFactory<?>> preProcessorFactories,
-				final Iterable<? extends IProcessor.IFactory<?>> postProcessorFactories) {
+		public static TypeAdapterFactory getInstance(
+				final Iterable<? extends IPreProcessor.IFactory<?>> preProcessorFactories,
+				final Iterable<? extends IPostProcessor.IFactory<?>> postProcessorFactories
+		) {
 			return new Factory(preProcessorFactories, postProcessorFactories);
 		}
 
@@ -74,50 +76,86 @@ public final class PrePostTypeAdapter<T>
 		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
 			final Type type = typeToken.getType();
 			@Nullable
-			final Iterable<? extends IProcessor<?>> preProcessors = getProcessors(type, preProcessorFactories);
+			final Collection<? extends IPreProcessor<?>> preProcessors = getPreProcessors(type, preProcessorFactories);
 			@Nullable
-			final Iterable<? extends IProcessor<?>> postProcessors = getProcessors(type, postProcessorFactories);
+			final Collection<? extends IPostProcessor<?>> postProcessors = getPostProcessors(type, postProcessorFactories);
 			if ( preProcessors == null && postProcessors == null ) {
 				return null;
 			}
 			final TypeAdapter<T> delegateTypeAdapter = gson.getDelegateAdapter(this, typeToken);
-			@SuppressWarnings("unchecked")
 			@Nullable
-			final Iterable<IProcessor<? super T>> castPreProcessors = (Iterable<IProcessor<? super T>>) preProcessors;
 			@SuppressWarnings("unchecked")
+			final Iterable<IPreProcessor<? super T>> castPreProcessors = preProcessors != null ? (Iterable<IPreProcessor<? super T>>) preProcessors : null;
 			@Nullable
-			final Iterable<IProcessor<? super T>> castPostProcessors = (Iterable<IProcessor<? super T>>) postProcessors;
+			@SuppressWarnings("unchecked")
+			final Iterable<IPostProcessor<? super T>> castPostProcessors = postProcessors != null ? (Iterable<IPostProcessor<? super T>>) postProcessors : null;
 			return PrePostTypeAdapter.getInstance(castPreProcessors, castPostProcessors, delegateTypeAdapter);
 		}
 
 		@Nullable
-		private static Iterable<? extends IProcessor<?>> getProcessors(final Type type, final Iterable<? extends IProcessor.IFactory<?>> factories) {
-			@Nullable
-			Collection<IProcessor<?>> processors = null;
-			for ( final IProcessor.IFactory<?> factory : factories ) {
+		private static Collection<IPreProcessor<?>> getPreProcessors(final Type type, @Nullable final Iterable<? extends IPreProcessor.IFactory<?>> factories) {
+			if ( factories == null ) {
+				return null;
+			}
+			Collection<IPreProcessor<?>> preProcessors = null;
+			for ( final IPreProcessor.IFactory<?> factory : factories ) {
 				@Nullable
-				final IProcessor<?> processor = factory.createProcessor(type);
-				if ( processor == null ) {
+				final IPreProcessor<?> preProcessor = factory.createPreProcessor(type);
+				if ( preProcessor == null ) {
 					continue;
 				}
-				if ( processors == null ) {
-					processors = new ArrayList<>();
+				if ( preProcessors == null ) {
+					preProcessors = new ArrayList<>();
 				}
-				processors.add(processor);
+				preProcessors.add(preProcessor);
 			}
-			return processors;
+			return preProcessors;
+		}
+
+		@Nullable
+		private static Collection<IPostProcessor<?>> getPostProcessors(final Type type, @Nullable final Iterable<? extends IPostProcessor.IFactory<?>> factories) {
+			if ( factories == null ) {
+				return null;
+			}
+			@Nullable
+			Collection<IPostProcessor<?>> postProcessors = null;
+			for ( final IPostProcessor.IFactory<?> factory : factories ) {
+				@Nullable
+				final IPostProcessor<?> postProcessor = factory.createPostProcessor(type);
+				if ( postProcessor == null ) {
+					continue;
+				}
+				if ( postProcessors == null ) {
+					postProcessors = new ArrayList<>();
+				}
+				postProcessors.add(postProcessor);
+			}
+			return postProcessors;
 		}
 
 	}
 
-	public interface IProcessor<T> {
+	public interface IPreProcessor<T> {
 
-		void process(T input);
+		void preProcess(T input);
 
 		interface IFactory<T> {
 
 			@Nullable
-			IProcessor<T> createProcessor(Type type);
+			IPreProcessor<T> createPreProcessor(Type type);
+
+		}
+
+	}
+
+	public interface IPostProcessor<T> {
+
+		void postProcess(T input);
+
+		interface IFactory<T> {
+
+			@Nullable
+			IPostProcessor<T> createPostProcessor(Type type);
 
 		}
 
