@@ -101,7 +101,6 @@ public final class JsonReaders {
 		private final TypeAdapter<? extends E> elementTypeAdapter;
 
 		@Override
-		@SuppressWarnings("checkstyle:IllegalToken")
 		public boolean hasNext() {
 			try {
 				return in.hasNext();
@@ -111,7 +110,6 @@ public final class JsonReaders {
 		}
 
 		@Override
-		@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:IllegalToken" })
 		public E next() {
 			try {
 				if ( !in.hasNext() ) {
