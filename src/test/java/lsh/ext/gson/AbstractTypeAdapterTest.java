@@ -46,8 +46,9 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testRead(final TypeAdapter<? extends T> unit, final JsonReader jsonReader, @SuppressWarnings("unused") final String writeJson, final T value)
+	public final void testRead(final TypeAdapter<? extends T> unit, final String readJson, @SuppressWarnings("unused") final String writeJson, final T value)
 			throws IOException {
+		final JsonReader jsonReader = new JsonReader(new StringReader(readJson));
 		initialize(jsonReader);
 		Assertions.assertEquals(normalize(value), normalize(unit.read(jsonReader)));
 		finalize(jsonReader);
@@ -55,7 +56,7 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final JsonReader jsonReader, final String writeJson, final T value)
+	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, final String writeJson, final T value)
 			throws IOException {
 		final Writer actualWriter = new StringWriter();
 		final JsonWriter jsonWriter = new JsonWriter(actualWriter);
@@ -70,8 +71,7 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 	}
 
 	protected final Arguments makeTestCase(final TypeAdapter<?> unit, final String readJson, final String writeJson, final T value) {
-		final JsonReader jsonReader = new JsonReader(new StringReader(readJson));
-		return Arguments.of(unit, jsonReader, writeJson, value);
+		return Arguments.of(unit, readJson, writeJson, value);
 	}
 
 }
