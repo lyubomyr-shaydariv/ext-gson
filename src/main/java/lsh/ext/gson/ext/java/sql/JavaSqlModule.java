@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
+import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
 
 public final class JavaSqlModule
@@ -34,13 +35,13 @@ public final class JavaSqlModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private TypeAdapterFactory dateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Date.class, () -> new Date(0));
+		private ITypeAdapterFactory<Date> dateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Date.class, () -> new Date(0));
 
 		@Setter
-		private TypeAdapterFactory timeTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Time.class, () -> new Time(0));
+		private ITypeAdapterFactory<Time> timeTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Time.class, () -> new Time(0));
 
 		@Setter
-		private TypeAdapterFactory timestampTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Timestamp.class, () -> new Timestamp(0));
+		private ITypeAdapterFactory<Timestamp> timestampTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Timestamp.class, () -> new Timestamp(0));
 
 		public static Builder create() {
 			return new Builder();
