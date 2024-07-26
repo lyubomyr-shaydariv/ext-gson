@@ -18,7 +18,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-// TODO consider reimplementing this as a post-processor
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapter<T>
 		extends TypeAdapter<T> {
