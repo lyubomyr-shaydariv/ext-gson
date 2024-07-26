@@ -94,6 +94,7 @@ public final class JsonStreamsTest {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private static JsonReader newLenientJsonReader(final String json) {
 		final JsonReader reader = new JsonReader(new StringReader(json));
 		reader.setLenient(true);
