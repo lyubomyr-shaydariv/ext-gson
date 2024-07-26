@@ -1,6 +1,7 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +20,13 @@ final class Sources {
 			declaredField.setAccessible(true);
 		}
 		return Collections.unmodifiableList(Arrays.asList(declaredFields));
+	}
+
+	@SuppressWarnings("Java9CollectionFactory")
+	static List<Method> toMethods(final TypeToken<?> typeToken) {
+		final Method[] methods = typeToken.getRawType()
+				.getMethods();
+		return Collections.unmodifiableList(Arrays.asList(methods));
 	}
 
 }

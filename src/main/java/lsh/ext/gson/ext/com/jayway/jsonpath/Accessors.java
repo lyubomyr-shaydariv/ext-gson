@@ -1,6 +1,8 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +29,23 @@ public final class Accessors {
 		return Collections.unmodifiableCollection(accessors);
 	}
 
+	public static Collection<IAccessor<? super Object, ? super Object>> getMethodsAccessors(@SuppressWarnings("TypeParameterExtendsFinalClass") final Iterable<? extends Method> methods) {
+		final Collection<IAccessor<? super Object, ? super Object>> accessors = new ArrayList<>();
+		for ( final Method method : methods ) {
+			@Nullable
+			final JsonPathExpression jsonPathExpression = method.getAnnotation(JsonPathExpression.class);
+			if ( jsonPathExpression == null ) {
+				continue;
+			}
+			if ( method.getParameterCount() != 1 ) {
+				throw new IllegalArgumentException(method + " must accept one argument");
+			}
+			final JsonPath jsonPath = JsonPath.compile(jsonPathExpression.value());
+			accessors.add(new MethodAccessor<>(jsonPath, method.getGenericParameterTypes()[0], method));
+		}
+		return Collections.unmodifiableCollection(accessors);
+	}
+
 	private static final class FieldAccessor<T>
 			extends AbstractAccessor<Object, T> {
 
@@ -42,6 +61,27 @@ public final class Accessors {
 			try {
 				field.set(superValue, innerValue);
 			} catch ( final IllegalAccessException ex ) {
+				throw new RuntimeException(ex);
+			}
+		}
+
+	}
+
+	private static final class MethodAccessor<T>
+			extends AbstractAccessor<Object, T> {
+
+		private final Method method;
+
+		private MethodAccessor(final JsonPath jsonPath, final Type type, final Method method) {
+			super(jsonPath, type);
+			this.method = method;
+		}
+
+		@Override
+		public void assign(final Object superValue, final Object innerValue) {
+			try {
+				method.invoke(superValue, innerValue);
+			} catch ( final IllegalAccessException | InvocationTargetException ex ) {
 				throw new RuntimeException(ex);
 			}
 		}
