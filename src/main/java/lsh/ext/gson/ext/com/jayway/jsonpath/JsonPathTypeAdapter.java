@@ -57,12 +57,12 @@ public final class JsonPathTypeAdapter<T>
 
 		private final Function<? super Gson, ? extends Configuration> provideConfiguration;
 		private final Function<? super TypeToken<?>, ? extends Collection<? extends S>> provideSources;
-		private final IAccessor.IFactory<S> accessorsFactory;
+		private final IAccessor.IFactory<? super S> accessorsFactory;
 
 		public static <T> ITypeAdapterFactory<?> getInstance(
 				final Function<? super Gson, ? extends Configuration> provideConfiguration,
 				final Function<? super TypeToken<?>, ? extends Collection<? extends T>> provideSources,
-				final IAccessor.IFactory<T> accessorsFactory
+				final IAccessor.IFactory<? super T> accessorsFactory
 		) {
 			return new Factory<>(provideConfiguration, provideSources, accessorsFactory);
 		}
