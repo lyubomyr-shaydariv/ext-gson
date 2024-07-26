@@ -59,6 +59,15 @@ final class FailSafeTypeAdapter<T>
 		private static final TypeAdapterFactory doNotCatchRuntimeExceptionInstance = new Factory(false);
 		private static final TypeAdapterFactory doCatchRuntimeExceptionInstance = new Factory(true);
 
+		private static final Boolean defaultBoolean = false;
+		private static final Byte defaultByte = (byte) 0;
+		private static final Short defaultShort = (short) 0;
+		private static final Integer defaultInteger = 0;
+		private static final Long defaultLong = 0L;
+		private static final Float defaultFloat = 0.0F;
+		private static final Double defaultDouble = 0.0D;
+		private static final Character defaultCharacter = '\u0000';
+
 		private final boolean catchRuntimeException;
 
 		public static TypeAdapterFactory getInstance(final boolean catchRuntimeException) {
@@ -87,21 +96,21 @@ final class FailSafeTypeAdapter<T>
 			}
 			final Object result;
 			if ( clazz == boolean.class ) {
-				result = false;
+				result = defaultBoolean;
 			} else if ( clazz == byte.class ) {
-				result = (byte) 0;
+				result = defaultByte;
 			} else if ( clazz == short.class ) {
-				result = (short) 0;
+				result = defaultShort;
 			} else if ( clazz == int.class ) {
-				result = 0;
+				result = defaultInteger;
 			} else if ( clazz == long.class ) {
-				result = 0L;
+				result = defaultLong;
 			} else if ( clazz == float.class ) {
-				result = 0.0F;
+				result = defaultFloat;
 			} else if ( clazz == double.class ) {
-				result = 0.0D;
+				result = defaultDouble;
 			} else if ( clazz == char.class ) {
-				result = '\u0000';
+				result = defaultCharacter;
 			} else {
 				throw new AssertionError(clazz);
 			}
