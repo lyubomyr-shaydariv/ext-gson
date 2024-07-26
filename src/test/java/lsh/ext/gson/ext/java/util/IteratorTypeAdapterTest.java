@@ -2,9 +2,11 @@ package lsh.ext.gson.ext.java.util;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.StreamSupport;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
 import lsh.ext.gson.Gsons;
@@ -18,7 +20,7 @@ public final class IteratorTypeAdapterTest
 	@Override
 	@Nullable
 	protected List<?> normalize(@Nullable final Iterator<?> value) {
-		return value != null ? ImmutableList.copyOf(value) : null;
+		return value != null ? StreamSupport.stream(Spliterators.spliteratorUnknownSize(value, Spliterator.IMMUTABLE), false).toList() : null;
 	}
 
 	@Override
