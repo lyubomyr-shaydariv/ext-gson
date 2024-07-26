@@ -1,10 +1,12 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,16 +21,28 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 	@Nullable
 	protected abstract R normalize(@Nullable T value);
 
-	@ParameterizedTest
-	@MethodSource("makeTestCases")
-	public final void testRead(final TypeAdapter<? extends T> unit, final String readJson, @SuppressWarnings("unused") final String writeJson, final T value)
+	@SuppressWarnings("NoopMethodInAbstractClass")
+	protected void initialize(@SuppressWarnings("unused") final JsonReader jsonReader)
 			throws IOException {
-		Assertions.assertEquals(normalize(value), normalize(unit.fromJson(readJson)));
+	}
+
+	@SuppressWarnings("NoopMethodInAbstractClass")
+	protected void finalize(@SuppressWarnings("unused") final JsonReader jsonReader)
+			throws IOException {
 	}
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, final String writeJson, final T value) {
+	public final void testRead(final TypeAdapter<? extends T> unit, final JsonReader jsonReader, @SuppressWarnings("unused") final String writeJson, final T value)
+			throws IOException {
+		initialize(jsonReader);
+		Assertions.assertEquals(normalize(value), normalize(unit.read(jsonReader)));
+		finalize(jsonReader);
+	}
+
+	@ParameterizedTest
+	@MethodSource("makeTestCases")
+	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final JsonReader jsonReader, final String writeJson, final T value) {
 		Assertions.assertEquals(writeJson, unit.toJson(value));
 	}
 
@@ -37,7 +51,8 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 	}
 
 	protected final Arguments makeTestCase(final TypeAdapter<?> unit, final String readJson, final String writeJson, final T value) {
-		return Arguments.of(unit, readJson, writeJson, value);
+		final JsonReader jsonReader = new JsonReader(new StringReader(readJson));
+		return Arguments.of(unit, jsonReader, writeJson, value);
 	}
 
 }

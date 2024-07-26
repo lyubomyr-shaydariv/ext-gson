@@ -126,8 +126,10 @@ public final class JsonReadersTest {
 	}
 
 	@Test
-	public void testAsIteratorSome() {
+	public void testAsIteratorSome()
+			throws IOException {
 		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
+		in.beginArray();
 		final Iterator<?> unit = JsonReaders.asIterator(in, gson.getAdapter(FooBar.class));
 		Assertions.assertTrue(unit.hasNext());
 		Assertions.assertEquals(new FooBar(1, 2), unit.next());
@@ -137,14 +139,18 @@ public final class JsonReadersTest {
 		Assertions.assertEquals(new FooBar(5, 6), unit.next());
 		Assertions.assertFalse(unit.hasNext());
 		Assertions.assertThrows(NoSuchElementException.class, unit::next);
+		in.endArray();
 	}
 
 	@Test
-	public void testAsIteratorEmpty() {
+	public void testAsIteratorEmpty()
+			throws IOException {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
+		in.beginArray();
 		final Iterator<?> unit = JsonReaders.asIterator(in, gson.getAdapter(FooBar.class));
 		Assertions.assertFalse(unit.hasNext());
 		Assertions.assertThrows(NoSuchElementException.class, unit::next);
+		in.endArray();
 	}
 
 	private record FooBar(

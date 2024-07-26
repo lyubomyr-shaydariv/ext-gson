@@ -5,12 +5,12 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
-import lsh.ext.gson.AbstractTypeAdapterTest;
+import lsh.ext.gson.AbstractCursorTypeAdapterTest;
 import lsh.ext.gson.Gsons;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class StreamTypeAdapterTest
-		extends AbstractTypeAdapterTest<Stream<?>, List<?>> {
+		extends AbstractCursorTypeAdapterTest<Stream<?>> {
 
 	private static final Gson gson = Gsons.getNormalized();
 
