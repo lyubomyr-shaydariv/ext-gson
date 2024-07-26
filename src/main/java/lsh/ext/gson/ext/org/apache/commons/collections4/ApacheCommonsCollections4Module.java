@@ -10,7 +10,6 @@ import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.UnmodifiableIterable;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.MultiMap;
@@ -25,7 +24,7 @@ public final class ApacheCommonsCollections4Module
 	private static final IModule instance = Builder.create()
 			.build();
 
-	private ApacheCommonsCollections4Module(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private ApacheCommonsCollections4Module(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -55,13 +54,13 @@ public final class ApacheCommonsCollections4Module
 
 		@Override
 		public IModule build() {
-			return new ApacheCommonsCollections4Module(UnmodifiableIterable.copyOf(
+			return new ApacheCommonsCollections4Module(
 					bagTypeAdapterFactory,
 					bidiMapTypeAdapterFactory,
 					multiSetTypeAdapterFactory,
 					multiMapTypeAdapterFactory,
 					multiValuedMapTypeAdapterFactory
-			));
+			);
 		}
 
 	}

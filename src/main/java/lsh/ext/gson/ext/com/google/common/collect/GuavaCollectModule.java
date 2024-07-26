@@ -14,7 +14,6 @@ import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.UnmodifiableIterable;
 
 public final class GuavaCollectModule
 		extends AbstractModule {
@@ -23,7 +22,7 @@ public final class GuavaCollectModule
 	private static final IModule instance = Builder.create()
 			.build();
 
-	private GuavaCollectModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private GuavaCollectModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -50,12 +49,12 @@ public final class GuavaCollectModule
 
 		@Override
 		public IModule build() {
-			return new GuavaCollectModule(UnmodifiableIterable.copyOf(
+			return new GuavaCollectModule(
 					biMapTypeAdapterFactory,
 					multimapTypeAdapterFactory,
 					multisetTypeAdapterFactory,
 					tableTypeAdapterFactory
-			));
+			);
 		}
 
 	}

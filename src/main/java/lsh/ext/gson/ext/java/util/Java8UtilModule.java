@@ -15,7 +15,6 @@ import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.UnmodifiableIterable;
 
 public final class Java8UtilModule
 		extends AbstractModule {
@@ -24,7 +23,7 @@ public final class Java8UtilModule
 	private static final IModule instance = Builder.create()
 			.build();
 
-	private Java8UtilModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private Java8UtilModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -51,12 +50,12 @@ public final class Java8UtilModule
 
 		@Override
 		public IModule build() {
-			return new Java8UtilModule(UnmodifiableIterable.copyOf(
+			return new Java8UtilModule(
 					optionalTypeAdapterFactory,
 					optionalIntTypeAdapterFactory,
 					optionalLongTypeAdapterFactory,
 					optionalDoubleTypeAdapterFactory
-			));
+			);
 		}
 
 	}

@@ -10,7 +10,6 @@ import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.UnmodifiableIterable;
 
 public final class JsonPathModule
 		extends AbstractModule {
@@ -19,7 +18,7 @@ public final class JsonPathModule
 	private static final IModule instance = Builder.create()
 			.build();
 
-	private JsonPathModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private JsonPathModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -37,9 +36,9 @@ public final class JsonPathModule
 
 		@Override
 		public IModule build() {
-			return new JsonPathModule(UnmodifiableIterable.copyOf(
+			return new JsonPathModule(
 					jsonPathTypeAdapterFactory
-			));
+			);
 		}
 
 	}

@@ -24,12 +24,11 @@ import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.UnmodifiableIterable;
 
 public final class Java8TimeModule
 		extends AbstractModule {
 
-	private Java8TimeModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private Java8TimeModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -86,7 +85,7 @@ public final class Java8TimeModule
 
 		@Override
 		public IModule build() {
-			return new Java8TimeModule(UnmodifiableIterable.copyOf(
+			return new Java8TimeModule(
 					dayOfWeekTypeAdapterFactory,
 					durationTypeAdapterFactory,
 					instantTypeAdapterFactory,
@@ -101,7 +100,7 @@ public final class Java8TimeModule
 					yearMonthTypeAdapterFactory,
 					yearTypeAdapterFactory,
 					zonedDateTimeTypeAdapterFactory
-			));
+			);
 		}
 
 	}

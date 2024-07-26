@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
-import lsh.ext.gson.UnmodifiableIterable;
 import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
 
 public final class JavaSqlModule
@@ -25,7 +24,7 @@ public final class JavaSqlModule
 	private static final IModule instance = Builder.create()
 			.build();
 
-	private JavaSqlModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private JavaSqlModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -49,11 +48,11 @@ public final class JavaSqlModule
 
 		@Override
 		public IModule build() {
-			return new JavaSqlModule(UnmodifiableIterable.copyOf(
+			return new JavaSqlModule(
 					dateTypeAdapterFactory,
 					timeTypeAdapterFactory,
 					timestampTypeAdapterFactory
-			));
+			);
 		}
 
 	}

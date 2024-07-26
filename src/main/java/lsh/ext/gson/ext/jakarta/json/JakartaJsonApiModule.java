@@ -12,7 +12,6 @@ import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.UnmodifiableIterable;
 
 public final class JakartaJsonApiModule
 		extends AbstractModule {
@@ -21,7 +20,7 @@ public final class JakartaJsonApiModule
 	private static final IModule instance = Builder.create()
 			.build();
 
-	private JakartaJsonApiModule(final Iterable<? extends TypeAdapterFactory> typeAdapterFactories) {
+	private JakartaJsonApiModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -39,9 +38,9 @@ public final class JakartaJsonApiModule
 
 		@Override
 		public IModule build() {
-			return new JakartaJsonApiModule(UnmodifiableIterable.copyOf(
+			return new JakartaJsonApiModule(
 					jsonValueTypeAdapterFactory
-			));
+			);
 		}
 
 	}
