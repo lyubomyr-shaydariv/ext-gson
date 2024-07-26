@@ -15,8 +15,8 @@ public final class IteratorTypeAdapterTest
 
 	private static final Gson gson = Gsons.getNormalized();
 
-	@Nullable
 	@Override
+	@Nullable
 	protected List<?> normalize(@Nullable final Iterator<?> value) {
 		return value != null ? ImmutableList.copyOf(value) : null;
 	}

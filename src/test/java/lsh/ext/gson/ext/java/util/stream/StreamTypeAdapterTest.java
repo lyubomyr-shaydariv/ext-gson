@@ -14,8 +14,8 @@ public final class StreamTypeAdapterTest
 
 	private static final Gson gson = Gsons.getNormalized();
 
-	@Nullable
 	@Override
+	@Nullable
 	protected List<?> normalize(@Nullable final Stream<?> value) {
 		return value != null ? value.toList() : null;
 	}

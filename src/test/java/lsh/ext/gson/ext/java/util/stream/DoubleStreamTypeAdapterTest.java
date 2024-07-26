@@ -12,8 +12,9 @@ public final class DoubleStreamTypeAdapterTest
 		extends AbstractElementCursorTypeAdapterTest<DoubleStream> {
 
 	@Override
+	@Nullable
 	protected List<?> normalize(@Nullable final DoubleStream value) {
-		return value != null ? value.boxed().toList() : List.of();
+		return value != null ? value.boxed().toList() : null;
 	}
 
 	@Override

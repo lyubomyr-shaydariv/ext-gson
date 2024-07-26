@@ -12,8 +12,9 @@ public final class IntStreamTypeAdapterTest
 		extends AbstractElementCursorTypeAdapterTest<IntStream> {
 
 	@Override
+	@Nullable
 	protected List<?> normalize(@Nullable final IntStream value) {
-		return value != null ? value.boxed().toList() : List.of();
+		return value != null ? value.boxed().toList() : null;
 	}
 
 	@Override
