@@ -58,7 +58,8 @@ public final class OptionalTypeAdapter<T>
 			extends AbstractTypeAdapterFactory<Optional<T>> {
 
 		@Getter
-		private static final ITypeAdapterFactory<? extends Optional<?>> instance = new Factory<>();
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		private static final ITypeAdapterFactory<Optional<?>> instance = (ITypeAdapterFactory) new Factory<>();
 
 		@Override
 		@Nullable
