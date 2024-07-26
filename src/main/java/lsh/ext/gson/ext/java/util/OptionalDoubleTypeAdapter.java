@@ -20,9 +20,8 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class OptionalDoubleTypeAdapter
 		extends TypeAdapter<OptionalDouble> {
 
-	public static TypeAdapter<OptionalDouble> getInstance() {
-		return new OptionalDoubleTypeAdapter();
-	}
+	@Getter
+	private static final TypeAdapter<OptionalDouble> instance = new OptionalDoubleTypeAdapter();
 
 	@Override
 	@SuppressWarnings("OptionalAssignedToNull")

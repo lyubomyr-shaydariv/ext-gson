@@ -20,9 +20,8 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class OptionalIntTypeAdapter
 		extends TypeAdapter<OptionalInt> {
 
-	public static TypeAdapter<OptionalInt> getInstance() {
-		return new OptionalIntTypeAdapter();
-	}
+	@Getter
+	private static final TypeAdapter<OptionalInt> instance = new OptionalIntTypeAdapter();
 
 	@Override
 	@SuppressWarnings("OptionalAssignedToNull")
