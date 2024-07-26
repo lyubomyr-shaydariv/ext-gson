@@ -13,13 +13,13 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 abstract class AbstractBaseTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<T> {
 
-	private final Class<T> clazz;
+	private final Class<T> klass;
 	private final TypeAdapter<T> typeAdapter;
 
 	@Override
 	@Nullable
 	protected final TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-		if ( typeToken.getRawType() != clazz ) {
+		if ( typeToken.getRawType() != klass ) {
 			return null;
 		}
 		return typeAdapter;

@@ -29,10 +29,10 @@ public final class TypeAwareTypeAdapter<T>
 			throws IOException {
 		out.beginObject();
 		out.name(typePropertyName);
-		final Class<?> clazz = value.getClass();
-		out.value(typeResolver.unresolveType(clazz));
+		final Class<?> klass = value.getClass();
+		out.value(typeResolver.unresolveType(klass));
 		out.name(valuePropertyName);
-		gson.toJson(value, clazz, out);
+		gson.toJson(value, klass, out);
 		out.endObject();
 	}
 
@@ -59,7 +59,7 @@ public final class TypeAwareTypeAdapter<T>
 
 	public interface ITypeResolver {
 
-		String unresolveType(Class<?> clazz);
+		String unresolveType(Class<?> klass);
 
 		Class<?> resolveType(String typeName);
 

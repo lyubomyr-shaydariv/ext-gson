@@ -93,10 +93,10 @@ public final class JsonPathTypeAdapter<T>
 		}
 
 		@Nullable
-		private static Collection<FieldDatum> findFields(final Class<?> clazz, final Gson gson) {
+		private static Collection<FieldDatum> findFields(final Class<?> klass, final Gson gson) {
 			@Nullable
 			Collection<FieldDatum> collection = null;
-			for ( final Field field : clazz.getDeclaredFields() ) {
+			for ( final Field field : klass.getDeclaredFields() ) {
 				@Nullable
 				final JsonPathExpression jsonPathExpression = field.getAnnotation(JsonPathExpression.class);
 				if ( jsonPathExpression == null ) {

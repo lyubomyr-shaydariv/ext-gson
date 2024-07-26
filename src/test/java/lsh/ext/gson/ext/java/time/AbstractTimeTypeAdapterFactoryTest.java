@@ -40,24 +40,24 @@ abstract class AbstractTimeTypeAdapterFactoryTest<T>
 			ZonedDateTime.class
 	};
 
-	private final Class<T> clazz;
+	private final Class<T> klass;
 
-	protected AbstractTimeTypeAdapterFactoryTest(final Class<T> clazz) {
+	protected AbstractTimeTypeAdapterFactoryTest(final Class<T> klass) {
 		super(false);
-		this.clazz = clazz;
+		this.klass = klass;
 	}
 
 	@Override
 	protected final Stream<Arguments> supported() {
 		return Stream.of(java8TimeApiClasses)
-				.filter(c -> c.equals(clazz))
+				.filter(c -> c.equals(klass))
 				.map(c -> Arguments.of(TypeToken.get(c)));
 	}
 
 	@Override
 	protected final Stream<Arguments> unsupported() {
 		return Stream.of(java8TimeApiClasses)
-				.filter(c -> !c.equals(clazz))
+				.filter(c -> !c.equals(klass))
 				.map(c -> Arguments.of(TypeToken.get(c)));
 	}
 

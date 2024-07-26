@@ -31,8 +31,8 @@ public final class ParameterizedTypesTest {
 			String.class
 	})
 	@ParameterizedTest
-	public void testResolveTypeArgumentsForNonGenericType(final Type clazz) {
-		Assertions.assertNull(ParameterizedTypes.getTypeArgument(clazz, 0));
+	public void testResolveTypeArgumentsForNonGenericType(final Type klass) {
+		Assertions.assertNull(ParameterizedTypes.getTypeArgument(klass, 0));
 	}
 
 }
