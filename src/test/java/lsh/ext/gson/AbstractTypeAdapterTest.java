@@ -15,6 +15,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.opentest4j.AssertionFailedError;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractTypeAdapterTest<T, R> {
@@ -46,24 +47,34 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testRead(final TypeAdapter<? extends T> unit, final String readJson, @SuppressWarnings("unused") final String writeJson, final T value)
+	public final void testRead(final TypeAdapter<? extends T> unit, final String readJson, @SuppressWarnings("unused") final String writeJson, final T value, final AssertionError assertionError)
 			throws IOException {
-		final JsonReader jsonReader = new JsonReader(new StringReader(readJson));
-		initialize(jsonReader);
-		Assertions.assertEquals(normalize(value), normalize(unit.read(jsonReader)));
-		finalize(jsonReader);
+		try {
+			final JsonReader jsonReader = new JsonReader(new StringReader(readJson));
+			initialize(jsonReader);
+			Assertions.assertEquals(normalize(value), normalize(unit.read(jsonReader)));
+			finalize(jsonReader);
+		} catch ( final AssertionFailedError ex ) {
+			ex.addSuppressed(assertionError);
+			throw ex;
+		}
 	}
 
 	@ParameterizedTest
 	@MethodSource("makeTestCases")
-	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, final String writeJson, final T value)
+	public final void testWrite(final TypeAdapter<? super T> unit, @SuppressWarnings("unused") final String readJson, final String writeJson, final T value, final AssertionError assertionError)
 			throws IOException {
-		final Writer actualWriter = new StringWriter();
-		final JsonWriter jsonWriter = new JsonWriter(actualWriter);
-		initialize(jsonWriter);
-		unit.write(jsonWriter, value);
-		finalize(jsonWriter);
-		Assertions.assertEquals(writeJson, actualWriter.toString());
+		try {
+			final Writer actualWriter = new StringWriter();
+			final JsonWriter jsonWriter = new JsonWriter(actualWriter);
+			initialize(jsonWriter);
+			unit.write(jsonWriter, value);
+			finalize(jsonWriter);
+			Assertions.assertEquals(writeJson, actualWriter.toString());
+		} catch ( final AssertionFailedError ex ) {
+			ex.addSuppressed(assertionError);
+			throw ex;
+		}
 	}
 
 	protected final Arguments makeTestCase(final TypeAdapter<?> unit, final String json, final T value) {
@@ -71,7 +82,7 @@ public abstract class AbstractTypeAdapterTest<T, R> {
 	}
 
 	protected final Arguments makeTestCase(final TypeAdapter<?> unit, final String readJson, final String writeJson, final T value) {
-		return Arguments.of(unit, readJson, writeJson, value);
+		return Arguments.of(unit, readJson, writeJson, value, new AssertionError());
 	}
 
 }
