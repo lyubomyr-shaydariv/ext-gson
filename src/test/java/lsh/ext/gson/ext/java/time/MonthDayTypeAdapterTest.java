@@ -19,6 +19,7 @@ public final class MonthDayTypeAdapterTest
 	}
 
 	@Override
+	@SuppressWarnings("SimpleDateFormatWithoutLocale")
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(

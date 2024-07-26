@@ -18,6 +18,7 @@ public final class YearMonthTypeAdapterTest
 	}
 
 	@Override
+	@SuppressWarnings("SimpleDateFormatWithoutLocale")
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
