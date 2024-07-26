@@ -12,12 +12,10 @@ import lombok.Getter;
 import lsh.ext.gson.AbstractElementCursorTypeAdapter;
 
 public final class EnumerationTypeAdapter<E>
-		extends AbstractElementCursorTypeAdapter<Enumeration<? extends E>, Enumeration<? extends E>> {
-
-	private final TypeAdapter<E> elementTypeAdapter;
+		extends AbstractElementCursorTypeAdapter<Enumeration<? extends E>, Enumeration<? extends E>, E> {
 
 	private EnumerationTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
-		this.elementTypeAdapter = elementTypeAdapter;
+		super(elementTypeAdapter);
 	}
 
 	public static <E> TypeAdapter<Enumeration<? extends E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
@@ -26,7 +24,7 @@ public final class EnumerationTypeAdapter<E>
 	}
 
 	@Override
-	protected Enumeration<? extends E> toCursor(final JsonReader jsonReader) {
+	protected Enumeration<? extends E> toCursor(final JsonReader jsonReader, final TypeAdapter<E> elementTypeAdapter) {
 		return new Enumeration<>() {
 			@Override
 			public boolean hasMoreElements() {
@@ -59,7 +57,7 @@ public final class EnumerationTypeAdapter<E>
 	}
 
 	@Override
-	protected void writeNext(final JsonWriter out, final Enumeration<? extends E> elementCursor)
+	protected void writeNext(final JsonWriter out, final Enumeration<? extends E> elementCursor, final TypeAdapter<E> elementTypeAdapter)
 			throws IOException {
 		elementTypeAdapter.write(out, elementCursor.nextElement());
 	}

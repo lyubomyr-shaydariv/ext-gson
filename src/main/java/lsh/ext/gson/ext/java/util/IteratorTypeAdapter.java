@@ -8,16 +8,14 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.Getter;
-import lsh.ext.gson.JsonReaders;
 import lsh.ext.gson.AbstractElementCursorTypeAdapter;
+import lsh.ext.gson.JsonReaders;
 
 public final class IteratorTypeAdapter<E>
-		extends AbstractElementCursorTypeAdapter<Iterator<? extends E>, Iterator<? extends E>> {
-
-	private final TypeAdapter<E> elementTypeAdapter;
+		extends AbstractElementCursorTypeAdapter<Iterator<? extends E>, Iterator<? extends E>, E> {
 
 	private IteratorTypeAdapter(final TypeAdapter<E> elementTypeAdapter) {
-		this.elementTypeAdapter = elementTypeAdapter;
+		super(elementTypeAdapter);
 	}
 
 	public static <E> TypeAdapter<Iterator<? extends E>> getInstance(final TypeAdapter<E> elementTypeAdapter) {
@@ -26,7 +24,7 @@ public final class IteratorTypeAdapter<E>
 	}
 
 	@Override
-	protected Iterator<? extends E> toCursor(final JsonReader jsonReader) {
+	protected Iterator<? extends E> toCursor(final JsonReader jsonReader, final TypeAdapter<E> elementTypeAdapter) {
 		return JsonReaders.asIterator(jsonReader, elementTypeAdapter);
 	}
 
@@ -41,7 +39,7 @@ public final class IteratorTypeAdapter<E>
 	}
 
 	@Override
-	protected void writeNext(final JsonWriter out, final Iterator<? extends E> elementCursor)
+	protected void writeNext(final JsonWriter out, final Iterator<? extends E> elementCursor, final TypeAdapter<E> elementTypeAdapter)
 			throws IOException {
 		elementTypeAdapter.write(out, elementCursor.next());
 	}
