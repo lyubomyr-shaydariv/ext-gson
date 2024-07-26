@@ -90,7 +90,7 @@ public final class JsonReaders {
 	}
 
 	public static <E> Iterator<E> asIterator(@WillNotClose final JsonReader jsonReader, final TypeAdapter<? extends E> elementTypeAdapter) {
-		return JsonReaderIterator.getInstance(jsonReader, elementTypeAdapter);
+		return new JsonReaderIterator<>(jsonReader, elementTypeAdapter);
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -101,10 +101,6 @@ public final class JsonReaders {
 		private final TypeAdapter<? extends E> elementTypeAdapter;
 
 		private ReadingIteratorState state = ReadingIteratorState.BEFORE_ARRAY;
-
-		private static <E> Iterator<E> getInstance(@WillNotClose final JsonReader in, final TypeAdapter<? extends E> elementTypeAdapter) {
-			return new JsonReaderIterator<>(in, elementTypeAdapter);
-		}
 
 		@Override
 		@SuppressWarnings("checkstyle:IllegalToken")
