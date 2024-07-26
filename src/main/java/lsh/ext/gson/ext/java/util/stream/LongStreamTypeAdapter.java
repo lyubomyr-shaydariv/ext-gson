@@ -2,6 +2,7 @@ package lsh.ext.gson.ext.java.util.stream;
 
 import java.io.IOException;
 import java.util.PrimitiveIterator;
+import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.LongStream;
 import java.util.stream.StreamSupport;
@@ -10,35 +11,35 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.Getter;
-import lsh.ext.gson.AbstractPrimitiverCursorTypeAdapter;
+import lsh.ext.gson.AbstractCursorTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.JsonReaders;
 
 public final class LongStreamTypeAdapter
-		extends AbstractPrimitiverCursorTypeAdapter<LongStream, PrimitiveIterator.OfLong> {
+		extends AbstractCursorTypeAdapter<LongStream, PrimitiveIterator.OfLong> {
 
 	@Getter
 	private static final TypeAdapter<LongStream> instance = new LongStreamTypeAdapter();
 
 	@Override
 	protected LongStream toCursor(final JsonReader jsonReader) {
-		return StreamSupport.longStream(Spliterators.spliteratorUnknownSize(JsonReaders.asLongIterator(jsonReader), 0), false);
+		return StreamSupport.longStream(Spliterators.spliteratorUnknownSize(JsonReaders.asLongIterator(jsonReader), Spliterator.IMMUTABLE), false);
 	}
 
 	@Override
-	protected PrimitiveIterator.OfLong toPrimitiveCursor(final LongStream cursor) {
+	protected PrimitiveIterator.OfLong toElementCursor(final LongStream cursor) {
 		return cursor.iterator();
 	}
 
 	@Override
-	protected boolean hasNext(final PrimitiveIterator.OfLong primitiveCursor) {
-		return primitiveCursor.hasNext();
+	protected boolean hasNext(final PrimitiveIterator.OfLong elementCursor) {
+		return elementCursor.hasNext();
 	}
 
 	@Override
-	protected void writeNext(final JsonWriter out, final PrimitiveIterator.OfLong primitiveCursor)
+	protected void writeNext(final JsonWriter out, final PrimitiveIterator.OfLong elementCursor)
 			throws IOException {
-		out.value(primitiveCursor.next());
+		out.value(elementCursor.next());
 	}
 
 	public static final class Factory

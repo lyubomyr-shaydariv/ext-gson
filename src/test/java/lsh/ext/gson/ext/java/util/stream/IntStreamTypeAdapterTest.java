@@ -5,11 +5,11 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
-import lsh.ext.gson.AbstractCursorTypeAdapterTest;
+import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class IntStreamTypeAdapterTest
-		extends AbstractCursorTypeAdapterTest<IntStream> {
+		extends AbstractElementCursorTypeAdapterTest<IntStream> {
 
 	@Override
 	protected List<?> normalize(@Nullable final IntStream value) {

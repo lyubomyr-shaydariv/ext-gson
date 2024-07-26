@@ -5,11 +5,11 @@ import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
-import lsh.ext.gson.AbstractCursorTypeAdapterTest;
+import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class DoubleStreamTypeAdapterTest
-		extends AbstractCursorTypeAdapterTest<DoubleStream> {
+		extends AbstractElementCursorTypeAdapterTest<DoubleStream> {
 
 	@Override
 	protected List<?> normalize(@Nullable final DoubleStream value) {

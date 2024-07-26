@@ -6,12 +6,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
-import lsh.ext.gson.AbstractCursorTypeAdapterTest;
+import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
 import lsh.ext.gson.Gsons;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class EnumerationTypeAdapterTest
-		extends AbstractCursorTypeAdapterTest<Enumeration<?>> {
+		extends AbstractElementCursorTypeAdapterTest<Enumeration<?>> {
 
 	private static final Gson gson = Gsons.getNormalized();
 

@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-public abstract class AbstractCursorTypeAdapterTest<C>
+public abstract class AbstractElementCursorTypeAdapterTest<C>
 		extends AbstractTypeAdapterTest<C, List<?>> {
 
 	@Override
