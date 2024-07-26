@@ -14,7 +14,7 @@ public final class FailSafeTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return FailSafeTypeAdapter.Factory.getInstance(false);
+		return FailSafeTypeAdapter.Factory.getInstance(String.class, false);
 	}
 
 	@Override

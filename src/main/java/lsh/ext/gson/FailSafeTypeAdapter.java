@@ -53,11 +53,8 @@ final class FailSafeTypeAdapter<T>
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class Factory
+	public static final class Factory<T>
 			implements TypeAdapterFactory {
-
-		private static final TypeAdapterFactory doNotCatchRuntimeExceptionInstance = new Factory(false);
-		private static final TypeAdapterFactory doCatchRuntimeExceptionInstance = new Factory(true);
 
 		private static final Boolean defaultBoolean = false;
 		private static final Byte defaultByte = (byte) 0;
@@ -68,51 +65,54 @@ final class FailSafeTypeAdapter<T>
 		private static final Double defaultDouble = 0.0D;
 		private static final Character defaultCharacter = '\u0000';
 
+		private final Class<T> klass;
+		@Nullable
+		private final T defaultValue;
 		private final boolean catchRuntimeException;
 
-		public static TypeAdapterFactory getInstance(final boolean catchRuntimeException) {
-			if ( !catchRuntimeException ) {
-				return doNotCatchRuntimeExceptionInstance;
-			}
-			return doCatchRuntimeExceptionInstance;
+		public static <T> TypeAdapterFactory getInstance(final Class<T> klass, final boolean catchRuntimeException) {
+			return new Factory<>(klass, getDefaultValue(klass), catchRuntimeException);
+		}
+
+		public static <T> TypeAdapterFactory getInstance(final Class<T> klass, final T defaultValue, final boolean catchRuntimeException) {
+			return new Factory<>(klass, defaultValue, catchRuntimeException);
 		}
 
 		@Override
 		@Nullable
 		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-			if ( typeToken.getRawType().isPrimitive() ) {
+			if ( !klass.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;
 			}
 			final TypeAdapter<T> typeAdapter = gson.getAdapter(typeToken);
-			final T defaultValue = getDefaultValue(typeToken.getRawType());
-			return FailSafeTypeAdapter.getInstance(typeAdapter, catchRuntimeException, defaultValue);
+			@SuppressWarnings("unchecked")
+			final T castDefaultValue = (T) defaultValue;
+			return FailSafeTypeAdapter.getInstance(typeAdapter, catchRuntimeException, castDefaultValue);
 		}
 
 		@Nullable
 		@SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:AvoidEscapedUnicodeCharacters", "IfStatementWithTooManyBranches", "ChainOfInstanceofChecks" })
-		private static <T> T getDefaultValue(final Class<?> clazz) {
-			if ( !clazz.isPrimitive() ) {
-				return null;
-			}
+		private static <T> T getDefaultValue(final Class<T> klass) {
+			@Nullable
 			final Object result;
-			if ( clazz == boolean.class ) {
+			if ( klass == boolean.class || klass == Boolean.class ) {
 				result = defaultBoolean;
-			} else if ( clazz == byte.class ) {
+			} else if ( klass == byte.class || klass == Byte.class ) {
 				result = defaultByte;
-			} else if ( clazz == short.class ) {
+			} else if ( klass == short.class || klass == Short.class ) {
 				result = defaultShort;
-			} else if ( clazz == int.class ) {
+			} else if ( klass == int.class || klass == Integer.class ) {
 				result = defaultInteger;
-			} else if ( clazz == long.class ) {
+			} else if ( klass == long.class || klass == Long.class ) {
 				result = defaultLong;
-			} else if ( clazz == float.class ) {
+			} else if ( klass == float.class || klass == Float.class ) {
 				result = defaultFloat;
-			} else if ( clazz == double.class ) {
+			} else if ( klass == double.class || klass == Double.class ) {
 				result = defaultDouble;
-			} else if ( clazz == char.class ) {
+			} else if ( klass == char.class || klass == Character.class ) {
 				result = defaultCharacter;
 			} else {
-				throw new AssertionError(clazz);
+				return null;
 			}
 			@SuppressWarnings("unchecked")
 			final T castResult = (T) result;
