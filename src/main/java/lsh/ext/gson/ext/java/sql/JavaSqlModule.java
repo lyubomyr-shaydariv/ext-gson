@@ -5,7 +5,6 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,7 +17,6 @@ import lsh.ext.gson.IModule;
 import lsh.ext.gson.UnmodifiableIterable;
 import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
 
-@SuppressWarnings("UseOfObsoleteDateTimeApi")
 public final class JavaSqlModule
 		extends AbstractModule {
 
@@ -31,28 +29,19 @@ public final class JavaSqlModule
 		super(typeAdapterFactories);
 	}
 
-	public static IBuilder0<java.util.Date> createSqlDateTypesFactory(final TypeToken<java.util.Date> typeToken) {
-		@SuppressWarnings("unchecked")
-		final Class<? extends java.util.Date> rawType = (Class<? extends java.util.Date>) typeToken.getRawType();
-		if ( rawType == Date.class ) {
-			return () -> new Date(0);
-		}
-		if ( rawType == Time.class ) {
-			return () -> new Time(0);
-		}
-		if ( rawType == Timestamp.class ) {
-			return () -> new Timestamp(0);
-		}
-		return UnixTimeDateTypeAdapter.Factory.createFactory();
-	}
-
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
 	public static final class Builder
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private TypeAdapterFactory unixTimeDateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(JavaSqlModule::createSqlDateTypesFactory);
+		private TypeAdapterFactory dateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Date.class, () -> new Date(0));
+
+		@Setter
+		private TypeAdapterFactory timeTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Time.class, () -> new Time(0));
+
+		@Setter
+		private TypeAdapterFactory timestampTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Timestamp.class, () -> new Timestamp(0));
 
 		public static Builder create() {
 			return new Builder();
@@ -61,7 +50,9 @@ public final class JavaSqlModule
 		@Override
 		public IModule build() {
 			return new JavaSqlModule(UnmodifiableIterable.copyOf(
-					unixTimeDateTypeAdapterFactory
+					dateTypeAdapterFactory,
+					timeTypeAdapterFactory,
+					timestampTypeAdapterFactory
 			));
 		}
 

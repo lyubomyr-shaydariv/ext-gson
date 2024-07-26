@@ -22,19 +22,19 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 
 	private static final int MS_IN_S = 1000;
 
-	private final IBuilder0<? extends T> instanceFactory;
+	private final IBuilder0<? extends T> instanceBuilder;
 
-	public static <T extends Date> TypeAdapter<T> getInstance(final IBuilder0<? extends T> instanceFactory) {
-		return new UnixTimeDateTypeAdapter<T>(instanceFactory)
+	public static <T extends Date> TypeAdapter<T> getInstance(final IBuilder0<? extends T> instanceBuilder) {
+		return new UnixTimeDateTypeAdapter<T>(instanceBuilder)
 				.nullSafe();
 	}
 
 	@Override
 	public T read(final JsonReader in)
 			throws IOException {
-		final long time = in.nextLong() * MS_IN_S;
-		final T value = instanceFactory.build();
-		value.setTime(time);
+		final long time = in.nextLong();
+		final T value = instanceBuilder.build();
+		value.setTime(time * MS_IN_S);
 		return value;
 	}
 
@@ -48,29 +48,23 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 	public static final class Factory<T extends Date>
 			extends AbstractTypeAdapterFactory<T> {
 
-		private final IBuilder0.IFactory<? extends T> dateFactoryFactory;
+		private final Class<T> klass;
+		private final IBuilder0<? extends T> instanceBuilder;
 
 		public static <T extends Date> ITypeAdapterFactory<T> getInstance(
-				final IBuilder0.IFactory<? extends T> dateFactoryFactory
+				final Class<T> klass,
+				final IBuilder0<? extends T> instanceBuilder
 		) {
-			return new Factory<>(dateFactoryFactory);
-		}
-
-		public static IBuilder0<Date> createFactory() {
-			return Date::new;
+			return new Factory<>(klass, instanceBuilder);
 		}
 
 		@Override
 		@Nullable
 		protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !Date.class.isAssignableFrom(typeToken.getRawType()) ) {
+			if ( !klass.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;
 			}
-			@SuppressWarnings("unchecked")
-			final TypeToken<T> castTypeToken = (TypeToken<T>) typeToken;
-			@SuppressWarnings("unchecked")
-			final IBuilder0.IFactory<T> castDateFactoryFactory = (IBuilder0.IFactory<T>) dateFactoryFactory;
-			return UnixTimeDateTypeAdapter.getInstance(castDateFactoryFactory.create(castTypeToken));
+			return UnixTimeDateTypeAdapter.getInstance(instanceBuilder);
 		}
 
 	}
