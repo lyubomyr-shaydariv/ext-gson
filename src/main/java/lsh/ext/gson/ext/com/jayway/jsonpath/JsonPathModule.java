@@ -29,7 +29,7 @@ public final class JsonPathModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Method>getInstance(Configurations::getDefault, Sources::toMethods, Accessors::getMethodsAccessors);
+		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Method>getInstance(Sources::toMethods, Accessors::getMethodsAccessors);
 
 		public static Builder create() {
 			return new Builder();

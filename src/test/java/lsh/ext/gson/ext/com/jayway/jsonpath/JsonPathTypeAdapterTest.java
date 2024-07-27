@@ -36,8 +36,8 @@ public final class JsonPathTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapterFactory declaredFieldsTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Field>getInstance(Configurations::getDefault, Sources::toDeclaredFields, Accessors::getFieldAccessors);
-		final TypeAdapterFactory methodsTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Method>getInstance(Configurations::getDefault, Sources::toMethods, Accessors::getMethodsAccessors);
+		final TypeAdapterFactory declaredFieldsTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Field>getInstance(Sources::toDeclaredFields, Accessors::getFieldAccessors);
+		final TypeAdapterFactory methodsTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Method>getInstance(Sources::toMethods, Accessors::getMethodsAccessors);
 		return List.of(
 				makeTestCase(
 						declaredFieldsTypeAdapterFactory.create(gson, fieldsWrapperTypeToken),
