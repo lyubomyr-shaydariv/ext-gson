@@ -13,7 +13,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.JsonPathException;
+import com.jayway.jsonpath.PathNotFoundException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -41,10 +41,9 @@ public final class JsonPathTypeAdapter<T>
 		for ( final Item<?> item : items ) {
 			try {
 				final JsonElement foundSubElement = item.jsonPath.read(superElement, configuration);
-				final TypeAdapter<?> typeAdapter = item.typeAdapter;
-				final Object subValue = typeAdapter.fromJsonTree(foundSubElement);
+				final Object subValue = item.typeAdapter.fromJsonTree(foundSubElement);
 				item.accessor.assign(superValue, subValue);
-			} catch ( final JsonPathException ignored ) {
+			} catch ( final PathNotFoundException ignored ) {
 				// do nothing
 			}
 		}
