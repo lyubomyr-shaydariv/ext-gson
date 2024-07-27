@@ -41,6 +41,12 @@ public final class JsonPathTypeAdapterTest
 		return List.of(
 				makeTestCase(
 						declaredFieldsTypeAdapterFactory.create(gson, fieldsWrapperTypeToken),
+						"null",
+						"null",
+						null
+				),
+				makeTestCase(
+						declaredFieldsTypeAdapterFactory.create(gson, fieldsWrapperTypeToken),
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":\"Foo\",\"barRef\":\"A\",\"bazRef\":{\"k1\":\"v1\"}}",
 						new FieldsWrapper("Foo", "A", Map.of("k1", "v1"))
@@ -62,6 +68,12 @@ public final class JsonPathTypeAdapterTest
 						"{\"l1\":{\"l2\":{\"l3\":{\"foo\":\"Foo!\",\"bar\":[\"A\",\"B\",\"C\"],\"baz\":{\"k1\":\"v1\"}}}}}",
 						"{\"fooRef\":null}",
 						new FieldsNoWrapper(null)
+				),
+				makeTestCase(
+						methodsTypeAdapterFactory.create(gson, methodsWrapperTypeToken),
+						"null",
+						"null",
+						null
 				),
 				makeTestCase(
 						methodsTypeAdapterFactory.create(gson, methodsWrapperTypeToken),
