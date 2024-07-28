@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
@@ -22,12 +23,12 @@ public final class JsonPathModule
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	@lombok.experimental.Accessors(fluent = true, chain = true)
+	@Accessors(fluent = true, chain = true)
 	public static final class Builder
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(Sources::toMethods, Accessors::getMethodsAccessors);
+		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(ReflectiveAccessors.getMethodAccessors());
 
 		public static Builder create() {
 			return new Builder();

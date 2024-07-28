@@ -51,33 +51,29 @@ public final class JsonPathTypeAdapter<T>
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class Factory<S>
+	public static final class Factory
 			implements ITypeAdapterFactory<Object> {
 
 		private final Function<? super Gson, ? extends Configuration> provideConfiguration;
-		private final Function<? super TypeToken<?>, ? extends S> provideSource;
-		private final IAccessor.IFactory<? super S> accessorsFactory;
+		private final IAccessor.IFactory accessorsFactory;
 
-		public static <S> ITypeAdapterFactory<?> getInstance(
-				final Function<? super TypeToken<?>, ? extends S> provideSource,
-				final IAccessor.IFactory<? super S> accessorsFactory
+		public static ITypeAdapterFactory<?> getInstance(
+				final IAccessor.IFactory accessorsFactory
 		) {
-			return getInstance(Configurations::getDefault, provideSource, accessorsFactory);
+			return getInstance(gson -> Configurations.getDefaultBuilder(gson).build(), accessorsFactory);
 		}
 
-		public static <S> ITypeAdapterFactory<?> getInstance(
+		public static ITypeAdapterFactory<?> getInstance(
 				final Function<? super Gson, ? extends Configuration> provideConfiguration,
-				final Function<? super TypeToken<?>, ? extends S> provideSource,
-				final IAccessor.IFactory<? super S> accessorsFactory
+				final IAccessor.IFactory accessorsFactory
 		) {
-			return new Factory<>(provideConfiguration, provideSource, accessorsFactory);
+			return new Factory(provideConfiguration, accessorsFactory);
 		}
 
 		@Override
 		@Nullable
 		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-			final S source = provideSource.apply(typeToken);
-			final Collection<IAccessor<? super Object, ? super Object>> accessors = accessorsFactory.create(source);
+			final Collection<IAccessor<? super Object, ? super Object>> accessors = accessorsFactory.create(typeToken);
 			if ( accessors.isEmpty() ) {
 				return null;
 			}

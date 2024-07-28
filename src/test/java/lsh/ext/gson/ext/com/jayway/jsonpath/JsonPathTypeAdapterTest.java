@@ -26,6 +26,9 @@ public final class JsonPathTypeAdapterTest
 	private static final TypeToken<MethodsWrapper> methodsWrapperTypeToken = TypeToken.get(MethodsWrapper.class);
 	private static final TypeToken<MethodsNoWrapper> methodsNoWrapperTypeToken = TypeToken.get(MethodsNoWrapper.class);
 
+	private static final TypeAdapterFactory declaredFieldsTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(ReflectiveAccessors.getDeclaredFieldAccessors());
+	private static final TypeAdapterFactory methodsTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(ReflectiveAccessors.getMethodAccessors());
+
 	@Nullable
 	@Override
 	protected Object normalize(@Nullable final Object value) {
@@ -34,8 +37,6 @@ public final class JsonPathTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapterFactory declaredFieldsTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(Sources::toDeclaredFields, Accessors::getFieldAccessors);
-		final TypeAdapterFactory methodsTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(Sources::toMethods, Accessors::getMethodsAccessors);
 		return List.of(
 				makeTestCase(
 						declaredFieldsTypeAdapterFactory.create(gson, fieldsWrapperTypeToken),

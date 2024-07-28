@@ -9,11 +9,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class Configurations {
 
-	public static Configuration getDefault(final Gson gson) {
+	public static Configuration.ConfigurationBuilder getDefaultBuilder(final Gson gson) {
 		return Configuration.builder()
 				.jsonProvider(new GsonJsonProvider(gson))
-				.mappingProvider(new GsonMappingProvider(gson))
-				.build();
+				.mappingProvider(new GsonMappingProvider(gson));
 	}
 
 }

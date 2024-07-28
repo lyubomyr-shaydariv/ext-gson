@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-abstract class AbstractAccessor<SP, SB>
-		implements IAccessor<SP, SB> {
+public abstract class AbstractAccessor<O, I>
+		implements IAccessor<O, I> {
 
 	@Getter
 	private final JsonPath jsonPath;
@@ -18,7 +18,7 @@ abstract class AbstractAccessor<SP, SB>
 	private final Type type;
 
 	@Override
-	public final void assignNotFound(final SP outerValue) {
+	public final void assignNotFound(final O outerValue) {
 		// do nothing
 	}
 

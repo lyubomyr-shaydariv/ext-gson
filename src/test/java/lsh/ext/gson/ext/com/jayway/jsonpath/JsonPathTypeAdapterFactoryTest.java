@@ -17,7 +17,7 @@ public final class JsonPathTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return JsonPathTypeAdapter.Factory.getInstance(Sources::toDeclaredFields, Accessors::getFieldAccessors);
+		return JsonPathTypeAdapter.Factory.getInstance(ReflectiveAccessors.getDeclaredFieldAccessors());
 	}
 
 	@Override
