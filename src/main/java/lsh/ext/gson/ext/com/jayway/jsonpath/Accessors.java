@@ -16,21 +16,29 @@ import lombok.experimental.UtilityClass;
 public final class Accessors {
 
 	public static Collection<IAccessor<? super Object, ? super Object>> getFieldAccessors(@SuppressWarnings("TypeParameterExtendsFinalClass") final Iterable<? extends Field> fields) {
-		final Collection<IAccessor<? super Object, ? super Object>> accessors = new ArrayList<>();
+		@Nullable
+		Collection<IAccessor<? super Object, ? super Object>> accessors = null;
 		for ( final Field field : fields ) {
 			@Nullable
 			final JsonPathExpression jsonPathExpression = field.getAnnotation(JsonPathExpression.class);
 			if ( jsonPathExpression == null ) {
 				continue;
 			}
+			if ( accessors == null ) {
+				accessors = new ArrayList<>();
+			}
 			final JsonPath jsonPath = JsonPath.compile(jsonPathExpression.value());
 			accessors.add(new FieldAccessor<>(jsonPath, field.getGenericType(), field));
+		}
+		if ( accessors == null ) {
+			return Collections.emptyList();
 		}
 		return Collections.unmodifiableCollection(accessors);
 	}
 
 	public static Collection<IAccessor<? super Object, ? super Object>> getMethodsAccessors(@SuppressWarnings("TypeParameterExtendsFinalClass") final Iterable<? extends Method> methods) {
-		final Collection<IAccessor<? super Object, ? super Object>> accessors = new ArrayList<>();
+		@Nullable
+		Collection<IAccessor<? super Object, ? super Object>> accessors = null;
 		for ( final Method method : methods ) {
 			@Nullable
 			final JsonPathExpression jsonPathExpression = method.getAnnotation(JsonPathExpression.class);
@@ -40,8 +48,14 @@ public final class Accessors {
 			if ( method.getParameterCount() != 1 ) {
 				throw new IllegalArgumentException(method + " must accept one argument");
 			}
+			if ( accessors == null ) {
+				accessors = new ArrayList<>();
+			}
 			final JsonPath jsonPath = JsonPath.compile(jsonPathExpression.value());
 			accessors.add(new MethodAccessor<>(jsonPath, method.getGenericParameterTypes()[0], method));
+		}
+		if ( accessors == null ) {
+			return Collections.emptyList();
 		}
 		return Collections.unmodifiableCollection(accessors);
 	}
