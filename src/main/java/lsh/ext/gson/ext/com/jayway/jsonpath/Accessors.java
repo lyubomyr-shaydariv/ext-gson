@@ -71,9 +71,9 @@ public final class Accessors {
 		}
 
 		@Override
-		public void assign(final Object superValue, final Object innerValue) {
+		public void assign(final Object outerValue, final Object innerValue) {
 			try {
-				field.set(superValue, innerValue);
+				field.set(outerValue, innerValue);
 			} catch ( final IllegalAccessException ex ) {
 				throw new RuntimeException(ex);
 			}
@@ -92,9 +92,9 @@ public final class Accessors {
 		}
 
 		@Override
-		public void assign(final Object superValue, final Object innerValue) {
+		public void assign(final Object outerValue, final Object innerValue) {
 			try {
-				method.invoke(superValue, innerValue);
+				method.invoke(outerValue, innerValue);
 			} catch ( final IllegalAccessException | InvocationTargetException ex ) {
 				throw new RuntimeException(ex);
 			}

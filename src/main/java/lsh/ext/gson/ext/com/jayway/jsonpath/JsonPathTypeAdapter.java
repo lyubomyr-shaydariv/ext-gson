@@ -36,18 +36,18 @@ public final class JsonPathTypeAdapter<T>
 	@Override
 	public T read(final JsonReader in)
 			throws IOException {
-		final JsonElement superElement = jsonElementTypeAdapter.read(in);
-		final T superValue = delegateAdapter.fromJsonTree(superElement);
+		final JsonElement outerElement = jsonElementTypeAdapter.read(in);
+		final T outerValue = delegateAdapter.fromJsonTree(outerElement);
 		for ( final Item<?> item : items ) {
 			try {
-				final JsonElement foundSubElement = item.jsonPath.read(superElement, configuration);
-				final Object subValue = item.typeAdapter.fromJsonTree(foundSubElement);
-				item.accessor.assign(superValue, subValue);
+				final JsonElement foundSubElement = item.jsonPath.read(outerElement, configuration);
+				final Object innerValue = item.typeAdapter.fromJsonTree(foundSubElement);
+				item.accessor.assign(outerValue, innerValue);
 			} catch ( final PathNotFoundException ignored ) {
 				// do nothing
 			}
 		}
-		return superValue;
+		return outerValue;
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -55,29 +55,29 @@ public final class JsonPathTypeAdapter<T>
 			implements ITypeAdapterFactory<Object> {
 
 		private final Function<? super Gson, ? extends Configuration> provideConfiguration;
-		private final Function<? super TypeToken<?>, ? extends Collection<? extends S>> provideSources;
+		private final Function<? super TypeToken<?>, ? extends S> provideSource;
 		private final IAccessor.IFactory<? super S> accessorsFactory;
 
-		public static <T> ITypeAdapterFactory<?> getInstance(
-				final Function<? super TypeToken<?>, ? extends Collection<? extends T>> provideSources,
-				final IAccessor.IFactory<? super T> accessorsFactory
+		public static <S> ITypeAdapterFactory<?> getInstance(
+				final Function<? super TypeToken<?>, ? extends S> provideSource,
+				final IAccessor.IFactory<? super S> accessorsFactory
 		) {
-			return getInstance(Configurations::getDefault, provideSources, accessorsFactory);
+			return getInstance(Configurations::getDefault, provideSource, accessorsFactory);
 		}
 
-		public static <T> ITypeAdapterFactory<?> getInstance(
+		public static <S> ITypeAdapterFactory<?> getInstance(
 				final Function<? super Gson, ? extends Configuration> provideConfiguration,
-				final Function<? super TypeToken<?>, ? extends Collection<? extends T>> provideSources,
-				final IAccessor.IFactory<? super T> accessorsFactory
+				final Function<? super TypeToken<?>, ? extends S> provideSource,
+				final IAccessor.IFactory<? super S> accessorsFactory
 		) {
-			return new Factory<>(provideConfiguration, provideSources, accessorsFactory);
+			return new Factory<>(provideConfiguration, provideSource, accessorsFactory);
 		}
 
 		@Override
 		@Nullable
 		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-			final Collection<? extends S> sources = provideSources.apply(typeToken);
-			final Collection<IAccessor<? super Object, ? super Object>> accessors = accessorsFactory.create(sources);
+			final S source = provideSource.apply(typeToken);
+			final Collection<IAccessor<? super Object, ? super Object>> accessors = accessorsFactory.create(source);
 			if ( accessors.isEmpty() ) {
 				return null;
 			}

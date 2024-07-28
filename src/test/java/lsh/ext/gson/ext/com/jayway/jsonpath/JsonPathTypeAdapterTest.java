@@ -1,7 +1,5 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -36,8 +34,8 @@ public final class JsonPathTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapterFactory declaredFieldsTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Field>getInstance(Sources::toDeclaredFields, Accessors::getFieldAccessors);
-		final TypeAdapterFactory methodsTypeAdapterFactory = JsonPathTypeAdapter.Factory.<Method>getInstance(Sources::toMethods, Accessors::getMethodsAccessors);
+		final TypeAdapterFactory declaredFieldsTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(Sources::toDeclaredFields, Accessors::getFieldAccessors);
+		final TypeAdapterFactory methodsTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(Sources::toMethods, Accessors::getMethodsAccessors);
 		return List.of(
 				makeTestCase(
 						declaredFieldsTypeAdapterFactory.create(gson, fieldsWrapperTypeToken),

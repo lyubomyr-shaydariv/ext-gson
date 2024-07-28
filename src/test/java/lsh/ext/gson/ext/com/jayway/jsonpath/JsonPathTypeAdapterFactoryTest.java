@@ -1,6 +1,5 @@
 package lsh.ext.gson.ext.com.jayway.jsonpath;
 
-import java.lang.reflect.Field;
 import java.util.stream.Stream;
 
 import com.google.gson.TypeAdapterFactory;
@@ -18,7 +17,7 @@ public final class JsonPathTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return JsonPathTypeAdapter.Factory.<Field>getInstance(Sources::toDeclaredFields, Accessors::getFieldAccessors);
+		return JsonPathTypeAdapter.Factory.getInstance(Sources::toDeclaredFields, Accessors::getFieldAccessors);
 	}
 
 	@Override
