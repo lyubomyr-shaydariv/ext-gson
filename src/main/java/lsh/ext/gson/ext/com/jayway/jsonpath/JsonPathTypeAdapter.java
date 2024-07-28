@@ -42,9 +42,9 @@ public final class JsonPathTypeAdapter<T>
 			try {
 				final JsonElement foundSubElement = item.jsonPath.read(outerElement, configuration);
 				final Object innerValue = item.typeAdapter.fromJsonTree(foundSubElement);
-				item.accessor.assign(outerValue, innerValue);
+				item.accessor.assignFound(outerValue, innerValue);
 			} catch ( final PathNotFoundException ignored ) {
-				// do nothing
+				item.accessor.assignNotFound(outerValue);
 			}
 		}
 		return outerValue;

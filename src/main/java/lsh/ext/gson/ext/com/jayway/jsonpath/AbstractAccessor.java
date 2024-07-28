@@ -17,4 +17,9 @@ abstract class AbstractAccessor<SP, SB>
 	@Getter
 	private final Type type;
 
+	@Override
+	public final void assignNotFound(final SP outerValue) {
+		// do nothing
+	}
+
 }

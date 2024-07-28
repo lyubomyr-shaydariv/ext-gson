@@ -11,7 +11,9 @@ public interface IAccessor<O, I> {
 
 	Type getType();
 
-	void assign(O outerValue, I innerValue);
+	void assignFound(O outerValue, I innerValue);
+
+	void assignNotFound(O outerValue);
 
 	interface IFactory<T> {
 

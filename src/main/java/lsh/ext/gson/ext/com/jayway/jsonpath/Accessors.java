@@ -71,7 +71,7 @@ public final class Accessors {
 		}
 
 		@Override
-		public void assign(final Object outerValue, final Object innerValue) {
+		public void assignFound(final Object outerValue, final Object innerValue) {
 			try {
 				field.set(outerValue, innerValue);
 			} catch ( final IllegalAccessException ex ) {
@@ -92,7 +92,7 @@ public final class Accessors {
 		}
 
 		@Override
-		public void assign(final Object outerValue, final Object innerValue) {
+		public void assignFound(final Object outerValue, final Object innerValue) {
 			try {
 				method.invoke(outerValue, innerValue);
 			} catch ( final IllegalAccessException | InvocationTargetException ex ) {
