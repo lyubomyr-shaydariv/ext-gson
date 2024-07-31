@@ -20,9 +20,17 @@ public final class TypeEncoderTypeAdapter<T, TT extends Type>
 	private final String valuePropertyName;
 	private final ITypeResolver<? extends TT> typeResolver;
 	private final ITypeEncoder<TT> typeEncoder;
+	private final ITypeEncoder.IGuard guard;
 
-	public static <T, TT extends Type> TypeAdapter<T> getInstance(final Gson gson, final String typePropertyName, final String valuePropertyName, final ITypeResolver<? extends TT> typeResolver, final ITypeEncoder<TT> typeEncoder) {
-		return new TypeEncoderTypeAdapter<T, TT>(gson, typePropertyName, valuePropertyName, typeResolver, typeEncoder)
+	public static <T, TT extends Type> TypeAdapter<T> getInstance(
+			final Gson gson,
+			final String typePropertyName,
+			final String valuePropertyName,
+			final ITypeResolver<? extends TT> typeResolver,
+			final ITypeEncoder<TT> typeEncoder,
+			final ITypeEncoder.IGuard guard
+	) {
+		return new TypeEncoderTypeAdapter<T, TT>(gson, typePropertyName, valuePropertyName, typeResolver, typeEncoder, guard)
 				.nullSafe();
 	}
 
@@ -45,6 +53,9 @@ public final class TypeEncoderTypeAdapter<T, TT extends Type>
 		in.beginObject();
 		requireName(typePropertyName, in);
 		final String typeName = in.nextString();
+		if ( !guard.passes(typeName) ) {
+			throw new IOException("Type name " + typeName + " is not allowed");
+		}
 		requireName(valuePropertyName, in);
 		final T value = gson.fromJson(in, typeEncoder.decode(typeName));
 		in.endObject();
@@ -88,6 +99,14 @@ public final class TypeEncoderTypeAdapter<T, TT extends Type>
 				}
 			}
 		};
+
+		interface IGuard {
+
+			boolean passes(String typeName);
+
+			IGuard weak = name -> true;
+
+		}
 
 	}
 
