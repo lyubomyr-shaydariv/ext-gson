@@ -19,7 +19,7 @@ import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.ParameterizedTypes;
+import lsh.ext.gson.internal.ParameterizedTypes;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("Guava")

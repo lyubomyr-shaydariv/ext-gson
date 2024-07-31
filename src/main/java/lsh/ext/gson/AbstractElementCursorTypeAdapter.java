@@ -11,6 +11,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.internal.ParameterizedTypes;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractElementCursorTypeAdapter<C, EC, E>

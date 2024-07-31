@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.ParameterizedTypes;
+import lsh.ext.gson.internal.ParameterizedTypes;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OptionalTypeAdapter<T>

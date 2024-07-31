@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.internal;
 
 import java.util.Iterator;
 
