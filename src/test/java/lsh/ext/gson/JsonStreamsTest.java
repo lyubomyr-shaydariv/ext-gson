@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
+import lsh.ext.gson.test.VariadicArgumentsAggregator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -5,18 +5,13 @@ import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.test.Types;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class FailSafeTypeAdapterTest
 		extends AbstractTypeAdapterTest<Object, Object> {
 
 	private static final Gson gson = Gsons.getNormalized();
-
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<List<String>> stringListTypeToken = (TypeToken<List<String>>) TypeToken.getParameterized(List.class, String.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<List<Integer>> integerListTypeToken = (TypeToken<List<Integer>>) TypeToken.getParameterized(List.class, Integer.class);
 
 	@Nullable
 	@Override
@@ -29,12 +24,12 @@ public final class FailSafeTypeAdapterTest
 		final TypeAdapterFactory typeAdapterFactory = FailSafeTypeAdapter.Factory.getInstance(List.class, false);
 		return List.of(
 				makeTestCase(
-						typeAdapterFactory.create(gson, stringListTypeToken),
+						typeAdapterFactory.create(gson, Types.stringListTypeToken),
 						"[\"foo\",\"bar\"]",
 						List.of("foo", "bar")
 				),
 				makeTestCase(
-						typeAdapterFactory.create(gson, integerListTypeToken),
+						typeAdapterFactory.create(gson, Types.integerListTypeToken),
 						"[1000]",
 						List.of(1000)
 				)

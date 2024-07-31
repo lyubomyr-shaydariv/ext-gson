@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.test;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Parameter;

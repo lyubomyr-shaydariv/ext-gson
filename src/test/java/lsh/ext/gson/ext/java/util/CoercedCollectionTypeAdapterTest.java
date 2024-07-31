@@ -11,7 +11,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
 import lsh.ext.gson.Gsons;
-import lsh.ext.gson.TypeTokens;
+import lsh.ext.gson.test.Types;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class CoercedCollectionTypeAdapterTest
@@ -30,9 +30,9 @@ public final class CoercedCollectionTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(TypeTokens.stringTypeToken);
-		final TypeAdapter<Integer> integerTypeAdapter = gson.getAdapter(TypeTokens.integerTypeToken);
-		final TypeAdapter<Boolean> booleanTypeAdapter = gson.getAdapter(TypeTokens.booleanTypeToken);
+		final TypeAdapter<String> stringTypeAdapter = gson.getAdapter(Types.stringTypeToken);
+		final TypeAdapter<Integer> integerTypeAdapter = gson.getAdapter(Types.integerTypeToken);
+		final TypeAdapter<Boolean> booleanTypeAdapter = gson.getAdapter(Types.booleanTypeToken);
 		final TypeAdapter<Map<String, Integer>> stringToIntegerMapTypeAdapter = gson.getAdapter(stringToIntegerMapTypeToken);
 		return List.of(
 				makeTestCase(

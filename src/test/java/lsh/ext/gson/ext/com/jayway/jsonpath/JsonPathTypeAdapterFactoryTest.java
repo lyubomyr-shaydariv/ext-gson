@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterFactoryTest;
-import lsh.ext.gson.TypeTokens;
+import lsh.ext.gson.test.Types;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class JsonPathTypeAdapterFactoryTest
@@ -30,8 +30,8 @@ public final class JsonPathTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(TypeTokens.objectTypeToken),
-				Arguments.of(TypeTokens.voidTypeToken)
+				Arguments.of(Types.objectTypeToken),
+				Arguments.of(Types.voidTypeToken)
 		);
 	}
 
