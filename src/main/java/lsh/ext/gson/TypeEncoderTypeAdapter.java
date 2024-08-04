@@ -11,7 +11,6 @@ import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-// TODO does this need to extend AbstractEncodingTypeAdapter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TypeEncoderTypeAdapter<T, TT extends Type>
 		extends TypeAdapter<T> {

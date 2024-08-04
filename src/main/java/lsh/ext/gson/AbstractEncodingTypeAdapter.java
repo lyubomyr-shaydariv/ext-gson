@@ -9,8 +9,10 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractEncodingTypeAdapter<T, U>
 		extends TypeAdapter<T> {
 
