@@ -7,7 +7,7 @@ import com.google.gson.annotations.JsonAdapter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public final class UnpackedJsonTypeAdapterFactoryTest {
+public final class AbstractEncodingTypeAdapterFactoryTest {
 
 	private static final Gson gson = Gsons.getNormalized();
 
@@ -22,7 +22,7 @@ public final class UnpackedJsonTypeAdapterFactoryTest {
 	}
 
 	private record Wrapper(
-			@JsonAdapter(UnpackedJsonTypeAdapter.Factory.class) List<Integer> value
+			@JsonAdapter(AbstractEncodingTypeAdapter.JsonAsString.Factory.class) List<Integer> value
 	) {
 	}
 
