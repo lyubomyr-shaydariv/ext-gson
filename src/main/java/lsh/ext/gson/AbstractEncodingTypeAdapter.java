@@ -54,7 +54,8 @@ public abstract class AbstractEncodingTypeAdapter<T, U>
 		}
 
 		public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter) {
-			return new JsonAsString<>(typeAdapter);
+			return new JsonAsString<>(typeAdapter)
+					.nullSafe();
 		}
 
 		@Override
