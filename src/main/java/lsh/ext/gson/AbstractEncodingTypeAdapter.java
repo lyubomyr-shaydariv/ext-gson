@@ -96,7 +96,7 @@ public abstract class AbstractEncodingTypeAdapter<T, U>
 	}
 
 	@AllArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class JsonAsTypedValue<T, TT extends Type>
+	public static final class TypedValueAsJsonObject<T, TT extends Type>
 			extends AbstractEncodingTypeAdapter<T, T> {
 
 		private final Gson gson;
@@ -114,7 +114,7 @@ public abstract class AbstractEncodingTypeAdapter<T, U>
 				final ITypeEncoder<TT> typeEncoder,
 				final ITypeEncoder.IGuard guard
 		) {
-			return new JsonAsTypedValue<T, TT>(gson, typePropertyName, valuePropertyName, typeResolver, typeEncoder, guard)
+			return new TypedValueAsJsonObject<T, TT>(gson, typePropertyName, valuePropertyName, typeResolver, typeEncoder, guard)
 					.nullSafe();
 		}
 

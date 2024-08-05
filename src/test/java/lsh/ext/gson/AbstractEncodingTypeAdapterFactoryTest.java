@@ -41,14 +41,14 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 	) {
 	}
 
-	private static final AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeResolver<Class<?>> forClass = AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeResolver.forClass;
-	private static final AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder<Class<?>> forUnsafeClass = AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder.forUnsafeClass;
-	private static final AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder.IGuard weakGuard = AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder.IGuard.weak;
+	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeResolver<Class<?>> forClass = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeResolver.forClass;
+	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder<Class<?>> forUnsafeClass = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.forUnsafeClass;
+	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard weakGuard = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard.weak;
 
 	@Test
 	public void testJsonAsTypedValueReadWrite()
 			throws IOException {
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.JsonAsTypedValue.getInstance(gson, "type", "value", forClass, forUnsafeClass, weakGuard);
+		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "type", "value", forClass, forUnsafeClass, weakGuard);
 		final Writer jsonWriter = new StringWriter();
 		final int before = 2;
 		typeAdapter.write(new JsonWriter(jsonWriter), before);
@@ -59,11 +59,11 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 
 	@Test
 	public void testJsonAsTypedValueReadWriteGuardPasses() {
-		final AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder.IGuard primitiveGuardMock = Mockito.mock(AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder.IGuard.class);
+		final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard primitiveGuardMock = Mockito.mock(AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard.class);
 		Mockito.doAnswer(invocationOnMock -> primitiveTypeGuard.passes(invocationOnMock.getArgument(0, String.class)))
 				.when(primitiveGuardMock)
 				.passes(ArgumentMatchers.anyString());
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.JsonAsTypedValue.getInstance(gson, "t", "v", forClass, primitiveTypeDecoder, primitiveGuardMock);
+		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "t", "v", forClass, primitiveTypeDecoder, primitiveGuardMock);
 		final JsonElement legalJsonTree = JsonObjects.of(
 				"t", JsonPrimitives.orNullable("int"),
 				"v", JsonPrimitives.orNullable(1000)
@@ -77,11 +77,11 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 
 	@Test
 	public void testJsonAsTypedValueReadWriteGuardDoesNotPass() {
-		final AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder.IGuard primitiveGuardMock = Mockito.mock(AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder.IGuard.class);
+		final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard primitiveGuardMock = Mockito.mock(AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard.class);
 		Mockito.doAnswer(invocationOnMock -> primitiveTypeGuard.passes(invocationOnMock.getArgument(0, String.class)))
 				.when(primitiveGuardMock)
 				.passes(ArgumentMatchers.anyString());
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.JsonAsTypedValue.getInstance(gson, "t", "v", forClass, primitiveTypeDecoder, primitiveGuardMock);
+		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "t", "v", forClass, primitiveTypeDecoder, primitiveGuardMock);
 		final JsonElement illegalJsonTree = JsonObjects.of(
 				"t", JsonPrimitives.orNullable("void")
 		);
@@ -94,9 +94,9 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 	private static final Map<String, Class<?>> primitiveTypeNames = Stream.of(boolean.class, byte.class, short.class, int.class, long.class, float.class, double.class, char.class)
 			.collect(Collectors.toMap(Class::getName, Function.identity()));
 
-	private static final AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder.IGuard primitiveTypeGuard = primitiveTypeNames::containsKey;
+	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard primitiveTypeGuard = primitiveTypeNames::containsKey;
 
-	private static final AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder<Class<?>> primitiveTypeDecoder = new AbstractEncodingTypeAdapter.JsonAsTypedValue.ITypeEncoder<>() {
+	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder<Class<?>> primitiveTypeDecoder = new AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder<>() {
 		@Override
 		public String encode(final Class<?> type) {
 			throw new AssertionError(type);
