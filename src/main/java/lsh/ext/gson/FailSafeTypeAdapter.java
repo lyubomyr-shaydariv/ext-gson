@@ -54,7 +54,7 @@ final class FailSafeTypeAdapter<T>
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<T>
-			implements TypeAdapterFactory {
+			implements ITypeAdapterFactory<T> {
 
 		private static final Boolean defaultBoolean = false;
 		private static final Byte defaultByte = (byte) 0;

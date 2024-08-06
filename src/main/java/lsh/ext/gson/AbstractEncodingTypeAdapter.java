@@ -44,14 +44,11 @@ public abstract class AbstractEncodingTypeAdapter<T, U>
 		return decode(encodedValue);
 	}
 
+	@AllArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class JsonAsString<T>
 			extends AbstractEncodingTypeAdapter<T, String> {
 
 		private final TypeAdapter<T> typeAdapter;
-
-		private JsonAsString(final TypeAdapter<T> typeAdapter) {
-			this.typeAdapter = typeAdapter;
-		}
 
 		public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter) {
 			return new JsonAsString<>(typeAdapter)
