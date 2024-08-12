@@ -15,6 +15,9 @@ public final class ParameterizedTypes {
 			return null;
 		}
 		final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+		if ( index < 0 || index >= actualTypeArguments.length ) {
+			throw new IllegalArgumentException(index + " is out of bounds for " + type + " that has " + actualTypeArguments.length + " type argument(s)");
+		}
 		return actualTypeArguments[index];
 	}
 

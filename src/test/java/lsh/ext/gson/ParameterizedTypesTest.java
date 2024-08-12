@@ -17,7 +17,14 @@ public final class ParameterizedTypesTest {
 
 	@Test
 	public void testGetTypeArgumentForParameterizedTypeGoesBeyond() {
-		Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> ParameterizedTypes.getTypeArgument(Types.stringListTypeToken.getType(), 1));
+		final Throwable ex = Assertions.assertThrows(IllegalArgumentException.class, () -> ParameterizedTypes.getTypeArgument(Types.stringListTypeToken.getType(), 1));
+		Assertions.assertEquals("1 is out of bounds for java.util.List<java.lang.String> that has 1 type argument(s)", ex.getMessage());
+	}
+
+	@Test
+	public void testGetTypeArgumentForParameterizedTypeIsBelowZero() {
+		final Throwable ex = Assertions.assertThrows(IllegalArgumentException.class, () -> ParameterizedTypes.getTypeArgument(Types.stringListTypeToken.getType(), -1));
+		Assertions.assertEquals("-1 is out of bounds for java.util.List<java.lang.String> that has 1 type argument(s)", ex.getMessage());
 	}
 
 	@ValueSource(classes = {
