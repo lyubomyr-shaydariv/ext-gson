@@ -18,7 +18,7 @@ public final class BiMapTypeAdapterTest
 	private static final Gson gson = Gsons.getNormalized();
 
 	@SuppressWarnings("unchecked")
-	private static final TypeToken<BiMap<String, String>> stringToStringBiMapType = (TypeToken<BiMap<String, String>>) TypeToken.getParameterized(BiMap.class, String.class, String.class);
+	private static final TypeToken<BiMap<String, String>> stringToStringBiMapType = (TypeToken<BiMap<String, String>>) TypeToken.getParameterized(HashBiMap.class, String.class, String.class);
 
 	@Nullable
 	@Override
@@ -30,7 +30,9 @@ public final class BiMapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						BiMapTypeAdapter.getInstance(gson.getAdapter(String.class), () -> BiMapTypeAdapter.Factory.defaultBuilder(stringToStringBiMapType, typeToken -> HashBiMap::create)),
+						BiMapTypeAdapter.getInstance(gson.getAdapter(String.class), () -> BiMapTypeAdapter.Factory.defaultBuilder(stringToStringBiMapType, typeToken -> {
+							throw new UnsupportedOperationException(typeToken.toString());
+						})),
 						"{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}",
 						ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz")
 				)

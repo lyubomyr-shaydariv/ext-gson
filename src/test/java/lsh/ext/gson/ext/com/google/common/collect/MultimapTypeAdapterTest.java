@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
@@ -19,7 +18,7 @@ public final class MultimapTypeAdapterTest
 	private static final Gson gson = Gsons.getNormalized();
 
 	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(BiMap.class, String.class, String.class);
+	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(LinkedHashMultimap.class, String.class, String.class);
 
 	@Nullable
 	@Override
@@ -31,7 +30,9 @@ public final class MultimapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class), () -> MultimapTypeAdapter.Factory.defaultBuilder(stringToStringMultimapTypeToken, typeToken -> LinkedHashMultimap::create)),
+						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class), () -> MultimapTypeAdapter.Factory.defaultBuilder(stringToStringMultimapTypeToken, typeToken -> {
+							throw new UnsupportedOperationException(typeToken.toString());
+						})),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
 						LinkedHashMultimap.create(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
 				)

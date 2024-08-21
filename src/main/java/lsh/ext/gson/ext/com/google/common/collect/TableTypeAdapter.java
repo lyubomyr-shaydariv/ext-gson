@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
@@ -16,7 +17,6 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder3;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
@@ -90,23 +90,29 @@ public final class TableTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends Table<String, String, V>> builderFactory
+				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		public static <V> IBuilder3<String, String, V, Table<String, String, V>> defaultBuilder(
 				final TypeToken<? super Table<String, String, V>> typeToken,
-				final IBuilder0.IFactory<? extends Table<String, String, V>> builderFactory
+				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> fallback
 		) {
-			@SuppressWarnings("unchecked")
-			final Class<? extends Table<?, ?, ?>> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final Class<? extends Table> rawType = (Class<? extends Table>) typeToken.getRawType();
 			if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
 				return immutableBuilder();
 			}
-			@SuppressWarnings("LawOfDemeter")
-			final Table<String, String, V> table = builderFactory.create(typeToken)
-					.build();
+			if ( HashBasedTable.class.isAssignableFrom(rawType) ) {
+				return builder(HashBasedTable.create());
+			}
+			@SuppressWarnings("unchecked")
+			final IBuilder3<String, String, V, Table<String, String, V>> fallbackBuilder = (IBuilder3<String, String, V, Table<String, String, V>>) fallback.create(typeToken);
+			return fallbackBuilder;
+		}
+
+		public static <V, T extends Table<String, String, V>> IBuilder3<String, String, V, T> builder(final T table) {
 			return new IBuilder3<>() {
 				@Override
 				public void accept(final String rowKey, final String columnKey, final V v) {
@@ -114,13 +120,13 @@ public final class TableTypeAdapter<V>
 				}
 
 				@Override
-				public Table<String, String, V> build() {
+				public T build() {
 					return table;
 				}
 			};
 		}
 
-		private static <V> IBuilder3<String, String, V, Table<String, String, V>> immutableBuilder() {
+		public static <V> IBuilder3<String, String, V, Table<String, String, V>> immutableBuilder() {
 			return new IBuilder3<>() {
 				private final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
 

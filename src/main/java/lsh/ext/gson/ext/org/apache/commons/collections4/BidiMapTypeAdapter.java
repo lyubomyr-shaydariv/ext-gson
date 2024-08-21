@@ -75,19 +75,19 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends BidiMap<String, V>> builderFactory
+				final IBuilder0.IFactory<? extends BidiMap<String, V>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		// TODO support sorted and unmodifiable sorted default implementations
 		// TODO support ordered and unmodifiable ordered default implementations
 		public static <V> IBuilder2<String, V, BidiMap<String, V>> defaultBuilder(
 				final TypeToken<? super BidiMap<String, V>> typeToken,
-				final IBuilder0.IFactory<? extends BidiMap<String, V>> builderFactory
+				final IBuilder0.IFactory<? extends BidiMap<String, V>> fallback
 		) {
 			@SuppressWarnings("LawOfDemeter")
-			final BidiMap<String, V> bidiMap = builderFactory.create(typeToken)
+			final BidiMap<String, V> bidiMap = fallback.create(typeToken)
 					.build();
 			@SuppressWarnings("unchecked")
 			final Class<? extends BidiMap<String, ?>> rawType = (Class<? extends BidiMap<String, ?>>) typeToken.getRawType();

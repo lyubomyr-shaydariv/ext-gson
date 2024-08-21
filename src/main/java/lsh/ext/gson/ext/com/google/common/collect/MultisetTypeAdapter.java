@@ -5,7 +5,9 @@ import java.lang.reflect.Type;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Supplier;
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableMultiset;
+import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -15,7 +17,6 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
@@ -76,24 +77,29 @@ public final class MultisetTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends Multiset<E>> builderFactory
+				final IBuilder1.IFactory<? super E, ? extends Multiset<E>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		public static <E> IBuilder1<E, Multiset<E>> defaultBuilder(
 				final TypeToken<? super Multiset<E>> typeToken,
-				final IBuilder0.IFactory<? extends Multiset<E>> builderFactory
+				final IBuilder1.IFactory<? super E, ? extends Multiset<E>> fallback
 		) {
-			@SuppressWarnings("unchecked")
-			final Class<? extends Multiset<?>> rawType = (Class<? extends Multiset<?>>) typeToken.getRawType();
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final Class<? extends Multiset> rawType = (Class<? extends Multiset>) typeToken.getRawType();
 			if ( ImmutableMultiset.class.isAssignableFrom(rawType) ) {
 				return immutableBuilder();
 			}
-			@SuppressWarnings("LawOfDemeter")
-			final Multiset<E> multiset = builderFactory.create(typeToken)
-					.build();
-			return IBuilder1.of(multiset);
+			if ( rawType == HashMultiset.class ) {
+				return IBuilder1.of(HashMultiset.create());
+			}
+			if ( rawType == LinkedHashMultiset.class ) {
+				return IBuilder1.of(HashMultiset.create());
+			}
+			@SuppressWarnings("unchecked")
+			final IBuilder1<E, Multiset<E>> fallbackBuilder = (IBuilder1<E, Multiset<E>>) fallback.create(typeToken);
+			return fallbackBuilder;
 		}
 
 		public static <E> IBuilder1<E, Multiset<E>> immutableBuilder() {

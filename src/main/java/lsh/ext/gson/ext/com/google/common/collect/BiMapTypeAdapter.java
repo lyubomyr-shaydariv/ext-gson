@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -16,7 +17,6 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
@@ -77,24 +77,26 @@ public final class BiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends BiMap<String, V>> builderFactory
+				final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		public static <V> IBuilder2<String, V, BiMap<String, V>> defaultBuilder(
 				final TypeToken<? super BiMap<String, V>> typeToken,
-				final IBuilder0.IFactory<? extends BiMap<String, V>> builderFactory
+				final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> fallback
 		) {
-			@SuppressWarnings("unchecked")
-			final Class<? extends BiMap<String, ?>> rawType = (Class<? extends BiMap<String, ?>>) typeToken.getRawType();
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final Class<? extends BiMap> rawType = (Class<? extends BiMap>) typeToken.getRawType();
 			if ( ImmutableBiMap.class.isAssignableFrom(rawType) ) {
 				return immutableBuilder();
 			}
-			@SuppressWarnings("LawOfDemeter")
-			final BiMap<String, V> biMap = builderFactory.create(typeToken)
-					.build();
-			return IBuilder2.of(biMap);
+			if ( rawType == HashBiMap.class ) {
+				return IBuilder2.of(HashBiMap.create());
+			}
+			@SuppressWarnings("unchecked")
+			final IBuilder2<String, V, BiMap<String, V>> fallbackBuilder = (IBuilder2<String, V, BiMap<String, V>>) fallback.create(typeToken);
+			return fallbackBuilder;
 		}
 
 		public static <V> IBuilder2<String, V, BiMap<String, V>> immutableBuilder() {
