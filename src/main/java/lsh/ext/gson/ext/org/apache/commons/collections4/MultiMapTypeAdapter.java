@@ -25,13 +25,13 @@ public final class MultiMapTypeAdapter<V>
 		extends TypeAdapter<MultiMap<String, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final org.apache.commons.collections4.Factory<? extends IBuilder2<? super String, ? super V, ? extends MultiMap<String, V>>> multiMapBuilderFactory;
+	private final org.apache.commons.collections4.Factory<? extends IBuilder2<? super String, ? super V, ? extends MultiMap<String, V>>> builderFactory;
 
 	public static <V> TypeAdapter<MultiMap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final org.apache.commons.collections4.Factory<? extends IBuilder2<? super String, ? super V, ? extends MultiMap<String, V>>> multiMapBuilderFactory
+			final org.apache.commons.collections4.Factory<? extends IBuilder2<? super String, ? super V, ? extends MultiMap<String, V>>> builderFactory
 	) {
-		return new MultiMapTypeAdapter<>(valueTypeAdapter, multiMapBuilderFactory)
+		return new MultiMapTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
 	}
 
@@ -53,7 +53,7 @@ public final class MultiMapTypeAdapter<V>
 	public MultiMap<String, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder2<? super String, ? super V, ? extends MultiMap<String, V>> builder = multiMapBuilderFactory.create();
+		final IBuilder2<? super String, ? super V, ? extends MultiMap<String, V>> builder = builderFactory.create();
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
@@ -67,26 +67,26 @@ public final class MultiMapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<MultiMap<String, V>> {
 
-		private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiMap<String, V>> multiMapBuilderFactory;
+		private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiMap<String, V>> builderFactory;
 
 		public static <V> ITypeAdapterFactory<MultiMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiMap<String, V>> multiMapBuilderFactory
+				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiMap<String, V>> builderFactory
 		) {
-			return new Factory<>(multiMapBuilderFactory);
+			return new Factory<>(builderFactory);
 		}
 
 		public static <V> ITypeAdapterFactory<MultiMap<String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends MultiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends MultiMap<String, V>> builderFactory
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
 		}
 
 		public static <V> IBuilder2<String, V, MultiMap<String, V>> defaultBuilder(
 				final TypeToken<? super MultiMap<String, V>> typeToken,
-				final IBuilder0.IFactory<? extends MultiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends MultiMap<String, V>> builderFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
-			final MultiMap<String, V> multiMap = factoryFactory.create(typeToken)
+			final MultiMap<String, V> multiMap = builderFactory.create(typeToken)
 					.build();
 			return new IBuilder2<>() {
 				@Override
@@ -115,8 +115,8 @@ public final class MultiMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<MultiMap<String, V>> castTypeToken = (TypeToken<MultiMap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<String, V, MultiMap<String, V>> castMultiMapBuilderFactory = (IBuilder2.IFactory<String, V, MultiMap<String, V>>) multiMapBuilderFactory;
-			return MultiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castMultiMapBuilderFactory.create(castTypeToken));
+			final IBuilder2.IFactory<String, V, MultiMap<String, V>> castBuilderFactory = (IBuilder2.IFactory<String, V, MultiMap<String, V>>) builderFactory;
+			return MultiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
 		}
 
 	}

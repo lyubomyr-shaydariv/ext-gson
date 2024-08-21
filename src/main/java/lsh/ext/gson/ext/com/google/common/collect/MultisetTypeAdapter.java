@@ -67,7 +67,7 @@ public final class MultisetTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Multiset<E>> {
 
-		private final IBuilder1.IFactory<? super E, ? extends Multiset<E>> multisetBuilderFactory;
+		private final IBuilder1.IFactory<? super E, ? extends Multiset<E>> builderFactory;
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(
 				final IBuilder1.IFactory<? super E, ? extends Multiset<E>> builderFactory
@@ -76,14 +76,14 @@ public final class MultisetTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends Multiset<E>> factoryFactory
+				final IBuilder0.IFactory<? extends Multiset<E>> builderFactory
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
 		}
 
 		public static <E> IBuilder1<E, Multiset<E>> defaultBuilder(
 				final TypeToken<? super Multiset<E>> typeToken,
-				final IBuilder0.IFactory<? extends Multiset<E>> factoryFactory
+				final IBuilder0.IFactory<? extends Multiset<E>> builderFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multiset> rawType = (Class<? extends Multiset<?>>) typeToken.getRawType();
@@ -102,7 +102,7 @@ public final class MultisetTypeAdapter<E>
 				};
 			}
 			@SuppressWarnings("LawOfDemeter")
-			final Multiset<E> multiset = factoryFactory.create(typeToken)
+			final Multiset<E> multiset = builderFactory.create(typeToken)
 					.build();
 			return IBuilder1.of(multiset);
 		}
@@ -121,7 +121,7 @@ public final class MultisetTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Multiset<E>> castTypeToken = (TypeToken<Multiset<E>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder1.IFactory<E, Multiset<E>> castMultisetBuilderFactory = (IBuilder1.IFactory<E, Multiset<E>>) multisetBuilderFactory;
+			final IBuilder1.IFactory<E, Multiset<E>> castMultisetBuilderFactory = (IBuilder1.IFactory<E, Multiset<E>>) builderFactory;
 			return MultisetTypeAdapter.getInstance(elementTypeAdapter, () -> castMultisetBuilderFactory.create(castTypeToken));
 		}
 

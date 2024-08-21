@@ -23,16 +23,16 @@ import org.apache.commons.collections4.Transformer;
 public final class BagTypeAdapter<E>
 		extends TypeAdapter<Bag<E>> {
 
-	private final org.apache.commons.collections4.Factory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> bagBuilderFactory;
+	private final org.apache.commons.collections4.Factory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory;
 	private final Transformer<? super E, String> keyMapper;
 	private final Transformer<? super String, ? extends E> keyReverseMapper;
 
 	public static <E> TypeAdapter<Bag<E>> getInstance(
-			final org.apache.commons.collections4.Factory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> bagBuilderFactory,
+			final org.apache.commons.collections4.Factory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
 			final Transformer<? super E, String> keyMapper,
 			final Transformer<? super String, ? extends E> keyReverseMapper
 	) {
-		return new BagTypeAdapter<>(bagBuilderFactory, keyMapper, keyReverseMapper)
+		return new BagTypeAdapter<>(builderFactory, keyMapper, keyReverseMapper)
 				.nullSafe();
 	}
 
@@ -51,7 +51,7 @@ public final class BagTypeAdapter<E>
 	public Bag<E> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder2<? super E, ? super Integer, ? extends Bag<E>> builder = bagBuilderFactory.create();
+		final IBuilder2<? super E, ? super Integer, ? extends Bag<E>> builder = builderFactory.create();
 		while ( in.hasNext() ) {
 			builder.accept(keyReverseMapper.transform(in.nextName()), in.nextInt());
 		}
@@ -63,33 +63,33 @@ public final class BagTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Bag<E>> {
 
-		private final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory;
+		private final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> builderFactory;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory,
+				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> builderFactory,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
-			return new Factory<>(bagBuilderFactory, createToString, createFromString);
+			return new Factory<>(builderFactory, createToString, createFromString);
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends Bag<E>> factoryFactory,
+				final IBuilder0.IFactory<? extends Bag<E>> builderFactory,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
-			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> defaultBuilder(typeToken, factoryFactory);
+			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> defaultBuilder(typeToken, builderFactory);
 			return getInstance(bagBuilderFactory, createToString, createFromString);
 		}
 
 		public static <E> IBuilder2<E, Integer, Bag<E>> defaultBuilder(
 				final TypeToken<? super Bag<E>> typeToken,
-				final IBuilder0.IFactory<? extends Bag<E>> factoryFactory
+				final IBuilder0.IFactory<? extends Bag<E>> builderFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
-			final Bag<E> bag = factoryFactory.create(typeToken)
+			final Bag<E> bag = builderFactory.create(typeToken)
 					.build();
 			return new IBuilder2<>() {
 				@Override
@@ -118,8 +118,8 @@ public final class BagTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Bag<E>> castTypeToken = (TypeToken<Bag<E>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<E, Integer, Bag<E>> castBagBuilderFactory = (IBuilder2.IFactory<E, Integer, Bag<E>>) bagBuilderFactory;
-			return BagTypeAdapter.getInstance(() -> castBagBuilderFactory.create(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
+			final IBuilder2.IFactory<E, Integer, Bag<E>> castBuilderFactory = (IBuilder2.IFactory<E, Integer, Bag<E>>) builderFactory;
+			return BagTypeAdapter.getInstance(() -> castBuilderFactory.create(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
 		}
 
 	}

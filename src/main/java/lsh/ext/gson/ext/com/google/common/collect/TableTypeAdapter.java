@@ -81,7 +81,7 @@ public final class TableTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<Table<String, String, V>> {
 
-		private final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> tableBuilderFactory;
+		private final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory;
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
 				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory
@@ -90,14 +90,14 @@ public final class TableTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends Table<String, String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends Table<String, String, V>> builderFactory
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
 		}
 
 		public static <V> IBuilder3<String, String, V, Table<String, String, V>> defaultBuilder(
 				final TypeToken<? super Table<String, String, V>> typeToken,
-				final IBuilder0.IFactory<? extends Table<String, String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends Table<String, String, V>> builderFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Table> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
@@ -116,7 +116,7 @@ public final class TableTypeAdapter<V>
 				};
 			}
 			@SuppressWarnings("LawOfDemeter")
-			final Table<String, String, V> table = factoryFactory.create(typeToken)
+			final Table<String, String, V> table = builderFactory.create(typeToken)
 					.build();
 			return new IBuilder3<>() {
 				@Override
@@ -145,7 +145,7 @@ public final class TableTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Table<String, String, V>> castTypeToken = (TypeToken<Table<String, String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder3.IFactory<String, String, V, Table<String, String, V>> castTableBuilderFactory = (IBuilder3.IFactory<String, String, V, Table<String, String, V>>) tableBuilderFactory;
+			final IBuilder3.IFactory<String, String, V, Table<String, String, V>> castTableBuilderFactory = (IBuilder3.IFactory<String, String, V, Table<String, String, V>>) builderFactory;
 			return TableTypeAdapter.getInstance(valueTypeAdapter, () -> castTableBuilderFactory.create(castTypeToken));
 		}
 

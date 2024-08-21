@@ -24,13 +24,13 @@ public final class MultiSetTypeAdapter<E>
 		extends TypeAdapter<MultiSet<E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final org.apache.commons.collections4.Factory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> multiSetBuilderFactory;
+	private final org.apache.commons.collections4.Factory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory;
 
 	public static <E> TypeAdapter<MultiSet<E>> getInstance(
 			final TypeAdapter<E> valueTypeAdapter,
-			final org.apache.commons.collections4.Factory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> multiSetBuilderFactory
+			final org.apache.commons.collections4.Factory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory
 	) {
-		return new MultiSetTypeAdapter<>(valueTypeAdapter, multiSetBuilderFactory)
+		return new MultiSetTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
 	}
 
@@ -52,7 +52,7 @@ public final class MultiSetTypeAdapter<E>
 	public MultiSet<E> read(final JsonReader in)
 			throws IOException {
 		in.beginArray();
-		final IBuilder1<? super E, ? extends MultiSet<E>> builder = multiSetBuilderFactory.create();
+		final IBuilder1<? super E, ? extends MultiSet<E>> builder = builderFactory.create();
 		while ( in.peek() != JsonToken.END_ARRAY ) {
 			final E element = elementTypeAdapter.read(in);
 			builder.accept(element);
@@ -65,26 +65,26 @@ public final class MultiSetTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<MultiSet<E>> {
 
-		private final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> multiSetBuilderFactory;
+		private final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> builderFactory;
 
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
-				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> multiSetBuilderFactory
+				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> builderFactory
 		) {
-			return new Factory<>(multiSetBuilderFactory);
+			return new Factory<>(builderFactory);
 		}
 
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends MultiSet<E>> factoryFactory
+				final IBuilder0.IFactory<? extends MultiSet<E>> builderFactory
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
 		}
 
 		public static <E> IBuilder1<E, MultiSet<E>> defaultBuilder(
 				final TypeToken<? super MultiSet<E>> typeToken,
-				final IBuilder0.IFactory<? extends MultiSet<E>> factoryFactory
+				final IBuilder0.IFactory<? extends MultiSet<E>> builderFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
-			final MultiSet<E> multiSet = factoryFactory.create(typeToken)
+			final MultiSet<E> multiSet = builderFactory.create(typeToken)
 					.build();
 			return IBuilder1.of(multiSet);
 		}
@@ -103,8 +103,8 @@ public final class MultiSetTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final TypeToken<MultiSet<E>> castTypeToken = (TypeToken<MultiSet<E>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder1.IFactory<E, MultiSet<E>> castMultiSetBuilderFactory = (IBuilder1.IFactory<E, MultiSet<E>>) multiSetBuilderFactory;
-			return MultiSetTypeAdapter.getInstance(elementTypeAdapter, () -> castMultiSetBuilderFactory.create(castTypeToken));
+			final IBuilder1.IFactory<E, MultiSet<E>> castBuilderFactory = (IBuilder1.IFactory<E, MultiSet<E>>) builderFactory;
+			return MultiSetTypeAdapter.getInstance(elementTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
 		}
 
 	}

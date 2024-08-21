@@ -68,7 +68,7 @@ public final class BiMapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<BiMap<String, V>> {
 
-		private final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> biMapBuilderFactory;
+		private final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> builderFactory;
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
 				final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> builderFactory
@@ -77,14 +77,14 @@ public final class BiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends BiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends BiMap<String, V>> builderFactory
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
 		}
 
 		public static <V> IBuilder2<String, V, BiMap<String, V>> defaultBuilder(
 				final TypeToken<? super BiMap<String, V>> typeToken,
-				final IBuilder0.IFactory<? extends BiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends BiMap<String, V>> builderFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends BiMap> rawType = (Class<? extends BiMap<String, ?>>) typeToken.getRawType();
@@ -103,7 +103,7 @@ public final class BiMapTypeAdapter<V>
 				};
 			}
 			@SuppressWarnings("LawOfDemeter")
-			final BiMap<String, V> biMap = factoryFactory.create(typeToken)
+			final BiMap<String, V> biMap = builderFactory.create(typeToken)
 					.build();
 			return IBuilder2.of(biMap);
 		}
@@ -122,8 +122,8 @@ public final class BiMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<BiMap<String, V>> castTypeToken = (TypeToken<BiMap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<String, V, BiMap<String, V>> castNewBiMapBuilderFactory = (IBuilder2.IFactory<String, V, BiMap<String, V>>) biMapBuilderFactory;
-			return BiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castNewBiMapBuilderFactory.create(castTypeToken));
+			final IBuilder2.IFactory<String, V, BiMap<String, V>> castBuilderFactory = (IBuilder2.IFactory<String, V, BiMap<String, V>>) builderFactory;
+			return BiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
 		}
 
 	}

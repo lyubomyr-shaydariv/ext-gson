@@ -68,7 +68,7 @@ public final class MultimapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<Multimap<String, V>> {
 
-		private final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> multimapBuilderFactory;
+		private final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> builderFactory;
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
 				final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> builderFactory
@@ -77,14 +77,14 @@ public final class MultimapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends Multimap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends Multimap<String, V>> builderFactory
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
 		}
 
 		public static <V> IBuilder2<String, V, Multimap<String, V>> defaultBuilder(
 				final TypeToken<? super Multimap<String, V>> typeToken,
-				final IBuilder0.IFactory<? extends Multimap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends Multimap<String, V>> builderFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multimap> rawType = (Class<? extends Multimap<?, ?>>) typeToken.getRawType();
@@ -103,7 +103,7 @@ public final class MultimapTypeAdapter<V>
 				};
 			}
 			@SuppressWarnings("LawOfDemeter")
-			final Multimap<String, V> multimap = factoryFactory.create(typeToken)
+			final Multimap<String, V> multimap = builderFactory.create(typeToken)
 					.build();
 			return new IBuilder2<>() {
 				@Override
@@ -132,7 +132,7 @@ public final class MultimapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Multimap<String, V>> castTypeToken = (TypeToken<Multimap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<String, V, Multimap<String, V>> castMultimapBuilderFactory = (IBuilder2.IFactory<String, V, Multimap<String, V>>) multimapBuilderFactory;
+			final IBuilder2.IFactory<String, V, Multimap<String, V>> castMultimapBuilderFactory = (IBuilder2.IFactory<String, V, Multimap<String, V>>) builderFactory;
 			return MultimapTypeAdapter.getInstance(valueTypeAdapter, () -> castMultimapBuilderFactory.create(castTypeToken));
 		}
 

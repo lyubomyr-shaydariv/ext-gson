@@ -100,9 +100,9 @@ public final class CoercedCollectionTypeAdapter<E>
 		public static <E> TypeAdapterFactory getInstance(
 				final Class<? extends Collection<E>> baseCollectionType,
 				final TypeToken<E> elementTypeToken,
-				final IBuilder1.IFactory<? super E, ? extends Collection<E>> collectionBuilderFactory
+				final IBuilder1.IFactory<? super E, ? extends Collection<E>> builderFactory
 		) {
-			return new Factory<>(baseCollectionType, elementTypeToken, collectionBuilderFactory);
+			return new Factory<>(baseCollectionType, elementTypeToken, builderFactory);
 		}
 
 		public static <E> TypeAdapterFactory getDefaultBuilderInstance(
@@ -116,15 +116,15 @@ public final class CoercedCollectionTypeAdapter<E>
 		public static <E> TypeAdapterFactory getDefaultBuilderInstance(
 				final Class<? extends Collection<E>> baseCollectionType,
 				final TypeToken<E> elementTypeToken,
-				final IBuilder0.IFactory<? extends Collection<E>> factoryFactory
+				final IBuilder0.IFactory<? extends Collection<E>> builderFactory
 		) {
-			return getInstance(baseCollectionType, elementTypeToken, typeToken -> defaultBuilder(factoryFactory.create(typeToken)));
+			return getInstance(baseCollectionType, elementTypeToken, typeToken -> defaultBuilder(builderFactory.create(typeToken)));
 		}
 
 		public static <E> IBuilder1<E, Collection<E>> defaultBuilder(
-				final IBuilder0<? extends Collection<E>> factory
+				final IBuilder0<? extends Collection<E>> builder
 		) {
-			return IBuilder1.of(factory.build());
+			return IBuilder1.of(builder.build());
 		}
 
 		@Override
