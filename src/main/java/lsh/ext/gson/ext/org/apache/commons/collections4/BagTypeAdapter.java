@@ -63,39 +63,9 @@ public final class BagTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Bag<E>> {
 
-		private static final Transformer<? super TypeToken<?>, ? extends Transformer<?, ?>> unsupported = typeToken -> {
-			throw new UnsupportedOperationException(typeToken.toString());
-		};
-
 		private final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
-
-		public static <E> ITypeAdapterFactory<Bag<E>> getInstance() {
-			@SuppressWarnings("unchecked")
-			final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString = (Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>>) unsupported;
-			@SuppressWarnings("unchecked")
-			final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString = (Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>>) unsupported;
-			return getInstance(createToString, createFromString);
-		}
-
-		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
-		) {
-			return getInstance((IBuilder0.IFactory<Bag<E>>) typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			}, createToString, createFromString);
-		}
-
-		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final IBuilder0.IFactory<? extends Bag<E>> factoryFactory,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
-		) {
-			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> builder(typeToken, factoryFactory);
-			return getInstance(bagBuilderFactory, createToString, createFromString);
-		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
 				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory,
@@ -105,7 +75,16 @@ public final class BagTypeAdapter<E>
 			return new Factory<>(bagBuilderFactory, createToString, createFromString);
 		}
 
-		public static <E> IBuilder2<E, Integer, Bag<E>> builder(
+		public static <E> ITypeAdapterFactory<Bag<E>> getDefaultBuilderInstance(
+				final IBuilder0.IFactory<? extends Bag<E>> factoryFactory,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
+		) {
+			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> defaultBuilder(typeToken, factoryFactory);
+			return getInstance(bagBuilderFactory, createToString, createFromString);
+		}
+
+		public static <E> IBuilder2<E, Integer, Bag<E>> defaultBuilder(
 				final TypeToken<? super Bag<E>> typeToken,
 				final IBuilder0.IFactory<? extends Bag<E>> factoryFactory
 		) {

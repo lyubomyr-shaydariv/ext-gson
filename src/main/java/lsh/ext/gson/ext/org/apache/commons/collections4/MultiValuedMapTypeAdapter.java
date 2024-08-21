@@ -67,25 +67,19 @@ public final class MultiValuedMapTypeAdapter<V>
 
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> multiValuedMapBuilderFactory;
 
-		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance() {
-			return getInstance((IBuilder0.IFactory<MultiValuedMap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			});
-		}
-
-		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
-				final IBuilder0.IFactory<? extends MultiValuedMap<String, V>> factoryFactory
-		) {
-			return getInstance((IBuilder2.IFactory<String, V, MultiValuedMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
-		}
-
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
 				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> multiValuedMapBuilderFactory
 		) {
 			return new Factory<>(multiValuedMapBuilderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> builder(
+		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getDefaultBuilderInstance(
+				final IBuilder0.IFactory<? extends MultiValuedMap<String, V>> factoryFactory
+		) {
+			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+		}
+
+		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> defaultBuilder(
 				final TypeToken<? super MultiValuedMap<String, V>> typeToken,
 				final IBuilder0.IFactory<? extends MultiValuedMap<String, V>> factoryFactory
 		) {

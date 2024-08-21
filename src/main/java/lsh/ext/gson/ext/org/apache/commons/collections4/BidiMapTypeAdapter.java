@@ -68,25 +68,18 @@ public final class BidiMapTypeAdapter<V>
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> bidiMapBuilderFactory;
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
-		) {
-			return getInstance((IBuilder0.IFactory<BidiMap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			});
-		}
-
-		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
-				final IBuilder0.IFactory<? extends BidiMap<String, V>> factoryFactory
-		) {
-			return getInstance((IBuilder2.IFactory<String, V, BidiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
-		}
-
-		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
 				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> bidiMapBuilderFactory
 		) {
 			return new Factory<>(bidiMapBuilderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, BidiMap<String, V>> builder(
+		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getDefaultBuilderInstance(
+				final IBuilder0.IFactory<? extends BidiMap<String, V>> factoryFactory
+		) {
+			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+		}
+
+		public static <V> IBuilder2<String, V, BidiMap<String, V>> defaultBuilder(
 				final TypeToken<? super BidiMap<String, V>> typeToken,
 				final IBuilder0.IFactory<? extends BidiMap<String, V>> factoryFactory
 		) {

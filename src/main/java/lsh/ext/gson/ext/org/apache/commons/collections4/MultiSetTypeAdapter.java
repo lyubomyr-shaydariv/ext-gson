@@ -67,25 +67,19 @@ public final class MultiSetTypeAdapter<E>
 
 		private final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> multiSetBuilderFactory;
 
-		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance() {
-			return getInstance((IBuilder0.IFactory<MultiSet<E>>) typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			});
-		}
-
-		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
-				final IBuilder0.IFactory<? extends MultiSet<E>> factoryFactory
-		) {
-			return getInstance((IBuilder1.IFactory<E, MultiSet<E>>) typeToken -> builder(typeToken, factoryFactory));
-		}
-
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
 				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> multiSetBuilderFactory
 		) {
 			return new Factory<>(multiSetBuilderFactory);
 		}
 
-		public static <E> IBuilder1<E, MultiSet<E>> builder(
+		public static <E> ITypeAdapterFactory<MultiSet<E>> getDefaultBuilderInstance(
+				final IBuilder0.IFactory<? extends MultiSet<E>> factoryFactory
+		) {
+			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+		}
+
+		public static <E> IBuilder1<E, MultiSet<E>> defaultBuilder(
 				final TypeToken<? super MultiSet<E>> typeToken,
 				final IBuilder0.IFactory<? extends MultiSet<E>> factoryFactory
 		) {
