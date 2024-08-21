@@ -86,11 +86,12 @@ public final class MultimapTypeAdapter<V>
 				final TypeToken<? super Multimap<String, V>> typeToken,
 				final IBuilder0.IFactory<? extends Multimap<String, V>> builderFactory
 		) {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final Class<? extends Multimap> rawType = (Class<? extends Multimap<?, ?>>) typeToken.getRawType();
+			@SuppressWarnings("unchecked")
+			final Class<? extends Multimap<?, ?>> rawType = (Class<? extends Multimap<?, ?>>) typeToken.getRawType();
 			if ( ImmutableMultimap.class.isAssignableFrom(rawType) ) {
-				final ImmutableMultimap.Builder<String, V> builder = ImmutableMultimap.builder();
 				return new IBuilder2<>() {
+					private final ImmutableMultimap.Builder<String, V> builder = ImmutableMultimap.builder();
+
 					@Override
 					public void accept(final String k, final V v) {
 						builder.put(k, v);

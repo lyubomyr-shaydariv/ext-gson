@@ -86,11 +86,12 @@ public final class BiMapTypeAdapter<V>
 				final TypeToken<? super BiMap<String, V>> typeToken,
 				final IBuilder0.IFactory<? extends BiMap<String, V>> builderFactory
 		) {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final Class<? extends BiMap> rawType = (Class<? extends BiMap<String, ?>>) typeToken.getRawType();
+			@SuppressWarnings("unchecked")
+			final Class<? extends BiMap<String, ?>> rawType = (Class<? extends BiMap<String, ?>>) typeToken.getRawType();
 			if ( ImmutableBiMap.class.isAssignableFrom(rawType) ) {
-				final ImmutableBiMap.Builder<String, V> builder = ImmutableBiMap.builder();
 				return new IBuilder2<>() {
+					private final ImmutableBiMap.Builder<String, V> builder = ImmutableBiMap.builder();
+
 					@Override
 					public void accept(final String k, final V v) {
 						builder.put(k, v);

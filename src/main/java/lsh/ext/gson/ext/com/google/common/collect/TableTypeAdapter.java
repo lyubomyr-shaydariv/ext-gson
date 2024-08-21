@@ -99,11 +99,12 @@ public final class TableTypeAdapter<V>
 				final TypeToken<? super Table<String, String, V>> typeToken,
 				final IBuilder0.IFactory<? extends Table<String, String, V>> builderFactory
 		) {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final Class<? extends Table> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
+			@SuppressWarnings("unchecked")
+			final Class<? extends Table<?, ?, ?>> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
 			if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
-				final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
 				return new IBuilder3<>() {
+					private final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
+
 					@Override
 					public void accept(final String rowKey, final String columnKey, final V v) {
 						builder.put(rowKey, columnKey, v);
