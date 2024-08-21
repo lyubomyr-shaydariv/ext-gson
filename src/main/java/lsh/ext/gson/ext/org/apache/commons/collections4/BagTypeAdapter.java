@@ -67,17 +67,9 @@ public final class BagTypeAdapter<E>
 		private final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory;
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance() {
-			return getInstance(new BagTypeAdapter.IKeyMapperFactory<>() {
-				@Override
-				public Transformer<E, String> createKeyMapper(final TypeToken<? super E> typeToken) {
-					throw new UnsupportedOperationException(typeToken.toString());
-				}
-
-				@Override
-				public Transformer<String, E> createReverseKeyMapper(final TypeToken<? extends E> typeToken) {
-					throw new UnsupportedOperationException(typeToken.toString());
-				}
-			});
+			@SuppressWarnings("unchecked")
+			final IKeyMapperFactory<E> unsupported = (IKeyMapperFactory<E>) IKeyMapperFactory.unsupported;
+			return getInstance(unsupported);
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
@@ -147,6 +139,18 @@ public final class BagTypeAdapter<E>
 		Transformer<E, String> createKeyMapper(TypeToken<? super E> typeToken);
 
 		Transformer<String, E> createReverseKeyMapper(TypeToken<? extends E> typeToken);
+
+		IKeyMapperFactory<?> unsupported = new IKeyMapperFactory<>() {
+			@Override
+			public Transformer<Object, String> createKeyMapper(final TypeToken<? super Object> typeToken) {
+				throw new UnsupportedOperationException(typeToken.toString());
+			}
+
+			@Override
+			public Transformer<String, Object> createReverseKeyMapper(final TypeToken<?> typeToken) {
+				throw new UnsupportedOperationException(typeToken.toString());
+			}
+		};
 
 	}
 
