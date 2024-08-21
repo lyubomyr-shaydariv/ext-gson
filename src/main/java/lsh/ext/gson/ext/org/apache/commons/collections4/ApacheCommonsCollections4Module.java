@@ -12,11 +12,9 @@ import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 
-@SuppressWarnings("deprecation")
 public final class ApacheCommonsCollections4Module
 		extends AbstractModule {
 
@@ -61,13 +59,6 @@ public final class ApacheCommonsCollections4Module
 		);
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiMap<String, ?>> multiMapTypeAdapterFactory = MultiMapTypeAdapter.Factory.getInstance(
-				typeToken -> {
-					throw new UnsupportedOperationException(typeToken.toString());
-				}
-		);
-
-		@Setter
 		private ITypeAdapterFactory<? extends MultiValuedMap<String, ?>> multiValuedMapTypeAdapterFactory = MultiValuedMapTypeAdapter.Factory.getInstance(
 				typeToken -> {
 					throw new UnsupportedOperationException(typeToken.toString());
@@ -84,7 +75,6 @@ public final class ApacheCommonsCollections4Module
 					bagTypeAdapterFactory,
 					bidiMapTypeAdapterFactory,
 					multiSetTypeAdapterFactory,
-					multiMapTypeAdapterFactory,
 					multiValuedMapTypeAdapterFactory
 			);
 		}
