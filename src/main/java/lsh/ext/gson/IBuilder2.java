@@ -26,7 +26,7 @@ public interface IBuilder2<A1, A2, T> {
 
 	interface IFactory<A1, A2, T> {
 
-		IBuilder2<A1, A2, T> create(TypeToken<T> typeToken);
+		IBuilder2<A1, A2, T> create(TypeToken<? super T> typeToken);
 
 	}
 

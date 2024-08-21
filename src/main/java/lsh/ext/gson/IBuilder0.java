@@ -8,7 +8,7 @@ public interface IBuilder0<T> {
 
 	interface IFactory<T> {
 
-		IBuilder0<T> create(TypeToken<T> typeToken);
+		IBuilder0<T> create(TypeToken<? super T> typeToken);
 
 	}
 

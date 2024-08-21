@@ -89,7 +89,7 @@ public final class BagTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final IBuilder0.IFactory<Bag<E>> factoryFactory,
+				final IBuilder0.IFactory<? extends Bag<E>> factoryFactory,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
@@ -106,8 +106,8 @@ public final class BagTypeAdapter<E>
 		}
 
 		public static <E> IBuilder2<E, Integer, Bag<E>> builder(
-				final TypeToken<Bag<E>> typeToken,
-				final IBuilder0.IFactory<Bag<E>> factoryFactory
+				final TypeToken<? super Bag<E>> typeToken,
+				final IBuilder0.IFactory<? extends Bag<E>> factoryFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
 			final Bag<E> bag = factoryFactory.create(typeToken)

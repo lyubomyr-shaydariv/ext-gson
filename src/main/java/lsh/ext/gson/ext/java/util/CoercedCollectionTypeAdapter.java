@@ -108,7 +108,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		public static <E> TypeAdapterFactory getInstance(
 				final Class<? extends Collection<E>> baseCollectionType,
 				final TypeToken<E> elementTypeToken,
-				final IBuilder0.IFactory<Collection<E>> factoryFactory
+				final IBuilder0.IFactory<? extends Collection<E>> factoryFactory
 		) {
 			return getInstance(baseCollectionType, elementTypeToken, (IBuilder1.IFactory<E, Collection<E>>) typeToken -> builder(factoryFactory.create(typeToken)));
 		}

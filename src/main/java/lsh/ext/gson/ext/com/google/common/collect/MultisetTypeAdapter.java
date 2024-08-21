@@ -76,7 +76,7 @@ public final class MultisetTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(
-				final IBuilder0.IFactory<Multiset<E>> factoryFactory
+				final IBuilder0.IFactory<? extends Multiset<E>> factoryFactory
 		) {
 			return getInstance((IBuilder1.IFactory<E, Multiset<E>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -88,8 +88,8 @@ public final class MultisetTypeAdapter<E>
 		}
 
 		public static <E> IBuilder1<E, Multiset<E>> builder(
-				final TypeToken<Multiset<E>> typeToken,
-				final IBuilder0.IFactory<Multiset<E>> factoryFactory
+				final TypeToken<? super Multiset<E>> typeToken,
+				final IBuilder0.IFactory<? extends Multiset<E>> factoryFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multiset> rawType = (Class<? extends Multiset<?>>) typeToken.getRawType();

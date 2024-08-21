@@ -77,7 +77,7 @@ public final class BiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
-				final IBuilder0.IFactory<BiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends BiMap<String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder2.IFactory<String, V, BiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -89,8 +89,8 @@ public final class BiMapTypeAdapter<V>
 		}
 
 		public static <V> IBuilder2<String, V, BiMap<String, V>> builder(
-				final TypeToken<BiMap<String, V>> typeToken,
-				final IBuilder0.IFactory<BiMap<String, V>> factoryFactory
+				final TypeToken<? super BiMap<String, V>> typeToken,
+				final IBuilder0.IFactory<? extends BiMap<String, V>> factoryFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends BiMap> rawType = (Class<? extends BiMap<String, ?>>) typeToken.getRawType();

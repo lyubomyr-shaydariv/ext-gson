@@ -76,7 +76,7 @@ public final class MultiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<MultiMap<String, V>> getInstance(
-				final IBuilder0.IFactory<MultiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends MultiMap<String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder2.IFactory<String, V, MultiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -88,8 +88,8 @@ public final class MultiMapTypeAdapter<V>
 		}
 
 		public static <V> IBuilder2<String, V, MultiMap<String, V>> builder(
-				final TypeToken<MultiMap<String, V>> typeToken,
-				final IBuilder0.IFactory<MultiMap<String, V>> factoryFactory
+				final TypeToken<? super MultiMap<String, V>> typeToken,
+				final IBuilder0.IFactory<? extends MultiMap<String, V>> factoryFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
 			final MultiMap<String, V> multiMap = factoryFactory.create(typeToken)

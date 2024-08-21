@@ -46,7 +46,7 @@ public final class DoubleStreamTypeAdapter
 			extends AbstractFactory<DoubleStream> {
 
 		@Getter
-		private static final ITypeAdapterFactory<DoubleStream> instance = new Factory();
+		private static final ITypeAdapterFactory<? extends DoubleStream> instance = new Factory();
 
 		private Factory() {
 			super(DoubleStream.class);

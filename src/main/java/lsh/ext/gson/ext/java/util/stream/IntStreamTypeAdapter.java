@@ -46,7 +46,7 @@ public final class IntStreamTypeAdapter
 			extends AbstractFactory<IntStream> {
 
 		@Getter
-		private static final ITypeAdapterFactory<IntStream> instance = new Factory();
+		private static final ITypeAdapterFactory<? extends IntStream> instance = new Factory();
 
 		private Factory() {
 			super(IntStream.class);

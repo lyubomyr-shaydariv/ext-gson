@@ -46,7 +46,7 @@ public final class LongStreamTypeAdapter
 			extends AbstractFactory<LongStream> {
 
 		@Getter
-		private static final ITypeAdapterFactory<LongStream> instance = new Factory();
+		private static final ITypeAdapterFactory<? extends LongStream> instance = new Factory();
 
 		private Factory() {
 			super(LongStream.class);

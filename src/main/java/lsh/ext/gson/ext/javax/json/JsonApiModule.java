@@ -31,7 +31,7 @@ public final class JsonApiModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance(JsonProvider.provider());
+		private ITypeAdapterFactory<? extends JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance(JsonProvider.provider());
 
 		public static Builder create() {
 			return new Builder();

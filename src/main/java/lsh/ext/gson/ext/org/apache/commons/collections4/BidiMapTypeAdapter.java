@@ -75,7 +75,7 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
-				final IBuilder0.IFactory<BidiMap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends BidiMap<String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder2.IFactory<String, V, BidiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -87,8 +87,8 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		public static <V> IBuilder2<String, V, BidiMap<String, V>> builder(
-				final TypeToken<BidiMap<String, V>> typeToken,
-				final IBuilder0.IFactory<BidiMap<String, V>> factoryFactory
+				final TypeToken<? super BidiMap<String, V>> typeToken,
+				final IBuilder0.IFactory<? extends BidiMap<String, V>> factoryFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
 			final BidiMap<String, V> bidiMap = factoryFactory.create(typeToken)

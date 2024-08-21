@@ -74,7 +74,7 @@ public final class MultiSetTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
-				final IBuilder0.IFactory<MultiSet<E>> factoryFactory
+				final IBuilder0.IFactory<? extends MultiSet<E>> factoryFactory
 		) {
 			return getInstance((IBuilder1.IFactory<E, MultiSet<E>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -86,8 +86,8 @@ public final class MultiSetTypeAdapter<E>
 		}
 
 		public static <E> IBuilder1<E, MultiSet<E>> builder(
-				final TypeToken<MultiSet<E>> typeToken,
-				final IBuilder0.IFactory<MultiSet<E>> factoryFactory
+				final TypeToken<? super MultiSet<E>> typeToken,
+				final IBuilder0.IFactory<? extends MultiSet<E>> factoryFactory
 		) {
 			@SuppressWarnings("LawOfDemeter")
 			final MultiSet<E> multiSet = factoryFactory.create(typeToken)

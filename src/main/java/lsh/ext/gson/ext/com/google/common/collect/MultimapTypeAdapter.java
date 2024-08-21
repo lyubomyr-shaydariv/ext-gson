@@ -77,7 +77,7 @@ public final class MultimapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
-				final IBuilder0.IFactory<Multimap<String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends Multimap<String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder2.IFactory<String, V, Multimap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -89,8 +89,8 @@ public final class MultimapTypeAdapter<V>
 		}
 
 		public static <V> IBuilder2<String, V, Multimap<String, V>> builder(
-				final TypeToken<Multimap<String, V>> typeToken,
-				final IBuilder0.IFactory<Multimap<String, V>> factoryFactory
+				final TypeToken<? super Multimap<String, V>> typeToken,
+				final IBuilder0.IFactory<? extends Multimap<String, V>> factoryFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multimap> rawType = (Class<? extends Multimap<?, ?>>) typeToken.getRawType();

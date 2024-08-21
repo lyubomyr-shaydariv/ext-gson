@@ -10,7 +10,7 @@ public interface IBuilder3<A1, A2, A3, T> {
 
 	interface IFactory<A1, A2, A3, T> {
 
-		IBuilder3<A1, A2, A3, T> create(TypeToken<T> typeToken);
+		IBuilder3<A1, A2, A3, T> create(TypeToken<? super T> typeToken);
 
 	}
 

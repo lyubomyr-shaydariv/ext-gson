@@ -91,7 +91,7 @@ public final class TableTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
-				final IBuilder0.IFactory<Table<String, String, V>> factoryFactory
+				final IBuilder0.IFactory<? extends Table<String, String, V>> factoryFactory
 		) {
 			return getInstance((IBuilder3.IFactory<String, String, V, Table<String, String, V>>) typeToken -> builder(typeToken, factoryFactory));
 		}
@@ -103,8 +103,8 @@ public final class TableTypeAdapter<V>
 		}
 
 		public static <V> IBuilder3<String, String, V, Table<String, String, V>> builder(
-				final TypeToken<Table<String, String, V>> typeToken,
-				final IBuilder0.IFactory<Table<String, String, V>> factoryFactory
+				final TypeToken<? super Table<String, String, V>> typeToken,
+				final IBuilder0.IFactory<? extends Table<String, String, V>> factoryFactory
 		) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Table> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
