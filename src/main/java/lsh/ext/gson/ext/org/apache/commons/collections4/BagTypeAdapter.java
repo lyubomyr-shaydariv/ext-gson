@@ -63,35 +63,46 @@ public final class BagTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Bag<E>> {
 
+		private static final Transformer<? super TypeToken<?>, ? extends Transformer<?, ?>> unsupported = typeToken -> {
+			throw new UnsupportedOperationException(typeToken.toString());
+		};
+
 		private final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory;
-		private final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory;
+		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString;
+		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance() {
 			@SuppressWarnings("unchecked")
-			final IKeyMapperFactory<E> unsupported = (IKeyMapperFactory<E>) IKeyMapperFactory.unsupported;
-			return getInstance(unsupported);
+			final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString = (Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>>) unsupported;
+			@SuppressWarnings("unchecked")
+			final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString = (Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>>) unsupported;
+			return getInstance(createToString, createFromString);
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
 			return getInstance((IBuilder0.IFactory<Bag<E>>) typeToken -> {
 				throw new UnsupportedOperationException(typeToken.toString());
-			}, keyMapperFactory);
+			}, createToString, createFromString);
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
 				final IBuilder0.IFactory<Bag<E>> factoryFactory,
-				final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
-			return getInstance((IBuilder2.IFactory<E, Integer, Bag<E>>) typeToken -> builder(typeToken, factoryFactory), keyMapperFactory);
+			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> builder(typeToken, factoryFactory);
+			return getInstance(bagBuilderFactory, createToString, createFromString);
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
 				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory,
-				final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
-			return new Factory<>(bagBuilderFactory, keyMapperFactory);
+			return new Factory<>(bagBuilderFactory, createToString, createFromString);
 		}
 
 		public static <E> IBuilder2<E, Integer, Bag<E>> builder(
@@ -129,28 +140,8 @@ public final class BagTypeAdapter<E>
 			final TypeToken<Bag<E>> castTypeToken = (TypeToken<Bag<E>>) typeToken;
 			@SuppressWarnings("unchecked")
 			final IBuilder2.IFactory<E, Integer, Bag<E>> castBagBuilderFactory = (IBuilder2.IFactory<E, Integer, Bag<E>>) bagBuilderFactory;
-			return BagTypeAdapter.getInstance(() -> castBagBuilderFactory.create(castTypeToken), keyMapperFactory.createKeyMapper(elementTypeToken), keyMapperFactory.createReverseKeyMapper(elementTypeToken));
+			return BagTypeAdapter.getInstance(() -> castBagBuilderFactory.create(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
 		}
-
-	}
-
-	public interface IKeyMapperFactory<E> {
-
-		Transformer<E, String> createKeyMapper(TypeToken<? super E> typeToken);
-
-		Transformer<String, E> createReverseKeyMapper(TypeToken<? extends E> typeToken);
-
-		IKeyMapperFactory<?> unsupported = new IKeyMapperFactory<>() {
-			@Override
-			public Transformer<Object, String> createKeyMapper(final TypeToken<? super Object> typeToken) {
-				throw new UnsupportedOperationException(typeToken.toString());
-			}
-
-			@Override
-			public Transformer<String, Object> createReverseKeyMapper(final TypeToken<?> typeToken) {
-				throw new UnsupportedOperationException(typeToken.toString());
-			}
-		};
 
 	}
 
