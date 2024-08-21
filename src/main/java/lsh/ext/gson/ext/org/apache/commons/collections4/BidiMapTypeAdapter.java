@@ -18,6 +18,7 @@ import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.UnmodifiableBidiMap;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BidiMapTypeAdapter<V>
@@ -79,6 +80,8 @@ public final class BidiMapTypeAdapter<V>
 			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
 		}
 
+		// TODO support sorted and unmodifiable sorted default implementations
+		// TODO support ordered and unmodifiable ordered default implementations
 		public static <V> IBuilder2<String, V, BidiMap<String, V>> defaultBuilder(
 				final TypeToken<? super BidiMap<String, V>> typeToken,
 				final IBuilder0.IFactory<? extends BidiMap<String, V>> builderFactory
@@ -86,7 +89,26 @@ public final class BidiMapTypeAdapter<V>
 			@SuppressWarnings("LawOfDemeter")
 			final BidiMap<String, V> bidiMap = builderFactory.create(typeToken)
 					.build();
+			@SuppressWarnings("unchecked")
+			final Class<? extends BidiMap<String, ?>> rawType = (Class<? extends BidiMap<String, ?>>) typeToken.getRawType();
+			if ( UnmodifiableBidiMap.class.isAssignableFrom(rawType) ) {
+				return unmodifiableBuilder(bidiMap);
+			}
 			return IBuilder2.of(bidiMap);
+		}
+
+		public static <V> IBuilder2<String, V, BidiMap<String, V>> unmodifiableBuilder(final BidiMap<String, V> bidiMap) {
+			return new IBuilder2<>() {
+				@Override
+				public void accept(final String k, final V v) {
+					bidiMap.put(k, v);
+				}
+
+				@Override
+				public BidiMap<String, V> build() {
+					return UnmodifiableBidiMap.unmodifiableBidiMap(bidiMap);
+				}
+			};
 		}
 
 		@Override

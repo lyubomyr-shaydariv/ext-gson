@@ -18,6 +18,7 @@ import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiSet;
+import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiSetTypeAdapter<E>
@@ -86,7 +87,26 @@ public final class MultiSetTypeAdapter<E>
 			@SuppressWarnings("LawOfDemeter")
 			final MultiSet<E> multiSet = builderFactory.create(typeToken)
 					.build();
+			@SuppressWarnings("unchecked")
+			final Class<? extends MultiSet<E>> rawType = (Class<? extends MultiSet<E>>) typeToken.getRawType();
+			if ( UnmodifiableMultiSet.class.isAssignableFrom(rawType) ) {
+				return unmodifiableBuilder(multiSet);
+			}
 			return IBuilder1.of(multiSet);
+		}
+
+		public static <E> IBuilder1<E, MultiSet<E>> unmodifiableBuilder(final MultiSet<E> multiSet) {
+			return new IBuilder1<>() {
+				@Override
+				public void accept(final E e) {
+					multiSet.add(e);
+				}
+
+				@Override
+				public MultiSet<E> build() {
+					return UnmodifiableMultiSet.unmodifiableMultiSet(multiSet);
+				}
+			};
 		}
 
 		@Override

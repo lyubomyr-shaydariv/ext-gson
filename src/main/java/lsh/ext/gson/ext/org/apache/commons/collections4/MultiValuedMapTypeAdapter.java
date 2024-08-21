@@ -18,6 +18,7 @@ import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiValuedMapTypeAdapter<V>
@@ -79,6 +80,8 @@ public final class MultiValuedMapTypeAdapter<V>
 			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
 		}
 
+		// TODO supported list valued map implementations
+		// TODO supported set valued map implementations
 		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> defaultBuilder(
 				final TypeToken<? super MultiValuedMap<String, V>> typeToken,
 				final IBuilder0.IFactory<? extends MultiValuedMap<String, V>> builderFactory
@@ -86,6 +89,29 @@ public final class MultiValuedMapTypeAdapter<V>
 			@SuppressWarnings("LawOfDemeter")
 			final MultiValuedMap<String, V> multiValuedMap = builderFactory.create(typeToken)
 					.build();
+			@SuppressWarnings("unchecked")
+			final Class<? extends MultiValuedMap<String, ?>> rawType = (Class<? extends MultiValuedMap<String, ?>>) typeToken.getRawType();
+			if ( UnmodifiableMultiValuedMap.class.isAssignableFrom(rawType) ) {
+				return unmodifiableBuilder(multiValuedMap);
+			}
+			return modifiableBuilder(multiValuedMap);
+		}
+
+		public static <V, M extends MultiValuedMap<String, V>> IBuilder2<String, V, M> modifiableBuilder(final M multiValuedMap) {
+			return new IBuilder2<>() {
+				@Override
+				public void accept(final String k, final V v) {
+					multiValuedMap.put(k, v);
+				}
+
+				@Override
+				public M build() {
+					return multiValuedMap;
+				}
+			};
+		}
+
+		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> unmodifiableBuilder(final MultiValuedMap<String, V> multiValuedMap) {
 			return new IBuilder2<>() {
 				@Override
 				public void accept(final String k, final V v) {
@@ -94,7 +120,7 @@ public final class MultiValuedMapTypeAdapter<V>
 
 				@Override
 				public MultiValuedMap<String, V> build() {
-					return multiValuedMap;
+					return UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(multiValuedMap);
 				}
 			};
 		}

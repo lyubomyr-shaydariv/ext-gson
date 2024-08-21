@@ -18,6 +18,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Transformer;
+import org.apache.commons.collections4.bag.UnmodifiableBag;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BagTypeAdapter<E>
@@ -84,6 +85,7 @@ public final class BagTypeAdapter<E>
 			return getInstance(bagBuilderFactory, createToString, createFromString);
 		}
 
+		// TODO support sorted and unmodifiable sorted default implementations
 		public static <E> IBuilder2<E, Integer, Bag<E>> defaultBuilder(
 				final TypeToken<? super Bag<E>> typeToken,
 				final IBuilder0.IFactory<? extends Bag<E>> builderFactory
@@ -91,6 +93,29 @@ public final class BagTypeAdapter<E>
 			@SuppressWarnings("LawOfDemeter")
 			final Bag<E> bag = builderFactory.create(typeToken)
 					.build();
+			@SuppressWarnings("unchecked")
+			final Class<Bag<E>> rawType = (Class<Bag<E>>) typeToken.getRawType();
+			if ( UnmodifiableBag.class.isAssignableFrom(rawType) ) {
+				return unmodifiableBuilder(bag);
+			}
+			return builder(bag);
+		}
+
+		public static <E, B extends Bag<E>> IBuilder2<E, Integer, B> builder(final B bag) {
+			return new IBuilder2<>() {
+				@Override
+				public void accept(final E e, final Integer n) {
+					bag.add(e, n);
+				}
+
+				@Override
+				public B build() {
+					return bag;
+				}
+			};
+		}
+
+		public static <E> IBuilder2<E, Integer, Bag<E>> unmodifiableBuilder(final Bag<E> bag) {
 			return new IBuilder2<>() {
 				@Override
 				public void accept(final E e, final Integer n) {
@@ -99,7 +124,7 @@ public final class BagTypeAdapter<E>
 
 				@Override
 				public Bag<E> build() {
-					return bag;
+					return UnmodifiableBag.unmodifiableBag(bag);
 				}
 			};
 		}
