@@ -72,7 +72,7 @@ public final class MultimapTypeAdapter<V>
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance() {
 			return getInstance((IBuilder0.IFactory<Multimap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(String.valueOf(typeToken));
+				throw new UnsupportedOperationException(typeToken.toString());
 			});
 		}
 

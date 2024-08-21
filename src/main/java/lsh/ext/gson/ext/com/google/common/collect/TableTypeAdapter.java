@@ -86,7 +86,7 @@ public final class TableTypeAdapter<V>
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
 		) {
 			return getInstance((IBuilder0.IFactory<Table<String, String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(String.valueOf(typeToken));
+				throw new UnsupportedOperationException(typeToken.toString());
 			});
 		}
 

@@ -70,7 +70,7 @@ public final class BidiMapTypeAdapter<V>
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
 		) {
 			return getInstance((IBuilder0.IFactory<BidiMap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(String.valueOf(typeToken));
+				throw new UnsupportedOperationException(typeToken.toString());
 			});
 		}
 

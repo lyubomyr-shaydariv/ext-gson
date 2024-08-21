@@ -71,7 +71,7 @@ public final class MultiMapTypeAdapter<V>
 
 		public static <V> ITypeAdapterFactory<MultiMap<String, V>> getInstance() {
 			return getInstance((IBuilder0.IFactory<MultiMap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(String.valueOf(typeToken));
+				throw new UnsupportedOperationException(typeToken.toString());
 			});
 		}
 

@@ -69,7 +69,7 @@ public final class MultiSetTypeAdapter<E>
 
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance() {
 			return getInstance((IBuilder0.IFactory<MultiSet<E>>) typeToken -> {
-				throw new UnsupportedOperationException(String.valueOf(typeToken));
+				throw new UnsupportedOperationException(typeToken.toString());
 			});
 		}
 

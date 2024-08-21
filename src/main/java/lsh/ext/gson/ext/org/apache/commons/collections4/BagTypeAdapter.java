@@ -70,12 +70,12 @@ public final class BagTypeAdapter<E>
 			return getInstance(new BagTypeAdapter.IKeyMapperFactory<>() {
 				@Override
 				public Transformer<E, String> createKeyMapper(final TypeToken<E> typeToken) {
-					throw new UnsupportedOperationException(String.valueOf(typeToken));
+					throw new UnsupportedOperationException(typeToken.toString());
 				}
 
 				@Override
 				public Transformer<String, E> createReverseKeyMapper(final TypeToken<E> typeToken) {
-					throw new UnsupportedOperationException(String.valueOf(typeToken));
+					throw new UnsupportedOperationException(typeToken.toString());
 				}
 			});
 		}
@@ -84,7 +84,7 @@ public final class BagTypeAdapter<E>
 				final BagTypeAdapter.IKeyMapperFactory<E> keyMapperFactory
 		) {
 			return getInstance((IBuilder0.IFactory<Bag<E>>) typeToken -> {
-				throw new UnsupportedOperationException(String.valueOf(typeToken));
+				throw new UnsupportedOperationException(typeToken.toString());
 			}, keyMapperFactory);
 		}
 

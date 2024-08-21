@@ -69,7 +69,7 @@ public final class MultiValuedMapTypeAdapter<V>
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance() {
 			return getInstance((IBuilder0.IFactory<MultiValuedMap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(String.valueOf(typeToken));
+				throw new UnsupportedOperationException(typeToken.toString());
 			});
 		}
 

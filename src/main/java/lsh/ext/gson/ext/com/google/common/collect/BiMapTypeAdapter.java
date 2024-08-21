@@ -72,7 +72,7 @@ public final class BiMapTypeAdapter<V>
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance() {
 			return getInstance((IBuilder0.IFactory<BiMap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(String.valueOf(typeToken));
+				throw new UnsupportedOperationException(typeToken.toString());
 			});
 		}
 
