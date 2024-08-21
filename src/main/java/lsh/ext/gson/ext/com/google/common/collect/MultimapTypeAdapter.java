@@ -89,19 +89,7 @@ public final class MultimapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final Class<? extends Multimap<?, ?>> rawType = (Class<? extends Multimap<?, ?>>) typeToken.getRawType();
 			if ( ImmutableMultimap.class.isAssignableFrom(rawType) ) {
-				return new IBuilder2<>() {
-					private final ImmutableMultimap.Builder<String, V> builder = ImmutableMultimap.builder();
-
-					@Override
-					public void accept(final String k, final V v) {
-						builder.put(k, v);
-					}
-
-					@Override
-					public Multimap<String, V> build() {
-						return builder.build();
-					}
-				};
+				return immutableBuilder();
 			}
 			@SuppressWarnings("LawOfDemeter")
 			final Multimap<String, V> multimap = builderFactory.create(typeToken)
@@ -115,6 +103,22 @@ public final class MultimapTypeAdapter<V>
 				@Override
 				public Multimap<String, V> build() {
 					return multimap;
+				}
+			};
+		}
+
+		public static <V> IBuilder2<String, V, Multimap<String, V>> immutableBuilder() {
+			return new IBuilder2<>() {
+				private final ImmutableMultimap.Builder<String, V> builder = ImmutableMultimap.builder();
+
+				@Override
+				public void accept(final String k, final V v) {
+					builder.put(k, v);
+				}
+
+				@Override
+				public Multimap<String, V> build() {
+					return builder.build();
 				}
 			};
 		}

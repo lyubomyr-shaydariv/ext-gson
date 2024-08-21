@@ -89,24 +89,28 @@ public final class BiMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final Class<? extends BiMap<String, ?>> rawType = (Class<? extends BiMap<String, ?>>) typeToken.getRawType();
 			if ( ImmutableBiMap.class.isAssignableFrom(rawType) ) {
-				return new IBuilder2<>() {
-					private final ImmutableBiMap.Builder<String, V> builder = ImmutableBiMap.builder();
-
-					@Override
-					public void accept(final String k, final V v) {
-						builder.put(k, v);
-					}
-
-					@Override
-					public BiMap<String, V> build() {
-						return builder.build();
-					}
-				};
+				return immutableBuilder();
 			}
 			@SuppressWarnings("LawOfDemeter")
 			final BiMap<String, V> biMap = builderFactory.create(typeToken)
 					.build();
 			return IBuilder2.of(biMap);
+		}
+
+		public static <V> IBuilder2<String, V, BiMap<String, V>> immutableBuilder() {
+			return new IBuilder2<>() {
+				private final ImmutableBiMap.Builder<String, V> builder = ImmutableBiMap.builder();
+
+				@Override
+				public void accept(final String k, final V v) {
+					builder.put(k, v);
+				}
+
+				@Override
+				public BiMap<String, V> build() {
+					return builder.build();
+				}
+			};
 		}
 
 		@Override

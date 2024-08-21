@@ -88,24 +88,28 @@ public final class MultisetTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final Class<? extends Multiset<?>> rawType = (Class<? extends Multiset<?>>) typeToken.getRawType();
 			if ( ImmutableMultiset.class.isAssignableFrom(rawType) ) {
-				return new IBuilder1<>() {
-					private final ImmutableMultiset.Builder<E> builder = ImmutableMultiset.builder();
-
-					@Override
-					public void accept(final E e) {
-						builder.add(e);
-					}
-
-					@Override
-					public Multiset<E> build() {
-						return builder.build();
-					}
-				};
+				return immutableBuilder();
 			}
 			@SuppressWarnings("LawOfDemeter")
 			final Multiset<E> multiset = builderFactory.create(typeToken)
 					.build();
 			return IBuilder1.of(multiset);
+		}
+
+		public static <E> IBuilder1<E, Multiset<E>> immutableBuilder() {
+			return new IBuilder1<>() {
+				private final ImmutableMultiset.Builder<E> builder = ImmutableMultiset.builder();
+
+				@Override
+				public void accept(final E e) {
+					builder.add(e);
+				}
+
+				@Override
+				public Multiset<E> build() {
+					return builder.build();
+				}
+			};
 		}
 
 		@Override

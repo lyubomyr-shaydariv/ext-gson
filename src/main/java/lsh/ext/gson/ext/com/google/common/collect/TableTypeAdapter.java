@@ -102,19 +102,7 @@ public final class TableTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final Class<? extends Table<?, ?, ?>> rawType = (Class<? extends Table<?, ?, ?>>) typeToken.getRawType();
 			if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
-				return new IBuilder3<>() {
-					private final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
-
-					@Override
-					public void accept(final String rowKey, final String columnKey, final V v) {
-						builder.put(rowKey, columnKey, v);
-					}
-
-					@Override
-					public Table<String, String, V> build() {
-						return builder.build();
-					}
-				};
+				return immutableBuilder();
 			}
 			@SuppressWarnings("LawOfDemeter")
 			final Table<String, String, V> table = builderFactory.create(typeToken)
@@ -128,6 +116,22 @@ public final class TableTypeAdapter<V>
 				@Override
 				public Table<String, String, V> build() {
 					return table;
+				}
+			};
+		}
+
+		private static <V> IBuilder3<String, String, V, Table<String, String, V>> immutableBuilder() {
+			return new IBuilder3<>() {
+				private final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
+
+				@Override
+				public void accept(final String rowKey, final String columnKey, final V v) {
+					builder.put(rowKey, columnKey, v);
+				}
+
+				@Override
+				public Table<String, String, V> build() {
+					return builder.build();
 				}
 			};
 		}
