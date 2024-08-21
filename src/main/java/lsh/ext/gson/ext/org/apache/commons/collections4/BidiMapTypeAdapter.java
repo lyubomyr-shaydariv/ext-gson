@@ -13,12 +13,12 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.UnmodifiableBidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.apache.commons.collections4.bidimap.DualLinkedHashBidiMap;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BidiMapTypeAdapter<V>
@@ -75,40 +75,26 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends BidiMap<String, V>> fallback
+				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> fallback
 		) {
 			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
-		// TODO support sorted and unmodifiable sorted default implementations
-		// TODO support ordered and unmodifiable ordered default implementations
 		public static <V> IBuilder2<String, V, BidiMap<String, V>> defaultBuilder(
 				final TypeToken<? super BidiMap<String, V>> typeToken,
-				final IBuilder0.IFactory<? extends BidiMap<String, V>> fallback
+				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> fallback
 		) {
-			@SuppressWarnings("LawOfDemeter")
-			final BidiMap<String, V> bidiMap = fallback.create(typeToken)
-					.build();
 			@SuppressWarnings("unchecked")
-			final Class<? extends BidiMap<String, ?>> rawType = (Class<? extends BidiMap<String, ?>>) typeToken.getRawType();
-			if ( UnmodifiableBidiMap.class.isAssignableFrom(rawType) ) {
-				return unmodifiableBuilder(bidiMap);
+			final Class<? extends BidiMap<?, ?>> rawType = (Class<? extends BidiMap<?, ?>>) typeToken.getRawType();
+			if ( DualHashBidiMap.class.isAssignableFrom(rawType) ) {
+				return IBuilder2.of(new DualHashBidiMap<>());
 			}
-			return IBuilder2.of(bidiMap);
-		}
-
-		public static <V> IBuilder2<String, V, BidiMap<String, V>> unmodifiableBuilder(final BidiMap<String, V> bidiMap) {
-			return new IBuilder2<>() {
-				@Override
-				public void accept(final String k, final V v) {
-					bidiMap.put(k, v);
-				}
-
-				@Override
-				public BidiMap<String, V> build() {
-					return UnmodifiableBidiMap.unmodifiableBidiMap(bidiMap);
-				}
-			};
+			if ( DualLinkedHashBidiMap.class.isAssignableFrom(rawType) ) {
+				return IBuilder2.of(new DualLinkedHashBidiMap<>());
+			}
+			@SuppressWarnings("unchecked")
+			final IBuilder2<String, V, BidiMap<String, V>> fallbackBuilder = (IBuilder2<String, V, BidiMap<String, V>>) fallback.create(typeToken);
+			return fallbackBuilder;
 		}
 
 		@Override

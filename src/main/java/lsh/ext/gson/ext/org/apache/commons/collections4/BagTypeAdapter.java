@@ -12,13 +12,12 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.bag.UnmodifiableBag;
+import org.apache.commons.collections4.bag.HashBag;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BagTypeAdapter<E>
@@ -77,28 +76,26 @@ public final class BagTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends Bag<E>> builderFactory,
+				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> fallback,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
-			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> defaultBuilder(typeToken, builderFactory);
+			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> defaultBuilder(typeToken, fallback);
 			return getInstance(bagBuilderFactory, createToString, createFromString);
 		}
 
-		// TODO support sorted and unmodifiable sorted default implementations
 		public static <E> IBuilder2<E, Integer, Bag<E>> defaultBuilder(
 				final TypeToken<? super Bag<E>> typeToken,
-				final IBuilder0.IFactory<? extends Bag<E>> builderFactory
+				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> fallback
 		) {
-			@SuppressWarnings("LawOfDemeter")
-			final Bag<E> bag = builderFactory.create(typeToken)
-					.build();
 			@SuppressWarnings("unchecked")
-			final Class<Bag<E>> rawType = (Class<Bag<E>>) typeToken.getRawType();
-			if ( UnmodifiableBag.class.isAssignableFrom(rawType) ) {
-				return unmodifiableBuilder(bag);
+			final Class<? super Bag<?>> rawType = (Class<? super Bag<?>>) typeToken.getRawType();
+			if ( HashBag.class.isAssignableFrom(rawType) ) {
+				return builder(new HashBag<>());
 			}
-			return builder(bag);
+			@SuppressWarnings("unchecked")
+			final IBuilder2<E, Integer, Bag<E>> fallbackBuilder = (IBuilder2<E, Integer, Bag<E>>) fallback.create(typeToken);
+			return fallbackBuilder;
 		}
 
 		public static <E, B extends Bag<E>> IBuilder2<E, Integer, B> builder(final B bag) {
@@ -111,20 +108,6 @@ public final class BagTypeAdapter<E>
 				@Override
 				public B build() {
 					return bag;
-				}
-			};
-		}
-
-		public static <E> IBuilder2<E, Integer, Bag<E>> unmodifiableBuilder(final Bag<E> bag) {
-			return new IBuilder2<>() {
-				@Override
-				public void accept(final E e, final Integer n) {
-					bag.add(e, n);
-				}
-
-				@Override
-				public Bag<E> build() {
-					return UnmodifiableBag.unmodifiableBag(bag);
 				}
 			};
 		}

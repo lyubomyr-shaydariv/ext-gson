@@ -13,12 +13,11 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiSet;
-import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
+import org.apache.commons.collections4.multiset.HashMultiSet;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiSetTypeAdapter<E>
@@ -75,38 +74,23 @@ public final class MultiSetTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends MultiSet<E>> builderFactory
+				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		public static <E> IBuilder1<E, MultiSet<E>> defaultBuilder(
 				final TypeToken<? super MultiSet<E>> typeToken,
-				final IBuilder0.IFactory<? extends MultiSet<E>> builderFactory
+				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> fallback
 		) {
-			@SuppressWarnings("LawOfDemeter")
-			final MultiSet<E> multiSet = builderFactory.create(typeToken)
-					.build();
 			@SuppressWarnings("unchecked")
-			final Class<? extends MultiSet<E>> rawType = (Class<? extends MultiSet<E>>) typeToken.getRawType();
-			if ( UnmodifiableMultiSet.class.isAssignableFrom(rawType) ) {
-				return unmodifiableBuilder(multiSet);
+			final Class<? extends MultiSet<?>> rawType = (Class<? extends MultiSet<?>>) typeToken.getRawType();
+			if ( HashMultiSet.class.isAssignableFrom(rawType) ) {
+				return IBuilder1.of(new HashMultiSet<>());
 			}
-			return IBuilder1.of(multiSet);
-		}
-
-		public static <E> IBuilder1<E, MultiSet<E>> unmodifiableBuilder(final MultiSet<E> multiSet) {
-			return new IBuilder1<>() {
-				@Override
-				public void accept(final E e) {
-					multiSet.add(e);
-				}
-
-				@Override
-				public MultiSet<E> build() {
-					return UnmodifiableMultiSet.unmodifiableMultiSet(multiSet);
-				}
-			};
+			@SuppressWarnings("unchecked")
+			final IBuilder1<E, MultiSet<E>> fallbackBuilder = (IBuilder1<E, MultiSet<E>>) fallback.create(typeToken);
+			return fallbackBuilder;
 		}
 
 		@Override

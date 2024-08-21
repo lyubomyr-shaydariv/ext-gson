@@ -13,12 +13,12 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
+import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MultiValuedMapTypeAdapter<V>
@@ -75,29 +75,29 @@ public final class MultiValuedMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getDefaultBuilderInstance(
-				final IBuilder0.IFactory<? extends MultiValuedMap<String, V>> builderFactory
+				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, builderFactory));
+			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
-		// TODO supported list valued map implementations
-		// TODO supported set valued map implementations
 		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> defaultBuilder(
 				final TypeToken<? super MultiValuedMap<String, V>> typeToken,
-				final IBuilder0.IFactory<? extends MultiValuedMap<String, V>> builderFactory
+				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> fallback
 		) {
-			@SuppressWarnings("LawOfDemeter")
-			final MultiValuedMap<String, V> multiValuedMap = builderFactory.create(typeToken)
-					.build();
 			@SuppressWarnings("unchecked")
-			final Class<? extends MultiValuedMap<String, ?>> rawType = (Class<? extends MultiValuedMap<String, ?>>) typeToken.getRawType();
-			if ( UnmodifiableMultiValuedMap.class.isAssignableFrom(rawType) ) {
-				return unmodifiableBuilder(multiValuedMap);
+			final Class<? extends MultiValuedMap<?, ?>> rawType = (Class<? extends MultiValuedMap<?, ?>>) typeToken.getRawType();
+			if ( HashSetValuedHashMap.class.isAssignableFrom(rawType) ) {
+				return builder(new HashSetValuedHashMap<>());
 			}
-			return modifiableBuilder(multiValuedMap);
+			if ( ArrayListValuedHashMap.class.isAssignableFrom(rawType) ) {
+				return builder(new ArrayListValuedHashMap<>());
+			}
+			@SuppressWarnings("unchecked")
+			final IBuilder2<String, V, MultiValuedMap<String, V>> fallbackBuilder = (IBuilder2<String, V, MultiValuedMap<String, V>>) fallback.create(typeToken);
+			return fallbackBuilder;
 		}
 
-		public static <V, M extends MultiValuedMap<String, V>> IBuilder2<String, V, M> modifiableBuilder(final M multiValuedMap) {
+		public static <V, M extends MultiValuedMap<String, V>> IBuilder2<String, V, M> builder(final M multiValuedMap) {
 			return new IBuilder2<>() {
 				@Override
 				public void accept(final String k, final V v) {
@@ -107,20 +107,6 @@ public final class MultiValuedMapTypeAdapter<V>
 				@Override
 				public M build() {
 					return multiValuedMap;
-				}
-			};
-		}
-
-		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> unmodifiableBuilder(final MultiValuedMap<String, V> multiValuedMap) {
-			return new IBuilder2<>() {
-				@Override
-				public void accept(final String k, final V v) {
-					multiValuedMap.put(k, v);
-				}
-
-				@Override
-				public MultiValuedMap<String, V> build() {
-					return UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(multiValuedMap);
 				}
 			};
 		}
