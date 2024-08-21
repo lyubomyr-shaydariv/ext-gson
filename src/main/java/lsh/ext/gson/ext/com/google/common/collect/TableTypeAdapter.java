@@ -84,25 +84,18 @@ public final class TableTypeAdapter<V>
 		private final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> tableBuilderFactory;
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
-		) {
-			return getInstance((IBuilder0.IFactory<Table<String, String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			});
-		}
-
-		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
-				final IBuilder0.IFactory<? extends Table<String, String, V>> factoryFactory
-		) {
-			return getInstance((IBuilder3.IFactory<String, String, V, Table<String, String, V>>) typeToken -> builder(typeToken, factoryFactory));
-		}
-
-		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
 				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory
 		) {
 			return new Factory<>(builderFactory);
 		}
 
-		public static <V> IBuilder3<String, String, V, Table<String, String, V>> builder(
+		public static <V> ITypeAdapterFactory<Table<String, String, V>> getDefaultBuilderInstance(
+				final IBuilder0.IFactory<? extends Table<String, String, V>> factoryFactory
+		) {
+			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+		}
+
+		public static <V> IBuilder3<String, String, V, Table<String, String, V>> defaultBuilder(
 				final TypeToken<? super Table<String, String, V>> typeToken,
 				final IBuilder0.IFactory<? extends Table<String, String, V>> factoryFactory
 		) {

@@ -31,7 +31,7 @@ public final class TableTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						TableTypeAdapter.getInstance(gson.getAdapter(Types.integerTypeToken), () -> TableTypeAdapter.Factory.builder(stringToStringToIntegerTableTypeToken, typeToken -> HashBasedTable::create)),
+						TableTypeAdapter.getInstance(gson.getAdapter(Types.integerTypeToken), () -> TableTypeAdapter.Factory.defaultBuilder(stringToStringToIntegerTableTypeToken, typeToken -> HashBasedTable::create)),
 						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
 						ImmutableTable.<String, String, Integer>builder()
 								.put("A", "1", 1)

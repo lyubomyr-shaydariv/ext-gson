@@ -25,7 +25,9 @@ public final class MultisetTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultisetTypeAdapter.Factory.getInstance();
+		return MultisetTypeAdapter.Factory.getDefaultBuilderInstance(typeToken -> {
+			throw new UnsupportedOperationException(typeToken.toString());
+		});
 	}
 
 	@Override

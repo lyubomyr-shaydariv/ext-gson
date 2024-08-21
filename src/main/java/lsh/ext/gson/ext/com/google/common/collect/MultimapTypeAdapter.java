@@ -70,25 +70,19 @@ public final class MultimapTypeAdapter<V>
 
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> multimapBuilderFactory;
 
-		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance() {
-			return getInstance((IBuilder0.IFactory<Multimap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			});
-		}
-
-		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
-				final IBuilder0.IFactory<? extends Multimap<String, V>> factoryFactory
-		) {
-			return getInstance((IBuilder2.IFactory<String, V, Multimap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
-		}
-
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
 				final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> builderFactory
 		) {
 			return new Factory<>(builderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, Multimap<String, V>> builder(
+		public static <V> ITypeAdapterFactory<Multimap<String, V>> getDefaultBuilderInstance(
+				final IBuilder0.IFactory<? extends Multimap<String, V>> factoryFactory
+		) {
+			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+		}
+
+		public static <V> IBuilder2<String, V, Multimap<String, V>> defaultBuilder(
 				final TypeToken<? super Multimap<String, V>> typeToken,
 				final IBuilder0.IFactory<? extends Multimap<String, V>> factoryFactory
 		) {

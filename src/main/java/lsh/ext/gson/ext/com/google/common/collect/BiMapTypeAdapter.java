@@ -70,25 +70,19 @@ public final class BiMapTypeAdapter<V>
 
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> biMapBuilderFactory;
 
-		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance() {
-			return getInstance((IBuilder0.IFactory<BiMap<String, V>>) typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			});
-		}
-
-		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
-				final IBuilder0.IFactory<? extends BiMap<String, V>> factoryFactory
-		) {
-			return getInstance((IBuilder2.IFactory<String, V, BiMap<String, V>>) typeToken -> builder(typeToken, factoryFactory));
-		}
-
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
 				final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> builderFactory
 		) {
 			return new Factory<>(builderFactory);
 		}
 
-		public static <V> IBuilder2<String, V, BiMap<String, V>> builder(
+		public static <V> ITypeAdapterFactory<BiMap<String, V>> getDefaultBuilderInstance(
+				final IBuilder0.IFactory<? extends BiMap<String, V>> factoryFactory
+		) {
+			return getInstance(typeToken -> defaultBuilder(typeToken, factoryFactory));
+		}
+
+		public static <V> IBuilder2<String, V, BiMap<String, V>> defaultBuilder(
 				final TypeToken<? super BiMap<String, V>> typeToken,
 				final IBuilder0.IFactory<? extends BiMap<String, V>> factoryFactory
 		) {

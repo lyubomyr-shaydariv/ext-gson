@@ -31,7 +31,9 @@ public final class TableTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return TableTypeAdapter.Factory.getInstance();
+		return TableTypeAdapter.Factory.getDefaultBuilderInstance(typeToken -> {
+			throw new UnsupportedOperationException(typeToken.toString());
+		});
 	}
 
 	@Override

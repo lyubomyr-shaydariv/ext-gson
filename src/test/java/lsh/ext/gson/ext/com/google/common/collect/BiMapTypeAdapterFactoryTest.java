@@ -29,7 +29,9 @@ public final class BiMapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return BiMapTypeAdapter.Factory.getInstance();
+		return BiMapTypeAdapter.Factory.getDefaultBuilderInstance(typeToken -> {
+			throw new UnsupportedOperationException(typeToken.toString());
+		});
 	}
 
 	@Override

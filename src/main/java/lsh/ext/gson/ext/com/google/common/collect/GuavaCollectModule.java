@@ -32,16 +32,32 @@ public final class GuavaCollectModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapter.Factory.getInstance(
+				typeToken -> {
+					throw new UnsupportedOperationException(typeToken.toString());
+				}
+		);
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = MultimapTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = MultimapTypeAdapter.Factory.getInstance(
+				typeToken -> {
+					throw new UnsupportedOperationException(typeToken.toString());
+				}
+		);
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapter.Factory.getInstance(
+				typeToken -> {
+					throw new UnsupportedOperationException(typeToken.toString());
+				}
+		);
 
 		@Setter
-		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapter.Factory.getInstance(
+				typeToken -> {
+					throw new UnsupportedOperationException(typeToken.toString());
+				}
+		);
 
 		public static Builder create() {
 			return new Builder();
