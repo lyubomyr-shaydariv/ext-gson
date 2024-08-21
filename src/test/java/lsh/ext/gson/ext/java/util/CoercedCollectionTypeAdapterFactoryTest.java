@@ -21,7 +21,7 @@ public final class CoercedCollectionTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return CoercedCollectionTypeAdapter.Factory.getInstance(Types.objectTypeToken);
+		return CoercedCollectionTypeAdapter.Factory.getDefaultBuilderInstance(Types.objectTypeToken);
 	}
 
 	@Override

@@ -98,22 +98,6 @@ public final class CoercedCollectionTypeAdapter<E>
 		private final IBuilder1.IFactory<? super E, ? extends Collection<E>> collectionBuilderFactory;
 
 		public static <E> TypeAdapterFactory getInstance(
-				final TypeToken<E> elementTypeToken
-		) {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			final Class<? extends Collection<E>> collectionClass = (Class) Collection.class;
-			return getInstance(collectionClass, elementTypeToken, (IBuilder0.IFactory<Collection<E>>) typeToken -> ArrayList::new);
-		}
-
-		public static <E> TypeAdapterFactory getInstance(
-				final Class<? extends Collection<E>> baseCollectionType,
-				final TypeToken<E> elementTypeToken,
-				final IBuilder0.IFactory<? extends Collection<E>> factoryFactory
-		) {
-			return getInstance(baseCollectionType, elementTypeToken, (IBuilder1.IFactory<E, Collection<E>>) typeToken -> builder(factoryFactory.create(typeToken)));
-		}
-
-		public static <E> TypeAdapterFactory getInstance(
 				final Class<? extends Collection<E>> baseCollectionType,
 				final TypeToken<E> elementTypeToken,
 				final IBuilder1.IFactory<? super E, ? extends Collection<E>> collectionBuilderFactory
@@ -121,7 +105,23 @@ public final class CoercedCollectionTypeAdapter<E>
 			return new Factory<>(baseCollectionType, elementTypeToken, collectionBuilderFactory);
 		}
 
-		public static <E> IBuilder1<E, Collection<E>> builder(
+		public static <E> TypeAdapterFactory getDefaultBuilderInstance(
+				final TypeToken<E> elementTypeToken
+		) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			final Class<? extends Collection<E>> collectionClass = (Class) Collection.class;
+			return getDefaultBuilderInstance(collectionClass, elementTypeToken, typeToken -> ArrayList::new);
+		}
+
+		public static <E> TypeAdapterFactory getDefaultBuilderInstance(
+				final Class<? extends Collection<E>> baseCollectionType,
+				final TypeToken<E> elementTypeToken,
+				final IBuilder0.IFactory<? extends Collection<E>> factoryFactory
+		) {
+			return getInstance(baseCollectionType, elementTypeToken, typeToken -> defaultBuilder(factoryFactory.create(typeToken)));
+		}
+
+		public static <E> IBuilder1<E, Collection<E>> defaultBuilder(
 				final IBuilder0<? extends Collection<E>> factory
 		) {
 			return IBuilder1.of(factory.build());
