@@ -92,6 +92,34 @@ public final class BagTypeAdapter<E>
 			return builder(new HashBag<>());
 		}
 
+		public static <T> Transformer<? super T, String> defaultCreateToString(final TypeToken<? super String> typeToken) {
+			final Class<? super String> rawType = typeToken.getRawType();
+			if ( rawType != String.class ) {
+				@SuppressWarnings("unchecked")
+				final Transformer<T, String> castToStringOrFail = (Transformer<T, String>) toStringOrFailTransformer;
+				return castToStringOrFail;
+			}
+			@SuppressWarnings("unchecked")
+			final Transformer<String, String> castIdentity = (Transformer<String, String>) identityTransformer;
+			@SuppressWarnings("unchecked")
+			final Transformer<? super T, String> castStringFromString = (Transformer<? super T, String>) castIdentity;
+			return castStringFromString;
+		}
+
+		public static <T> Transformer<? super String, ? extends T> defaultCreateFromString(final TypeToken<? super String> typeToken) {
+			final Class<? super String> rawType = typeToken.getRawType();
+			if ( rawType != String.class ) {
+				@SuppressWarnings("unchecked")
+				final Transformer<String, T> castFailFromString = (Transformer<String, T>) failFromStringTransformer;
+				return castFailFromString;
+			}
+			@SuppressWarnings("unchecked")
+			final Transformer<String, String> castIdentity = (Transformer<String, String>) identityTransformer;
+			@SuppressWarnings("unchecked")
+			final Transformer<? super String, ? extends T> castStringFromString = (Transformer<? super String, ? extends T>) castIdentity;
+			return castStringFromString;
+		}
+
 		@Override
 		@Nullable
 		protected TypeAdapter<Bag<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
@@ -123,6 +151,19 @@ public final class BagTypeAdapter<E>
 				}
 			};
 		}
+
+		private static final Transformer<?, ?> identityTransformer = o -> o;
+
+		private static final Transformer<?, String> toStringOrFailTransformer = o -> {
+			if ( o == null ) {
+				throw new NullPointerException("No argument to parse provided");
+			}
+			return o.toString();
+		};
+
+		private static final Transformer<String, ?> failFromStringTransformer = o -> {
+			throw new UnsupportedOperationException("Can't parse " + o);
+		};
 
 	}
 

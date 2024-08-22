@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.org.apache.commons.collections4;
 
 import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.Transformer;
 
 public final class ApacheCommonsCollections4Module
 		extends AbstractModule {
@@ -33,14 +31,8 @@ public final class ApacheCommonsCollections4Module
 	public static final class Builder
 			implements IBuilder0<IModule> {
 
-		private static <I, O> Transformer<TypeToken<I>, Transformer<? super I, O>> unsupported() {
-			return typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			};
-		}
-
 		@Setter
-		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapter.Factory.getInstance(unsupported(), unsupported());
+		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapter.Factory.getInstance(BagTypeAdapter.Factory::defaultCreateToString, BagTypeAdapter.Factory::defaultCreateFromString);
 
 		@Setter
 		private ITypeAdapterFactory<? extends BidiMap<String, ?>> bidiMapTypeAdapterFactory = BidiMapTypeAdapter.Factory.getInstance();
