@@ -12,9 +12,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
-import lsh.ext.gson.IBuilder1;
-import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IBuilder3;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -35,16 +32,16 @@ public final class GuavaCollectModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapter.Factory.getInstance(IBuilder2.IFactory.unsupported());
+		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = BiMapTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = MultimapTypeAdapter.Factory.getInstance(IBuilder2.IFactory.unsupported());
+		private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = MultimapTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapter.Factory.getInstance(IBuilder1.IFactory.unsupported());
+		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = MultisetTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapter.Factory.getInstance(IBuilder3.IFactory.unsupported());
+		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = TableTypeAdapter.Factory.getInstance();
 
 		public static Builder create() {
 			return new Builder();

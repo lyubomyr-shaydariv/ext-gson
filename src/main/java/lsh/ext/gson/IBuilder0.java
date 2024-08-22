@@ -10,12 +10,6 @@ public interface IBuilder0<T> {
 
 		IBuilder0<T> create(TypeToken<? super T> typeToken);
 
-		static <T> IFactory<T> unsupported() {
-			return typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			};
-		}
-
 	}
 
 }

@@ -68,40 +68,28 @@ public final class BagTypeAdapter<E>
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> fallback,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
-			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> defaultBuilder(typeToken, fallback);
-			return new Factory<>(bagBuilderFactory, createToString, createFromString);
+			return getInstance(Factory::defaultBuilder, createToString, createFromString);
 		}
 
-		public static <E> IBuilder2<E, Integer, Bag<E>> defaultBuilder(
-				final TypeToken<? super Bag<E>> typeToken,
-				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> fallback
+		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
+				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> builderFactory,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
+			return new Factory<>(builderFactory, createToString, createFromString);
+		}
+
+		// TODO handle all known implementations
+		public static <E> IBuilder2<E, Integer, Bag<E>> defaultBuilder(final TypeToken<? super Bag<E>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? super Bag<?>> rawType = (Class<? super Bag<?>>) typeToken.getRawType();
 			if ( HashBag.class.isAssignableFrom(rawType) ) {
 				return builder(new HashBag<>());
 			}
-			@SuppressWarnings("unchecked")
-			final IBuilder2<E, Integer, Bag<E>> fallbackBuilder = (IBuilder2<E, Integer, Bag<E>>) fallback.create(typeToken);
-			return fallbackBuilder;
-		}
-
-		public static <E, B extends Bag<E>> IBuilder2<E, Integer, B> builder(final B bag) {
-			return new IBuilder2<>() {
-				@Override
-				public void accept(final E e, final Integer n) {
-					bag.add(e, n);
-				}
-
-				@Override
-				public B build() {
-					return bag;
-				}
-			};
+			return builder(new HashBag<>());
 		}
 
 		@Override
@@ -120,6 +108,20 @@ public final class BagTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final IBuilder2.IFactory<E, Integer, Bag<E>> castBuilderFactory = (IBuilder2.IFactory<E, Integer, Bag<E>>) builderFactory;
 			return BagTypeAdapter.getInstance(() -> castBuilderFactory.create(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
+		}
+
+		private static <E, B extends Bag<E>> IBuilder2<E, Integer, B> builder(final B bag) {
+			return new IBuilder2<>() {
+				@Override
+				public void accept(final E e, final Integer n) {
+					bag.add(e, n);
+				}
+
+				@Override
+				public B build() {
+					return bag;
+				}
+			};
 		}
 
 	}

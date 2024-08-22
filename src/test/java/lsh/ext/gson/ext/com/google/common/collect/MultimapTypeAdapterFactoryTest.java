@@ -30,9 +30,7 @@ public final class MultimapTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return MultimapTypeAdapter.Factory.getInstance(typeToken -> {
-			throw new UnsupportedOperationException(typeToken.toString());
-		});
+		return MultimapTypeAdapter.Factory.getInstance();
 	}
 
 	@Override

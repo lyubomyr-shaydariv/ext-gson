@@ -28,12 +28,6 @@ public interface IBuilder1<A1, T> {
 
 		IBuilder1<A1, T> create(TypeToken<? super T> typeToken);
 
-		static <A1, T> IFactory<A1, T> unsupported() {
-			return typeToken -> {
-				throw new UnsupportedOperationException(typeToken.toString());
-			};
-		}
-
 	}
 
 }

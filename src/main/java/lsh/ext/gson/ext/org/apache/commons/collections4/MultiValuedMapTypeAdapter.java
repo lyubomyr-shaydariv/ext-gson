@@ -66,43 +66,33 @@ public final class MultiValuedMapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<MultiValuedMap<String, V>> {
 
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderFactory;
 
-		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> fallback
-		) {
-			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
+		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance() {
+			@SuppressWarnings("unchecked")
+			final ITypeAdapterFactory<MultiValuedMap<String, V>> castInstance = (ITypeAdapterFactory<MultiValuedMap<String, V>>) instance;
+			return castInstance;
 		}
 
-		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> defaultBuilder(
-				final TypeToken<? super MultiValuedMap<String, V>> typeToken,
-				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> fallback
+		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
+				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderFactory
 		) {
+			return new Factory<>(builderFactory);
+		}
+
+		// TODO handle all known implementations
+		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> defaultBuilder(final TypeToken<? super MultiValuedMap<String, V>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? extends MultiValuedMap<?, ?>> rawType = (Class<? extends MultiValuedMap<?, ?>>) typeToken.getRawType();
-			if ( HashSetValuedHashMap.class.isAssignableFrom(rawType) ) {
-				return builder(new HashSetValuedHashMap<>());
-			}
 			if ( ArrayListValuedHashMap.class.isAssignableFrom(rawType) ) {
 				return builder(new ArrayListValuedHashMap<>());
 			}
-			@SuppressWarnings("unchecked")
-			final IBuilder2<String, V, MultiValuedMap<String, V>> fallbackBuilder = (IBuilder2<String, V, MultiValuedMap<String, V>>) fallback.create(typeToken);
-			return fallbackBuilder;
-		}
-
-		public static <V, M extends MultiValuedMap<String, V>> IBuilder2<String, V, M> builder(final M multiValuedMap) {
-			return new IBuilder2<>() {
-				@Override
-				public void accept(final String k, final V v) {
-					multiValuedMap.put(k, v);
-				}
-
-				@Override
-				public M build() {
-					return multiValuedMap;
-				}
-			};
+			if ( HashSetValuedHashMap.class.isAssignableFrom(rawType) ) {
+				return builder(new HashSetValuedHashMap<>());
+			}
+			return builder(new ArrayListValuedHashMap<>());
 		}
 
 		@Override
@@ -121,6 +111,20 @@ public final class MultiValuedMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final IBuilder2.IFactory<String, V, MultiValuedMap<String, V>> castBuilderFactory = (IBuilder2.IFactory<String, V, MultiValuedMap<String, V>>) builderFactory;
 			return MultiValuedMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
+		}
+
+		private static <V, M extends MultiValuedMap<String, V>> IBuilder2<String, V, M> builder(final M multiValuedMap) {
+			return new IBuilder2<>() {
+				@Override
+				public void accept(final String k, final V v) {
+					multiValuedMap.put(k, v);
+				}
+
+				@Override
+				public M build() {
+					return multiValuedMap;
+				}
+			};
 		}
 
 	}

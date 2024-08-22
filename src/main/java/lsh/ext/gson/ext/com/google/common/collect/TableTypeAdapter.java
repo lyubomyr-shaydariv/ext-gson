@@ -81,59 +81,34 @@ public final class TableTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<Table<String, String, V>> {
 
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+
 		private final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory;
 
-		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
-				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> fallback
-		) {
-			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
+		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance() {
+			@SuppressWarnings("unchecked")
+			final ITypeAdapterFactory<Table<String, String, V>> castInstance = (ITypeAdapterFactory<Table<String, String, V>>) instance;
+			return castInstance;
 		}
 
-		public static <V> IBuilder3<String, String, V, Table<String, String, V>> defaultBuilder(
-				final TypeToken<? super Table<String, String, V>> typeToken,
-				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> fallback
+		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
+				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory
 		) {
+			return new Factory<>(builderFactory);
+		}
+
+		// TODO handle all known implementations
+		public static <V> IBuilder3<String, String, V, Table<String, String, V>> defaultBuilder(final TypeToken<? super Table<String, String, V>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Table> rawType = (Class<? extends Table>) typeToken.getRawType();
-			if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
-				return immutableBuilder();
-			}
+			// TODO why is HashBasedTable not final?
 			if ( HashBasedTable.class.isAssignableFrom(rawType) ) {
 				return builder(HashBasedTable.create());
 			}
-			@SuppressWarnings("unchecked")
-			final IBuilder3<String, String, V, Table<String, String, V>> fallbackBuilder = (IBuilder3<String, String, V, Table<String, String, V>>) fallback.create(typeToken);
-			return fallbackBuilder;
-		}
-
-		public static <V, T extends Table<String, String, V>> IBuilder3<String, String, V, T> builder(final T table) {
-			return new IBuilder3<>() {
-				@Override
-				public void accept(final String rowKey, final String columnKey, final V v) {
-					table.put(rowKey, columnKey, v);
-				}
-
-				@Override
-				public T build() {
-					return table;
-				}
-			};
-		}
-
-		public static <V> IBuilder3<String, String, V, Table<String, String, V>> immutableBuilder() {
-			return new IBuilder3<>() {
-				private final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
-
-				@Override
-				public void accept(final String rowKey, final String columnKey, final V v) {
-					builder.put(rowKey, columnKey, v);
-				}
-
-				@Override
-				public Table<String, String, V> build() {
-					return builder.build();
-				}
-			};
+			if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
+				return immutableBuilder();
+			}
+			return builder(HashBasedTable.create());
 		}
 
 		@Override
@@ -152,6 +127,36 @@ public final class TableTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final IBuilder3.IFactory<String, String, V, Table<String, String, V>> castTableBuilderFactory = (IBuilder3.IFactory<String, String, V, Table<String, String, V>>) builderFactory;
 			return TableTypeAdapter.getInstance(valueTypeAdapter, () -> castTableBuilderFactory.create(castTypeToken));
+		}
+
+		private static <V, T extends Table<String, String, V>> IBuilder3<String, String, V, T> builder(final T table) {
+			return new IBuilder3<>() {
+				@Override
+				public void accept(final String rowKey, final String columnKey, final V v) {
+					table.put(rowKey, columnKey, v);
+				}
+
+				@Override
+				public T build() {
+					return table;
+				}
+			};
+		}
+
+		private static <V> IBuilder3<String, String, V, Table<String, String, V>> immutableBuilder() {
+			return new IBuilder3<>() {
+				private final ImmutableTable.Builder<String, String, V> builder = ImmutableTable.builder();
+
+				@Override
+				public void accept(final String rowKey, final String columnKey, final V v) {
+					builder.put(rowKey, columnKey, v);
+				}
+
+				@Override
+				public Table<String, String, V> build() {
+					return builder.build();
+				}
+			};
 		}
 
 	}

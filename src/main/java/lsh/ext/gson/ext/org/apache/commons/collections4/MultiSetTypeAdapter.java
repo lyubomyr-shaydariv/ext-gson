@@ -65,26 +65,30 @@ public final class MultiSetTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<MultiSet<E>> {
 
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+
 		private final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> builderFactory;
 
-		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
-				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> fallback
-		) {
-			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
+		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance() {
+			@SuppressWarnings("unchecked")
+			final ITypeAdapterFactory<MultiSet<E>> castInstance = (ITypeAdapterFactory<MultiSet<E>>) instance;
+			return castInstance;
 		}
 
-		public static <E> IBuilder1<E, MultiSet<E>> defaultBuilder(
-				final TypeToken<? super MultiSet<E>> typeToken,
-				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> fallback
+		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
+				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> builderFactory
 		) {
+			return new Factory<>(builderFactory);
+		}
+
+		// TODO handle all known implementations
+		public static <E> IBuilder1<E, MultiSet<E>> defaultBuilder(final TypeToken<? super MultiSet<E>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? extends MultiSet<?>> rawType = (Class<? extends MultiSet<?>>) typeToken.getRawType();
 			if ( HashMultiSet.class.isAssignableFrom(rawType) ) {
 				return IBuilder1.of(new HashMultiSet<>());
 			}
-			@SuppressWarnings("unchecked")
-			final IBuilder1<E, MultiSet<E>> fallbackBuilder = (IBuilder1<E, MultiSet<E>>) fallback.create(typeToken);
-			return fallbackBuilder;
+			return IBuilder1.of(new HashMultiSet<>());
 		}
 
 		@Override

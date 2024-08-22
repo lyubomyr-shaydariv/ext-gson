@@ -69,62 +69,36 @@ public final class MultimapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<Multimap<String, V>> {
 
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> builderFactory;
 
-		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> fallback
-		) {
-			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
+		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance() {
+			@SuppressWarnings("unchecked")
+			final ITypeAdapterFactory<Multimap<String, V>> castInstance = (ITypeAdapterFactory<Multimap<String, V>>) instance;
+			return castInstance;
 		}
 
-		public static <V> IBuilder2<String, V, Multimap<String, V>> defaultBuilder(
-				final TypeToken<? super Multimap<String, V>> typeToken,
-				final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> fallback
+		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
+				final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> builderFactory
 		) {
+			return new Factory<>(builderFactory);
+		}
+
+		// TODO handle all known implementations
+		public static <V> IBuilder2<String, V, Multimap<String, V>> defaultBuilder(final TypeToken<? super Multimap<String, V>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multimap> rawType = (Class<? extends Multimap>) typeToken.getRawType();
-			if ( ImmutableMultimap.class.isAssignableFrom(rawType) ) {
-				return immutableBuilder();
-			}
 			if ( rawType == HashMultimap.class ) {
 				return builder(HashMultimap.create());
 			}
 			if ( rawType == LinkedHashMultimap.class ) {
 				return builder(LinkedHashMultimap.create());
 			}
-			@SuppressWarnings("unchecked")
-			final IBuilder2<String, V, Multimap<String, V>> fallbackBuilder = (IBuilder2<String, V, Multimap<String, V>>) fallback.create(typeToken);
-			return fallbackBuilder;
-		}
-
-		public static <V, M extends Multimap<String, V>> IBuilder2<String, V, M> builder(final M biMap) {
-			return new IBuilder2<>() {
-				@Override
-				public void accept(final String k, final V v) {
-					biMap.put(k, v);
-				}
-
-				@Override
-				public M build() {
-					return biMap;
-				}
-			};
-		}
-
-		public static <V> IBuilder2<String, V, Multimap<String, V>> immutableBuilder() {
-			return new IBuilder2<>() {
-				private final ImmutableMultimap.Builder<String, V> builder = ImmutableMultimap.builder();
-
-				@Override
-				public void accept(final String k, final V v) {
-					builder.put(k, v);
-				}
-
-				@Override
-				public Multimap<String, V> build() {
-					return builder.build();
-				}
-			};
+			if ( ImmutableMultimap.class.isAssignableFrom(rawType) ) {
+				return immutableBuilder();
+			}
+			return builder(HashMultimap.create());
 		}
 
 		@Override
@@ -143,6 +117,36 @@ public final class MultimapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final IBuilder2.IFactory<String, V, Multimap<String, V>> castMultimapBuilderFactory = (IBuilder2.IFactory<String, V, Multimap<String, V>>) builderFactory;
 			return MultimapTypeAdapter.getInstance(valueTypeAdapter, () -> castMultimapBuilderFactory.create(castTypeToken));
+		}
+
+		private static <V, M extends Multimap<String, V>> IBuilder2<String, V, M> builder(final M biMap) {
+			return new IBuilder2<>() {
+				@Override
+				public void accept(final String k, final V v) {
+					biMap.put(k, v);
+				}
+
+				@Override
+				public M build() {
+					return biMap;
+				}
+			};
+		}
+
+		private static <V> IBuilder2<String, V, Multimap<String, V>> immutableBuilder() {
+			return new IBuilder2<>() {
+				private final ImmutableMultimap.Builder<String, V> builder = ImmutableMultimap.builder();
+
+				@Override
+				public void accept(final String k, final V v) {
+					builder.put(k, v);
+				}
+
+				@Override
+				public Multimap<String, V> build() {
+					return builder.build();
+				}
+			};
 		}
 
 	}

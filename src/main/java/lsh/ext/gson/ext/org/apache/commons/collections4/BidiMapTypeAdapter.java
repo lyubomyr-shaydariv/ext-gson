@@ -66,18 +66,24 @@ public final class BidiMapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<BidiMap<String, V>> {
 
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> builderFactory;
 
-		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> fallback
-		) {
-			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
+		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance() {
+			@SuppressWarnings("unchecked")
+			final ITypeAdapterFactory<BidiMap<String, V>> castInstance = (ITypeAdapterFactory<BidiMap<String, V>>) instance;
+			return castInstance;
 		}
 
-		public static <V> IBuilder2<String, V, BidiMap<String, V>> defaultBuilder(
-				final TypeToken<? super BidiMap<String, V>> typeToken,
-				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> fallback
+		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
+				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> builderFactory
 		) {
+			return new Factory<>(builderFactory);
+		}
+
+		// TODO handle all known implementations
+		public static <V> IBuilder2<String, V, BidiMap<String, V>> defaultBuilder(final TypeToken<? super BidiMap<String, V>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? extends BidiMap<?, ?>> rawType = (Class<? extends BidiMap<?, ?>>) typeToken.getRawType();
 			if ( DualHashBidiMap.class.isAssignableFrom(rawType) ) {
@@ -86,9 +92,7 @@ public final class BidiMapTypeAdapter<V>
 			if ( DualLinkedHashBidiMap.class.isAssignableFrom(rawType) ) {
 				return IBuilder2.of(new DualLinkedHashBidiMap<>());
 			}
-			@SuppressWarnings("unchecked")
-			final IBuilder2<String, V, BidiMap<String, V>> fallbackBuilder = (IBuilder2<String, V, BidiMap<String, V>>) fallback.create(typeToken);
-			return fallbackBuilder;
+			return IBuilder2.of(new DualHashBidiMap<>());
 		}
 
 		@Override

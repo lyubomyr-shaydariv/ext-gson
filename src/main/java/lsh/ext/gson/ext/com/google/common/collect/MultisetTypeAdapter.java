@@ -68,48 +68,36 @@ public final class MultisetTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Multiset<E>> {
 
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+
 		private final IBuilder1.IFactory<? super E, ? extends Multiset<E>> builderFactory;
 
-		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(
-				final IBuilder1.IFactory<? super E, ? extends Multiset<E>> fallback
-		) {
-			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
+		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance() {
+			@SuppressWarnings("unchecked")
+			final ITypeAdapterFactory<Multiset<E>> castInstance = (ITypeAdapterFactory<Multiset<E>>) instance;
+			return castInstance;
 		}
 
-		public static <E> IBuilder1<E, Multiset<E>> defaultBuilder(
-				final TypeToken<? super Multiset<E>> typeToken,
-				final IBuilder1.IFactory<? super E, ? extends Multiset<E>> fallback
+		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(
+				final IBuilder1.IFactory<? super E, ? extends Multiset<E>> builderFactory
 		) {
+			return new Factory<>(builderFactory);
+		}
+
+		// TODO handle all known implementations
+		public static <E> IBuilder1<E, Multiset<E>> defaultBuilder(final TypeToken<? super Multiset<E>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multiset> rawType = (Class<? extends Multiset>) typeToken.getRawType();
-			if ( ImmutableMultiset.class.isAssignableFrom(rawType) ) {
-				return immutableBuilder();
-			}
 			if ( rawType == HashMultiset.class ) {
 				return IBuilder1.of(HashMultiset.create());
 			}
 			if ( rawType == LinkedHashMultiset.class ) {
-				return IBuilder1.of(HashMultiset.create());
+				return IBuilder1.of(LinkedHashMultiset.create());
 			}
-			@SuppressWarnings("unchecked")
-			final IBuilder1<E, Multiset<E>> fallbackBuilder = (IBuilder1<E, Multiset<E>>) fallback.create(typeToken);
-			return fallbackBuilder;
-		}
-
-		public static <E> IBuilder1<E, Multiset<E>> immutableBuilder() {
-			return new IBuilder1<>() {
-				private final ImmutableMultiset.Builder<E> builder = ImmutableMultiset.builder();
-
-				@Override
-				public void accept(final E e) {
-					builder.add(e);
-				}
-
-				@Override
-				public Multiset<E> build() {
-					return builder.build();
-				}
-			};
+			if ( ImmutableMultiset.class.isAssignableFrom(rawType) ) {
+				return immutableBuilder();
+			}
+			return IBuilder1.of(HashMultiset.create());
 		}
 
 		@Override
@@ -128,6 +116,22 @@ public final class MultisetTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final IBuilder1.IFactory<E, Multiset<E>> castMultisetBuilderFactory = (IBuilder1.IFactory<E, Multiset<E>>) builderFactory;
 			return MultisetTypeAdapter.getInstance(elementTypeAdapter, () -> castMultisetBuilderFactory.create(castTypeToken));
+		}
+
+		private static <E> IBuilder1<E, Multiset<E>> immutableBuilder() {
+			return new IBuilder1<>() {
+				private final ImmutableMultiset.Builder<E> builder = ImmutableMultiset.builder();
+
+				@Override
+				public void accept(final E e) {
+					builder.add(e);
+				}
+
+				@Override
+				public Multiset<E> build() {
+					return builder.build();
+				}
+			};
 		}
 
 	}

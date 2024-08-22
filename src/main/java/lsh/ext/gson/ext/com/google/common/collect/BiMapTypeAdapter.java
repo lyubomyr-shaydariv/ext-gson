@@ -68,45 +68,33 @@ public final class BiMapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<BiMap<String, V>> {
 
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> builderFactory;
 
-		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> fallback
-		) {
-			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
+		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance() {
+			@SuppressWarnings("unchecked")
+			final ITypeAdapterFactory<BiMap<String, V>> castInstance = (ITypeAdapterFactory<BiMap<String, V>>) instance;
+			return castInstance;
 		}
 
-		public static <V> IBuilder2<String, V, BiMap<String, V>> defaultBuilder(
-				final TypeToken<? super BiMap<String, V>> typeToken,
-				final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> fallback
+		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
+				final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> builderFactory
 		) {
+			return new Factory<>(builderFactory);
+		}
+
+		// TODO handle all known implementations
+		public static <V> IBuilder2<String, V, BiMap<String, V>> defaultBuilder(final TypeToken<? super BiMap<String, V>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends BiMap> rawType = (Class<? extends BiMap>) typeToken.getRawType();
-			if ( ImmutableBiMap.class.isAssignableFrom(rawType) ) {
-				return immutableBuilder();
-			}
 			if ( rawType == HashBiMap.class ) {
 				return IBuilder2.of(HashBiMap.create());
 			}
-			@SuppressWarnings("unchecked")
-			final IBuilder2<String, V, BiMap<String, V>> fallbackBuilder = (IBuilder2<String, V, BiMap<String, V>>) fallback.create(typeToken);
-			return fallbackBuilder;
-		}
-
-		public static <V> IBuilder2<String, V, BiMap<String, V>> immutableBuilder() {
-			return new IBuilder2<>() {
-				private final ImmutableBiMap.Builder<String, V> builder = ImmutableBiMap.builder();
-
-				@Override
-				public void accept(final String k, final V v) {
-					builder.put(k, v);
-				}
-
-				@Override
-				public BiMap<String, V> build() {
-					return builder.build();
-				}
-			};
+			if ( ImmutableBiMap.class.isAssignableFrom(rawType) ) {
+				return immutableBuilder();
+			}
+			return IBuilder2.of(HashBiMap.create());
 		}
 
 		@Override
@@ -125,6 +113,22 @@ public final class BiMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final IBuilder2.IFactory<String, V, BiMap<String, V>> castBuilderFactory = (IBuilder2.IFactory<String, V, BiMap<String, V>>) builderFactory;
 			return BiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
+		}
+
+		private static <V> IBuilder2<String, V, BiMap<String, V>> immutableBuilder() {
+			return new IBuilder2<>() {
+				private final ImmutableBiMap.Builder<String, V> builder = ImmutableBiMap.builder();
+
+				@Override
+				public void accept(final String k, final V v) {
+					builder.put(k, v);
+				}
+
+				@Override
+				public BiMap<String, V> build() {
+					return builder.build();
+				}
+			};
 		}
 
 	}
