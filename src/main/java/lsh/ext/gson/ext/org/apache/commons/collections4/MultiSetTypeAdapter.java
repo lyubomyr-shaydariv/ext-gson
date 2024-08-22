@@ -68,15 +68,9 @@ public final class MultiSetTypeAdapter<E>
 		private final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> builderFactory;
 
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
-				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> builderFactory
-		) {
-			return new Factory<>(builderFactory);
-		}
-
-		public static <E> ITypeAdapterFactory<MultiSet<E>> getDefaultBuilderInstance(
 				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
+			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		public static <E> IBuilder1<E, MultiSet<E>> defaultBuilder(

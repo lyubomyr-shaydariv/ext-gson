@@ -68,20 +68,12 @@ public final class BagTypeAdapter<E>
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> builderFactory,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
-		) {
-			return new Factory<>(builderFactory, createToString, createFromString);
-		}
-
-		public static <E> ITypeAdapterFactory<Bag<E>> getDefaultBuilderInstance(
 				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> fallback,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
 			final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> bagBuilderFactory = typeToken -> defaultBuilder(typeToken, fallback);
-			return getInstance(bagBuilderFactory, createToString, createFromString);
+			return new Factory<>(bagBuilderFactory, createToString, createFromString);
 		}
 
 		public static <E> IBuilder2<E, Integer, Bag<E>> defaultBuilder(

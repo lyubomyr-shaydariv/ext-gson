@@ -69,15 +69,9 @@ public final class BidiMapTypeAdapter<V>
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> builderFactory;
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> builderFactory
-		) {
-			return new Factory<>(builderFactory);
-		}
-
-		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getDefaultBuilderInstance(
 				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
+			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		public static <V> IBuilder2<String, V, BidiMap<String, V>> defaultBuilder(

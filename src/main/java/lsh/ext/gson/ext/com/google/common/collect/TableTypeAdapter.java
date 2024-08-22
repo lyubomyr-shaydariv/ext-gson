@@ -84,15 +84,9 @@ public final class TableTypeAdapter<V>
 		private final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory;
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
-				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory
-		) {
-			return new Factory<>(builderFactory);
-		}
-
-		public static <V> ITypeAdapterFactory<Table<String, String, V>> getDefaultBuilderInstance(
 				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
+			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		public static <V> IBuilder3<String, String, V, Table<String, String, V>> defaultBuilder(

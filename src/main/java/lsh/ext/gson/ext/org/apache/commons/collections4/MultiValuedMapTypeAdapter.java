@@ -69,15 +69,9 @@ public final class MultiValuedMapTypeAdapter<V>
 		private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderFactory;
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderFactory
-		) {
-			return new Factory<>(builderFactory);
-		}
-
-		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getDefaultBuilderInstance(
 				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> fallback
 		) {
-			return getInstance(typeToken -> defaultBuilder(typeToken, fallback));
+			return new Factory<>(typeToken -> defaultBuilder(typeToken, fallback));
 		}
 
 		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> defaultBuilder(
