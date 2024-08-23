@@ -18,7 +18,7 @@ public interface IAccessor<O, I> {
 
 	interface IFactory {
 
-		Collection<IAccessor<? super Object, ? super Object>> create(TypeToken<?> typeToken);
+		Collection<IAccessor<Object, Object>> create(TypeToken<?> typeToken);
 
 	}
 

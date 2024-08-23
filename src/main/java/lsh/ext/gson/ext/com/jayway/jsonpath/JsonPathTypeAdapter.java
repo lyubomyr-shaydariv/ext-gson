@@ -73,7 +73,7 @@ public final class JsonPathTypeAdapter<T>
 		@Override
 		@Nullable
 		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-			final Collection<IAccessor<? super Object, ? super Object>> accessors = accessorsFactory.create(typeToken);
+			final Collection<IAccessor<Object, Object>> accessors = accessorsFactory.create(typeToken);
 			if ( accessors.isEmpty() ) {
 				return null;
 			}
