@@ -64,15 +64,16 @@ public final class BagTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Bag<E>> {
 
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory, Factory::defaultCreateToString, Factory::defaultCreateFromString);
+
 		private final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderLookup;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
 
-		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
-		) {
-			return getInstance(Factory::defaultBuilderFactory, createToString, createFromString);
+		public static <E> ITypeAdapterFactory<Bag<E>> getInstance() {
+			@SuppressWarnings("unchecked")
+			final ITypeAdapterFactory<Bag<E>> castInstance = (ITypeAdapterFactory<Bag<E>>) instance;
+			return castInstance;
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(

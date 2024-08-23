@@ -32,7 +32,7 @@ public final class ApacheCommonsCollections4Module
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapter.Factory.getInstance(BagTypeAdapter.Factory::defaultCreateToString, BagTypeAdapter.Factory::defaultCreateFromString);
+		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = BagTypeAdapter.Factory.getInstance();
 
 		@Setter
 		private ITypeAdapterFactory<? extends BidiMap<String, ?>> bidiMapTypeAdapterFactory = BidiMapTypeAdapter.Factory.getInstance();
