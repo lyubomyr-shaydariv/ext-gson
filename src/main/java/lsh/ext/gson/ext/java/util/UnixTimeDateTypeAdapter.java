@@ -12,7 +12,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IBuilder0;
+import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -22,10 +22,10 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 
 	private static final int MS_IN_S = 1000;
 
-	private final IBuilder0<? extends T> instanceBuilder;
+	private final IFactory<? extends T> instanceFactory;
 
-	public static <T extends Date> TypeAdapter<T> getInstance(final IBuilder0<? extends T> instanceBuilder) {
-		return new UnixTimeDateTypeAdapter<T>(instanceBuilder)
+	public static <T extends Date> TypeAdapter<T> getInstance(final IFactory<? extends T> instanceFactory) {
+		return new UnixTimeDateTypeAdapter<T>(instanceFactory)
 				.nullSafe();
 	}
 
@@ -33,7 +33,7 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 	public T read(final JsonReader in)
 			throws IOException {
 		final long time = in.nextLong();
-		final T value = instanceBuilder.build();
+		final T value = instanceFactory.create();
 		value.setTime(time * MS_IN_S);
 		return value;
 	}
@@ -49,13 +49,13 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 			extends AbstractTypeAdapterFactory<T> {
 
 		private final Class<T> klass;
-		private final IBuilder0<? extends T> instanceBuilder;
+		private final IFactory<? extends T> instanceBuilder;
 
 		public static <T extends Date> ITypeAdapterFactory<T> getInstance(
 				final Class<T> klass,
-				final IBuilder0<? extends T> instanceBuilder
+				final IFactory<? extends T> instanceFactory
 		) {
-			return new Factory<>(klass, instanceBuilder);
+			return new Factory<>(klass, instanceFactory);
 		}
 
 		@Override

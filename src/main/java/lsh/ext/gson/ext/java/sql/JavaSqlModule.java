@@ -34,14 +34,18 @@ public final class JavaSqlModule
 	public static final class Builder
 			implements IBuilder0<IModule> {
 
-		@Setter
-		private ITypeAdapterFactory<? extends Date> dateTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Date.class, () -> new Date(0));
+		private static final ITypeAdapterFactory<Date> dateInstance = UnixTimeDateTypeAdapter.Factory.getInstance(Date.class, () -> new Date(0));
+		private static final ITypeAdapterFactory<Time> timeInstance = UnixTimeDateTypeAdapter.Factory.getInstance(Time.class, () -> new Time(0));
+		private static final ITypeAdapterFactory<Timestamp> timestampInstance = UnixTimeDateTypeAdapter.Factory.getInstance(Timestamp.class, () -> new Timestamp(0));
 
 		@Setter
-		private ITypeAdapterFactory<? extends Time> timeTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Time.class, () -> new Time(0));
+		private ITypeAdapterFactory<? extends Date> dateTypeAdapterFactory = dateInstance;
 
 		@Setter
-		private ITypeAdapterFactory<? extends Timestamp> timestampTypeAdapterFactory = UnixTimeDateTypeAdapter.Factory.getInstance(Timestamp.class, () -> new Timestamp(0));
+		private ITypeAdapterFactory<? extends Time> timeTypeAdapterFactory = timeInstance;
+
+		@Setter
+		private ITypeAdapterFactory<? extends Timestamp> timestampTypeAdapterFactory = timestampInstance;
 
 		public static Builder create() {
 			return new Builder();
