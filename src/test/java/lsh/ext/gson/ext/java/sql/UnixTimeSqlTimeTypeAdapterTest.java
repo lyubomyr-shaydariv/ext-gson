@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
+import lsh.ext.gson.domain.UnixTimeTypeAdapter;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class UnixTimeSqlTimeTypeAdapterTest
@@ -21,7 +21,7 @@ public final class UnixTimeSqlTimeTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						UnixTimeDateTypeAdapter.getInstance(() -> new Time(0)),
+						UnixTimeTypeAdapter.getInstance(Converters.timeConverter),
 						"1488929283",
 						new Time(1488929283000L)
 				)

@@ -1,7 +1,6 @@
-package lsh.ext.gson.ext.java.util;
+package lsh.ext.gson.domain;
 
 import java.io.IOException;
-import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -12,50 +11,51 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
-import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@SuppressWarnings("UseOfObsoleteDateTimeApi")
-public final class UnixTimeDateTypeAdapter<T extends Date>
+public final class UnixTimeTypeAdapter<T>
 		extends TypeAdapter<T> {
 
-	private static final int MS_IN_S = 1000;
+	public interface IConverter<T> {
 
-	private final IFactory<? extends T> instanceFactory;
+		long toSeconds(T value);
 
-	public static <T extends Date> TypeAdapter<T> getInstance(final IFactory<? extends T> instanceFactory) {
-		return new UnixTimeDateTypeAdapter<T>(instanceFactory)
+		T fromSeconds(long s);
+
+	}
+
+	private final IConverter<T> converter;
+
+	public static <T> TypeAdapter<T> getInstance(final IConverter<T> converter) {
+		return new UnixTimeTypeAdapter<T>(converter)
 				.nullSafe();
 	}
 
 	@Override
 	public T read(final JsonReader in)
 			throws IOException {
-		final long time = in.nextLong();
-		final T value = instanceFactory.create();
-		value.setTime(time * MS_IN_S);
-		return value;
+		return converter.fromSeconds(in.nextLong());
 	}
 
 	@Override
 	public void write(final JsonWriter out, final T value)
 			throws IOException {
-		out.value(value.getTime() / MS_IN_S);
+		out.value(converter.toSeconds(value));
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class Factory<T extends Date>
+	public static final class Factory<T>
 			extends AbstractTypeAdapterFactory<T> {
 
 		private final Class<T> klass;
-		private final IFactory<? extends T> instanceBuilder;
+		private final IConverter<T> converter;
 
-		public static <T extends Date> ITypeAdapterFactory<T> getInstance(
+		public static <T> ITypeAdapterFactory<T> getInstance(
 				final Class<T> klass,
-				final IFactory<? extends T> instanceFactory
+				final IConverter<T> converter
 		) {
-			return new Factory<>(klass, instanceFactory);
+			return new Factory<>(klass, converter);
 		}
 
 		@Override
@@ -64,7 +64,7 @@ public final class UnixTimeDateTypeAdapter<T extends Date>
 			if ( !klass.isAssignableFrom(typeToken.getRawType()) ) {
 				return null;
 			}
-			return UnixTimeDateTypeAdapter.getInstance(instanceBuilder);
+			return UnixTimeTypeAdapter.getInstance(converter);
 		}
 
 	}

@@ -15,7 +15,7 @@ import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
-import lsh.ext.gson.ext.java.util.UnixTimeDateTypeAdapter;
+import lsh.ext.gson.domain.UnixTimeTypeAdapter;
 
 public final class JavaSqlModule
 		extends AbstractModule {
@@ -34,9 +34,9 @@ public final class JavaSqlModule
 	public static final class Builder
 			implements IBuilder0<IModule> {
 
-		private static final ITypeAdapterFactory<Date> dateInstance = UnixTimeDateTypeAdapter.Factory.getInstance(Date.class, () -> new Date(0));
-		private static final ITypeAdapterFactory<Time> timeInstance = UnixTimeDateTypeAdapter.Factory.getInstance(Time.class, () -> new Time(0));
-		private static final ITypeAdapterFactory<Timestamp> timestampInstance = UnixTimeDateTypeAdapter.Factory.getInstance(Timestamp.class, () -> new Timestamp(0));
+		private static final ITypeAdapterFactory<Date> dateInstance = UnixTimeTypeAdapter.Factory.getInstance(Date.class, Converters.dateConverter);
+		private static final ITypeAdapterFactory<Time> timeInstance = UnixTimeTypeAdapter.Factory.getInstance(Time.class, Converters.timeConverter);
+		private static final ITypeAdapterFactory<Timestamp> timestampInstance = UnixTimeTypeAdapter.Factory.getInstance(Timestamp.class, Converters.timestampConverter);
 
 		@Setter
 		private ITypeAdapterFactory<? extends Date> dateTypeAdapterFactory = dateInstance;
