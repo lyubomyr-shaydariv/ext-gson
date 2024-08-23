@@ -103,6 +103,9 @@ public final class JsonValueTypeAdapter
 	public static final class Factory
 			extends AbstractFactory<JsonValue, JsonProvider> {
 
+		@Getter
+		private static final ITypeAdapterFactory<JsonValue> instance = getInstance(JsonProvider.provider());
+
 		private Factory(final JsonProvider jsonProvider) {
 			super(JsonValue.class, jsonProvider);
 		}

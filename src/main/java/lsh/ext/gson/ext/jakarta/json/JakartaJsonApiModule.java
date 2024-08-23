@@ -2,7 +2,6 @@ package lsh.ext.gson.ext.jakarta.json;
 
 import com.google.gson.TypeAdapterFactory;
 import jakarta.json.JsonValue;
-import jakarta.json.spi.JsonProvider;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ public final class JakartaJsonApiModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance(JsonProvider.provider());
+		private ITypeAdapterFactory<? extends JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance();
 
 		public static Builder create() {
 			return new Builder();
