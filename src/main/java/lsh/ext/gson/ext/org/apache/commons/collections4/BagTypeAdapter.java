@@ -25,8 +25,8 @@ public final class BagTypeAdapter<E>
 		extends TypeAdapter<Bag<E>> {
 
 	private final IFactory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory;
-	private final Transformer<? super E, String> keyMapper;
-	private final Transformer<? super String, ? extends E> keyReverseMapper;
+	private final Transformer<? super E, String> toString;
+	private final Transformer<? super String, ? extends E> fromString;
 
 	public static <E> TypeAdapter<Bag<E>> getInstance(
 			final IFactory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
@@ -42,7 +42,7 @@ public final class BagTypeAdapter<E>
 			throws IOException {
 		out.beginObject();
 		for ( final E e : bag ) {
-			out.name(keyMapper.transform(e));
+			out.name(toString.transform(e));
 			out.value(bag.getCount(e));
 		}
 		out.endObject();
@@ -54,7 +54,7 @@ public final class BagTypeAdapter<E>
 		in.beginObject();
 		final IBuilder2<? super E, ? super Integer, ? extends Bag<E>> builder = builderFactory.create();
 		while ( in.hasNext() ) {
-			builder.accept(keyReverseMapper.transform(in.nextName()), in.nextInt());
+			builder.accept(fromString.transform(in.nextName()), in.nextInt());
 		}
 		in.endObject();
 		return builder.build();
