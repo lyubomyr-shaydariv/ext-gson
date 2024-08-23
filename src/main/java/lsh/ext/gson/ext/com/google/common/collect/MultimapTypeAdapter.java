@@ -28,13 +28,13 @@ public final class MultimapTypeAdapter<V>
 		extends TypeAdapter<Multimap<String, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final Supplier<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> multimapBuilderFactory;
+	private final Supplier<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> builderFactory;
 
 	public static <V> TypeAdapter<Multimap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final Supplier<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> multimapBuilderFactory
+			final Supplier<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> builderFactory
 	) {
-		return new MultimapTypeAdapter<>(valueTypeAdapter, multimapBuilderFactory)
+		return new MultimapTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
 	}
 
@@ -55,7 +55,7 @@ public final class MultimapTypeAdapter<V>
 	public Multimap<String, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder2<? super String, ? super V, ? extends Multimap<String, V>> builder = multimapBuilderFactory.get();
+		final IBuilder2<? super String, ? super V, ? extends Multimap<String, V>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
@@ -71,7 +71,7 @@ public final class MultimapTypeAdapter<V>
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
 
-		private final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> builderFactory;
+		private final IBuilder2.ILookup<? super String, ? super V, ? extends Multimap<String, V>> builderLookup;
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -80,9 +80,9 @@ public final class MultimapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends Multimap<String, V>> builderFactory
+				final IBuilder2.ILookup<? super String, ? super V, ? extends Multimap<String, V>> builderLookup
 		) {
-			return new Factory<>(builderFactory);
+			return new Factory<>(builderLookup);
 		}
 
 		// TODO handle all known implementations
@@ -115,8 +115,8 @@ public final class MultimapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Multimap<String, V>> castTypeToken = (TypeToken<Multimap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<String, V, Multimap<String, V>> castMultimapBuilderFactory = (IBuilder2.IFactory<String, V, Multimap<String, V>>) builderFactory;
-			return MultimapTypeAdapter.getInstance(valueTypeAdapter, () -> castMultimapBuilderFactory.create(castTypeToken));
+			final IBuilder2.ILookup<String, V, Multimap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, Multimap<String, V>>) builderLookup;
+			return MultimapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
 		}
 
 		private static <V, M extends Multimap<String, V>> IBuilder2<String, V, M> builder(final M biMap) {

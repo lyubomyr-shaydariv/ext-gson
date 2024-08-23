@@ -63,7 +63,7 @@ public final class BagTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Bag<E>> {
 
-		private final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> builderFactory;
+		private final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderLookup;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
 
@@ -75,7 +75,7 @@ public final class BagTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final IBuilder2.IFactory<? super E, ? super Integer, ? extends Bag<E>> builderFactory,
+				final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderFactory,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
@@ -134,8 +134,8 @@ public final class BagTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Bag<E>> castTypeToken = (TypeToken<Bag<E>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<E, Integer, Bag<E>> castBuilderFactory = (IBuilder2.IFactory<E, Integer, Bag<E>>) builderFactory;
-			return BagTypeAdapter.getInstance(() -> castBuilderFactory.create(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
+			final IBuilder2.ILookup<E, Integer, Bag<E>> castBuilderLookup = (IBuilder2.ILookup<E, Integer, Bag<E>>) builderLookup;
+			return BagTypeAdapter.getInstance(() -> castBuilderLookup.lookup(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
 		}
 
 		private static <E, B extends Bag<E>> IBuilder2<E, Integer, B> builder(final B bag) {

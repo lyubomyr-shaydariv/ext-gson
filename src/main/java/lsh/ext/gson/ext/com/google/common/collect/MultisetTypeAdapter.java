@@ -27,13 +27,13 @@ public final class MultisetTypeAdapter<E>
 		extends TypeAdapter<Multiset<E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final Supplier<? extends IBuilder1<? super E, ? extends Multiset<E>>> multisetBuilderFactory;
+	private final Supplier<? extends IBuilder1<? super E, ? extends Multiset<E>>> builderFactory;
 
 	public static <E> TypeAdapter<Multiset<E>> getInstance(
 			final TypeAdapter<E> valueTypeAdapter,
-			final Supplier<? extends IBuilder1<? super E, ? extends Multiset<E>>> multisetBuilderFactory
+			final Supplier<? extends IBuilder1<? super E, ? extends Multiset<E>>> builderFactory
 	) {
-		return new MultisetTypeAdapter<>(valueTypeAdapter, multisetBuilderFactory)
+		return new MultisetTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
 	}
 
@@ -55,7 +55,7 @@ public final class MultisetTypeAdapter<E>
 	public Multiset<E> read(final JsonReader in)
 			throws IOException {
 		in.beginArray();
-		final IBuilder1<? super E, ? extends Multiset<E>> builder = multisetBuilderFactory.get();
+		final IBuilder1<? super E, ? extends Multiset<E>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			final E element = elementTypeAdapter.read(in);
 			builder.accept(element);
@@ -70,7 +70,7 @@ public final class MultisetTypeAdapter<E>
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
 
-		private final IBuilder1.IFactory<? super E, ? extends Multiset<E>> builderFactory;
+		private final IBuilder1.ILookup<? super E, ? extends Multiset<E>> builderLookup;
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -79,9 +79,9 @@ public final class MultisetTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance(
-				final IBuilder1.IFactory<? super E, ? extends Multiset<E>> builderFactory
+				final IBuilder1.ILookup<? super E, ? extends Multiset<E>> builderLookup
 		) {
-			return new Factory<>(builderFactory);
+			return new Factory<>(builderLookup);
 		}
 
 		// TODO handle all known implementations
@@ -114,8 +114,8 @@ public final class MultisetTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Multiset<E>> castTypeToken = (TypeToken<Multiset<E>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder1.IFactory<E, Multiset<E>> castMultisetBuilderFactory = (IBuilder1.IFactory<E, Multiset<E>>) builderFactory;
-			return MultisetTypeAdapter.getInstance(elementTypeAdapter, () -> castMultisetBuilderFactory.create(castTypeToken));
+			final IBuilder1.ILookup<E, Multiset<E>> castBuilderLookup = (IBuilder1.ILookup<E, Multiset<E>>) builderLookup;
+			return MultisetTypeAdapter.getInstance(elementTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
 		}
 
 		private static <E> IBuilder1<E, Multiset<E>> immutableBuilder() {

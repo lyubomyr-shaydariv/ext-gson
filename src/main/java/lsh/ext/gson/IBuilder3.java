@@ -8,9 +8,9 @@ public interface IBuilder3<A1, A2, A3, T> {
 
 	T build();
 
-	interface IFactory<A1, A2, A3, T> {
+	interface ILookup<A1, A2, A3, T> {
 
-		IBuilder3<A1, A2, A3, T> create(TypeToken<? super T> typeToken);
+		IBuilder3<A1, A2, A3, T> lookup(TypeToken<? super T> typeToken);
 
 	}
 

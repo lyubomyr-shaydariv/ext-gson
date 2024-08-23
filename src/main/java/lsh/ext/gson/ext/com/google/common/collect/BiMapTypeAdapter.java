@@ -27,13 +27,13 @@ public final class BiMapTypeAdapter<V>
 		extends TypeAdapter<BiMap<String, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final Supplier<? extends IBuilder2<String, V, BiMap<String, V>>> biMapBuilderFactory;
+	private final Supplier<? extends IBuilder2<String, V, BiMap<String, V>>> builderFactory;
 
 	public static <V> TypeAdapter<BiMap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final Supplier<? extends IBuilder2<String, V, BiMap<String, V>>> biMapBuilderFactory
+			final Supplier<? extends IBuilder2<String, V, BiMap<String, V>>> builderFactory
 	) {
-		return new BiMapTypeAdapter<>(valueTypeAdapter, biMapBuilderFactory)
+		return new BiMapTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
 	}
 
@@ -54,7 +54,7 @@ public final class BiMapTypeAdapter<V>
 	public BiMap<String, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder2<? super String, ? super V, ? extends BiMap<String, V>> builder = biMapBuilderFactory.get();
+		final IBuilder2<? super String, ? super V, ? extends BiMap<String, V>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
@@ -70,7 +70,7 @@ public final class BiMapTypeAdapter<V>
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
 
-		private final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> builderFactory;
+		private final IBuilder2.ILookup<? super String, ? super V, ? extends BiMap<String, V>> builderLookup;
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -79,9 +79,9 @@ public final class BiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<BiMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends BiMap<String, V>> builderFactory
+				final IBuilder2.ILookup<? super String, ? super V, ? extends BiMap<String, V>> builderLookup
 		) {
-			return new Factory<>(builderFactory);
+			return new Factory<>(builderLookup);
 		}
 
 		// TODO handle all known implementations
@@ -111,8 +111,8 @@ public final class BiMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<BiMap<String, V>> castTypeToken = (TypeToken<BiMap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<String, V, BiMap<String, V>> castBuilderFactory = (IBuilder2.IFactory<String, V, BiMap<String, V>>) builderFactory;
-			return BiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
+			final IBuilder2.ILookup<String, V, BiMap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, BiMap<String, V>>) builderLookup;
+			return BiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
 		}
 
 		private static <V> IBuilder2<String, V, BiMap<String, V>> immutableBuilder() {

@@ -67,7 +67,7 @@ public final class MultiSetTypeAdapter<E>
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
 
-		private final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> builderFactory;
+		private final IBuilder1.ILookup<? super E, ? extends MultiSet<E>> builderFactory;
 
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -76,7 +76,7 @@ public final class MultiSetTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<MultiSet<E>> getInstance(
-				final IBuilder1.IFactory<? super E, ? extends MultiSet<E>> builderFactory
+				final IBuilder1.ILookup<? super E, ? extends MultiSet<E>> builderFactory
 		) {
 			return new Factory<>(builderFactory);
 		}
@@ -105,8 +105,8 @@ public final class MultiSetTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final TypeToken<MultiSet<E>> castTypeToken = (TypeToken<MultiSet<E>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder1.IFactory<E, MultiSet<E>> castBuilderFactory = (IBuilder1.IFactory<E, MultiSet<E>>) builderFactory;
-			return MultiSetTypeAdapter.getInstance(elementTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
+			final IBuilder1.ILookup<E, MultiSet<E>> castBuilderLookup = (IBuilder1.ILookup<E, MultiSet<E>>) builderFactory;
+			return MultiSetTypeAdapter.getInstance(elementTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
 		}
 
 	}

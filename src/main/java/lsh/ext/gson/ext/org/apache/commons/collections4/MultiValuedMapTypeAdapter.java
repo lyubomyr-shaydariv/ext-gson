@@ -68,7 +68,7 @@ public final class MultiValuedMapTypeAdapter<V>
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
 
-		private final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderFactory;
+		private final IBuilder2.ILookup<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderLookup;
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -77,7 +77,7 @@ public final class MultiValuedMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderFactory
+				final IBuilder2.ILookup<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderFactory
 		) {
 			return new Factory<>(builderFactory);
 		}
@@ -109,8 +109,8 @@ public final class MultiValuedMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<MultiValuedMap<String, V>> castTypeToken = (TypeToken<MultiValuedMap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<String, V, MultiValuedMap<String, V>> castBuilderFactory = (IBuilder2.IFactory<String, V, MultiValuedMap<String, V>>) builderFactory;
-			return MultiValuedMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
+			final IBuilder2.ILookup<String, V, MultiValuedMap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, MultiValuedMap<String, V>>) builderLookup;
+			return MultiValuedMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
 		}
 
 		private static <V, M extends MultiValuedMap<String, V>> IBuilder2<String, V, M> builder(final M multiValuedMap) {

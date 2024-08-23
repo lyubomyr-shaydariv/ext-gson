@@ -68,7 +68,7 @@ public final class BidiMapTypeAdapter<V>
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
 
-		private final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> builderFactory;
+		private final IBuilder2.ILookup<? super String, ? super V, ? extends BidiMap<String, V>> builderLookup;
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -77,9 +77,9 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance(
-				final IBuilder2.IFactory<? super String, ? super V, ? extends BidiMap<String, V>> builderFactory
+				final IBuilder2.ILookup<? super String, ? super V, ? extends BidiMap<String, V>> builderLookup
 		) {
-			return new Factory<>(builderFactory);
+			return new Factory<>(builderLookup);
 		}
 
 		// TODO handle all known implementations
@@ -109,8 +109,8 @@ public final class BidiMapTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<BidiMap<String, V>> castTypeToken = (TypeToken<BidiMap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder2.IFactory<String, V, BidiMap<String, V>> castBuilderFactory = (IBuilder2.IFactory<String, V, BidiMap<String, V>>) builderFactory;
-			return BidiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderFactory.create(castTypeToken));
+			final IBuilder2.ILookup<String, V, BidiMap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, BidiMap<String, V>>) builderLookup;
+			return BidiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
 		}
 
 	}

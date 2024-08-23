@@ -96,7 +96,7 @@ public final class CoercedCollectionTypeAdapter<E>
 			extends AbstractTypeAdapterFactory<Collection<? extends E>> {
 
 		private final TypeToken<E> elementTypeToken;
-		private final IBuilder1.IFactory<? super E, ? extends Collection<E>> builderFactory;
+		private final IBuilder1.ILookup<? super E, ? extends Collection<E>> builderFactory;
 
 		public static <E> TypeAdapterFactory getInstance(
 				final TypeToken<E> elementTypeToken
@@ -106,7 +106,7 @@ public final class CoercedCollectionTypeAdapter<E>
 
 		public static <E> TypeAdapterFactory getInstance(
 				final TypeToken<E> elementTypeToken,
-				final IBuilder1.IFactory<? super E, ? extends Collection<E>> builderFactory
+				final IBuilder1.ILookup<? super E, ? extends Collection<E>> builderFactory
 		) {
 			return new Factory<>(elementTypeToken, builderFactory);
 		}
@@ -132,8 +132,8 @@ public final class CoercedCollectionTypeAdapter<E>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Collection<E>> castTypeToken = (TypeToken<Collection<E>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder1.IFactory<E, Collection<E>> castCollectionBuilderFactory = (IBuilder1.IFactory<E, Collection<E>>) builderFactory;
-			return CoercedCollectionTypeAdapter.getInstance(elementTypeAdapter, () -> castCollectionBuilderFactory.create(castTypeToken));
+			final IBuilder1.ILookup<E, Collection<E>> castBuilderLookup = (IBuilder1.ILookup<E, Collection<E>>) builderFactory;
+			return CoercedCollectionTypeAdapter.getInstance(elementTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
 		}
 
 	}

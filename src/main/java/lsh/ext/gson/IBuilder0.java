@@ -6,9 +6,9 @@ public interface IBuilder0<T> {
 
 	T build();
 
-	interface IFactory<T> {
+	interface ILookup<T> {
 
-		IBuilder0<T> create(TypeToken<? super T> typeToken);
+		IBuilder0<T> lookup(TypeToken<? super T> typeToken);
 
 	}
 

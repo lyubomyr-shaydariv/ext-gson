@@ -27,13 +27,13 @@ public final class TableTypeAdapter<V>
 		extends TypeAdapter<Table<String, String, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> tableBuilderFactory;
+	private final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory;
 
 	public static <V> TypeAdapter<Table<String, String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> tableBuilderFactory
+			final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory
 	) {
-		return new TableTypeAdapter<>(valueTypeAdapter, tableBuilderFactory)
+		return new TableTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
 	}
 
@@ -62,7 +62,7 @@ public final class TableTypeAdapter<V>
 	public Table<String, String, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builder = tableBuilderFactory.get();
+		final IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			final String rowKey = in.nextName();
 			in.beginObject();
@@ -83,7 +83,7 @@ public final class TableTypeAdapter<V>
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
 
-		private final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory;
+		private final IBuilder3.ILookup<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderLookup;
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -92,9 +92,9 @@ public final class TableTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance(
-				final IBuilder3.IFactory<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderFactory
+				final IBuilder3.ILookup<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderLookup
 		) {
-			return new Factory<>(builderFactory);
+			return new Factory<>(builderLookup);
 		}
 
 		// TODO handle all known implementations
@@ -125,8 +125,8 @@ public final class TableTypeAdapter<V>
 			@SuppressWarnings("unchecked")
 			final TypeToken<Table<String, String, V>> castTypeToken = (TypeToken<Table<String, String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
-			final IBuilder3.IFactory<String, String, V, Table<String, String, V>> castTableBuilderFactory = (IBuilder3.IFactory<String, String, V, Table<String, String, V>>) builderFactory;
-			return TableTypeAdapter.getInstance(valueTypeAdapter, () -> castTableBuilderFactory.create(castTypeToken));
+			final IBuilder3.ILookup<String, String, V, Table<String, String, V>> castBuilderLookup = (IBuilder3.ILookup<String, String, V, Table<String, String, V>>) builderLookup;
+			return TableTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
 		}
 
 		private static <V, T extends Table<String, String, V>> IBuilder3<String, String, V, T> builder(final T table) {

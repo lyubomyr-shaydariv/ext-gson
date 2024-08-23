@@ -24,9 +24,9 @@ public interface IBuilder2<A1, A2, T> {
 		};
 	}
 
-	interface IFactory<A1, A2, T> {
+	interface ILookup<A1, A2, T> {
 
-		IBuilder2<A1, A2, T> create(TypeToken<? super T> typeToken);
+		IBuilder2<A1, A2, T> lookup(TypeToken<? super T> typeToken);
 
 	}
 
