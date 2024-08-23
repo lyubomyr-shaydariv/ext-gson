@@ -14,6 +14,8 @@ import com.google.gson.stream.JsonWriter;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
+import com.jayway.jsonpath.spi.json.GsonJsonProvider;
+import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -51,8 +53,8 @@ public final class JsonPathTypeAdapter<T>
 	}
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	public static final class Factory
-			implements ITypeAdapterFactory<Object> {
+	public static final class Factory<T>
+			implements ITypeAdapterFactory<T> {
 
 		private final Function<? super Gson, ? extends Configuration> provideConfiguration;
 		private final IAccessor.IFactory accessorsFactory;
@@ -60,7 +62,7 @@ public final class JsonPathTypeAdapter<T>
 		public static ITypeAdapterFactory<?> getInstance(
 				final IAccessor.IFactory accessorsFactory
 		) {
-			return getInstance(gson -> Configurations.getDefaultBuilder(gson).build(), accessorsFactory);
+			return getInstance(Factory::defaultConfiguration, accessorsFactory);
 		}
 
 		public static ITypeAdapterFactory<?> getInstance(
@@ -68,6 +70,13 @@ public final class JsonPathTypeAdapter<T>
 				final IAccessor.IFactory accessorsFactory
 		) {
 			return new Factory(provideConfiguration, accessorsFactory);
+		}
+
+		public static Configuration defaultConfiguration(final Gson gson) {
+			return Configuration.builder()
+					.jsonProvider(new GsonJsonProvider(gson))
+					.mappingProvider(new GsonMappingProvider(gson))
+					.build();
 		}
 
 		@Override

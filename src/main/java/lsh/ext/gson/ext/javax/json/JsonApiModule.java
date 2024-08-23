@@ -1,7 +1,6 @@
 package lsh.ext.gson.ext.javax.json;
 
 import javax.json.JsonValue;
-import javax.json.spi.JsonProvider;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
