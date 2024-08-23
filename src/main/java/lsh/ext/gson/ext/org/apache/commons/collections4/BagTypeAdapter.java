@@ -77,11 +77,11 @@ public final class BagTypeAdapter<E>
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
-				final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderFactory,
+				final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderLookup,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
-			return new Factory<>(builderFactory, createToString, createFromString);
+			return new Factory<>(builderLookup, createToString, createFromString);
 		}
 
 		// TODO handle all known implementations

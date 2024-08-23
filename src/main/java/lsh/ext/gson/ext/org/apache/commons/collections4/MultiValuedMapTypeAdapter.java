@@ -78,9 +78,9 @@ public final class MultiValuedMapTypeAdapter<V>
 		}
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance(
-				final IBuilder2.ILookup<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderFactory
+				final IBuilder2.ILookup<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderLookup
 		) {
-			return new Factory<>(builderFactory);
+			return new Factory<>(builderLookup);
 		}
 
 		// TODO handle all known implementations
