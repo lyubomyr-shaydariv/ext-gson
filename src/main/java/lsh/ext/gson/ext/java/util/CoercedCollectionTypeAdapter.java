@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -21,17 +20,18 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
+import lsh.ext.gson.IFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapter<E>
 		extends TypeAdapter<Collection<? extends E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final Supplier<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> builderFactory;
+	private final IFactory<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> builderFactory;
 
 	public static <E> TypeAdapter<Collection<? extends E>> getInstance(
 			final TypeAdapter<E> elementTypeAdapter,
-			final Supplier<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> builderFactory
+			final IFactory<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> builderFactory
 	) {
 		return new CoercedCollectionTypeAdapter<E>(elementTypeAdapter, builderFactory)
 				.nullSafe();
@@ -62,7 +62,7 @@ public final class CoercedCollectionTypeAdapter<E>
 	@SuppressWarnings("checkstyle:CyclomaticComplexity")
 	public Collection<? extends E> read(final JsonReader in)
 			throws IOException {
-		final IBuilder1<? super E, ? extends Collection<? extends E>> builder = builderFactory.get();
+		final IBuilder1<? super E, ? extends Collection<? extends E>> builder = builderFactory.create();
 		final JsonToken token = in.peek();
 		switch ( token ) {
 		case BEGIN_ARRAY:
@@ -101,7 +101,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		public static <E> TypeAdapterFactory getInstance(
 				final TypeToken<E> elementTypeToken
 		) {
-			return new Factory<>(elementTypeToken, Factory::defaultBuilder);
+			return new Factory<>(elementTypeToken, Factory::defaultBuilderFactory);
 		}
 
 		public static <E> TypeAdapterFactory getInstance(
@@ -111,15 +111,15 @@ public final class CoercedCollectionTypeAdapter<E>
 			return new Factory<>(elementTypeToken, builderFactory);
 		}
 
-		public static <E> IBuilder1<E, Collection<E>> defaultBuilder(final TypeToken<? super Collection<E>> typeToken) {
+		public static <E> IFactory<IBuilder1<E, Collection<E>>> defaultBuilderFactory(final TypeToken<? super Collection<E>> typeToken) {
 			final Class<? super Collection<E>> rawType = typeToken.getRawType();
 			if ( rawType.isAssignableFrom(List.class) ) {
-				return IBuilder1.of(new ArrayList<>());
+				return () -> IBuilder1.of(new ArrayList<>());
 			}
 			if ( rawType.isAssignableFrom(Set.class) ) {
-				return IBuilder1.of(new HashSet<>());
+				return () -> IBuilder1.of(new HashSet<>());
 			}
-			return IBuilder1.of(new ArrayList<>());
+			return () -> IBuilder1.of(new ArrayList<>());
 		}
 
 		@Override
@@ -133,7 +133,7 @@ public final class CoercedCollectionTypeAdapter<E>
 			final TypeToken<Collection<E>> castTypeToken = (TypeToken<Collection<E>>) typeToken;
 			@SuppressWarnings("unchecked")
 			final IBuilder1.ILookup<E, Collection<E>> castBuilderLookup = (IBuilder1.ILookup<E, Collection<E>>) builderFactory;
-			return CoercedCollectionTypeAdapter.getInstance(elementTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
+			return CoercedCollectionTypeAdapter.getInstance(elementTypeAdapter, castBuilderLookup.lookup(castTypeToken));
 		}
 
 	}

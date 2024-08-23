@@ -10,7 +10,7 @@ public interface IBuilder3<A1, A2, A3, T> {
 
 	interface ILookup<A1, A2, A3, T> {
 
-		IBuilder3<A1, A2, A3, T> lookup(TypeToken<? super T> typeToken);
+		IFactory<IBuilder3<A1, A2, A3, T>> lookup(TypeToken<? super T> typeToken);
 
 	}
 

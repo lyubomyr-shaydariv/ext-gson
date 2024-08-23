@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import javax.annotation.Nullable;
 
-import com.google.common.base.Supplier;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.LinkedHashMultiset;
@@ -18,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
+import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -27,11 +27,11 @@ public final class MultisetTypeAdapter<E>
 		extends TypeAdapter<Multiset<E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final Supplier<? extends IBuilder1<? super E, ? extends Multiset<E>>> builderFactory;
+	private final IFactory<? extends IBuilder1<? super E, ? extends Multiset<E>>> builderFactory;
 
 	public static <E> TypeAdapter<Multiset<E>> getInstance(
 			final TypeAdapter<E> valueTypeAdapter,
-			final Supplier<? extends IBuilder1<? super E, ? extends Multiset<E>>> builderFactory
+			final IFactory<? extends IBuilder1<? super E, ? extends Multiset<E>>> builderFactory
 	) {
 		return new MultisetTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
@@ -55,7 +55,7 @@ public final class MultisetTypeAdapter<E>
 	public Multiset<E> read(final JsonReader in)
 			throws IOException {
 		in.beginArray();
-		final IBuilder1<? super E, ? extends Multiset<E>> builder = builderFactory.get();
+		final IBuilder1<? super E, ? extends Multiset<E>> builder = builderFactory.create();
 		while ( in.hasNext() ) {
 			final E element = elementTypeAdapter.read(in);
 			builder.accept(element);
@@ -68,7 +68,7 @@ public final class MultisetTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<Multiset<E>> {
 
-		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder1.ILookup<? super E, ? extends Multiset<E>> builderLookup;
 
@@ -85,19 +85,19 @@ public final class MultisetTypeAdapter<E>
 		}
 
 		// TODO handle all known implementations
-		public static <E> IBuilder1<E, Multiset<E>> defaultBuilder(final TypeToken<? super Multiset<E>> typeToken) {
+		public static <E> IFactory<IBuilder1<E, Multiset<E>>> defaultBuilderFactory(final TypeToken<? super Multiset<E>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multiset> rawType = (Class<? extends Multiset>) typeToken.getRawType();
 			if ( rawType == HashMultiset.class ) {
-				return IBuilder1.of(HashMultiset.create());
+				return () -> IBuilder1.of(HashMultiset.create());
 			}
 			if ( rawType == LinkedHashMultiset.class ) {
-				return IBuilder1.of(LinkedHashMultiset.create());
+				return () -> IBuilder1.of(LinkedHashMultiset.create());
 			}
 			if ( ImmutableMultiset.class.isAssignableFrom(rawType) ) {
-				return immutableBuilder();
+				return Factory::immutableBuilder;
 			}
-			return IBuilder1.of(HashMultiset.create());
+			return () -> IBuilder1.of(HashMultiset.create());
 		}
 
 		@Override
@@ -115,7 +115,7 @@ public final class MultisetTypeAdapter<E>
 			final TypeToken<Multiset<E>> castTypeToken = (TypeToken<Multiset<E>>) typeToken;
 			@SuppressWarnings("unchecked")
 			final IBuilder1.ILookup<E, Multiset<E>> castBuilderLookup = (IBuilder1.ILookup<E, Multiset<E>>) builderLookup;
-			return MultisetTypeAdapter.getInstance(elementTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
+			return MultisetTypeAdapter.getInstance(elementTypeAdapter, castBuilderLookup.lookup(castTypeToken));
 		}
 
 		private static <E> IBuilder1<E, Multiset<E>> immutableBuilder() {

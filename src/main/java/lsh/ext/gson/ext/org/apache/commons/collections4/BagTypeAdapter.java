@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
+import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
@@ -23,12 +24,12 @@ import org.apache.commons.collections4.bag.HashBag;
 public final class BagTypeAdapter<E>
 		extends TypeAdapter<Bag<E>> {
 
-	private final org.apache.commons.collections4.Factory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory;
+	private final IFactory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory;
 	private final Transformer<? super E, String> keyMapper;
 	private final Transformer<? super String, ? extends E> keyReverseMapper;
 
 	public static <E> TypeAdapter<Bag<E>> getInstance(
-			final org.apache.commons.collections4.Factory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
+			final IFactory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
 			final Transformer<? super E, String> keyMapper,
 			final Transformer<? super String, ? extends E> keyReverseMapper
 	) {
@@ -71,7 +72,7 @@ public final class BagTypeAdapter<E>
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
 				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
 		) {
-			return getInstance(Factory::defaultBuilder, createToString, createFromString);
+			return getInstance(Factory::defaultBuilderFactory, createToString, createFromString);
 		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
@@ -83,13 +84,13 @@ public final class BagTypeAdapter<E>
 		}
 
 		// TODO handle all known implementations
-		public static <E> IBuilder2<E, Integer, Bag<E>> defaultBuilder(final TypeToken<? super Bag<E>> typeToken) {
+		public static <E> IFactory<IBuilder2<E, Integer, Bag<E>>> defaultBuilderFactory(final TypeToken<? super Bag<E>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? super Bag<?>> rawType = (Class<? super Bag<?>>) typeToken.getRawType();
 			if ( HashBag.class.isAssignableFrom(rawType) ) {
-				return builder(new HashBag<>());
+				return () -> builder(new HashBag<>());
 			}
-			return builder(new HashBag<>());
+			return () -> builder(new HashBag<>());
 		}
 
 		public static <T> Transformer<? super T, String> defaultCreateToString(final TypeToken<? super String> typeToken) {
@@ -135,7 +136,7 @@ public final class BagTypeAdapter<E>
 			final TypeToken<Bag<E>> castTypeToken = (TypeToken<Bag<E>>) typeToken;
 			@SuppressWarnings("unchecked")
 			final IBuilder2.ILookup<E, Integer, Bag<E>> castBuilderLookup = (IBuilder2.ILookup<E, Integer, Bag<E>>) builderLookup;
-			return BagTypeAdapter.getInstance(() -> castBuilderLookup.lookup(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
+			return BagTypeAdapter.getInstance(castBuilderLookup.lookup(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
 		}
 
 		private static <E, B extends Bag<E>> IBuilder2<E, Integer, B> builder(final B bag) {

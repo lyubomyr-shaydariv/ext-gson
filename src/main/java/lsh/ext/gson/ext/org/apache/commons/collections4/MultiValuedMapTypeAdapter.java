@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
+import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -25,11 +26,11 @@ public final class MultiValuedMapTypeAdapter<V>
 		extends TypeAdapter<MultiValuedMap<String, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final org.apache.commons.collections4.Factory<? extends IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>>> builderFactory;
+	private final IFactory<? extends IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>>> builderFactory;
 
 	public static <V> TypeAdapter<MultiValuedMap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final org.apache.commons.collections4.Factory<? extends IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>>> builderFactory
+			final IFactory<? extends IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>>> builderFactory
 	) {
 		return new MultiValuedMapTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
@@ -66,7 +67,7 @@ public final class MultiValuedMapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<MultiValuedMap<String, V>> {
 
-		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder2.ILookup<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderLookup;
 
@@ -83,16 +84,16 @@ public final class MultiValuedMapTypeAdapter<V>
 		}
 
 		// TODO handle all known implementations
-		public static <V> IBuilder2<String, V, MultiValuedMap<String, V>> defaultBuilder(final TypeToken<? super MultiValuedMap<String, V>> typeToken) {
+		public static <V> IFactory<IBuilder2<String, V, MultiValuedMap<String, V>>> defaultBuilderFactory(final TypeToken<? super MultiValuedMap<String, V>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? extends MultiValuedMap<?, ?>> rawType = (Class<? extends MultiValuedMap<?, ?>>) typeToken.getRawType();
 			if ( ArrayListValuedHashMap.class.isAssignableFrom(rawType) ) {
-				return builder(new ArrayListValuedHashMap<>());
+				return () -> builder(new ArrayListValuedHashMap<>());
 			}
 			if ( HashSetValuedHashMap.class.isAssignableFrom(rawType) ) {
-				return builder(new HashSetValuedHashMap<>());
+				return () -> builder(new HashSetValuedHashMap<>());
 			}
-			return builder(new ArrayListValuedHashMap<>());
+			return () -> builder(new ArrayListValuedHashMap<>());
 		}
 
 		@Override
@@ -110,7 +111,7 @@ public final class MultiValuedMapTypeAdapter<V>
 			final TypeToken<MultiValuedMap<String, V>> castTypeToken = (TypeToken<MultiValuedMap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
 			final IBuilder2.ILookup<String, V, MultiValuedMap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, MultiValuedMap<String, V>>) builderLookup;
-			return MultiValuedMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
+			return MultiValuedMapTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(castTypeToken));
 		}
 
 		private static <V, M extends MultiValuedMap<String, V>> IBuilder2<String, V, M> builder(final M multiValuedMap) {

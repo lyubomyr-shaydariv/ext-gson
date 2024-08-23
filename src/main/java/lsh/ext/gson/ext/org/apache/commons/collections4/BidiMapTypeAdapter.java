@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
+import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
@@ -25,11 +26,11 @@ public final class BidiMapTypeAdapter<V>
 		extends TypeAdapter<BidiMap<String, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final org.apache.commons.collections4.Factory<? extends IBuilder2<? super String, ? super V, ? extends BidiMap<String, V>>> builderFactory;
+	private final IFactory<? extends IBuilder2<? super String, ? super V, ? extends BidiMap<String, V>>> builderFactory;
 
 	public static <V> TypeAdapter<BidiMap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final org.apache.commons.collections4.Factory<? extends IBuilder2<? super String, ? super V, ? extends BidiMap<String, V>>> builderFactory
+			final IFactory<? extends IBuilder2<? super String, ? super V, ? extends BidiMap<String, V>>> builderFactory
 	) {
 		return new BidiMapTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
@@ -66,7 +67,7 @@ public final class BidiMapTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<BidiMap<String, V>> {
 
-		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder2.ILookup<? super String, ? super V, ? extends BidiMap<String, V>> builderLookup;
 
@@ -83,16 +84,16 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		// TODO handle all known implementations
-		public static <V> IBuilder2<String, V, BidiMap<String, V>> defaultBuilder(final TypeToken<? super BidiMap<String, V>> typeToken) {
+		public static <V> IFactory<IBuilder2<String, V, BidiMap<String, V>>> defaultBuilderFactory(final TypeToken<? super BidiMap<String, V>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? extends BidiMap<?, ?>> rawType = (Class<? extends BidiMap<?, ?>>) typeToken.getRawType();
 			if ( DualHashBidiMap.class.isAssignableFrom(rawType) ) {
-				return IBuilder2.of(new DualHashBidiMap<>());
+				return () -> IBuilder2.of(new DualHashBidiMap<>());
 			}
 			if ( DualLinkedHashBidiMap.class.isAssignableFrom(rawType) ) {
-				return IBuilder2.of(new DualLinkedHashBidiMap<>());
+				return () -> IBuilder2.of(new DualLinkedHashBidiMap<>());
 			}
-			return IBuilder2.of(new DualHashBidiMap<>());
+			return () -> IBuilder2.of(new DualHashBidiMap<>());
 		}
 
 		@Override
@@ -110,7 +111,7 @@ public final class BidiMapTypeAdapter<V>
 			final TypeToken<BidiMap<String, V>> castTypeToken = (TypeToken<BidiMap<String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
 			final IBuilder2.ILookup<String, V, BidiMap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, BidiMap<String, V>>) builderLookup;
-			return BidiMapTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
+			return BidiMapTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(castTypeToken));
 		}
 
 	}

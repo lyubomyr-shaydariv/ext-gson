@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
+import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiSet;
@@ -24,11 +25,11 @@ public final class MultiSetTypeAdapter<E>
 		extends TypeAdapter<MultiSet<E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final org.apache.commons.collections4.Factory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory;
+	private final IFactory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory;
 
 	public static <E> TypeAdapter<MultiSet<E>> getInstance(
 			final TypeAdapter<E> valueTypeAdapter,
-			final org.apache.commons.collections4.Factory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory
+			final IFactory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory
 	) {
 		return new MultiSetTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
@@ -65,7 +66,7 @@ public final class MultiSetTypeAdapter<E>
 	public static final class Factory<E>
 			extends AbstractTypeAdapterFactory<MultiSet<E>> {
 
-		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder1.ILookup<? super E, ? extends MultiSet<E>> builderFactory;
 
@@ -82,13 +83,13 @@ public final class MultiSetTypeAdapter<E>
 		}
 
 		// TODO handle all known implementations
-		public static <E> IBuilder1<E, MultiSet<E>> defaultBuilder(final TypeToken<? super MultiSet<E>> typeToken) {
+		public static <E> IFactory<IBuilder1<E, MultiSet<E>>> defaultBuilderFactory(final TypeToken<? super MultiSet<E>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? extends MultiSet<?>> rawType = (Class<? extends MultiSet<?>>) typeToken.getRawType();
 			if ( HashMultiSet.class.isAssignableFrom(rawType) ) {
-				return IBuilder1.of(new HashMultiSet<>());
+				return () -> IBuilder1.of(new HashMultiSet<>());
 			}
-			return IBuilder1.of(new HashMultiSet<>());
+			return () -> IBuilder1.of(new HashMultiSet<>());
 		}
 
 		@Override
@@ -106,7 +107,7 @@ public final class MultiSetTypeAdapter<E>
 			final TypeToken<MultiSet<E>> castTypeToken = (TypeToken<MultiSet<E>>) typeToken;
 			@SuppressWarnings("unchecked")
 			final IBuilder1.ILookup<E, MultiSet<E>> castBuilderLookup = (IBuilder1.ILookup<E, MultiSet<E>>) builderFactory;
-			return MultiSetTypeAdapter.getInstance(elementTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
+			return MultiSetTypeAdapter.getInstance(elementTypeAdapter, castBuilderLookup.lookup(castTypeToken));
 		}
 
 	}

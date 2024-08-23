@@ -37,42 +37,42 @@ public final class CoercedCollectionTypeAdapterTest
 		final TypeAdapter<Map<String, Integer>> stringToIntegerMapTypeAdapter = gson.getAdapter(stringToIntegerMapTypeToken);
 		return List.of(
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.defaultBuilder(collectionTypeToken)),
+						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, CoercedCollectionTypeAdapter.Factory.defaultBuilderFactory(collectionTypeToken)),
 						"{\"foo\":1,\"bar\":2}",
 						List.of(ImmutableMap.of("foo", 1, "bar", 2))
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.defaultBuilder(collectionTypeToken)),
+						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, CoercedCollectionTypeAdapter.Factory.defaultBuilderFactory(collectionTypeToken)),
 						"\"foo\"",
 						List.of("foo")
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.defaultBuilder(collectionTypeToken)),
+						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, CoercedCollectionTypeAdapter.Factory.defaultBuilderFactory(collectionTypeToken)),
 						"39",
 						List.of(39)
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.defaultBuilder(collectionTypeToken)),
+						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, CoercedCollectionTypeAdapter.Factory.defaultBuilderFactory(collectionTypeToken)),
 						"true",
 						List.of(true)
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.defaultBuilder(collectionTypeToken)),
+						CoercedCollectionTypeAdapter.getInstance(stringToIntegerMapTypeAdapter, CoercedCollectionTypeAdapter.Factory.defaultBuilderFactory(collectionTypeToken)),
 						"[{\"foo\":1,\"bar\":2},{\"bar\":3,\"qux\":4}]",
 						List.of(ImmutableMap.of("foo", 1, "bar", 2), ImmutableMap.of("bar", 3, "qux", 4))
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.defaultBuilder(collectionTypeToken)),
+						CoercedCollectionTypeAdapter.getInstance(stringTypeAdapter, CoercedCollectionTypeAdapter.Factory.defaultBuilderFactory(collectionTypeToken)),
 						"[\"foo\",\"bar\",\"baz\"]",
 						List.of("foo", "bar", "baz")
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.defaultBuilder(collectionTypeToken)),
+						CoercedCollectionTypeAdapter.getInstance(integerTypeAdapter, CoercedCollectionTypeAdapter.Factory.defaultBuilderFactory(collectionTypeToken)),
 						"[39,42,100]",
 						List.of(39, 42, 100)
 				),
 				makeTestCase(
-						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, () -> CoercedCollectionTypeAdapter.Factory.defaultBuilder(collectionTypeToken)),
+						CoercedCollectionTypeAdapter.getInstance(booleanTypeAdapter, CoercedCollectionTypeAdapter.Factory.defaultBuilderFactory(collectionTypeToken)),
 						"[true,false,true]",
 						List.of(true, false, true)
 				)

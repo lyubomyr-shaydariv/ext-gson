@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.HashBasedTable;
@@ -18,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractTypeAdapterFactory;
 import lsh.ext.gson.IBuilder3;
+import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -27,11 +27,11 @@ public final class TableTypeAdapter<V>
 		extends TypeAdapter<Table<String, String, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory;
+	private final IFactory<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory;
 
 	public static <V> TypeAdapter<Table<String, String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory
+			final IFactory<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory
 	) {
 		return new TableTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
@@ -62,7 +62,7 @@ public final class TableTypeAdapter<V>
 	public Table<String, String, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builder = builderFactory.get();
+		final IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builder = builderFactory.create();
 		while ( in.hasNext() ) {
 			final String rowKey = in.nextName();
 			in.beginObject();
@@ -81,7 +81,7 @@ public final class TableTypeAdapter<V>
 	public static final class Factory<V>
 			extends AbstractTypeAdapterFactory<Table<String, String, V>> {
 
-		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilder);
+		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder3.ILookup<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderLookup;
 
@@ -98,17 +98,17 @@ public final class TableTypeAdapter<V>
 		}
 
 		// TODO handle all known implementations
-		public static <V> IBuilder3<String, String, V, Table<String, String, V>> defaultBuilder(final TypeToken<? super Table<String, String, V>> typeToken) {
+		public static <V> IFactory<IBuilder3<String, String, V, Table<String, String, V>>> defaultBuilderFactory(final TypeToken<? super Table<String, String, V>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Table> rawType = (Class<? extends Table>) typeToken.getRawType();
 			// TODO why is HashBasedTable not final?
 			if ( HashBasedTable.class.isAssignableFrom(rawType) ) {
-				return builder(HashBasedTable.create());
+				return () -> builder(HashBasedTable.create());
 			}
 			if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
-				return immutableBuilder();
+				return Factory::immutableBuilder;
 			}
-			return builder(HashBasedTable.create());
+			return () -> builder(HashBasedTable.create());
 		}
 
 		@Override
@@ -126,7 +126,7 @@ public final class TableTypeAdapter<V>
 			final TypeToken<Table<String, String, V>> castTypeToken = (TypeToken<Table<String, String, V>>) typeToken;
 			@SuppressWarnings("unchecked")
 			final IBuilder3.ILookup<String, String, V, Table<String, String, V>> castBuilderLookup = (IBuilder3.ILookup<String, String, V, Table<String, String, V>>) builderLookup;
-			return TableTypeAdapter.getInstance(valueTypeAdapter, () -> castBuilderLookup.lookup(castTypeToken));
+			return TableTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(castTypeToken));
 		}
 
 		private static <V, T extends Table<String, String, V>> IBuilder3<String, String, V, T> builder(final T table) {

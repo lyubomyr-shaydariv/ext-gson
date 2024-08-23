@@ -26,7 +26,7 @@ public interface IBuilder1<A1, T> {
 
 	interface ILookup<A1, T> {
 
-		IBuilder1<A1, T> lookup(TypeToken<? super T> typeToken);
+		IFactory<IBuilder1<A1, T>> lookup(TypeToken<? super T> typeToken);
 
 	}
 
