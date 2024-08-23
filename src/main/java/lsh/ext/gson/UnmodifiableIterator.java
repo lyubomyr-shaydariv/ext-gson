@@ -11,6 +11,7 @@ final class UnmodifiableIterator<T>
 
 	private final Iterator<? extends T> iterator;
 
+	@SuppressWarnings("UseOfConcreteClass")
 	static <T> Iterator<T> of(final Iterator<? extends T> iterator) {
 		if ( iterator instanceof UnmodifiableIterator<? extends T> ) {
 			@SuppressWarnings("unchecked")

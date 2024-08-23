@@ -11,6 +11,7 @@ public final class UnmodifiableIterable<T>
 
 	private final Iterable<? extends T> iterable;
 
+	@SuppressWarnings("UseOfConcreteClass")
 	public static <T> Iterable<T> of(final Iterable<? extends T> iterable) {
 		if ( iterable instanceof UnmodifiableIterable<? extends T> ) {
 			@SuppressWarnings("unchecked")
