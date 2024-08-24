@@ -11,6 +11,10 @@ No `ext-gson` dependencies are bundled or planned to be bundled, so all dependen
 * `java.util.Enumeration`
 * `java.util.Iterator`
 
+##### Regular expressions
+
+* `java.util.regex.Pattern`
+
 #### Java 8
 
 ##### Optionals
