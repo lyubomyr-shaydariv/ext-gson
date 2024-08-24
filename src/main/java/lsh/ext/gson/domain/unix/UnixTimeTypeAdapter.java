@@ -1,4 +1,4 @@
-package lsh.ext.gson.domain;
+package lsh.ext.gson.domain.unix;
 
 import java.io.IOException;
 
