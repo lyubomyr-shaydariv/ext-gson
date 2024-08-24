@@ -6,22 +6,22 @@ import java.time.temporal.TemporalQuery;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractStringTypeAdapter;
+import lsh.ext.gson.AbstractCharSequenceTypeAdapter;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 abstract class AbstractTemporalAccessorTypeAdapter<T extends TemporalAccessor>
-		extends AbstractStringTypeAdapter<T> {
+		extends AbstractCharSequenceTypeAdapter<T> {
 
 	private final DateTimeFormatter dateTimeFormatter;
 	private final TemporalQuery<? extends T> query;
 
 	@Override
-	protected final T fromString(final String text) {
-		return dateTimeFormatter.parse(text, query);
+	protected final T fromCharSequence(final CharSequence cs) {
+		return dateTimeFormatter.parse(cs, query);
 	}
 
 	@Override
-	protected final String toString(final T value) {
+	protected final CharSequence toCharSequence(final T value) {
 		return dateTimeFormatter.format(value);
 	}
 

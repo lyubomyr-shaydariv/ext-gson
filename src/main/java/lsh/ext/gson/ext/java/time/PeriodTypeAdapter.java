@@ -5,11 +5,11 @@ import java.time.Period;
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.AbstractStringTypeAdapter;
+import lsh.ext.gson.AbstractCharSequenceTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class PeriodTypeAdapter
-		extends AbstractStringTypeAdapter<Period> {
+		extends AbstractCharSequenceTypeAdapter<Period> {
 
 	@Getter
 	@SuppressFBWarnings("MS_EXPOSE_REP")
@@ -17,12 +17,12 @@ public final class PeriodTypeAdapter
 			.nullSafe();
 
 	@Override
-	protected Period fromString(final String text) {
-		return Period.parse(text);
+	protected Period fromCharSequence(final CharSequence cs) {
+		return Period.parse(cs);
 	}
 
 	@Override
-	protected String toString(final Period value) {
+	protected CharSequence toCharSequence(final Period value) {
 		return value.toString();
 	}
 

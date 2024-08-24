@@ -7,12 +7,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractStringTypeAdapter;
+import lsh.ext.gson.AbstractCharSequenceTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DurationTypeAdapter
-		extends AbstractStringTypeAdapter<Duration> {
+		extends AbstractCharSequenceTypeAdapter<Duration> {
 
 	@Getter
 	@SuppressFBWarnings("MS_EXPOSE_REP")
@@ -20,12 +20,12 @@ public final class DurationTypeAdapter
 			.nullSafe();
 
 	@Override
-	protected Duration fromString(final String text) {
-		return Duration.parse(text);
+	protected Duration fromCharSequence(final CharSequence cs) {
+		return Duration.parse(cs);
 	}
 
 	@Override
-	protected String toString(final Duration value) {
+	protected String toCharSequence(final Duration value) {
 		return value.toString();
 	}
 
