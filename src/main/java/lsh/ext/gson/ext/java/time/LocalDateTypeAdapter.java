@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -29,14 +30,18 @@ public final class LocalDateTypeAdapter
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
-		private static final ITypeAdapterFactory<LocalDate> instance = new Factory(LocalDateTypeAdapter.getInstance());
+		private static final ITypeAdapterFactory<LocalDate> instance = new Factory(LocalDateTypeAdapter.instance);
+
+		@Getter(AccessLevel.PROTECTED)
+		private final TypeAdapter<LocalDate> typeAdapter;
 
 		private Factory(final TypeAdapter<LocalDate> typeAdapter) {
-			super(LocalDate.class, typeAdapter);
+			super(LocalDate.class);
+			this.typeAdapter = typeAdapter;
 		}
 
-		public static ITypeAdapterFactory<LocalDate> getInstance(final DateTimeFormatter dateTimeFormatter) {
-			return new Factory(LocalDateTypeAdapter.getInstance(dateTimeFormatter));
+		public static ITypeAdapterFactory<LocalDate> getInstance(final TypeAdapter<LocalDate> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 	}

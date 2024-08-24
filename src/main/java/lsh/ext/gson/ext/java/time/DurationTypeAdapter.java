@@ -34,10 +34,18 @@ public final class DurationTypeAdapter
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
-		private static final ITypeAdapterFactory<Duration> instance = new Factory(DurationTypeAdapter.getInstance());
+		private static final ITypeAdapterFactory<Duration> instance = new Factory(DurationTypeAdapter.instance);
+
+		@Getter(AccessLevel.PROTECTED)
+		private final TypeAdapter<Duration> typeAdapter;
 
 		private Factory(final TypeAdapter<Duration> typeAdapter) {
-			super(Duration.class, typeAdapter);
+			super(Duration.class);
+			this.typeAdapter = typeAdapter;
+		}
+
+		public static ITypeAdapterFactory<Duration> getInstance(final TypeAdapter<Duration> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 	}

@@ -34,10 +34,18 @@ public final class DayOfWeekTypeAdapter
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
-		private static final ITypeAdapterFactory<DayOfWeek> instance = new Factory(DayOfWeekTypeAdapter.getInstance());
+		private static final ITypeAdapterFactory<DayOfWeek> instance = new Factory(DayOfWeekTypeAdapter.instance);
+
+		@Getter(AccessLevel.PROTECTED)
+		private final TypeAdapter<DayOfWeek> typeAdapter;
 
 		private Factory(final TypeAdapter<DayOfWeek> typeAdapter) {
-			super(DayOfWeek.class, typeAdapter);
+			super(DayOfWeek.class);
+			this.typeAdapter = typeAdapter;
+		}
+
+		public static ITypeAdapterFactory<DayOfWeek> getInstance(final TypeAdapter<DayOfWeek> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 	}

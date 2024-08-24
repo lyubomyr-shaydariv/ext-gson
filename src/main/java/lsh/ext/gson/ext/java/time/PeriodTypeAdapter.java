@@ -4,6 +4,7 @@ import java.time.Period;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lsh.ext.gson.AbstractCharSequenceTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -31,10 +32,18 @@ public final class PeriodTypeAdapter
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
-		private static final ITypeAdapterFactory<Period> instance = new Factory(PeriodTypeAdapter.getInstance());
+		private static final ITypeAdapterFactory<Period> instance = new Factory(PeriodTypeAdapter.instance);
+
+		@Getter(AccessLevel.PROTECTED)
+		private final TypeAdapter<Period> typeAdapter;
 
 		private Factory(final TypeAdapter<Period> typeAdapter) {
-			super(Period.class, typeAdapter);
+			super(Period.class);
+			this.typeAdapter = typeAdapter;
+		}
+
+		public static ITypeAdapterFactory<Period> getInstance(final TypeAdapter<Period> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 	}

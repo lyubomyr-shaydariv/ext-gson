@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -29,14 +30,18 @@ public final class OffsetDateTimeTypeAdapter
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
-		private static final ITypeAdapterFactory<OffsetDateTime> instance = new Factory(OffsetDateTimeTypeAdapter.getInstance());
+		private static final ITypeAdapterFactory<OffsetDateTime> instance = new Factory(OffsetDateTimeTypeAdapter.instance);
+
+		@Getter(AccessLevel.PROTECTED)
+		private final TypeAdapter<OffsetDateTime> typeAdapter;
 
 		private Factory(final TypeAdapter<OffsetDateTime> typeAdapter) {
-			super(OffsetDateTime.class, typeAdapter);
+			super(OffsetDateTime.class);
+			this.typeAdapter = typeAdapter;
 		}
 
-		public static ITypeAdapterFactory<OffsetDateTime> getInstance(final DateTimeFormatter dateTimeFormatter) {
-			return new Factory(OffsetDateTimeTypeAdapter.getInstance(dateTimeFormatter));
+		public static ITypeAdapterFactory<OffsetDateTime> getInstance(final TypeAdapter<OffsetDateTime> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 	}

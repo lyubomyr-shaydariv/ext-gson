@@ -8,6 +8,7 @@ import java.time.temporal.ChronoField;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -37,14 +38,18 @@ public final class YearTypeAdapter
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
-		private static final ITypeAdapterFactory<Year> instance = new Factory(YearTypeAdapter.getInstance());
+		private static final ITypeAdapterFactory<Year> instance = new Factory(YearTypeAdapter.instance);
+
+		@Getter(AccessLevel.PROTECTED)
+		private final TypeAdapter<Year> typeAdapter;
 
 		private Factory(final TypeAdapter<Year> typeAdapter) {
-			super(Year.class, typeAdapter);
+			super(Year.class);
+			this.typeAdapter = typeAdapter;
 		}
 
-		public static ITypeAdapterFactory<Year> getInstance(final DateTimeFormatter dateTimeFormatter) {
-			return new Factory(YearTypeAdapter.getInstance(dateTimeFormatter));
+		public static ITypeAdapterFactory<Year> getInstance(final TypeAdapter<Year> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 	}

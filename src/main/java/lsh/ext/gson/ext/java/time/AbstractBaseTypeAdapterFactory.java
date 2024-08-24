@@ -14,7 +14,8 @@ abstract class AbstractBaseTypeAdapterFactory<T>
 		extends AbstractTypeAdapterFactory<T> {
 
 	private final Class<T> klass;
-	private final TypeAdapter<T> typeAdapter;
+
+	protected abstract TypeAdapter<T> getTypeAdapter();
 
 	@Override
 	@Nullable
@@ -22,7 +23,7 @@ abstract class AbstractBaseTypeAdapterFactory<T>
 		if ( typeToken.getRawType() != klass ) {
 			return null;
 		}
-		return typeAdapter;
+		return getTypeAdapter();
 	}
 
 }

@@ -7,6 +7,7 @@ import java.time.temporal.ChronoField;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -37,14 +38,18 @@ public final class MonthDayTypeAdapter
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
-		private static final ITypeAdapterFactory<MonthDay> instance = new Factory(MonthDayTypeAdapter.getInstance());
+		private static final ITypeAdapterFactory<MonthDay> instance = new Factory(MonthDayTypeAdapter.instance);
+
+		@Getter(AccessLevel.PROTECTED)
+		private final TypeAdapter<MonthDay> typeAdapter;
 
 		private Factory(final TypeAdapter<MonthDay> typeAdapter) {
-			super(MonthDay.class, typeAdapter);
+			super(MonthDay.class);
+			this.typeAdapter = typeAdapter;
 		}
 
-		public static ITypeAdapterFactory<MonthDay> getInstance(final DateTimeFormatter dateTimeFormatter) {
-			return new Factory(MonthDayTypeAdapter.getInstance(dateTimeFormatter));
+		public static ITypeAdapterFactory<MonthDay> getInstance(final TypeAdapter<MonthDay> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 	}

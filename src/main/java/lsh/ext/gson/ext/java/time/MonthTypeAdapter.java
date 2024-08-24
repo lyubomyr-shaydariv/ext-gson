@@ -4,6 +4,7 @@ import java.time.Month;
 
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lsh.ext.gson.AbstractStringTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -31,10 +32,18 @@ public final class MonthTypeAdapter
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
-		private static final ITypeAdapterFactory<Month> instance = new Factory(MonthTypeAdapter.getInstance());
+		private static final ITypeAdapterFactory<Month> instance = new Factory(MonthTypeAdapter.instance);
+
+		@Getter(AccessLevel.PROTECTED)
+		private final TypeAdapter<Month> typeAdapter;
 
 		private Factory(final TypeAdapter<Month> typeAdapter) {
-			super(Month.class, typeAdapter);
+			super(Month.class);
+			this.typeAdapter = typeAdapter;
+		}
+
+		public static ITypeAdapterFactory<Month> getInstance(final TypeAdapter<Month> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 	}
