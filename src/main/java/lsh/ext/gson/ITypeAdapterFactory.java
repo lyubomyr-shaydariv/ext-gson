@@ -1,8 +1,18 @@
 package lsh.ext.gson;
 
-import com.google.gson.TypeAdapterFactory;
+import javax.annotation.Nullable;
 
-@SuppressWarnings({ "unused", "MarkerInterface" })
-public interface ITypeAdapterFactory<T>
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+@SuppressWarnings("unused")
+public interface ITypeAdapterFactory<CT>
 		extends TypeAdapterFactory {
+
+	@Override
+	@Nullable
+	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
+
 }

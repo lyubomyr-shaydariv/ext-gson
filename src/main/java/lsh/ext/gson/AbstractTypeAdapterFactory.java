@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 
+@Deprecated
 public abstract class AbstractTypeAdapterFactory<CT>
 		implements ITypeAdapterFactory<CT> {
 
