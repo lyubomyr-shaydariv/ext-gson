@@ -6,7 +6,6 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-// TODO reasonable?
 public abstract class AbstractCharSequenceTypeAdapter<T>
 		extends TypeAdapter<T> {
 
