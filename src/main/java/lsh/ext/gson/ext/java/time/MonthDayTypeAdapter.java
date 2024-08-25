@@ -5,10 +5,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import lombok.AccessLevel;
 import lombok.Getter;
+import lsh.ext.gson.AbstractClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class MonthDayTypeAdapter
@@ -34,13 +36,12 @@ public final class MonthDayTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<MonthDay> {
+			extends AbstractClassTypeAdapterFactory<MonthDay> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<MonthDay> instance = new Factory(MonthDayTypeAdapter.instance);
 
-		@Getter(AccessLevel.PROTECTED)
 		private final TypeAdapter<MonthDay> typeAdapter;
 
 		private Factory(final TypeAdapter<MonthDay> typeAdapter) {
@@ -50,6 +51,11 @@ public final class MonthDayTypeAdapter
 
 		public static ITypeAdapterFactory<MonthDay> getInstance(final TypeAdapter<MonthDay> typeAdapter) {
 			return new Factory(typeAdapter);
+		}
+
+		@Override
+		protected TypeAdapter<MonthDay> createTypeAdapter(final Gson gson, final TypeToken<MonthDay> typeToken) {
+			return typeAdapter;
 		}
 
 	}

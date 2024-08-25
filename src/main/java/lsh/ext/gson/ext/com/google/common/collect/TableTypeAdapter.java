@@ -15,7 +15,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder3;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -77,13 +77,18 @@ public final class TableTypeAdapter<V>
 		return builder.build();
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<Table<String, String, V>> {
+			extends AbstractHierarchyTypeAdapterFactory<Table<String, String, V>> {
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder3.ILookup<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderLookup;
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Factory(final IBuilder3.ILookup<? super String, ? super String, ? super V, ? extends Table<String, String, V>> builderLookup) {
+			super((Class) Table.class);
+			this.builderLookup = builderLookup;
+		}
 
 		public static <V> ITypeAdapterFactory<Table<String, String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -113,20 +118,15 @@ public final class TableTypeAdapter<V>
 
 		@Override
 		@Nullable
-		protected TypeAdapter<Table<String, String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !Table.class.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected TypeAdapter<Table<String, String, V>> createTypeAdapter(final Gson gson, final TypeToken<Table<String, String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 2);
 			assert valueType != null;
 			@SuppressWarnings("unchecked")
 			final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 			@SuppressWarnings("unchecked")
-			final TypeToken<Table<String, String, V>> castTypeToken = (TypeToken<Table<String, String, V>>) typeToken;
-			@SuppressWarnings("unchecked")
 			final IBuilder3.ILookup<String, String, V, Table<String, String, V>> castBuilderLookup = (IBuilder3.ILookup<String, String, V, Table<String, String, V>>) builderLookup;
-			return TableTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(castTypeToken));
+			return TableTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(typeToken));
 		}
 
 		private static <V, T extends Table<String, String, V>> IBuilder3<String, String, V, T> builder(final T table) {

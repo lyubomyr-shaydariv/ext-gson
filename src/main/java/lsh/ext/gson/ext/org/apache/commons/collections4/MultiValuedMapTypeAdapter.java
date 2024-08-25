@@ -12,7 +12,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -63,13 +63,18 @@ public final class MultiValuedMapTypeAdapter<V>
 		return builder.build();
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<MultiValuedMap<String, V>> {
+			extends AbstractHierarchyTypeAdapterFactory<MultiValuedMap<String, V>> {
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder2.ILookup<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderLookup;
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Factory(final IBuilder2.ILookup<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderLookup) {
+			super((Class) MultiValuedMap.class);
+			this.builderLookup = builderLookup;
+		}
 
 		public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -97,21 +102,15 @@ public final class MultiValuedMapTypeAdapter<V>
 		}
 
 		@Override
-		@Nullable
-		protected TypeAdapter<MultiValuedMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !MultiValuedMap.class.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected TypeAdapter<MultiValuedMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<MultiValuedMap<String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 			assert valueType != null;
 			@SuppressWarnings("unchecked")
 			final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 			@SuppressWarnings("unchecked")
-			final TypeToken<MultiValuedMap<String, V>> castTypeToken = (TypeToken<MultiValuedMap<String, V>>) typeToken;
-			@SuppressWarnings("unchecked")
 			final IBuilder2.ILookup<String, V, MultiValuedMap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, MultiValuedMap<String, V>>) builderLookup;
-			return MultiValuedMapTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(castTypeToken));
+			return MultiValuedMapTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(typeToken));
 		}
 
 		private static <V, M extends MultiValuedMap<String, V>> IBuilder2<String, V, M> builder(final M multiValuedMap) {

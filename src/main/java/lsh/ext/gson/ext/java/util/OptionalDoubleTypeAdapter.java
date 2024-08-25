@@ -13,7 +13,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -45,20 +45,26 @@ public final class OptionalDoubleTypeAdapter
 		return OptionalDouble.of(in.nextDouble());
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory
-			extends AbstractTypeAdapterFactory<OptionalDouble> {
+			extends AbstractClassTypeAdapterFactory<OptionalDouble> {
 
 		@Getter
-		private static final ITypeAdapterFactory<OptionalDouble> instance = new Factory();
+		private static final ITypeAdapterFactory<OptionalDouble> instance = getInstance(OptionalDoubleTypeAdapter.instance);
+
+		private final TypeAdapter<OptionalDouble> typeAdapter;
+
+		private Factory(final TypeAdapter<OptionalDouble> typeAdapter) {
+			super(OptionalDouble.class);
+			this.typeAdapter = typeAdapter;
+		}
+
+		private static ITypeAdapterFactory<OptionalDouble> getInstance(final TypeAdapter<OptionalDouble> typeAdapter) {
+			return new Factory(typeAdapter);
+		}
 
 		@Override
-		@Nullable
-		protected TypeAdapter<OptionalDouble> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( typeToken.getRawType() != OptionalDouble.class ) {
-				return null;
-			}
-			return OptionalDoubleTypeAdapter.getInstance();
+		protected TypeAdapter<OptionalDouble> createTypeAdapter(final Gson gson, final TypeToken<OptionalDouble> typeToken) {
+			return typeAdapter;
 		}
 
 	}

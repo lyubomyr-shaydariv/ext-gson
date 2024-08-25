@@ -43,18 +43,13 @@ public final class LongStreamTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractFactory<LongStream> {
+			extends AbstractCursorTypeAdapter.AbstractFactory<LongStream> {
 
 		@Getter
-		private static final ITypeAdapterFactory<? extends LongStream> instance = new Factory();
+		private static final ITypeAdapterFactory<? extends LongStream> instance = new Factory(LongStreamTypeAdapter.instance);
 
-		private Factory() {
-			super(LongStream.class);
-		}
-
-		@Override
-		protected TypeAdapter<LongStream> createCursorTypeAdapter() {
-			return LongStreamTypeAdapter.instance;
+		private Factory(final TypeAdapter<LongStream> typeAdapter) {
+			super(LongStream.class, typeAdapter);
 		}
 
 	}

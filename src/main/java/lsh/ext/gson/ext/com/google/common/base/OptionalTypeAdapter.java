@@ -13,7 +13,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -49,19 +49,19 @@ public final class OptionalTypeAdapter<T>
 		return Optional.fromNullable(value);
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<T>
-			extends AbstractTypeAdapterFactory<Optional<T>> {
+			extends AbstractHierarchyTypeAdapterFactory<Optional<T>> {
 
 		@Getter
 		private static final ITypeAdapterFactory<? extends Optional<?>> instance = new Factory<>();
 
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Factory() {
+			super((Class) Optional.class);
+		}
+
 		@Override
-		@Nullable
-		protected TypeAdapter<Optional<T>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !Optional.class.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected TypeAdapter<Optional<T>> createTypeAdapter(final Gson gson, final TypeToken<Optional<T>> typeToken) {
 			@Nullable
 			final Type parameterType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 			assert parameterType != null;

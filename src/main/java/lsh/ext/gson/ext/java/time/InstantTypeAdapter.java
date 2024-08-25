@@ -3,10 +3,12 @@ package lsh.ext.gson.ext.java.time;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import lombok.AccessLevel;
 import lombok.Getter;
+import lsh.ext.gson.AbstractClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class InstantTypeAdapter
@@ -26,13 +28,12 @@ public final class InstantTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<Instant> {
+			extends AbstractClassTypeAdapterFactory<Instant> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<Instant> instance = new Factory(InstantTypeAdapter.instance);
 
-		@Getter(AccessLevel.PROTECTED)
 		private final TypeAdapter<Instant> typeAdapter;
 
 		private Factory(final TypeAdapter<Instant> typeAdapter) {
@@ -42,6 +43,11 @@ public final class InstantTypeAdapter
 
 		public static ITypeAdapterFactory<Instant> getInstance(final TypeAdapter<Instant> typeAdapter) {
 			return new Factory(typeAdapter);
+		}
+
+		@Override
+		protected TypeAdapter<Instant> createTypeAdapter(final Gson gson, final TypeToken<Instant> typeToken) {
+			return typeAdapter;
 		}
 
 	}

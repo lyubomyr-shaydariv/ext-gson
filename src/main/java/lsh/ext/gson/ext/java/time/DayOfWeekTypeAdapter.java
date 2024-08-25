@@ -2,11 +2,14 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.DayOfWeek;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.AbstractClassTypeAdapterFactory;
 import lsh.ext.gson.AbstractStringTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -30,13 +33,12 @@ public final class DayOfWeekTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<DayOfWeek> {
+			extends AbstractClassTypeAdapterFactory<DayOfWeek> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<DayOfWeek> instance = new Factory(DayOfWeekTypeAdapter.instance);
 
-		@Getter(AccessLevel.PROTECTED)
 		private final TypeAdapter<DayOfWeek> typeAdapter;
 
 		private Factory(final TypeAdapter<DayOfWeek> typeAdapter) {
@@ -46,6 +48,11 @@ public final class DayOfWeekTypeAdapter
 
 		public static ITypeAdapterFactory<DayOfWeek> getInstance(final TypeAdapter<DayOfWeek> typeAdapter) {
 			return new Factory(typeAdapter);
+		}
+
+		@Override
+		protected TypeAdapter<DayOfWeek> createTypeAdapter(final Gson gson, final TypeToken<DayOfWeek> typeToken) {
+			return typeAdapter;
 		}
 
 	}

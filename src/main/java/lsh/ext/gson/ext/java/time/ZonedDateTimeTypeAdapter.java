@@ -3,10 +3,12 @@ package lsh.ext.gson.ext.java.time;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import lombok.AccessLevel;
 import lombok.Getter;
+import lsh.ext.gson.AbstractClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class ZonedDateTimeTypeAdapter
@@ -26,13 +28,12 @@ public final class ZonedDateTimeTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<ZonedDateTime> {
+			extends AbstractClassTypeAdapterFactory<ZonedDateTime> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<ZonedDateTime> instance = new Factory(ZonedDateTimeTypeAdapter.instance);
 
-		@Getter(AccessLevel.PROTECTED)
 		private final TypeAdapter<ZonedDateTime> typeAdapter;
 
 		private Factory(final TypeAdapter<ZonedDateTime> typeAdapter) {
@@ -42,6 +43,11 @@ public final class ZonedDateTimeTypeAdapter
 
 		public static ITypeAdapterFactory<ZonedDateTime> getInstance(final TypeAdapter<ZonedDateTime> typeAdapter) {
 			return new Factory(typeAdapter);
+		}
+
+		@Override
+		protected TypeAdapter<ZonedDateTime> createTypeAdapter(final Gson gson, final TypeToken<ZonedDateTime> typeToken) {
+			return typeAdapter;
 		}
 
 	}

@@ -34,20 +34,18 @@ public abstract class AbstractElementCursorTypeAdapter<C, EC, E>
 		writeNext(out, elementCursor, elementTypeAdapter);
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 	public abstract static class AbstractElementTypeAdapterFactory<E>
-			extends AbstractTypeAdapterFactory<E> {
+			extends AbstractHierarchyTypeAdapterFactory<E> {
 
-		private final Class<?> cursorClass;
+		@SuppressWarnings("unchecked")
+		protected AbstractElementTypeAdapterFactory(final Class<?> cursorClass) {
+			super((Class<E>) cursorClass);
+		}
 
 		protected abstract TypeAdapter<?> createCursorTypeAdapter(TypeAdapter<?> elementTypeAdapter);
 
 		@Override
-		@Nullable
-		protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !cursorClass.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<E> typeToken) {
 			@Nullable
 			final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 			assert elementType != null;

@@ -15,7 +15,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -64,13 +64,18 @@ public final class MultisetTypeAdapter<E>
 		return builder.build();
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<E>
-			extends AbstractTypeAdapterFactory<Multiset<E>> {
+			extends AbstractHierarchyTypeAdapterFactory<Multiset<E>> {
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder1.ILookup<? super E, ? extends Multiset<E>> builderLookup;
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Factory(final IBuilder1.ILookup<? super E, ? extends Multiset<E>> builderLookup) {
+			super((Class) Multiset.class);
+			this.builderLookup = builderLookup;
+		}
 
 		public static <E> ITypeAdapterFactory<Multiset<E>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -102,20 +107,15 @@ public final class MultisetTypeAdapter<E>
 
 		@Override
 		@Nullable
-		protected TypeAdapter<Multiset<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !Multiset.class.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected TypeAdapter<Multiset<E>> createTypeAdapter(final Gson gson, final TypeToken<Multiset<E>> typeToken) {
 			@Nullable
 			final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 			assert elementType != null;
 			@SuppressWarnings("unchecked")
 			final TypeAdapter<E> elementTypeAdapter = (TypeAdapter<E>) gson.getAdapter(TypeToken.get(elementType));
 			@SuppressWarnings("unchecked")
-			final TypeToken<Multiset<E>> castTypeToken = (TypeToken<Multiset<E>>) typeToken;
-			@SuppressWarnings("unchecked")
 			final IBuilder1.ILookup<E, Multiset<E>> castBuilderLookup = (IBuilder1.ILookup<E, Multiset<E>>) builderLookup;
-			return MultisetTypeAdapter.getInstance(elementTypeAdapter, castBuilderLookup.lookup(castTypeToken));
+			return MultisetTypeAdapter.getInstance(elementTypeAdapter, castBuilderLookup.lookup(typeToken));
 		}
 
 		private static <E> IBuilder1<E, Multiset<E>> immutableBuilder() {

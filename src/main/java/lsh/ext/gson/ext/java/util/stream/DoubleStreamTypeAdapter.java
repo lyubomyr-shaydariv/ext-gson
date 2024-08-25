@@ -43,18 +43,13 @@ public final class DoubleStreamTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractFactory<DoubleStream> {
+			extends AbstractCursorTypeAdapter.AbstractFactory<DoubleStream> {
 
 		@Getter
-		private static final ITypeAdapterFactory<? extends DoubleStream> instance = new Factory();
+		private static final ITypeAdapterFactory<? extends DoubleStream> instance = new Factory(DoubleStreamTypeAdapter.instance);
 
-		private Factory() {
-			super(DoubleStream.class);
-		}
-
-		@Override
-		protected TypeAdapter<DoubleStream> createCursorTypeAdapter() {
-			return DoubleStreamTypeAdapter.instance;
+		private Factory(final TypeAdapter<DoubleStream> typeAdapter) {
+			super(DoubleStream.class, typeAdapter);
 		}
 
 	}

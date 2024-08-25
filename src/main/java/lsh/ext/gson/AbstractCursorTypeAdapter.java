@@ -1,7 +1,6 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
-import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -39,21 +38,19 @@ public abstract class AbstractCursorTypeAdapter<C, EC>
 		return toCursor(in);
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 	public abstract static class AbstractFactory<C>
-			extends AbstractTypeAdapterFactory<C> {
+			extends AbstractClassTypeAdapterFactory<C> {
 
-		private final Class<C> cursorClass;
+		private final TypeAdapter<C> typeAdapter;
 
-		protected abstract TypeAdapter<C> createCursorTypeAdapter();
+		protected AbstractFactory(final Class<C> cursorClass, final TypeAdapter<C> typeAdapter) {
+			super(cursorClass);
+			this.typeAdapter = typeAdapter;
+		}
 
 		@Override
-		@Nullable
-		protected final TypeAdapter<C> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !cursorClass.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
-			return createCursorTypeAdapter();
+		protected final TypeAdapter<C> createTypeAdapter(final Gson gson, final TypeToken<C> typeToken) {
+			return typeAdapter;
 		}
 
 	}

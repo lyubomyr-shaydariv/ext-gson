@@ -2,11 +2,13 @@ package lsh.ext.gson.ext.java.time;
 
 import java.time.Period;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lsh.ext.gson.AbstractCharSequenceTypeAdapter;
+import lsh.ext.gson.AbstractClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class PeriodTypeAdapter
@@ -28,13 +30,12 @@ public final class PeriodTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractBaseTypeAdapterFactory<Period> {
+			extends AbstractClassTypeAdapterFactory<Period> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")
 		private static final ITypeAdapterFactory<Period> instance = new Factory(PeriodTypeAdapter.instance);
 
-		@Getter(AccessLevel.PROTECTED)
 		private final TypeAdapter<Period> typeAdapter;
 
 		private Factory(final TypeAdapter<Period> typeAdapter) {
@@ -44,6 +45,11 @@ public final class PeriodTypeAdapter
 
 		public static ITypeAdapterFactory<Period> getInstance(final TypeAdapter<Period> typeAdapter) {
 			return new Factory(typeAdapter);
+		}
+
+		@Override
+		protected TypeAdapter<Period> createTypeAdapter(final Gson gson, final TypeToken<Period> typeToken) {
+			return typeAdapter;
 		}
 
 	}

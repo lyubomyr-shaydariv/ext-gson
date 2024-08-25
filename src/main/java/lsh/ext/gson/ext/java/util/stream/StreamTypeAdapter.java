@@ -49,7 +49,7 @@ public final class StreamTypeAdapter<E>
 	}
 
 	public static final class Factory<E>
-			extends AbstractElementTypeAdapterFactory<E> {
+			extends AbstractElementCursorTypeAdapter.AbstractElementTypeAdapterFactory<E> {
 
 		@Getter
 		private static final ITypeAdapterFactory<? extends Stream<?>> instance = new Factory<>();

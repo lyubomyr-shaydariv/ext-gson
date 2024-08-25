@@ -11,7 +11,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -60,15 +60,26 @@ public final class BagTypeAdapter<E>
 		return builder.build();
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<E>
-			extends AbstractTypeAdapterFactory<Bag<E>> {
+			extends AbstractHierarchyTypeAdapterFactory<Bag<E>> {
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory, Factory::defaultCreateToString, Factory::defaultCreateFromString);
 
 		private final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderLookup;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString;
 		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Factory(
+				final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderLookup,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
+				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
+		) {
+			super((Class) Bag.class);
+			this.builderLookup = builderLookup;
+			this.createToString = createToString;
+			this.createFromString = createFromString;
+		}
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -123,21 +134,15 @@ public final class BagTypeAdapter<E>
 		}
 
 		@Override
-		@Nullable
-		protected TypeAdapter<Bag<E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !Bag.class.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected TypeAdapter<Bag<E>> createTypeAdapter(final Gson gson, final TypeToken<Bag<E>> typeToken) {
 			@Nullable
 			final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 			assert elementType != null;
 			@SuppressWarnings("unchecked")
 			final TypeToken<E> elementTypeToken = (TypeToken<E>) TypeToken.get(elementType);
 			@SuppressWarnings("unchecked")
-			final TypeToken<Bag<E>> castTypeToken = (TypeToken<Bag<E>>) typeToken;
-			@SuppressWarnings("unchecked")
 			final IBuilder2.ILookup<E, Integer, Bag<E>> castBuilderLookup = (IBuilder2.ILookup<E, Integer, Bag<E>>) builderLookup;
-			return BagTypeAdapter.getInstance(castBuilderLookup.lookup(castTypeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
+			return BagTypeAdapter.getInstance(castBuilderLookup.lookup(typeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
 		}
 
 		private static <E, B extends Bag<E>> IBuilder2<E, Integer, B> builder(final B bag) {

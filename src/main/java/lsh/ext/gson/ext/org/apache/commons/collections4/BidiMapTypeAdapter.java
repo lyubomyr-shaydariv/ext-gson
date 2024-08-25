@@ -12,7 +12,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -63,13 +63,18 @@ public final class BidiMapTypeAdapter<V>
 		return builder.build();
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<BidiMap<String, V>> {
+			extends AbstractHierarchyTypeAdapterFactory<BidiMap<String, V>> {
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder2.ILookup<? super String, ? super V, ? extends BidiMap<String, V>> builderLookup;
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Factory(final IBuilder2.ILookup<? super String, ? super V, ? extends BidiMap<String, V>> builderLookup) {
+			super((Class) BidiMap.class);
+			this.builderLookup = builderLookup;
+		}
 
 		public static <V> ITypeAdapterFactory<BidiMap<String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -97,21 +102,15 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		@Override
-		@Nullable
-		protected TypeAdapter<BidiMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !BidiMap.class.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected TypeAdapter<BidiMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<BidiMap<String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 			assert valueType != null;
 			@SuppressWarnings("unchecked")
 			final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 			@SuppressWarnings("unchecked")
-			final TypeToken<BidiMap<String, V>> castTypeToken = (TypeToken<BidiMap<String, V>>) typeToken;
-			@SuppressWarnings("unchecked")
 			final IBuilder2.ILookup<String, V, BidiMap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, BidiMap<String, V>>) builderLookup;
-			return BidiMapTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(castTypeToken));
+			return BidiMapTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(typeToken));
 		}
 
 	}

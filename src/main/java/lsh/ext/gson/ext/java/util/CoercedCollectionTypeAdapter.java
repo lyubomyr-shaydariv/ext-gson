@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -18,7 +17,7 @@ import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IFactory;
 
@@ -91,12 +90,18 @@ public final class CoercedCollectionTypeAdapter<E>
 		return builder.build();
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<E>
-			extends AbstractTypeAdapterFactory<Collection<? extends E>> {
+			extends AbstractHierarchyTypeAdapterFactory<Collection<? extends E>> {
 
 		private final TypeToken<E> elementTypeToken;
 		private final IBuilder1.ILookup<? super E, ? extends Collection<E>> builderLookup;
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Factory(final TypeToken<E> elementTypeToken, final IBuilder1.ILookup<? super E, ? extends Collection<E>> builderLookup) {
+			super((Class) Collection.class);
+			this.elementTypeToken = elementTypeToken;
+			this.builderLookup = builderLookup;
+		}
 
 		public static <E> TypeAdapterFactory getInstance(
 				final TypeToken<E> elementTypeToken
@@ -123,17 +128,11 @@ public final class CoercedCollectionTypeAdapter<E>
 		}
 
 		@Override
-		@Nullable
-		protected TypeAdapter<Collection<? extends E>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !Collection.class.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected TypeAdapter<Collection<? extends E>> createTypeAdapter(final Gson gson, final TypeToken<Collection<? extends E>> typeToken) {
 			final TypeAdapter<E> elementTypeAdapter = gson.getAdapter(elementTypeToken);
 			@SuppressWarnings("unchecked")
-			final TypeToken<Collection<E>> castTypeToken = (TypeToken<Collection<E>>) typeToken;
-			@SuppressWarnings("unchecked")
 			final IBuilder1.ILookup<E, Collection<E>> castBuilderLookup = (IBuilder1.ILookup<E, Collection<E>>) builderLookup;
-			return CoercedCollectionTypeAdapter.getInstance(elementTypeAdapter, castBuilderLookup.lookup(castTypeToken));
+			return CoercedCollectionTypeAdapter.getInstance(elementTypeAdapter, castBuilderLookup.lookup(typeToken));
 		}
 
 	}

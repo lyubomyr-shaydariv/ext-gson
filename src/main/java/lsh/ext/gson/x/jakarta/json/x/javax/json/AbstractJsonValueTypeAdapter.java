@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -15,8 +14,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 
 // TODO currently Numbers are only supported
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -197,29 +195,20 @@ public abstract class AbstractJsonValueTypeAdapter<
 		}
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-	protected abstract static class AbstractFactory<JsonValue, JsonProvider>
-			extends AbstractTypeAdapterFactory<JsonValue> {
+	protected abstract static class AbstractFactory<JsonValue>
+			extends AbstractHierarchyTypeAdapterFactory<JsonValue> {
 
-		private final Class<? extends JsonValue> jsonValueClass;
+		private final TypeAdapter<JsonValue> typeAdapter;
 
-		@Nullable
-		private final JsonProvider jsonProvider;
-
-		protected abstract TypeAdapter<JsonValue> getJsonValueTypeAdapter();
-
-		protected abstract TypeAdapter<JsonValue> getJsonValueTypeAdapter(JsonProvider jsonProvider);
+		@SuppressWarnings("unchecked")
+		protected AbstractFactory(final Class<? extends JsonValue> klass, final TypeAdapter<JsonValue> typeAdapter) {
+			super((Class<JsonValue>) klass);
+			this.typeAdapter = typeAdapter;
+		}
 
 		@Override
-		@Nullable
-		protected final TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !jsonValueClass.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
-			if ( jsonProvider == null ) {
-				return getJsonValueTypeAdapter();
-			}
-			return getJsonValueTypeAdapter(jsonProvider);
+		protected final TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<JsonValue> typeToken) {
+			return typeAdapter;
 		}
 
 	}

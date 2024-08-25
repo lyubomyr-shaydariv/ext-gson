@@ -7,10 +7,9 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -44,27 +43,23 @@ public final class UnixTimeTypeAdapter<T>
 		out.value(converter.toSeconds(value));
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<T>
-			extends AbstractTypeAdapterFactory<T> {
+			extends AbstractHierarchyTypeAdapterFactory<T> {
 
-		private final Class<T> klass;
-		private final IConverter<T> converter;
+		private final TypeAdapter<T> typeAdapter;
 
-		public static <T> ITypeAdapterFactory<T> getInstance(
-				final Class<T> klass,
-				final IConverter<T> converter
-		) {
-			return new Factory<>(klass, converter);
+		private Factory(final Class<T> klass, final TypeAdapter<T> typeAdapter) {
+			super(klass);
+			this.typeAdapter = typeAdapter;
+		}
+
+		public static <T> ITypeAdapterFactory<T> getInstance(final Class<T> klass, final IConverter<T> converter) {
+			return new Factory<>(klass, UnixTimeTypeAdapter.getInstance(converter));
 		}
 
 		@Override
-		@Nullable
-		protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !klass.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
-			return UnixTimeTypeAdapter.getInstance(converter);
+		protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<T> typeToken) {
+			return typeAdapter;
 		}
 
 	}

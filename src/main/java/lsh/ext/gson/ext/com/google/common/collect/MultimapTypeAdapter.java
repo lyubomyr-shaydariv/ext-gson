@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractTypeAdapterFactory;
+import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -65,13 +65,18 @@ public final class MultimapTypeAdapter<V>
 		return builder.build();
 	}
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class Factory<V>
-			extends AbstractTypeAdapterFactory<Multimap<String, V>> {
+			extends AbstractHierarchyTypeAdapterFactory<Multimap<String, V>> {
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 
 		private final IBuilder2.ILookup<? super String, ? super V, ? extends Multimap<String, V>> builderLookup;
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Factory(final IBuilder2.ILookup<? super String, ? super V, ? extends Multimap<String, V>> builderLookup) {
+			super((Class) Multimap.class);
+			this.builderLookup = builderLookup;
+		}
 
 		public static <V> ITypeAdapterFactory<Multimap<String, V>> getInstance() {
 			@SuppressWarnings("unchecked")
@@ -102,21 +107,16 @@ public final class MultimapTypeAdapter<V>
 		}
 
 		@Override
-		@Nullable
-		protected TypeAdapter<Multimap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<?> typeToken) {
-			if ( !Multimap.class.isAssignableFrom(typeToken.getRawType()) ) {
-				return null;
-			}
+		protected TypeAdapter<Multimap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<Multimap<String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 			assert valueType != null;
 			@SuppressWarnings("unchecked")
 			final TypeAdapter<V> valueTypeAdapter = (TypeAdapter<V>) gson.getAdapter(TypeToken.get(valueType));
 			@SuppressWarnings("unchecked")
-			final TypeToken<Multimap<String, V>> castTypeToken = (TypeToken<Multimap<String, V>>) typeToken;
-			@SuppressWarnings("unchecked")
 			final IBuilder2.ILookup<String, V, Multimap<String, V>> castBuilderLookup = (IBuilder2.ILookup<String, V, Multimap<String, V>>) builderLookup;
-			return MultimapTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(castTypeToken));
+			return MultimapTypeAdapter.getInstance(valueTypeAdapter, castBuilderLookup.lookup(typeToken));
+
 		}
 
 		private static <V, M extends Multimap<String, V>> IBuilder2<String, V, M> builder(final M biMap) {

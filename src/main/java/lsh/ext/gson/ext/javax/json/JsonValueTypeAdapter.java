@@ -109,27 +109,17 @@ public final class JsonValueTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractFactory<JsonValue, JsonProvider> {
+			extends AbstractJsonValueTypeAdapter.AbstractFactory<JsonValue> {
 
 		@Getter
 		private static final ITypeAdapterFactory<JsonValue> instance = getInstance(JsonProvider.provider());
 
-		private Factory(final JsonProvider jsonProvider) {
-			super(JsonValue.class, jsonProvider);
+		private Factory(final TypeAdapter<JsonValue> typeAdapter) {
+			super(JsonValue.class, typeAdapter);
 		}
 
 		public static ITypeAdapterFactory<JsonValue> getInstance(final JsonProvider jsonProvider) {
-			return new Factory(jsonProvider);
-		}
-
-		@Override
-		protected TypeAdapter<JsonValue> getJsonValueTypeAdapter() {
-			return JsonValueTypeAdapter.getInstance();
-		}
-
-		@Override
-		protected TypeAdapter<JsonValue> getJsonValueTypeAdapter(final JsonProvider jsonProvider) {
-			return JsonValueTypeAdapter.getInstance(jsonProvider);
+			return new Factory(JsonValueTypeAdapter.getInstance(jsonProvider));
 		}
 
 	}
