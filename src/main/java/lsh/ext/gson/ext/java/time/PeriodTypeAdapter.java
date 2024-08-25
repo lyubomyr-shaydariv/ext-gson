@@ -48,7 +48,7 @@ public final class PeriodTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<Period> createTypeAdapter(final Gson gson, final TypeToken<Period> typeToken) {
+		protected TypeAdapter<Period> createTypeAdapter(final Gson gson, final TypeToken<? super Period> typeToken) {
 			return typeAdapter;
 		}
 

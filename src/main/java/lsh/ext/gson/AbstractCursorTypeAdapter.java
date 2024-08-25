@@ -49,7 +49,7 @@ public abstract class AbstractCursorTypeAdapter<C, EC>
 		}
 
 		@Override
-		protected final TypeAdapter<C> createTypeAdapter(final Gson gson, final TypeToken<C> typeToken) {
+		protected final TypeAdapter<C> createTypeAdapter(final Gson gson, final TypeToken<? super C> typeToken) {
 			return typeAdapter;
 		}
 

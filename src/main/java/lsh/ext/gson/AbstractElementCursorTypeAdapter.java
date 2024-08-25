@@ -45,7 +45,7 @@ public abstract class AbstractElementCursorTypeAdapter<C, EC, E>
 		protected abstract TypeAdapter<?> createCursorTypeAdapter(TypeAdapter<?> elementTypeAdapter);
 
 		@Override
-		protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<E> typeToken) {
+		protected final TypeAdapter<E> createTypeAdapter(final Gson gson, final TypeToken<? super E> typeToken) {
 			@Nullable
 			final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 			assert elementType != null;

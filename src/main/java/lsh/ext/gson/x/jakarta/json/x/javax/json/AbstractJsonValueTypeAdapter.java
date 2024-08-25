@@ -207,7 +207,7 @@ public abstract class AbstractJsonValueTypeAdapter<
 		}
 
 		@Override
-		protected final TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<JsonValue> typeToken) {
+		protected final TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<? super JsonValue> typeToken) {
 			return typeAdapter;
 		}
 

@@ -46,7 +46,7 @@ public final class LocalTimeTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<LocalTime> createTypeAdapter(final Gson gson, final TypeToken<LocalTime> typeToken) {
+		protected TypeAdapter<LocalTime> createTypeAdapter(final Gson gson, final TypeToken<? super LocalTime> typeToken) {
 			return typeAdapter;
 		}
 

@@ -102,7 +102,7 @@ public final class MultiValuedMapTypeAdapter<V>
 		}
 
 		@Override
-		protected TypeAdapter<MultiValuedMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<MultiValuedMap<String, V>> typeToken) {
+		protected TypeAdapter<MultiValuedMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<? super MultiValuedMap<String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 			assert valueType != null;

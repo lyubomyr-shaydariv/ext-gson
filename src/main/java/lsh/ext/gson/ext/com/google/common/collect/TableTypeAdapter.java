@@ -118,7 +118,7 @@ public final class TableTypeAdapter<V>
 
 		@Override
 		@Nullable
-		protected TypeAdapter<Table<String, String, V>> createTypeAdapter(final Gson gson, final TypeToken<Table<String, String, V>> typeToken) {
+		protected TypeAdapter<Table<String, String, V>> createTypeAdapter(final Gson gson, final TypeToken<? super Table<String, String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 2);
 			assert valueType != null;

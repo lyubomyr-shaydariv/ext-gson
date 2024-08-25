@@ -128,7 +128,7 @@ public final class CoercedCollectionTypeAdapter<E>
 		}
 
 		@Override
-		protected TypeAdapter<Collection<? extends E>> createTypeAdapter(final Gson gson, final TypeToken<Collection<? extends E>> typeToken) {
+		protected TypeAdapter<Collection<? extends E>> createTypeAdapter(final Gson gson, final TypeToken<? super Collection<? extends E>> typeToken) {
 			final TypeAdapter<E> elementTypeAdapter = gson.getAdapter(elementTypeToken);
 			@SuppressWarnings("unchecked")
 			final IBuilder1.ILookup<E, Collection<E>> castBuilderLookup = (IBuilder1.ILookup<E, Collection<E>>) builderLookup;

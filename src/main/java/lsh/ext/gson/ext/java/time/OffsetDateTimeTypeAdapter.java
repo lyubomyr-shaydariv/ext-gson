@@ -46,7 +46,7 @@ public final class OffsetDateTimeTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<OffsetDateTime> createTypeAdapter(final Gson gson, final TypeToken<OffsetDateTime> typeToken) {
+		protected TypeAdapter<OffsetDateTime> createTypeAdapter(final Gson gson, final TypeToken<? super OffsetDateTime> typeToken) {
 			return typeAdapter;
 		}
 

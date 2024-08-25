@@ -51,7 +51,7 @@ public final class DayOfWeekTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<DayOfWeek> createTypeAdapter(final Gson gson, final TypeToken<DayOfWeek> typeToken) {
+		protected TypeAdapter<DayOfWeek> createTypeAdapter(final Gson gson, final TypeToken<? super DayOfWeek> typeToken) {
 			return typeAdapter;
 		}
 

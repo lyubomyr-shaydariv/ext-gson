@@ -134,7 +134,7 @@ public final class BagTypeAdapter<E>
 		}
 
 		@Override
-		protected TypeAdapter<Bag<E>> createTypeAdapter(final Gson gson, final TypeToken<Bag<E>> typeToken) {
+		protected TypeAdapter<Bag<E>> createTypeAdapter(final Gson gson, final TypeToken<? super Bag<E>> typeToken) {
 			@Nullable
 			final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 			assert elementType != null;

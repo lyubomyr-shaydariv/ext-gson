@@ -58,7 +58,7 @@ public final class UnixTimeTypeAdapter<T>
 		}
 
 		@Override
-		protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<T> typeToken) {
+		protected TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<? super T> typeToken) {
 			return typeAdapter;
 		}
 

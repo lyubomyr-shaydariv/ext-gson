@@ -46,7 +46,7 @@ public final class ZonedDateTimeTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<ZonedDateTime> createTypeAdapter(final Gson gson, final TypeToken<ZonedDateTime> typeToken) {
+		protected TypeAdapter<ZonedDateTime> createTypeAdapter(final Gson gson, final TypeToken<? super ZonedDateTime> typeToken) {
 			return typeAdapter;
 		}
 

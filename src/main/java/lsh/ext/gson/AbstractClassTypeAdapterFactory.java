@@ -14,7 +14,7 @@ public abstract class AbstractClassTypeAdapterFactory<CT>
 
 	private final Class<CT> klass;
 
-	protected abstract TypeAdapter<CT> createTypeAdapter(final Gson gson, final TypeToken<CT> typeToken);
+	protected abstract TypeAdapter<CT> createTypeAdapter(final Gson gson, final TypeToken<? super CT> typeToken);
 
 	@Override
 	@Nullable

@@ -103,7 +103,7 @@ public final class BiMapTypeAdapter<V>
 		}
 
 		@Override
-		protected TypeAdapter<BiMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<BiMap<String, V>> typeToken) {
+		protected TypeAdapter<BiMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<? super BiMap<String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 			assert valueType != null;

@@ -98,7 +98,7 @@ public final class MultiSetTypeAdapter<E>
 		}
 
 		@Override
-		protected TypeAdapter<MultiSet<E>> createTypeAdapter(final Gson gson, final TypeToken<MultiSet<E>> typeToken) {
+		protected TypeAdapter<MultiSet<E>> createTypeAdapter(final Gson gson, final TypeToken<? super MultiSet<E>> typeToken) {
 			@Nullable
 			final Type elementType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 			assert elementType != null;

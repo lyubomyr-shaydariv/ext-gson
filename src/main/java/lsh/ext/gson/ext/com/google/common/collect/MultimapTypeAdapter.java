@@ -107,7 +107,7 @@ public final class MultimapTypeAdapter<V>
 		}
 
 		@Override
-		protected TypeAdapter<Multimap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<Multimap<String, V>> typeToken) {
+		protected TypeAdapter<Multimap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<? super Multimap<String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 			assert valueType != null;

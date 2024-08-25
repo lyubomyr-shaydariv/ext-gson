@@ -102,7 +102,7 @@ public final class BidiMapTypeAdapter<V>
 		}
 
 		@Override
-		protected TypeAdapter<BidiMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<BidiMap<String, V>> typeToken) {
+		protected TypeAdapter<BidiMap<String, V>> createTypeAdapter(final Gson gson, final TypeToken<? super BidiMap<String, V>> typeToken) {
 			@Nullable
 			final Type valueType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 1);
 			assert valueType != null;

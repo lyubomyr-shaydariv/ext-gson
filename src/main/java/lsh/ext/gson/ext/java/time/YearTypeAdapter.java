@@ -54,7 +54,7 @@ public final class YearTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<Year> createTypeAdapter(final Gson gson, final TypeToken<Year> typeToken) {
+		protected TypeAdapter<Year> createTypeAdapter(final Gson gson, final TypeToken<? super Year> typeToken) {
 			return typeAdapter;
 		}
 

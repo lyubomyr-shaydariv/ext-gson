@@ -51,7 +51,7 @@ public final class DurationTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<Duration> createTypeAdapter(final Gson gson, final TypeToken<Duration> typeToken) {
+		protected TypeAdapter<Duration> createTypeAdapter(final Gson gson, final TypeToken<? super Duration> typeToken) {
 			return typeAdapter;
 		}
 

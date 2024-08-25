@@ -63,7 +63,7 @@ public final class OptionalDoubleTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<OptionalDouble> createTypeAdapter(final Gson gson, final TypeToken<OptionalDouble> typeToken) {
+		protected TypeAdapter<OptionalDouble> createTypeAdapter(final Gson gson, final TypeToken<? super OptionalDouble> typeToken) {
 			return typeAdapter;
 		}
 

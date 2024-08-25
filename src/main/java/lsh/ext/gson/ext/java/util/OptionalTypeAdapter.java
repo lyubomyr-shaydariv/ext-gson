@@ -64,7 +64,7 @@ public final class OptionalTypeAdapter<T>
 		}
 
 		@Override
-		protected TypeAdapter<Optional<T>> createTypeAdapter(final Gson gson, final TypeToken<Optional<T>> typeToken) {
+		protected TypeAdapter<Optional<T>> createTypeAdapter(final Gson gson, final TypeToken<? super Optional<T>> typeToken) {
 			@Nullable
 			final Type parameterType = ParameterizedTypes.getTypeArgument(typeToken.getType(), 0);
 			assert parameterType != null;

@@ -63,7 +63,7 @@ public final class OptionalLongTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<OptionalLong> createTypeAdapter(final Gson gson, final TypeToken<OptionalLong> typeToken) {
+		protected TypeAdapter<OptionalLong> createTypeAdapter(final Gson gson, final TypeToken<? super OptionalLong> typeToken) {
 			return typeAdapter;
 		}
 

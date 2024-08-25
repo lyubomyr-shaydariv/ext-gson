@@ -46,7 +46,7 @@ public final class InstantTypeAdapter
 		}
 
 		@Override
-		protected TypeAdapter<Instant> createTypeAdapter(final Gson gson, final TypeToken<Instant> typeToken) {
+		protected TypeAdapter<Instant> createTypeAdapter(final Gson gson, final TypeToken<? super Instant> typeToken) {
 			return typeAdapter;
 		}
 
