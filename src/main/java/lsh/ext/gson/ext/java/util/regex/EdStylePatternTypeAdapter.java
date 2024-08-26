@@ -130,24 +130,22 @@ public final class EdStylePatternTypeAdapter
 			extends AbstractClassTypeAdapterFactory<Pattern> {
 
 		@Getter
-		public static final ITypeAdapterFactory<Pattern> instance = new EdStylePatternTypeAdapter.Factory(DEFAULT_REGEX_DELIMITER, IFlagConverter.defaultFlagConverter);
+		public static final ITypeAdapterFactory<Pattern> instance = new EdStylePatternTypeAdapter.Factory(EdStylePatternTypeAdapter.instance);
 
-		private final char delimiter;
-		private final IFlagConverter flagConverter;
+		private final TypeAdapter<Pattern> typeAdapter;
 
-		private Factory(final char delimiter, final IFlagConverter flagConverter) {
+		private Factory(final TypeAdapter<Pattern> typeAdapter) {
 			super(Pattern.class);
-			this.delimiter = delimiter;
-			this.flagConverter = flagConverter;
+			this.typeAdapter = typeAdapter;
 		}
 
-		public static ITypeAdapterFactory<Pattern> getInstance(final char delimiter, final IFlagConverter flagConverter) {
-			return new Factory(delimiter, flagConverter);
+		public static ITypeAdapterFactory<Pattern> getInstance(final TypeAdapter<Pattern> typeAdapter) {
+			return new Factory(typeAdapter);
 		}
 
 		@Override
 		protected TypeAdapter<Pattern> createTypeAdapter(final Gson gson, final TypeToken<? super Pattern> typeToken) {
-			return EdStylePatternTypeAdapter.getInstance(delimiter, flagConverter);
+			return typeAdapter;
 		}
 
 	}
