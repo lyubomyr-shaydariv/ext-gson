@@ -19,15 +19,29 @@ public final class EdStylePatternTypeAdapter
 
 	private static final Pattern emptyPattern = Pattern.compile("");
 
-	public interface IFlagConverter {
+	private static final int[] noFlags = {};
 
-		char fromFlag(int flag);
+	private static final int[] allKnownFlags = {
+			Pattern.UNIX_LINES,             //
+			Pattern.CASE_INSENSITIVE,       // /.../i
+			Pattern.COMMENTS,               //
+			Pattern.MULTILINE,              // /.../m
+			Pattern.LITERAL,                //
+			Pattern.DOTALL,                 //
+			Pattern.UNICODE_CASE,           //
+			Pattern.CANON_EQ,               //
+			Pattern.UNICODE_CHARACTER_CLASS //
+	};
 
-		int toFlag(char c);
+	public interface IFlagStrategy {
 
-		IFlagConverter defaultFlagConverter = new IFlagConverter() {
+		char encodeFlag(int flag);
+
+		int decodeFlag(char c);
+
+		IFlagStrategy defaultFlagStrategy = new IFlagStrategy() {
 			@Override
-			public char fromFlag(final int flag) {
+			public char encodeFlag(final int flag) {
 				switch ( flag ) {
 				case Pattern.CASE_INSENSITIVE:
 					return 'i';
@@ -39,7 +53,7 @@ public final class EdStylePatternTypeAdapter
 			}
 
 			@Override
-			public int toFlag(final char c) {
+			public int decodeFlag(final char c) {
 				switch ( c ) {
 				case 'i':
 					return Pattern.CASE_INSENSITIVE;
@@ -56,16 +70,38 @@ public final class EdStylePatternTypeAdapter
 	public static final char DEFAULT_REGEX_DELIMITER = '/';
 
 	@Getter
-	private static final TypeAdapter<Pattern> instance = new EdStylePatternTypeAdapter(DEFAULT_REGEX_DELIMITER, IFlagConverter.defaultFlagConverter);
+	private static final TypeAdapter<Pattern> instance = getInstance(DEFAULT_REGEX_DELIMITER, IFlagStrategy.defaultFlagStrategy);
 
 	private final char delimiter;
-	private final IFlagConverter flagConverter;
+	private final IFlagStrategy flagStrategy;
+	private final int[] declaredFlags;
 
 	public static TypeAdapter<Pattern> getInstance(
 			final char delimiter,
-			final IFlagConverter flagConverter
+			final IFlagStrategy flagStrategy
 	) {
-		return new EdStylePatternTypeAdapter(delimiter, flagConverter);
+		return new EdStylePatternTypeAdapter(delimiter, flagStrategy, allKnownFlags);
+	}
+
+	public static TypeAdapter<Pattern> getInstance(
+			final char delimiter,
+			final IFlagStrategy flagStrategy,
+			final int declaredFlagsMask
+	) {
+		if ( declaredFlagsMask == 0 ) {
+			return new EdStylePatternTypeAdapter(delimiter, flagStrategy, noFlags);
+		}
+		final int flagCount = countSetBits(declaredFlagsMask);
+		final int[] declaredFlags = new int[flagCount];
+		int i = 0;
+		for ( int fi = 0; fi < allKnownFlags.length && i < flagCount; fi++ ) {
+			final int knownFlag = allKnownFlags[fi];
+			if ( (declaredFlagsMask & knownFlag) == 0 ) {
+				continue;
+			}
+			declaredFlags[i++] = knownFlag;
+		}
+		return new EdStylePatternTypeAdapter(delimiter, flagStrategy, declaredFlags);
 	}
 
 	@Override
@@ -94,7 +130,7 @@ public final class EdStylePatternTypeAdapter
 			if ( c == delimiter ) {
 				break;
 			}
-			flags |= flagConverter.toFlag(c);
+			flags |= flagStrategy.decodeFlag(c);
 		}
 		final String regex = pattern.substring(1, i);
 		return Pattern.compile(regex, flags);
@@ -108,13 +144,14 @@ public final class EdStylePatternTypeAdapter
 		s.append(regex); // TODO escape the delimiter in the pattern?
 		s.append(delimiter);
 		final int fs = pattern.flags();
-		// TODO should the type adapter accept reduced number of flags in order not to make a useless loop iteration?
-		// TODO or, better, take the converter in the factory method and ruh it against all Pattern flags so that parsing the string would be, if possible, quicker?
-		for ( final int kf : knownFlags ) {
+		for ( final int kf : declaredFlags ) {
+			System.out.print("FLAG " + kf + ": ");
 			if ( (fs & kf) == 0 ) {
+				System.out.println(" -");
 				continue;
 			}
-			final char fc = flagConverter.fromFlag(kf);
+			System.out.println(" FOUND!");
+			final char fc = flagStrategy.encodeFlag(kf);
 			if ( fc == 0 ) {
 				continue;
 			}
@@ -150,16 +187,16 @@ public final class EdStylePatternTypeAdapter
 
 	}
 
-	private static final int[] knownFlags = {
-			Pattern.UNIX_LINES,             //
-			Pattern.CASE_INSENSITIVE,       // /.../i
-			Pattern.COMMENTS,               //
-			Pattern.MULTILINE,              // /.../m
-			Pattern.LITERAL,                //
-			Pattern.DOTALL,                 //
-			Pattern.UNICODE_CASE,           //
-			Pattern.CANON_EQ,               //
-			Pattern.UNICODE_CHARACTER_CLASS //
-	};
+	private static int countSetBits(final int mask) {
+		int count = 0;
+		int m = mask;
+		for ( int i = 0; i < 32 && m != 0; i++, m >>= 1 ) {
+			if ( (m & 1) == 0 ) {
+				continue;
+			}
+			count++;
+		}
+		return count;
+	}
 
 }

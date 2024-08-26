@@ -70,14 +70,14 @@ public final class EdStylePatternTestCoverageTypeAdapterTest {
 
 	@Test
 	public void testToStringDelimiterAndFlagClash() {
-		final TypeAdapter<Pattern> unit = EdStylePatternTypeAdapter.getInstance('#', new EdStylePatternTypeAdapter.IFlagConverter() {
+		final TypeAdapter<Pattern> unit = EdStylePatternTypeAdapter.getInstance('#', new EdStylePatternTypeAdapter.IFlagStrategy() {
 			@Override
-			public char fromFlag(final int flag) {
+			public char encodeFlag(final int flag) {
 				return '#';
 			}
 
 			@Override
-			public int toFlag(final char c) {
+			public int decodeFlag(final char c) {
 				throw new AssertionError(c);
 			}
 		});
@@ -88,14 +88,14 @@ public final class EdStylePatternTestCoverageTypeAdapterTest {
 
 	@Test
 	public void testToStringForIgnoredFlags() {
-		final TypeAdapter<Pattern> unit = EdStylePatternTypeAdapter.getInstance('/', new EdStylePatternTypeAdapter.IFlagConverter() {
+		final TypeAdapter<Pattern> unit = EdStylePatternTypeAdapter.getInstance('/', new EdStylePatternTypeAdapter.IFlagStrategy() {
 			@Override
-			public char fromFlag(final int flag) {
+			public char encodeFlag(final int flag) {
 				return 0;
 			}
 
 			@Override
-			public int toFlag(final char c) {
+			public int decodeFlag(final char c) {
 				throw new AssertionError(c);
 			}
 		});
