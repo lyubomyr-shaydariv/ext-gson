@@ -80,7 +80,8 @@ public final class EdStylePatternTypeAdapter
 			final char delimiter,
 			final IFlagStrategy flagStrategy
 	) {
-		return new EdStylePatternTypeAdapter(delimiter, flagStrategy, allKnownFlags);
+		return new EdStylePatternTypeAdapter(delimiter, flagStrategy, allKnownFlags)
+				.nullSafe();
 	}
 
 	public static TypeAdapter<Pattern> getInstance(

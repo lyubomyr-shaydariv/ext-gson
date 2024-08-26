@@ -21,7 +21,8 @@ public final class OptionalIntTypeAdapter
 		extends TypeAdapter<OptionalInt> {
 
 	@Getter
-	private static final TypeAdapter<OptionalInt> instance = new OptionalIntTypeAdapter();
+	private static final TypeAdapter<OptionalInt> instance = new OptionalIntTypeAdapter()
+			.nullSafe();
 
 	@Override
 	@SuppressWarnings("OptionalAssignedToNull")
@@ -49,7 +50,7 @@ public final class OptionalIntTypeAdapter
 			extends AbstractClassTypeAdapterFactory<OptionalInt> {
 
 		@Getter
-		private static final ITypeAdapterFactory<OptionalInt> instance = new Factory(OptionalIntTypeAdapter.instance);
+		private static final ITypeAdapterFactory<OptionalInt> instance = new Factory(OptionalIntTypeAdapter.getInstance());
 
 		private final TypeAdapter<OptionalInt> typeAdapter;
 

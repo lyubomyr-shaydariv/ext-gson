@@ -17,6 +17,7 @@ import java.time.ZonedDateTime;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -27,6 +28,10 @@ import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class Java8TimeModule
 		extends AbstractModule {
+
+	@Getter
+	private static final IModule instance = new Builder()
+			.build();
 
 	private Java8TimeModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);

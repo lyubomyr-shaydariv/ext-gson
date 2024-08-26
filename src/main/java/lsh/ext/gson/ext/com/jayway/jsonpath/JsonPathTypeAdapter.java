@@ -29,6 +29,16 @@ public final class JsonPathTypeAdapter<T>
 	private final TypeAdapter<? extends JsonElement> jsonElementTypeAdapter;
 	private final Item<?>[] items;
 
+	private static <T> TypeAdapter<T> getInstance(
+			final Configuration configuration,
+			final TypeAdapter<T> delegateAdapter,
+			final TypeAdapter<? extends JsonElement> jsonElementTypeAdapter,
+			final Item<?>[] items
+	) {
+		return new JsonPathTypeAdapter<>(configuration, delegateAdapter, jsonElementTypeAdapter, items)
+				.nullSafe();
+	}
+
 	@Override
 	public void write(final JsonWriter out, final T value)
 			throws IOException {
@@ -69,7 +79,7 @@ public final class JsonPathTypeAdapter<T>
 				final Function<? super Gson, ? extends Configuration> provideConfiguration,
 				final IAccessor.IFactory accessorsFactory
 		) {
-			return new Factory(provideConfiguration, accessorsFactory);
+			return new Factory<>(provideConfiguration, accessorsFactory);
 		}
 
 		public static Configuration defaultConfiguration(final Gson gson) {
@@ -86,7 +96,7 @@ public final class JsonPathTypeAdapter<T>
 			if ( accessors.isEmpty() ) {
 				return null;
 			}
-			return new JsonPathTypeAdapter<>(
+			return JsonPathTypeAdapter.getInstance(
 					provideConfiguration.apply(gson),
 					gson.getDelegateAdapter(this, typeToken),
 					gson.getAdapter(JsonElement.class),

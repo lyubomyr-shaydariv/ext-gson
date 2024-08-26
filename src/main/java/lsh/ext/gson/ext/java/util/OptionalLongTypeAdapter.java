@@ -21,7 +21,8 @@ public final class OptionalLongTypeAdapter
 		extends TypeAdapter<OptionalLong> {
 
 	@Getter
-	private static final TypeAdapter<OptionalLong> instance = new OptionalLongTypeAdapter();
+	private static final TypeAdapter<OptionalLong> instance = new OptionalLongTypeAdapter()
+			.nullSafe();
 
 	@Override
 	@SuppressWarnings("OptionalAssignedToNull")
@@ -49,7 +50,7 @@ public final class OptionalLongTypeAdapter
 			extends AbstractClassTypeAdapterFactory<OptionalLong> {
 
 		@Getter
-		private static final ITypeAdapterFactory<OptionalLong> instance = new Factory(OptionalLongTypeAdapter.instance);
+		private static final ITypeAdapterFactory<OptionalLong> instance = new Factory(OptionalLongTypeAdapter.getInstance());
 
 		private final TypeAdapter<OptionalLong> typeAdapter;
 

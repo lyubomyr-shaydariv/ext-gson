@@ -21,7 +21,8 @@ public final class OptionalDoubleTypeAdapter
 		extends TypeAdapter<OptionalDouble> {
 
 	@Getter
-	private static final TypeAdapter<OptionalDouble> instance = new OptionalDoubleTypeAdapter();
+	private static final TypeAdapter<OptionalDouble> instance = new OptionalDoubleTypeAdapter()
+			.nullSafe();
 
 	@Override
 	@SuppressWarnings("OptionalAssignedToNull")
@@ -49,7 +50,7 @@ public final class OptionalDoubleTypeAdapter
 			extends AbstractClassTypeAdapterFactory<OptionalDouble> {
 
 		@Getter
-		private static final ITypeAdapterFactory<OptionalDouble> instance = getInstance(OptionalDoubleTypeAdapter.instance);
+		private static final ITypeAdapterFactory<OptionalDouble> instance = getInstance(OptionalDoubleTypeAdapter.getInstance());
 
 		private final TypeAdapter<OptionalDouble> typeAdapter;
 

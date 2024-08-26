@@ -24,7 +24,8 @@ public final class OptionalTypeAdapter<T>
 	private final TypeAdapter<T> valueTypeAdapter;
 
 	public static <T> TypeAdapter<Optional<T>> getInstance(final TypeAdapter<T> valueTypeAdapter) {
-		return new OptionalTypeAdapter<>(valueTypeAdapter);
+		return new OptionalTypeAdapter<>(valueTypeAdapter)
+				.nullSafe();
 	}
 
 	@Override

@@ -10,16 +10,20 @@ import java.util.stream.StreamSupport;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractCursorTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.JsonReaders;
 
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class LongStreamTypeAdapter
 		extends AbstractCursorTypeAdapter<LongStream, PrimitiveIterator.OfLong> {
 
 	@Getter
-	private static final TypeAdapter<LongStream> instance = new LongStreamTypeAdapter();
+	private static final TypeAdapter<LongStream> instance = new LongStreamTypeAdapter()
+			.nullSafe();
 
 	@Override
 	protected LongStream toCursor(final JsonReader jsonReader) {

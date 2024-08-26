@@ -2,6 +2,7 @@ package lsh.ext.gson.ext.com.jayway.jsonpath;
 
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,10 +14,9 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class JsonPathModule
 		extends AbstractModule {
 
-	public static IModule getInstance(final IAccessor.IFactory accessorsFactory) {
-		return Builder.create(accessorsFactory)
-				.build();
-	}
+	@Getter
+	private static final IModule instance = Builder.create()
+			.build();
 
 	private JsonPathModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
@@ -28,11 +28,10 @@ public final class JsonPathModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory;
+		private ITypeAdapterFactory<?> jsonPathTypeAdapterFactory = JsonPathTypeAdapter.Factory.getInstance(ReflectiveAccessors.getDeclaredFieldAccessors());
 
-		public static Builder create(final IAccessor.IFactory accessorsFactory) {
-			return new Builder()
-					.jsonPathTypeAdapterFactory(JsonPathTypeAdapter.Factory.getInstance(accessorsFactory));
+		public static Builder create() {
+			return new Builder();
 		}
 
 		@Override
