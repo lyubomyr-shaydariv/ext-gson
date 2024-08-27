@@ -7,6 +7,7 @@ import com.google.common.collect.BiMap;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterFactoryTest;
+import lsh.ext.gson.test.Types;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class BiMapTypeAdapterFactoryTest
@@ -18,10 +19,6 @@ public final class BiMapTypeAdapterFactoryTest
 	private static final TypeToken<BiMap<Integer, Object>> integerToObjectTypeToken = (TypeToken<BiMap<Integer, Object>>) TypeToken.getParameterized(BiMap.class, Integer.class, Object.class);
 	@SuppressWarnings("unchecked")
 	private static final TypeToken<BiMap<Float, Integer>> floatToIntegerTypeToken = (TypeToken<BiMap<Float, Integer>>) TypeToken.getParameterized(BiMap.class, Float.class, Integer.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Map<Object, Integer>> objectToIntegerMapTypeToken = (TypeToken<Map<Object, Integer>>) TypeToken.getParameterized(Map.class, Object.class, Integer.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Map<Integer, String>> integerToStringTypeToken = (TypeToken<Map<Integer, String>>) TypeToken.getParameterized(Map.class, Integer.class, String.class);
 
 	public BiMapTypeAdapterFactoryTest() {
 		super(false);
@@ -44,8 +41,9 @@ public final class BiMapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(objectToIntegerMapTypeToken),
-				Arguments.of(integerToStringTypeToken)
+				Arguments.of(Types.voidTypeToken),
+				Arguments.of(Types.rawMapTypeToken),
+				Arguments.of(Types.rawSetTypeToken)
 		);
 	}
 

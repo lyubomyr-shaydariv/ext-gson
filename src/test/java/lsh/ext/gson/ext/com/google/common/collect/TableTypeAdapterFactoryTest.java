@@ -1,14 +1,13 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import com.google.common.collect.Table;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterFactoryTest;
+import lsh.ext.gson.test.Types;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class TableTypeAdapterFactoryTest
@@ -20,10 +19,6 @@ public final class TableTypeAdapterFactoryTest
 	private static final TypeToken<Table<Float, Integer, Object>> floatToIntegerToObjectTableTypeToken = (TypeToken<Table<Float, Integer, Object>>) TypeToken.getParameterized(Table.class, Float.class, Integer.class, Object.class);
 	@SuppressWarnings("unchecked")
 	private static final TypeToken<Table<Character, List<?>, Integer>> characterToListToIntegerTableTypeToken = (TypeToken<Table<Character, List<?>, Integer>>) TypeToken.getParameterized(Table.class, Character.class, List.class, Integer.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Map<Float, Integer>> floatToIntegerMapTypeToken = (TypeToken<Map<Float, Integer>>) TypeToken.getParameterized(Map.class, Float.class, Integer.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Set<String>> stringSetTypeToken = (TypeToken<Set<String>>) TypeToken.getParameterized(Set.class, String.class);
 
 	public TableTypeAdapterFactoryTest() {
 		super(false);
@@ -46,8 +41,9 @@ public final class TableTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(floatToIntegerMapTypeToken),
-				Arguments.of(stringSetTypeToken)
+				Arguments.of(Types.voidTypeToken),
+				Arguments.of(Types.rawMapTypeToken),
+				Arguments.of(Types.rawSetTypeToken)
 		);
 	}
 

@@ -2,6 +2,8 @@ package lsh.ext.gson.test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.google.gson.reflect.TypeToken;
 import lombok.experimental.UtilityClass;
@@ -25,6 +27,11 @@ public final class Types {
 	public static final TypeToken<Integer> integerTypeToken = TypeToken.get(Integer.class);
 	public static final TypeToken<Object> objectTypeToken = TypeToken.get(Object.class);
 	public static final TypeToken<String> stringTypeToken = TypeToken.get(String.class);
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static TypeToken<Map> rawMapTypeToken = TypeToken.get(Map.class);
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static TypeToken<Set> rawSetTypeToken = TypeToken.get(Set.class);
 
 	@SuppressWarnings("unchecked")
 	public static final TypeToken<List<Integer>> integerListTypeToken = (TypeToken<List<Integer>>) TypeToken.getParameterized(List.class, Integer.class);

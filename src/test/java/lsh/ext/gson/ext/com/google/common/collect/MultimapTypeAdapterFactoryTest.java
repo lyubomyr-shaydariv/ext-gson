@@ -1,13 +1,12 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
-import java.util.Map;
 import java.util.stream.Stream;
 
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterFactoryTest;
+import lsh.ext.gson.test.Types;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultimapTypeAdapterFactoryTest
@@ -19,10 +18,6 @@ public final class MultimapTypeAdapterFactoryTest
 	private static final TypeToken<Multimap<String, Object>> stringToObjectMultimapTypeToken = (TypeToken<Multimap<String, Object>>) TypeToken.getParameterized(Multimap.class, String.class, Object.class);
 	@SuppressWarnings("unchecked")
 	private static final TypeToken<Multimap<Integer, Integer>> integerToIntegerMultimapTypeToken = (TypeToken<Multimap<Integer, Integer>>) TypeToken.getParameterized(Multimap.class, Integer.class, Integer.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multiset<Object>> objectMultisetTypeToken = (TypeToken<Multiset<Object>>) TypeToken.getParameterized(Multiset.class, Object.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Map<Integer, String>> integerToStringMapTypeToken = (TypeToken<Map<Integer, String>>) TypeToken.getParameterized(Map.class, Integer.class, String.class);
 
 	public MultimapTypeAdapterFactoryTest() {
 		super(false);
@@ -45,8 +40,9 @@ public final class MultimapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(objectMultisetTypeToken),
-				Arguments.of(integerToStringMapTypeToken)
+				Arguments.of(Types.voidTypeToken),
+				Arguments.of(Types.rawSetTypeToken),
+				Arguments.of(Types.rawMapTypeToken)
 		);
 	}
 
