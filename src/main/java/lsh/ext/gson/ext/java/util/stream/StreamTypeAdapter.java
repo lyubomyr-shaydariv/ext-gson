@@ -29,7 +29,14 @@ public final class StreamTypeAdapter<E>
 
 	@Override
 	protected Stream<E> toCursor(final JsonReader jsonReader, final TypeAdapter<E> elementTypeAdapter) {
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(JsonReaders.asIterator(jsonReader, elementTypeAdapter), Spliterator.IMMUTABLE), false);
+		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(JsonReaders.asIterator(jsonReader, elementTypeAdapter), Spliterator.IMMUTABLE), false)
+				.onClose(() -> {
+					try {
+						jsonReader.close();
+					} catch ( final IOException ex ) {
+						throw new RuntimeException(ex);
+					}
+				});
 	}
 
 	@Override

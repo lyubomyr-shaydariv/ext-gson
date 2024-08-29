@@ -10,12 +10,14 @@ import javax.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
 import lsh.ext.gson.Gsons;
 import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
+import org.mockito.Mockito;
 
 public final class StreamTypeAdapterTest
 		extends AbstractElementCursorTypeAdapterTest<Stream<?>> {
@@ -58,8 +60,36 @@ public final class StreamTypeAdapterTest
 		Assertions.assertEquals("$[4]", in.getPath());
 		in.endArray();
 		Assertions.assertEquals("$", in.getPath());
+		Assertions.assertEquals(JsonToken.END_DOCUMENT, in.peek());
+		final IllegalStateException ex = Assertions.assertThrows(IllegalStateException.class, in::nextNull);
+		Assertions.assertTrue(ex.getMessage().startsWith("Expected null but was END_DOCUMENT at line 1 column 10 path $"));
+	}
+
+	@Test
+	public void testLazinessClosingTheStream()
+			throws IOException {
+		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.getIntTypeAdapter());
+		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")));
+		final Stream<? extends Integer> stream = unit.read(inSpy);
+		final Iterator<? extends Integer> iterator = stream.iterator();
+		Assertions.assertEquals("$", inSpy.getPath());
+		inSpy.beginArray();
+		Assertions.assertEquals(1, iterator.next());
+		Assertions.assertEquals("$[1]", inSpy.getPath());
+		Assertions.assertEquals(2, iterator.next());
+		Assertions.assertEquals("$[2]", inSpy.getPath());
+		Assertions.assertEquals(4, iterator.next());
+		Assertions.assertEquals("$[3]", inSpy.getPath());
+		Assertions.assertEquals(8, iterator.next());
+		Assertions.assertEquals("$[4]", inSpy.getPath());
+		inSpy.endArray();
+		Mockito.verify(inSpy, Mockito.never())
+				.close();
 		stream.close();
-		in.hasNext();
+		Mockito.verify(inSpy)
+				.close();
+		final IllegalStateException ex = Assertions.assertThrows(IllegalStateException.class, inSpy::nextNull);
+		Assertions.assertEquals("JsonReader is closed", ex.getMessage());
 	}
 
 }
