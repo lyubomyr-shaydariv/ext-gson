@@ -15,7 +15,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -65,7 +65,7 @@ public final class MultisetTypeAdapter<E>
 	}
 
 	public static final class Factory<E>
-			extends AbstractHierarchyTypeAdapterFactory<Multiset<E>> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<Multiset<E>> {
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory);
 

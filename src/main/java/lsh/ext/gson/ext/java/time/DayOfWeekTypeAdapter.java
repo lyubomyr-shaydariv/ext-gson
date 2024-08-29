@@ -9,7 +9,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractClassTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 import lsh.ext.gson.AbstractStringTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -33,7 +33,7 @@ public final class DayOfWeekTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractClassTypeAdapterFactory<DayOfWeek> {
+			extends AbstractRawClassTypeAdapterFactory<DayOfWeek> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")

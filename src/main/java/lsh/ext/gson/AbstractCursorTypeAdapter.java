@@ -39,7 +39,7 @@ public abstract class AbstractCursorTypeAdapter<C, EC>
 	}
 
 	public abstract static class AbstractFactory<C>
-			extends AbstractClassTypeAdapterFactory<C> {
+			extends AbstractRawClassTypeAdapterFactory<C> {
 
 		private final TypeAdapter<C> typeAdapter;
 

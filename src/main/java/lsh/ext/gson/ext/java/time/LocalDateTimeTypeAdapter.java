@@ -8,7 +8,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.AbstractClassTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class LocalDateTimeTypeAdapter
@@ -28,7 +28,7 @@ public final class LocalDateTimeTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractClassTypeAdapterFactory<LocalDateTime> {
+			extends AbstractRawClassTypeAdapterFactory<LocalDateTime> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")

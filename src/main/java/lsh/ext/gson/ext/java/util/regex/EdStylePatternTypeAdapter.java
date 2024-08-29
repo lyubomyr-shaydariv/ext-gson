@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractClassTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 import lsh.ext.gson.AbstractStringTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -165,7 +165,7 @@ public final class EdStylePatternTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractClassTypeAdapterFactory<Pattern> {
+			extends AbstractRawClassTypeAdapterFactory<Pattern> {
 
 		@Getter
 		public static final ITypeAdapterFactory<Pattern> instance = new EdStylePatternTypeAdapter.Factory(EdStylePatternTypeAdapter.instance);

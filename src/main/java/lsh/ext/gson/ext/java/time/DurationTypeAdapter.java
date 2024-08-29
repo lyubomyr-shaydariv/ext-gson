@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractCharSequenceTypeAdapter;
-import lsh.ext.gson.AbstractClassTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -33,7 +33,7 @@ public final class DurationTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractClassTypeAdapterFactory<Duration> {
+			extends AbstractRawClassTypeAdapterFactory<Duration> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")

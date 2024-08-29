@@ -13,7 +13,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -50,7 +50,7 @@ public final class OptionalTypeAdapter<T>
 	}
 
 	public static final class Factory<T>
-			extends AbstractHierarchyTypeAdapterFactory<Optional<T>> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<Optional<T>> {
 
 		@Getter
 		private static final ITypeAdapterFactory<? extends Optional<?>> instance = new Factory<>();

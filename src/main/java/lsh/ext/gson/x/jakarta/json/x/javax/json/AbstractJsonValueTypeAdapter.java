@@ -14,7 +14,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 
 // TODO currently Numbers are only supported
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -196,7 +196,7 @@ public abstract class AbstractJsonValueTypeAdapter<
 	}
 
 	protected abstract static class AbstractFactory<JsonValue>
-			extends AbstractHierarchyTypeAdapterFactory<JsonValue> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<JsonValue> {
 
 		private final TypeAdapter<JsonValue> typeAdapter;
 

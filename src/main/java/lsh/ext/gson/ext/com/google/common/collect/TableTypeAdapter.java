@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder3;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -95,7 +95,7 @@ public final class TableTypeAdapter<R, C, V>
 	}
 
 	public static final class Factory<R, C, V>
-			extends AbstractHierarchyTypeAdapterFactory<Table<R, C, V>> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<Table<R, C, V>> {
 
 		private static final ITypeAdapterFactory<?> instance = getInstance(Factory::defaultBuilderFactory, Function.identity(), Function.identity(), Function.identity(), Function.identity());
 

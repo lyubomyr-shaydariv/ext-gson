@@ -13,7 +13,7 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractClassTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -47,7 +47,7 @@ public final class OptionalDoubleTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractClassTypeAdapterFactory<OptionalDouble> {
+			extends AbstractRawClassTypeAdapterFactory<OptionalDouble> {
 
 		@Getter
 		private static final ITypeAdapterFactory<OptionalDouble> instance = getInstance(OptionalDoubleTypeAdapter.getInstance());

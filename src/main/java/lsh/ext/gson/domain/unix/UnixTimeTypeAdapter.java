@@ -9,7 +9,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -44,7 +44,7 @@ public final class UnixTimeTypeAdapter<T>
 	}
 
 	public static final class Factory<T>
-			extends AbstractHierarchyTypeAdapterFactory<T> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<T> {
 
 		private final TypeAdapter<T> typeAdapter;
 

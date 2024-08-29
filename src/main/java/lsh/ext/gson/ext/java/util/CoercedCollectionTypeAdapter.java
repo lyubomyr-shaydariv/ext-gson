@@ -17,7 +17,7 @@ import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IFactory;
 
@@ -91,7 +91,7 @@ public final class CoercedCollectionTypeAdapter<E>
 	}
 
 	public static final class Factory<E>
-			extends AbstractHierarchyTypeAdapterFactory<Collection<? extends E>> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<Collection<? extends E>> {
 
 		private final TypeToken<E> elementTypeToken;
 		private final IBuilder1.ILookup<? super E, ? extends Collection<E>> builderLookup;

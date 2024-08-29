@@ -7,7 +7,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.AbstractClassTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 import lsh.ext.gson.AbstractStringTypeAdapter;
 import lsh.ext.gson.ITypeAdapterFactory;
 
@@ -30,7 +30,7 @@ public final class MonthTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractClassTypeAdapterFactory<Month> {
+			extends AbstractRawClassTypeAdapterFactory<Month> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")

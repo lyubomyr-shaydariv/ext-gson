@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -77,7 +77,7 @@ public final class BiMapTypeAdapter<K, V>
 	}
 
 	public static final class Factory<K, V>
-			extends AbstractHierarchyTypeAdapterFactory<BiMap<K, V>> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<BiMap<K, V>> {
 
 		private static final ITypeAdapterFactory<?> instance = getInstance(Factory::defaultBuilderLookup, Function.identity(), Function.identity());
 

@@ -35,7 +35,7 @@ public abstract class AbstractElementCursorTypeAdapter<C, EC, E>
 	}
 
 	public abstract static class AbstractElementTypeAdapterFactory<E>
-			extends AbstractHierarchyTypeAdapterFactory<E> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<E> {
 
 		@SuppressWarnings("unchecked")
 		protected AbstractElementTypeAdapterFactory(final Class<?> cursorClass) {

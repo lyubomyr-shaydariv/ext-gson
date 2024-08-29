@@ -11,7 +11,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.AbstractClassTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 public final class YearTypeAdapter
@@ -36,7 +36,7 @@ public final class YearTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractClassTypeAdapterFactory<Year> {
+			extends AbstractRawClassTypeAdapterFactory<Year> {
 
 		@Getter
 		@SuppressFBWarnings("MS_EXPOSE_REP")

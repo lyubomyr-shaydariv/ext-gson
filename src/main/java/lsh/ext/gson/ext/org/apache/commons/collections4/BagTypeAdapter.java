@@ -11,7 +11,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractHierarchyTypeAdapterFactory;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
@@ -61,7 +61,7 @@ public final class BagTypeAdapter<E>
 	}
 
 	public static final class Factory<E>
-			extends AbstractHierarchyTypeAdapterFactory<Bag<E>> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<Bag<E>> {
 
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory, Factory::defaultCreateToString, Factory::defaultCreateFromString);
 

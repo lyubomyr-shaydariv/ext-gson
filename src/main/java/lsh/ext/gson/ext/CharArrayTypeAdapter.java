@@ -9,8 +9,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractClassTypeAdapterFactory;
 import lsh.ext.gson.AbstractEncodingTypeAdapter;
+import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CharArrayTypeAdapter
@@ -54,7 +54,7 @@ public final class CharArrayTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractClassTypeAdapterFactory<char[]> {
+			extends AbstractRawClassTypeAdapterFactory<char[]> {
 
 		private final TypeAdapter<char[]> typeAdapter;
 
