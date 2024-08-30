@@ -92,4 +92,21 @@ public final class StreamTypeAdapterTest
 		Assertions.assertEquals("JsonReader is closed", ex.getMessage());
 	}
 
+	@Test
+	public void testLazinessClosingTheStreamFails()
+			throws IOException {
+		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
+		final IOException expectedEx = new IOException();
+		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")) {
+			@Override
+			public void close()
+					throws IOException {
+				throw expectedEx;
+			}
+		});
+		final Stream<? extends Integer> stream = unit.read(inSpy);
+		final RuntimeException ex = Assertions.assertThrows(RuntimeException.class, stream::close);
+		Assertions.assertSame(expectedEx, ex.getCause());
+	}
+
 }

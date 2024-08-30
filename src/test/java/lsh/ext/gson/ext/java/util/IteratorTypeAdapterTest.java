@@ -18,6 +18,7 @@ import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
+import org.mockito.Mockito;
 
 public final class IteratorTypeAdapterTest
 		extends AbstractElementCursorTypeAdapterTest<Iterator<?>> {
@@ -45,20 +46,43 @@ public final class IteratorTypeAdapterTest
 	public void testLaziness()
 			throws IOException {
 		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
-		final JsonReader in = new JsonReader(new StringReader("[1,2,4,8]"));
-		final Iterator<? extends Integer> iterator = unit.read(in);
-		Assertions.assertEquals("$", in.getPath());
-		in.beginArray();
+		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")));
+		final Iterator<? extends Integer> iterator = unit.read(inSpy);
+		Assertions.assertEquals("$", inSpy.getPath());
+		inSpy.beginArray();
 		Assertions.assertEquals(1, iterator.next());
-		Assertions.assertEquals("$[1]", in.getPath());
+		Assertions.assertEquals("$[1]", inSpy.getPath());
 		Assertions.assertEquals(2, iterator.next());
-		Assertions.assertEquals("$[2]", in.getPath());
+		Assertions.assertEquals("$[2]", inSpy.getPath());
 		Assertions.assertEquals(4, iterator.next());
-		Assertions.assertEquals("$[3]", in.getPath());
+		Assertions.assertEquals("$[3]", inSpy.getPath());
 		Assertions.assertEquals(8, iterator.next());
-		Assertions.assertEquals("$[4]", in.getPath());
-		in.endArray();
-		Assertions.assertEquals("$", in.getPath());
+		Assertions.assertEquals("$[4]", inSpy.getPath());
+		inSpy.endArray();
+		Assertions.assertEquals("$", inSpy.getPath());
+		Mockito.verify(inSpy, Mockito.never())
+				.close();
+	}
+
+	@Test
+	public void testLazinessClosingTheInputFails()
+			throws IOException {
+		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
+		final IOException expectedEx = new IOException();
+		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")) {
+			@Override
+			public void close()
+					throws IOException {
+				throw expectedEx;
+			}
+		});
+		final Iterator<? extends Integer> iterator = unit.read(inSpy);
+		Assertions.assertEquals("$", inSpy.getPath());
+		inSpy.beginArray();
+		Assertions.assertEquals(1, iterator.next());
+		Assertions.assertEquals("$[1]", inSpy.getPath());
+		final IOException ex = Assertions.assertThrows(IOException.class, inSpy::close);
+		Assertions.assertSame(expectedEx, ex);
 	}
 
 }
