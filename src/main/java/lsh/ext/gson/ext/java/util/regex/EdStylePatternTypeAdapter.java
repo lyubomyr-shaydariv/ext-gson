@@ -146,12 +146,9 @@ public final class EdStylePatternTypeAdapter
 		s.append(delimiter);
 		final int fs = pattern.flags();
 		for ( final int kf : declaredFlags ) {
-			System.out.print("FLAG " + kf + ": ");
 			if ( (fs & kf) == 0 ) {
-				System.out.println(" -");
 				continue;
 			}
-			System.out.println(" FOUND!");
 			final char fc = flagStrategy.encodeFlag(kf);
 			if ( fc == 0 ) {
 				continue;
