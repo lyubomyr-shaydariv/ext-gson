@@ -85,35 +85,6 @@ public final class JsonObjects {
 		return jsonObject;
 	}
 
-	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right) {
-		return mergeIntoNew(left, right, IMergePredicate.replace);
-	}
-
-	public static JsonObject mergeIntoNew(final JsonObject left, final JsonObject right, final IMergePredicate predicate) {
-		final JsonObject merged = new JsonObject();
-		for ( final Map.Entry<String, JsonElement> leftEntry : left.entrySet() ) {
-			merged.add(leftEntry.getKey(), leftEntry.getValue());
-		}
-		mergeIntoLeft(merged, right, predicate);
-		return merged;
-	}
-
-	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right) {
-		return mergeIntoLeft(left, right, IMergePredicate.replace);
-	}
-
-	public static JsonObject mergeIntoLeft(final JsonObject left, final JsonObject right, final IMergePredicate predicate) {
-		for ( final Map.Entry<String, JsonElement> rightEntry : right.entrySet() ) {
-			final String key = rightEntry.getKey();
-			final JsonElement leftValue = left.get(key);
-			final JsonElement rightValue = rightEntry.getValue();
-			if ( predicate.canReplace(key, left, leftValue, right, rightValue) ) {
-				left.add(key, rightValue);
-			}
-		}
-		return left;
-	}
-
 	public static Map<String, JsonElement> asUnmodifiableMap(final JsonObject jsonObject) {
 		return Collections.unmodifiableMap(jsonObject.asMap());
 	}
@@ -128,22 +99,6 @@ public final class JsonObjects {
 
 	public static Map<String, JsonElement> toImmutableMap(final JsonObject jsonObject) {
 		return Map.copyOf(jsonObject.asMap());
-	}
-
-	public interface IMergePredicate {
-
-		/**
-		 * Represents a merge predicate that always replaces keys in the "left" object.
-		 */
-		IMergePredicate replace = (key, leftObject, leftValue, rightObject, rightValue) -> true;
-
-		/**
-		 * Represents a merge predicate that always retains keys in the "left" object.
-		 */
-		IMergePredicate retain = (key, leftObject, leftValue, rightObject, rightValue) -> false;
-
-		boolean canReplace(String key, JsonObject leftObject, @Nullable JsonElement leftValue, JsonObject rightObject, @Nullable JsonElement rightValue);
-
 	}
 
 }
