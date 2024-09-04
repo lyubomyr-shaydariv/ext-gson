@@ -1,11 +1,15 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.WillCloseWhenClosed;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -15,6 +19,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -322,6 +327,90 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 			final String discriminator = classToDiscriminator.apply(klass);
 			putDiscriminatorToTypeAdapter.accept(discriminator, delegateTypeAdapter);
 		}
+	}
+
+	@SuppressWarnings({ "AbstractClassExtendsConcreteClass", "AbstractClassWithOnlyOneDirectInheritor", "ClassWithoutNoArgConstructor" })
+	private abstract static class AbstractDelegateJsonReader
+			extends JsonReader {
+
+		private static final Reader neverReader = new Reader() {
+			// @formatter:off
+			@Override public int read(@Nonnull final char[] buffer, final int offset, final int length) { throw new AssertionError(); }
+			@Override public void close() { throw new AssertionError(); }
+			// @formatter:on
+		};
+
+		private final JsonReader in;
+
+		@SuppressWarnings("WeakerAccess")
+		private AbstractDelegateJsonReader(@WillCloseWhenClosed final JsonReader in) {
+			super(neverReader);
+			this.in = in;
+		}
+
+		// @formatter:off
+		@Override @SuppressWarnings("all") public void beginArray() throws IOException { in.beginArray(); }
+		@Override @SuppressWarnings("all") public void endArray() throws IOException { in.endArray(); }
+		@Override @SuppressWarnings("all") public void beginObject() throws IOException { in.beginObject(); }
+		@Override @SuppressWarnings("all") public void endObject() throws IOException { in.endObject(); }
+		@Override @SuppressWarnings("all") public boolean hasNext() throws IOException { return in.hasNext(); }
+		@Override @SuppressWarnings("all") public JsonToken peek() throws IOException { return in.peek(); }
+		@Override @SuppressWarnings("all") public String nextName() throws IOException { return in.nextName(); }
+		@Override @SuppressWarnings("all") public String nextString() throws IOException { return in.nextString(); }
+		@Override @SuppressWarnings("all") public boolean nextBoolean() throws IOException { return in.nextBoolean(); }
+		@Override @SuppressWarnings("all") public void nextNull() throws IOException { in.nextNull(); }
+		@Override @SuppressWarnings("all") public double nextDouble() throws IOException { return in.nextDouble(); }
+		@Override @SuppressWarnings("all") public long nextLong() throws IOException { return in.nextLong(); }
+		@Override @SuppressWarnings("all") public int nextInt() throws IOException { return in.nextInt(); }
+		@Override @SuppressWarnings("all") public void close() throws IOException { in.close(); }
+		@Override @SuppressWarnings("all") public void skipValue() throws IOException { in.skipValue(); }
+		@Override @SuppressWarnings("all") public String toString() { return in.toString(); }
+		@Override @SuppressWarnings("all") public String getPath() { return in.getPath(); }
+		@Override @SuppressWarnings("all") public String getPreviousPath() { return in.getPreviousPath(); }
+		// @formatter:on
+
+	}
+
+	@SuppressWarnings({ "AbstractClassExtendsConcreteClass", "AbstractClassWithOnlyOneDirectInheritor", "ClassWithoutNoArgConstructor" })
+	private abstract static class AbstractDelegateJsonWriter
+			extends JsonWriter {
+
+		private static final Writer neverWriter = new Writer() {
+			// @formatter:off
+			@Override public void write(@Nonnull final char[] buffer, final int offset, final int length) { throw new AssertionError(); }
+			@Override public void flush() { throw new AssertionError(); }
+			@Override public void close() { throw new AssertionError(); }
+			// @formatter:on
+		};
+
+		private final JsonWriter out;
+
+		@SuppressWarnings("WeakerAccess")
+		private AbstractDelegateJsonWriter(@WillCloseWhenClosed final JsonWriter out) {
+			super(neverWriter);
+			this.out = out;
+		}
+
+		// @formatter:off
+		@Override @SuppressWarnings("all") public boolean isLenient() { return out.isLenient(); }
+		@Override @SuppressWarnings("all") public JsonWriter beginArray() throws IOException { return out.beginArray(); }
+		@Override @SuppressWarnings("all") public JsonWriter endArray() throws IOException { return out.endArray(); }
+		@Override @SuppressWarnings("all") public JsonWriter beginObject() throws IOException { return out.beginObject(); }
+		@Override @SuppressWarnings("all") public JsonWriter endObject() throws IOException { return out.endObject(); }
+		@Override @SuppressWarnings("all") public JsonWriter name(final String name) throws IOException { return out.name(name); }
+		@Override @SuppressWarnings("all") public JsonWriter value(final String value) throws IOException { return out.value(value); }
+		@Override @SuppressWarnings("all") public JsonWriter value(final boolean value) throws IOException { return out.value(value); }
+		@Override @SuppressWarnings("all") public JsonWriter value(final Boolean value) throws IOException { return out.value(value); }
+		@Override @SuppressWarnings("all") public JsonWriter value(final float value) throws IOException { return out.value(value); }
+		@Override @SuppressWarnings("all") public JsonWriter value(final double value) throws IOException { return out.value(value); }
+		@Override @SuppressWarnings("all") public JsonWriter value(final long value) throws IOException { return out.value(value); }
+		@Override @SuppressWarnings("all") public JsonWriter value(final Number value) throws IOException { return out.value(value); }
+		@Override @SuppressWarnings("all") public JsonWriter nullValue() throws IOException { return out.nullValue(); }
+		@Override @SuppressWarnings("all") public JsonWriter jsonValue(final String value) throws IOException { return out.jsonValue(value); }
+		@Override @SuppressWarnings("all") public void flush() throws IOException { out.flush(); }
+		@Override @SuppressWarnings("all") public void close() throws IOException { out.close(); }
+		// @formatter:on
+
 	}
 
 }
