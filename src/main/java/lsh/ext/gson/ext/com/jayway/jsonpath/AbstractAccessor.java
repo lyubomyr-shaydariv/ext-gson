@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.com.jayway.jsonpath;
 import java.lang.reflect.Type;
 
 import com.jayway.jsonpath.JsonPath;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ public abstract class AbstractAccessor<O, I>
 		implements IAccessor<O, I> {
 
 	@Getter
+	@SuppressFBWarnings("EI_EXPOSE_REP")
 	private final JsonPath jsonPath;
 
 	@Getter

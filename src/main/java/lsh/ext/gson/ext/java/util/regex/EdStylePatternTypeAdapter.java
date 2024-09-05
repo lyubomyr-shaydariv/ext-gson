@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -70,6 +71,7 @@ public final class EdStylePatternTypeAdapter
 	public static final char DEFAULT_REGEX_DELIMITER = '/';
 
 	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final TypeAdapter<Pattern> instance = getInstance(DEFAULT_REGEX_DELIMITER, IFlagStrategy.defaultFlagStrategy);
 
 	private final char delimiter;

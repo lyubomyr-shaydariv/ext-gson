@@ -10,6 +10,7 @@ import java.util.stream.StreamSupport;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public final class IntStreamTypeAdapter
 		extends AbstractCursorTypeAdapter<IntStream, PrimitiveIterator.OfInt> {
 
 	@Getter
+	@SuppressFBWarnings("MS_EXPOSE_REP")
 	private static final TypeAdapter<IntStream> instance = new IntStreamTypeAdapter()
 			.nullSafe();
 
