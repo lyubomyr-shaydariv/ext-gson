@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.google.common.io.BaseEncoding;
 import com.google.gson.TypeAdapter;
+import lsh.ext.gson.domain.encoded.ByteArrayTypeAdapter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.AdditionalMatchers;

@@ -1,4 +1,4 @@
 @Nonnull
-package lsh.ext.gson.ext;
+package lsh.ext.gson.domain.encoded;
 
 import javax.annotation.Nonnull;

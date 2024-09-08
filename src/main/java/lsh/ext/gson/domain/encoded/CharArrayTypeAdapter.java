@@ -1,4 +1,4 @@
-package lsh.ext.gson.ext;
+package lsh.ext.gson.domain.encoded;
 
 import java.io.IOException;
 
@@ -13,26 +13,26 @@ import lsh.ext.gson.AbstractEncodingTypeAdapter;
 import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ByteArrayTypeAdapter
-		extends AbstractEncodingTypeAdapter<byte[], String> {
+public final class CharArrayTypeAdapter
+		extends AbstractEncodingTypeAdapter<char[], String> {
 
 	public interface IEncoder {
 
-		String encode(byte[] array);
+		String encode(char[] array);
 
-		byte[] decode(String s);
+		char[] decode(String s);
 
 	}
 
 	private final IEncoder encoder;
 
-	public static TypeAdapter<byte[]> getInstance(final IEncoder encoder) {
-		return new ByteArrayTypeAdapter(encoder)
+	public static TypeAdapter<char[]> getInstance(final IEncoder encoder) {
+		return new CharArrayTypeAdapter(encoder)
 				.nullSafe();
 	}
 
 	@Override
-	protected String encode(final byte[] value) {
+	protected String encode(final char[] value) {
 		return encoder.encode(value);
 	}
 
@@ -49,22 +49,22 @@ public final class ByteArrayTypeAdapter
 	}
 
 	@Override
-	protected byte[] decode(final String encodedValue) {
+	protected char[] decode(final String encodedValue) {
 		return encoder.decode(encodedValue);
 	}
 
 	public static final class Factory
-			extends AbstractRawClassTypeAdapterFactory<byte[]> {
+			extends AbstractRawClassTypeAdapterFactory<char[]> {
 
-		private final TypeAdapter<byte[]> typeAdapter;
+		private final TypeAdapter<char[]> typeAdapter;
 
-		private Factory(final TypeAdapter<byte[]> typeAdapter) {
-			super(byte[].class);
+		private Factory(final TypeAdapter<char[]> typeAdapter) {
+			super(char[].class);
 			this.typeAdapter = typeAdapter;
 		}
 
 		@Override
-		protected TypeAdapter<byte[]> createTypeAdapter(final Gson gson, final TypeToken<? super byte[]> typeToken) {
+		protected TypeAdapter<char[]> createTypeAdapter(final Gson gson, final TypeToken<? super char[]> typeToken) {
 			return typeAdapter;
 		}
 
