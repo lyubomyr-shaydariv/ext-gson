@@ -69,9 +69,23 @@ No `ext-gson` dependencies are bundled or planned to be bundled, so all dependen
 ##### Collections
 
 * `com.google.common.collect.BiMap`
+* `com.google.common.collect.Collection`
+* `com.google.common.collect.Graph`
+* `com.google.common.collect.List`
+* `com.google.common.collect.ListMultimap`
+* `com.google.common.collect.Map`
 * `com.google.common.collect.Multimap`
 * `com.google.common.collect.Multiset`
+* `com.google.common.collect.Network`
+* `com.google.common.collect.RangeMap`
+* `com.google.common.collect.RangeSet`
+* `com.google.common.collect.Set`
+* `com.google.common.collect.SetMultimap`
+* `com.google.common.collect.SortedMap`
+* `com.google.common.collect.SortedMultiset`
+* `com.google.common.collect.SortedSet`
 * `com.google.common.collect.Table`
+* `com.google.common.collect.ValueGraph`
 
 #### Apache Commons Collections 4
 

@@ -44,7 +44,6 @@ public final class GuavaCollectTypeAdapter {
 		);
 	}
 
-
 	public static <V> TypeAdapter<Multimap<String, V>> forMultimap(
 			final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> builderFactory
