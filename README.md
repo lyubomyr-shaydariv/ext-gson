@@ -11,6 +11,18 @@ No `ext-gson` dependencies are bundled or planned to be bundled, so all dependen
 * `java.util.Enumeration`
 * `java.util.Iterator`
 
+* `java.util.Collection`
+* `java.util.List`
+* `java.util.Map`
+* `java.util.NavigableMap`
+* `java.util.NavigableSet`
+* `java.util.SequencedCollection`
+* `java.util.SequencedMap`
+* `java.util.SequencedSet`
+* `java.util.Set`
+* `java.util.SortedMap`
+* `java.util.SortedSet`
+
 ##### Regular expressions
 
 * `java.util.regex.Pattern`
