@@ -3,9 +3,10 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.function.Function;
 import javax.annotation.Nullable;
 
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
@@ -38,7 +39,7 @@ public final class TableTypeAdapter<R, C, V>
 			final TypeAdapter<V> valueTypeAdapter,
 			final IFactory<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory
 	) {
-		return new TableTypeAdapter<String, String, V>(valueTypeAdapter, builderFactory, Function.identity(), Function.identity(), Function.identity(), Function.identity())
+		return new TableTypeAdapter<String, String, V>(valueTypeAdapter, builderFactory, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity())
 				.nullSafe();
 	}
 
@@ -97,7 +98,7 @@ public final class TableTypeAdapter<R, C, V>
 	public static final class Factory<R, C, V>
 			extends AbstractRawClassHierarchyTypeAdapterFactory<Table<R, C, V>> {
 
-		private static final ITypeAdapterFactory<?> instance = getInstance(Factory::defaultBuilderFactory, Function.identity(), Function.identity(), Function.identity(), Function.identity());
+		private static final ITypeAdapterFactory<?> instance = getInstance(Factory::defaultBuilderFactory, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity());
 
 		private final IBuilder3.ILookup<? super R, ? super C, ? super V, ? extends Table<R, C, V>> builderLookup;
 		private final Function<? super R, String> encodeRowKey;

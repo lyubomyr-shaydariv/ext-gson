@@ -3,9 +3,10 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.function.Function;
 import javax.annotation.Nullable;
 
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.LinkedHashMultimap;
@@ -37,7 +38,7 @@ public final class MultimapTypeAdapter<K, V>
 			final TypeAdapter<V> valueTypeAdapter,
 			final IFactory<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> builderFactory
 	) {
-		return getInstance(valueTypeAdapter, builderFactory, Function.identity(), Function.identity());
+		return getInstance(valueTypeAdapter, builderFactory, Functions.identity(), Functions.identity());
 	}
 
 	public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(
@@ -80,7 +81,7 @@ public final class MultimapTypeAdapter<K, V>
 	public static final class Factory<K, V>
 			extends AbstractRawClassHierarchyTypeAdapterFactory<Multimap<K, V>> {
 
-		private static final ITypeAdapterFactory<?> instance = getInstance(Factory::defaultBuilderFactory, Function.identity(), Function.identity());
+		private static final ITypeAdapterFactory<?> instance = getInstance(Factory::defaultBuilderFactory, Functions.identity(), Functions.identity());
 
 		private final IBuilder2.ILookup<? super K, ? super V, ? extends Multimap<K, V>> builderLookup;
 		private final Function<? super K, String> encodeKey;
