@@ -4,28 +4,13 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.google.gson.TypeAdapter;
-import lsh.ext.gson.IFunction;
 import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class MapEntryTypeAdapterTest {
 
-	private static final TypeAdapter<Map.Entry<Double, Integer>> unit = MapEntryTypeAdapter.getInstance(
-			TypeAdapters.intTypeAdapter,
-			new IFunction<Double, String>() {
-				@Override
-				public String apply(final Double aDouble) {
-					return String.valueOf(aDouble);
-				}
-			},
-			new IFunction<String, Double>() {
-				@Override
-				public Double apply(final String s) {
-					return Double.parseDouble(s);
-				}
-			}
-	);
+	private static final TypeAdapter<Map.Entry<Double, Integer>> unit = MapEntryTypeAdapter.getInstance(TypeAdapters.intTypeAdapter, String::valueOf, Double::parseDouble);
 
 	@Test
 	public void testReadForNoProperties()
