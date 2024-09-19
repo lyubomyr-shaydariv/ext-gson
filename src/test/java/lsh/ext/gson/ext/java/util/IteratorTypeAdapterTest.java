@@ -44,7 +44,7 @@ public final class IteratorTypeAdapterTest
 	@Test
 	public void testLaziness()
 			throws IOException {
-		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.getIntTypeAdapter());
+		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
 		final JsonReader in = new JsonReader(new StringReader("[1,2,4,8]"));
 		final Iterator<? extends Integer> iterator = unit.read(in);
 		Assertions.assertEquals("$", in.getPath());

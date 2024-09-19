@@ -44,7 +44,7 @@ public final class StreamTypeAdapterTest
 	@Test
 	public void testLaziness()
 			throws IOException {
-		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.getIntTypeAdapter());
+		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
 		final JsonReader in = new JsonReader(new StringReader("[1,2,4,8]"));
 		final Stream<? extends Integer> stream = unit.read(in);
 		final Iterator<? extends Integer> iterator = stream.iterator();
@@ -68,7 +68,7 @@ public final class StreamTypeAdapterTest
 	@Test
 	public void testLazinessClosingTheStream()
 			throws IOException {
-		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.getIntTypeAdapter());
+		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")));
 		final Stream<? extends Integer> stream = unit.read(inSpy);
 		final Iterator<? extends Integer> iterator = stream.iterator();
