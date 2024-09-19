@@ -2,7 +2,6 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.function.Function;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -15,8 +14,8 @@ public abstract class AbstractJsonObjectTypeAdapter<O, K, V>
 		extends TypeAdapter<O> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final Function<? super K, String> encodeKey;
-	private final Function<? super String, ? extends K> decodeKey;
+	private final IFunction<? super K, String> encodeKey;
+	private final IFunction<? super String, ? extends K> decodeKey;
 
 	protected abstract Iterable<? extends Map.Entry<K, V>> toIterable(O object);
 

@@ -6,7 +6,6 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillCloseWhenClosed;
@@ -29,9 +28,9 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	private final String property;
-	private final Function<? super Class<? extends T>, String> classToDiscriminator;
-	private final Function<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter;
-	private final Function<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter;
+	private final IFunction<? super Class<? extends T>, String> classToDiscriminator;
+	private final IFunction<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter;
+	private final IFunction<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter;
 
 	protected abstract void write(JsonWriter out, T value, TypeAdapter<? super T> typeAdapter, String property, String discriminator)
 			throws IOException;
@@ -73,13 +72,13 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 
 		private final Iterable<Class<? extends T>> classes;
 		private final String property;
-		private final Function<? super Class<? extends T>, String> classToDiscriminator;
+		private final IFunction<? super Class<? extends T>, String> classToDiscriminator;
 
 		protected AbstractFactory(
 				final Class<T> klass,
 				final Iterable<Class<? extends T>> classes,
 				final String property,
-				final Function<? super Class<? extends T>, String> classToDiscriminator
+				final IFunction<? super Class<? extends T>, String> classToDiscriminator
 		) {
 			super(klass);
 			this.classes = classes;
@@ -92,7 +91,7 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 				TypeToken<? super T> typeToken,
 				Iterable<Class<? extends T>> classes,
 				String property,
-				Function<? super Class<? extends T>, String> classToDiscriminator
+				IFunction<? super Class<? extends T>, String> classToDiscriminator
 		);
 
 		@Override
@@ -107,18 +106,18 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 
 		private Streamed(
 				final String property,
-				final Function<? super Class<? extends T>, String> classToDiscriminator,
-				final Function<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
-				final Function<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter
+				final IFunction<? super Class<? extends T>, String> classToDiscriminator,
+				final IFunction<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
+				final IFunction<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter
 		) {
 			super(property, classToDiscriminator, classToTypeAdapter, discriminatorToTypeAdapter);
 		}
 
 		public static <T> TypeAdapter<T> getInstance(
 				final String property,
-				final Function<? super Class<? extends T>, String> classToDiscriminator,
-				final Function<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
-				final Function<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter
+				final IFunction<? super Class<? extends T>, String> classToDiscriminator,
+				final IFunction<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
+				final IFunction<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter
 		) {
 			return new Streamed<>(property, classToDiscriminator, classToTypeAdapter, discriminatorToTypeAdapter)
 					.nullSafe();
@@ -183,7 +182,7 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 					final Class<T> klass,
 					final Iterable<Class<? extends T>> classes,
 					final String property,
-					final Function<? super Class<? extends T>, String> classToDiscriminator
+					final IFunction<? super Class<? extends T>, String> classToDiscriminator
 			) {
 				super(klass, classes, property, classToDiscriminator);
 			}
@@ -192,7 +191,7 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 					final Class<T> klass,
 					final Iterable<Class<? extends T>> classes,
 					final String property,
-					final Function<? super Class<? extends T>, String> classToDiscriminator
+					final IFunction<? super Class<? extends T>, String> classToDiscriminator
 			) {
 				return new Factory<>(klass, classes, property, classToDiscriminator);
 			}
@@ -203,7 +202,7 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 					final TypeToken<? super T> typeToken,
 					final Iterable<Class<? extends T>> classes,
 					final String property,
-					final Function<? super Class<? extends T>, String> classToDiscriminator
+					final IFunction<? super Class<? extends T>, String> classToDiscriminator
 			) {
 				final Map<Class<? extends T>, TypeAdapter<? super T>> classToTypeAdapterMap = new HashMap<>();
 				final Map<String, TypeAdapter<? extends T>> discriminatorToTypeAdapterMap = new HashMap<>();
@@ -222,9 +221,9 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 
 		private JsonTree(
 				final String property,
-				final Function<? super Class<? extends T>, String> classToDiscriminator,
-				final Function<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
-				final Function<? super String, ? extends TypeAdapter<? extends T>> propertyToTypeAdapter,
+				final IFunction<? super Class<? extends T>, String> classToDiscriminator,
+				final IFunction<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
+				final IFunction<? super String, ? extends TypeAdapter<? extends T>> propertyToTypeAdapter,
 				final TypeAdapter<? super JsonElement> jsonElementTypeAdapter
 		) {
 			super(property, classToDiscriminator, classToTypeAdapter, propertyToTypeAdapter);
@@ -233,9 +232,9 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 
 		public static <T> TypeAdapter<T> getInstance(
 				final String property,
-				final Function<? super Class<? extends T>, String> classToDiscriminator,
-				final Function<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
-				final Function<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter,
+				final IFunction<? super Class<? extends T>, String> classToDiscriminator,
+				final IFunction<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
+				final IFunction<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter,
 				final TypeAdapter<? super JsonElement> jsonElementTypeAdapter
 		) {
 			return new JsonTree<>(property, classToDiscriminator, classToTypeAdapter, discriminatorToTypeAdapter, jsonElementTypeAdapter)
@@ -279,7 +278,7 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 					final Class<T> klass,
 					final Iterable<Class<? extends T>> classes,
 					final String propertyProperty,
-					final Function<? super Class<? extends T>, String> classToDiscriminator
+					final IFunction<? super Class<? extends T>, String> classToDiscriminator
 			) {
 				super(klass, classes, propertyProperty, classToDiscriminator);
 			}
@@ -288,7 +287,7 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 					final Class<T> klass,
 					final Iterable<Class<? extends T>> classes,
 					final String property,
-					final Function<? super Class<? extends T>, String> classToDiscriminator
+					final IFunction<? super Class<? extends T>, String> classToDiscriminator
 			) {
 				return new Factory<>(klass, classes, property, classToDiscriminator);
 			}
@@ -299,7 +298,7 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 					final TypeToken<? super T> typeToken,
 					final Iterable<Class<? extends T>> classes,
 					final String property,
-					final Function<? super Class<? extends T>, String> classToDiscriminator
+					final IFunction<? super Class<? extends T>, String> classToDiscriminator
 			) {
 				final TypeAdapter<JsonElement> jsonElementTypeAdapter = gson.getAdapter(JsonElement.class);
 				final Map<Class<? extends T>, TypeAdapter<? super T>> classToTypeAdapterMap = new HashMap<>();
@@ -316,7 +315,7 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 			final Gson gson,
 			final TypeAdapterFactory skipPast,
 			final Iterable<Class<? extends T>> classes,
-			final Function<? super Class<? extends T>, String> classToDiscriminator,
+			final IFunction<? super Class<? extends T>, String> classToDiscriminator,
 			final BiConsumer<? super Class<? extends T>, ? super TypeAdapter<? super T>> putClassToTypeAdapter,
 			final BiConsumer<? super String, ? super TypeAdapter<? extends T>> putDiscriminatorToTypeAdapter
 	) {
