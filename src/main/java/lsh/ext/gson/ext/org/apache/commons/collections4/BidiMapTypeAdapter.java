@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.function.Function;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -19,6 +18,7 @@ import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.apache.commons.collections4.bidimap.DualLinkedHashBidiMap;
 
@@ -28,21 +28,21 @@ public final class BidiMapTypeAdapter<K, V>
 
 	private final TypeAdapter<V> valueTypeAdapter;
 	private final IFactory<? extends IBuilder2<? super K, ? super V, ? extends BidiMap<K, V>>> builderFactory;
-	private final Function<? super K, String> encodeKey;
-	private final Function<? super String, ? extends K> decodeKey;
+	private final Transformer<? super K, String> encodeKey;
+	private final Transformer<? super String, ? extends K> decodeKey;
 
 	public static <V> TypeAdapter<BidiMap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
 			final IFactory<? extends IBuilder2<? super String, ? super V, ? extends BidiMap<String, V>>> builderFactory
 	) {
-		return getInstance(valueTypeAdapter, builderFactory, Function.identity(), Function.identity());
+		return getInstance(valueTypeAdapter, builderFactory, Transformers.identity(), Transformers.identity());
 	}
 
 	public static <K, V> TypeAdapter<BidiMap<K, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
 			final IFactory<? extends IBuilder2<? super K, ? super V, ? extends BidiMap<K, V>>> builderFactory,
-			final Function<? super K, String> encodeKey,
-			final Function<? super String, ? extends K> decodeKey
+			final Transformer<? super K, String> encodeKey,
+			final Transformer<? super String, ? extends K> decodeKey
 	) {
 		return new BidiMapTypeAdapter<>(valueTypeAdapter, builderFactory, encodeKey, decodeKey)
 				.nullSafe();
@@ -53,7 +53,7 @@ public final class BidiMapTypeAdapter<K, V>
 			throws IOException {
 		out.beginObject();
 		for ( final Map.Entry<K, V> e : bidiMap.entrySet() ) {
-			final String key = encodeKey.apply(e.getKey());
+			final String key = encodeKey.transform(e.getKey());
 			final V value = e.getValue();
 			out.name(key);
 			valueTypeAdapter.write(out, value);
@@ -69,7 +69,7 @@ public final class BidiMapTypeAdapter<K, V>
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
-			builder.accept(decodeKey.apply(key), value);
+			builder.accept(decodeKey.transform(key), value);
 		}
 		in.endObject();
 		return builder.build();
@@ -78,17 +78,17 @@ public final class BidiMapTypeAdapter<K, V>
 	public static final class Factory<K, V>
 			extends AbstractRawClassHierarchyTypeAdapterFactory<BidiMap<K, V>> {
 
-		private static final ITypeAdapterFactory<?> instance = getInstance(Factory::defaultBuilderFactory, Function.identity(), Function.identity());
+		private static final ITypeAdapterFactory<?> instance = getInstance(Factory::defaultBuilderFactory, Transformers.identity(), Transformers.identity());
 
 		private final IBuilder2.ILookup<? super K, ? super V, ? extends BidiMap<K, V>> builderLookup;
-		private final Function<? super K, String> encodeKey;
-		private final Function<? super String, ? extends K> decodeKey;
+		private final Transformer<? super K, String> encodeKey;
+		private final Transformer<? super String, ? extends K> decodeKey;
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		private Factory(
 				final IBuilder2.ILookup<? super K, ? super V, ? extends BidiMap<K, V>> builderLookup,
-				final Function<? super K, String> encodeKey,
-				final Function<? super String, ? extends K> decodeKey
+				final Transformer<? super K, String> encodeKey,
+				final Transformer<? super String, ? extends K> decodeKey
 		) {
 			super((Class) BidiMap.class);
 			this.builderLookup = builderLookup;
@@ -104,8 +104,8 @@ public final class BidiMapTypeAdapter<K, V>
 
 		public static <K, V> ITypeAdapterFactory<BidiMap<K, V>> getInstance(
 				final IBuilder2.ILookup<? super K, ? super V, ? extends BidiMap<K, V>> builderLookup,
-				final Function<? super K, String> encodeKey,
-				final Function<? super String, ? extends K> decodeKey
+				final Transformer<? super K, String> encodeKey,
+				final Transformer<? super String, ? extends K> decodeKey
 		) {
 			return new Factory<>(builderLookup, encodeKey, decodeKey);
 		}
