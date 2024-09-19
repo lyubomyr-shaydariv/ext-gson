@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.IFunction;
-import lsh.ext.gson.test.MoreAssertions;
 import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -46,7 +45,11 @@ public final class MapEntryTypeAdapterTest {
 
 	@Test
 	public void testReadForMultipleProperties() {
-		MoreAssertions.assertThrows(IllegalStateException.class, "Expected a single property object with key `3.14` but also encountered `2.7`", () -> unit.fromJson("{\"3.14\":1,\"2.7\":3,\"UNREACHABLE\":\"UNREACHABLE\"}"));
+		Assertions.assertThrows(
+				IllegalStateException.class,
+				() -> unit.fromJson("{\"3.14\":1,\"2.7\":3,\"UNREACHABLE\":\"UNREACHABLE\"}"),
+				"Expected a single property object with key `3.14` but also encountered `2.7`"
+		);
 	}
 
 }
