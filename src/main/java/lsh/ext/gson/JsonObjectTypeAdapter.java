@@ -26,7 +26,8 @@ public final class JsonObjectTypeAdapter<A, K, V>
 			final IFunction1<? super A, ? extends Iterable<? extends Map.Entry<K, V>>> toIterable,
 			final IFactory<? extends IBuilder2<? super K, ? super V, ? extends A>> createBuilder
 	) {
-		return new JsonObjectTypeAdapter<>(valueTypeAdapter, encodeKey, decodeKey, toIterable, createBuilder);
+		return new JsonObjectTypeAdapter<>(valueTypeAdapter, encodeKey, decodeKey, toIterable, createBuilder)
+				.nullSafe();
 	}
 
 	@Override

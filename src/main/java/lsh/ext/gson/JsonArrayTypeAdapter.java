@@ -21,7 +21,8 @@ public final class JsonArrayTypeAdapter<A, E>
 			final IFunction1<? super A, ? extends Iterable<E>> toIterable,
 			final IFactory<? extends IBuilder1<? super E, ? extends A>> createBuilder
 	) {
-		return new JsonArrayTypeAdapter<>(elementTypeAdapter, toIterable, createBuilder);
+		return new JsonArrayTypeAdapter<>(elementTypeAdapter, toIterable, createBuilder)
+				.nullSafe();
 	}
 
 	@Override
