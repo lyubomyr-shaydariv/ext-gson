@@ -30,7 +30,7 @@ public final class RegexModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<Pattern> patternTypeAdapterFactory = SimplePatternTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<Pattern> patternTypeAdapterFactory = RegexTypeAdapterFactory.getDefaultForSimplePattern();
 
 		public static Builder create() {
 			return new Builder();

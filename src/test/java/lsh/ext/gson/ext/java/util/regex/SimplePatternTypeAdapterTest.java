@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
+import com.google.gson.TypeAdapter;
 import lsh.ext.gson.AbstractTypeAdapterTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class SimplePatternTypeAdapterTest
 		extends AbstractTypeAdapterTest<Pattern, PatternWrapper> {
+
+	private static final TypeAdapter<Pattern> unit = RegexTypeAdapter.getDefaultForSimplePattern();
 
 	@Nullable
 	@Override
@@ -19,15 +22,10 @@ public final class SimplePatternTypeAdapterTest
 		return PatternWrapper.from(pattern);
 	}
 
-
 	@Override
 	protected List<Arguments> makeTestCases() {
 		return List.of(
-				makeTestCase(
-						SimplePatternTypeAdapter.getInstance(),
-						"\"^foo.*bar$\"",
-						Pattern.compile("^foo.*bar$")
-				)
+				makeTestCase(unit, "\"^foo.*bar$\"", Pattern.compile("^foo.*bar$"))
 		);
 	}
 

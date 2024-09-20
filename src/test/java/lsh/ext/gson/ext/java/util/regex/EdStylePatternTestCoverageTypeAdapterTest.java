@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public final class EdStylePatternTestCoverageTypeAdapterTest {
 
-	private static final TypeAdapter<Pattern> unit = EdStylePatternTypeAdapter.getInstance();
+	private static final TypeAdapter<Pattern> unit = RegexTypeAdapter.getDefaultForEdStylePattern();
 
 	@Test
 	public void testFromStringRegexLiteralExpressionEmpty() {
@@ -70,7 +70,7 @@ public final class EdStylePatternTestCoverageTypeAdapterTest {
 
 	@Test
 	public void testToStringDelimiterAndFlagClash() {
-		final TypeAdapter<Pattern> unit = EdStylePatternTypeAdapter.getInstance('#', new EdStylePatternTypeAdapter.IFlagStrategy() {
+		final TypeAdapter<Pattern> unit = RegexTypeAdapter.forEdStylePattern('#', new RegexTypeAdapter.IFlagStrategy() {
 			@Override
 			public char encodeFlag(final int flag) {
 				return '#';
@@ -88,7 +88,7 @@ public final class EdStylePatternTestCoverageTypeAdapterTest {
 
 	@Test
 	public void testToStringForIgnoredFlags() {
-		final TypeAdapter<Pattern> unit = EdStylePatternTypeAdapter.getInstance('/', new EdStylePatternTypeAdapter.IFlagStrategy() {
+		final TypeAdapter<Pattern> unit = RegexTypeAdapter.forEdStylePattern('/', new RegexTypeAdapter.IFlagStrategy() {
 			@Override
 			public char encodeFlag(final int flag) {
 				return 0;
