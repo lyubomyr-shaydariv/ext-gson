@@ -6,16 +6,13 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.Gsons;
+import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultimapTypeAdapterTest
 		extends AbstractTypeAdapterTest<Multimap<String, ?>, Multimap<String, ?>> {
-
-	private static final Gson gson = Gsons.getNormalized();
 
 	@SuppressWarnings("unchecked")
 	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(LinkedHashMultimap.class, String.class, String.class);
@@ -30,7 +27,7 @@ public final class MultimapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultimapTypeAdapter.getInstance(gson.getAdapter(String.class), MultimapTypeAdapter.Factory.defaultBuilderFactory(stringToStringMultimapTypeToken)),
+						MultimapTypeAdapter.getInstance(TypeAdapters.stringTypeAdapter, MultimapTypeAdapter.Factory.defaultBuilderFactory(stringToStringMultimapTypeToken)),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
 						LinkedHashMultimap.create(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
 				)

@@ -9,11 +9,9 @@ import java.util.Spliterators;
 import java.util.stream.StreamSupport;
 import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
-import lsh.ext.gson.Gsons;
 import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,8 +20,6 @@ import org.mockito.Mockito;
 
 public final class IteratorTypeAdapterTest
 		extends AbstractElementCursorTypeAdapterTest<Iterator<?>> {
-
-	private static final Gson gson = Gsons.getNormalized();
 
 	@Override
 	@Nullable
@@ -35,7 +31,7 @@ public final class IteratorTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						IteratorTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
+						IteratorTypeAdapter.getInstance(TypeAdapters.integerTypeAdapter),
 						"[1,2,4,8]",
 						List.of(1, 2, 4, 8).iterator()
 				)
@@ -45,7 +41,7 @@ public final class IteratorTypeAdapterTest
 	@Test
 	public void testLaziness()
 			throws IOException {
-		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
+		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.primitiveIntTypeAdapter);
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")));
 		final Iterator<? extends Integer> iterator = unit.read(inSpy);
 		Assertions.assertEquals("$", inSpy.getPath());
@@ -67,7 +63,7 @@ public final class IteratorTypeAdapterTest
 	@Test
 	public void testLazinessClosingTheInputFails()
 			throws IOException {
-		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
+		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.primitiveIntTypeAdapter);
 		final IOException expectedEx = new IOException();
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")) {
 			@Override

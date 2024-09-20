@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -128,15 +129,15 @@ public final class JsonReadersTest {
 	@Test
 	public void testAsIteratorSome()
 			throws IOException {
-		final JsonReader in = new JsonReader(new StringReader("[{\"foo\":1,\"bar\":2},{\"foo\":3,\"bar\":4},{\"foo\":5,\"bar\":6}]"));
+		final JsonReader in = new JsonReader(new StringReader("[2,4,6]"));
 		in.beginArray();
-		final Iterator<?> unit = JsonReaders.asIterator(in, gson.getAdapter(FooBar.class));
+		final Iterator<?> unit = JsonReaders.asIterator(in, TypeAdapters.integerTypeAdapter);
 		Assertions.assertTrue(unit.hasNext());
-		Assertions.assertEquals(new FooBar(1, 2), unit.next());
+		Assertions.assertEquals(2, unit.next());
 		Assertions.assertTrue(unit.hasNext());
-		Assertions.assertEquals(new FooBar(3, 4), unit.next());
+		Assertions.assertEquals(4, unit.next());
 		Assertions.assertTrue(unit.hasNext());
-		Assertions.assertEquals(new FooBar(5, 6), unit.next());
+		Assertions.assertEquals(6, unit.next());
 		Assertions.assertFalse(unit.hasNext());
 		Assertions.assertThrows(NoSuchElementException.class, unit::next);
 		in.endArray();
@@ -147,16 +148,10 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
 		in.beginArray();
-		final Iterator<?> unit = JsonReaders.asIterator(in, gson.getAdapter(FooBar.class));
+		final Iterator<?> unit = JsonReaders.asIterator(in, TypeAdapters.integerTypeAdapter);
 		Assertions.assertFalse(unit.hasNext());
 		Assertions.assertThrows(NoSuchElementException.class, unit::next);
 		in.endArray();
-	}
-
-	private record FooBar(
-			int foo,
-			int bar
-	) {
 	}
 
 }

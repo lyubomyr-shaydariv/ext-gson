@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public final class MapEntryTypeAdapterTest {
 
-	private static final TypeAdapter<Map.Entry<Double, Integer>> unit = MapEntryTypeAdapter.getInstance(TypeAdapters.intTypeAdapter, String::valueOf, Double::parseDouble, AbstractMap.SimpleImmutableEntry::new);
+	private static final TypeAdapter<Map.Entry<Double, Integer>> unit = MapEntryTypeAdapter.getInstance(TypeAdapters.primitiveIntTypeAdapter, String::valueOf, Double::parseDouble, AbstractMap.SimpleImmutableEntry::new);
 
 	@Test
 	public void testReadForNoProperties()

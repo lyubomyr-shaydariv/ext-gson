@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
-import lsh.ext.gson.Gsons;
 import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,8 +19,6 @@ import org.mockito.Mockito;
 
 public final class StreamTypeAdapterTest
 		extends AbstractElementCursorTypeAdapterTest<Stream<?>> {
-
-	private static final Gson gson = Gsons.getNormalized();
 
 	@Override
 	@Nullable
@@ -34,7 +30,7 @@ public final class StreamTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						StreamTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
+						StreamTypeAdapter.getInstance(TypeAdapters.integerTypeAdapter),
 						"[1,2,4,8]",
 						Stream.of(1, 2, 4, 8)
 				)
@@ -44,7 +40,7 @@ public final class StreamTypeAdapterTest
 	@Test
 	public void testLaziness()
 			throws IOException {
-		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
+		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.primitiveIntTypeAdapter);
 		final JsonReader in = new JsonReader(new StringReader("[1,2,4,8]"));
 		final Stream<? extends Integer> stream = unit.read(in);
 		final Iterator<? extends Integer> iterator = stream.iterator();
@@ -68,7 +64,7 @@ public final class StreamTypeAdapterTest
 	@Test
 	public void testLazinessClosingTheStream()
 			throws IOException {
-		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
+		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.primitiveIntTypeAdapter);
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")));
 		final Stream<? extends Integer> stream = unit.read(inSpy);
 		final Iterator<? extends Integer> iterator = stream.iterator();
@@ -95,7 +91,7 @@ public final class StreamTypeAdapterTest
 	@Test
 	public void testLazinessClosingTheStreamFails()
 			throws IOException {
-		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.intTypeAdapter);
+		final TypeAdapter<Stream<? extends Integer>> unit = StreamTypeAdapter.getInstance(TypeAdapters.primitiveIntTypeAdapter);
 		final IOException expectedEx = new IOException();
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")) {
 			@Override

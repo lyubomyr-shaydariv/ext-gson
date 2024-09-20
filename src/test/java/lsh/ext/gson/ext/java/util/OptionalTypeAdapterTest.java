@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.Gsons;
+import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class OptionalTypeAdapterTest
 		extends AbstractTypeAdapterTest<Optional<?>, Optional<?>> {
-
-	private static final Gson gson = Gsons.getNormalized();
 
 	@Override
 	@SuppressWarnings("OptionalAssignedToNull")
@@ -24,7 +21,7 @@ public final class OptionalTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						OptionalTypeAdapter.getInstance(gson.getAdapter(String.class)),
+						OptionalTypeAdapter.getInstance(TypeAdapters.stringTypeAdapter),
 						"\"foo\"",
 						Optional.of("foo")
 				)

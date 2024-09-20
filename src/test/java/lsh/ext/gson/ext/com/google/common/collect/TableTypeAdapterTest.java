@@ -6,17 +6,13 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.Gsons;
-import lsh.ext.gson.test.Types;
+import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class TableTypeAdapterTest
 		extends AbstractTypeAdapterTest<Table<String, String, ?>, Table<String, String, ?>> {
-
-	private static final Gson gson = Gsons.getNormalized();
 
 	@SuppressWarnings("unchecked")
 	private static final TypeToken<Table<String, String, Integer>> stringToStringToIntegerTableTypeToken = (TypeToken<Table<String, String, Integer>>) TypeToken.getParameterized(HashBasedTable.class, String.class, String.class, Integer.class);
@@ -31,7 +27,7 @@ public final class TableTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						TableTypeAdapter.getInstance(gson.getAdapter(Types.integerTypeToken), TableTypeAdapter.Factory.defaultBuilderFactory(stringToStringToIntegerTableTypeToken)),
+						TableTypeAdapter.getInstance(TypeAdapters.integerTypeAdapter, TableTypeAdapter.Factory.defaultBuilderFactory(stringToStringToIntegerTableTypeToken)),
 						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
 						ImmutableTable.<String, String, Integer>builder()
 								.put("A", "1", 1)

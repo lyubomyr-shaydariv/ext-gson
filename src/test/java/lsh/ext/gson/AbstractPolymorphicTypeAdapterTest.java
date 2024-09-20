@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -69,7 +70,7 @@ public final class AbstractPolymorphicTypeAdapterTest {
 			classToDiscriminator::get,
 			classToTypeAdapter::get,
 			discriminatorToTypeAdapter::get,
-			gson.getAdapter(JsonElement.class)
+			TypeAdapters.jsonElementTypeAdapter
 	);
 
 	private static Stream<Arguments> testJsonTreeWrite() {

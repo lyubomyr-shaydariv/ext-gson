@@ -5,15 +5,12 @@ import java.util.Enumeration;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
 import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
-import lsh.ext.gson.Gsons;
+import lsh.ext.gson.test.TypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class EnumerationTypeAdapterTest
 		extends AbstractElementCursorTypeAdapterTest<Enumeration<?>> {
-
-	private static final Gson gson = Gsons.getNormalized();
 
 	@Nullable
 	@Override
@@ -25,7 +22,7 @@ public final class EnumerationTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						EnumerationTypeAdapter.getInstance(gson.getAdapter(Integer.class)),
+						EnumerationTypeAdapter.getInstance(TypeAdapters.integerTypeAdapter),
 						"[1,2,4,8]",
 						Collections.enumeration(List.of(1, 2, 4, 8))
 				)
