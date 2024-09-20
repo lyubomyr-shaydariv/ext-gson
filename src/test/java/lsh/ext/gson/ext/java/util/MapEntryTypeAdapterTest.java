@@ -1,6 +1,7 @@
 package lsh.ext.gson.ext.java.util;
 
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.Map;
 
 import com.google.gson.TypeAdapter;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public final class MapEntryTypeAdapterTest {
 
-	private static final TypeAdapter<Map.Entry<Double, Integer>> unit = MapEntryTypeAdapter.getInstance(TypeAdapters.intTypeAdapter, String::valueOf, Double::parseDouble);
+	private static final TypeAdapter<Map.Entry<Double, Integer>> unit = MapEntryTypeAdapter.getInstance(TypeAdapters.intTypeAdapter, String::valueOf, Double::parseDouble, AbstractMap.SimpleImmutableEntry::new);
 
 	@Test
 	public void testReadForNoProperties()
