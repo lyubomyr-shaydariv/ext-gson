@@ -13,7 +13,7 @@ public final class PeriodTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return PeriodTypeAdapter.Factory.getInstance();
+		return Java8TimeTypeAdapterFactory.getDefaultForPeriod();
 	}
 
 }

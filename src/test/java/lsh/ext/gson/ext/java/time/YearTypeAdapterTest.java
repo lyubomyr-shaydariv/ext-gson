@@ -21,16 +21,8 @@ public final class YearTypeAdapterTest
 	@SuppressWarnings("SimpleDateFormatWithoutLocale")
 	protected List<Arguments> makeTestCases() {
 		return List.of(
-				makeTestCase(
-						YearTypeAdapter.getInstance(),
-						"\"2018\"",
-						Year.of(2018)
-				),
-				makeTestCase(
-						YearTypeAdapter.getInstance(DateTimeFormatter.ofPattern("y'-xx-xx'")),
-						"\"2018-xx-xx\"",
-						Year.of(2018)
-				)
+				makeTestCase(Java8TimeTypeAdapter.getYearTypeAdapter(), "\"2018\"", Year.of(2018)),
+				makeTestCase(Java8TimeTypeAdapter.getYearTypeAdapter(DateTimeFormatter.ofPattern("y'-xx-xx'")), "\"2018-xx-xx\"", Year.of(2018))
 		);
 	}
 

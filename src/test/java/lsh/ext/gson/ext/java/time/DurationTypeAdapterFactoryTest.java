@@ -13,7 +13,7 @@ public final class DurationTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return DurationTypeAdapter.Factory.getInstance();
+		return Java8TimeTypeAdapterFactory.getDefaultForDuration();
 	}
 
 }

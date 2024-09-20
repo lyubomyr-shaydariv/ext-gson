@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class DayOfWeekTypeAdapterTest
 		extends AbstractTypeAdapterTest<DayOfWeek, DayOfWeek> {
 
+	private static final TypeAdapter<DayOfWeek> unit = Java8TimeTypeAdapter.getDefaultForDayOfWeek();
+
 	@Nullable
 	@Override
 	protected DayOfWeek normalize(@Nullable final DayOfWeek value) {
@@ -19,18 +21,9 @@ public final class DayOfWeekTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapter<DayOfWeek> unit = DayOfWeekTypeAdapter.getInstance();
 		return List.of(
-				makeTestCase(
-						unit,
-						"\"MONDAY\"",
-						DayOfWeek.MONDAY
-				),
-				makeTestCase(
-						unit,
-						"\"FRIDAY\"",
-						DayOfWeek.FRIDAY
-				)
+				makeTestCase(unit, "\"MONDAY\"", DayOfWeek.MONDAY),
+				makeTestCase(unit, "\"FRIDAY\"", DayOfWeek.FRIDAY)
 		);
 	}
 

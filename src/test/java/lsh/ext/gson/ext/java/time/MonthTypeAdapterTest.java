@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class MonthTypeAdapterTest
 		extends AbstractTypeAdapterTest<Month, Month> {
 
+	private static final TypeAdapter<Month> unit = Java8TimeTypeAdapter.getMonthTypeAdapter();
+
 	@Nullable
 	@Override
 	protected Month normalize(@Nullable final Month value) {
@@ -19,13 +21,8 @@ public final class MonthTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapter<Month> unit = MonthTypeAdapter.getInstance();
 		return List.of(
-				makeTestCase(
-						unit,
-						"\"SEPTEMBER\"",
-						Month.SEPTEMBER
-				)
+				makeTestCase(unit, "\"SEPTEMBER\"", Month.SEPTEMBER)
 		);
 	}
 

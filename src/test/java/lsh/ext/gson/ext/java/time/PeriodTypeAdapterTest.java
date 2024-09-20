@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class PeriodTypeAdapterTest
 		extends AbstractTypeAdapterTest<Period, Period> {
 
+	private static final TypeAdapter<Period> unit = Java8TimeTypeAdapter.getPeriodTypeAdapter();
+
 	@Nullable
 	@Override
 	protected Period normalize(@Nullable final Period value) {
@@ -19,13 +21,8 @@ public final class PeriodTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapter<Period> unit = PeriodTypeAdapter.getInstance();
 		return List.of(
-				makeTestCase(
-						unit,
-						"\"P1Y8M20D\"",
-						Period.of(1, 8, 20)
-				)
+				makeTestCase(unit, "\"P1Y8M20D\"", Period.of(1, 8, 20))
 		);
 	}
 

@@ -20,11 +20,7 @@ public final class ZonedDateTimeTypeAdapterTest
 	@Override
 	protected List<Arguments> makeTestCases() {
 		return List.of(
-				makeTestCase(
-						ZonedDateTimeTypeAdapter.getInstance(),
-						"\"2018-03-20T12:34:56.000000666Z[UTC]\"",
-						ZonedDateTime.of(2018, 3, 20, 12, 34, 56, 666, ZoneId.of("UTC"))
-				)
+				makeTestCase(Java8TimeTypeAdapter.getZonedDateTimeTypeAdapter(), "\"2018-03-20T12:34:56.000000666Z[UTC]\"", ZonedDateTime.of(2018, 3, 20, 12, 34, 56, 666, ZoneId.of("UTC")))
 		);
 	}
 

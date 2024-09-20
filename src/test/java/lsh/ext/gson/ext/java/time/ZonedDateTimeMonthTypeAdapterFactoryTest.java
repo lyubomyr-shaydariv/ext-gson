@@ -13,7 +13,7 @@ public final class ZonedDateTimeMonthTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return ZonedDateTimeTypeAdapter.Factory.getInstance();
+		return Java8TimeTypeAdapterFactory.getDefaultForZonedDateTime();
 	}
 
 }

@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class InstantTypeAdapterTest
 		extends AbstractTypeAdapterTest<Instant, Instant> {
 
+	private static final TypeAdapter<Instant> unit = Java8TimeTypeAdapter.getDefaultForInstant();
+
 	@Nullable
 	@Override
 	protected Instant normalize(@Nullable final Instant value) {
@@ -19,18 +21,9 @@ public final class InstantTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapter<Instant> unit = InstantTypeAdapter.getInstance();
 		return List.of(
-				makeTestCase(
-						unit,
-						"\"1970-01-01T00:00:00Z\"",
-						Instant.ofEpochMilli(0)
-				),
-				makeTestCase(
-						unit,
-						"\"2061-08-14T09:37:12.837Z\"",
-						Instant.ofEpochMilli(2891237832837L)
-				)
+				makeTestCase(unit, "\"1970-01-01T00:00:00Z\"", Instant.ofEpochMilli(0)),
+				makeTestCase(unit, "\"2061-08-14T09:37:12.837Z\"", Instant.ofEpochMilli(2891237832837L))
 		);
 	}
 

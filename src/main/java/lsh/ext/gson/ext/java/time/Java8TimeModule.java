@@ -43,46 +43,46 @@ public final class Java8TimeModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<DayOfWeek> dayOfWeekTypeAdapterFactory = DayOfWeekTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<DayOfWeek> dayOfWeekTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForDayOfWeek();
 
 		@Setter
-		private ITypeAdapterFactory<Duration> durationTypeAdapterFactory = DurationTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<Duration> durationTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForDuration();
 
 		@Setter
-		private ITypeAdapterFactory<Instant> instantTypeAdapterFactory = InstantTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<Instant> instantTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForInstant();
 
 		@Setter
-		private ITypeAdapterFactory<Month> monthTypeAdapterFactory = MonthTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<LocalDateTime> localDateTimeTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForLocalDateTime();
 
 		@Setter
-		private ITypeAdapterFactory<Period> periodTypeAdapterFactory = PeriodTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<LocalDate> localDateTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForLocalDate();
 
 		@Setter
-		private ITypeAdapterFactory<LocalDateTime> localDateTimeTypeAdapterFactory = LocalDateTimeTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<LocalTime> localTimeTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForLocalTime();
 
 		@Setter
-		private ITypeAdapterFactory<LocalDate> localDateTypeAdapterFactory = LocalDateTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<MonthDay> monthDayTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForMonthDay();
 
 		@Setter
-		private ITypeAdapterFactory<LocalTime> localTimeTypeAdapterFactory = LocalTimeTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<Month> monthTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForMonth();
 
 		@Setter
-		private ITypeAdapterFactory<MonthDay> monthDayTypeAdapterFactory = MonthDayTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<OffsetDateTime> offsetDateTimeTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForOffsetDateTime();
 
 		@Setter
-		private ITypeAdapterFactory<OffsetDateTime> offsetDateTimeTypeAdapterFactory = OffsetDateTimeTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<OffsetTime> offsetTimeTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForOffsetTime();
 
 		@Setter
-		private ITypeAdapterFactory<OffsetTime> offsetTimeTypeAdapterFactory = OffsetTimeTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<Period> periodTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForPeriod();
 
 		@Setter
-		private ITypeAdapterFactory<YearMonth> yearMonthTypeAdapterFactory = YearMonthTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<YearMonth> yearMonthTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForYearMonth();
 
 		@Setter
-		private ITypeAdapterFactory<Year> yearTypeAdapterFactory = YearTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<Year> yearTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForYear();
 
 		@Setter
-		private ITypeAdapterFactory<ZonedDateTime> zonedDateTimeTypeAdapterFactory = ZonedDateTimeTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<ZonedDateTime> zonedDateTimeTypeAdapterFactory = Java8TimeTypeAdapterFactory.getDefaultForZonedDateTime();
 
 		public static Builder create() {
 			return new Builder();

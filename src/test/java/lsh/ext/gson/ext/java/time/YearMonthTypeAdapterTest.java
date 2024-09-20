@@ -21,16 +21,8 @@ public final class YearMonthTypeAdapterTest
 	@SuppressWarnings("SimpleDateFormatWithoutLocale")
 	protected List<Arguments> makeTestCases() {
 		return List.of(
-				makeTestCase(
-						YearMonthTypeAdapter.getInstance(),
-						"\"1999-09\"",
-						YearMonth.of(1999, 9)
-				),
-				makeTestCase(
-						YearMonthTypeAdapter.getInstance(DateTimeFormatter.ofPattern("M.y")),
-						"\"9.1999\"",
-						YearMonth.of(1999, 9)
-				)
+				makeTestCase(Java8TimeTypeAdapter.getYearMonthTypeAdapter(), "\"1999-09\"", YearMonth.of(1999, 9)),
+				makeTestCase(Java8TimeTypeAdapter.getYearMonthTypeAdapter(DateTimeFormatter.ofPattern("M.y")), "\"9.1999\"", YearMonth.of(1999, 9))
 		);
 	}
 

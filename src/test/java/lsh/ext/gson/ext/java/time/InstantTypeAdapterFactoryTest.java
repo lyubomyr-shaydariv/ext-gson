@@ -13,7 +13,7 @@ public final class InstantTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return InstantTypeAdapter.Factory.getInstance();
+		return Java8TimeTypeAdapterFactory.getDefaultForInstant();
 	}
 
 }

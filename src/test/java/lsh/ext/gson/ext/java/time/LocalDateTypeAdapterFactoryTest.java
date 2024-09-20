@@ -13,7 +13,7 @@ public final class LocalDateTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return LocalDateTypeAdapter.Factory.getInstance();
+		return Java8TimeTypeAdapterFactory.getDefaultForLocalDate();
 	}
 
 }

@@ -20,16 +20,8 @@ public final class LocalDateTypeAdapterTest
 	@Override
 	protected List<Arguments> makeTestCases() {
 		return List.of(
-				makeTestCase(
-						LocalDateTypeAdapter.getInstance(),
-						"\"2018-01-01\"",
-						LocalDate.of(2018, 1, 1)
-				),
-				makeTestCase(
-						LocalDateTypeAdapter.getInstance(DateTimeFormatter.ISO_LOCAL_DATE),
-						"\"2018-01-01\"",
-						LocalDate.of(2018, 1, 1)
-				)
+				makeTestCase(Java8TimeTypeAdapter.getLocalDateTypeAdapter(), "\"2018-01-01\"", LocalDate.of(2018, 1, 1)),
+				makeTestCase(Java8TimeTypeAdapter.getLocalDateTypeAdapter(DateTimeFormatter.ISO_LOCAL_DATE), "\"2018-01-01\"", LocalDate.of(2018, 1, 1))
 		);
 	}
 

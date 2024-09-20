@@ -20,16 +20,8 @@ public final class LocalTimeTypeAdapterTest
 	@Override
 	protected List<Arguments> makeTestCases() {
 		return List.of(
-				makeTestCase(
-						LocalTimeTypeAdapter.getInstance(),
-						"\"10:10:00\"",
-						LocalTime.of(10, 10, 0)
-				),
-				makeTestCase(
-						LocalTimeTypeAdapter.getInstance(DateTimeFormatter.ISO_TIME),
-						"\"19:23:33\"",
-						LocalTime.of(19, 23, 33)
-				)
+				makeTestCase(Java8TimeTypeAdapter.getLocalTimeTypeAdapter(), "\"10:10:00\"", LocalTime.of(10, 10, 0)),
+				makeTestCase(Java8TimeTypeAdapter.getLocalTimeTypeAdapter(DateTimeFormatter.ISO_TIME), "\"19:23:33\"", LocalTime.of(19, 23, 33))
 		);
 	}
 
