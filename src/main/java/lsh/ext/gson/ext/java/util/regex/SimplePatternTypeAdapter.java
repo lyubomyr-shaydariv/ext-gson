@@ -17,7 +17,7 @@ public final class SimplePatternTypeAdapter
 		extends AbstractStringTypeAdapter<Pattern> {
 
 	@Getter
-	public static final TypeAdapter<Pattern> instance = new SimplePatternTypeAdapter()
+	private static final TypeAdapter<Pattern> instance = new SimplePatternTypeAdapter()
 			.nullSafe();
 
 	@Override
