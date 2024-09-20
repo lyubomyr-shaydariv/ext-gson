@@ -113,9 +113,7 @@ public final class BagTypeAdapter<E>
 				return castToStringOrFail;
 			}
 			@SuppressWarnings("unchecked")
-			final Transformer<String, String> castIdentity = (Transformer<String, String>) identityTransformer;
-			@SuppressWarnings("unchecked")
-			final Transformer<? super T, String> castStringFromString = (Transformer<? super T, String>) castIdentity;
+			final Transformer<? super T, String> castStringFromString = (Transformer<? super T, String>) Transformers.<String>identity();
 			return castStringFromString;
 		}
 
@@ -127,9 +125,7 @@ public final class BagTypeAdapter<E>
 				return castFailFromString;
 			}
 			@SuppressWarnings("unchecked")
-			final Transformer<String, String> castIdentity = (Transformer<String, String>) identityTransformer;
-			@SuppressWarnings("unchecked")
-			final Transformer<? super String, ? extends T> castStringFromString = (Transformer<? super String, ? extends T>) castIdentity;
+			final Transformer<? super String, ? extends T> castStringFromString = (Transformer<? super String, ? extends T>) Transformers.<String>identity();
 			return castStringFromString;
 		}
 
@@ -158,8 +154,6 @@ public final class BagTypeAdapter<E>
 				}
 			};
 		}
-
-		private static final Transformer<?, ?> identityTransformer = o -> o;
 
 		private static final Transformer<?, String> toStringOrFailTransformer = o -> {
 			if ( o == null ) {
