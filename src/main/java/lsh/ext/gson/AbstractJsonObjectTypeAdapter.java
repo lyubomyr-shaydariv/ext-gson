@@ -14,8 +14,8 @@ public abstract class AbstractJsonObjectTypeAdapter<O, K, V>
 		extends TypeAdapter<O> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final IFunction<? super K, String> encodeKey;
-	private final IFunction<? super String, ? extends K> decodeKey;
+	private final IFunction1<? super K, String> encodeKey;
+	private final IFunction1<? super String, ? extends K> decodeKey;
 
 	protected abstract Iterable<? extends Map.Entry<K, V>> toIterable(O object);
 

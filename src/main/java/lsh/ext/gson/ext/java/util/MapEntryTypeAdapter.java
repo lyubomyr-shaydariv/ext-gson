@@ -9,20 +9,20 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.IFunction;
+import lsh.ext.gson.IFunction1;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MapEntryTypeAdapter<K, V>
 		extends TypeAdapter<Map.Entry<K, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final IFunction<? super K, String> encodeKey;
-	private final IFunction<? super String, ? extends K> decodeKey;
+	private final IFunction1<? super K, String> encodeKey;
+	private final IFunction1<? super String, ? extends K> decodeKey;
 
 	public static <K, V> TypeAdapter<Map.Entry<K, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFunction<? super K, String> encodeKey,
-			final IFunction<? super String, ? extends K> decodeKey
+			final IFunction1<? super K, String> encodeKey,
+			final IFunction1<? super String, ? extends K> decodeKey
 	) {
 		return new MapEntryTypeAdapter<K, V>(valueTypeAdapter, encodeKey, decodeKey)
 				.nullSafe();

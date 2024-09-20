@@ -17,7 +17,7 @@ import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.IFunction;
+import lsh.ext.gson.IFunction1;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -66,7 +66,7 @@ public final class JsonPathTypeAdapter<T>
 	public static final class Factory<T>
 			implements ITypeAdapterFactory<T> {
 
-		private final IFunction<? super Gson, ? extends Configuration> provideConfiguration;
+		private final IFunction1<? super Gson, ? extends Configuration> provideConfiguration;
 		private final IAccessor.IFactory accessorsFactory;
 
 		public static ITypeAdapterFactory<?> getInstance(
@@ -76,7 +76,7 @@ public final class JsonPathTypeAdapter<T>
 		}
 
 		public static ITypeAdapterFactory<?> getInstance(
-				final IFunction<? super Gson, ? extends Configuration> provideConfiguration,
+				final IFunction1<? super Gson, ? extends Configuration> provideConfiguration,
 				final IAccessor.IFactory accessorsFactory
 		) {
 			return new Factory<>(provideConfiguration, accessorsFactory);
