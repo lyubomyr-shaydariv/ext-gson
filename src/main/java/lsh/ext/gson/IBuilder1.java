@@ -4,11 +4,11 @@ import java.util.Collection;
 
 import com.google.gson.reflect.TypeToken;
 
-public interface IBuilder1<A1, T> {
+public interface IBuilder1<A1, R> {
 
 	void accept(A1 a1);
 
-	T build();
+	R build();
 
 	static <E, C extends Collection<E>> IBuilder1<E, C> of(final C collection) {
 		return new IBuilder1<>() {
@@ -24,9 +24,9 @@ public interface IBuilder1<A1, T> {
 		};
 	}
 
-	interface ILookup<A1, T> {
+	interface ILookup<A1, R> {
 
-		IFactory<IBuilder1<A1, T>> lookup(TypeToken<? super T> typeToken);
+		IFactory<IBuilder1<A1, R>> lookup(TypeToken<? super R> typeToken);
 
 	}
 

@@ -4,11 +4,11 @@ import java.util.Map;
 
 import com.google.gson.reflect.TypeToken;
 
-public interface IBuilder2<A1, A2, T> {
+public interface IBuilder2<A1, A2, R> {
 
 	void accept(A1 a1, A2 a2);
 
-	T build();
+	R build();
 
 	static <K, V, M extends Map<K, V>> IBuilder2<K, V, M> of(final M map) {
 		return new IBuilder2<>() {
@@ -24,9 +24,9 @@ public interface IBuilder2<A1, A2, T> {
 		};
 	}
 
-	interface ILookup<A1, A2, T> {
+	interface ILookup<A1, A2, R> {
 
-		IFactory<IBuilder2<A1, A2, T>> lookup(TypeToken<? super T> typeToken);
+		IFactory<IBuilder2<A1, A2, R>> lookup(TypeToken<? super R> typeToken);
 
 	}
 

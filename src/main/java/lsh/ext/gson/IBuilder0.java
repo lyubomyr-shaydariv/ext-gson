@@ -2,13 +2,13 @@ package lsh.ext.gson;
 
 import com.google.gson.reflect.TypeToken;
 
-public interface IBuilder0<T> {
+public interface IBuilder0<R> {
 
-	T build();
+	R build();
 
-	interface ILookup<T> {
+	interface ILookup<R> {
 
-		IFactory<IBuilder0<T>> lookup(TypeToken<? super T> typeToken);
+		IFactory<IBuilder0<R>> lookup(TypeToken<? super R> typeToken);
 
 	}
 
