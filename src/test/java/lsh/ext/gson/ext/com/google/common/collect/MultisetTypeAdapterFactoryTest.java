@@ -40,7 +40,7 @@ public final class MultisetTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(Types.voidTypeToken)
+				Arguments.of(Types.primitiveVoidTypeToken)
 		);
 	}
 

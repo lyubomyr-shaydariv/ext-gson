@@ -40,7 +40,7 @@ public final class MultimapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(Types.voidTypeToken),
+				Arguments.of(Types.primitiveVoidTypeToken),
 				Arguments.of(Types.rawSetTypeToken),
 				Arguments.of(Types.rawMapTypeToken)
 		);

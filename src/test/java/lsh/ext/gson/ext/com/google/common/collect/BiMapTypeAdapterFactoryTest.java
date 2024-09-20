@@ -40,7 +40,7 @@ public final class BiMapTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(Types.voidTypeToken),
+				Arguments.of(Types.primitiveVoidTypeToken),
 				Arguments.of(Types.rawMapTypeToken),
 				Arguments.of(Types.rawSetTypeToken)
 		);

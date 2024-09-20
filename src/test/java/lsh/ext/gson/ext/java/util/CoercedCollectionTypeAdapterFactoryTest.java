@@ -34,7 +34,7 @@ public final class CoercedCollectionTypeAdapterFactoryTest
 	@Override
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
-				Arguments.of(Types.voidTypeToken)
+				Arguments.of(Types.primitiveVoidTypeToken)
 		);
 	}
 

@@ -31,7 +31,7 @@ public final class JsonPathTypeAdapterFactoryTest
 	protected Stream<Arguments> unsupported() {
 		return Stream.of(
 				Arguments.of(Types.objectTypeToken),
-				Arguments.of(Types.voidTypeToken)
+				Arguments.of(Types.primitiveVoidTypeToken)
 		);
 	}
 
