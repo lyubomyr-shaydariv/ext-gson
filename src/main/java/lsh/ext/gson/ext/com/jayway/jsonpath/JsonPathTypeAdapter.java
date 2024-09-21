@@ -67,19 +67,19 @@ public final class JsonPathTypeAdapter<T>
 			implements ITypeAdapterFactory<T> {
 
 		private final Function<? super Gson, ? extends Configuration> provideConfiguration;
-		private final IAccessor.IFactory accessorsFactory;
+		private final Function<TypeToken<?>, Collection<IAccessor<Object, Object>>> resolveAccessors;
 
 		public static ITypeAdapterFactory<?> getInstance(
-				final IAccessor.IFactory accessorsFactory
+				final Function<TypeToken<?>, Collection<IAccessor<Object, Object>>> resolveAccessors
 		) {
-			return getInstance(Factory::defaultConfiguration, accessorsFactory);
+			return getInstance(Factory::defaultConfiguration, resolveAccessors);
 		}
 
 		public static ITypeAdapterFactory<?> getInstance(
 				final Function<? super Gson, ? extends Configuration> provideConfiguration,
-				final IAccessor.IFactory accessorsFactory
+				final Function<TypeToken<?>, Collection<IAccessor<Object, Object>>> resolveAccessors
 		) {
-			return new Factory<>(provideConfiguration, accessorsFactory);
+			return new Factory<>(provideConfiguration, resolveAccessors);
 		}
 
 		public static Configuration defaultConfiguration(final Gson gson) {
@@ -92,7 +92,7 @@ public final class JsonPathTypeAdapter<T>
 		@Override
 		@Nullable
 		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-			final Collection<IAccessor<Object, Object>> accessors = accessorsFactory.create(typeToken);
+			final Collection<IAccessor<Object, Object>> accessors = resolveAccessors.apply(typeToken);
 			if ( accessors.isEmpty() ) {
 				return null;
 			}

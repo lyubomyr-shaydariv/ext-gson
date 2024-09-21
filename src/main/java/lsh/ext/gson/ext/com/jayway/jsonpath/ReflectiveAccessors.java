@@ -6,8 +6,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Function;
 import javax.annotation.Nullable;
 
+import com.google.gson.reflect.TypeToken;
 import com.jayway.jsonpath.JsonPath;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
@@ -16,7 +18,7 @@ import lombok.experimental.UtilityClass;
 public final class ReflectiveAccessors {
 
 	@Getter
-	private static final IAccessor.IFactory declaredFieldAccessors = typeToken -> {
+	private static final Function<TypeToken<?>, Collection<IAccessor<Object, Object>>> declaredFieldAccessors = typeToken -> {
 		final Field[] declaredFields = typeToken.getRawType()
 				.getDeclaredFields();
 		if ( declaredFields.length == 0 ) {
@@ -63,7 +65,7 @@ public final class ReflectiveAccessors {
 	}
 
 	@Getter
-	private static final IAccessor.IFactory methodAccessors = typeToken -> {
+	private static final Function<TypeToken<?>, Collection<IAccessor<Object, Object>>> methodAccessors = typeToken -> {
 		final Method[] methods = typeToken.getRawType()
 				.getMethods();
 		if ( methods.length == 0 ) {
