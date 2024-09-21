@@ -2,6 +2,8 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -99,19 +101,21 @@ public abstract class AbstractEncodingTypeAdapter<T, U>
 		private final Gson gson;
 		private final String typePropertyName;
 		private final String valuePropertyName;
-		private final ITypeResolver<? extends TT> typeResolver;
-		private final ITypeEncoder<TT> typeEncoder;
-		private final ITypeEncoder.IGuard guard;
+		private final Function<Object, ? extends TT> resolveType;
+		private final Function<? super TT, String> encode;
+		private final Function<? super String, ? extends TT> decode;
+		private final Predicate<String> guard;
 
 		public static <T, TT extends Type> TypeAdapter<T> getInstance(
 				final Gson gson,
 				final String typePropertyName,
 				final String valuePropertyName,
-				final ITypeResolver<? extends TT> typeResolver,
-				final ITypeEncoder<TT> typeEncoder,
-				final ITypeEncoder.IGuard guard
+				final Function<Object, ? extends TT> resolveType,
+				final Function<? super TT, String> encode,
+				final Function<? super String, ? extends TT> decode,
+				final Predicate<String> guard
 		) {
-			return new TypedValueAsJsonObject<T, TT>(gson, typePropertyName, valuePropertyName, typeResolver, typeEncoder, guard)
+			return new TypedValueAsJsonObject<T, TT>(gson, typePropertyName, valuePropertyName, resolveType, encode, decode, guard)
 					.nullSafe();
 		}
 
@@ -125,8 +129,8 @@ public abstract class AbstractEncodingTypeAdapter<T, U>
 				throws IOException {
 			out.beginObject();
 			out.name(typePropertyName);
-			final TT type = typeResolver.typeOf(value);
-			out.value(typeEncoder.encode(type));
+			final TT type = resolveType.apply(value);
+			out.value(encode.apply(type));
 			out.name(valuePropertyName);
 			gson.toJson(value, type, out);
 			out.endObject();
@@ -138,11 +142,11 @@ public abstract class AbstractEncodingTypeAdapter<T, U>
 			in.beginObject();
 			requireName(typePropertyName, in);
 			final String typeName = in.nextString();
-			if ( !guard.passes(typeName) ) {
+			if ( !guard.test(typeName) ) {
 				throw new IOException("Type name " + typeName + " is not allowed");
 			}
 			requireName(valuePropertyName, in);
-			final T value = gson.fromJson(in, typeEncoder.decode(typeName));
+			final T value = gson.fromJson(in, decode.apply(typeName));
 			in.endObject();
 			return value;
 		}
@@ -158,46 +162,6 @@ public abstract class AbstractEncodingTypeAdapter<T, U>
 			if ( !actualName.equals(expectedName) ) {
 				throw new MalformedJsonException("Expected " + expectedName + " but was " + actualName + " at " + in.getPath());
 			}
-		}
-
-		public interface ITypeResolver<T extends Type> {
-
-			T typeOf(Object o);
-
-			ITypeResolver<Class<?>> forClass = Object::getClass;
-
-		}
-
-		public interface ITypeEncoder<T extends Type> {
-
-			String encode(T type);
-
-			T decode(String typeName);
-
-			ITypeEncoder<Class<?>> forUnsafeClass = new ITypeEncoder<>() {
-				@Override
-				public String encode(final Class<?> type) {
-					return type.getTypeName();
-				}
-
-				@Override
-				public Class<?> decode(final String typeName) {
-					try {
-						return Class.forName(typeName);
-					} catch ( final ClassNotFoundException ex ) {
-						throw new RuntimeException(ex);
-					}
-				}
-			};
-
-			interface IGuard {
-
-				boolean passes(String typeName);
-
-				IGuard weak = name -> true;
-
-			}
-
 		}
 
 	}

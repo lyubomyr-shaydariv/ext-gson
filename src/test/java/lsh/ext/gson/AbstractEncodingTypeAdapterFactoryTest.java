@@ -7,6 +7,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,14 +42,23 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 	) {
 	}
 
-	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeResolver<Class<?>> forClass = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeResolver.forClass;
-	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder<Class<?>> forUnsafeClass = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.forUnsafeClass;
-	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard weakGuard = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard.weak;
+	private static final Function<Object, Class<?>> forClass = Object::getClass;
+	private static final Function<String, Class<?>> forUnsafeClass = new Function<String, Class<?>>() {
+		@Override
+		public Class<?> apply(final String typeName) {
+			try {
+				return Class.forName(typeName);
+			} catch ( final ClassNotFoundException ex ) {
+				throw new RuntimeException(ex);
+			}
+		}
+	};
+	private static final Predicate<String> weakGuard = name -> true;
 
 	@Test
 	public void testJsonAsTypedValueReadWrite()
 			throws IOException {
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "type", "value", forClass, forUnsafeClass, weakGuard);
+		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "type", "value", forClass, Class::getTypeName, forUnsafeClass, weakGuard);
 		final Writer jsonWriter = new StringWriter();
 		final int before = 2;
 		typeAdapter.write(new JsonWriter(jsonWriter), before);
@@ -59,53 +69,45 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 
 	@Test
 	public void testJsonAsTypedValueReadWriteGuardPasses() {
-		final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard primitiveGuardMock = Mockito.mock(AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard.class);
-		Mockito.doAnswer(invocationOnMock -> primitiveTypeGuard.passes(invocationOnMock.getArgument(0, String.class)))
-				.when(primitiveGuardMock)
-				.passes(ArgumentMatchers.anyString());
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "t", "v", forClass, primitiveTypeDecoder, primitiveGuardMock);
+		@SuppressWarnings("unchecked")
+		final Predicate<String> guardMock = Mockito.mock(Predicate.class);
+		Mockito.doAnswer(invocationOnMock -> primitiveTypeGuard.test(invocationOnMock.getArgument(0, String.class)))
+				.when(guardMock)
+				.test(ArgumentMatchers.anyString());
+		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "t", "v", forClass, Class::getTypeName, primitiveTypeDecoder, guardMock);
 		final JsonElement legalJsonTree = JsonObjects.of(
 				"t", JsonPrimitives.orNullable("int"),
 				"v", JsonPrimitives.orNullable(1000)
 		);
 		final Integer actualPayload = Assertions.assertDoesNotThrow(() -> typeAdapter.fromJsonTree(legalJsonTree));
 		Assertions.assertEquals(1000, actualPayload);
-		Mockito.verify(primitiveGuardMock)
-				.passes(ArgumentMatchers.eq("int"));
-		Mockito.verifyNoMoreInteractions(primitiveGuardMock);
+		Mockito.verify(guardMock)
+				.test(ArgumentMatchers.eq("int"));
+		Mockito.verifyNoMoreInteractions(guardMock);
 	}
 
 	@Test
 	public void testJsonAsTypedValueReadWriteGuardDoesNotPass() {
-		final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard primitiveGuardMock = Mockito.mock(AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard.class);
-		Mockito.doAnswer(invocationOnMock -> primitiveTypeGuard.passes(invocationOnMock.getArgument(0, String.class)))
-				.when(primitiveGuardMock)
-				.passes(ArgumentMatchers.anyString());
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "t", "v", forClass, primitiveTypeDecoder, primitiveGuardMock);
+		@SuppressWarnings("unchecked")
+		final Predicate<String> guardMock = Mockito.mock(Predicate.class);
+		Mockito.doAnswer(invocationOnMock -> primitiveTypeGuard.test(invocationOnMock.getArgument(0, String.class)))
+				.when(guardMock)
+				.test(ArgumentMatchers.anyString());
+		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "t", "v", forClass, Class::getTypeName, primitiveTypeDecoder, guardMock);
 		final JsonElement illegalJsonTree = JsonObjects.of(
 				"t", JsonPrimitives.orNullable("void")
 		);
 		Assertions.assertThrows(JsonIOException.class, () -> typeAdapter.fromJsonTree(illegalJsonTree));
-		Mockito.verify(primitiveGuardMock)
-				.passes(ArgumentMatchers.eq("void"));
-		Mockito.verifyNoMoreInteractions(primitiveGuardMock);
+		Mockito.verify(guardMock)
+				.test(ArgumentMatchers.eq("void"));
+		Mockito.verifyNoMoreInteractions(guardMock);
 	}
 
 	private static final Map<String, Class<?>> primitiveTypeNames = Stream.of(boolean.class, byte.class, short.class, int.class, long.class, float.class, double.class, char.class)
 			.collect(Collectors.toMap(Class::getName, Function.identity()));
 
-	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder.IGuard primitiveTypeGuard = primitiveTypeNames::containsKey;
+	private static final Predicate<String> primitiveTypeGuard = primitiveTypeNames::containsKey;
 
-	private static final AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder<Class<?>> primitiveTypeDecoder = new AbstractEncodingTypeAdapter.TypedValueAsJsonObject.ITypeEncoder<>() {
-		@Override
-		public String encode(final Class<?> type) {
-			throw new AssertionError(type);
-		}
-
-		@Override
-		public Class<?> decode(final String typeName) {
-			return primitiveTypeNames.get(typeName);
-		}
-	};
+	private static final Function<String, Class<?>> primitiveTypeDecoder = primitiveTypeNames::get;
 
 }
