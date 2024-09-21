@@ -1,6 +1,9 @@
 package lsh.ext.gson;
 
+import java.lang.reflect.Type;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
@@ -12,28 +15,32 @@ public final class PrePostTypeAdapterFactoryTest {
 	@Test
 	public void testPreConstruct() {
 		@SuppressWarnings("unchecked")
-		final PrePostTypeAdapter.IPreProcessor<User> processorMock = Mockito.mock(PrePostTypeAdapter.IPreProcessor.class);
-		final PrePostTypeAdapter.IPreProcessor.IFactory<User> userProcessorFactory = type -> type == User.class ? processorMock : null;
+		final Consumer<User> processorMock = Mockito.mock(Consumer.class);
+		final Iterable<Function<Type, Consumer<User>>> preProcessorFactories = List.of(
+				type -> type == User.class ? processorMock : null
+		);
 		final Gson gson = Gsons.Builders.createNormalized()
-				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(List.of(userProcessorFactory), null))
+				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(preProcessorFactories, null))
 				.create();
 		gson.toJson(user);
 		Mockito.verify(processorMock)
-				.preProcess(ArgumentMatchers.eq(user));
+				.accept(ArgumentMatchers.eq(user));
 		Mockito.verifyNoMoreInteractions(processorMock);
 	}
 
 	@Test
 	public void testPostConstruct() {
 		@SuppressWarnings("unchecked")
-		final PrePostTypeAdapter.IPostProcessor<User> processorMock = Mockito.mock(PrePostTypeAdapter.IPostProcessor.class);
-		final PrePostTypeAdapter.IPostProcessor.IFactory<User> userProcessorFactory = type -> type == User.class ? processorMock : null;
+		final Consumer<User> processorMock = Mockito.mock(Consumer.class);
+		final List<Function<Type, Consumer<User>>> postProcessorFactories = List.of(
+				type -> type == User.class ? processorMock : null
+		);
 		final Gson gson = Gsons.Builders.createNormalized()
-				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(null, List.of(userProcessorFactory)))
+				.registerTypeAdapterFactory(PrePostTypeAdapter.Factory.getInstance(null, postProcessorFactories))
 				.create();
 		gson.fromJson("{\"firstName\":\"John\",\"lastName\":\"Doe\"}", User.class);
 		Mockito.verify(processorMock)
-				.postProcess(ArgumentMatchers.eq(user));
+				.accept(ArgumentMatchers.eq(user));
 		Mockito.verifyNoMoreInteractions(processorMock);
 	}
 
