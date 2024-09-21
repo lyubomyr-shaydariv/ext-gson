@@ -2,6 +2,7 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
@@ -17,7 +18,6 @@ import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.bag.HashBag;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -25,13 +25,13 @@ public final class BagTypeAdapter<E>
 		extends TypeAdapter<Bag<E>> {
 
 	private final Supplier<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory;
-	private final Transformer<? super E, String> toString;
-	private final Transformer<? super String, ? extends E> fromString;
+	private final Function<? super E, String> toString;
+	private final Function<? super String, ? extends E> fromString;
 
 	public static <E> TypeAdapter<Bag<E>> getInstance(
 			final Supplier<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
-			final Transformer<? super E, String> keyMapper,
-			final Transformer<? super String, ? extends E> keyReverseMapper
+			final Function<? super E, String> keyMapper,
+			final Function<? super String, ? extends E> keyReverseMapper
 	) {
 		return new BagTypeAdapter<>(builderFactory, keyMapper, keyReverseMapper)
 				.nullSafe();
@@ -42,7 +42,7 @@ public final class BagTypeAdapter<E>
 			throws IOException {
 		out.beginObject();
 		for ( final E e : bag ) {
-			out.name(toString.transform(e));
+			out.name(toString.apply(e));
 			out.value(bag.getCount(e));
 		}
 		out.endObject();
@@ -54,7 +54,7 @@ public final class BagTypeAdapter<E>
 		in.beginObject();
 		final IBuilder2<? super E, ? super Integer, ? extends Bag<E>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
-			builder.accept(fromString.transform(in.nextName()), in.nextInt());
+			builder.accept(fromString.apply(in.nextName()), in.nextInt());
 		}
 		in.endObject();
 		return builder.build();
@@ -66,14 +66,14 @@ public final class BagTypeAdapter<E>
 		private static final ITypeAdapterFactory<?> instance = new Factory<>(Factory::defaultBuilderFactory, Factory::defaultCreateToString, Factory::defaultCreateFromString);
 
 		private final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderLookup;
-		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString;
-		private final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString;
+		private final Function<? super TypeToken<E>, ? extends Function<? super E, String>> createToString;
+		private final Function<? super TypeToken<E>, ? extends Function<? super String, ? extends E>> createFromString;
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		private Factory(
 				final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderLookup,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
+				final Function<? super TypeToken<E>, ? extends Function<? super E, String>> createToString,
+				final Function<? super TypeToken<E>, ? extends Function<? super String, ? extends E>> createFromString
 		) {
 			super((Class) Bag.class);
 			this.builderLookup = builderLookup;
@@ -89,8 +89,8 @@ public final class BagTypeAdapter<E>
 
 		public static <E> ITypeAdapterFactory<Bag<E>> getInstance(
 				final IBuilder2.ILookup<? super E, ? super Integer, ? extends Bag<E>> builderLookup,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super E, String>> createToString,
-				final Transformer<? super TypeToken<E>, ? extends Transformer<? super String, ? extends E>> createFromString
+				final Function<? super TypeToken<E>, ? extends Function<? super E, String>> createToString,
+				final Function<? super TypeToken<E>, ? extends Function<? super String, ? extends E>> createFromString
 		) {
 			return new Factory<>(builderLookup, createToString, createFromString);
 		}
@@ -105,27 +105,27 @@ public final class BagTypeAdapter<E>
 			return () -> builder(new HashBag<>());
 		}
 
-		public static <T> Transformer<? super T, String> defaultCreateToString(final TypeToken<? super String> typeToken) {
+		public static <T> Function<? super T, String> defaultCreateToString(final TypeToken<? super String> typeToken) {
 			final Class<? super String> rawType = typeToken.getRawType();
 			if ( rawType != String.class ) {
 				@SuppressWarnings("unchecked")
-				final Transformer<T, String> castToStringOrFail = (Transformer<T, String>) toStringOrFailTransformer;
+				final Function<T, String> castToStringOrFail = (Function<T, String>) toStringOrFail;
 				return castToStringOrFail;
 			}
 			@SuppressWarnings("unchecked")
-			final Transformer<? super T, String> castStringFromString = (Transformer<? super T, String>) Transformers.<String>identity();
+			final Function<? super T, String> castStringFromString = (Function<? super T, String>) Function.<String>identity();
 			return castStringFromString;
 		}
 
-		public static <T> Transformer<? super String, ? extends T> defaultCreateFromString(final TypeToken<? super String> typeToken) {
+		public static <T> Function<? super String, ? extends T> defaultCreateFromString(final TypeToken<? super String> typeToken) {
 			final Class<? super String> rawType = typeToken.getRawType();
 			if ( rawType != String.class ) {
 				@SuppressWarnings("unchecked")
-				final Transformer<String, T> castFailFromString = (Transformer<String, T>) failFromStringTransformer;
+				final Function<String, T> castFailFromString = (Function<String, T>) failFromString;
 				return castFailFromString;
 			}
 			@SuppressWarnings("unchecked")
-			final Transformer<? super String, ? extends T> castStringFromString = (Transformer<? super String, ? extends T>) Transformers.<String>identity();
+			final Function<? super String, ? extends T> castStringFromString = (Function<? super String, ? extends T>) Function.<String>identity();
 			return castStringFromString;
 		}
 
@@ -138,7 +138,7 @@ public final class BagTypeAdapter<E>
 			final TypeToken<E> elementTypeToken = (TypeToken<E>) TypeToken.get(elementType);
 			@SuppressWarnings("unchecked")
 			final IBuilder2.ILookup<E, Integer, Bag<E>> castBuilderLookup = (IBuilder2.ILookup<E, Integer, Bag<E>>) builderLookup;
-			return BagTypeAdapter.getInstance(castBuilderLookup.lookup(typeToken), createToString.transform(elementTypeToken), createFromString.transform(elementTypeToken));
+			return BagTypeAdapter.getInstance(castBuilderLookup.lookup(typeToken), createToString.apply(elementTypeToken), createFromString.apply(elementTypeToken));
 		}
 
 		private static <E, B extends Bag<E>> IBuilder2<E, Integer, B> builder(final B bag) {
@@ -155,14 +155,14 @@ public final class BagTypeAdapter<E>
 			};
 		}
 
-		private static final Transformer<?, String> toStringOrFailTransformer = o -> {
+		private static final Function<?, String> toStringOrFail = o -> {
 			if ( o == null ) {
 				throw new NullPointerException("No argument to parse provided");
 			}
 			return o.toString();
 		};
 
-		private static final Transformer<String, ?> failFromStringTransformer = o -> {
+		private static final Function<String, ?> failFromString = o -> {
 			throw new UnsupportedOperationException("Can't parse " + o);
 		};
 
