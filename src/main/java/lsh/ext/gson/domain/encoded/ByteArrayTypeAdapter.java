@@ -2,15 +2,12 @@ package lsh.ext.gson.domain.encoded;
 
 import java.io.IOException;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractEncodingTypeAdapter;
-import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ByteArrayTypeAdapter
@@ -51,23 +48,6 @@ public final class ByteArrayTypeAdapter
 	@Override
 	protected byte[] decode(final String encodedValue) {
 		return encoder.decode(encodedValue);
-	}
-
-	public static final class Factory
-			extends AbstractRawClassTypeAdapterFactory<byte[]> {
-
-		private final TypeAdapter<byte[]> typeAdapter;
-
-		private Factory(final TypeAdapter<byte[]> typeAdapter) {
-			super(byte[].class);
-			this.typeAdapter = typeAdapter;
-		}
-
-		@Override
-		protected TypeAdapter<byte[]> createTypeAdapter(final Gson gson, final TypeToken<? super byte[]> typeToken) {
-			return typeAdapter;
-		}
-
 	}
 
 }
