@@ -8,29 +8,26 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractEncodingTypeAdapter;
+import lsh.ext.gson.IFunction1;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CharArrayTypeAdapter
 		extends AbstractEncodingTypeAdapter<char[], String> {
 
-	public interface IEncoder {
+	private final IFunction1<? super char[], String> encode;
+	private final IFunction1<? super String, char[]> decode;
 
-		String encode(char[] array);
-
-		char[] decode(String s);
-
-	}
-
-	private final IEncoder encoder;
-
-	public static TypeAdapter<char[]> getInstance(final IEncoder encoder) {
-		return new CharArrayTypeAdapter(encoder)
+	public static TypeAdapter<char[]> getInstance(
+			final IFunction1<? super char[], String> encode,
+			final IFunction1<? super String, char[]> decode
+	) {
+		return new CharArrayTypeAdapter(encode, decode)
 				.nullSafe();
 	}
 
 	@Override
 	protected String encode(final char[] value) {
-		return encoder.encode(value);
+		return encode.apply(value);
 	}
 
 	@Override
@@ -47,7 +44,7 @@ public final class CharArrayTypeAdapter
 
 	@Override
 	protected char[] decode(final String encodedValue) {
-		return encoder.decode(encodedValue);
+		return decode.apply(encodedValue);
 	}
 
 }

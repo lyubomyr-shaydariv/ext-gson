@@ -8,29 +8,26 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractEncodingTypeAdapter;
+import lsh.ext.gson.IFunction1;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ByteArrayTypeAdapter
 		extends AbstractEncodingTypeAdapter<byte[], String> {
 
-	public interface IEncoder {
+	private final IFunction1<? super byte[], String> encode;
+	private final IFunction1<? super String, byte[]> decode;
 
-		String encode(byte[] array);
-
-		byte[] decode(String s);
-
-	}
-
-	private final IEncoder encoder;
-
-	public static TypeAdapter<byte[]> getInstance(final IEncoder encoder) {
-		return new ByteArrayTypeAdapter(encoder)
+	public static TypeAdapter<byte[]> getInstance(
+			final IFunction1<? super byte[], String> encode,
+			final IFunction1<? super String, byte[]> decode
+	) {
+		return new ByteArrayTypeAdapter(encode, decode)
 				.nullSafe();
 	}
 
 	@Override
 	protected String encode(final byte[] value) {
-		return encoder.encode(value);
+		return encode.apply(value);
 	}
 
 	@Override
@@ -47,7 +44,7 @@ public final class ByteArrayTypeAdapter
 
 	@Override
 	protected byte[] decode(final String encodedValue) {
-		return encoder.decode(encodedValue);
+		return decode.apply(encodedValue);
 	}
 
 }
