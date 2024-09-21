@@ -15,12 +15,6 @@ import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.bag.HashBag;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.apache.commons.collections4.bidimap.DualLinkedHashBidiMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
-import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
-import org.apache.commons.collections4.multiset.HashMultiSet;
 
 @UtilityClass
 public final class ApacheCommonsCollections4TypeAdapterFactory {
@@ -52,14 +46,8 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		);
 	}
 
-	// TODO handle all known implementations
 	public static <E> Supplier<IBuilder2<E, Integer, Bag<E>>> defaultBuilderForBag(final TypeToken<? super Bag<E>> typeToken) {
-		@SuppressWarnings("unchecked")
-		final Class<? super Bag<?>> rawType = (Class<? super Bag<?>>) typeToken.getRawType();
-		if ( HashBag.class.isAssignableFrom(rawType) ) {
-			return () -> Builder.forBagNCopies(HashBag::new);
-		}
-		return () -> Builder.forBagNCopies(HashBag::new);
+		throw new UnsupportedOperationException(String.valueOf(typeToken));
 	}
 
 	public static final ITypeAdapterFactory<BidiMap<String, Object>> defaultForBidiMap = forBidiMap(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForBidiMap);
@@ -78,17 +66,8 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		return ITypeAdapterFactory.forClassHierarchy(BidiMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forBidiMap(provider.getTypeAdapter(1), lookup.lookup(provider.getTypeToken()), toKey, fromKey));
 	}
 
-	// TODO handle all known implementations
 	public static <V> Supplier<IBuilder2<String, V, BidiMap<String, V>>> defaultBuilderForBidiMap(final TypeToken<? super BidiMap<String, V>> typeToken) {
-		@SuppressWarnings("unchecked")
-		final Class<? extends BidiMap<?, ?>> rawType = (Class<? extends BidiMap<?, ?>>) typeToken.getRawType();
-		if ( DualHashBidiMap.class.isAssignableFrom(rawType) ) {
-			return () -> IBuilder2.fromMap(new DualHashBidiMap<>());
-		}
-		if ( DualLinkedHashBidiMap.class.isAssignableFrom(rawType) ) {
-			return () -> IBuilder2.fromMap(new DualLinkedHashBidiMap<>());
-		}
-		return () -> IBuilder2.fromMap(new DualHashBidiMap<>());
+		throw new UnsupportedOperationException(String.valueOf(typeToken));
 	}
 
 	public static ITypeAdapterFactory<BoundedCollection<Object>> defaultForBoundedCollection = forBoundedCollection(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForBoundedCollection);
@@ -99,7 +78,6 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		return ITypeAdapterFactory.forClassHierarchy(BoundedCollection.class, provider -> ApacheCommonsCollections4TypeAdapter.forBoundedCollection(provider.getTypeAdapter(0), lookup.lookup(provider.getTypeToken())));
 	}
 
-	// TODO handle all known implementations
 	public static <E> Supplier<IBuilder1<E, BoundedCollection<E>>> defaultBuilderForBoundedCollection(final TypeToken<? super BoundedCollection<E>> typeToken) {
 		throw new UnsupportedOperationException(String.valueOf(typeToken));
 	}
@@ -132,14 +110,8 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		return ITypeAdapterFactory.forClassHierarchy(MultiSet.class, provider -> ApacheCommonsCollections4TypeAdapter.forMultiSet(provider.getTypeAdapter(0), lookup.lookup(provider.getTypeToken())));
 	}
 
-	// TODO handle all known implementations
 	public static <E> Supplier<IBuilder1<E, MultiSet<E>>> defaultBuilderForMultiSet(final TypeToken<? super MultiSet<E>> typeToken) {
-		@SuppressWarnings("unchecked")
-		final Class<? extends MultiSet<?>> rawType = (Class<? extends MultiSet<?>>) typeToken.getRawType();
-		if ( HashMultiSet.class.isAssignableFrom(rawType) ) {
-			return () -> Builder.forMultiSet(HashMultiSet::new);
-		}
-		return () -> Builder.forMultiSet(HashMultiSet::new);
+		throw new UnsupportedOperationException(String.valueOf(typeToken));
 	}
 
 	public static final ITypeAdapterFactory<MultiValuedMap<String, Object>> defaultForMultiValueMap = forMultiValueMap(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForMultiValuedMap);
@@ -158,17 +130,8 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		return ITypeAdapterFactory.forClassHierarchy(MultiValuedMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forMultiValuedMap(provider.getTypeAdapter(1), builderLookup.lookup(provider.getTypeToken()), encodeKey, decodeKey));
 	}
 
-	// TODO handle all known implementations
 	public static <V> Supplier<IBuilder2<String, V, MultiValuedMap<String, V>>> defaultBuilderForMultiValuedMap(final TypeToken<? super MultiValuedMap<String, V>> typeToken) {
-		@SuppressWarnings("unchecked")
-		final Class<? extends MultiValuedMap<?, ?>> rawType = (Class<? extends MultiValuedMap<?, ?>>) typeToken.getRawType();
-		if ( ArrayListValuedHashMap.class.isAssignableFrom(rawType) ) {
-			return () -> Builder.forMultiValuedMap(ArrayListValuedHashMap::new);
-		}
-		if ( HashSetValuedHashMap.class.isAssignableFrom(rawType) ) {
-			return () -> Builder.forMultiValuedMap(HashSetValuedHashMap::new);
-		}
-		return () -> Builder.forMultiValuedMap(ArrayListValuedHashMap::new);
+		throw new UnsupportedOperationException(String.valueOf(typeToken));
 	}
 
 }
