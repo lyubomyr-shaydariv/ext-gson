@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
+import java.util.function.UnaryOperator;
 import javax.annotation.Nullable;
 
 import com.google.gson.FieldNamingPolicy;
@@ -16,15 +17,15 @@ import lombok.RequiredArgsConstructor;
 public final class DynamicFieldNamingStrategy
 		implements FieldNamingStrategy {
 
-	private final INamingStrategy namingStrategy;
+	private final UnaryOperator<String> translateName;
 	private final FieldNamingStrategy fieldNamingStrategy;
 
-	public static FieldNamingStrategy getInstance(final INamingStrategy namingStrategy) {
-		return getInstance(namingStrategy, FieldNamingPolicy.IDENTITY);
+	public static FieldNamingStrategy getInstance(final UnaryOperator<String> translateName) {
+		return getInstance(translateName, FieldNamingPolicy.IDENTITY);
 	}
 
-	public static FieldNamingStrategy getInstance(final INamingStrategy namingStrategy, final FieldNamingStrategy fieldNamingStrategy) {
-		return new DynamicFieldNamingStrategy(namingStrategy, fieldNamingStrategy);
+	public static FieldNamingStrategy getInstance(final UnaryOperator<String> translateName, final FieldNamingStrategy fieldNamingStrategy) {
+		return new DynamicFieldNamingStrategy(translateName, fieldNamingStrategy);
 	}
 
 	@Override
@@ -35,18 +36,11 @@ public final class DynamicFieldNamingStrategy
 			return fieldNamingStrategy.translateName(field);
 		}
 		@Nullable
-		final String name = namingStrategy.translateName(as.value());
+		final String name = translateName.apply(as.value());
 		if ( name == null ) {
 			return fieldNamingStrategy.translateName(field);
 		}
 		return name;
-	}
-
-	public interface INamingStrategy {
-
-		@Nullable
-		String translateName(String name);
-
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)

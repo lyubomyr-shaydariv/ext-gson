@@ -1,5 +1,7 @@
 package lsh.ext.gson;
 
+import java.util.function.UnaryOperator;
+
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -60,15 +62,16 @@ public final class DynamicFieldNamingStrategyTest {
 
 	@Test
 	public void testTranslateNameForDynamicMappingsIntegrationWithSerializedNameThatHasHigherPriority() {
-		final DynamicFieldNamingStrategy.INamingStrategy namingStrategyMock = Mockito.mock(DynamicFieldNamingStrategy.INamingStrategy.class);
-		final FieldNamingStrategy unit = DynamicFieldNamingStrategy.getInstance(namingStrategyMock);
+		@SuppressWarnings("unchecked")
+		final UnaryOperator<String> translateNameMock = Mockito.mock(UnaryOperator.class);
+		final FieldNamingStrategy unit = DynamicFieldNamingStrategy.getInstance(translateNameMock);
 		final Gson gson = Gsons.Builders.createNormalized()
 				.setFieldNamingStrategy(unit)
 				.create();
 		final MixedFooBar mixedFooBar = gson.fromJson("{\"staticFoo\":\"1\",\"staticBar\":\"2\"}", MixedFooBar.class);
 		Assertions.assertEquals("1", mixedFooBar.foo);
 		Assertions.assertEquals("2", mixedFooBar.bar);
-		Mockito.verifyNoInteractions(namingStrategyMock);
+		Mockito.verifyNoInteractions(translateNameMock);
 	}
 
 	private static String translate(final String name) {
