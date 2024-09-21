@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.google.common.io.BaseEncoding;
 import com.google.gson.TypeAdapter;
 import lsh.ext.gson.IFunction1;
-import lsh.ext.gson.domain.encoded.ByteArrayTypeAdapter;
+import lsh.ext.gson.domain.encoded.EncodingTypeAdapter;
 import lsh.ext.gson.test.MoreMockito;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ public final class ByteArrayTypeAdapterTest {
 	@Test
 	public void testWriteEmpty() {
 		final IFunction1<? super byte[], String> encodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((IFunction1<byte[], String>) encoding::encode));
-		final TypeAdapter<byte[]> unit = ByteArrayTypeAdapter.getInstance(encodeSpy, Mockito.mock(MoreMockito.assertionError()));
+		final TypeAdapter<byte[]> unit = EncodingTypeAdapter.forPrimitiveByteArray(encodeSpy, Mockito.mock(MoreMockito.assertionError()));
 		Assertions.assertEquals(ENCODED_EMPTY_DATA_LITERAL, unit.toJson(emptyArray));
 		// make sure the encoder works even for empty data
 		Mockito.verify(encodeSpy)
@@ -38,7 +38,7 @@ public final class ByteArrayTypeAdapterTest {
 
 	@Test
 	public void testWriteNonEmpty() {
-		final TypeAdapter<byte[]> unit = ByteArrayTypeAdapter.getInstance(encoding::encode, encoding::decode);
+		final TypeAdapter<byte[]> unit = EncodingTypeAdapter.forPrimitiveByteArray(encoding::encode, encoding::decode);
 		Assertions.assertEquals(ENCODED_DATA_LITERAL, unit.toJson(data));
 	}
 
@@ -46,7 +46,7 @@ public final class ByteArrayTypeAdapterTest {
 	public void testReadEmpty()
 			throws IOException {
 		final IFunction1<? super String, byte[]> decodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((IFunction1<String, byte[]>) encoding::decode));
-		final TypeAdapter<byte[]> unit = ByteArrayTypeAdapter.getInstance(Mockito.mock(MoreMockito.assertionError()), decodeSpy);
+		final TypeAdapter<byte[]> unit = EncodingTypeAdapter.forPrimitiveByteArray(Mockito.mock(MoreMockito.assertionError()), decodeSpy);
 		Assertions.assertArrayEquals(emptyArray, unit.fromJson(ENCODED_EMPTY_DATA_LITERAL));
 		// make sure the decoder works even for empty data
 		Mockito.verify(decodeSpy)
@@ -57,7 +57,7 @@ public final class ByteArrayTypeAdapterTest {
 	@Test
 	public void testReadNonEmpty()
 			throws IOException {
-		final TypeAdapter<byte[]> unit = ByteArrayTypeAdapter.getInstance(encoding::encode, encoding::decode);
+		final TypeAdapter<byte[]> unit = EncodingTypeAdapter.forPrimitiveByteArray(encoding::encode, encoding::decode);
 		Assertions.assertArrayEquals(data, unit.fromJson(ENCODED_DATA_LITERAL));
 	}
 
