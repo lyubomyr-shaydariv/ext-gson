@@ -38,19 +38,16 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 	}
 
 	private record Wrapper(
-			@JsonAdapter(AbstractEncodingTypeAdapter.JsonAsString.Factory.class) List<Integer> value
+			@JsonAdapter(EncodedJsonStringTypeAdapter.Factory.class) List<Integer> value
 	) {
 	}
 
 	private static final Function<Object, Class<?>> forClass = Object::getClass;
-	private static final Function<String, Class<?>> forUnsafeClass = new Function<String, Class<?>>() {
-		@Override
-		public Class<?> apply(final String typeName) {
-			try {
-				return Class.forName(typeName);
-			} catch ( final ClassNotFoundException ex ) {
-				throw new RuntimeException(ex);
-			}
+	private static final Function<String, Class<?>> forUnsafeClass = typeName -> {
+		try {
+			return Class.forName(typeName);
+		} catch ( final ClassNotFoundException ex ) {
+			throw new RuntimeException(ex);
 		}
 	};
 	private static final Predicate<String> weakGuard = name -> true;
