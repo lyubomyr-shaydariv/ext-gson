@@ -1,6 +1,8 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -13,13 +15,13 @@ public final class JsonArrayTypeAdapter<A, E>
 		extends TypeAdapter<A> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final IFunction1<? super A, ? extends Iterable<E>> toIterable;
-	private final IFactory<? extends IBuilder1<? super E, ? extends A>> createBuilder;
+	private final Function<? super A, ? extends Iterable<E>> toIterable;
+	private final Supplier<? extends IBuilder1<? super E, ? extends A>> createBuilder;
 
 	public static <A, E> TypeAdapter<A> getInstance(
 			final TypeAdapter<E> elementTypeAdapter,
-			final IFunction1<? super A, ? extends Iterable<E>> toIterable,
-			final IFactory<? extends IBuilder1<? super E, ? extends A>> createBuilder
+			final Function<? super A, ? extends Iterable<E>> toIterable,
+			final Supplier<? extends IBuilder1<? super E, ? extends A>> createBuilder
 	) {
 		return new JsonArrayTypeAdapter<>(elementTypeAdapter, toIterable, createBuilder)
 				.nullSafe();
@@ -38,7 +40,7 @@ public final class JsonArrayTypeAdapter<A, E>
 	@Override
 	public A read(final JsonReader in)
 			throws IOException {
-		final IBuilder1<? super E, ? extends A> builder = createBuilder.create();
+		final IBuilder1<? super E, ? extends A> builder = createBuilder.get();
 		in.beginArray();
 		while ( in.hasNext() ) {
 			final E e = elementTypeAdapter.read(in);

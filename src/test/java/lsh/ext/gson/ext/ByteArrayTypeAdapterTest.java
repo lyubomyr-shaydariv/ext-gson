@@ -1,10 +1,10 @@
 package lsh.ext.gson.ext;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import com.google.common.io.BaseEncoding;
 import com.google.gson.TypeAdapter;
-import lsh.ext.gson.IFunction1;
 import lsh.ext.gson.domain.encoded.EncodingTypeAdapter;
 import lsh.ext.gson.test.MoreMockito;
 import org.junit.jupiter.api.Assertions;
@@ -27,7 +27,7 @@ public final class ByteArrayTypeAdapterTest {
 
 	@Test
 	public void testWriteEmpty() {
-		final IFunction1<? super byte[], String> encodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((IFunction1<byte[], String>) encoding::encode));
+		final Function<? super byte[], String> encodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((Function<byte[], String>) encoding::encode));
 		final TypeAdapter<byte[]> unit = EncodingTypeAdapter.forPrimitiveByteArray(encodeSpy, Mockito.mock(MoreMockito.assertionError()));
 		Assertions.assertEquals(ENCODED_EMPTY_DATA_LITERAL, unit.toJson(emptyArray));
 		// make sure the encoder works even for empty data
@@ -45,7 +45,7 @@ public final class ByteArrayTypeAdapterTest {
 	@Test
 	public void testReadEmpty()
 			throws IOException {
-		final IFunction1<? super String, byte[]> decodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((IFunction1<String, byte[]>) encoding::decode));
+		final Function<? super String, byte[]> decodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((Function<String, byte[]>) encoding::decode));
 		final TypeAdapter<byte[]> unit = EncodingTypeAdapter.forPrimitiveByteArray(Mockito.mock(MoreMockito.assertionError()), decodeSpy);
 		Assertions.assertArrayEquals(emptyArray, unit.fromJson(ENCODED_EMPTY_DATA_LITERAL));
 		// make sure the decoder works even for empty data

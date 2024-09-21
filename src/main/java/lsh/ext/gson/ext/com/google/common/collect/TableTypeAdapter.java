@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
@@ -19,7 +20,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder3;
-import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -29,7 +29,7 @@ public final class TableTypeAdapter<R, C, V>
 		extends TypeAdapter<Table<R, C, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final IFactory<? extends IBuilder3<? super R, ? super C, ? super V, ? extends Table<R, C, V>>> builderFactory;
+	private final Supplier<? extends IBuilder3<? super R, ? super C, ? super V, ? extends Table<R, C, V>>> builderFactory;
 	private final Function<? super R, String> encodeRowKey;
 	private final Function<? super String, ? extends R> decodeRowKey;
 	private final Function<? super C, String> encodeColumnKey;
@@ -37,7 +37,7 @@ public final class TableTypeAdapter<R, C, V>
 
 	public static <V> TypeAdapter<Table<String, String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFactory<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory
+			final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory
 	) {
 		return new TableTypeAdapter<String, String, V>(valueTypeAdapter, builderFactory, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity())
 				.nullSafe();
@@ -45,7 +45,7 @@ public final class TableTypeAdapter<R, C, V>
 
 	public static <R, C, V> TypeAdapter<Table<R, C, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFactory<? extends IBuilder3<? super R, ? super C, ? super V, ? extends Table<R, C, V>>> builderFactory,
+			final Supplier<? extends IBuilder3<? super R, ? super C, ? super V, ? extends Table<R, C, V>>> builderFactory,
 			final Function<? super R, String> encodeRowKey,
 			final Function<? super String, ? extends R> decodeRowKey,
 			final Function<? super C, String> encodeColumnKey,
@@ -80,7 +80,7 @@ public final class TableTypeAdapter<R, C, V>
 	public Table<R, C, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder3<? super R, ? super C, ? super V, ? extends Table<R, C, V>> builder = builderFactory.create();
+		final IBuilder3<? super R, ? super C, ? super V, ? extends Table<R, C, V>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			final R rowKey = decodeRowKey.apply(in.nextName());
 			in.beginObject();
@@ -139,7 +139,7 @@ public final class TableTypeAdapter<R, C, V>
 		}
 
 		// TODO handle all known implementations
-		public static <V> IFactory<IBuilder3<String, String, V, Table<String, String, V>>> defaultBuilderFactory(final TypeToken<? super Table<String, String, V>> typeToken) {
+		public static <V> Supplier<IBuilder3<String, String, V, Table<String, String, V>>> defaultBuilderFactory(final TypeToken<? super Table<String, String, V>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Table> rawType = (Class<? extends Table>) typeToken.getRawType();
 			// TODO why is HashBasedTable not final?

@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -19,18 +20,17 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
-import lsh.ext.gson.IFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoercedCollectionTypeAdapter<E>
 		extends TypeAdapter<Collection<? extends E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final IFactory<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> builderFactory;
+	private final Supplier<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> builderFactory;
 
 	public static <E> TypeAdapter<Collection<? extends E>> getInstance(
 			final TypeAdapter<E> elementTypeAdapter,
-			final IFactory<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> builderFactory
+			final Supplier<? extends IBuilder1<? super E, ? extends Collection<? extends E>>> builderFactory
 	) {
 		return new CoercedCollectionTypeAdapter<E>(elementTypeAdapter, builderFactory)
 				.nullSafe();
@@ -61,7 +61,7 @@ public final class CoercedCollectionTypeAdapter<E>
 	@SuppressWarnings("checkstyle:CyclomaticComplexity")
 	public Collection<? extends E> read(final JsonReader in)
 			throws IOException {
-		final IBuilder1<? super E, ? extends Collection<? extends E>> builder = builderFactory.create();
+		final IBuilder1<? super E, ? extends Collection<? extends E>> builder = builderFactory.get();
 		final JsonToken token = in.peek();
 		switch ( token ) {
 		case BEGIN_ARRAY:
@@ -116,7 +116,7 @@ public final class CoercedCollectionTypeAdapter<E>
 			return new Factory<>(elementTypeToken, builderLookup);
 		}
 
-		public static <E> IFactory<IBuilder1<E, Collection<E>>> defaultBuilderFactory(final TypeToken<? super Collection<E>> typeToken) {
+		public static <E> Supplier<IBuilder1<E, Collection<E>>> defaultBuilderFactory(final TypeToken<? super Collection<E>> typeToken) {
 			final Class<? super Collection<E>> rawType = typeToken.getRawType();
 			if ( rawType.isAssignableFrom(List.class) ) {
 				return () -> IBuilder1.of(new ArrayList<>());

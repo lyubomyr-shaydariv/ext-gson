@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
@@ -20,7 +21,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -30,20 +30,20 @@ public final class MultimapTypeAdapter<K, V>
 		extends TypeAdapter<Multimap<K, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final IFactory<? extends IBuilder2<? super K, ? super V, ? extends Multimap<K, V>>> builderFactory;
+	private final Supplier<? extends IBuilder2<? super K, ? super V, ? extends Multimap<K, V>>> builderFactory;
 	private final Function<? super K, String> encodeKey;
 	private final Function<? super String, ? extends K> decodeKey;
 
 	public static <V> TypeAdapter<Multimap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFactory<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> builderFactory
+			final Supplier<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> builderFactory
 	) {
 		return getInstance(valueTypeAdapter, builderFactory, Functions.identity(), Functions.identity());
 	}
 
 	public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFactory<? extends IBuilder2<? super K, ? super V, ? extends Multimap<K, V>>> builderFactory,
+			final Supplier<? extends IBuilder2<? super K, ? super V, ? extends Multimap<K, V>>> builderFactory,
 			final Function<? super K, String> encodeKey,
 			final Function<? super String, ? extends K> decodeKey
 	) {
@@ -68,7 +68,7 @@ public final class MultimapTypeAdapter<K, V>
 	public Multimap<K, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder2<? super K, ? super V, ? extends Multimap<K, V>> builder = builderFactory.create();
+		final IBuilder2<? super K, ? super V, ? extends Multimap<K, V>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
@@ -114,7 +114,7 @@ public final class MultimapTypeAdapter<K, V>
 		}
 
 		// TODO handle all known implementations
-		public static <K, V> IFactory<IBuilder2<K, V, Multimap<K, V>>> defaultBuilderFactory(final TypeToken<? super Multimap<K, V>> typeToken) {
+		public static <K, V> Supplier<IBuilder2<K, V, Multimap<K, V>>> defaultBuilderFactory(final TypeToken<? super Multimap<K, V>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends Multimap> rawType = (Class<? extends Multimap>) typeToken.getRawType();
 			if ( rawType == HashMultimap.class ) {

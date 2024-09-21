@@ -1,6 +1,7 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
+import java.util.function.Function;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
@@ -13,12 +14,12 @@ import lombok.RequiredArgsConstructor;
 public final class JsonStringTypeAdapter<T>
 		extends TypeAdapter<T> {
 
-	private final IFunction1<? super T, String> toString;
-	private final IFunction1<? super String, ? extends T> fromString;
+	private final Function<? super T, String> toString;
+	private final Function<? super String, ? extends T> fromString;
 
 	public static <T> TypeAdapter<T> getInstance(
-			final IFunction1<? super T, String> toString,
-			final IFunction1<? super String, ? extends T> fromString
+			final Function<? super T, String> toString,
+			final Function<? super String, ? extends T> fromString
 	) {
 		return new JsonStringTypeAdapter<T>(toString, fromString)
 				.nullSafe();

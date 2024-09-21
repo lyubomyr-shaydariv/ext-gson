@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -14,7 +15,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -27,20 +27,20 @@ public final class MultiValuedMapTypeAdapter<K, V>
 		extends TypeAdapter<MultiValuedMap<K, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final IFactory<? extends IBuilder2<? super K, ? super V, ? extends MultiValuedMap<K, V>>> builderFactory;
+	private final Supplier<? extends IBuilder2<? super K, ? super V, ? extends MultiValuedMap<K, V>>> builderFactory;
 	private final Transformer<? super K, String> encodeKey;
 	private final Transformer<? super String, ? extends K> decodeKey;
 
 	public static <V> TypeAdapter<MultiValuedMap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFactory<? extends IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>>> builderFactory
+			final Supplier<? extends IBuilder2<? super String, ? super V, ? extends MultiValuedMap<String, V>>> builderFactory
 	) {
 		return getInstance(valueTypeAdapter, builderFactory, Transformers.identity(), Transformers.identity());
 	}
 
 	public static <K, V> TypeAdapter<MultiValuedMap<K, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFactory<? extends IBuilder2<? super K, ? super V, ? extends MultiValuedMap<K, V>>> builderFactory,
+			final Supplier<? extends IBuilder2<? super K, ? super V, ? extends MultiValuedMap<K, V>>> builderFactory,
 			final Transformer<? super K, String> encodeKey,
 			final Transformer<? super String, ? extends K> decodeKey
 	) {
@@ -65,7 +65,7 @@ public final class MultiValuedMapTypeAdapter<K, V>
 	public MultiValuedMap<K, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder2<? super K, ? super V, ? extends MultiValuedMap<K, V>> builder = builderFactory.create();
+		final IBuilder2<? super K, ? super V, ? extends MultiValuedMap<K, V>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
@@ -111,7 +111,7 @@ public final class MultiValuedMapTypeAdapter<K, V>
 		}
 
 		// TODO handle all known implementations
-		public static <V> IFactory<IBuilder2<String, V, MultiValuedMap<String, V>>> defaultBuilderFactory(final TypeToken<? super MultiValuedMap<String, V>> typeToken) {
+		public static <V> Supplier<IBuilder2<String, V, MultiValuedMap<String, V>>> defaultBuilderFactory(final TypeToken<? super MultiValuedMap<String, V>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? extends MultiValuedMap<?, ?>> rawType = (Class<? extends MultiValuedMap<?, ?>>) typeToken.getRawType();
 			if ( ArrayListValuedHashMap.class.isAssignableFrom(rawType) ) {

@@ -2,6 +2,7 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -13,7 +14,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.Bag;
@@ -24,12 +24,12 @@ import org.apache.commons.collections4.bag.HashBag;
 public final class BagTypeAdapter<E>
 		extends TypeAdapter<Bag<E>> {
 
-	private final IFactory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory;
+	private final Supplier<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory;
 	private final Transformer<? super E, String> toString;
 	private final Transformer<? super String, ? extends E> fromString;
 
 	public static <E> TypeAdapter<Bag<E>> getInstance(
-			final IFactory<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
+			final Supplier<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
 			final Transformer<? super E, String> keyMapper,
 			final Transformer<? super String, ? extends E> keyReverseMapper
 	) {
@@ -52,7 +52,7 @@ public final class BagTypeAdapter<E>
 	public Bag<E> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder2<? super E, ? super Integer, ? extends Bag<E>> builder = builderFactory.create();
+		final IBuilder2<? super E, ? super Integer, ? extends Bag<E>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			builder.accept(fromString.transform(in.nextName()), in.nextInt());
 		}
@@ -96,7 +96,7 @@ public final class BagTypeAdapter<E>
 		}
 
 		// TODO handle all known implementations
-		public static <E> IFactory<IBuilder2<E, Integer, Bag<E>>> defaultBuilderFactory(final TypeToken<? super Bag<E>> typeToken) {
+		public static <E> Supplier<IBuilder2<E, Integer, Bag<E>>> defaultBuilderFactory(final TypeToken<? super Bag<E>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? super Bag<?>> rawType = (Class<? super Bag<?>>) typeToken.getRawType();
 			if ( HashBag.class.isAssignableFrom(rawType) ) {

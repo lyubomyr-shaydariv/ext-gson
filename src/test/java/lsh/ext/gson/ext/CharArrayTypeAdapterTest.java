@@ -6,10 +6,10 @@ import java.nio.CharBuffer;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 import com.google.common.io.BaseEncoding;
 import com.google.gson.TypeAdapter;
-import lsh.ext.gson.IFunction1;
 import lsh.ext.gson.domain.encoded.EncodingTypeAdapter;
 import lsh.ext.gson.test.MoreMockito;
 import org.junit.jupiter.api.Assertions;
@@ -34,7 +34,7 @@ public final class CharArrayTypeAdapterTest {
 
 	@Test
 	public void testWriteEmpty() {
-		final IFunction1<? super char[], String> encodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((IFunction1<char[], String>) CharArrayTypeAdapterTest::encode));
+		final Function<? super char[], String> encodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((Function<char[], String>) CharArrayTypeAdapterTest::encode));
 		final TypeAdapter<char[]> unit = EncodingTypeAdapter.forPrimitiveCharArray(encodeSpy, Mockito.mock(MoreMockito.assertionError()));
 		Assertions.assertEquals(ENCODED_EMPTY_DATA_LITERAL, unit.toJson(emptyArray));
 		// make sure the encoder works even for empty data
@@ -52,7 +52,7 @@ public final class CharArrayTypeAdapterTest {
 	@Test
 	public void testReadEmpty()
 			throws IOException {
-		final IFunction1<? super String, char[]> decodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((IFunction1<String, char[]>) CharArrayTypeAdapterTest::decode));
+		final Function<? super String, char[]> decodeSpy = Mockito.mock(AdditionalAnswers.delegatesTo((Function<String, char[]>) CharArrayTypeAdapterTest::decode));
 		final TypeAdapter<char[]> unit = EncodingTypeAdapter.forPrimitiveCharArray(Mockito.mock(MoreMockito.assertionError()), decodeSpy);
 		Assertions.assertArrayEquals(emptyArray, unit.fromJson(ENCODED_EMPTY_DATA_LITERAL));
 		// make sure the decoder works even for empty data

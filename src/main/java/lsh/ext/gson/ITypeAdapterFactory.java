@@ -1,5 +1,6 @@
 package lsh.ext.gson;
 
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -15,7 +16,7 @@ public interface ITypeAdapterFactory<CT>
 	@Nullable
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	static <CT> ITypeAdapterFactory<CT> forClass(final Class<CT> klass, final IFactory<? extends TypeAdapter<CT>> createTypeAdapter) {
+	static <CT> ITypeAdapterFactory<CT> forClass(final Class<CT> klass, final Supplier<? extends TypeAdapter<CT>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
 			@Override
@@ -26,7 +27,7 @@ public interface ITypeAdapterFactory<CT>
 				@SuppressWarnings("unchecked")
 				final TypeToken<CT> castTypeToken = (TypeToken<CT>) typeToken;
 				@SuppressWarnings("unchecked")
-				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.create();
+				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.get();
 				return castTypeAdapter;
 			}
 		};

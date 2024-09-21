@@ -2,6 +2,7 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -14,7 +15,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder1;
-import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 import org.apache.commons.collections4.MultiSet;
@@ -25,11 +25,11 @@ public final class MultiSetTypeAdapter<E>
 		extends TypeAdapter<MultiSet<E>> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
-	private final IFactory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory;
+	private final Supplier<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory;
 
 	public static <E> TypeAdapter<MultiSet<E>> getInstance(
 			final TypeAdapter<E> valueTypeAdapter,
-			final IFactory<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory
+			final Supplier<? extends IBuilder1<? super E, ? extends MultiSet<E>>> builderFactory
 	) {
 		return new MultiSetTypeAdapter<>(valueTypeAdapter, builderFactory)
 				.nullSafe();
@@ -53,7 +53,7 @@ public final class MultiSetTypeAdapter<E>
 	public MultiSet<E> read(final JsonReader in)
 			throws IOException {
 		in.beginArray();
-		final IBuilder1<? super E, ? extends MultiSet<E>> builder = builderFactory.create();
+		final IBuilder1<? super E, ? extends MultiSet<E>> builder = builderFactory.get();
 		while ( in.peek() != JsonToken.END_ARRAY ) {
 			final E element = elementTypeAdapter.read(in);
 			builder.accept(element);
@@ -88,7 +88,7 @@ public final class MultiSetTypeAdapter<E>
 		}
 
 		// TODO handle all known implementations
-		public static <E> IFactory<IBuilder1<E, MultiSet<E>>> defaultBuilderFactory(final TypeToken<? super MultiSet<E>> typeToken) {
+		public static <E> Supplier<IBuilder1<E, MultiSet<E>>> defaultBuilderFactory(final TypeToken<? super MultiSet<E>> typeToken) {
 			@SuppressWarnings("unchecked")
 			final Class<? extends MultiSet<?>> rawType = (Class<? extends MultiSet<?>>) typeToken.getRawType();
 			if ( HashMultiSet.class.isAssignableFrom(rawType) ) {

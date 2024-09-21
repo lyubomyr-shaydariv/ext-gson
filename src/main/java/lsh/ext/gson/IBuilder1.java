@@ -1,6 +1,7 @@
 package lsh.ext.gson;
 
 import java.util.Collection;
+import java.util.function.Supplier;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -26,7 +27,7 @@ public interface IBuilder1<A1, R> {
 
 	interface ILookup<A1, R> {
 
-		IFactory<IBuilder1<A1, R>> lookup(TypeToken<? super R> typeToken);
+		Supplier<IBuilder1<A1, R>> lookup(TypeToken<? super R> typeToken);
 
 	}
 

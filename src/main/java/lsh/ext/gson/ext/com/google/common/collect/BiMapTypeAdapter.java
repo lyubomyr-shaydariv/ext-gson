@@ -3,6 +3,7 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
@@ -19,7 +20,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.IBuilder2;
-import lsh.ext.gson.IFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.ParameterizedTypes;
 
@@ -29,20 +29,20 @@ public final class BiMapTypeAdapter<K, V>
 		extends TypeAdapter<BiMap<K, V>> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
-	private final IFactory<? extends IBuilder2<K, V, BiMap<K, V>>> builderFactory;
+	private final Supplier<? extends IBuilder2<K, V, BiMap<K, V>>> builderFactory;
 	private final Function<? super K, String> encodeKey;
 	private final Function<? super String, ? extends K> decodeKey;
 
 	public static <V> TypeAdapter<BiMap<String, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFactory<? extends IBuilder2<String, V, BiMap<String, V>>> builderFactory
+			final Supplier<? extends IBuilder2<String, V, BiMap<String, V>>> builderFactory
 	) {
 		return getInstance(valueTypeAdapter, builderFactory, Functions.identity(), Functions.identity());
 	}
 
 	public static <K, V> TypeAdapter<BiMap<K, V>> getInstance(
 			final TypeAdapter<V> valueTypeAdapter,
-			final IFactory<? extends IBuilder2<K, V, BiMap<K, V>>> builderFactory,
+			final Supplier<? extends IBuilder2<K, V, BiMap<K, V>>> builderFactory,
 			final Function<? super K, String> encodeKey,
 			final Function<? super String, ? extends K> decodeKey
 	) {
@@ -67,7 +67,7 @@ public final class BiMapTypeAdapter<K, V>
 	public BiMap<K, V> read(final JsonReader in)
 			throws IOException {
 		in.beginObject();
-		final IBuilder2<? super K, ? super V, ? extends BiMap<K, V>> builder = builderFactory.create();
+		final IBuilder2<? super K, ? super V, ? extends BiMap<K, V>> builder = builderFactory.get();
 		while ( in.hasNext() ) {
 			final String key = in.nextName();
 			final V value = valueTypeAdapter.read(in);
@@ -113,7 +113,7 @@ public final class BiMapTypeAdapter<K, V>
 		}
 
 		// TODO handle all known implementations
-		public static <K, V> IFactory<IBuilder2<K, V, BiMap<K, V>>> defaultBuilderLookup(final TypeToken<? super BiMap<K, V>> typeToken) {
+		public static <K, V> Supplier<IBuilder2<K, V, BiMap<K, V>>> defaultBuilderLookup(final TypeToken<? super BiMap<K, V>> typeToken) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			final Class<? extends BiMap> rawType = (Class<? extends BiMap>) typeToken.getRawType();
 			if ( rawType == HashBiMap.class ) {
