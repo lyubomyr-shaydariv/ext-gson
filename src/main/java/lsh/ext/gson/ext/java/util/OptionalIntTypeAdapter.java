@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.OptionalInt;
 import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
@@ -14,8 +12,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractRawClassTypeAdapterFactory;
-import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OptionalIntTypeAdapter
@@ -46,30 +42,6 @@ public final class OptionalIntTypeAdapter
 			return OptionalInt.empty();
 		}
 		return OptionalInt.of(in.nextInt());
-	}
-
-	public static final class Factory
-			extends AbstractRawClassTypeAdapterFactory<OptionalInt> {
-
-		@Getter
-		private static final ITypeAdapterFactory<OptionalInt> instance = new Factory(OptionalIntTypeAdapter.getInstance());
-
-		private final TypeAdapter<OptionalInt> typeAdapter;
-
-		private Factory(final TypeAdapter<OptionalInt> typeAdapter) {
-			super(OptionalInt.class);
-			this.typeAdapter = typeAdapter;
-		}
-
-		public static ITypeAdapterFactory<OptionalInt> getInstance(final TypeAdapter<OptionalInt> typeAdapter) {
-			return new Factory(typeAdapter);
-		}
-
-		@Override
-		protected TypeAdapter<OptionalInt> createTypeAdapter(final Gson gson, final TypeToken<? super OptionalInt> typeToken) {
-			return typeAdapter;
-		}
-
 	}
 
 }

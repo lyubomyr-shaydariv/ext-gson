@@ -36,13 +36,13 @@ public final class Java8UtilModule
 		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<OptionalInt> optionalIntTypeAdapterFactory = OptionalIntTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<OptionalDouble> optionalDoubleTypeAdapterFactory = OptionalTypeAdapterFactory.getDefaultForOptionalDouble();
 
 		@Setter
-		private ITypeAdapterFactory<OptionalLong> optionalLongTypeAdapterFactory = OptionalLongTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<OptionalInt> optionalIntTypeAdapterFactory = OptionalTypeAdapterFactory.getDefaultForOptionalInt();
 
 		@Setter
-		private ITypeAdapterFactory<OptionalDouble> optionalDoubleTypeAdapterFactory = OptionalDoubleTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<OptionalLong> optionalLongTypeAdapterFactory = OptionalTypeAdapterFactory.getDefaultForOptionalLong();
 
 		public static Builder create() {
 			return new Builder();
@@ -52,9 +52,9 @@ public final class Java8UtilModule
 		public IModule build() {
 			return new Java8UtilModule(
 					optionalTypeAdapterFactory,
+					optionalDoubleTypeAdapterFactory,
 					optionalIntTypeAdapterFactory,
-					optionalLongTypeAdapterFactory,
-					optionalDoubleTypeAdapterFactory
+					optionalLongTypeAdapterFactory
 			);
 		}
 
