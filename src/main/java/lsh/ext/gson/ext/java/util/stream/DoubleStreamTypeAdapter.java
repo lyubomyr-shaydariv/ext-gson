@@ -15,7 +15,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.AbstractCursorTypeAdapter;
-import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.JsonReaders;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -46,18 +45,6 @@ public final class DoubleStreamTypeAdapter
 	protected void writeNext(final JsonWriter out, final PrimitiveIterator.OfDouble elementCursor)
 			throws IOException {
 		out.value(elementCursor.next());
-	}
-
-	public static final class Factory
-			extends AbstractCursorTypeAdapter.AbstractFactory<DoubleStream> {
-
-		@Getter
-		private static final ITypeAdapterFactory<? extends DoubleStream> instance = new Factory(DoubleStreamTypeAdapter.instance);
-
-		private Factory(final TypeAdapter<DoubleStream> typeAdapter) {
-			super(DoubleStream.class, typeAdapter);
-		}
-
 	}
 
 }

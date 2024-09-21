@@ -2,9 +2,7 @@ package lsh.ext.gson;
 
 import java.io.IOException;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
@@ -36,23 +34,6 @@ public abstract class AbstractCursorTypeAdapter<C, EC>
 	public final C read(final JsonReader in)
 			throws IOException {
 		return toCursor(in);
-	}
-
-	public abstract static class AbstractFactory<C>
-			extends AbstractRawClassTypeAdapterFactory<C> {
-
-		private final TypeAdapter<C> typeAdapter;
-
-		protected AbstractFactory(final Class<C> cursorClass, final TypeAdapter<C> typeAdapter) {
-			super(cursorClass);
-			this.typeAdapter = typeAdapter;
-		}
-
-		@Override
-		protected final TypeAdapter<C> createTypeAdapter(final Gson gson, final TypeToken<? super C> typeToken) {
-			return typeAdapter;
-		}
-
 	}
 
 }
