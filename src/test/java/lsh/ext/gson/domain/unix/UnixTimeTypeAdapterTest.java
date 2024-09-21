@@ -19,25 +19,26 @@ public final class UnixTimeTypeAdapterTest
 	}
 
 	@Override
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						UnixTimeTypeAdapter.getInstance(JavaUtilDateConverter.javaUtilDateConverter),
+						UnixTimeTypeAdapter.getInstance(java.util.Date::getTime, java.util.Date::new),
 						"1488929283",
 						new java.util.Date(1488929283000L)
 				),
 				makeTestCase(
-						UnixTimeTypeAdapter.getInstance(JavaUtilDateConverter.javaSqlDateConverter),
+						UnixTimeTypeAdapter.getInstance(java.sql.Date::getTime, java.sql.Date::new),
 						"1488929283",
 						new java.sql.Date(1488929283000L)
 				),
 				makeTestCase(
-						UnixTimeTypeAdapter.getInstance(JavaUtilDateConverter.javaSqlTimeConverter),
+						UnixTimeTypeAdapter.getInstance(java.sql.Time::getTime, java.sql.Time::new),
 						"1488929283",
 						new Time(1488929283000L)
 				),
 				makeTestCase(
-						UnixTimeTypeAdapter.getInstance(JavaUtilDateConverter.javaSqlTimestampConverter),
+						UnixTimeTypeAdapter.getInstance(java.sql.Timestamp::getTime, java.sql.Timestamp::new),
 						"1488929283",
 						new Timestamp(1488929283000L)
 				)
