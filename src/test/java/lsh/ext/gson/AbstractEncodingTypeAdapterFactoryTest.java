@@ -55,7 +55,7 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 	@Test
 	public void testJsonAsTypedValueReadWrite()
 			throws IOException {
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "type", "value", forClass, Class::getTypeName, forUnsafeClass, weakGuard);
+		final TypeAdapter<Integer> typeAdapter = EncodedTypeTypeAdapter.getInstance(gson, "type", "value", forClass, Class::getTypeName, forUnsafeClass, weakGuard);
 		final Writer jsonWriter = new StringWriter();
 		final int before = 2;
 		typeAdapter.write(new JsonWriter(jsonWriter), before);
@@ -71,7 +71,7 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 		Mockito.doAnswer(invocationOnMock -> primitiveTypeGuard.test(invocationOnMock.getArgument(0, String.class)))
 				.when(guardMock)
 				.test(ArgumentMatchers.anyString());
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "t", "v", forClass, Class::getTypeName, primitiveTypeDecoder, guardMock);
+		final TypeAdapter<Integer> typeAdapter = EncodedTypeTypeAdapter.getInstance(gson, "t", "v", forClass, Class::getTypeName, primitiveTypeDecoder, guardMock);
 		final JsonElement legalJsonTree = JsonObjects.of(
 				"t", JsonPrimitives.orNullable("int"),
 				"v", JsonPrimitives.orNullable(1000)
@@ -90,7 +90,7 @@ public final class AbstractEncodingTypeAdapterFactoryTest {
 		Mockito.doAnswer(invocationOnMock -> primitiveTypeGuard.test(invocationOnMock.getArgument(0, String.class)))
 				.when(guardMock)
 				.test(ArgumentMatchers.anyString());
-		final TypeAdapter<Integer> typeAdapter = AbstractEncodingTypeAdapter.TypedValueAsJsonObject.getInstance(gson, "t", "v", forClass, Class::getTypeName, primitiveTypeDecoder, guardMock);
+		final TypeAdapter<Integer> typeAdapter = EncodedTypeTypeAdapter.getInstance(gson, "t", "v", forClass, Class::getTypeName, primitiveTypeDecoder, guardMock);
 		final JsonElement illegalJsonTree = JsonObjects.of(
 				"t", JsonPrimitives.orNullable("void")
 		);
