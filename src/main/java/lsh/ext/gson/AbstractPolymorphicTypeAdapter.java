@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,13 +27,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractPolymorphicTypeAdapter<T>
 		extends TypeAdapter<T> {
-
-	// TODO this may be extracted as a package-level interface in the future
-	public interface BiConsumer<T, U> {
-
-		void accept(T t, U u);
-
-	}
 
 	private final String property;
 	private final Function<? super Class<? extends T>, String> classToDiscriminator;
