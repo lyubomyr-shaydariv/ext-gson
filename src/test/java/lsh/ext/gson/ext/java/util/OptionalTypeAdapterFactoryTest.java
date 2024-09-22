@@ -25,7 +25,7 @@ public final class OptionalTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return OptionalTypeAdapter.Factory.getInstance();
+		return OptionalTypeAdapterFactory.defaultForOptional;
 	}
 
 	@Override

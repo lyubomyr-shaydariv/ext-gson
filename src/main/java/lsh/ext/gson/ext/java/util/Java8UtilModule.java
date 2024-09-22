@@ -33,7 +33,7 @@ public final class Java8UtilModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<Optional<Object>> optionalTypeAdapterFactory = OptionalTypeAdapterFactory.defaultForOptional;
 
 		@Setter
 		private ITypeAdapterFactory<OptionalDouble> optionalDoubleTypeAdapterFactory = OptionalTypeAdapterFactory.getDefaultForOptionalDouble();
