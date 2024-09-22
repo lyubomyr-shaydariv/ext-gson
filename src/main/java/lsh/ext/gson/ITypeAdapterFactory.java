@@ -9,14 +9,14 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
 @SuppressWarnings("unused")
-public interface ITypeAdapterFactory<CT>
+public interface ITypeAdapterFactory<K>
 		extends TypeAdapterFactory {
 
 	@Override
 	@Nullable
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	static <CT> ITypeAdapterFactory<CT> forClass(final Class<CT> klass, final Supplier<? extends TypeAdapter<CT>> createTypeAdapter) {
+	static <K> ITypeAdapterFactory<K> forClass(final Class<K> klass, final Supplier<? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
 			@Override
@@ -24,8 +24,6 @@ public interface ITypeAdapterFactory<CT>
 				if ( typeToken.getRawType() != klass ) {
 					return null;
 				}
-				@SuppressWarnings("unchecked")
-				final TypeToken<CT> castTypeToken = (TypeToken<CT>) typeToken;
 				@SuppressWarnings("unchecked")
 				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.get();
 				return castTypeAdapter;

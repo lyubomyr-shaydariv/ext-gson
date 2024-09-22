@@ -9,12 +9,12 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractRawClassHierarchyTypeAdapterFactory<CT>
-		implements ITypeAdapterFactory<CT> {
+public abstract class AbstractRawClassHierarchyTypeAdapterFactory<K>
+		implements ITypeAdapterFactory<K> {
 
-	private final Class<CT> klass;
+	private final Class<K> klass;
 
-	protected abstract TypeAdapter<CT> createTypeAdapter(final Gson gson, final TypeToken<? super CT> typeToken);
+	protected abstract TypeAdapter<K> createTypeAdapter(final Gson gson, final TypeToken<? super K> typeToken);
 
 	@Override
 	@Nullable
@@ -23,7 +23,7 @@ public abstract class AbstractRawClassHierarchyTypeAdapterFactory<CT>
 			return null;
 		}
 		@SuppressWarnings("unchecked")
-		final TypeToken<CT> castTypeToken = (TypeToken<CT>) typeToken;
+		final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
 		@SuppressWarnings("unchecked")
 		final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter(gson, castTypeToken);
 		return castTypeAdapter;
