@@ -2,14 +2,15 @@ package lsh.ext.gson.ext.java.util;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Iterator;
 
-import com.google.gson.JsonIOException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.Getter;
 import lsh.ext.gson.AbstractElementCursorTypeAdapter;
+import lsh.ext.gson.JsonReaders;
 
 public final class EnumerationTypeAdapter<E>
 		extends AbstractElementCursorTypeAdapter<Enumeration<? extends E>, Enumeration<? extends E>, E> {
@@ -25,23 +26,16 @@ public final class EnumerationTypeAdapter<E>
 
 	@Override
 	protected Enumeration<? extends E> toCursor(final JsonReader jsonReader, final TypeAdapter<E> elementTypeAdapter) {
+		final Iterator<E> iterator = JsonReaders.asIterator(jsonReader, elementTypeAdapter);
 		return new Enumeration<>() {
 			@Override
 			public boolean hasMoreElements() {
-				try {
-					return jsonReader.hasNext();
-				} catch ( final IOException ex ) {
-					throw new JsonIOException(ex);
-				}
+				return iterator.hasNext();
 			}
 
 			@Override
 			public E nextElement() {
-				try {
-					return elementTypeAdapter.read(jsonReader);
-				} catch ( final IOException ex ) {
-					throw new JsonIOException(ex);
-				}
+				return iterator.next();
 			}
 		};
 	}
