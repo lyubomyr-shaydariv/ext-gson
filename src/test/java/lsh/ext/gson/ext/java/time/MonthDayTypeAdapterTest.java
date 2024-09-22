@@ -22,8 +22,8 @@ public final class MonthDayTypeAdapterTest
 	@SuppressWarnings("SimpleDateFormatWithoutLocale")
 	protected List<Arguments> makeTestCases() {
 		return List.of(
-				makeTestCase(Java8TimeTypeAdapter.getMonthDayTypeAdapter(), "\"--07-13\"", MonthDay.of(Month.JULY, 13)),
-				makeTestCase(Java8TimeTypeAdapter.getMonthDayTypeAdapter(DateTimeFormatter.ofPattern("M.d")), "\"7.13\"", MonthDay.of(Month.JULY, 13))
+				makeTestCase(Java8TimeTypeAdapter.defaulFortMonthDay, "\"--07-13\"", MonthDay.of(Month.JULY, 13)),
+				makeTestCase(Java8TimeTypeAdapter.forMonthDay(DateTimeFormatter.ofPattern("M.d")), "\"7.13\"", MonthDay.of(Month.JULY, 13))
 		);
 	}
 

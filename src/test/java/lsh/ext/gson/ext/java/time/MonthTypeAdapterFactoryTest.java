@@ -13,7 +13,7 @@ public final class MonthTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return Java8TimeTypeAdapterFactory.getDefaultForMonth();
+		return Java8TimeTypeAdapterFactory.defaultForMonth;
 	}
 
 }

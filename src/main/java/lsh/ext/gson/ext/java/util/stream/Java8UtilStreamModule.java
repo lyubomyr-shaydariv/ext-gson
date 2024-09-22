@@ -36,13 +36,13 @@ public final class Java8UtilStreamModule
 		private ITypeAdapterFactory<? extends Stream<?>> streamTypeAdapterFactory = StreamTypeAdapter.Factory.getInstance();
 
 		@Setter
-		private ITypeAdapterFactory<? extends IntStream> intStreamTypeAdapterFactory = StreamTypeAdapterFactory.getDefaultForIntStream();
+		private ITypeAdapterFactory<? extends IntStream> intStreamTypeAdapterFactory = StreamTypeAdapterFactory.defaultForIntStream;
 
 		@Setter
-		private ITypeAdapterFactory<? extends LongStream> longStreamTypeAdapterFactory = StreamTypeAdapterFactory.getDefaultForLongStream();
+		private ITypeAdapterFactory<? extends LongStream> longStreamTypeAdapterFactory = StreamTypeAdapterFactory.defaultForLongStream;
 
 		@Setter
-		private ITypeAdapterFactory<? extends DoubleStream> doubleStreamTypeAdapterFactory = StreamTypeAdapterFactory.getDefaultForDoubleStream();
+		private ITypeAdapterFactory<? extends DoubleStream> doubleStreamTypeAdapterFactory = StreamTypeAdapterFactory.defaultForDoubleStream;
 
 		public static Builder create() {
 			return new Builder();

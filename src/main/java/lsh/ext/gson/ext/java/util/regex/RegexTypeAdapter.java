@@ -81,8 +81,7 @@ public final class RegexTypeAdapter {
 		return forEdStylePattern(delimiter, flagStrategy, declaredFlags);
 	}
 
-	@Getter
-	private static final TypeAdapter<Pattern> defaultForEdStylePattern = forEdStylePattern('/', IFlagStrategy.defaultFlagStrategy);
+	public static final TypeAdapter<Pattern> edStyleForPattern = forEdStylePattern('/', IFlagStrategy.defaultFlagStrategy);
 
 	// https://en.wikipedia.org/w/index.php?title=Regular_expression&oldid=1239052130#Delimiters
 	private static TypeAdapter<Pattern> forEdStylePattern(final char delimiter, final IFlagStrategy flagStrategy, final int[] declaredFlags) {
@@ -159,7 +158,7 @@ public final class RegexTypeAdapter {
 	}
 
 	@Getter
-	private static final TypeAdapter<Pattern> defaultForSimplePattern = JsonStringTypeAdapter.getInstance(RegexTypeAdapter::formatSimplePattern, Pattern::compile);
+	public static final TypeAdapter<Pattern> simpleForPattern = JsonStringTypeAdapter.getInstance(RegexTypeAdapter::formatSimplePattern, Pattern::compile);
 
 	private static String formatSimplePattern(final Pattern pattern) {
 		final int flags = pattern.flags();

@@ -21,8 +21,8 @@ public final class OffsetDateTimeTypeAdapterTest
 	@Override
 	protected List<Arguments> makeTestCases() {
 		return List.of(
-				makeTestCase(Java8TimeTypeAdapter.getOffsetDateTimeTypeAdapter(), "\"1996-10-18T12:34:45Z\"", OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)),
-				makeTestCase(Java8TimeTypeAdapter.getOffsetDateTimeTypeAdapter(DateTimeFormatter.ISO_OFFSET_DATE_TIME), "\"1996-10-18T12:34:45Z\"", OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC))
+				makeTestCase(Java8TimeTypeAdapter.defaultForOffsetDateTime, "\"1996-10-18T12:34:45Z\"", OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC)),
+				makeTestCase(Java8TimeTypeAdapter.forOffsetDateTime(DateTimeFormatter.ISO_OFFSET_DATE_TIME), "\"1996-10-18T12:34:45Z\"", OffsetDateTime.of(1996, 10, 18, 12, 34, 45, 0, ZoneOffset.UTC))
 		);
 	}
 

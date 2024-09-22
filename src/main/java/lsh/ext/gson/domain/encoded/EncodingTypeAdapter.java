@@ -4,21 +4,18 @@ import java.util.Base64;
 import java.util.function.Function;
 
 import com.google.gson.TypeAdapter;
-import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lsh.ext.gson.JsonStringTypeAdapter;
 
 @UtilityClass
 public final class EncodingTypeAdapter {
 
-	@Getter
-	private static final TypeAdapter<byte[]> defaultForPrimitiveByteArrayAsBase64 = forPrimitiveByteArray(
+	public static final TypeAdapter<byte[]> base64ForPrimitiveByteArray = forPrimitiveByteArray(
 			Base64.getEncoder()::encodeToString,
 			Base64.getDecoder()::decode
 	);
 
-	@Getter
-	private static final TypeAdapter<byte[]> defaultForPrimitiveByteArrayAsUrl = forPrimitiveByteArray(
+	public static final TypeAdapter<byte[]> urlForPrimitiveByteArray = forPrimitiveByteArray(
 			Base64.getUrlEncoder()::encodeToString,
 			Base64.getUrlDecoder()::decode
 	);

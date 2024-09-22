@@ -1,40 +1,54 @@
 package lsh.ext.gson.domain.unix;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+
 import com.google.gson.TypeAdapter;
-import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @UtilityClass
-@SuppressWarnings({ "UseOfObsoleteDateTimeApi", "UnnecessaryFullyQualifiedName" })
 public final class UnixTimeTypeAdapterFactory {
 
-	@Getter
-	private static final ITypeAdapterFactory<java.util.Date> defaultForJavaUtilDate = forJavaUtilDate(UnixTimeTypeAdapter.getDefaultForJavaUtilDate());
+	@SuppressWarnings("UseOfObsoleteDateTimeApi")
+	public static final ITypeAdapterFactory<java.util.Date> defaultForJavaUtilDate = forJavaUtilDate(UnixTimeTypeAdapter.defaultForJavaUtilDate);
 
+	@SuppressWarnings("UseOfObsoleteDateTimeApi")
 	public static ITypeAdapterFactory<java.util.Date> forJavaUtilDate(final TypeAdapter<java.util.Date> typeAdapter) {
 		return ITypeAdapterFactory.forClass(java.util.Date.class, typeResolver -> typeAdapter);
 	}
-
-	@Getter
-	private static final ITypeAdapterFactory<java.sql.Date> defaultForJavaSqlDate = forJavaSqlDate(UnixTimeTypeAdapter.getDefaultForJavaSqlDate());
+	public static final ITypeAdapterFactory<java.sql.Date> defaultForJavaSqlDate = forJavaSqlDate(UnixTimeTypeAdapter.defaultForJavaSqlDate);
 
 	public static ITypeAdapterFactory<java.sql.Date> forJavaSqlDate(final TypeAdapter<java.sql.Date> typeAdapter) {
 		return ITypeAdapterFactory.forClass(java.sql.Date.class, typeResolver -> typeAdapter);
 	}
 
-	@Getter
-	private static final ITypeAdapterFactory<java.sql.Time> defaultForJavaSqlTime = forJavaSqlTime(UnixTimeTypeAdapter.getDefaultForJavaSqlTime());
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
+	public static final ITypeAdapterFactory<java.sql.Time> defaultForJavaSqlTime = forJavaSqlTime(UnixTimeTypeAdapter.defaultForJavaSqlTime);
 
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
 	public static ITypeAdapterFactory<java.sql.Time> forJavaSqlTime(final TypeAdapter<java.sql.Time> typeAdapter) {
 		return ITypeAdapterFactory.forClass(java.sql.Time.class, typeResolver -> typeAdapter);
 	}
 
-	@Getter
-	private static final ITypeAdapterFactory<java.sql.Timestamp> defaultForJavaSqlTimestamp = forJavaSqlTimestamp(UnixTimeTypeAdapter.getDefaultForJavaSqlTimestamp());
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
+	public static final ITypeAdapterFactory<java.sql.Timestamp> defaultForJavaSqlTimestamp = forJavaSqlTimestamp(UnixTimeTypeAdapter.defaultForJavaSqlTimestamp);
 
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
 	public static ITypeAdapterFactory<java.sql.Timestamp> forJavaSqlTimestamp(final TypeAdapter<java.sql.Timestamp> typeAdapter) {
 		return ITypeAdapterFactory.forClass(java.sql.Timestamp.class, typeResolver -> typeAdapter);
+	}
+
+	public static final ITypeAdapterFactory<Instant> defaultForJavaTimeInstant = forJavaTimeInstant(UnixTimeTypeAdapter.forJavaTimeInstant);
+
+	public static ITypeAdapterFactory<Instant> forJavaTimeInstant(final TypeAdapter<Instant> typeAdapter) {
+		return ITypeAdapterFactory.forClass(Instant.class, typeResolver -> typeAdapter);
+	}
+
+	public static final ITypeAdapterFactory<OffsetDateTime> defaultForOffsetDateTime = forJavaTimeOffsetDateTime(UnixTimeTypeAdapter.forJavaTimeOffsetDateTime);
+
+	public static ITypeAdapterFactory<OffsetDateTime> forJavaTimeOffsetDateTime(final TypeAdapter<OffsetDateTime> typeAdapter) {
+		return ITypeAdapterFactory.forClass(OffsetDateTime.class, typeResolver -> typeAdapter);
 	}
 
 }

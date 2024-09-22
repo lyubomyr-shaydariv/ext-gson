@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public final class EdStylePatternTestCoverageTypeAdapterTest {
 
-	private static final TypeAdapter<Pattern> unit = RegexTypeAdapter.getDefaultForEdStylePattern();
+	private static final TypeAdapter<Pattern> unit = RegexTypeAdapter.edStyleForPattern;
 
 	@Test
 	public void testFromStringRegexLiteralExpressionEmpty() {

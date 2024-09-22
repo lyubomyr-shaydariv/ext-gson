@@ -13,7 +13,7 @@ public final class YearMonthTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return Java8TimeTypeAdapterFactory.getDefaultForYearMonth();
+		return Java8TimeTypeAdapterFactory.defaultForYearMonth;
 	}
 
 }

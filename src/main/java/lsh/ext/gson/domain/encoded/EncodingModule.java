@@ -28,7 +28,7 @@ public final class EncodingModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<byte[]> primitiveByteArrayTypeAdapterFactory = EncodingTypeAdapterFactory.forPrimitiveByteArray(EncodingTypeAdapter.getDefaultForPrimitiveByteArrayAsBase64());
+		private ITypeAdapterFactory<byte[]> primitiveByteArrayTypeAdapterFactory = EncodingTypeAdapterFactory.base64ForPrimitiveByteArray;
 
 		public static Builder create() {
 			return new Builder();

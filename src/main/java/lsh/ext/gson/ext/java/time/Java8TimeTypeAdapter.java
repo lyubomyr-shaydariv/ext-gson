@@ -20,52 +20,43 @@ import java.time.format.SignStyle;
 import java.time.temporal.ChronoField;
 
 import com.google.gson.TypeAdapter;
-import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lsh.ext.gson.JsonStringTypeAdapter;
 
 @UtilityClass
 public final class Java8TimeTypeAdapter {
 
-	@Getter
-	private static final TypeAdapter<DayOfWeek> defaultForDayOfWeek = JsonStringTypeAdapter.getInstance(Enum::toString, DayOfWeek::valueOf);
+	public static final TypeAdapter<DayOfWeek> defaultForDayOfWeek = JsonStringTypeAdapter.getInstance(Enum::toString, DayOfWeek::valueOf);
 
-	@Getter
-	private static final TypeAdapter<Duration> defaultForDuration = JsonStringTypeAdapter.getInstance(Duration::toString, Duration::parse);
+	public static final TypeAdapter<Duration> defaultForDuration = JsonStringTypeAdapter.getInstance(Duration::toString, Duration::parse);
 
-	@Getter
-	private static final TypeAdapter<Instant> defaultForInstant = forInstantTypeAdapter(DateTimeFormatter.ISO_INSTANT);
+	public static final TypeAdapter<Instant> defaultForInstant = forInstant(DateTimeFormatter.ISO_INSTANT);
 
-	public static TypeAdapter<Instant> forInstantTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<Instant> forInstant(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, Instant::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<LocalDate> localDateTypeAdapter = getLocalDateTypeAdapter(DateTimeFormatter.ISO_LOCAL_DATE);
+	public static final TypeAdapter<LocalDate> defaultForLocalDate = forLocalDate(DateTimeFormatter.ISO_LOCAL_DATE);
 
-	public static TypeAdapter<LocalDate> getLocalDateTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<LocalDate> forLocalDate(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalDate::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<LocalDateTime> localDateTimeTypeAdapter = getLocalDateTimeTypeAdapter(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+	public static final TypeAdapter<LocalDateTime> defaultForLocalDateTime = forLocalDateTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
-	public static TypeAdapter<LocalDateTime> getLocalDateTimeTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<LocalDateTime> forLocalDateTime(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalDateTime::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<LocalTime> localTimeTypeAdapter = getLocalTimeTypeAdapter(DateTimeFormatter.ISO_LOCAL_TIME);
+	public static final TypeAdapter<LocalTime> defaultForLocalTime = forLocalTime(DateTimeFormatter.ISO_LOCAL_TIME);
 
-	public static TypeAdapter<LocalTime> getLocalTimeTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<LocalTime> forLocalTime(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalTime::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<Month> monthTypeAdapter = JsonStringTypeAdapter.getInstance(Enum::toString, Month::valueOf);
+	public static final TypeAdapter<Month> defaultForMonth = JsonStringTypeAdapter.getInstance(Enum::toString, Month::valueOf);
 
-	@Getter
-	private static final TypeAdapter<MonthDay> monthDayTypeAdapter = getMonthDayTypeAdapter(new DateTimeFormatterBuilder()
+	public static final TypeAdapter<MonthDay> defaulFortMonthDay = forMonthDay(new DateTimeFormatterBuilder()
 			.appendLiteral("--")
 			.appendValue(ChronoField.MONTH_OF_YEAR, 2)
 			.appendLiteral('-')
@@ -73,54 +64,48 @@ public final class Java8TimeTypeAdapter {
 			.toFormatter()
 	);
 
-	public static TypeAdapter<MonthDay> getMonthDayTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<MonthDay> forMonthDay(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, MonthDay::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<OffsetDateTime> offsetDateTimeTypeAdapter = getOffsetDateTimeTypeAdapter(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+	public static final TypeAdapter<OffsetDateTime> defaultForOffsetDateTime = forOffsetDateTime(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
-	public static TypeAdapter<OffsetDateTime> getOffsetDateTimeTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<OffsetDateTime> forOffsetDateTime(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, OffsetDateTime::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<OffsetTime> offsetTimeTypeAdapter = getOffsetTimeTypeAdapter(DateTimeFormatter.ISO_OFFSET_TIME);
+	public static final TypeAdapter<OffsetTime> defaultForOffsetTime = forOffsetTime(DateTimeFormatter.ISO_OFFSET_TIME);
 
-	public static TypeAdapter<OffsetTime> getOffsetTimeTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<OffsetTime> forOffsetTime(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, OffsetTime::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<Period> periodTypeAdapter = JsonStringTypeAdapter.getInstance(Period::toString, Period::parse);
+	public static final TypeAdapter<Period> defaultForPeriod = JsonStringTypeAdapter.getInstance(Period::toString, Period::parse);
 
-	@Getter
-	private static final TypeAdapter<YearMonth> yearMonthTypeAdapter = getYearMonthTypeAdapter(new DateTimeFormatterBuilder()
+	public static final TypeAdapter<YearMonth> defaultForYearMonth = forYearMonth(new DateTimeFormatterBuilder()
 			.appendValue(ChronoField.YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
 			.appendLiteral('-')
 			.appendValue(ChronoField.MONTH_OF_YEAR, 2)
 			.toFormatter()
 	);
 
-	public static TypeAdapter<YearMonth> getYearMonthTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<YearMonth> forYearMonth(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, YearMonth::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<Year> yearTypeAdapter = getYearTypeAdapter(new DateTimeFormatterBuilder()
+	public static final TypeAdapter<Year> defaultForYear = forYear(new DateTimeFormatterBuilder()
 			.parseLenient()
 			.appendValue(ChronoField.YEAR, 1, 10, SignStyle.NORMAL)
 			.toFormatter()
 	);
 
-	public static TypeAdapter<Year> getYearTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<Year> forYear(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, Year::from));
 	}
 
-	@Getter
-	private static final TypeAdapter<ZonedDateTime> zonedDateTimeTypeAdapter = getZonedDateTimeTypeAdapter(DateTimeFormatter.ISO_ZONED_DATE_TIME);
+	public static final TypeAdapter<ZonedDateTime> defaultForZonedDateTime = forZonedDateTime(DateTimeFormatter.ISO_ZONED_DATE_TIME);
 
-	public static TypeAdapter<ZonedDateTime> getZonedDateTimeTypeAdapter(final DateTimeFormatter dateTimeFormatter) {
+	public static TypeAdapter<ZonedDateTime> forZonedDateTime(final DateTimeFormatter dateTimeFormatter) {
 		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, ZonedDateTime::from));
 	}
 

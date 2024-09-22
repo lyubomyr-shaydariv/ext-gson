@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class DayOfWeekTypeAdapterTest
 		extends AbstractTypeAdapterTest<DayOfWeek, DayOfWeek> {
 
-	private static final TypeAdapter<DayOfWeek> unit = Java8TimeTypeAdapter.getDefaultForDayOfWeek();
+	private static final TypeAdapter<DayOfWeek> unit = Java8TimeTypeAdapter.defaultForDayOfWeek;
 
 	@Nullable
 	@Override

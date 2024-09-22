@@ -1,5 +1,8 @@
 package lsh.ext.gson.domain.unix;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+
 import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,21 +27,29 @@ public final class UnixTimeModule
 
 	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	@Accessors(fluent = true, chain = true)
-	@SuppressWarnings({ "UnnecessaryFullyQualifiedName", "UseOfObsoleteDateTimeApi" })
 	public static final class Builder
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends java.util.Date> javaUtilDateTypeAdapterFactory = UnixTimeTypeAdapterFactory.getDefaultForJavaUtilDate();
+		@SuppressWarnings("UseOfObsoleteDateTimeApi")
+		private ITypeAdapterFactory<? extends java.util.Date> javaUtilDateTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaUtilDate;
 
 		@Setter
-		private ITypeAdapterFactory<? extends java.sql.Date> javaSqlDateTypeAdapterFactory = UnixTimeTypeAdapterFactory.getDefaultForJavaSqlDate();
+		private ITypeAdapterFactory<? extends java.sql.Date> javaSqlDateTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlDate;
 
 		@Setter
-		private ITypeAdapterFactory<? extends java.sql.Time> javaSqlTimeTypeAdapterFactory = UnixTimeTypeAdapterFactory.getDefaultForJavaSqlTime();
+		@SuppressWarnings("UnnecessaryFullyQualifiedName")
+		private ITypeAdapterFactory<? extends java.sql.Time> javaSqlTimeTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlTime;
 
 		@Setter
-		private ITypeAdapterFactory<? extends java.sql.Timestamp> javaSqlTimestampTypeAdapterFactory = UnixTimeTypeAdapterFactory.getDefaultForJavaSqlTimestamp();
+		@SuppressWarnings("UnnecessaryFullyQualifiedName")
+		private ITypeAdapterFactory<? extends java.sql.Timestamp> javaSqlTimestampTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlTimestamp;
+
+		@Setter
+		private ITypeAdapterFactory<Instant> javaTimeInstant = UnixTimeTypeAdapterFactory.defaultForJavaTimeInstant;
+
+		@Setter
+		private ITypeAdapterFactory<OffsetDateTime> javaTimeOffsetDateTime = UnixTimeTypeAdapterFactory.defaultForOffsetDateTime;
 
 		public static Builder create() {
 			return new Builder();
@@ -50,7 +61,9 @@ public final class UnixTimeModule
 					javaUtilDateTypeAdapterFactory,
 					javaSqlDateTypeAdapterFactory,
 					javaSqlTimeTypeAdapterFactory,
-					javaSqlTimestampTypeAdapterFactory
+					javaSqlTimestampTypeAdapterFactory,
+					javaTimeInstant,
+					javaTimeOffsetDateTime
 			);
 		}
 

@@ -23,22 +23,22 @@ public final class UnixTimeTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						UnixTimeTypeAdapter.getDefaultForJavaUtilDate(),
+						UnixTimeTypeAdapter.defaultForJavaUtilDate,
 						"1488929283",
 						new java.util.Date(1488929283000L)
 				),
 				makeTestCase(
-						UnixTimeTypeAdapter.getDefaultForJavaSqlDate(),
+						UnixTimeTypeAdapter.defaultForJavaSqlDate,
 						"1488929283",
 						new java.sql.Date(1488929283000L)
 				),
 				makeTestCase(
-						UnixTimeTypeAdapter.getDefaultForJavaSqlTime(),
+						UnixTimeTypeAdapter.defaultForJavaSqlTime,
 						"1488929283",
 						new Time(1488929283000L)
 				),
 				makeTestCase(
-						UnixTimeTypeAdapter.getDefaultForJavaSqlTimestamp(),
+						UnixTimeTypeAdapter.defaultForJavaSqlTimestamp,
 						"1488929283",
 						new Timestamp(1488929283000L)
 				)

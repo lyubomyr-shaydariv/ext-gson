@@ -13,7 +13,7 @@ public final class DayOfWeekTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return Java8TimeTypeAdapterFactory.getDefaultForDayOfWeek();
+		return Java8TimeTypeAdapterFactory.defaultForDayOfWeek;
 	}
 
 }

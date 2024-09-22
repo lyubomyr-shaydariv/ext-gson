@@ -13,7 +13,7 @@ public final class OffsetTimeTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return Java8TimeTypeAdapterFactory.getDefaultForOffsetTime();
+		return Java8TimeTypeAdapterFactory.defaultForOffsetTime;
 	}
 
 }

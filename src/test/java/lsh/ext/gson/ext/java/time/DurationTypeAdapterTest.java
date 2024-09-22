@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class DurationTypeAdapterTest
 		extends AbstractTypeAdapterTest<Duration, Duration> {
 
-	private static final TypeAdapter<Duration> unit = Java8TimeTypeAdapter.getDefaultForDuration();
+	private static final TypeAdapter<Duration> unit = Java8TimeTypeAdapter.defaultForDuration;
 
 	@Nullable
 	@Override

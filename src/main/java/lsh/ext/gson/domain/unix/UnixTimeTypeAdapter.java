@@ -1,46 +1,39 @@
 package lsh.ext.gson.domain.unix;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.function.LongFunction;
 
 import com.google.gson.TypeAdapter;
-import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lsh.ext.gson.JsonPrimitiveLongTypeAdapter;
 
 @UtilityClass
-@SuppressWarnings({ "UseOfObsoleteDateTimeApi", "UnnecessaryFullyQualifiedName" })
 public final class UnixTimeTypeAdapter {
 
-	@Getter
-	private static TypeAdapter<java.util.Date> defaultForJavaUtilDate = JsonPrimitiveLongTypeAdapter.getInstance(
-			UnixTimeTypeAdapter::format,
-			timestamp -> parse(timestamp, java.util.Date::new)
-	);
+	@SuppressWarnings("UseOfObsoleteDateTimeApi")
+	public static TypeAdapter<java.util.Date> defaultForJavaUtilDate = forJavaUtilDate(java.util.Date::new);
 
-	@Getter
-	private static TypeAdapter<java.sql.Date> defaultForJavaSqlDate = JsonPrimitiveLongTypeAdapter.getInstance(
-			UnixTimeTypeAdapter::format,
-			timestamp -> parse(timestamp, java.sql.Date::new)
-	);
+	public static TypeAdapter<java.sql.Date> defaultForJavaSqlDate = forJavaUtilDate(java.sql.Date::new);
 
-	@Getter
-	private static TypeAdapter<java.sql.Time> defaultForJavaSqlTime = JsonPrimitiveLongTypeAdapter.getInstance(
-			UnixTimeTypeAdapter::format,
-			timestamp -> parse(timestamp, java.sql.Time::new)
-	);
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
+	public static TypeAdapter<java.sql.Time> defaultForJavaSqlTime = forJavaUtilDate(java.sql.Time::new);
 
-	@Getter
-	private static TypeAdapter<java.sql.Timestamp> defaultForJavaSqlTimestamp = JsonPrimitiveLongTypeAdapter.getInstance(
-			UnixTimeTypeAdapter::format,
-			timestamp -> parse(timestamp, java.sql.Timestamp::new)
-	);
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
+	public static TypeAdapter<java.sql.Timestamp> defaultForJavaSqlTimestamp = forJavaUtilDate(java.sql.Timestamp::new);
 
-	private static <T extends java.util.Date> long format(final T date) {
-		return date.getTime() / 1000;
+	@SuppressWarnings("UseOfObsoleteDateTimeApi")
+	public static <T extends java.util.Date> TypeAdapter<T> forJavaUtilDate(final LongFunction<? extends T> construct) {
+		return JsonPrimitiveLongTypeAdapter.getInstance(date -> date.getTime() / 1000, timestamp -> construct.apply(timestamp * 1000));
 	}
 
-	private static <T extends java.util.Date> T parse(final long timestamp, final LongFunction<? extends T> construct) {
-		return construct.apply(timestamp * 1000);
-	}
+	public static TypeAdapter<Instant> forJavaTimeInstant = JsonPrimitiveLongTypeAdapter.getInstance(Instant::getEpochSecond, Instant::ofEpochSecond);
+
+	public static TypeAdapter<OffsetDateTime> forJavaTimeOffsetDateTime = JsonPrimitiveLongTypeAdapter.getInstance(
+			OffsetDateTime::toEpochSecond,
+			seconds -> {
+				throw new UnsupportedOperationException(String.valueOf(seconds));
+			}
+	);
 
 }

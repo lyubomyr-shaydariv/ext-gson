@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class SimplePatternTypeAdapterTest
 		extends AbstractTypeAdapterTest<Pattern, PatternWrapper> {
 
-	private static final TypeAdapter<Pattern> unit = RegexTypeAdapter.getDefaultForSimplePattern();
+	private static final TypeAdapter<Pattern> unit = RegexTypeAdapter.simpleForPattern;
 
 	@Nullable
 	@Override

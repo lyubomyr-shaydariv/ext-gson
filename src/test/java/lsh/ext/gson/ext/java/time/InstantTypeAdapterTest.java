@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class InstantTypeAdapterTest
 		extends AbstractTypeAdapterTest<Instant, Instant> {
 
-	private static final TypeAdapter<Instant> unit = Java8TimeTypeAdapter.getDefaultForInstant();
+	private static final TypeAdapter<Instant> unit = Java8TimeTypeAdapter.defaultForInstant;
 
 	@Nullable
 	@Override

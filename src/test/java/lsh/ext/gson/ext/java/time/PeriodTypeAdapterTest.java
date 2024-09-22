@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class PeriodTypeAdapterTest
 		extends AbstractTypeAdapterTest<Period, Period> {
 
-	private static final TypeAdapter<Period> unit = Java8TimeTypeAdapter.getPeriodTypeAdapter();
+	private static final TypeAdapter<Period> unit = Java8TimeTypeAdapter.defaultForPeriod;
 
 	@Nullable
 	@Override
