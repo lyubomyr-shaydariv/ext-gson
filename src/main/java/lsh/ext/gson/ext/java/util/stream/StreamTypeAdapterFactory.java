@@ -16,21 +16,21 @@ public final class StreamTypeAdapterFactory {
 	private static ITypeAdapterFactory<DoubleStream> defaultForDoubleStream = forDoubleStream(DoubleStreamTypeAdapter.getInstance());
 
 	public static ITypeAdapterFactory<DoubleStream> forDoubleStream(final TypeAdapter<DoubleStream> typeAdapter) {
-		return ITypeAdapterFactory.forClass(DoubleStream.class, () -> typeAdapter);
+		return ITypeAdapterFactory.forClass(DoubleStream.class, typeResolver -> typeAdapter);
 	}
 
 	@Getter
 	private static ITypeAdapterFactory<IntStream> defaultForIntStream = forIntStream(IntStreamTypeAdapter.getInstance());
 
 	public static ITypeAdapterFactory<IntStream> forIntStream(final TypeAdapter<IntStream> typeAdapter) {
-		return ITypeAdapterFactory.forClass(IntStream.class, () -> typeAdapter);
+		return ITypeAdapterFactory.forClass(IntStream.class, typeResolver -> typeAdapter);
 	}
 
 	@Getter
 	private static ITypeAdapterFactory<LongStream> defaultForLongStream = forLongStream(LongStreamTypeAdapter.getInstance());
 
 	public static ITypeAdapterFactory<LongStream> forLongStream(final TypeAdapter<LongStream> typeAdapter) {
-		return ITypeAdapterFactory.forClass(LongStream.class, () -> typeAdapter);
+		return ITypeAdapterFactory.forClass(LongStream.class, typeResolver -> typeAdapter);
 	}
 
 }

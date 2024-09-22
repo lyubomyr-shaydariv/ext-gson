@@ -1,6 +1,7 @@
 package lsh.ext.gson;
 
-import java.util.function.Supplier;
+import java.lang.reflect.Type;
+import java.util.function.Function;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -16,7 +17,14 @@ public interface ITypeAdapterFactory<K>
 	@Nullable
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	static <K> ITypeAdapterFactory<K> forClass(final Class<K> klass, final Supplier<? extends TypeAdapter<K>> createTypeAdapter) {
+	interface ITypeResolver<K> {
+
+		<T> TypeAdapter<T> getTypeAdapter(int index);
+
+	}
+
+	@SuppressWarnings("NewClassNamingConvention")
+	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final Function<? super ITypeResolver<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
 			@Override
@@ -25,7 +33,20 @@ public interface ITypeAdapterFactory<K>
 					return null;
 				}
 				@SuppressWarnings("unchecked")
-				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.get();
+				final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
+				final ITypeResolver<K> typeResolver = new ITypeResolver<K>() {
+					private final Type type = castTypeToken.getType();
+
+					@Override
+					public <INNER_T> TypeAdapter<INNER_T> getTypeAdapter(final int index) {
+						final Type typeArgument = ParameterizedTypes.getTypeArgumentOrObjectClass(castTypeToken.getType(), index);
+						@SuppressWarnings("unchecked")
+						final TypeToken<INNER_T> o = (TypeToken<INNER_T>) TypeToken.get(typeArgument);
+						return gson.getAdapter(o);
+					}
+				};
+				@SuppressWarnings("unchecked")
+				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.apply(typeResolver);
 				return castTypeAdapter;
 			}
 		};

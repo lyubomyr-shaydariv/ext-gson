@@ -8,11 +8,11 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class EncodingTypeAdapterFactory {
 
 	public static ITypeAdapterFactory<byte[]> forPrimitiveByteArray(final TypeAdapter<byte[]> typeAdapter) {
-		return ITypeAdapterFactory.forClass(byte[].class, () -> typeAdapter);
+		return ITypeAdapterFactory.forClass(byte[].class, typeResolver -> typeAdapter);
 	}
 
 	public static ITypeAdapterFactory<char[]> forPrimitiveCharArray(final TypeAdapter<char[]> typeAdapter) {
-		return ITypeAdapterFactory.forClass(char[].class, () -> typeAdapter);
+		return ITypeAdapterFactory.forClass(char[].class, typeResolver -> typeAdapter);
 	}
 
 }

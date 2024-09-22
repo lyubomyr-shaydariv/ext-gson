@@ -14,14 +14,14 @@ public final class RegexTypeAdapterFactory {
 	private static ITypeAdapterFactory<Pattern> defaultForEdStylePattern = forEdStylePattern(RegexTypeAdapter.getDefaultForEdStylePattern());
 
 	public static ITypeAdapterFactory<Pattern> forEdStylePattern(final TypeAdapter<Pattern> typeAdapter) {
-		return ITypeAdapterFactory.forClass(Pattern.class, () -> typeAdapter);
+		return ITypeAdapterFactory.forClass(Pattern.class, typeResolver -> typeAdapter);
 	}
 
 	@Getter
 	private static ITypeAdapterFactory<Pattern> defaultForSimplePattern = forSimplePattern(RegexTypeAdapter.getDefaultForSimplePattern());
 
 	public static ITypeAdapterFactory<Pattern> forSimplePattern(final TypeAdapter<Pattern> typeAdapter) {
-		return ITypeAdapterFactory.forClass(Pattern.class, () -> typeAdapter);
+		return ITypeAdapterFactory.forClass(Pattern.class, typeResolver -> typeAdapter);
 	}
 
 }

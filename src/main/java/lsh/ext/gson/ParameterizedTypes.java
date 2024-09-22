@@ -21,4 +21,13 @@ public final class ParameterizedTypes {
 		return actualTypeArguments[index];
 	}
 
+	public static Type getTypeArgumentOrObjectClass(final Type type, final int index) {
+		@Nullable
+		final Type typeArgument = getTypeArgument(type, index);
+		if ( typeArgument == null ) {
+			return Object.class;
+		}
+		return typeArgument;
+	}
+
 }
