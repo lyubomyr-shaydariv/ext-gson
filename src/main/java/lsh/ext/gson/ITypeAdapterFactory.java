@@ -52,4 +52,33 @@ public interface ITypeAdapterFactory<K>
 		};
 	}
 
+	@SuppressWarnings("NewClassNamingConvention")
+	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<? extends RAW_K> klass, final Function<? super ITypeResolver<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
+		return new ITypeAdapterFactory<>() {
+			@Nullable
+			@Override
+			public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
+				if ( !klass.isAssignableFrom(typeToken.getRawType()) ) {
+					return null;
+				}
+				@SuppressWarnings("unchecked")
+				final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
+				final ITypeResolver<K> typeResolver = new ITypeResolver<K>() {
+					private final Type type = castTypeToken.getType();
+
+					@Override
+					public <INNER_T> TypeAdapter<INNER_T> getTypeAdapter(final int index) {
+						final Type typeArgument = ParameterizedTypes.getTypeArgumentOrObjectClass(castTypeToken.getType(), index);
+						@SuppressWarnings("unchecked")
+						final TypeToken<INNER_T> o = (TypeToken<INNER_T>) TypeToken.get(typeArgument);
+						return gson.getAdapter(o);
+					}
+				};
+				@SuppressWarnings("unchecked")
+				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.apply(typeResolver);
+				return castTypeAdapter;
+			}
+		};
+	}
+
 }
