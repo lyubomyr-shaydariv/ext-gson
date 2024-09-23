@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+@Deprecated
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractRawClassHierarchyTypeAdapterFactory<K>
 		implements ITypeAdapterFactory<K> {
