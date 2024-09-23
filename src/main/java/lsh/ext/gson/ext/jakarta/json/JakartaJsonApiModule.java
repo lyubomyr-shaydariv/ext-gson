@@ -29,7 +29,7 @@ public final class JakartaJsonApiModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<? extends JsonValue> jsonValueTypeAdapterFactory = JakartaJsonTypeAdapterFactory.defaultForJsonValue;
 
 		public static Builder create() {
 			return new Builder();

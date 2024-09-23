@@ -22,7 +22,7 @@ public final class JsonValueTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						JsonValueTypeAdapter.getInstance(),
+						JavaJsonValueTypeAdapter.getInstance(),
 						"{\"boolean\":true,\"integer\":3,\"string\":\"foo\",\"null\":null,\"array\":[false,2,\"bar\",null]}",
 						jsonProvider.createObjectBuilder()
 								.add("boolean", true)

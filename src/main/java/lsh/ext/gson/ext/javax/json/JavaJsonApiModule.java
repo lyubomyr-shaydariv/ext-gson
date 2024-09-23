@@ -13,14 +13,14 @@ import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 
-public final class JsonApiModule
+public final class JavaJsonApiModule
 		extends AbstractModule {
 
 	@Getter
 	private static final IModule instance = Builder.create()
 			.build();
 
-	private JsonApiModule(final TypeAdapterFactory... typeAdapterFactories) {
+	private JavaJsonApiModule(final TypeAdapterFactory... typeAdapterFactories) {
 		super(typeAdapterFactories);
 	}
 
@@ -30,7 +30,7 @@ public final class JsonApiModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends JsonValue> jsonValueTypeAdapterFactory = JsonValueTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<? extends JsonValue> jsonValueTypeAdapterFactory = JavaJsonValueTypeAdapterFactory.defaultForJsonValue;
 
 		public static Builder create() {
 			return new Builder();
@@ -38,7 +38,7 @@ public final class JsonApiModule
 
 		@Override
 		public IModule build() {
-			return new JsonApiModule(
+			return new JavaJsonApiModule(
 					jsonValueTypeAdapterFactory
 			);
 		}

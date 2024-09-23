@@ -13,7 +13,7 @@ public final class JsonApiModuleTest
 	private static final TypeToken<JsonValue> jsonValueTypeToken = TypeToken.get(JsonValue.class);
 
 	public JsonApiModuleTest() {
-		super(JsonApiModule.getInstance());
+		super(JavaJsonApiModule.getInstance());
 	}
 
 	@Override
