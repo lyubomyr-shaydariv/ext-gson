@@ -31,7 +31,7 @@ public final class IteratorTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						IteratorTypeAdapter.getInstance(TypeAdapters.integerTypeAdapter),
+						UtilTypeAdapter.forIterator(TypeAdapters.integerTypeAdapter, false),
 						"[1,2,4,8]",
 						List.of(1, 2, 4, 8).iterator()
 				)
@@ -41,9 +41,9 @@ public final class IteratorTypeAdapterTest
 	@Test
 	public void testLaziness()
 			throws IOException {
-		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.primitiveIntTypeAdapter);
+		final TypeAdapter<Iterator<Integer>> unit = UtilTypeAdapter.forIterator(TypeAdapters.primitiveIntTypeAdapter, false);
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")));
-		final Iterator<? extends Integer> iterator = unit.read(inSpy);
+		final Iterator<Integer> iterator = unit.read(inSpy);
 		Assertions.assertEquals("$", inSpy.getPath());
 		inSpy.beginArray();
 		Assertions.assertEquals(1, iterator.next());
@@ -63,7 +63,7 @@ public final class IteratorTypeAdapterTest
 	@Test
 	public void testLazinessClosingTheInputFails()
 			throws IOException {
-		final TypeAdapter<Iterator<? extends Integer>> unit = IteratorTypeAdapter.getInstance(TypeAdapters.primitiveIntTypeAdapter);
+		final TypeAdapter<Iterator<Integer>> unit = UtilTypeAdapter.forIterator(TypeAdapters.primitiveIntTypeAdapter, false);
 		final IOException expectedEx = new IOException();
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")) {
 			@Override
@@ -72,7 +72,7 @@ public final class IteratorTypeAdapterTest
 				throw expectedEx;
 			}
 		});
-		final Iterator<? extends Integer> iterator = unit.read(inSpy);
+		final Iterator<Integer> iterator = unit.read(inSpy);
 		Assertions.assertEquals("$", inSpy.getPath());
 		inSpy.beginArray();
 		Assertions.assertEquals(1, iterator.next());

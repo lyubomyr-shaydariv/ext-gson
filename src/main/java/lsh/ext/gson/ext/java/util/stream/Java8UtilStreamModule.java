@@ -33,7 +33,7 @@ public final class Java8UtilStreamModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Stream<?>> streamTypeAdapterFactory = StreamTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<? extends Stream<?>> streamTypeAdapterFactory = StreamTypeAdapterFactory.forStream(false, false);
 
 		@Setter
 		private ITypeAdapterFactory<? extends IntStream> intStreamTypeAdapterFactory = StreamTypeAdapterFactory.defaultForIntStream;

@@ -22,7 +22,7 @@ public final class EnumerationTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						EnumerationTypeAdapter.getInstance(TypeAdapters.integerTypeAdapter),
+						UtilTypeAdapter.forEnumeration(TypeAdapters.integerTypeAdapter, false),
 						"[1,2,4,8]",
 						Collections.enumeration(List.of(1, 2, 4, 8))
 				)
