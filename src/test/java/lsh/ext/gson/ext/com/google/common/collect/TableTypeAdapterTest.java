@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class TableTypeAdapterTest
@@ -27,7 +27,7 @@ public final class TableTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						TableTypeAdapter.getInstance(TypeAdapters.integerTypeAdapter, TableTypeAdapter.Factory.defaultBuilderFactory(stringToStringToIntegerTableTypeToken)),
+						TableTypeAdapter.getInstance(TestTypeAdapters.integerTypeAdapter, TableTypeAdapter.Factory.defaultBuilderFactory(stringToStringToIntegerTableTypeToken)),
 						"{\"A\":{\"1\":1},\"B\":{\"2\":2},\"C\":{\"3\":3}}",
 						ImmutableTable.<String, String, Integer>builder()
 								.put("A", "1", 1)

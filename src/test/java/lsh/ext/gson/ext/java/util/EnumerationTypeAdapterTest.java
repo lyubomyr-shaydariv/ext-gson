@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class EnumerationTypeAdapterTest
@@ -22,7 +22,7 @@ public final class EnumerationTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						UtilTypeAdapter.forEnumeration(TypeAdapters.integerTypeAdapter, false),
+						UtilTypeAdapter.forEnumeration(TestTypeAdapters.integerTypeAdapter, false),
 						"[1,2,4,8]",
 						Collections.enumeration(List.of(1, 2, 4, 8))
 				)

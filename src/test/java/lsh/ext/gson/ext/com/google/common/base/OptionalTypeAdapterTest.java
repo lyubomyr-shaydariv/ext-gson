@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class OptionalTypeAdapterTest
@@ -21,7 +21,7 @@ public final class OptionalTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						OptionalTypeAdapter.getInstance(TypeAdapters.stringTypeAdapter),
+						OptionalTypeAdapter.getInstance(TestTypeAdapters.stringTypeAdapter),
 						"\"foo\"",
 						Optional.of("foo")
 				)

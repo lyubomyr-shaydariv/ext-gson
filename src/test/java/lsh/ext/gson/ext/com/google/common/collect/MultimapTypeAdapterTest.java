@@ -8,7 +8,7 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultimapTypeAdapterTest
@@ -27,7 +27,7 @@ public final class MultimapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultimapTypeAdapter.getInstance(TypeAdapters.stringTypeAdapter, MultimapTypeAdapter.Factory.defaultBuilderFactory(stringToStringMultimapTypeToken)),
+						MultimapTypeAdapter.getInstance(TestTypeAdapters.stringTypeAdapter, MultimapTypeAdapter.Factory.defaultBuilderFactory(stringToStringMultimapTypeToken)),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
 						LinkedHashMultimap.create(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
 				)

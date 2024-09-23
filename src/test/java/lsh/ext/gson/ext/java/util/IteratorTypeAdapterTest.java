@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
@@ -31,7 +31,7 @@ public final class IteratorTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						UtilTypeAdapter.forIterator(TypeAdapters.integerTypeAdapter, false),
+						UtilTypeAdapter.forIterator(TestTypeAdapters.integerTypeAdapter, false),
 						"[1,2,4,8]",
 						List.of(1, 2, 4, 8).iterator()
 				)
@@ -41,7 +41,7 @@ public final class IteratorTypeAdapterTest
 	@Test
 	public void testLaziness()
 			throws IOException {
-		final TypeAdapter<Iterator<Integer>> unit = UtilTypeAdapter.forIterator(TypeAdapters.primitiveIntTypeAdapter, false);
+		final TypeAdapter<Iterator<Integer>> unit = UtilTypeAdapter.forIterator(TestTypeAdapters.primitiveIntTypeAdapter, false);
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")));
 		final Iterator<Integer> iterator = unit.read(inSpy);
 		Assertions.assertEquals("$", inSpy.getPath());
@@ -63,7 +63,7 @@ public final class IteratorTypeAdapterTest
 	@Test
 	public void testLazinessClosingTheInputFails()
 			throws IOException {
-		final TypeAdapter<Iterator<Integer>> unit = UtilTypeAdapter.forIterator(TypeAdapters.primitiveIntTypeAdapter, false);
+		final TypeAdapter<Iterator<Integer>> unit = UtilTypeAdapter.forIterator(TestTypeAdapters.primitiveIntTypeAdapter, false);
 		final IOException expectedEx = new IOException();
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")) {
 			@Override

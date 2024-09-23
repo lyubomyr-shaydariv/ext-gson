@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -131,7 +131,7 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader in = new JsonReader(new StringReader("[2,4,6]"));
 		in.beginArray();
-		final Iterator<?> unit = JsonReaders.asIterator(in, TypeAdapters.integerTypeAdapter);
+		final Iterator<?> unit = JsonReaders.asIterator(in, TestTypeAdapters.integerTypeAdapter);
 		Assertions.assertTrue(unit.hasNext());
 		Assertions.assertEquals(2, unit.next());
 		Assertions.assertTrue(unit.hasNext());
@@ -148,7 +148,7 @@ public final class JsonReadersTest {
 			throws IOException {
 		final JsonReader in = new JsonReader(new StringReader("[]"));
 		in.beginArray();
-		final Iterator<?> unit = JsonReaders.asIterator(in, TypeAdapters.integerTypeAdapter);
+		final Iterator<?> unit = JsonReaders.asIterator(in, TestTypeAdapters.integerTypeAdapter);
 		Assertions.assertFalse(unit.hasNext());
 		Assertions.assertThrows(NoSuchElementException.class, unit::next);
 		in.endArray();

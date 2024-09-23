@@ -217,27 +217,24 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 	public static final class JsonTree<T>
 			extends AbstractPolymorphicTypeAdapter<T> {
 
-		private final TypeAdapter<? super JsonElement> jsonElementTypeAdapter;
+		private static final TypeAdapter<? super JsonElement> jsonElementTypeAdapter = TypeAdapters.getJsonElementTypeAdapter();
 
 		private JsonTree(
 				final String property,
 				final Function<? super Class<? extends T>, String> classToDiscriminator,
 				final Function<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
-				final Function<? super String, ? extends TypeAdapter<? extends T>> propertyToTypeAdapter,
-				final TypeAdapter<? super JsonElement> jsonElementTypeAdapter
+				final Function<? super String, ? extends TypeAdapter<? extends T>> propertyToTypeAdapter
 		) {
 			super(property, classToDiscriminator, classToTypeAdapter, propertyToTypeAdapter);
-			this.jsonElementTypeAdapter = jsonElementTypeAdapter;
 		}
 
 		public static <T> TypeAdapter<T> getInstance(
 				final String property,
 				final Function<? super Class<? extends T>, String> classToDiscriminator,
 				final Function<? super Class<? extends T>, ? extends TypeAdapter<? super T>> classToTypeAdapter,
-				final Function<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter,
-				final TypeAdapter<? super JsonElement> jsonElementTypeAdapter
+				final Function<? super String, ? extends TypeAdapter<? extends T>> discriminatorToTypeAdapter
 		) {
-			return new JsonTree<>(property, classToDiscriminator, classToTypeAdapter, discriminatorToTypeAdapter, jsonElementTypeAdapter)
+			return new JsonTree<>(property, classToDiscriminator, classToTypeAdapter, discriminatorToTypeAdapter)
 					.nullSafe();
 		}
 
@@ -300,11 +297,10 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 					final String property,
 					final Function<? super Class<? extends T>, String> classToDiscriminator
 			) {
-				final TypeAdapter<JsonElement> jsonElementTypeAdapter = gson.getAdapter(JsonElement.class);
 				final Map<Class<? extends T>, TypeAdapter<? super T>> classToTypeAdapterMap = new HashMap<>();
 				final Map<String, TypeAdapter<? extends T>> discriminatorToTypeAdapterMap = new HashMap<>();
 				AbstractPolymorphicTypeAdapter.<T>fill(gson, this, classes, classToDiscriminator, classToTypeAdapterMap::put, discriminatorToTypeAdapterMap::put);
-				return JsonTree.getInstance(property, classToDiscriminator, classToTypeAdapterMap::get, discriminatorToTypeAdapterMap::get, jsonElementTypeAdapter);
+				return JsonTree.getInstance(property, classToDiscriminator, classToTypeAdapterMap::get, discriminatorToTypeAdapterMap::get);
 			}
 
 		}

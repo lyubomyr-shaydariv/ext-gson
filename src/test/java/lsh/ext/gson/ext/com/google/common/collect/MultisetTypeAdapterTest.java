@@ -8,7 +8,7 @@ import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class MultisetTypeAdapterTest
@@ -27,7 +27,7 @@ public final class MultisetTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultisetTypeAdapter.getInstance(TypeAdapters.stringTypeAdapter, MultisetTypeAdapter.Factory.defaultBuilderFactory(stringMultisetTypeToken)),
+						MultisetTypeAdapter.getInstance(TestTypeAdapters.stringTypeAdapter, MultisetTypeAdapter.Factory.defaultBuilderFactory(stringMultisetTypeToken)),
 						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
 						ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
 				)

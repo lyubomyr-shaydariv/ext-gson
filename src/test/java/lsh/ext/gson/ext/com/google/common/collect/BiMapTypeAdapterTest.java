@@ -8,7 +8,7 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class BiMapTypeAdapterTest
@@ -27,7 +27,7 @@ public final class BiMapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						BiMapTypeAdapter.getInstance(TypeAdapters.stringTypeAdapter, BiMapTypeAdapter.Factory.defaultBuilderLookup(stringToStringBiMapType)),
+						BiMapTypeAdapter.getInstance(TestTypeAdapters.stringTypeAdapter, BiMapTypeAdapter.Factory.defaultBuilderLookup(stringToStringBiMapType)),
 						"{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}",
 						ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz")
 				)

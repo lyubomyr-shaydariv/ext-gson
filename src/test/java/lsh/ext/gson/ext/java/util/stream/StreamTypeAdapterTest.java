@@ -11,7 +11,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import lsh.ext.gson.AbstractElementCursorTypeAdapterTest;
-import lsh.ext.gson.test.TypeAdapters;
+import lsh.ext.gson.test.TestTypeAdapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,7 +30,7 @@ public final class StreamTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						StreamTypeAdapter.forStream(TypeAdapters.integerTypeAdapter, false, false),
+						StreamTypeAdapter.forStream(TestTypeAdapters.integerTypeAdapter, false, false),
 						"[1,2,4,8]",
 						Stream.of(1, 2, 4, 8)
 				)
@@ -40,7 +40,7 @@ public final class StreamTypeAdapterTest
 	@Test
 	public void testLaziness()
 			throws IOException {
-		final TypeAdapter<Stream<Integer>> unit = StreamTypeAdapter.forStream(TypeAdapters.primitiveIntTypeAdapter, false, false);
+		final TypeAdapter<Stream<Integer>> unit = StreamTypeAdapter.forStream(TestTypeAdapters.primitiveIntTypeAdapter, false, false);
 		final JsonReader in = new JsonReader(new StringReader("[1,2,4,8]"));
 		final Stream<Integer> stream = unit.read(in);
 		final Iterator<Integer> iterator = stream.iterator();
@@ -64,7 +64,7 @@ public final class StreamTypeAdapterTest
 	@Test
 	public void testLazinessClosingTheStream()
 			throws IOException {
-		final TypeAdapter<Stream<Integer>> unit = StreamTypeAdapter.forStream(TypeAdapters.primitiveIntTypeAdapter, false, true);
+		final TypeAdapter<Stream<Integer>> unit = StreamTypeAdapter.forStream(TestTypeAdapters.primitiveIntTypeAdapter, false, true);
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")));
 		final Stream<Integer> stream = unit.read(inSpy);
 		final Iterator<Integer> iterator = stream.iterator();
@@ -91,7 +91,7 @@ public final class StreamTypeAdapterTest
 	@Test
 	public void testLazinessClosingTheStreamFails()
 			throws IOException {
-		final TypeAdapter<Stream<Integer>> unit = StreamTypeAdapter.forStream(TypeAdapters.primitiveIntTypeAdapter, false, true);
+		final TypeAdapter<Stream<Integer>> unit = StreamTypeAdapter.forStream(TestTypeAdapters.primitiveIntTypeAdapter, false, true);
 		final IOException expectedEx = new IOException();
 		final JsonReader inSpy = Mockito.spy(new JsonReader(new StringReader("[1,2,4,8]")) {
 			@Override

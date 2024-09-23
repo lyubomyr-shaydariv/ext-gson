@@ -19,23 +19,24 @@ import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lsh.ext.gson.ITypeAdapterFactory;
+import lsh.ext.gson.TypeAdapters;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonPathTypeAdapter<T>
 		extends TypeAdapter<T> {
 
+	private static final TypeAdapter<JsonElement> jsonElementTypeAdapter = TypeAdapters.getJsonElementTypeAdapter();
+
 	private final Configuration configuration;
 	private final TypeAdapter<T> delegateAdapter;
-	private final TypeAdapter<? extends JsonElement> jsonElementTypeAdapter;
 	private final Item<?>[] items;
 
 	private static <T> TypeAdapter<T> getInstance(
 			final Configuration configuration,
 			final TypeAdapter<T> delegateAdapter,
-			final TypeAdapter<? extends JsonElement> jsonElementTypeAdapter,
 			final Item<?>[] items
 	) {
-		return new JsonPathTypeAdapter<>(configuration, delegateAdapter, jsonElementTypeAdapter, items)
+		return new JsonPathTypeAdapter<>(configuration, delegateAdapter, items)
 				.nullSafe();
 	}
 
@@ -99,7 +100,6 @@ public final class JsonPathTypeAdapter<T>
 			return JsonPathTypeAdapter.getInstance(
 					provideConfiguration.apply(gson),
 					gson.getDelegateAdapter(this, typeToken),
-					gson.getAdapter(JsonElement.class),
 					accessors.stream()
 							.map(accessor -> new Item<>(accessor, accessor.getJsonPath(), gson.getAdapter(TypeToken.get(accessor.getType()))))
 							.toArray(Item[]::new)
