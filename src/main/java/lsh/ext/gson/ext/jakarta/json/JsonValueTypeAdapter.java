@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonNumber;
@@ -13,6 +15,7 @@ import jakarta.json.JsonString;
 import jakarta.json.JsonValue;
 import jakarta.json.spi.JsonProvider;
 import lombok.Getter;
+import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 import lsh.ext.gson.ITypeAdapterFactory;
 import lsh.ext.gson.x.jakarta.json.x.javax.json.AbstractJsonValueTypeAdapter;
 
@@ -101,17 +104,25 @@ public final class JsonValueTypeAdapter
 	}
 
 	public static final class Factory
-			extends AbstractJsonValueTypeAdapter.AbstractFactory<JsonValue> {
+			extends AbstractRawClassHierarchyTypeAdapterFactory<JsonValue> {
 
 		@Getter
 		private static final ITypeAdapterFactory<JsonValue> instance = getInstance(JsonProvider.provider());
 
+		private final TypeAdapter<JsonValue> typeAdapter;
+
 		private Factory(final TypeAdapter<JsonValue> typeAdapter) {
-			super(JsonValue.class, typeAdapter);
+			super(JsonValue.class);
+			this.typeAdapter = typeAdapter;
 		}
 
 		public static ITypeAdapterFactory<JsonValue> getInstance(final JsonProvider jsonProvider) {
 			return new Factory(JsonValueTypeAdapter.getInstance(jsonProvider));
+		}
+
+		@Override
+		protected TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<? super JsonValue> typeToken) {
+			return typeAdapter;
 		}
 
 	}

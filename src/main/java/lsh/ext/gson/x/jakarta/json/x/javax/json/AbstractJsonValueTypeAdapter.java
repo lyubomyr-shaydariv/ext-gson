@@ -6,15 +6,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
 
 // TODO currently Numbers are only supported
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -193,24 +190,6 @@ public abstract class AbstractJsonValueTypeAdapter<
 		default:
 			throw new AssertionError(jsonToken);
 		}
-	}
-
-	protected abstract static class AbstractFactory<JsonValue>
-			extends AbstractRawClassHierarchyTypeAdapterFactory<JsonValue> {
-
-		private final TypeAdapter<JsonValue> typeAdapter;
-
-		@SuppressWarnings("unchecked")
-		protected AbstractFactory(final Class<? extends JsonValue> klass, final TypeAdapter<JsonValue> typeAdapter) {
-			super((Class<JsonValue>) klass);
-			this.typeAdapter = typeAdapter;
-		}
-
-		@Override
-		protected final TypeAdapter<JsonValue> createTypeAdapter(final Gson gson, final TypeToken<? super JsonValue> typeToken) {
-			return typeAdapter;
-		}
-
 	}
 
 }
