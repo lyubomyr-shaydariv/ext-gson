@@ -10,11 +10,11 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class UtilTypeAdapterFactory {
 
 	public static <E> ITypeAdapterFactory<Iterator<E>> forIterator(final boolean useBeginEnd) {
-		return ITypeAdapterFactory.forClass(Iterator.class, typeResolver -> UtilTypeAdapter.forIterator(typeResolver.getTypeAdapter(0), useBeginEnd));
+		return ITypeAdapterFactory.forClassHierarchy(Iterator.class, typeResolver -> UtilTypeAdapter.forIterator(typeResolver.getTypeAdapter(0), useBeginEnd));
 	}
 
 	public static <E> ITypeAdapterFactory<Enumeration<E>> forEnumeration(final boolean useBeginEnd) {
-		return ITypeAdapterFactory.forClass(Enumeration.class, typeResolver -> UtilTypeAdapter.forEnumeration(typeResolver.getTypeAdapter(0), useBeginEnd));
+		return ITypeAdapterFactory.forClassHierarchy(Enumeration.class, typeResolver -> UtilTypeAdapter.forEnumeration(typeResolver.getTypeAdapter(0), useBeginEnd));
 	}
 
 }
