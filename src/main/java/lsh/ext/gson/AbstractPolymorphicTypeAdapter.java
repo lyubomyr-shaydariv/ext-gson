@@ -23,6 +23,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractPolymorphicTypeAdapter<T>
@@ -68,36 +69,34 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 		return read(in, property);
 	}
 
-	public abstract static class AbstractFactory<T>
-			extends AbstractRawClassTypeAdapterFactory<T> {
+	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+	public abstract static class AbstractFactory<K>
+			implements ITypeAdapterFactory<K> {
 
-		private final Iterable<Class<? extends T>> classes;
+		private final Class<K> klass;
+		private final Iterable<Class<? extends K>> classes;
 		private final String property;
-		private final Function<? super Class<? extends T>, String> classToDiscriminator;
+		private final Function<? super Class<? extends K>, String> classToDiscriminator;
 
-		protected AbstractFactory(
-				final Class<T> klass,
-				final Iterable<Class<? extends T>> classes,
-				final String property,
-				final Function<? super Class<? extends T>, String> classToDiscriminator
-		) {
-			super(klass);
-			this.classes = classes;
-			this.property = property;
-			this.classToDiscriminator = classToDiscriminator;
-		}
-
-		protected abstract TypeAdapter<T> createTypeAdapter(
+		protected abstract TypeAdapter<K> createTypeAdapter(
 				Gson gson,
-				TypeToken<? super T> typeToken,
-				Iterable<Class<? extends T>> classes,
+				TypeToken<? super K> typeToken,
+				Iterable<Class<? extends K>> classes,
 				String property,
-				Function<? super Class<? extends T>, String> classToDiscriminator
+				Function<? super Class<? extends K>, String> classToDiscriminator
 		);
 
 		@Override
-		protected final TypeAdapter<T> createTypeAdapter(final Gson gson, final TypeToken<? super T> typeToken) {
-			return createTypeAdapter(gson, typeToken, classes, property, classToDiscriminator);
+		@Nullable
+		public final <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
+			if ( typeToken.getRawType() != klass ) {
+				return null;
+			}
+			@SuppressWarnings("unchecked")
+			final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
+			@SuppressWarnings("unchecked")
+			final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter(gson, castTypeToken, classes, property, classToDiscriminator);
+			return castTypeAdapter;
 		}
 
 	}
