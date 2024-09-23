@@ -6,13 +6,10 @@ import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 import javax.annotation.WillNotClose;
 
-import com.google.gson.JsonIOException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.MalformedJsonException;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -90,118 +87,104 @@ public final class JsonReaders {
 		}
 	}
 
-	public static <E> Iterator<E> asIterator(@WillNotClose final JsonReader jsonReader, final TypeAdapter<? extends E> elementTypeAdapter) {
-		return new JsonReaderIterator<>(jsonReader, elementTypeAdapter);
-	}
-
-	public static PrimitiveIterator.OfInt asIntIterator(@WillNotClose final JsonReader jsonReader) {
-		return new JsonReaderIntIterator(jsonReader);
-	}
-
-	public static PrimitiveIterator.OfLong asLongIterator(@WillNotClose final JsonReader jsonReader) {
-		return new JsonReaderLongIterator(jsonReader);
-	}
-
-	public static PrimitiveIterator.OfDouble asDoubleIterator(@WillNotClose final JsonReader jsonReader) {
-		return new JsonReaderDoubleIterator(jsonReader);
-	}
-
-	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-	private abstract static class AbstractJsonReaderIterator {
-
-		@SuppressWarnings("ProtectedField")
-		protected final JsonReader in;
-
-		public final boolean hasNext() {
-			try {
-				return in.hasNext();
-			} catch ( final IOException ex ) {
-				throw new JsonIOException(ex);
-			}
-		}
-
-	}
-
-	private static final class JsonReaderIterator<E>
-			extends AbstractJsonReaderIterator
-			implements Iterator<E> {
-
-		private final TypeAdapter<? extends E> elementTypeAdapter;
-
-		private JsonReaderIterator(final JsonReader in, final TypeAdapter<? extends E> elementTypeAdapter) {
-			super(in);
-			this.elementTypeAdapter = elementTypeAdapter;
-		}
-
-		@Override
-		public E next() {
-			try {
-				if ( !in.hasNext() ) {
-					throw new NoSuchElementException();
+	public static <E> Iterator<E> asIterator(@WillNotClose final JsonReader in, final TypeAdapter<? extends E> elementTypeAdapter) {
+		return new Iterator<>() {
+			@Override
+			public boolean hasNext() {
+				try {
+					return in.hasNext();
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
 				}
-				return elementTypeAdapter.read(in);
-			} catch ( final IOException ex ) {
-				throw new JsonIOException(ex);
 			}
-		}
 
+			@Override
+			public E next() {
+				try {
+					if ( !hasNext() ) {
+						throw new NoSuchElementException(String.valueOf(in));
+					}
+					return elementTypeAdapter.read(in);
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
+			}
+		};
 	}
 
-	private static final class JsonReaderIntIterator
-			extends AbstractJsonReaderIterator
-			implements PrimitiveIterator.OfInt {
-
-		private JsonReaderIntIterator(final JsonReader in) {
-			super(in);
-		}
-
-		@Override
-		public int nextInt() {
-			try {
-				return in.nextInt();
-			} catch ( final IOException ex ) {
-				throw new JsonIOException(ex);
+	public static PrimitiveIterator.OfInt asIntIterator(@WillNotClose final JsonReader in) {
+		return new PrimitiveIterator.OfInt() {
+			@Override
+			public boolean hasNext() {
+				try {
+					return in.hasNext();
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
 			}
-		}
 
+			@Override
+			public int nextInt() {
+				try {
+					if ( !hasNext() ) {
+						throw new NoSuchElementException(String.valueOf(in));
+					}
+					return in.nextInt();
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
+			}
+		};
 	}
 
-	private static final class JsonReaderLongIterator
-			extends AbstractJsonReaderIterator
-			implements PrimitiveIterator.OfLong {
-
-		private JsonReaderLongIterator(final JsonReader in) {
-			super(in);
-		}
-
-		@Override
-		public long nextLong() {
-			try {
-				return in.nextLong();
-			} catch ( final IOException ex ) {
-				throw new JsonIOException(ex);
+	public static PrimitiveIterator.OfLong asLongIterator(@WillNotClose final JsonReader in) {
+		return new PrimitiveIterator.OfLong() {
+			@Override
+			public boolean hasNext() {
+				try {
+					return in.hasNext();
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
 			}
-		}
 
+			@Override
+			public long nextLong() {
+				try {
+					if ( !hasNext() ) {
+						throw new NoSuchElementException(String.valueOf(in));
+					}
+					return in.nextLong();
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
+			}
+		};
 	}
 
-	private static final class JsonReaderDoubleIterator
-			extends AbstractJsonReaderIterator
-			implements PrimitiveIterator.OfDouble {
-
-		private JsonReaderDoubleIterator(final JsonReader in) {
-			super(in);
-		}
-
-		@Override
-		public double nextDouble() {
-			try {
-				return in.nextDouble();
-			} catch ( final IOException ex ) {
-				throw new JsonIOException(ex);
+	public static PrimitiveIterator.OfDouble asDoubleIterator(@WillNotClose final JsonReader in) {
+		return new PrimitiveIterator.OfDouble() {
+			@Override
+			public boolean hasNext() {
+				try {
+					return in.hasNext();
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
 			}
-		}
 
+			@Override
+			public double nextDouble() {
+				try {
+					if ( !hasNext() ) {
+						throw new NoSuchElementException(String.valueOf(in));
+					}
+					return in.nextDouble();
+				} catch ( final IOException ex ) {
+					throw new RuntimeException(ex);
+				}
+			}
+		};
 	}
 
 }
