@@ -21,7 +21,7 @@ public final class IntStreamTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						IntStreamTypeAdapter.getInstance(),
+						StreamTypeAdapter.forIntStream,
 						"[1,2,4,8]",
 						Stream.of(1, 2, 4, 8).mapToInt(value -> value)
 				)

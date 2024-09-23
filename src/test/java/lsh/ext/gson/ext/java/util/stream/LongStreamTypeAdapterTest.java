@@ -21,7 +21,7 @@ public final class LongStreamTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						LongStreamTypeAdapter.getInstance(),
+						StreamTypeAdapter.forLongStream,
 						"[1,2,4,8]",
 						Stream.of(1L, 2L, 4L, 8L).mapToLong(value -> value)
 				)

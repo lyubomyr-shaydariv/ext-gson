@@ -21,7 +21,7 @@ public final class DoubleStreamTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						DoubleStreamTypeAdapter.getInstance(),
+						StreamTypeAdapter.forDoubleStream,
 						"[1,2,4,8]",
 						"[1.0,2.0,4.0,8.0]",
 						Stream.of(1.0D, 2.0D, 4.0D, 8.0D).mapToDouble(value -> value)
