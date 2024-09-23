@@ -26,7 +26,7 @@ public final class TableTypeAdapterFactoryTest
 
 	@Override
 	protected TypeAdapterFactory createUnit() {
-		return TableTypeAdapter.Factory.getInstance();
+		return GuavaCollectTypeAdapterFactory.defaultForTable;
 	}
 
 	@Override

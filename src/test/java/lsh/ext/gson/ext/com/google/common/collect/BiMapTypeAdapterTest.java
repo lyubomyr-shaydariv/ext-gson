@@ -27,7 +27,7 @@ public final class BiMapTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						BiMapTypeAdapter.getInstance(TestTypeAdapters.stringTypeAdapter, BiMapTypeAdapter.Factory.defaultBuilderLookup(stringToStringBiMapType)),
+						BiMapTypeAdapter.getInstance(TestTypeAdapters.stringTypeAdapter, GuavaCollectTypeAdapterFactory.defaultBuilderFactoryForBiMap(stringToStringBiMapType)),
 						"{\"1\":\"foo\",\"2\":\"bar\",\"3\":\"baz\"}",
 						ImmutableBiMap.of("1", "foo", "2", "bar", "3", "baz")
 				)
