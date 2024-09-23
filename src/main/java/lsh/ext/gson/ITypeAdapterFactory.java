@@ -19,6 +19,8 @@ public interface ITypeAdapterFactory<K>
 
 	interface ITypeResolver<K> {
 
+		TypeToken<K> getTypeToken();
+
 		<T> TypeAdapter<T> getTypeAdapter(int index);
 
 	}
@@ -36,6 +38,11 @@ public interface ITypeAdapterFactory<K>
 				final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
 				final ITypeResolver<K> typeResolver = new ITypeResolver<K>() {
 					private final Type type = castTypeToken.getType();
+
+					@Override
+					public TypeToken<K> getTypeToken() {
+						return castTypeToken;
+					}
 
 					@Override
 					public <INNER_T> TypeAdapter<INNER_T> getTypeAdapter(final int index) {
@@ -65,6 +72,11 @@ public interface ITypeAdapterFactory<K>
 				final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
 				final ITypeResolver<K> typeResolver = new ITypeResolver<K>() {
 					private final Type type = castTypeToken.getType();
+
+					@Override
+					public TypeToken<K> getTypeToken() {
+						return castTypeToken;
+					}
 
 					@Override
 					public <INNER_T> TypeAdapter<INNER_T> getTypeAdapter(final int index) {
