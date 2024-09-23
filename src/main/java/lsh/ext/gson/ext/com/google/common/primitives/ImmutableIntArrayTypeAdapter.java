@@ -3,16 +3,12 @@ package lsh.ext.gson.ext.com.google.common.primitives;
 import java.io.IOException;
 
 import com.google.common.primitives.ImmutableIntArray;
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lsh.ext.gson.AbstractRawClassHierarchyTypeAdapterFactory;
-import lsh.ext.gson.ITypeAdapterFactory;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ImmutableIntArrayTypeAdapter
@@ -45,23 +41,6 @@ public final class ImmutableIntArrayTypeAdapter
 		}
 		in.endArray();
 		return builder.build();
-	}
-
-	public static final class Factory
-			extends AbstractRawClassHierarchyTypeAdapterFactory<ImmutableIntArray> {
-
-		@Getter
-		private static final ITypeAdapterFactory<ImmutableIntArray> instance = new Factory();
-
-		private Factory() {
-			super(ImmutableIntArray.class);
-		}
-
-		@Override
-		protected TypeAdapter<ImmutableIntArray> createTypeAdapter(final Gson gson, final TypeToken<? super ImmutableIntArray> typeToken) {
-			return ImmutableIntArrayTypeAdapter.instance;
-		}
-
 	}
 
 }

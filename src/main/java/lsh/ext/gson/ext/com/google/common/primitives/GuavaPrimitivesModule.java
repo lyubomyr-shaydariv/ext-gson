@@ -31,13 +31,13 @@ public final class GuavaPrimitivesModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<ImmutableDoubleArray> immutableDoubleArrayTypeAdapterFactory = ImmutableDoubleArrayTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<ImmutableDoubleArray> immutableDoubleArrayTypeAdapterFactory = GuavaPrimitivesTypeAdapterFactory.defaultForImmutableDoubleArray;
 
 		@Setter
-		private ITypeAdapterFactory<ImmutableIntArray> immutableIntArrayTypeAdapterFactory = ImmutableIntArrayTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<ImmutableIntArray> immutableIntArrayTypeAdapterFactory = GuavaPrimitivesTypeAdapterFactory.defaultForImmutableIntegerArray;
 
 		@Setter
-		private ITypeAdapterFactory<ImmutableLongArray> immutableLongArrayTypeAdapterFactory = ImmutableLongArrayTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<ImmutableLongArray> immutableLongArrayTypeAdapterFactory = GuavaPrimitivesTypeAdapterFactory.defaultForImmutableLongArray;
 
 		public static Builder create() {
 			return new Builder();
