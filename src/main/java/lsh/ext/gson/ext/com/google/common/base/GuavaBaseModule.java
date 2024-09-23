@@ -29,7 +29,7 @@ public final class GuavaBaseModule
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapter.Factory.getInstance();
+		private ITypeAdapterFactory<? extends Optional<?>> optionalTypeAdapterFactory = OptionalTypeAdapterFactory.defaultForOptional;
 
 		public static Builder create() {
 			return new Builder();
