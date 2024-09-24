@@ -13,14 +13,14 @@ import lsh.ext.gson.IBuilder2;
 import org.apache.commons.collections4.Bag;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class BagTypeAdapter<E>
+final class BagTypeAdapter<E>
 		extends TypeAdapter<Bag<E>> {
 
 	private final Supplier<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory;
 	private final Function<? super E, String> toKey;
 	private final Function<? super String, ? extends E> fromKey;
 
-	public static <E> TypeAdapter<Bag<E>> getInstance(
+	static <E> TypeAdapter<Bag<E>> getInstance(
 			final Supplier<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
 			final Function<? super E, String> toKey,
 			final Function<? super String, ? extends E> fromKey

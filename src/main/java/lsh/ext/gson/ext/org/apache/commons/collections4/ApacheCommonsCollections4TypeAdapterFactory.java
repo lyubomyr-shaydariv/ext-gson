@@ -36,7 +36,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 			final Function<? super E, String> toKey,
 			final Function<? super String, ? extends E> fromKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(Bag.class, typeResolver -> BagTypeAdapter.getInstance(lookup.lookup(typeResolver.getTypeToken()), toKey, fromKey));
+		return ITypeAdapterFactory.forClassHierarchy(Bag.class, typeResolver -> ApacheCommonsCollections4TypeAdapter.forBag(lookup.lookup(typeResolver.getTypeToken()), toKey, fromKey));
 	}
 
 	// TODO handle all known implementations
@@ -62,7 +62,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 			final Function<? super K, String> toKey,
 			final Function<? super String, ? extends K> fromKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(BiMap.class, typeResolver -> BidiMapTypeAdapter.getInstance(typeResolver.getTypeAdapter(1), lookup.lookup(typeResolver.getTypeToken()), toKey, fromKey));
+		return ITypeAdapterFactory.forClassHierarchy(BiMap.class, typeResolver -> ApacheCommonsCollections4TypeAdapter.forBidiMap(typeResolver.getTypeAdapter(1), lookup.lookup(typeResolver.getTypeToken()), toKey, fromKey));
 	}
 
 	// TODO handle all known implementations
@@ -83,7 +83,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 	public static <E> ITypeAdapterFactory<MultiSet<E>> forMultiSet(
 			final IBuilder1.ILookup<? super E, ? extends MultiSet<E>> lookup
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(MultiSet.class, typeResolver -> MultiSetTypeAdapter.getInstance(typeResolver.getTypeAdapter(0), lookup.lookup(typeResolver.getTypeToken())));
+		return ITypeAdapterFactory.forClassHierarchy(MultiSet.class, typeResolver -> ApacheCommonsCollections4TypeAdapter.forMultiSet(typeResolver.getTypeAdapter(0), lookup.lookup(typeResolver.getTypeToken())));
 	}
 
 	// TODO handle all known implementations
@@ -109,7 +109,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 			final Function<? super K, String> encodeKey,
 			final Function<? super String, ? extends K> decodeKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(MultiValuedMap.class, typeResolver -> MultiValuedMapTypeAdapter.getInstance(typeResolver.getTypeAdapter(1), builderLookup.lookup(typeResolver.getTypeToken()), encodeKey, decodeKey));
+		return ITypeAdapterFactory.forClassHierarchy(MultiValuedMap.class, typeResolver -> ApacheCommonsCollections4TypeAdapter.forMultiValuedMap(typeResolver.getTypeAdapter(1), builderLookup.lookup(typeResolver.getTypeToken()), encodeKey, decodeKey));
 	}
 
 	// TODO handle all known implementations
