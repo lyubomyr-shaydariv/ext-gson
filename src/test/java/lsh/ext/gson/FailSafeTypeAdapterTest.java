@@ -1,39 +1,48 @@
 package lsh.ext.gson;
 
+import java.io.IOException;
 import java.util.List;
-import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapterFactory;
-import lsh.ext.gson.test.Types;
-import org.junit.jupiter.params.provider.Arguments;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import lsh.ext.gson.test.TestTypeAdapters;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public final class FailSafeTypeAdapterTest
-		extends AbstractTypeAdapterTest<Object, Object> {
+public final class FailSafeTypeAdapterTest {
 
-	private static final Gson gson = Gsons.getNormalized();
-
-	@Nullable
-	@Override
-	protected Object normalize(@Nullable final Object value) {
-		return value;
+	@Test
+	public void testReadSucceeds()
+			throws IOException {
+		final TypeAdapter<List<String>> unit = FailSafeTypeAdapter.getInstance(TestTypeAdapters.stringListTypeAdapter, true, () -> {
+			throw new AssertionError();
+		});
+		final Iterable<String> actual = unit.fromJson("[\"foo\",\"bar\"]");
+		Assertions.assertIterableEquals(List.of("foo", "bar"), actual);
 	}
 
-	@Override
-	protected List<Arguments> makeTestCases() {
-		final TypeAdapterFactory typeAdapterFactory = FailSafeTypeAdapter.Factory.getInstance(List.class, false, List::of);
-		return List.of(
-				makeTestCase(
-						typeAdapterFactory.create(gson, Types.stringListTypeToken),
-						"[\"foo\",\"bar\"]",
-						List.of("foo", "bar")
-				),
-				makeTestCase(
-						typeAdapterFactory.create(gson, Types.integerListTypeToken),
-						"[1000]",
-						List.of(1000)
-				)
-		);
+	@Test
+	public void testReadFails()
+			throws IOException {
+		final TypeAdapter<String> unit = FailSafeTypeAdapter.getInstance(getBadTypeAdapter(), true, () -> "error");
+		final String actual = unit.fromJson("\"foo\"");
+		Assertions.assertEquals("error", actual);
+	}
+
+	private static TypeAdapter<String> getBadTypeAdapter() {
+		return new TypeAdapter<>() {
+			@Override
+			public void write(final JsonWriter out, final String value) {
+				throw new AssertionError();
+			}
+
+			@Override
+			public String read(final JsonReader in)
+					throws IOException {
+				throw new RuntimeException(in.nextName());
+			}
+		};
 	}
 
 }

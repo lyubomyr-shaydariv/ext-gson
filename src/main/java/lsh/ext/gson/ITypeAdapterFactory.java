@@ -21,6 +21,8 @@ public interface ITypeAdapterFactory<K>
 
 		TypeToken<K> getTypeToken();
 
+		TypeAdapter<K> getTypeAdapter(Class<K> klass);
+
 		<T> TypeAdapter<T> getTypeAdapter(int index);
 
 	}
@@ -42,6 +44,11 @@ public interface ITypeAdapterFactory<K>
 					@Override
 					public TypeToken<K> getTypeToken() {
 						return castTypeToken;
+					}
+
+					@Override
+					public TypeAdapter<K> getTypeAdapter(final Class<K> klass) {
+						return gson.getAdapter(klass);
 					}
 
 					@Override
@@ -76,6 +83,11 @@ public interface ITypeAdapterFactory<K>
 					@Override
 					public TypeToken<K> getTypeToken() {
 						return castTypeToken;
+					}
+
+					@Override
+					public TypeAdapter<K> getTypeAdapter(final Class<K> klass) {
+						return gson.getAdapter(klass);
 					}
 
 					@Override
