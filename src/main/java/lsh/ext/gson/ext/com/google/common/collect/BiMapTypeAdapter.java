@@ -2,10 +2,9 @@ package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
 import com.google.common.collect.BiMap;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -28,7 +27,7 @@ public final class BiMapTypeAdapter<K, V>
 			final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends IBuilder2<? super String, ? super V, ? extends BiMap<String, V>>> builderFactory
 	) {
-		return getInstance(valueTypeAdapter, builderFactory, Functions.identity(), Functions.identity());
+		return getInstance(valueTypeAdapter, builderFactory, Function.identity(), Function.identity());
 	}
 
 	public static <K, V> TypeAdapter<BiMap<K, V>> getInstance(

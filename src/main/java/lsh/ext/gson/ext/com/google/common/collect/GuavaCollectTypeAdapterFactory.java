@@ -1,9 +1,8 @@
 package lsh.ext.gson.ext.com.google.common.collect;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashBiMap;
@@ -33,7 +32,7 @@ public final class GuavaCollectTypeAdapterFactory {
 	public static <V> ITypeAdapterFactory<BiMap<String, V>> forBiMap(
 			final IBuilder2.ILookup<? super String, ? super V, ? extends BiMap<String, V>> lookup
 	) {
-		return forBiMap(lookup, Functions.identity(), Functions.identity());
+		return forBiMap(lookup, Function.identity(), Function.identity());
 	}
 
 	public static <K, V> ITypeAdapterFactory<BiMap<K, V>> forBiMap(
@@ -67,7 +66,7 @@ public final class GuavaCollectTypeAdapterFactory {
 	public static <V> ITypeAdapterFactory<Multimap<String, V>> forMultimap(
 			final IBuilder2.ILookup<? super String, ? super V, ? extends Multimap<String, V>> lookup
 	) {
-		return forMultimap(lookup, Functions.identity(), Functions.identity());
+		return forMultimap(lookup, Function.identity(), Function.identity());
 	}
 
 	public static <K, V> ITypeAdapterFactory<Multimap<K, V>> forMultimap(
@@ -126,7 +125,7 @@ public final class GuavaCollectTypeAdapterFactory {
 		return () -> IBuilder1.of(HashMultiset.create());
 	}
 
-	public static final ITypeAdapterFactory<Table<String, String, Object>> defaultForTable = forTable(GuavaCollectTypeAdapterFactory::defaultBuilderFactoryForTable, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity());
+	public static final ITypeAdapterFactory<Table<String, String, Object>> defaultForTable = forTable(GuavaCollectTypeAdapterFactory::defaultBuilderFactoryForTable, Function.identity(), Function.identity(), Function.identity(), Function.identity());
 
 	public static <R, C, V> ITypeAdapterFactory<Table<R, C, V>> forTable(
 			final IBuilder3.ILookup<? super R, ? super C, ? super V, ? extends Table<R, C, V>> builderLookup,

@@ -2,10 +2,9 @@ package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
 import com.google.common.collect.Table;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -30,7 +29,7 @@ public final class TableTypeAdapter<R, C, V>
 			final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends IBuilder3<? super String, ? super String, ? super V, ? extends Table<String, String, V>>> builderFactory
 	) {
-		return new TableTypeAdapter<String, String, V>(valueTypeAdapter, builderFactory, Functions.identity(), Functions.identity(), Functions.identity(), Functions.identity())
+		return new TableTypeAdapter<String, String, V>(valueTypeAdapter, builderFactory, Function.identity(), Function.identity(), Function.identity(), Function.identity())
 				.nullSafe();
 	}
 

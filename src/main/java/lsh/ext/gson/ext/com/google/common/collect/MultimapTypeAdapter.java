@@ -2,10 +2,9 @@ package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
 import com.google.common.collect.Multimap;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -28,7 +27,7 @@ public final class MultimapTypeAdapter<K, V>
 			final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends IBuilder2<? super String, ? super V, ? extends Multimap<String, V>>> builderFactory
 	) {
-		return getInstance(valueTypeAdapter, builderFactory, Functions.identity(), Functions.identity());
+		return getInstance(valueTypeAdapter, builderFactory, Function.identity(), Function.identity());
 	}
 
 	public static <K, V> TypeAdapter<Multimap<K, V>> getInstance(
