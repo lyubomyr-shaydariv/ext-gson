@@ -40,7 +40,7 @@ public final class GuavaCollectTypeAdapterFactory {
 			final Function<? super K, String> encodeKey,
 			final Function<? super String, ? extends K> decodeKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(BiMap.class, typeResolver -> BiMapTypeAdapter.getInstance(
+		return ITypeAdapterFactory.forClassHierarchy(BiMap.class, typeResolver -> GuavaCollectTypeAdapter.forBiMap(
 				typeResolver.getTypeAdapter(1),
 				lookup.lookup(typeResolver.getTypeToken()),
 				encodeKey,
@@ -74,7 +74,7 @@ public final class GuavaCollectTypeAdapterFactory {
 			final Function<? super K, String> encodeKey,
 			final Function<? super String, ? extends K> decodeKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(Multimap.class, typeResolver -> MultimapTypeAdapter.getInstance(
+		return ITypeAdapterFactory.forClassHierarchy(Multimap.class, typeResolver -> GuavaCollectTypeAdapter.forMultimap(
 				typeResolver.getTypeAdapter(1),
 				lookup.lookup(typeResolver.getTypeToken()),
 				encodeKey,
@@ -103,7 +103,7 @@ public final class GuavaCollectTypeAdapterFactory {
 	public static <E> ITypeAdapterFactory<Multiset<E>> forMultiset(
 			final IBuilder1.ILookup<? super E, ? extends Multiset<E>> lookup
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(Multiset.class, typeResolver -> MultisetTypeAdapter.getInstance(
+		return ITypeAdapterFactory.forClassHierarchy(Multiset.class, typeResolver -> GuavaCollectTypeAdapter.forMultiset(
 				typeResolver.getTypeAdapter(0),
 				lookup.lookup(typeResolver.getTypeToken())
 		));

@@ -27,7 +27,7 @@ public final class MultisetTypeAdapterTest
 	protected List<Arguments> makeTestCases() {
 		return List.of(
 				makeTestCase(
-						MultisetTypeAdapter.getInstance(TestTypeAdapters.stringTypeAdapter, GuavaCollectTypeAdapterFactory.defaultBuilderFactoryForMultiset(stringMultisetTypeToken)),
+						GuavaCollectTypeAdapter.forMultiset(TestTypeAdapters.stringTypeAdapter, GuavaCollectTypeAdapterFactory.defaultBuilderFactoryForMultiset(stringMultisetTypeToken)),
 						"[\"foo\",\"foo\",\"bar\",\"bar\",\"baz\"]",
 						ImmutableMultiset.of("foo", "foo", "bar", "bar", "baz")
 				)
