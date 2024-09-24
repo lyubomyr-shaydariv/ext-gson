@@ -25,6 +25,10 @@ public interface IBuilder1<A1, R> {
 		};
 	}
 
+	static <E, C extends Collection<E>> Supplier<IBuilder1<E, C>> from(final Supplier<? extends C> collectionFactory) {
+		return () -> of(collectionFactory.get());
+	}
+
 	interface ILookup<A1, R> {
 
 		Supplier<IBuilder1<A1, R>> lookup(TypeToken<? super R> typeToken);
