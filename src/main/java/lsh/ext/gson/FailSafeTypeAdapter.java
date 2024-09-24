@@ -1,13 +1,12 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
-import java.util.function.Supplier;
+import java.util.function.Function;
 import javax.annotation.Nullable;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.google.gson.stream.MalformedJsonException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -17,14 +16,14 @@ public final class FailSafeTypeAdapter<T>
 
 	private final TypeAdapter<T> typeAdapter;
 	private final boolean ignoreRuntimeException;
-	private final Supplier<? extends T> getDefault;
+	private final Function<? super RuntimeException, ? extends T> getDefault;
 
 	public static <T> TypeAdapter<T> getInstance(final Class<T> klass, final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException) {
 		final T defaultValue = getDefaultValue(klass);
-		return getInstance(typeAdapter, ignoreRuntimeException, () -> defaultValue);
+		return getInstance(typeAdapter, ignoreRuntimeException, ex -> defaultValue);
 	}
 
-	public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException, final Supplier<? extends T> getDefault) {
+	public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException, final Function<? super RuntimeException, ? extends T> getDefault) {
 		return new FailSafeTypeAdapter<T>(typeAdapter, ignoreRuntimeException, getDefault)
 				.nullSafe();
 	}
@@ -46,10 +45,7 @@ public final class FailSafeTypeAdapter<T>
 				throw ex;
 			}
 			JsonReaders.skipValue(in);
-			return getDefault.get();
-		} catch ( final MalformedJsonException ignored ) {
-			JsonReaders.skipValue(in);
-			return getDefault.get();
+			return getDefault.apply(ex);
 		}
 	}
 
