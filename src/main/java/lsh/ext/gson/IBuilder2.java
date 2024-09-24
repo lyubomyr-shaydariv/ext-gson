@@ -25,6 +25,10 @@ public interface IBuilder2<A1, A2, R> {
 		};
 	}
 
+	static <K, V, M extends Map<K, V>> Supplier<IBuilder2<K, V, M>> from(final Supplier<? extends M> factory) {
+		return () -> of(factory.get());
+	}
+
 	interface ILookup<A1, A2, R> {
 
 		Supplier<IBuilder2<A1, A2, R>> lookup(TypeToken<? super R> typeToken);
