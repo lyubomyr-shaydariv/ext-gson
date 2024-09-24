@@ -21,7 +21,7 @@ public final class FailSafeTypeAdapterTest
 
 	@Override
 	protected List<Arguments> makeTestCases() {
-		final TypeAdapterFactory typeAdapterFactory = FailSafeTypeAdapter.Factory.getInstance(List.class, false);
+		final TypeAdapterFactory typeAdapterFactory = FailSafeTypeAdapter.Factory.getInstance(List.class, false, List::of);
 		return List.of(
 				makeTestCase(
 						typeAdapterFactory.create(gson, Types.stringListTypeToken),

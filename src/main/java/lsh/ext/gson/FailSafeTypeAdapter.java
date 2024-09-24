@@ -1,11 +1,11 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -14,17 +14,15 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-final class FailSafeTypeAdapter<T>
+public final class FailSafeTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	private final TypeAdapter<T> typeAdapter;
 	private final boolean ignoreRuntimeException;
+	private final Supplier<? extends T> getDefault;
 
-	@Nullable
-	private final T defaultValue;
-
-	private static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException, @Nullable final T defaultValue) {
-		return new FailSafeTypeAdapter<T>(typeAdapter, ignoreRuntimeException, defaultValue)
+	public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException, final Supplier<? extends T> getDefault) {
+		return new FailSafeTypeAdapter<T>(typeAdapter, ignoreRuntimeException, getDefault)
 				.nullSafe();
 	}
 
@@ -45,10 +43,10 @@ final class FailSafeTypeAdapter<T>
 				throw ex;
 			}
 			JsonReaders.skipValue(in);
-			return defaultValue;
+			return getDefault.get();
 		} catch ( final MalformedJsonException ignored ) {
 			JsonReaders.skipValue(in);
-			return defaultValue;
+			return getDefault.get();
 		}
 	}
 
@@ -66,16 +64,16 @@ final class FailSafeTypeAdapter<T>
 		private static final Character defaultCharacter = '\u0000';
 
 		private final Class<T> klass;
-		@Nullable
-		private final T defaultValue;
-		private final boolean catchRuntimeException;
+		private final boolean ignoreRuntimeException;
+		private final Supplier<? extends T> getDefault;
 
-		public static <T> TypeAdapterFactory getInstance(final Class<T> klass, final boolean catchRuntimeException) {
-			return new Factory<>(klass, getDefaultValue(klass), catchRuntimeException);
+		public static <T> ITypeAdapterFactory<T> getInstance(final Class<T> klass, final boolean ignoreRuntimeException) {
+			final T defaultValue = getDefaultValue(klass);
+			return new Factory<>(klass, ignoreRuntimeException, () -> defaultValue);
 		}
 
-		public static <T> TypeAdapterFactory getInstance(final Class<T> klass, final T defaultValue, final boolean catchRuntimeException) {
-			return new Factory<>(klass, defaultValue, catchRuntimeException);
+		public static <T> ITypeAdapterFactory<T> getInstance(final Class<T> klass, final boolean ignoreRuntimeException, final Supplier<? extends T> getDefault) {
+			return new Factory<>(klass, ignoreRuntimeException, getDefault);
 		}
 
 		@Override
@@ -86,8 +84,8 @@ final class FailSafeTypeAdapter<T>
 			}
 			final TypeAdapter<T> typeAdapter = gson.getAdapter(typeToken);
 			@SuppressWarnings("unchecked")
-			final T castDefaultValue = (T) defaultValue;
-			return FailSafeTypeAdapter.getInstance(typeAdapter, catchRuntimeException, castDefaultValue);
+			final Supplier<? extends T> castGetDefault = (Supplier<? extends T>) getDefault;
+			return FailSafeTypeAdapter.getInstance(typeAdapter, ignoreRuntimeException, castGetDefault);
 		}
 
 		@Nullable
