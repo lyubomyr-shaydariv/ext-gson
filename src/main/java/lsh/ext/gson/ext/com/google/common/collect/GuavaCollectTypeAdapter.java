@@ -2,12 +2,8 @@ package lsh.ext.gson.ext.com.google.common.collect;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Spliterator;
-import java.util.Spliterators;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.Multimap;
@@ -79,20 +75,46 @@ public final class GuavaCollectTypeAdapter {
 	) {
 		return Container1TypeAdapter.getInstance(
 				valueTypeAdapter,
-				es -> {
-					// TODO optimize
-					final Iterator<Multiset.Entry<E>> multisetIterator = es.entrySet()
-							.iterator();
-					return StreamSupport.stream(Spliterators.spliteratorUnknownSize(multisetIterator, Spliterator.IMMUTABLE), false)
-							.flatMap(e -> {
-								final E element = e.getElement();
-								return Stream.generate(() -> element)
-										.limit(e.getCount());
-							})
-							.iterator();
-				},
+				es -> forMultiset(es.entrySet()
+						.iterator()
+				),
 				builderFactory
 		);
+	}
+
+	static <E> Iterator<E> forMultiset(final Iterator<? extends Multiset.Entry<E>> iterator) {
+		return new Iterator<>() {
+			private E element;
+			private int count;
+
+			@Override
+			public boolean hasNext() {
+				if ( count != 0 ) {
+					return true;
+				}
+				final boolean hasNext = iterator.hasNext();
+				if ( hasNext ) {
+					move();
+				}
+				return hasNext;
+			}
+
+			@Override
+			public E next() {
+				if ( count == 0 ) {
+					move();
+					return element;
+				}
+				count--;
+				return element;
+			}
+
+			private void move() {
+				final Multiset.Entry<E> entry = iterator.next();
+				element = entry.getElement();
+				count = entry.getCount();
+			}
+		};
 	}
 
 	static <V> TypeAdapter<Table<String, String, V>> forTable(
