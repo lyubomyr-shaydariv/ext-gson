@@ -15,16 +15,15 @@ public final class FailSafeTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	private final TypeAdapter<T> typeAdapter;
-	private final boolean ignoreRuntimeException;
-	private final Function<? super RuntimeException, ? extends T> getDefault;
+	private final Function<? super Exception, ? extends T> getDefault;
 
-	public static <T> TypeAdapter<T> getInstance(final Class<T> klass, final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException) {
+	public static <T> TypeAdapter<T> getInstance(final Class<T> klass, final TypeAdapter<T> typeAdapter) {
 		final T defaultValue = getDefaultValue(klass);
-		return getInstance(typeAdapter, ignoreRuntimeException, ex -> defaultValue);
+		return getInstance(typeAdapter, ex -> defaultValue);
 	}
 
-	public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final boolean ignoreRuntimeException, final Function<? super RuntimeException, ? extends T> getDefault) {
-		return new FailSafeTypeAdapter<T>(typeAdapter, ignoreRuntimeException, getDefault)
+	public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter, final Function<? super Exception, ? extends T> getDefault) {
+		return new FailSafeTypeAdapter<T>(typeAdapter, getDefault)
 				.nullSafe();
 	}
 
@@ -40,10 +39,7 @@ public final class FailSafeTypeAdapter<T>
 			throws IOException {
 		try {
 			return typeAdapter.read(in);
-		} catch ( final RuntimeException ex ) {
-			if ( !ignoreRuntimeException ) {
-				throw ex;
-			}
+		} catch ( final Exception ex ) {
 			JsonReaders.skipValue(in);
 			return getDefault.apply(ex);
 		}

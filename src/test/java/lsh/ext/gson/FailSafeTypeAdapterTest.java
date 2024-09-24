@@ -15,7 +15,7 @@ public final class FailSafeTypeAdapterTest {
 	@Test
 	public void testReadSucceeds()
 			throws IOException {
-		final TypeAdapter<List<String>> unit = FailSafeTypeAdapter.getInstance(TestTypeAdapters.stringListTypeAdapter, true, ex -> {
+		final TypeAdapter<List<String>> unit = FailSafeTypeAdapter.getInstance(TestTypeAdapters.stringListTypeAdapter, ex -> {
 			throw new AssertionError();
 		});
 		final Iterable<String> actual = unit.fromJson("[\"foo\",\"bar\"]");
@@ -25,7 +25,7 @@ public final class FailSafeTypeAdapterTest {
 	@Test
 	public void testReadFails()
 			throws IOException {
-		final TypeAdapter<String> unit = FailSafeTypeAdapter.getInstance(getBadTypeAdapter(), true, ex -> "error");
+		final TypeAdapter<String> unit = FailSafeTypeAdapter.getInstance(getBadTypeAdapter(), ex -> "error");
 		final String actual = unit.fromJson("\"success\"");
 		Assertions.assertEquals("error", actual);
 	}
