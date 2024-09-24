@@ -32,16 +32,16 @@ public final class ApacheCommonsCollections4Module
 			implements IBuilder0<IModule> {
 
 		@Setter
-		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = ApacheCommonsCollectionsTypeAdapterFactory.defaultForBag;
+		private ITypeAdapterFactory<? extends Bag<?>> bagTypeAdapterFactory = ApacheCommonsCollections4TypeAdapterFactory.defaultForBag;
 
 		@Setter
-		private ITypeAdapterFactory<? extends BidiMap<String, ?>> bidiMapTypeAdapterFactory = ApacheCommonsCollectionsTypeAdapterFactory.defaultForBidiMap;
+		private ITypeAdapterFactory<? extends BidiMap<String, ?>> bidiMapTypeAdapterFactory = ApacheCommonsCollections4TypeAdapterFactory.defaultForBidiMap;
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiSet<?>> multiSetTypeAdapterFactory = ApacheCommonsCollectionsTypeAdapterFactory.defaultForMultiSet;
+		private ITypeAdapterFactory<? extends MultiSet<?>> multiSetTypeAdapterFactory = ApacheCommonsCollections4TypeAdapterFactory.defaultForMultiSet;
 
 		@Setter
-		private ITypeAdapterFactory<? extends MultiValuedMap<String, ?>> multiValuedMapTypeAdapterFactory = ApacheCommonsCollectionsTypeAdapterFactory.defaultForMultiValueMap;
+		private ITypeAdapterFactory<? extends MultiValuedMap<String, ?>> multiValuedMapTypeAdapterFactory = ApacheCommonsCollections4TypeAdapterFactory.defaultForMultiValueMap;
 
 		public static Builder create() {
 			return new Builder();

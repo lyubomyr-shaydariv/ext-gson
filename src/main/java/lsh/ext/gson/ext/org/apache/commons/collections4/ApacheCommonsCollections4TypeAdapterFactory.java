@@ -21,9 +21,9 @@ import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.commons.collections4.multiset.HashMultiSet;
 
 @UtilityClass
-public final class ApacheCommonsCollectionsTypeAdapterFactory {
+public final class ApacheCommonsCollections4TypeAdapterFactory {
 
-	public static ITypeAdapterFactory<Bag<String>> defaultForBag = forBag(ApacheCommonsCollectionsTypeAdapterFactory::defaultBuilderForBag);
+	public static ITypeAdapterFactory<Bag<String>> defaultForBag = forBag(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForBag);
 
 	public static ITypeAdapterFactory<Bag<String>> forBag(
 			final IBuilder2.ILookup<? super String, ? super Integer, ? extends Bag<String>> lookup
@@ -49,7 +49,7 @@ public final class ApacheCommonsCollectionsTypeAdapterFactory {
 		return () -> Builder.forBag(new HashBag<>());
 	}
 
-	public static final ITypeAdapterFactory<BidiMap<String, Object>> defaultForBidiMap = forBidiMap(ApacheCommonsCollectionsTypeAdapterFactory::defaultBuilderForBidiMap);
+	public static final ITypeAdapterFactory<BidiMap<String, Object>> defaultForBidiMap = forBidiMap(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForBidiMap);
 
 	public static <V> ITypeAdapterFactory<BidiMap<String, V>> forBidiMap(
 			final IBuilder2.ILookup<? super String, ? super V, ? extends BidiMap<String, V>> lookup
@@ -78,7 +78,7 @@ public final class ApacheCommonsCollectionsTypeAdapterFactory {
 		return () -> IBuilder2.of(new DualHashBidiMap<>());
 	}
 
-	public static ITypeAdapterFactory<MultiSet<Object>> defaultForMultiSet = forMultiSet(ApacheCommonsCollectionsTypeAdapterFactory::defaultBuilderForMultiSet);
+	public static ITypeAdapterFactory<MultiSet<Object>> defaultForMultiSet = forMultiSet(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForMultiSet);
 
 	public static <E> ITypeAdapterFactory<MultiSet<E>> forMultiSet(
 			final IBuilder1.ILookup<? super E, ? extends MultiSet<E>> lookup
@@ -96,7 +96,7 @@ public final class ApacheCommonsCollectionsTypeAdapterFactory {
 		return () -> IBuilder1.of(new HashMultiSet<>());
 	}
 
-	public static final ITypeAdapterFactory<MultiValuedMap<String, Object>> defaultForMultiValueMap = forMultiValueMap(ApacheCommonsCollectionsTypeAdapterFactory::defaultBuilderForMultiValuedMap);
+	public static final ITypeAdapterFactory<MultiValuedMap<String, Object>> defaultForMultiValueMap = forMultiValueMap(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForMultiValuedMap);
 
 	public static <V> ITypeAdapterFactory<MultiValuedMap<String, V>> forMultiValueMap(
 			final IBuilder2.ILookup<? super String, ? super V, ? extends MultiValuedMap<String, V>> builderLookup
