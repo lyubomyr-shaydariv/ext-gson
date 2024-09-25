@@ -16,7 +16,7 @@ public final class IBuilder2Test {
 				s -> Long.valueOf(s.length() * 1000),
 				String::length
 		);
-		final IBuilder2<Integer, Long, ? extends Table<String, Long, Integer>> unit = IBuilder2.from(collector, (i1, i2) -> i1 + ":" + i2);
+		final IBuilder2<Integer, Long, ? extends Table<String, Long, Integer>> unit = IBuilder2.of(collector, (i1, i2) -> i1 + ":" + i2);
 		unit.accept(1, 2L);
 		unit.accept(3, 4L);
 		final Table<String, Long, Integer> actual = unit.build();

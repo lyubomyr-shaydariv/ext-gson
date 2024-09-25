@@ -22,7 +22,7 @@ public final class Container2TypeAdapterTest {
 				Map.Entry::getValue,
 				String::valueOf,
 				Integer::valueOf,
-				IBuilder2.<Integer, String, Map<Integer, String>>from(HashMap::new)
+				IBuilder2.<Integer, String, Map<Integer, String>>fromMap(HashMap::new)
 		);
 		final Map<Integer, String> before = ImmutableMap.of(1, "foo", 2, "bar", 3, "baz"); // Google Guava immutable map preserves order
 		final String json = unit.toJson(before);

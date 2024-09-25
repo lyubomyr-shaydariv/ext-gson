@@ -17,7 +17,7 @@ public final class Container1TypeAdapterTest {
 			throws IOException {
 		final TypeAdapter<Queue<String>> unit = Container1TypeAdapter.getInstance(
 				TestTypeAdapters.stringTypeAdapter,
-				IBuilder1.<String, Queue<String>>from(ArrayDeque::new)
+				IBuilder1.<String, Queue<String>>fromCollection(ArrayDeque::new)
 		);
 		final List<String> data = List.of("foo", "bar", "baz");
 		final Queue<String> before = new ArrayDeque<>(data);

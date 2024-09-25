@@ -13,7 +13,7 @@ public final class IBuilder1Test {
 	@Test
 	public void testFromCollector() {
 		final Collector<String, ?, ? extends Map<String, Integer>> collector = ImmutableMap.toImmutableMap(Function.identity(), String::length);
-		final IBuilder1<String, Map<String, Integer>> unit = IBuilder1.from(collector);
+		final IBuilder1<String, Map<String, Integer>> unit = IBuilder1.of(collector);
 		unit.accept("Lorem");
 		unit.accept("ipsum");
 		unit.accept("dolor");

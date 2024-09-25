@@ -53,12 +53,12 @@ public final class GuavaCollectTypeAdapterFactory {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends BiMap> rawType = (Class<? extends BiMap>) typeToken.getRawType();
 		if ( rawType == HashBiMap.class ) {
-			return () -> IBuilder2.of(HashBiMap.create());
+			return () -> IBuilder2.fromMap(HashBiMap.create());
 		}
 		if ( ImmutableBiMap.class.isAssignableFrom(rawType) ) {
 			return ImmutableBuilder::forBiMap;
 		}
-		return () -> IBuilder2.of(HashBiMap.create());
+		return () -> IBuilder2.fromMap(HashBiMap.create());
 	}
 
 	public static final ITypeAdapterFactory<Multimap<String, Object>> defaultForMultimap = forMultimap(GuavaCollectTypeAdapterFactory::defaultBuilderFactoryForMultimap);
@@ -114,15 +114,15 @@ public final class GuavaCollectTypeAdapterFactory {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends Multiset> rawType = (Class<? extends Multiset>) typeToken.getRawType();
 		if ( rawType == HashMultiset.class ) {
-			return () -> IBuilder1.of(HashMultiset.create());
+			return () -> IBuilder1.fromCollection(HashMultiset.create());
 		}
 		if ( rawType == LinkedHashMultiset.class ) {
-			return () -> IBuilder1.of(LinkedHashMultiset.create());
+			return () -> IBuilder1.fromCollection(LinkedHashMultiset.create());
 		}
 		if ( ImmutableMultiset.class.isAssignableFrom(rawType) ) {
 			return ImmutableBuilder::forMultiset;
 		}
-		return () -> IBuilder1.of(HashMultiset.create());
+		return () -> IBuilder1.fromCollection(HashMultiset.create());
 	}
 
 	public static final ITypeAdapterFactory<Table<String, String, Object>> defaultForTable = forTable(GuavaCollectTypeAdapterFactory::defaultBuilderFactoryForTable, Function.identity(), Function.identity(), Function.identity(), Function.identity());

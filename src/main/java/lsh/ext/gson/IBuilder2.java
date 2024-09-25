@@ -33,15 +33,7 @@ public interface IBuilder2<A1, A2, R> {
 		};
 	}
 
-	static <K, V, M extends Map<K, V>> IBuilder2<K, V, M> of(final M map) {
-		return of(map::put, () -> map);
-	}
-
-	static <K, V, M extends Map<K, V>> Supplier<IBuilder2<K, V, M>> from(final Supplier<? extends M> factory) {
-		return () -> of(factory.get());
-	}
-
-	static <A1, A2, R, CT, CA> IBuilder2<A1, A2, R> from(
+	static <A1, A2, R, CT, CA> IBuilder2<A1, A2, R> of(
 			final Collector<? super CT, CA, ? extends R> collector,
 			final BiFunction<? super A1, ? super A2, ? extends CT> toElementType
 	) {
@@ -56,23 +48,31 @@ public interface IBuilder2<A1, A2, R> {
 
 			@Override
 			public void accept(final A1 a1, final A2 a2) {
-				if ( !isInitialized ) {
-					ca = supplier.get();
-					isInitialized = true;
-				}
 				final CT ct = toElementType.apply(a1, a2);
-				accumulator.accept(ca, ct);
+				accumulator.accept(createOrGet(), ct);
 			}
 
 			@Override
 			public R build() {
+				return finisher.apply(createOrGet());
+			}
+
+			private CA createOrGet() {
 				if ( !isInitialized ) {
 					ca = supplier.get();
 					isInitialized = true;
 				}
-				return finisher.apply(ca);
+				return ca;
 			}
 		};
+	}
+
+	static <K, V, M extends Map<K, V>> IBuilder2<K, V, M> fromMap(final M map) {
+		return of(map::put, () -> map);
+	}
+
+	static <K, V, M extends Map<K, V>> Supplier<IBuilder2<K, V, M>> fromMap(final Supplier<? extends M> factory) {
+		return () -> fromMap(factory.get());
 	}
 
 	interface ILookup<A1, A2, R> {

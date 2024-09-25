@@ -34,12 +34,12 @@ public final class UtilTypeAdapterFactory {
 	public static <E> Supplier<IBuilder1<E, Collection<E>>> defaultBuilderFactoryForCoercedCollection(final TypeToken<? super Collection<E>> typeToken) {
 		final Class<? super Collection<E>> rawType = typeToken.getRawType();
 		if ( rawType.isAssignableFrom(List.class) ) {
-			return () -> IBuilder1.of(new ArrayList<>());
+			return () -> IBuilder1.fromCollection(new ArrayList<>());
 		}
 		if ( rawType.isAssignableFrom(Set.class) ) {
-			return () -> IBuilder1.of(new HashSet<>());
+			return () -> IBuilder1.fromCollection(new HashSet<>());
 		}
-		return () -> IBuilder1.of(new ArrayList<>());
+		return () -> IBuilder1.fromCollection(new ArrayList<>());
 	}
 
 }

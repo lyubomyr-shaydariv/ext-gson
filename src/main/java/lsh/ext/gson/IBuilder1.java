@@ -33,15 +33,7 @@ public interface IBuilder1<A1, R> {
 		};
 	}
 
-	static <E, C extends Collection<E>> IBuilder1<E, C> of(final C collection) {
-		return of(collection::add, () -> collection);
-	}
-
-	static <E, C extends Collection<E>> Supplier<IBuilder1<E, C>> from(final Supplier<? extends C> collectionFactory) {
-		return () -> of(collectionFactory.get());
-	}
-
-	static <A1, R, CA> IBuilder1<A1, R> from(final Collector<? super A1, CA, ? extends R> collector) {
+	static <A1, R, CA> IBuilder1<A1, R> of(final Collector<? super A1, CA, ? extends R> collector) {
 		return new IBuilder1<>() {
 			private final Supplier<? extends CA> supplier = collector.supplier();
 			private final BiConsumer<? super CA, ? super A1> accumulator = collector.accumulator();
@@ -53,22 +45,30 @@ public interface IBuilder1<A1, R> {
 
 			@Override
 			public void accept(final A1 a1) {
-				if ( !isInitialized ) {
-					ca = supplier.get();
-					isInitialized = true;
-				}
-				accumulator.accept(ca, a1);
+				accumulator.accept(createOrGet(), a1);
 			}
 
 			@Override
 			public R build() {
+				return finisher.apply(createOrGet());
+			}
+
+			private CA createOrGet() {
 				if ( !isInitialized ) {
 					ca = supplier.get();
 					isInitialized = true;
 				}
-				return finisher.apply(ca);
+				return ca;
 			}
 		};
+	}
+
+	static <E, C extends Collection<E>> IBuilder1<E, C> fromCollection(final C collection) {
+		return of(collection::add, () -> collection);
+	}
+
+	static <E, C extends Collection<E>> Supplier<IBuilder1<E, C>> fromCollection(final Supplier<? extends C> collectionFactory) {
+		return () -> fromCollection(collectionFactory.get());
 	}
 
 	interface ILookup<A1, R> {

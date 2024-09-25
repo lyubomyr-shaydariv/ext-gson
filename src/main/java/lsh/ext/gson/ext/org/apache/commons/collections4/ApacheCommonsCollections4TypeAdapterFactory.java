@@ -70,12 +70,12 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		@SuppressWarnings("unchecked")
 		final Class<? extends BidiMap<?, ?>> rawType = (Class<? extends BidiMap<?, ?>>) typeToken.getRawType();
 		if ( DualHashBidiMap.class.isAssignableFrom(rawType) ) {
-			return () -> IBuilder2.of(new DualHashBidiMap<>());
+			return () -> IBuilder2.fromMap(new DualHashBidiMap<>());
 		}
 		if ( DualLinkedHashBidiMap.class.isAssignableFrom(rawType) ) {
-			return () -> IBuilder2.of(new DualLinkedHashBidiMap<>());
+			return () -> IBuilder2.fromMap(new DualLinkedHashBidiMap<>());
 		}
-		return () -> IBuilder2.of(new DualHashBidiMap<>());
+		return () -> IBuilder2.fromMap(new DualHashBidiMap<>());
 	}
 
 	public static ITypeAdapterFactory<MultiSet<Object>> defaultForMultiSet = forMultiSet(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForMultiSet);
@@ -91,9 +91,9 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		@SuppressWarnings("unchecked")
 		final Class<? extends MultiSet<?>> rawType = (Class<? extends MultiSet<?>>) typeToken.getRawType();
 		if ( HashMultiSet.class.isAssignableFrom(rawType) ) {
-			return () -> IBuilder1.of(new HashMultiSet<>());
+			return () -> IBuilder1.fromCollection(new HashMultiSet<>());
 		}
-		return () -> IBuilder1.of(new HashMultiSet<>());
+		return () -> IBuilder1.fromCollection(new HashMultiSet<>());
 	}
 
 	public static final ITypeAdapterFactory<MultiValuedMap<String, Object>> defaultForMultiValueMap = forMultiValueMap(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForMultiValuedMap);
