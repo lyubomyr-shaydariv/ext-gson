@@ -3,7 +3,12 @@ package lsh.ext.gson;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.reflect.TypeToken;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +27,19 @@ public final class EncodedJsonStringTypeAdapterTest {
 	}
 
 	private record Wrapper(
-			@JsonAdapter(EncodedJsonStringTypeAdapter.Factory.class) List<Integer> value
+			@JsonAdapter(Factory.class) List<Integer> value
 	) {
+	}
+
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+	public static final class Factory
+			implements TypeAdapterFactory {
+
+		@Override
+		public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
+			return EncodedJsonStringTypeAdapter.delegate(gson.getAdapter(typeToken));
+		}
+
 	}
 
 }
