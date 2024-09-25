@@ -11,7 +11,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public final class JsonPrimitiveDoubleTtypeAdapter<T>
+public final class JsonPrimitiveDoubleTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	private final ToDoubleFunction<? super T> toDouble;
@@ -21,7 +21,7 @@ public final class JsonPrimitiveDoubleTtypeAdapter<T>
 			final ToDoubleFunction<? super T> toDouble,
 			final DoubleFunction<? extends T> fromDouble
 	) {
-		return new JsonPrimitiveDoubleTtypeAdapter<T>(toDouble, fromDouble)
+		return new JsonPrimitiveDoubleTypeAdapter<T>(toDouble, fromDouble)
 				.nullSafe();
 	}
 
