@@ -33,7 +33,7 @@ final class BagTypeAdapter<E>
 	public void write(final JsonWriter out, final Bag<E> bag)
 			throws IOException {
 		out.beginObject();
-		for ( final E e : bag ) {
+		for ( final E e : bag.uniqueSet() ) {
 			out.name(toKey.apply(e));
 			out.value(bag.getCount(e));
 		}
