@@ -33,6 +33,43 @@ public interface IBuilder2<A1, A2, R> {
 		};
 	}
 
+	static <A1, A2, R, AUX> IBuilder2<A1, A2, R> of(
+			final Supplier<? extends AUX> createAux,
+			final TriConsumer<? super A1, ? super A2, ? super AUX> consume,
+			final Function<? super AUX, ? extends R> build
+	) {
+		return new IBuilder2<>() {
+			private boolean isInitialized;
+			@Nullable
+			private AUX aux;
+
+			@Override
+			public void accept(final A1 a1, final A2 a2) {
+				consume.accept(a1, a2, createOrGet());
+			}
+
+			@Override
+			public R build() {
+				return build.apply(createOrGet());
+			}
+
+			private AUX createOrGet() {
+				if ( !isInitialized ) {
+					aux = createAux.get();
+					isInitialized = true;
+				}
+				return aux;
+			}
+		};
+	}
+
+	static <A1, A2, R> IBuilder2<A1, A2, R> of(
+			final Supplier<? extends R> createResult,
+			final TriConsumer<? super A1, ? super A2, ? super R> consume
+	) {
+		return of(createResult, consume, Function.identity());
+	}
+
 	static <A1, A2, R, CT, CA> IBuilder2<A1, A2, R> of(
 			final Collector<? super CT, CA, ? extends R> collector,
 			final BiFunction<? super A1, ? super A2, ? extends CT> toElementType

@@ -33,6 +33,43 @@ public interface IBuilder1<A1, R> {
 		};
 	}
 
+	static <A1, R, AUX> IBuilder1<A1, R> of(
+			final Supplier<? extends AUX> createAux,
+			final BiConsumer<? super A1, ? super AUX> consume,
+			final Function<? super AUX, ? extends R> build
+	) {
+		return new IBuilder1<>() {
+			private boolean isInitialized;
+			@Nullable
+			private AUX aux;
+
+			@Override
+			public void accept(final A1 a1) {
+				consume.accept(a1, createOrGet());
+			}
+
+			@Override
+			public R build() {
+				return build.apply(createOrGet());
+			}
+
+			private AUX createOrGet() {
+				if ( !isInitialized ) {
+					aux = createAux.get();
+					isInitialized = true;
+				}
+				return aux;
+			}
+		};
+	}
+
+	static <A1, R> IBuilder1<A1, R> of(
+			final Supplier<? extends R> createResult,
+			final BiConsumer<? super A1, ? super R> consume
+	) {
+		return of(createResult, consume, Function.identity());
+	}
+
 	static <A1, R, CA> IBuilder1<A1, R> of(final Collector<? super A1, CA, ? extends R> collector) {
 		return new IBuilder1<>() {
 			private final Supplier<? extends CA> supplier = collector.supplier();
