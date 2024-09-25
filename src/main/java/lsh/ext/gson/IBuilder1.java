@@ -2,6 +2,7 @@ package lsh.ext.gson;
 
 import java.util.Collection;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
@@ -15,18 +16,25 @@ public interface IBuilder1<A1, R> {
 
 	R build();
 
-	static <E, C extends Collection<E>> IBuilder1<E, C> of(final C collection) {
+	static <A1, R> IBuilder1<A1, R> of(
+			final Consumer<? super A1> consume,
+			final Supplier<? extends R> build
+	) {
 		return new IBuilder1<>() {
 			@Override
-			public void accept(final E e) {
-				collection.add(e);
+			public void accept(final A1 a1) {
+				consume.accept(a1);
 			}
 
 			@Override
-			public C build() {
-				return collection;
+			public R build() {
+				return build.get();
 			}
 		};
+	}
+
+	static <E, C extends Collection<E>> IBuilder1<E, C> of(final C collection) {
+		return of(collection::add, () -> collection);
 	}
 
 	static <E, C extends Collection<E>> Supplier<IBuilder1<E, C>> from(final Supplier<? extends C> collectionFactory) {
