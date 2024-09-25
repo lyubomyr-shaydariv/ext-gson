@@ -10,7 +10,7 @@ public final class Java8UtilModuleTest
 		extends AbstractModuleTest {
 
 	public Java8UtilModuleTest() {
-		super(Java8UtilModule.getInstance());
+		super(Java8UtilModule.create().build());
 	}
 
 	@Override

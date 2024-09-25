@@ -4,59 +4,39 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Table;
-import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC, staticName = "create")
+@Accessors(fluent = true, chain = true)
 public final class GuavaCollectModule
-		extends AbstractModule {
+		implements IBuilder0<IModule> {
 
-	@Getter
-	private static final IModule instance = Builder.create()
-			.build();
+	@Setter
+	private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = GuavaCollectTypeAdapterFactory.defaultForBiMap;
 
-	private GuavaCollectModule(final TypeAdapterFactory... typeAdapterFactories) {
-		super(typeAdapterFactories);
-	}
+	@Setter
+	private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = GuavaCollectTypeAdapterFactory.defaultForMultimap;
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	@Accessors(fluent = true, chain = true)
-	public static final class Builder
-			implements IBuilder0<IModule> {
+	@Setter
+	private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = GuavaCollectTypeAdapterFactory.defaultForMultiset;
 
-		@Setter
-		private ITypeAdapterFactory<? extends BiMap<?, ?>> biMapTypeAdapterFactory = GuavaCollectTypeAdapterFactory.defaultForBiMap;
+	@Setter
+	private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = GuavaCollectTypeAdapterFactory.defaultForTable;
 
-		@Setter
-		private ITypeAdapterFactory<? extends Multimap<String, ?>> multimapTypeAdapterFactory = GuavaCollectTypeAdapterFactory.defaultForMultimap;
-
-		@Setter
-		private ITypeAdapterFactory<? extends Multiset<?>> multisetTypeAdapterFactory = GuavaCollectTypeAdapterFactory.defaultForMultiset;
-
-		@Setter
-		private ITypeAdapterFactory<? extends Table<String, String, ?>> tableTypeAdapterFactory = GuavaCollectTypeAdapterFactory.defaultForTable;
-
-		public static Builder create() {
-			return new Builder();
-		}
-
-		@Override
-		public IModule build() {
-			return new GuavaCollectModule(
-					biMapTypeAdapterFactory,
-					multimapTypeAdapterFactory,
-					multisetTypeAdapterFactory,
-					tableTypeAdapterFactory
-			);
-		}
-
+	@Override
+	public IModule build() {
+		return IModule.from(
+				biMapTypeAdapterFactory,
+				multimapTypeAdapterFactory,
+				multisetTypeAdapterFactory,
+				tableTypeAdapterFactory
+		);
 	}
 
 }

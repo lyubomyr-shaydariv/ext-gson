@@ -3,70 +3,50 @@ package lsh.ext.gson.domain.unix;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 
-import com.google.gson.TypeAdapterFactory;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lsh.ext.gson.AbstractModule;
 import lsh.ext.gson.IBuilder0;
 import lsh.ext.gson.IModule;
 import lsh.ext.gson.ITypeAdapterFactory;
 
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC, staticName = "create")
+@Accessors(fluent = true, chain = true)
 public final class UnixTimeModule
-		extends AbstractModule {
+		implements IBuilder0<IModule> {
 
-	@Getter
-	private static final IModule instance = Builder.create()
-			.build();
+	@Setter
+	@SuppressWarnings("UseOfObsoleteDateTimeApi")
+	private ITypeAdapterFactory<? extends java.util.Date> javaUtilDateTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaUtilDate;
 
-	private UnixTimeModule(final TypeAdapterFactory... typeAdapterFactories) {
-		super(typeAdapterFactories);
-	}
+	@Setter
+	private ITypeAdapterFactory<? extends java.sql.Date> javaSqlDateTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlDate;
 
-	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-	@Accessors(fluent = true, chain = true)
-	public static final class Builder
-			implements IBuilder0<IModule> {
+	@Setter
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
+	private ITypeAdapterFactory<? extends java.sql.Time> javaSqlTimeTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlTime;
 
-		@Setter
-		@SuppressWarnings("UseOfObsoleteDateTimeApi")
-		private ITypeAdapterFactory<? extends java.util.Date> javaUtilDateTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaUtilDate;
+	@Setter
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
+	private ITypeAdapterFactory<? extends java.sql.Timestamp> javaSqlTimestampTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlTimestamp;
 
-		@Setter
-		private ITypeAdapterFactory<? extends java.sql.Date> javaSqlDateTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlDate;
+	@Setter
+	private ITypeAdapterFactory<Instant> javaTimeInstant = UnixTimeTypeAdapterFactory.defaultForJavaTimeInstant;
 
-		@Setter
-		@SuppressWarnings("UnnecessaryFullyQualifiedName")
-		private ITypeAdapterFactory<? extends java.sql.Time> javaSqlTimeTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlTime;
+	@Setter
+	private ITypeAdapterFactory<OffsetDateTime> javaTimeOffsetDateTime = UnixTimeTypeAdapterFactory.defaultForOffsetDateTime;
 
-		@Setter
-		@SuppressWarnings("UnnecessaryFullyQualifiedName")
-		private ITypeAdapterFactory<? extends java.sql.Timestamp> javaSqlTimestampTypeAdapterFactory = UnixTimeTypeAdapterFactory.defaultForJavaSqlTimestamp;
-
-		@Setter
-		private ITypeAdapterFactory<Instant> javaTimeInstant = UnixTimeTypeAdapterFactory.defaultForJavaTimeInstant;
-
-		@Setter
-		private ITypeAdapterFactory<OffsetDateTime> javaTimeOffsetDateTime = UnixTimeTypeAdapterFactory.defaultForOffsetDateTime;
-
-		public static Builder create() {
-			return new Builder();
-		}
-
-		@Override
-		public IModule build() {
-			return new UnixTimeModule(
-					javaUtilDateTypeAdapterFactory,
-					javaSqlDateTypeAdapterFactory,
-					javaSqlTimeTypeAdapterFactory,
-					javaSqlTimestampTypeAdapterFactory,
-					javaTimeInstant,
-					javaTimeOffsetDateTime
-			);
-		}
-
+	@Override
+	public IModule build() {
+		return IModule.from(
+				javaUtilDateTypeAdapterFactory,
+				javaSqlDateTypeAdapterFactory,
+				javaSqlTimeTypeAdapterFactory,
+				javaSqlTimestampTypeAdapterFactory,
+				javaTimeInstant,
+				javaTimeOffsetDateTime
+		);
 	}
 
 }

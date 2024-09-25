@@ -23,7 +23,7 @@ public final class GuavaCollectModuleTest
 	private static final TypeToken<Table<String, String, Integer>> stringToStringToIntegerTableTypeToken = (TypeToken<Table<String, String, Integer>>) TypeToken.getParameterized(Table.class, String.class, String.class, Integer.class);
 
 	public GuavaCollectModuleTest() {
-		super(GuavaCollectModule.getInstance());
+		super(GuavaCollectModule.create().build());
 	}
 
 	@Override

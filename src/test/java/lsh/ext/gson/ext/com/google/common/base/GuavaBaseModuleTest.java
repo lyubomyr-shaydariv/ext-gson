@@ -14,7 +14,7 @@ public final class GuavaBaseModuleTest
 	private static final TypeToken<Optional<Integer>> optionalIntegerTypeToken = (TypeToken<Optional<Integer>>) TypeToken.getParameterized(Optional.class, Integer.class);
 
 	public GuavaBaseModuleTest() {
-		super(GuavaBaseModule.getInstance());
+		super(GuavaBaseModule.create().build());
 	}
 
 	@Override
