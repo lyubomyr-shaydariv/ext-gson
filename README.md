@@ -66,6 +66,11 @@ No `ext-gson` dependencies are bundled or planned to be bundled, so all dependen
 
 * `com.google.common.base.Optional`
 
+##### Cache
+
+* `com.google.common.cache.Cache`
+* `com.google.common.cache.LoadingCache`
+
 ##### Collections
 
 * `com.google.common.collect.BiMap`
