@@ -56,33 +56,13 @@ public final class ImmutableBuilder {
 	public static <K, V> IBuilder2<K, V, BiMap<K, V>> forBiMap(
 			final ImmutableBiMap.Builder<K, V> builder
 	) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final K k, final V v) {
-				builder.put(k, v);
-			}
-
-			@Override
-			public BiMap<K, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder2.of(builder::put, builder::build);
 	}
 
 	public static <E> IBuilder1<E, Collection<E>> forCollection(
 			final ImmutableCollection.Builder<E> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final E e) {
-				builder.add(e);
-			}
-
-			@Override
-			public Collection<E> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::add, builder::build);
 	}
 
 	public static <N> IBuilder0<Graph<N>> forGraph(
@@ -94,17 +74,7 @@ public final class ImmutableBuilder {
 	public static <N> IBuilder1<N, Graph<N>> forGraphAddNode(
 			final ImmutableGraph.Builder<N> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final N n) {
-				builder.addNode(n);
-			}
-
-			@Override
-			public Graph<N> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::addNode, builder::build);
 	}
 
 	public static <E> IBuilder1<E, List<E>> forList() {
@@ -114,17 +84,7 @@ public final class ImmutableBuilder {
 	public static <E> IBuilder1<E, List<E>> forList(
 			final ImmutableList.Builder<E> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final E e) {
-				builder.add(e);
-			}
-
-			@Override
-			public List<E> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::add, builder::build);
 	}
 
 	public static <K, V> IBuilder2<K, V, ListMultimap<K, V>> forListMultimap() {
@@ -134,17 +94,7 @@ public final class ImmutableBuilder {
 	public static <K, V> IBuilder2<K, V, ListMultimap<K, V>> forListMultimap(
 			final ImmutableListMultimap.Builder<K, V> builder
 	) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final K k, final V v) {
-				builder.put(k, v);
-			}
-
-			@Override
-			public ListMultimap<K, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder2.of(builder::put, builder::build);
 	}
 
 	public static <K, V> IBuilder2<K, V, Map<K, V>> forMap() {
@@ -154,17 +104,7 @@ public final class ImmutableBuilder {
 	public static <K, V> IBuilder2<K, V, Map<K, V>> forMap(
 			final ImmutableMap.Builder<K, V> builder
 	) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final K k, final V v) {
-				builder.put(k, v);
-			}
-
-			@Override
-			public Map<K, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder2.of(builder::put, builder::build);
 	}
 
 	public static <K, V> IBuilder2<K, V, Multimap<K, V>> forMultimap() {
@@ -174,17 +114,7 @@ public final class ImmutableBuilder {
 	public static <K, V> IBuilder2<K, V, Multimap<K, V>> forMultimap(
 			final ImmutableMultimap.Builder<K, V> builder
 	) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final K k, final V v) {
-				builder.put(k, v);
-			}
-
-			@Override
-			public Multimap<K, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder2.of(builder::put, builder::build);
 	}
 
 	public static <E> IBuilder1<E, Multiset<E>> forMultiset() {
@@ -194,95 +124,51 @@ public final class ImmutableBuilder {
 	public static <E> IBuilder1<E, Multiset<E>> forMultiset(
 			final ImmutableMultiset.Builder<E> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final E e) {
-				builder.add(e);
-			}
-
-			@Override
-			public Multiset<E> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::add, builder::build);
 	}
 
 	public static <N, E> IBuilder1<N, Network<N, E>> forNetworkAddNode(
 			final ImmutableNetwork.Builder<N, E> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final N n) {
-				builder.addNode(n);
-			}
-
-			@Override
-			public Network<N, E> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::addNode, builder::build);
 	}
 
 	public static <N, E> IBuilder3<N, N, E, Network<N, E>> forNetworkAddEdge(
 			final ImmutableNetwork.Builder<N, E> builder
 	) {
-		return new IBuilder3<>() {
-			@Override
-			public void accept(final N n1, final N n2, final E e) {
-				builder.addEdge(n1, n2, e);
-			}
-
-			@Override
-			public Network<N, E> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder3.of(builder::addEdge, builder::build);
 	}
 
-	public static <C extends Comparable<?>, V> IBuilder2<C, V, RangeMap<C, V>> forRangeMap(
-			final BiFunction<? super C, ? super V, Range<C>> toRange
+	public static <K extends Comparable<?>, V> IBuilder2<K, V, RangeMap<K, V>> forRangeMap(
+			final BiFunction<? super K, ? super V, Range<K>> toRange
 	) {
 		return forRangeMap(ImmutableRangeMap.builder(), toRange);
 	}
 
-	public static <C extends Comparable<?>, V> IBuilder2<C, V, RangeMap<C, V>> forRangeMap(
-			final ImmutableRangeMap.Builder<C, V> builder,
-			final BiFunction<? super C, ? super V, Range<C>> toRange
+	public static <K extends Comparable<?>, V> IBuilder2<K, V, RangeMap<K, V>> forRangeMap(
+			final ImmutableRangeMap.Builder<K, V> builder,
+			final BiFunction<? super K, ? super V, Range<K>> toRange
 	) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final C k, final V v) {
-				builder.put(toRange.apply(k, v), v);
-			}
-
-			@Override
-			public RangeMap<C, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder2.of(
+				(k, v) -> builder.put(toRange.apply(k, v), v),
+				builder::build
+		);
 	}
 
-	public static <C extends Comparable<?>> IBuilder1<C, RangeSet<C>> forRangeSet(
-			final Function<? super C, Range<C>> toRange
+	public static <K extends Comparable<?>> IBuilder1<K, RangeSet<K>> forRangeSet(
+			final Function<? super K, Range<K>> toRange
 	) {
 		return forRangeSet(ImmutableRangeSet.builder(), toRange);
 	}
 
-	public static <C extends Comparable<?>> IBuilder1<C, RangeSet<C>> forRangeSet(
-			final ImmutableRangeSet.Builder<C> builder,
-			final Function<? super C, Range<C>> toRange
+	public static <K extends Comparable<?>> IBuilder1<K, RangeSet<K>> forRangeSet(
+			final ImmutableRangeSet.Builder<K> builder,
+			final Function<? super K, Range<K>> toRange
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final C c) {
-				builder.add(toRange.apply(c));
-			}
-
-			@Override
-			public RangeSet<C> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(
+				k -> builder.add(toRange.apply(k)),
+				builder::build
+		);
 	}
 
 	public static <E> IBuilder1<E, Set<E>> forSet() {
@@ -292,17 +178,7 @@ public final class ImmutableBuilder {
 	public static <E> IBuilder1<E, Set<E>> forSet(
 			final ImmutableSet.Builder<E> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final E e) {
-				builder.add(e);
-			}
-
-			@Override
-			public Set<E> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::add, builder::build);
 	}
 
 	public static <K, V> IBuilder2<K, V, SetMultimap<K, V>> forSetMultimap() {
@@ -312,17 +188,7 @@ public final class ImmutableBuilder {
 	public static <K, V> IBuilder2<K, V, SetMultimap<K, V>> forSetMultimap(
 			final ImmutableSetMultimap.Builder<K, V> builder
 	) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final K k, final V v) {
-				builder.put(k, v);
-			}
-
-			@Override
-			public SetMultimap<K, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder2.of(builder::put, builder::build);
 	}
 
 	public static <K extends Comparable<?>, V> IBuilder2<K, V, SortedMap<K, V>> forSortedMap() {
@@ -332,17 +198,7 @@ public final class ImmutableBuilder {
 	public static <K, V> IBuilder2<K, V, SortedMap<K, V>> forSortedMap(
 			final ImmutableSortedMap.Builder<K, V> builder
 	) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final K k, final V v) {
-				builder.put(k, v);
-			}
-
-			@Override
-			public SortedMap<K, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder2.of(builder::put, builder::build);
 	}
 
 	public static <E extends Comparable<?>> IBuilder1<E, SortedMultiset<E>> forSortedMultiset() {
@@ -352,17 +208,7 @@ public final class ImmutableBuilder {
 	public static <E extends Comparable<?>> IBuilder1<E, SortedMultiset<E>> forSortedMultiset(
 			final ImmutableSortedMultiset.Builder<E> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final E e) {
-				builder.add(e);
-			}
-
-			@Override
-			public SortedMultiset<E> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::add, builder::build);
 	}
 
 	public static <E extends Comparable<?>> IBuilder1<E, SortedSet<E>> forSortedSet() {
@@ -372,17 +218,7 @@ public final class ImmutableBuilder {
 	public static <E extends Comparable<?>> IBuilder1<E, SortedSet<E>> forSortedSet(
 			final ImmutableSortedSet.Builder<E> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final E e) {
-				builder.add(e);
-			}
-
-			@Override
-			public SortedSet<E> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::add, builder::build);
 	}
 
 	public static <V> IBuilder3<String, String, V, Table<String, String, V>> forTable() {
@@ -392,49 +228,19 @@ public final class ImmutableBuilder {
 	public static <V> IBuilder3<String, String, V, Table<String, String, V>> forTable(
 			final ImmutableTable.Builder<String, String, V> builder
 	) {
-		return new IBuilder3<>() {
-			@Override
-			public void accept(final String rowKey, final String columnKey, final V v) {
-				builder.put(rowKey, columnKey, v);
-			}
-
-			@Override
-			public Table<String, String, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder3.of(builder::put, builder::build);
 	}
 
 	public static <N, V> IBuilder3<N, N, V, ValueGraph<N, V>> forValueGraphPutEdgeValue(
 			final ImmutableValueGraph.Builder<N, V> builder
 	) {
-		return new IBuilder3<>() {
-			@Override
-			public void accept(final N n1, final N n2, final V v) {
-				builder.putEdgeValue(n1, n2, v);
-			}
-
-			@Override
-			public ValueGraph<N, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder3.of(builder::putEdgeValue, builder::build);
 	}
 
 	public static <N, V> IBuilder1<N, ValueGraph<N, V>> forValueGraphAddNode(
 			final ImmutableValueGraph.Builder<N, V> builder
 	) {
-		return new IBuilder1<>() {
-			@Override
-			public void accept(final N n) {
-				builder.addNode(n);
-			}
-
-			@Override
-			public ValueGraph<N, V> build() {
-				return builder.build();
-			}
-		};
+		return IBuilder1.of(builder::addNode, builder::build);
 	}
 
 }
