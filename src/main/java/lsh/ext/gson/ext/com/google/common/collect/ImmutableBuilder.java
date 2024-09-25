@@ -325,8 +325,8 @@ public final class ImmutableBuilder {
 		};
 	}
 
-	public static <K, V> IBuilder2<K, V, SortedMap<K, V>> forSortedMap() {
-		return forSortedMap(ImmutableSortedMap.builder());
+	public static <K extends Comparable<?>, V> IBuilder2<K, V, SortedMap<K, V>> forSortedMap() {
+		return forSortedMap(ImmutableSortedMap.naturalOrder());
 	}
 
 	public static <K, V> IBuilder2<K, V, SortedMap<K, V>> forSortedMap(
