@@ -1,5 +1,6 @@
 package lsh.ext.gson.ext.org.apache.commons.collections4;
 
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -12,6 +13,7 @@ import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IBuilder2;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 
@@ -19,11 +21,37 @@ import org.apache.commons.collections4.MultiValuedMap;
 public final class ApacheCommonsCollections4TypeAdapter {
 
 	public static <E> TypeAdapter<Bag<E>> forBag(
+			final TypeAdapter<E> typeAdapter,
+			final Supplier<? extends IBuilder1<? super E, ? extends Bag<E>>> builderFactory
+	) {
+		return Container1TypeAdapter.getInstance(typeAdapter, Bag::iterator, builderFactory);
+	}
+
+	public static TypeAdapter<Bag<String>> forBagNCopies(
+			final TypeAdapter<Integer> integerTypeAdapter,
+			final Supplier<? extends IBuilder2<? super String, ? super Integer, ? extends Bag<String>>> builderFactory
+	) {
+		return forBagNCopies(integerTypeAdapter, builderFactory, Function.identity(), Function.identity());
+	}
+
+	public static <E> TypeAdapter<Bag<E>> forBagNCopies(
+			final TypeAdapter<Integer> integerTypeAdapter,
 			final Supplier<? extends IBuilder2<? super E, ? super Integer, ? extends Bag<E>>> builderFactory,
 			final Function<? super E, String> toName,
 			final Function<? super String, ? extends E> fromName
 	) {
-		return BagTypeAdapter.getInstance(builderFactory, toName, fromName);
+		return Container2TypeAdapter.<E, Integer, Bag<E>, Map.Entry<String, Integer>>getInstance(
+				integerTypeAdapter,
+				es -> IteratorUtils.transformedIterator(
+						es.uniqueSet().iterator(),
+						e -> new AbstractMap.SimpleImmutableEntry<>(toName.apply(e), es.getCount(e))
+				),
+				e -> fromName.apply(e.getKey()),
+				Map.Entry::getValue,
+				toName,
+				fromName,
+				builderFactory
+		);
 	}
 
 	public static <V> TypeAdapter<BidiMap<String, V>> forBidiMap(

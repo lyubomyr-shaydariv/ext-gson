@@ -25,6 +25,8 @@ public interface ITypeAdapterFactory<K>
 
 		<T> TypeAdapter<T> getTypeAdapter(int index);
 
+		<T> TypeAdapter<T> getTypeAdapterForClass(Class<T> klass);
+
 	}
 
 	@SuppressWarnings("NewClassNamingConvention")
@@ -57,6 +59,11 @@ public interface ITypeAdapterFactory<K>
 						@SuppressWarnings("unchecked")
 						final TypeToken<INNER_T> o = (TypeToken<INNER_T>) TypeToken.get(typeArgument);
 						return gson.getAdapter(o);
+					}
+
+					@Override
+					public <T> TypeAdapter<T> getTypeAdapterForClass(final Class<T> klass) {
+						return gson.getAdapter(klass);
 					}
 				};
 				@SuppressWarnings("unchecked")
@@ -96,6 +103,11 @@ public interface ITypeAdapterFactory<K>
 						@SuppressWarnings("unchecked")
 						final TypeToken<INNER_T> o = (TypeToken<INNER_T>) TypeToken.get(typeArgument);
 						return gson.getAdapter(o);
+					}
+
+					@Override
+					public <T> TypeAdapter<T> getTypeAdapterForClass(final Class<T> klass) {
+						return gson.getAdapter(klass);
 					}
 				};
 				@SuppressWarnings("unchecked")

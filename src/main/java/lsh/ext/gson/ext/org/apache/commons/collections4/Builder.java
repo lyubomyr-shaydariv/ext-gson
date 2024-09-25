@@ -1,6 +1,9 @@
 package lsh.ext.gson.ext.org.apache.commons.collections4;
 
+import java.util.function.Supplier;
+
 import lombok.experimental.UtilityClass;
+import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IBuilder2;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -8,32 +11,16 @@ import org.apache.commons.collections4.MultiValuedMap;
 @UtilityClass
 public final class Builder {
 
-	public static <E, B extends Bag<E>> IBuilder2<E, Integer, B> forBag(final B bag) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final E e, final Integer n) {
-				bag.add(e, n);
-			}
-
-			@Override
-			public B build() {
-				return bag;
-			}
-		};
+	public static <E, B extends Bag<E>> IBuilder1<E, B> forBag(final Supplier<? extends B> create) {
+		return IBuilder1.of(create, (e, bag) -> bag.add(e));
 	}
 
-	public static <K, V, M extends MultiValuedMap<K, V>> IBuilder2<K, V, M> forMultiValuedMap(final M multiValuedMap) {
-		return new IBuilder2<>() {
-			@Override
-			public void accept(final K k, final V v) {
-				multiValuedMap.put(k, v);
-			}
+	public static <E, B extends Bag<E>> IBuilder2<E, Integer, B> forBagNCopies(final Supplier<? extends B> create) {
+		return IBuilder2.of(create, (e, nCopies, bag) -> bag.add(e, nCopies));
+	}
 
-			@Override
-			public M build() {
-				return multiValuedMap;
-			}
-		};
+	public static <K, V, M extends MultiValuedMap<K, V>> IBuilder2<K, V, M> forMultiValuedMap(final Supplier<? extends M> create) {
+		return IBuilder2.of(create, (k, v, map) -> map.put(k, v));
 	}
 
 }

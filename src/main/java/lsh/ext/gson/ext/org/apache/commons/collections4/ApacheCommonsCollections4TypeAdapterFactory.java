@@ -4,6 +4,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.google.common.collect.BiMap;
+import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import lombok.experimental.UtilityClass;
 import lsh.ext.gson.IBuilder1;
@@ -36,7 +37,18 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 			final Function<? super E, String> toKey,
 			final Function<? super String, ? extends E> fromKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(Bag.class, typeResolver -> ApacheCommonsCollections4TypeAdapter.forBag(lookup.lookup(typeResolver.getTypeToken()), toKey, fromKey));
+		return ITypeAdapterFactory.forClassHierarchy(
+				Bag.class,
+				typeResolver -> {
+					final TypeAdapter<Integer> integerTypeAdapter = typeResolver.getTypeAdapterForClass(int.class);
+					return ApacheCommonsCollections4TypeAdapter.forBagNCopies(
+							integerTypeAdapter,
+							lookup.lookup(typeResolver.getTypeToken()),
+							toKey,
+							fromKey
+					);
+				}
+		);
 	}
 
 	// TODO handle all known implementations
@@ -44,9 +56,9 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		@SuppressWarnings("unchecked")
 		final Class<? super Bag<?>> rawType = (Class<? super Bag<?>>) typeToken.getRawType();
 		if ( HashBag.class.isAssignableFrom(rawType) ) {
-			return () -> Builder.forBag(new HashBag<>());
+			return () -> Builder.forBagNCopies(HashBag::new);
 		}
-		return () -> Builder.forBag(new HashBag<>());
+		return () -> Builder.forBagNCopies(HashBag::new);
 	}
 
 	public static final ITypeAdapterFactory<BidiMap<String, Object>> defaultForBidiMap = forBidiMap(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForBidiMap);
@@ -117,12 +129,12 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		@SuppressWarnings("unchecked")
 		final Class<? extends MultiValuedMap<?, ?>> rawType = (Class<? extends MultiValuedMap<?, ?>>) typeToken.getRawType();
 		if ( ArrayListValuedHashMap.class.isAssignableFrom(rawType) ) {
-			return () -> Builder.forMultiValuedMap(new ArrayListValuedHashMap<>());
+			return () -> Builder.forMultiValuedMap(ArrayListValuedHashMap::new);
 		}
 		if ( HashSetValuedHashMap.class.isAssignableFrom(rawType) ) {
-			return () -> Builder.forMultiValuedMap(new HashSetValuedHashMap<>());
+			return () -> Builder.forMultiValuedMap(HashSetValuedHashMap::new);
 		}
-		return () -> Builder.forMultiValuedMap(new ArrayListValuedHashMap<>());
+		return () -> Builder.forMultiValuedMap(ArrayListValuedHashMap::new);
 	}
 
 }
