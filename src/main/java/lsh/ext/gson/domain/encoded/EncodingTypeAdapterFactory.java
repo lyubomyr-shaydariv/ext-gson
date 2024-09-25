@@ -12,11 +12,11 @@ public final class EncodingTypeAdapterFactory {
 	public static ITypeAdapterFactory<byte[]> urlForPrimitiveByteArray = forPrimitiveByteArray(EncodingTypeAdapter.urlForPrimitiveByteArray);
 
 	public static ITypeAdapterFactory<byte[]> forPrimitiveByteArray(final TypeAdapter<byte[]> typeAdapter) {
-		return ITypeAdapterFactory.forClass(byte[].class, typeResolver -> typeAdapter);
+		return ITypeAdapterFactory.forClass(byte[].class, provider -> typeAdapter);
 	}
 
 	public static ITypeAdapterFactory<char[]> forPrimitiveCharArray(final TypeAdapter<char[]> typeAdapter) {
-		return ITypeAdapterFactory.forClass(char[].class, typeResolver -> typeAdapter);
+		return ITypeAdapterFactory.forClass(char[].class, provider -> typeAdapter);
 	}
 
 }

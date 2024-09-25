@@ -40,9 +40,9 @@ public final class GuavaCollectTypeAdapterFactory {
 			final Function<? super K, String> encodeKey,
 			final Function<? super String, ? extends K> decodeKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(BiMap.class, typeResolver -> GuavaCollectTypeAdapter.forBiMap(
-				typeResolver.getTypeAdapter(1),
-				lookup.lookup(typeResolver.getTypeToken()),
+		return ITypeAdapterFactory.forClassHierarchy(BiMap.class, provider -> GuavaCollectTypeAdapter.forBiMap(
+				provider.getTypeAdapter(1),
+				lookup.lookup(provider.getTypeToken()),
 				encodeKey,
 				decodeKey
 		));
@@ -74,9 +74,9 @@ public final class GuavaCollectTypeAdapterFactory {
 			final Function<? super K, String> encodeKey,
 			final Function<? super String, ? extends K> decodeKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(Multimap.class, typeResolver -> GuavaCollectTypeAdapter.forMultimap(
-				typeResolver.getTypeAdapter(1),
-				lookup.lookup(typeResolver.getTypeToken()),
+		return ITypeAdapterFactory.forClassHierarchy(Multimap.class, provider -> GuavaCollectTypeAdapter.forMultimap(
+				provider.getTypeAdapter(1),
+				lookup.lookup(provider.getTypeToken()),
 				encodeKey,
 				decodeKey
 		));
@@ -103,9 +103,9 @@ public final class GuavaCollectTypeAdapterFactory {
 	public static <E> ITypeAdapterFactory<Multiset<E>> forMultiset(
 			final IBuilder1.ILookup<? super E, ? extends Multiset<E>> lookup
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(Multiset.class, typeResolver -> GuavaCollectTypeAdapter.forMultiset(
-				typeResolver.getTypeAdapter(0),
-				lookup.lookup(typeResolver.getTypeToken())
+		return ITypeAdapterFactory.forClassHierarchy(Multiset.class, provider -> GuavaCollectTypeAdapter.forMultiset(
+				provider.getTypeAdapter(0),
+				lookup.lookup(provider.getTypeToken())
 		));
 	}
 
@@ -134,9 +134,9 @@ public final class GuavaCollectTypeAdapterFactory {
 			final Function<? super C, String> encodeColumnKey,
 			final Function<? super String, ? extends C> decodeColumnKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(Table.class, typeResolver -> TableTypeAdapter.getInstance(
-				typeResolver.getTypeAdapter(0),
-				builderLookup.lookup(typeResolver.getTypeToken()),
+		return ITypeAdapterFactory.forClassHierarchy(Table.class, provider -> TableTypeAdapter.getInstance(
+				provider.getTypeAdapter(0),
+				builderLookup.lookup(provider.getTypeToken()),
 				encodeRowKey,
 				decodeRowKey,
 				encodeColumnKey,

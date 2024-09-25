@@ -14,7 +14,7 @@ public final class RegexTypeAdapterFactory {
 	public static ITypeAdapterFactory<Pattern> simpleForPattern = forPattern(RegexTypeAdapter.simpleForPattern);
 
 	public static ITypeAdapterFactory<Pattern> forPattern(final TypeAdapter<Pattern> typeAdapter) {
-		return ITypeAdapterFactory.forClass(Pattern.class, typeResolver -> typeAdapter);
+		return ITypeAdapterFactory.forClass(Pattern.class, provider -> typeAdapter);
 	}
 
 }

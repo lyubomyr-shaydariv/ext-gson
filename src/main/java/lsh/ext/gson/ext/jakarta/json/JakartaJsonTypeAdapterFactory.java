@@ -12,7 +12,7 @@ public final class JakartaJsonTypeAdapterFactory {
 	public static ITypeAdapterFactory<JsonValue> defaultForJsonValue = forJsonValue(JakartaJsonValueTypeAdapter.getInstance(JsonProvider.provider()));
 
 	public static ITypeAdapterFactory<JsonValue> forJsonValue(final TypeAdapter<JsonValue> typeAdapter) {
-		return ITypeAdapterFactory.forClassHierarchy(JsonValue.class, typeResolver -> typeAdapter);
+		return ITypeAdapterFactory.forClassHierarchy(JsonValue.class, provider -> typeAdapter);
 	}
 
 }

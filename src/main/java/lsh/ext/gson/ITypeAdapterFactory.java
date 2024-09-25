@@ -17,7 +17,7 @@ public interface ITypeAdapterFactory<K>
 	@Nullable
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	interface ITypeResolver<K> {
+	interface IProvider<K> {
 
 		TypeToken<K> getTypeToken();
 
@@ -30,7 +30,7 @@ public interface ITypeAdapterFactory<K>
 	}
 
 	@SuppressWarnings("NewClassNamingConvention")
-	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final Function<? super ITypeResolver<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
+	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
 			@Override
@@ -40,7 +40,7 @@ public interface ITypeAdapterFactory<K>
 				}
 				@SuppressWarnings("unchecked")
 				final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
-				final ITypeResolver<K> typeResolver = new ITypeResolver<K>() {
+				final IProvider<K> provider = new IProvider<>() {
 					private final Type type = castTypeToken.getType();
 
 					@Override
@@ -67,14 +67,14 @@ public interface ITypeAdapterFactory<K>
 					}
 				};
 				@SuppressWarnings("unchecked")
-				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.apply(typeResolver);
+				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.apply(provider);
 				return castTypeAdapter;
 			}
 		};
 	}
 
 	@SuppressWarnings("NewClassNamingConvention")
-	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<? extends RAW_K> klass, final Function<? super ITypeResolver<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
+	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<? extends RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
 			@Override
@@ -84,7 +84,7 @@ public interface ITypeAdapterFactory<K>
 				}
 				@SuppressWarnings("unchecked")
 				final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
-				final ITypeResolver<K> typeResolver = new ITypeResolver<K>() {
+				final IProvider<K> provider = new IProvider<>() {
 					private final Type type = castTypeToken.getType();
 
 					@Override
@@ -111,7 +111,7 @@ public interface ITypeAdapterFactory<K>
 					}
 				};
 				@SuppressWarnings("unchecked")
-				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.apply(typeResolver);
+				final TypeAdapter<T> castTypeAdapter = (TypeAdapter<T>) createTypeAdapter.apply(provider);
 				return castTypeAdapter;
 			}
 		};

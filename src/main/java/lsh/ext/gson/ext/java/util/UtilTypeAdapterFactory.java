@@ -18,17 +18,17 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class UtilTypeAdapterFactory {
 
 	public static <E> ITypeAdapterFactory<Iterator<E>> forIterator(final boolean useBeginEnd) {
-		return ITypeAdapterFactory.forClassHierarchy(Iterator.class, typeResolver -> UtilTypeAdapter.forIterator(typeResolver.getTypeAdapter(0), useBeginEnd));
+		return ITypeAdapterFactory.forClassHierarchy(Iterator.class, provider -> UtilTypeAdapter.forIterator(provider.getTypeAdapter(0), useBeginEnd));
 	}
 
 	public static <E> ITypeAdapterFactory<Enumeration<E>> forEnumeration(final boolean useBeginEnd) {
-		return ITypeAdapterFactory.forClassHierarchy(Enumeration.class, typeResolver -> UtilTypeAdapter.forEnumeration(typeResolver.getTypeAdapter(0), useBeginEnd));
+		return ITypeAdapterFactory.forClassHierarchy(Enumeration.class, provider -> UtilTypeAdapter.forEnumeration(provider.getTypeAdapter(0), useBeginEnd));
 	}
 
 	public static ITypeAdapterFactory<Collection<Object>> defaultForCoercedCollection = forCoercedCollection(UtilTypeAdapterFactory::defaultBuilderFactoryForCoercedCollection);
 
 	public static <E> ITypeAdapterFactory<Collection<E>> forCoercedCollection(final IBuilder1.ILookup<? super E, ? extends Collection<E>> builderLookup) {
-		return ITypeAdapterFactory.forClassHierarchy(Collection.class, typeResolver -> CoercedCollectionTypeAdapter.getInstance(typeResolver.getTypeAdapter(0), builderLookup.lookup(typeResolver.getTypeToken())));
+		return ITypeAdapterFactory.forClassHierarchy(Collection.class, provider -> CoercedCollectionTypeAdapter.getInstance(provider.getTypeAdapter(0), builderLookup.lookup(provider.getTypeToken())));
 	}
 
 	public static <E> Supplier<IBuilder1<E, Collection<E>>> defaultBuilderFactoryForCoercedCollection(final TypeToken<? super Collection<E>> typeToken) {

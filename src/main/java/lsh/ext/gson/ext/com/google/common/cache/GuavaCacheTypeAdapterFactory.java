@@ -32,8 +32,8 @@ public final class GuavaCacheTypeAdapterFactory {
 	) {
 		return ITypeAdapterFactory.forClassHierarchy(
 				klass,
-				typeResolver -> GuavaCacheTypeAdapter.forCache(
-						typeResolver.getTypeAdapter(1),
+				provider -> GuavaCacheTypeAdapter.forCache(
+						provider.getTypeAdapter(1),
 						toName,
 						fromName,
 						getCache
