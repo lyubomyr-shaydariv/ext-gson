@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public final class EncodedJsonStringTypeAdapterTest {
+public final class EncodedLiteralStringTypeAdapterTest {
 
 	private static final Gson gson = Gsons.getNormalized();
 

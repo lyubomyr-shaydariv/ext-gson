@@ -11,7 +11,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public final class JsonPrimitiveLongTypeAdapter<T>
+public final class LiteralPrimitiveLongTypeAdapter<T>
 		extends TypeAdapter<T> {
 
 	private final ToLongFunction<? super T> toLong;
@@ -21,7 +21,7 @@ public final class JsonPrimitiveLongTypeAdapter<T>
 			final ToLongFunction<? super T> toLong,
 			final LongFunction<? extends T> fromLong
 	) {
-		return new JsonPrimitiveLongTypeAdapter<T>(toLong, fromLong)
+		return new LiteralPrimitiveLongTypeAdapter<T>(toLong, fromLong)
 				.nullSafe();
 	}
 

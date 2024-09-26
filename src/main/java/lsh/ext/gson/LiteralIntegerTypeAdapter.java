@@ -11,17 +11,17 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public final class JsonDoubleTypeAdapter<T>
+public final class LiteralIntegerTypeAdapter<T>
 		extends TypeAdapter<T> {
 
-	private final Function<? super T, Double> toDouble;
-	private final Function<? super Double, ? extends T> fromDouble;
+	private final Function<? super T, Integer> toInteger;
+	private final Function<? super Integer, ? extends T> fromInteger;
 
 	public static <T> TypeAdapter<T> getInstance(
-			final Function<? super T, Double> toDouble,
-			final Function<? super Double, ? extends T> fromDouble
+			final Function<? super T, Integer> toInteger,
+			final Function<? super Integer, ? extends T> fromInteger
 	) {
-		return new JsonDoubleTypeAdapter<T>(toDouble, fromDouble)
+		return new LiteralIntegerTypeAdapter<T>(toInteger, fromInteger)
 				.nullSafe();
 	}
 
@@ -29,18 +29,18 @@ public final class JsonDoubleTypeAdapter<T>
 	public void write(final JsonWriter out, final T value)
 			throws IOException {
 		@Nullable
-		final Double d = toDouble.apply(value);
-		if ( d == null ) {
+		final Integer i = toInteger.apply(value);
+		if ( i == null ) {
 			out.nullValue();
 			return;
 		}
-		out.value(d);
+		out.value(i);
 	}
 
 	@Override
 	public T read(final JsonReader in)
 			throws IOException {
-		return fromDouble.apply(in.nextDouble());
+		return fromInteger.apply(in.nextInt());
 	}
 
 }

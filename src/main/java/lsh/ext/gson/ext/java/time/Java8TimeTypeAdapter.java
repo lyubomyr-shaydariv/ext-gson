@@ -21,40 +21,40 @@ import java.time.temporal.ChronoField;
 
 import com.google.gson.TypeAdapter;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.JsonStringTypeAdapter;
+import lsh.ext.gson.LiteralStringTypeAdapter;
 
 @UtilityClass
 public final class Java8TimeTypeAdapter {
 
-	public static final TypeAdapter<DayOfWeek> defaultForDayOfWeek = JsonStringTypeAdapter.getInstance(Enum::toString, DayOfWeek::valueOf);
+	public static final TypeAdapter<DayOfWeek> defaultForDayOfWeek = LiteralStringTypeAdapter.getInstance(Enum::toString, DayOfWeek::valueOf);
 
-	public static final TypeAdapter<Duration> defaultForDuration = JsonStringTypeAdapter.getInstance(Duration::toString, Duration::parse);
+	public static final TypeAdapter<Duration> defaultForDuration = LiteralStringTypeAdapter.getInstance(Duration::toString, Duration::parse);
 
 	public static final TypeAdapter<Instant> defaultForInstant = forInstant(DateTimeFormatter.ISO_INSTANT);
 
 	public static TypeAdapter<Instant> forInstant(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, Instant::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, Instant::from));
 	}
 
 	public static final TypeAdapter<LocalDate> defaultForLocalDate = forLocalDate(DateTimeFormatter.ISO_LOCAL_DATE);
 
 	public static TypeAdapter<LocalDate> forLocalDate(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalDate::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalDate::from));
 	}
 
 	public static final TypeAdapter<LocalDateTime> defaultForLocalDateTime = forLocalDateTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
 	public static TypeAdapter<LocalDateTime> forLocalDateTime(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalDateTime::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalDateTime::from));
 	}
 
 	public static final TypeAdapter<LocalTime> defaultForLocalTime = forLocalTime(DateTimeFormatter.ISO_LOCAL_TIME);
 
 	public static TypeAdapter<LocalTime> forLocalTime(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalTime::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, LocalTime::from));
 	}
 
-	public static final TypeAdapter<Month> defaultForMonth = JsonStringTypeAdapter.getInstance(Enum::toString, Month::valueOf);
+	public static final TypeAdapter<Month> defaultForMonth = LiteralStringTypeAdapter.getInstance(Enum::toString, Month::valueOf);
 
 	public static final TypeAdapter<MonthDay> defaulFortMonthDay = forMonthDay(new DateTimeFormatterBuilder()
 			.appendLiteral("--")
@@ -65,22 +65,22 @@ public final class Java8TimeTypeAdapter {
 	);
 
 	public static TypeAdapter<MonthDay> forMonthDay(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, MonthDay::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, MonthDay::from));
 	}
 
 	public static final TypeAdapter<OffsetDateTime> defaultForOffsetDateTime = forOffsetDateTime(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
 	public static TypeAdapter<OffsetDateTime> forOffsetDateTime(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, OffsetDateTime::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, OffsetDateTime::from));
 	}
 
 	public static final TypeAdapter<OffsetTime> defaultForOffsetTime = forOffsetTime(DateTimeFormatter.ISO_OFFSET_TIME);
 
 	public static TypeAdapter<OffsetTime> forOffsetTime(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, OffsetTime::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, OffsetTime::from));
 	}
 
-	public static final TypeAdapter<Period> defaultForPeriod = JsonStringTypeAdapter.getInstance(Period::toString, Period::parse);
+	public static final TypeAdapter<Period> defaultForPeriod = LiteralStringTypeAdapter.getInstance(Period::toString, Period::parse);
 
 	public static final TypeAdapter<YearMonth> defaultForYearMonth = forYearMonth(new DateTimeFormatterBuilder()
 			.appendValue(ChronoField.YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
@@ -90,7 +90,7 @@ public final class Java8TimeTypeAdapter {
 	);
 
 	public static TypeAdapter<YearMonth> forYearMonth(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, YearMonth::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, YearMonth::from));
 	}
 
 	public static final TypeAdapter<Year> defaultForYear = forYear(new DateTimeFormatterBuilder()
@@ -100,13 +100,13 @@ public final class Java8TimeTypeAdapter {
 	);
 
 	public static TypeAdapter<Year> forYear(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, Year::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, Year::from));
 	}
 
 	public static final TypeAdapter<ZonedDateTime> defaultForZonedDateTime = forZonedDateTime(DateTimeFormatter.ISO_ZONED_DATE_TIME);
 
 	public static TypeAdapter<ZonedDateTime> forZonedDateTime(final DateTimeFormatter dateTimeFormatter) {
-		return JsonStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, ZonedDateTime::from));
+		return LiteralStringTypeAdapter.getInstance(dateTimeFormatter::format, s -> dateTimeFormatter.parse(s, ZonedDateTime::from));
 	}
 
 }

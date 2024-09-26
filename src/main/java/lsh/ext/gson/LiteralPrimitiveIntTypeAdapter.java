@@ -1,8 +1,8 @@
 package lsh.ext.gson;
 
 import java.io.IOException;
-import java.util.function.Function;
-import javax.annotation.Nullable;
+import java.util.function.IntFunction;
+import java.util.function.ToIntFunction;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -11,36 +11,30 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public final class JsonLongTypeAdapter<T>
+public final class LiteralPrimitiveIntTypeAdapter<T>
 		extends TypeAdapter<T> {
 
-	private final Function<? super T, Long> toLong;
-	private final Function<? super Long, ? extends T> fromLong;
+	private final ToIntFunction<? super T> toInt;
+	private final IntFunction<? extends T> fromInt;
 
 	public static <T> TypeAdapter<T> getInstance(
-			final Function<? super T, Long> toLong,
-			final Function<? super Long, ? extends T> fromLong
+			final ToIntFunction<? super T> toInt,
+			final IntFunction<? extends T> fromInt
 	) {
-		return new JsonLongTypeAdapter<T>(toLong, fromLong)
+		return new LiteralPrimitiveIntTypeAdapter<T>(toInt, fromInt)
 				.nullSafe();
 	}
 
 	@Override
 	public void write(final JsonWriter out, final T value)
 			throws IOException {
-		@Nullable
-		final Long l = toLong.apply(value);
-		if ( l == null ) {
-			out.nullValue();
-			return;
-		}
-		out.value(l);
+		out.value(toInt.applyAsInt(value));
 	}
 
 	@Override
 	public T read(final JsonReader in)
 			throws IOException {
-		return fromLong.apply(in.nextLong());
+		return fromInt.apply(in.nextInt());
 	}
 
 }

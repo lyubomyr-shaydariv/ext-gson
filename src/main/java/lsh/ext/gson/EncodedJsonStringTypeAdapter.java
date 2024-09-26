@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 public final class EncodedJsonStringTypeAdapter {
 
 	public static <T> TypeAdapter<T> delegate(final TypeAdapter<T> typeAdapter) {
-		return JsonStringTypeAdapter.getInstance(
+		return LiteralStringTypeAdapter.getInstance(
 				typeAdapter::toJson,
 				json -> {
 					try {

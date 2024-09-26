@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import com.google.gson.TypeAdapter;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.JsonStringTypeAdapter;
+import lsh.ext.gson.LiteralStringTypeAdapter;
 
 @UtilityClass
 public final class RegexTypeAdapter {
@@ -85,7 +85,7 @@ public final class RegexTypeAdapter {
 
 	// https://en.wikipedia.org/w/index.php?title=Regular_expression&oldid=1239052130#Delimiters
 	private static TypeAdapter<Pattern> forEdStylePattern(final char delimiter, final IFlagStrategy flagStrategy, final int[] declaredFlags) {
-		return JsonStringTypeAdapter.getInstance(
+		return LiteralStringTypeAdapter.getInstance(
 				pattern -> formatEdStylePattern(pattern, delimiter, flagStrategy, declaredFlags),
 				pattern -> parseEdStylePattern(pattern, delimiter, flagStrategy)
 		);
@@ -158,7 +158,7 @@ public final class RegexTypeAdapter {
 	}
 
 	@Getter
-	public static final TypeAdapter<Pattern> simpleForPattern = JsonStringTypeAdapter.getInstance(RegexTypeAdapter::formatSimplePattern, Pattern::compile);
+	public static final TypeAdapter<Pattern> simpleForPattern = LiteralStringTypeAdapter.getInstance(RegexTypeAdapter::formatSimplePattern, Pattern::compile);
 
 	private static String formatSimplePattern(final Pattern pattern) {
 		final int flags = pattern.flags();

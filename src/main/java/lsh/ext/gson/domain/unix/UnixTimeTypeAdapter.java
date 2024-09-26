@@ -6,7 +6,7 @@ import java.util.function.LongFunction;
 
 import com.google.gson.TypeAdapter;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.JsonPrimitiveLongTypeAdapter;
+import lsh.ext.gson.LiteralPrimitiveLongTypeAdapter;
 
 @UtilityClass
 public final class UnixTimeTypeAdapter {
@@ -24,12 +24,12 @@ public final class UnixTimeTypeAdapter {
 
 	@SuppressWarnings("UseOfObsoleteDateTimeApi")
 	public static <T extends java.util.Date> TypeAdapter<T> forJavaUtilDate(final LongFunction<? extends T> construct) {
-		return JsonPrimitiveLongTypeAdapter.getInstance(date -> date.getTime() / 1000, timestamp -> construct.apply(timestamp * 1000));
+		return LiteralPrimitiveLongTypeAdapter.getInstance(date -> date.getTime() / 1000, timestamp -> construct.apply(timestamp * 1000));
 	}
 
-	public static TypeAdapter<Instant> forJavaTimeInstant = JsonPrimitiveLongTypeAdapter.getInstance(Instant::getEpochSecond, Instant::ofEpochSecond);
+	public static TypeAdapter<Instant> forJavaTimeInstant = LiteralPrimitiveLongTypeAdapter.getInstance(Instant::getEpochSecond, Instant::ofEpochSecond);
 
-	public static TypeAdapter<OffsetDateTime> forJavaTimeOffsetDateTime = JsonPrimitiveLongTypeAdapter.getInstance(
+	public static TypeAdapter<OffsetDateTime> forJavaTimeOffsetDateTime = LiteralPrimitiveLongTypeAdapter.getInstance(
 			OffsetDateTime::toEpochSecond,
 			seconds -> {
 				throw new UnsupportedOperationException(String.valueOf(seconds));

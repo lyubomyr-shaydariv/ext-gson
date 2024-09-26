@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 import com.google.gson.TypeAdapter;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.JsonStringTypeAdapter;
+import lsh.ext.gson.LiteralStringTypeAdapter;
 
 @UtilityClass
 public final class EncodingTypeAdapter {
@@ -24,14 +24,14 @@ public final class EncodingTypeAdapter {
 			final Function<? super byte[], String> encode,
 			final Function<? super String, byte[]> decode
 	) {
-		return JsonStringTypeAdapter.getInstance(encode, decode);
+		return LiteralStringTypeAdapter.getInstance(encode, decode);
 	}
 
 	public static TypeAdapter<char[]> forPrimitiveCharArray(
 			final Function<? super char[], String> encode,
 			final Function<? super String, char[]> decode
 	) {
-		return JsonStringTypeAdapter.getInstance(encode, decode);
+		return LiteralStringTypeAdapter.getInstance(encode, decode);
 	}
 
 }
