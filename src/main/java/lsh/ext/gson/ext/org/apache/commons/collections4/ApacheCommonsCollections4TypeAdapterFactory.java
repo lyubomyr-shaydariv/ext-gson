@@ -102,9 +102,9 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		@SuppressWarnings("unchecked")
 		final Class<? extends MultiSet<?>> rawType = (Class<? extends MultiSet<?>>) typeToken.getRawType();
 		if ( HashMultiSet.class.isAssignableFrom(rawType) ) {
-			return () -> IBuilder1.fromCollection(new HashMultiSet<>());
+			return () -> Builder.forMultiSet(HashMultiSet::new);
 		}
-		return () -> IBuilder1.fromCollection(new HashMultiSet<>());
+		return () -> Builder.forMultiSet(HashMultiSet::new);
 	}
 
 	public static final ITypeAdapterFactory<MultiValuedMap<String, Object>> defaultForMultiValueMap = forMultiValueMap(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForMultiValuedMap);
