@@ -29,6 +29,10 @@ public interface ITypeAdapterFactory<K>
 
 	}
 
+	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
+		return forClass(klass, provider -> typeAdapter);
+	}
+
 	@SuppressWarnings("NewClassNamingConvention")
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
@@ -71,6 +75,10 @@ public interface ITypeAdapterFactory<K>
 				return castTypeAdapter;
 			}
 		};
+	}
+
+	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
+		return forClassHierarchy(klass, provider -> typeAdapter);
 	}
 
 	@SuppressWarnings("NewClassNamingConvention")

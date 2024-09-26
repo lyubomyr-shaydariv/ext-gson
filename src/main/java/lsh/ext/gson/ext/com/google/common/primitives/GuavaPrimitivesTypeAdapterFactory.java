@@ -13,19 +13,19 @@ public final class GuavaPrimitivesTypeAdapterFactory {
 	public static final ITypeAdapterFactory<ImmutableDoubleArray> defaultForImmutableDoubleArray = forImmutableDoubleArray(ImmutableDoubleArrayTypeAdapter.getInstance());
 
 	public static ITypeAdapterFactory<ImmutableDoubleArray> forImmutableDoubleArray(final TypeAdapter<ImmutableDoubleArray> typeAdapter) {
-		return ITypeAdapterFactory.forClassHierarchy(ImmutableDoubleArray.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClassHierarchy(ImmutableDoubleArray.class, typeAdapter);
 	}
 
 	public static final ITypeAdapterFactory<ImmutableIntArray> defaultForImmutableIntegerArray = forImmutableIntArray(ImmutableIntArrayTypeAdapter.getInstance());
 
 	public static ITypeAdapterFactory<ImmutableIntArray> forImmutableIntArray(final TypeAdapter<ImmutableIntArray> typeAdapter) {
-		return ITypeAdapterFactory.forClassHierarchy(ImmutableIntArray.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClassHierarchy(ImmutableIntArray.class, typeAdapter);
 	}
 
 	public static final ITypeAdapterFactory<ImmutableLongArray> defaultForImmutableLongArray = forImmutableLongArray(ImmutableLongArrayTypeAdapter.getInstance());
 
 	public static ITypeAdapterFactory<ImmutableLongArray> forImmutableLongArray(final TypeAdapter<ImmutableLongArray> typeAdapter) {
-		return ITypeAdapterFactory.forClassHierarchy(ImmutableLongArray.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClassHierarchy(ImmutableLongArray.class, typeAdapter);
 	}
 
 }

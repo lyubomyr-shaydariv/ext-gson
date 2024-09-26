@@ -15,12 +15,13 @@ public final class UnixTimeTypeAdapterFactory {
 
 	@SuppressWarnings("UseOfObsoleteDateTimeApi")
 	public static ITypeAdapterFactory<java.util.Date> forJavaUtilDate(final TypeAdapter<java.util.Date> typeAdapter) {
-		return ITypeAdapterFactory.forClass(java.util.Date.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClass(java.util.Date.class, typeAdapter);
 	}
+
 	public static final ITypeAdapterFactory<java.sql.Date> defaultForJavaSqlDate = forJavaSqlDate(UnixTimeTypeAdapter.defaultForJavaSqlDate);
 
 	public static ITypeAdapterFactory<java.sql.Date> forJavaSqlDate(final TypeAdapter<java.sql.Date> typeAdapter) {
-		return ITypeAdapterFactory.forClass(java.sql.Date.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClass(java.sql.Date.class, typeAdapter);
 	}
 
 	@SuppressWarnings("UnnecessaryFullyQualifiedName")
@@ -28,7 +29,7 @@ public final class UnixTimeTypeAdapterFactory {
 
 	@SuppressWarnings("UnnecessaryFullyQualifiedName")
 	public static ITypeAdapterFactory<java.sql.Time> forJavaSqlTime(final TypeAdapter<java.sql.Time> typeAdapter) {
-		return ITypeAdapterFactory.forClass(java.sql.Time.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClass(java.sql.Time.class, typeAdapter);
 	}
 
 	@SuppressWarnings("UnnecessaryFullyQualifiedName")
@@ -36,19 +37,19 @@ public final class UnixTimeTypeAdapterFactory {
 
 	@SuppressWarnings("UnnecessaryFullyQualifiedName")
 	public static ITypeAdapterFactory<java.sql.Timestamp> forJavaSqlTimestamp(final TypeAdapter<java.sql.Timestamp> typeAdapter) {
-		return ITypeAdapterFactory.forClass(java.sql.Timestamp.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClass(java.sql.Timestamp.class, typeAdapter);
 	}
 
 	public static final ITypeAdapterFactory<Instant> defaultForJavaTimeInstant = forJavaTimeInstant(UnixTimeTypeAdapter.forJavaTimeInstant);
 
 	public static ITypeAdapterFactory<Instant> forJavaTimeInstant(final TypeAdapter<Instant> typeAdapter) {
-		return ITypeAdapterFactory.forClass(Instant.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClass(Instant.class, typeAdapter);
 	}
 
 	public static final ITypeAdapterFactory<OffsetDateTime> defaultForOffsetDateTime = forJavaTimeOffsetDateTime(UnixTimeTypeAdapter.forJavaTimeOffsetDateTime);
 
 	public static ITypeAdapterFactory<OffsetDateTime> forJavaTimeOffsetDateTime(final TypeAdapter<OffsetDateTime> typeAdapter) {
-		return ITypeAdapterFactory.forClass(OffsetDateTime.class, provider -> typeAdapter);
+		return ITypeAdapterFactory.forClass(OffsetDateTime.class, typeAdapter);
 	}
 
 }
