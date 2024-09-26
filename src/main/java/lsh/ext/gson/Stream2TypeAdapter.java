@@ -20,7 +20,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class JsonObjectStreamTypeAdapter<S, K, V, E>
+public final class Stream2TypeAdapter<S, K, V, E>
 		extends TypeAdapter<S> {
 
 	private final TypeAdapter<V> valueTypeAdapter;
@@ -42,7 +42,7 @@ public final class JsonObjectStreamTypeAdapter<S, K, V, E>
 			final Function<? super E, String> fromKey,
 			final Function<? super E, ? extends V> fromValue
 	) {
-		return new JsonObjectStreamTypeAdapter<S, K, V, E>(valueTypeAdapter, useBeginEnd, toKey, toEntry, toReadIterator, toWriteIterator, fromKey, fromValue)
+		return new Stream2TypeAdapter<S, K, V, E>(valueTypeAdapter, useBeginEnd, toKey, toEntry, toReadIterator, toWriteIterator, fromKey, fromValue)
 				.nullSafe();
 	}
 
@@ -85,7 +85,7 @@ public final class JsonObjectStreamTypeAdapter<S, K, V, E>
 			final Function<? super E, ? extends V> fromValue,
 			final boolean useBeginEnd
 	) {
-		return JsonObjectStreamTypeAdapter.<Iterator<E>, K, V, E>forObject(valueTypeAdapter, useBeginEnd, toKey, toEntry, (jsonReader, iterator) -> iterator, Function.identity(), fromKey, fromValue);
+		return Stream2TypeAdapter.<Iterator<E>, K, V, E>forObject(valueTypeAdapter, useBeginEnd, toKey, toEntry, (jsonReader, iterator) -> iterator, Function.identity(), fromKey, fromValue);
 	}
 
 	public static <V> TypeAdapter<Stream<Map.Entry<String, V>>> forObjectAsStream(
@@ -105,7 +105,7 @@ public final class JsonObjectStreamTypeAdapter<S, K, V, E>
 			final Function<? super E, ? extends V> fromValue,
 			final boolean autoClose
 	) {
-		return JsonObjectStreamTypeAdapter.<Stream<E>, K, V, E>forObject(valueTypeAdapter, useBeginEnd, toKey, toEntry, (in, iterator) -> {
+		return Stream2TypeAdapter.<Stream<E>, K, V, E>forObject(valueTypeAdapter, useBeginEnd, toKey, toEntry, (in, iterator) -> {
 			final Stream<E> stream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.IMMUTABLE), false);
 			if ( !autoClose ) {
 				return stream;
@@ -136,7 +136,7 @@ public final class JsonObjectStreamTypeAdapter<S, K, V, E>
 			final Function<? super E, ? extends V> fromValue,
 			final boolean useBeginEnd
 	) {
-		return JsonObjectStreamTypeAdapter.<Enumeration<E>, K, V, E>forObject(valueTypeAdapter, useBeginEnd, toKey, toEntry, (jsonReader, iterator) -> new Enumeration<>() {
+		return Stream2TypeAdapter.<Enumeration<E>, K, V, E>forObject(valueTypeAdapter, useBeginEnd, toKey, toEntry, (jsonReader, iterator) -> new Enumeration<>() {
 			@Override
 			public boolean hasMoreElements() {
 				return iterator.hasNext();

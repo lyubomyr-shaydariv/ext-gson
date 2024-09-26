@@ -6,17 +6,17 @@ import java.util.function.Function;
 
 import com.google.gson.TypeAdapter;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.JsonArrayStreamTypeAdapter;
+import lsh.ext.gson.Stream1TypeAdapter;
 
 @UtilityClass
 public final class UtilTypeAdapter {
 
 	public static <E> TypeAdapter<Iterator<E>> forIterator(final TypeAdapter<E> elementTypeAdapter, final boolean useBeginEnd) {
-		return JsonArrayStreamTypeAdapter.forArray(elementTypeAdapter, useBeginEnd, (jsonReader, iterator) -> iterator, Function.identity());
+		return Stream1TypeAdapter.forArray(elementTypeAdapter, useBeginEnd, (jsonReader, iterator) -> iterator, Function.identity());
 	}
 
 	public static <E> TypeAdapter<Enumeration<E>> forEnumeration(final TypeAdapter<E> elementTypeAdapter, final boolean useBeginEnd) {
-		return JsonArrayStreamTypeAdapter.forArray(elementTypeAdapter, useBeginEnd, (jsonReader, iterator) -> new Enumeration<>() {
+		return Stream1TypeAdapter.forArray(elementTypeAdapter, useBeginEnd, (jsonReader, iterator) -> new Enumeration<>() {
 			@Override
 			public boolean hasMoreElements() {
 				return iterator.hasNext();

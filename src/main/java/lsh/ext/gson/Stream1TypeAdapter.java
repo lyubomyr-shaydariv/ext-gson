@@ -12,7 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class JsonArrayStreamTypeAdapter<S, E>
+public final class Stream1TypeAdapter<S, E>
 		extends TypeAdapter<S> {
 
 	private final TypeAdapter<E> elementTypeAdapter;
@@ -26,7 +26,7 @@ public final class JsonArrayStreamTypeAdapter<S, E>
 			final BiFunction<? super JsonReader, ? super Iterator<E>, ? extends S> toReadIterator,
 			final Function<? super S, ? extends Iterator<E>> toWriteIterator
 	) {
-		return new JsonArrayStreamTypeAdapter<S, E>(elementTypeAdapter, useBeginEnd, toReadIterator, toWriteIterator)
+		return new Stream1TypeAdapter<S, E>(elementTypeAdapter, useBeginEnd, toReadIterator, toWriteIterator)
 				.nullSafe();
 	}
 

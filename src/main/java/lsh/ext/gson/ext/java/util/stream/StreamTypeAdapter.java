@@ -13,15 +13,15 @@ import java.util.stream.StreamSupport;
 
 import com.google.gson.TypeAdapter;
 import lombok.experimental.UtilityClass;
-import lsh.ext.gson.JsonArrayStreamTypeAdapter;
 import lsh.ext.gson.JsonReaders;
+import lsh.ext.gson.Stream1TypeAdapter;
 import lsh.ext.gson.StreamedTypeAdapter;
 
 @UtilityClass
 public final class StreamTypeAdapter {
 
 	public static <E> TypeAdapter<Stream<E>> forStream(final TypeAdapter<E> elementTypeAdapter, final boolean useBeginEnd, final boolean autoClose) {
-		return JsonArrayStreamTypeAdapter.forArray(elementTypeAdapter, useBeginEnd, (in, iterator) -> {
+		return Stream1TypeAdapter.forArray(elementTypeAdapter, useBeginEnd, (in, iterator) -> {
 			final Stream<E> stream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.IMMUTABLE), false);
 			if ( !autoClose ) {
 				return stream;
