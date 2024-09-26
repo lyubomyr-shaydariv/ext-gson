@@ -96,6 +96,8 @@ No `ext-gson` dependencies are bundled or planned to be bundled, so all dependen
 
 * `org.apache.commons.collections4.Bag`
 * `org.apache.commons.collections4.BidiMap`
+* `org.apache.commons.collections4.BoundedCollection`
+* `org.apache.commons.collections4.IterableMap`
 * `org.apache.commons.collections4.MultiSet`
 * `org.apache.commons.collections4.MultiValuedMap`
 

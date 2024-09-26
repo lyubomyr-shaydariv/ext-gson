@@ -11,6 +11,8 @@ import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.BoundedCollection;
+import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bag.HashBag;
@@ -87,6 +89,39 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 			return () -> IBuilder2.fromMap(new DualLinkedHashBidiMap<>());
 		}
 		return () -> IBuilder2.fromMap(new DualHashBidiMap<>());
+	}
+
+	public static ITypeAdapterFactory<BoundedCollection<Object>> defaultForBoundedCollection = forBoundedCollection(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForBoundedCollection);
+
+	public static <E> ITypeAdapterFactory<BoundedCollection<E>> forBoundedCollection(
+			final IBuilder1.ILookup<? super E, ? extends BoundedCollection<E>> lookup
+	) {
+		return ITypeAdapterFactory.forClassHierarchy(BoundedCollection.class, provider -> ApacheCommonsCollections4TypeAdapter.forBoundedCollection(provider.getTypeAdapter(0), lookup.lookup(provider.getTypeToken())));
+	}
+
+	// TODO handle all known implementations
+	public static <E> Supplier<IBuilder1<E, BoundedCollection<E>>> defaultBuilderForBoundedCollection(final TypeToken<? super BoundedCollection<E>> typeToken) {
+		throw new UnsupportedOperationException(String.valueOf(typeToken));
+	}
+
+	public static final ITypeAdapterFactory<IterableMap<String, Object>> defaultForIterableMap = forIterableMap(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForIterableMap);
+
+	public static <V> ITypeAdapterFactory<IterableMap<String, V>> forIterableMap(
+			final IBuilder2.ILookup<? super String, ? super V, ? extends IterableMap<String, V>> lookup
+	) {
+		return forIterableMap(lookup, Function.identity(), Function.identity());
+	}
+
+	public static <K, V> ITypeAdapterFactory<IterableMap<K, V>> forIterableMap(
+			final IBuilder2.ILookup<? super K, ? super V, ? extends IterableMap<K, V>> lookup,
+			final Function<? super K, String> toKey,
+			final Function<? super String, ? extends K> fromKey
+	) {
+		return ITypeAdapterFactory.forClassHierarchy(IterableMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forIterableMap(provider.getTypeAdapter(1), lookup.lookup(provider.getTypeToken()), toKey, fromKey));
+	}
+
+	public static <V> Supplier<IBuilder2<String, V, IterableMap<String, V>>> defaultBuilderForIterableMap(final TypeToken<? super IterableMap<String, V>> typeToken) {
+		throw new UnsupportedOperationException(String.valueOf(typeToken));
 	}
 
 	public static ITypeAdapterFactory<MultiSet<Object>> defaultForMultiSet = forMultiSet(ApacheCommonsCollections4TypeAdapterFactory::defaultBuilderForMultiSet);

@@ -13,6 +13,8 @@ import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IBuilder2;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.BoundedCollection;
+import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -64,6 +66,30 @@ public final class ApacheCommonsCollections4TypeAdapter {
 	public static <K, V> TypeAdapter<BidiMap<K, V>> forBidiMap(
 			final TypeAdapter<V> valueTypeAdapter,
 			final Supplier<? extends IBuilder2<? super K, ? super V, ? extends BidiMap<K, V>>> builderFactory,
+			final Function<? super K, String> toName,
+			final Function<? super String, ? extends K> fromName
+	) {
+		return Container2TypeAdapter.getInstance(
+				valueTypeAdapter,
+				map -> map.entrySet().iterator(),
+				Map.Entry::getKey,
+				Map.Entry::getValue,
+				toName,
+				fromName,
+				builderFactory
+		);
+	}
+
+	public static <E> TypeAdapter<BoundedCollection<E>> forBoundedCollection(
+			final TypeAdapter<E> elementTypeAdapter,
+			final Supplier<? extends IBuilder1<? super E, ? extends BoundedCollection<E>>> builderFactory
+	) {
+		return Container1TypeAdapter.getInstance(elementTypeAdapter, BoundedCollection::iterator, builderFactory);
+	}
+
+	public static <K, V> TypeAdapter<IterableMap<K, V>> forIterableMap(
+			final TypeAdapter<V> valueTypeAdapter,
+			final Supplier<? extends IBuilder2<? super K, ? super V, ? extends IterableMap<K, V>>> builderFactory,
 			final Function<? super K, String> toName,
 			final Function<? super String, ? extends K> fromName
 	) {
