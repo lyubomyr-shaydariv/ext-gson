@@ -35,7 +35,7 @@ public interface IBuilder1<A1, R> {
 
 	static <A1, R, AUX> IBuilder1<A1, R> of(
 			final Supplier<? extends AUX> createAux,
-			final BiConsumer<? super A1, ? super AUX> consume,
+			final BiConsumer<? super AUX, ? super A1> consume,
 			final Function<? super AUX, ? extends R> build
 	) {
 		return new IBuilder1<>() {
@@ -45,7 +45,7 @@ public interface IBuilder1<A1, R> {
 
 			@Override
 			public void accept(final A1 a1) {
-				consume.accept(a1, createOrGet());
+				consume.accept(createOrGet(), a1);
 			}
 
 			@Override
@@ -65,7 +65,7 @@ public interface IBuilder1<A1, R> {
 
 	static <A1, R> IBuilder1<A1, R> of(
 			final Supplier<? extends R> createResult,
-			final BiConsumer<? super A1, ? super R> consume
+			final BiConsumer<? super R, ? super A1> consume
 	) {
 		return of(createResult, consume, Function.identity());
 	}

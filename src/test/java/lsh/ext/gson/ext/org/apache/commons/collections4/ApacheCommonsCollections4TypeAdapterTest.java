@@ -7,6 +7,7 @@ import com.google.gson.TypeAdapter;
 import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.test.TestTypeAdapters;
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.bag.AbstractMapBag;
 import org.apache.commons.collections4.bag.TreeBag;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ public final class ApacheCommonsCollections4TypeAdapterTest {
 		@SuppressWarnings("RedundantTypeArguments")
 		final TypeAdapter<Bag<String>> unit = ApacheCommonsCollections4TypeAdapter.<String>forBagNCopies(
 				TestTypeAdapters.integerTypeAdapter,
-				() -> IBuilder2.of(TreeBag::new, (e, nCopies, strings) -> strings.add(e, nCopies), Function.identity())
+				() -> IBuilder2.of(TreeBag::new, AbstractMapBag::add, Function.identity())
 		);
 		final Bag<String> before = new TreeBag<>();
 		before.add("foo");

@@ -13,19 +13,19 @@ import org.apache.commons.collections4.MultiValuedMap;
 public final class Builder {
 
 	public static <E, B extends Bag<E>> IBuilder1<E, B> forBag(final Supplier<? extends B> create) {
-		return IBuilder1.of(create, (e, bag) -> bag.add(e));
+		return IBuilder1.of(create, Bag::add);
 	}
 
 	public static <E, B extends Bag<E>> IBuilder2<E, Integer, B> forBagNCopies(final Supplier<? extends B> create) {
-		return IBuilder2.of(create, (e, nCopies, bag) -> bag.add(e, nCopies));
+		return IBuilder2.of(create, Bag::add);
 	}
 
 	public static <E, M extends MultiSet<E>> IBuilder1<E, M> forMultiSet(final Supplier<? extends M> create) {
-		return IBuilder1.of(create, (e, es) -> es.add(e));
+		return IBuilder1.of(create, MultiSet::add);
 	}
 
 	public static <K, V, M extends MultiValuedMap<K, V>> IBuilder2<K, V, M> forMultiValuedMap(final Supplier<? extends M> create) {
-		return IBuilder2.of(create, (k, v, map) -> map.put(k, v));
+		return IBuilder2.of(create, MultiValuedMap::put);
 	}
 
 }
