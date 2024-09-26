@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.google.common.collect.BiMap;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import lombok.experimental.UtilityClass;
@@ -74,7 +73,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 			final Function<? super K, String> toKey,
 			final Function<? super String, ? extends K> fromKey
 	) {
-		return ITypeAdapterFactory.forClassHierarchy(BiMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forBidiMap(provider.getTypeAdapter(1), lookup.lookup(provider.getTypeToken()), toKey, fromKey));
+		return ITypeAdapterFactory.forClassHierarchy(BidiMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forBidiMap(provider.getTypeAdapter(1), lookup.lookup(provider.getTypeToken()), toKey, fromKey));
 	}
 
 	// TODO handle all known implementations

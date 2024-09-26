@@ -82,7 +82,7 @@ public interface ITypeAdapterFactory<K>
 	}
 
 	@SuppressWarnings("NewClassNamingConvention")
-	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<? extends RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
+	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
 			@Override

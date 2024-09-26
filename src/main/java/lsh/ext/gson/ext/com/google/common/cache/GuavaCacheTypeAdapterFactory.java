@@ -12,7 +12,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 public final class GuavaCacheTypeAdapterFactory {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static final Class<? extends Cache<String, String>> stringStringToStringCacheClass = (Class) Cache.class;
+	private static final Class<Cache<String, String>> stringStringToStringCacheClass = (Class) Cache.class;
 
 	public static final ITypeAdapterFactory<Cache<String, String>> defaultForCache = forCache(() -> CacheBuilder.newBuilder()
 			.build()
@@ -25,7 +25,7 @@ public final class GuavaCacheTypeAdapterFactory {
 	}
 
 	public static <K, V, C extends Cache<K, V>> ITypeAdapterFactory<C> forCache(
-			final Class<? extends C> klass,
+			final Class<C> klass,
 			final Function<? super K, String> toName,
 			final Function<? super String, ? extends K> fromName,
 			final Supplier<? extends C> getCache
