@@ -1,9 +1,10 @@
-package lsh.ext.gson;
+package lsh.ext.gson.adapters;
 
 import java.io.IOException;
 
 import com.google.gson.TypeAdapter;
 import lombok.experimental.UtilityClass;
+import lsh.ext.gson.LiteralStringTypeAdapter;
 
 @UtilityClass
 public final class EncodedJsonStringTypeAdapter {

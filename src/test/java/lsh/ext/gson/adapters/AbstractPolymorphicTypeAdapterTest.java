@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.adapters;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -19,6 +19,8 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lsh.ext.gson.Gsons;
+import lsh.ext.gson.JsonObjects;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

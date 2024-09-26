@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.adapters;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -24,6 +24,8 @@ import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.ITypeAdapterFactory;
+import lsh.ext.gson.TypeAdapters;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractPolymorphicTypeAdapter<T>

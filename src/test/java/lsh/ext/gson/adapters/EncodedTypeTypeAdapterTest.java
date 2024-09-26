@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.adapters;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -16,6 +16,9 @@ import com.google.gson.JsonIOException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import lsh.ext.gson.Gsons;
+import lsh.ext.gson.JsonObjects;
+import lsh.ext.gson.JsonPrimitives;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;

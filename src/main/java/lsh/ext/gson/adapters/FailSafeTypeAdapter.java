@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.adapters;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.JsonReaders;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FailSafeTypeAdapter<T>

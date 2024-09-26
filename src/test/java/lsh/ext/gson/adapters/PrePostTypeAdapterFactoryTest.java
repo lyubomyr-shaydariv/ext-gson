@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.adapters;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import com.google.gson.Gson;
+import lsh.ext.gson.Gsons;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;

@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.adapters;
 
 import java.util.List;
 
@@ -9,10 +9,11 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lsh.ext.gson.Gsons;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public final class EncodedLiteralStringTypeAdapterTest {
+public final class EncodedJsonStringTypeAdapterTest {
 
 	private static final Gson gson = Gsons.getNormalized();
 
