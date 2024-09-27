@@ -29,11 +29,12 @@ public interface ITypeAdapterFactory<K>
 
 	}
 
+	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
 		return forClass(klass, provider -> typeAdapter);
 	}
 
-	@SuppressWarnings("NewClassNamingConvention")
+	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
@@ -77,11 +78,12 @@ public interface ITypeAdapterFactory<K>
 		};
 	}
 
+	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
 		return forClassHierarchy(klass, provider -> typeAdapter);
 	}
 
-	@SuppressWarnings("NewClassNamingConvention")
+	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
