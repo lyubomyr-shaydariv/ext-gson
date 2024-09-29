@@ -160,10 +160,13 @@
 				</executions>
 				<configuration>
 					<rules>
+						<banDynamicVersions/>
+						<banTransitiveDependencies/>
 						<dependencyConvergence/>
 						<requireMavenVersion>
 							<version>[3.6.3,)</version>
 						</requireMavenVersion>
+						<requireSnapshotVersion/>
 					</rules>
 				</configuration>
 			</plugin>
