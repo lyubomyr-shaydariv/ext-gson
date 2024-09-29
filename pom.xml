@@ -160,6 +160,7 @@
 				</executions>
 				<configuration>
 					<rules>
+						<dependencyConvergence/>
 						<requireMavenVersion>
 							<version>[3.6.3,)</version>
 						</requireMavenVersion>
