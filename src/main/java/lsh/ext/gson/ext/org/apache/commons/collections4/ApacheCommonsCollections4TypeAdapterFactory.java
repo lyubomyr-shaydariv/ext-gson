@@ -1,5 +1,6 @@
 package lsh.ext.gson.ext.org.apache.commons.collections4;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -13,11 +14,13 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.IterableMap;
+import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.apache.commons.collections4.bidimap.DualLinkedHashBidiMap;
+import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.commons.collections4.multiset.HashMultiSet;
@@ -121,6 +124,29 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 	}
 
 	public static <V> Supplier<IBuilder2<String, V, IterableMap<String, V>>> defaultBuilderForIterableMap(final TypeToken<? super IterableMap<String, V>> typeToken) {
+		throw new UnsupportedOperationException(String.valueOf(typeToken));
+	}
+
+	public static final ITypeAdapterFactory<KeyValue<String, Object>> defaultForKeyValue = forKeyValue(UnmodifiableMapEntry::new);
+
+	public static <V> ITypeAdapterFactory<KeyValue<String, V>> forKeyValue(
+			final BiFunction<? super String, ? super V, ? extends KeyValue<String, V>> createEntry
+	) {
+		return forKeyValue(createEntry, Function.identity(), Function.identity());
+	}
+
+	public static <K, V> ITypeAdapterFactory<KeyValue<K, V>> forKeyValue(
+			final BiFunction<? super K, ? super V, ? extends KeyValue<K, V>> createEntry,
+			final Function<? super K, String> toKey,
+			final Function<? super String, ? extends K> fromKey
+	) {
+		return ITypeAdapterFactory.forClassHierarchy(
+				KeyValue.class,
+				provider -> ApacheCommonsCollections4TypeAdapter.forKeyValue(provider.getTypeAdapter(1), createEntry, toKey, fromKey)
+		);
+	}
+
+	public static <V> Supplier<IBuilder2<String, V, KeyValue<String, V>>> defaultBuilderForKeyValue(final TypeToken<? super KeyValue<String, V>> typeToken) {
 		throw new UnsupportedOperationException(String.valueOf(typeToken));
 	}
 
