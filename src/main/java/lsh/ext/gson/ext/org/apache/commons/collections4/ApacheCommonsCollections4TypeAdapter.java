@@ -2,6 +2,7 @@ package lsh.ext.gson.ext.org.apache.commons.collections4;
 
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -11,11 +12,13 @@ import lsh.ext.gson.Container1TypeAdapter;
 import lsh.ext.gson.Container2TypeAdapter;
 import lsh.ext.gson.IBuilder1;
 import lsh.ext.gson.IBuilder2;
+import lsh.ext.gson.SingleEntryTypeAdapter;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.IteratorUtils;
+import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 
@@ -101,6 +104,22 @@ public final class ApacheCommonsCollections4TypeAdapter {
 				toName,
 				fromName,
 				builderFactory
+		);
+	}
+
+	public static <K, V> TypeAdapter<KeyValue<K, V>> forKeyValue(
+			final TypeAdapter<V> valueTypeAdapter,
+			final BiFunction<? super K, ? super V, ? extends KeyValue<K, V>> createEntry,
+			final Function<? super K, String> encodeKey,
+			final Function<? super String, ? extends K> decodeKey
+	) {
+		return SingleEntryTypeAdapter.getInstance(
+				valueTypeAdapter,
+				KeyValue::getKey,
+				KeyValue::getValue,
+				createEntry,
+				encodeKey,
+				decodeKey
 		);
 	}
 

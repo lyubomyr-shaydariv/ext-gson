@@ -11,6 +11,7 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.IterableMap;
+import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 
@@ -32,6 +33,9 @@ public final class ApacheCommonsCollections4Module
 	private ITypeAdapterFactory<? extends IterableMap<String, ?>> iterableMapTypeAdapterFactory = ApacheCommonsCollections4TypeAdapterFactory.defaultForIterableMap;
 
 	@Setter
+	private ITypeAdapterFactory<? extends KeyValue<String, ?>> keyTypeAdapterFactory = ApacheCommonsCollections4TypeAdapterFactory.defaultForKeyValue;
+
+	@Setter
 	private ITypeAdapterFactory<? extends MultiSet<?>> multiSetTypeAdapterFactory = ApacheCommonsCollections4TypeAdapterFactory.defaultForMultiSet;
 
 	@Setter
@@ -44,6 +48,7 @@ public final class ApacheCommonsCollections4Module
 				bidiMapTypeAdapterFactory,
 				boundedCollectionTypeAdapterFactory,
 				iterableMapTypeAdapterFactory,
+				keyTypeAdapterFactory,
 				multiSetTypeAdapterFactory,
 				multiValuedMapTypeAdapterFactory
 		);
