@@ -2,10 +2,13 @@ package lsh.ext.gson.ext.java.util;
 
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import com.google.gson.TypeAdapter;
 import lombok.experimental.UtilityClass;
+import lsh.ext.gson.SingleEntryTypeAdapter;
 import lsh.ext.gson.Stream1TypeAdapter;
 
 @UtilityClass
@@ -37,6 +40,22 @@ public final class UtilTypeAdapter {
 				return enumeration.nextElement();
 			}
 		});
+	}
+
+	public static <K, V> TypeAdapter<Map.Entry<K, V>> forMapEntry(
+			final TypeAdapter<V> valueTypeAdapter,
+			final BiFunction<? super K, ? super V, ? extends Map.Entry<K, V>> createEntry,
+			final Function<? super K, String> encodeKey,
+			final Function<? super String, ? extends K> decodeKey
+	) {
+		return SingleEntryTypeAdapter.getInstance(
+				valueTypeAdapter,
+				Map.Entry::getKey,
+				Map.Entry::getValue,
+				createEntry,
+				encodeKey,
+				decodeKey
+		);
 	}
 
 }
