@@ -116,14 +116,14 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.11.2</version>
+			<version>5.11.3</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-params</artifactId>
-			<version>5.11.2</version>
+			<version>5.11.3</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -471,7 +471,7 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>10.0.4</version>
+						<version>11.0.0</version>
 						<executions>
 							<execution>
 								<phase>validate</phase>
@@ -573,7 +573,7 @@
 					<plugin>
 						<groupId>com.github.spotbugs</groupId>
 						<artifactId>spotbugs-maven-plugin</artifactId>
-						<version>4.8.6.4</version>
+						<version>4.8.6.5</version>
 						<executions>
 							<execution>
 								<phase>process-classes</phase>
