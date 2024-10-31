@@ -4,7 +4,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
@@ -15,7 +14,7 @@ public final class MultimapTypeAdapterTest
 		extends AbstractTypeAdapterTest<Multimap<String, ?>, Multimap<String, ?>> {
 
 	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(LinkedHashMultimap.class, String.class, String.class);
+	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(Multimap.class, String.class, String.class);
 
 	@Nullable
 	@Override
@@ -29,7 +28,7 @@ public final class MultimapTypeAdapterTest
 				makeTestCase(
 						GuavaCollectTypeAdapter.forMultimap(TestTypeAdapters.stringTypeAdapter, GuavaCollectTypeAdapterFactory.defaultBuilderFactoryForMultimap(stringToStringMultimapTypeToken)),
 						"{\"1\":\"foo\",\"1\":\"bar\",\"2\":\"foo\",\"2\":\"bar\"}",
-						LinkedHashMultimap.create(ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar"))
+						ImmutableMultimap.of("1", "foo", "1", "bar", "2", "foo", "2", "bar")
 				)
 		);
 	}

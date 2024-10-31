@@ -3,7 +3,6 @@ package lsh.ext.gson.ext.com.google.common.collect;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.gson.reflect.TypeToken;
@@ -15,7 +14,7 @@ public final class TableTypeAdapterTest
 		extends AbstractTypeAdapterTest<Table<String, String, ?>, Table<String, String, ?>> {
 
 	@SuppressWarnings("unchecked")
-	private static final TypeToken<Table<String, String, Integer>> stringToStringToIntegerTableTypeToken = (TypeToken<Table<String, String, Integer>>) TypeToken.getParameterized(HashBasedTable.class, String.class, String.class, Integer.class);
+	private static final TypeToken<Table<String, String, Integer>> stringToStringToIntegerTableTypeToken = (TypeToken<Table<String, String, Integer>>) TypeToken.getParameterized(Table.class, String.class, String.class, Integer.class);
 
 	@Nullable
 	@Override

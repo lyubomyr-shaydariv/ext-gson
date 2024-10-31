@@ -4,7 +4,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractTypeAdapterTest;
@@ -15,7 +14,7 @@ public final class BiMapTypeAdapterTest
 		extends AbstractTypeAdapterTest<BiMap<String, ?>, BiMap<String, ?>> {
 
 	@SuppressWarnings("unchecked")
-	private static final TypeToken<BiMap<String, String>> stringToStringBiMapType = (TypeToken<BiMap<String, String>>) TypeToken.getParameterized(HashBiMap.class, String.class, String.class);
+	private static final TypeToken<BiMap<String, String>> stringToStringBiMapType = (TypeToken<BiMap<String, String>>) TypeToken.getParameterized(BiMap.class, String.class, String.class);
 
 	@Nullable
 	@Override
