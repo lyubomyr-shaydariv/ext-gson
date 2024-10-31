@@ -4,16 +4,10 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.ImmutableTable;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.LinkedHashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Table;
@@ -48,17 +42,15 @@ public final class GuavaCollectTypeAdapterFactory {
 		));
 	}
 
-	// TODO handle all known implementations
 	public static <K, V> Supplier<IBuilder2<K, V, BiMap<K, V>>> defaultBuilderFactoryForBiMap(final TypeToken<? super BiMap<K, V>> typeToken) {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends BiMap> rawType = (Class<? extends BiMap>) typeToken.getRawType();
-		if ( rawType == HashBiMap.class ) {
-			return () -> IBuilder2.fromMap(HashBiMap.create());
-		}
-		if ( ImmutableBiMap.class.isAssignableFrom(rawType) ) {
+		if ( rawType == BiMap.class || ImmutableBiMap.class.isAssignableFrom(rawType) ) {
 			return ImmutableBuilder::forBiMap;
 		}
-		return () -> IBuilder2.fromMap(HashBiMap.create());
+		return () -> {
+			throw new UnsupportedOperationException(String.format("The default builder for %s does not support %s", BiMap.class, typeToken));
+		};
 	}
 
 	public static final ITypeAdapterFactory<Multimap<String, Object>> defaultForMultimap = forMultimap(GuavaCollectTypeAdapterFactory::defaultBuilderFactoryForMultimap);
@@ -82,20 +74,15 @@ public final class GuavaCollectTypeAdapterFactory {
 		));
 	}
 
-	// TODO handle all known implementations
 	public static <K, V> Supplier<IBuilder2<K, V, Multimap<K, V>>> defaultBuilderFactoryForMultimap(final TypeToken<? super Multimap<K, V>> typeToken) {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends Multimap> rawType = (Class<? extends Multimap>) typeToken.getRawType();
-		if ( rawType == HashMultimap.class ) {
-			return () -> Builder.forMultimap(HashMultimap.create());
-		}
-		if ( rawType == LinkedHashMultimap.class ) {
-			return () -> Builder.forMultimap(LinkedHashMultimap.create());
-		}
-		if ( ImmutableMultimap.class.isAssignableFrom(rawType) ) {
+		if ( rawType == Multimap.class || ImmutableMultimap.class.isAssignableFrom(rawType) ) {
 			return ImmutableBuilder::forMultimap;
 		}
-		return () -> Builder.forMultimap(HashMultimap.create());
+		return () -> {
+			throw new UnsupportedOperationException(String.format("The default builder for %s does not support %s", Multimap.class, typeToken));
+		};
 	}
 
 	public static final ITypeAdapterFactory<Multiset<Object>> defaultForMultiset = forMultiset(GuavaCollectTypeAdapterFactory::defaultBuilderFactoryForMultiset);
@@ -109,20 +96,15 @@ public final class GuavaCollectTypeAdapterFactory {
 		));
 	}
 
-	// TODO handle all known implementations
 	public static <E> Supplier<IBuilder1<E, Multiset<E>>> defaultBuilderFactoryForMultiset(final TypeToken<? super Multiset<E>> typeToken) {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends Multiset> rawType = (Class<? extends Multiset>) typeToken.getRawType();
-		if ( rawType == HashMultiset.class ) {
-			return () -> IBuilder1.fromCollection(HashMultiset.create());
-		}
-		if ( rawType == LinkedHashMultiset.class ) {
-			return () -> IBuilder1.fromCollection(LinkedHashMultiset.create());
-		}
-		if ( ImmutableMultiset.class.isAssignableFrom(rawType) ) {
+		if ( rawType == Multiset.class || ImmutableMultiset.class.isAssignableFrom(rawType) ) {
 			return ImmutableBuilder::forMultiset;
 		}
-		return () -> IBuilder1.fromCollection(HashMultiset.create());
+		return () -> {
+			throw new UnsupportedOperationException(String.format("The default builder for %s does not support %s", Multiset.class, typeToken));
+		};
 	}
 
 	public static final ITypeAdapterFactory<Table<String, String, Object>> defaultForTable = forTable(GuavaCollectTypeAdapterFactory::defaultBuilderFactoryForTable, Function.identity(), Function.identity(), Function.identity(), Function.identity());
@@ -144,18 +126,15 @@ public final class GuavaCollectTypeAdapterFactory {
 		));
 	}
 
-	// TODO handle all known implementations
 	public static <V> Supplier<IBuilder3<String, String, V, Table<String, String, V>>> defaultBuilderFactoryForTable(final TypeToken<? super Table<String, String, V>> typeToken) {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends Table> rawType = (Class<? extends Table>) typeToken.getRawType();
-		// TODO why is HashBasedTable not final?
-		if ( HashBasedTable.class.isAssignableFrom(rawType) ) {
-			return () -> Builder.forTable(HashBasedTable.create());
-		}
-		if ( ImmutableTable.class.isAssignableFrom(rawType) ) {
+		if ( rawType == Table.class || ImmutableTable.class.isAssignableFrom(rawType) ) {
 			return ImmutableBuilder::forTable;
 		}
-		return () -> Builder.forTable(HashBasedTable.create());
+		return () -> {
+			throw new UnsupportedOperationException(String.format("The default builder for %s does not support %s", Table.class, typeToken));
+		};
 	}
 
 }
