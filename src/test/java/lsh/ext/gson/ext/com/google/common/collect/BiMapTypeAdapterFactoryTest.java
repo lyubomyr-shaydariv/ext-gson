@@ -12,12 +12,9 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class BiMapTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<BiMap<String, String>> stringToStringBiMapTypeToken = (TypeToken<BiMap<String, String>>) TypeToken.getParameterized(BiMap.class, String.class, String.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<BiMap<Integer, Object>> integerToObjectTypeToken = (TypeToken<BiMap<Integer, Object>>) TypeToken.getParameterized(BiMap.class, Integer.class, Object.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<BiMap<Float, Integer>> floatToIntegerTypeToken = (TypeToken<BiMap<Float, Integer>>) TypeToken.getParameterized(BiMap.class, Float.class, Integer.class);
+	private static final TypeToken<BiMap<String, String>> stringToStringBiMapTypeToken = Types.typeTokenOf(BiMap.class, String.class, String.class);
+	private static final TypeToken<BiMap<Integer, Object>> integerToObjectTypeToken = Types.typeTokenOf(BiMap.class, Integer.class, Object.class);
+	private static final TypeToken<BiMap<Float, Integer>> floatToIntegerTypeToken = Types.typeTokenOf(BiMap.class, Float.class, Integer.class);
 
 	public BiMapTypeAdapterFactoryTest() {
 		super(false);

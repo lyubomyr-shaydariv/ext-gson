@@ -12,12 +12,9 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class MultisetTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multiset<String>> stringMultisetTypeToken = (TypeToken<Multiset<String>>) TypeToken.getParameterized(Multiset.class, String.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multiset<Object>> objectMultisetTypeToken = (TypeToken<Multiset<Object>>) TypeToken.getParameterized(Multiset.class, Object.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multiset<Integer>> integerMultisetTypeToken = (TypeToken<Multiset<Integer>>) TypeToken.getParameterized(Multiset.class, Integer.class);
+	private static final TypeToken<Multiset<String>> stringMultisetTypeToken = Types.typeTokenOf(Multiset.class, String.class);
+	private static final TypeToken<Multiset<Object>> objectMultisetTypeToken = Types.typeTokenOf(Multiset.class, Object.class);
+	private static final TypeToken<Multiset<Integer>> integerMultisetTypeToken = Types.typeTokenOf(Multiset.class, Integer.class);
 
 	public MultisetTypeAdapterFactoryTest() {
 		super(false);

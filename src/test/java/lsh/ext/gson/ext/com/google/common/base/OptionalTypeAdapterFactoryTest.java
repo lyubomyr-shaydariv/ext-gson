@@ -12,12 +12,9 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class OptionalTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Optional<String>> optionalStringTypeToken = (TypeToken<Optional<String>>) TypeToken.getParameterized(Optional.class, String.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Optional<Object>> optionalObjectTypeToken = (TypeToken<Optional<Object>>) TypeToken.getParameterized(Optional.class, Object.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Optional<Integer>> optionalIntegerTypeToken = (TypeToken<Optional<Integer>>) TypeToken.getParameterized(Optional.class, Integer.class);
+	private static final TypeToken<Optional<String>> optionalStringTypeToken = Types.typeTokenOf(Optional.class, String.class);
+	private static final TypeToken<Optional<Object>> optionalObjectTypeToken = Types.typeTokenOf(Optional.class, Object.class);
+	private static final TypeToken<Optional<Integer>> optionalIntegerTypeToken = Types.typeTokenOf(Optional.class, Integer.class);
 
 	public OptionalTypeAdapterFactoryTest() {
 		super(false);

@@ -12,12 +12,9 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class MultimapTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = (TypeToken<Multimap<String, String>>) TypeToken.getParameterized(Multimap.class, String.class, String.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multimap<String, Object>> stringToObjectMultimapTypeToken = (TypeToken<Multimap<String, Object>>) TypeToken.getParameterized(Multimap.class, String.class, Object.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multimap<Integer, Integer>> integerToIntegerMultimapTypeToken = (TypeToken<Multimap<Integer, Integer>>) TypeToken.getParameterized(Multimap.class, Integer.class, Integer.class);
+	private static final TypeToken<Multimap<String, String>> stringToStringMultimapTypeToken = Types.typeTokenOf(Multimap.class, String.class, String.class);
+	private static final TypeToken<Multimap<String, Object>> stringToObjectMultimapTypeToken = Types.typeTokenOf(Multimap.class, String.class, Object.class);
+	private static final TypeToken<Multimap<Integer, Integer>> integerToIntegerMultimapTypeToken = Types.typeTokenOf(Multimap.class, Integer.class, Integer.class);
 
 	public MultimapTypeAdapterFactoryTest() {
 		super(false);
