@@ -126,7 +126,7 @@ public final class GuavaCollectTypeAdapterFactory {
 		));
 	}
 
-	public static <V> Supplier<IBuilder3<String, String, V, Table<String, String, V>>> defaultBuilderFactoryForTable(final TypeToken<? super Table<String, String, V>> typeToken) {
+	public static <R, C, V> Supplier<IBuilder3<R, C, V, Table<R, C, V>>> defaultBuilderFactoryForTable(final TypeToken<? super Table<R, C, V>> typeToken) {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends Table> rawType = (Class<? extends Table>) typeToken.getRawType();
 		if ( rawType == Table.class || ImmutableTable.class.isAssignableFrom(rawType) ) {

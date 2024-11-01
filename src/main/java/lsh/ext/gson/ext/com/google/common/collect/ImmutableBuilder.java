@@ -175,11 +175,11 @@ public final class ImmutableBuilder {
 		return IBuilder1.of(builder::add, builder::build);
 	}
 
-	public static <V> IBuilder3<String, String, V, Table<String, String, V>> forTable() {
+	public static <R, C, V> IBuilder3<R, C, V, Table<R, C, V>> forTable() {
 		return forTable(ImmutableTable.builder());
 	}
 
-	public static <V> IBuilder3<String, String, V, Table<String, String, V>> forTable(final ImmutableTable.Builder<String, String, V> builder) {
+	public static <R, C, V> IBuilder3<R, C, V, Table<R, C, V>> forTable(final ImmutableTable.Builder<R, C, V> builder) {
 		return IBuilder3.of(builder::put, builder::build);
 	}
 

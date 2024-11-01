@@ -77,7 +77,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		return ITypeAdapterFactory.forClassHierarchy(BidiMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forBidiMap(provider.getTypeAdapter(1), lookup.lookup(provider.getTypeToken()), toKey, fromKey));
 	}
 
-	public static <V> Supplier<IBuilder2<String, V, BidiMap<String, V>>> defaultBuilderForBidiMap(final TypeToken<? super BidiMap<String, V>> typeToken) {
+	public static <K, V> Supplier<IBuilder2<K, V, BidiMap<K, V>>> defaultBuilderForBidiMap(final TypeToken<? super BidiMap<K, V>> typeToken) {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		final Class<? extends BidiMap> rawType = (Class<? extends BidiMap>) typeToken.getRawType();
 		if ( rawType == BidiMap.class || UnmodifiableBidiMap.class.isAssignableFrom(rawType) ) {
@@ -123,11 +123,11 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		return ITypeAdapterFactory.forClassHierarchy(IterableMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forIterableMap(provider.getTypeAdapter(1), lookup.lookup(provider.getTypeToken()), toKey, fromKey));
 	}
 
-	public static <V> Supplier<IBuilder2<String, V, IterableMap<String, V>>> defaultBuilderForIterableMap(final TypeToken<? super IterableMap<String, V>> typeToken) {
+	public static <K, V> Supplier<IBuilder2<K, V, IterableMap<K, V>>> defaultBuilderForIterableMap(final TypeToken<? super IterableMap<K, V>> typeToken) {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends IterableMap> rawType = (Class<? extends IterableMap>) typeToken.getRawType();
 		if ( rawType == IterableMap.class ) {
-			return () -> Builder.forIterableMap(HashedMap::new, iterableMap -> (IterableMap<String, V>) UnmodifiableMap.unmodifiableMap(iterableMap));
+			return () -> Builder.forIterableMap(HashedMap::new, iterableMap -> (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(iterableMap));
 		}
 		return () -> {
 			throw new UnsupportedOperationException(String.format("The default builder for %s does not support %s", IterableMap.class, typeToken));
@@ -153,7 +153,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		);
 	}
 
-	public static <V> Supplier<IBuilder2<String, V, KeyValue<String, V>>> defaultBuilderForKeyValue(final TypeToken<? super KeyValue<String, V>> typeToken) {
+	public static <K, V> Supplier<IBuilder2<K, V, KeyValue<K, V>>> defaultBuilderForKeyValue(final TypeToken<? super KeyValue<K, V>> typeToken) {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends KeyValue> rawType = (Class<? extends KeyValue>) typeToken.getRawType();
 		if ( rawType == KeyValue.class || UnmodifiableMapEntry.class.isAssignableFrom(rawType) ) {
@@ -199,7 +199,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		return ITypeAdapterFactory.forClassHierarchy(MultiValuedMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forMultiValuedMap(provider.getTypeAdapter(1), builderLookup.lookup(provider.getTypeToken()), encodeKey, decodeKey));
 	}
 
-	public static <V> Supplier<IBuilder2<String, V, MultiValuedMap<String, V>>> defaultBuilderForMultiValuedMap(final TypeToken<? super MultiValuedMap<String, V>> typeToken) {
+	public static <K, V> Supplier<IBuilder2<K, V, MultiValuedMap<K, V>>> defaultBuilderForMultiValuedMap(final TypeToken<? super MultiValuedMap<K, V>> typeToken) {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Class<? extends MultiValuedMap> rawType = (Class<? extends MultiValuedMap>) typeToken.getRawType();
 		if ( rawType == MultiValuedMap.class || UnmodifiableMultiValuedMap.class.isAssignableFrom(rawType) ) {
