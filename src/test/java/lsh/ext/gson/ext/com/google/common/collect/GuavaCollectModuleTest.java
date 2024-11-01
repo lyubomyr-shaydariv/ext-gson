@@ -8,19 +8,16 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Table;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.AbstractModuleTest;
+import lsh.ext.gson.test.Types;
 import org.junit.jupiter.params.provider.Arguments;
 
 public final class GuavaCollectModuleTest
 		extends AbstractModuleTest {
 
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<BiMap<String, Integer>> stringToIntegerBiMapTypeToken = (TypeToken<BiMap<String, Integer>>) TypeToken.getParameterized(BiMap.class, String.class, Integer.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multiset<Integer>> integerMultisetTypeToken = (TypeToken<Multiset<Integer>>) TypeToken.getParameterized(Multiset.class, Integer.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Multimap<String, Integer>> stringToIntegerMultiMapTypeToken = (TypeToken<Multimap<String, Integer>>) TypeToken.getParameterized(Multimap.class, String.class, Integer.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Table<String, String, Integer>> stringToStringToIntegerTableTypeToken = (TypeToken<Table<String, String, Integer>>) TypeToken.getParameterized(Table.class, String.class, String.class, Integer.class);
+	private static final TypeToken<BiMap<String, Integer>> stringToIntegerBiMapTypeToken = Types.typeTokenOf(BiMap.class, String.class, Integer.class);
+	private static final TypeToken<Multiset<Integer>> integerMultisetTypeToken = Types.typeTokenOf(Multiset.class, Integer.class);
+	private static final TypeToken<Multimap<String, Integer>> stringToIntegerMultiMapTypeToken = Types.typeTokenOf(Multimap.class, String.class, Integer.class);
+	private static final TypeToken<Table<String, String, Integer>> stringToStringToIntegerTableTypeToken = Types.typeTokenOf(Table.class, String.class, String.class, Integer.class);
 
 	public GuavaCollectModuleTest() {
 		super(GuavaCollectModule.create().build());

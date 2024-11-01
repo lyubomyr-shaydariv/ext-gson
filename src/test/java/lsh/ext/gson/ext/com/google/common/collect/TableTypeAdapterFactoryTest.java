@@ -13,12 +13,9 @@ import org.junit.jupiter.params.provider.Arguments;
 public final class TableTypeAdapterFactoryTest
 		extends AbstractTypeAdapterFactoryTest {
 
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Table<String, String, String>> stringToStringToStringTableTypeToken = (TypeToken<Table<String, String, String>>) TypeToken.getParameterized(Table.class, String.class, String.class, String.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Table<Float, Integer, Object>> floatToIntegerToObjectTableTypeToken = (TypeToken<Table<Float, Integer, Object>>) TypeToken.getParameterized(Table.class, Float.class, Integer.class, Object.class);
-	@SuppressWarnings("unchecked")
-	private static final TypeToken<Table<Character, List<?>, Integer>> characterToListToIntegerTableTypeToken = (TypeToken<Table<Character, List<?>, Integer>>) TypeToken.getParameterized(Table.class, Character.class, List.class, Integer.class);
+	private static final TypeToken<Table<String, String, String>> stringToStringToStringTableTypeToken = Types.typeTokenOf(Table.class, String.class, String.class, String.class);
+	private static final TypeToken<Table<Float, Integer, Object>> floatToIntegerToObjectTableTypeToken = Types.typeTokenOf(Table.class, Float.class, Integer.class, Object.class);
+	private static final TypeToken<Table<Character, List<?>, Integer>> characterToListToIntegerTableTypeToken = Types.typeTokenOf(Table.class, Character.class, List.class, Integer.class);
 
 	public TableTypeAdapterFactoryTest() {
 		super(false);
