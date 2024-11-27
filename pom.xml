@@ -177,10 +177,9 @@
 				<version>3.13.0</version>
 				<configuration>
 					<failOnWarning>false</failOnWarning>
-					<source>19</source>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
-					<target>19</target>
+					<release>19</release>
 				</configuration>
 			</plugin>
 
