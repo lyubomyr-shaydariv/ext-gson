@@ -24,9 +24,22 @@ public interface IModule
 		};
 	}
 
+	static IModule from(final TypeAdapterFactory typeAdapterFactory) {
+		return new IModule() {
+			@Nullable
+			@Override
+			public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
+				return typeAdapterFactory.create(gson, typeToken);
+			}
+		};
+	}
+
 	static IModule from(final TypeAdapterFactory... typeAdapterFactories) {
 		if ( typeAdapterFactories.length == 0 ) {
 			return empty();
+		}
+		if ( typeAdapterFactories.length == 1 ) {
+			return from(typeAdapterFactories[0]);
 		}
 		return new IModule() {
 			private final TypeAdapterFactory[] typeAdapterFactoriesCopy = typeAdapterFactories.clone();
