@@ -10,16 +10,6 @@
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/ITypeAdapterFactory.java:[18,16] error: [override.return] Incompatible return type.
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/ITypeAdapterFactory.java:[42,25] error: [override.return] Incompatible return type.
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/ITypeAdapterFactory.java:[91,25] error: [override.return] Incompatible return type.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[24,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[33,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[34,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[44,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[45,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[46,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[57,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[58,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[59,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[60,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonObjects.java:[23,21] error: [argument] incompatible argument for parameter value of JsonObject.add.
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonObjects.java:[32,21] error: [argument] incompatible argument for parameter value of JsonObject.add.
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonObjects.java:[33,21] error: [argument] incompatible argument for parameter value of JsonObject.add.
@@ -138,36 +128,6 @@
 [ERROR]     <T extends @Initialized @Nullable Object> @Initialized @Nullable TypeAdapter<T extends @Initialized @Nullable Object> create(@Initialized @NonNull <anonymous lsh.ext.gson.ITypeAdapterFactory$2> this, @Initialized @NonNull Gson p0, @Initialized @NonNull TypeToken<T extends @Initialized @Nullable Object> p1)
 [ERROR]   cannot override method in @Initialized @NonNull TypeAdapterFactory
 [ERROR]     <T extends @Initialized @Nullable Object> @Initialized @NonNull TypeAdapter<T extends @Initialized @Nullable Object> create(@Initialized @NonNull TypeAdapterFactory this, @Initialized @NonNull Gson p0, @Initialized @NonNull TypeToken<T extends @Initialized @Nullable Object> p1)
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[24,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[33,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[34,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[44,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[45,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[46,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[57,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[58,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[59,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
-[ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonArrays.java:[60,16] error: [argument] incompatible argument for parameter element of JsonArray.add.
-[ERROR]   found   : @Initialized @Nullable JsonElement
-[ERROR]   required: @Initialized @NonNull JsonElement
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/JsonObjects.java:[23,21] error: [argument] incompatible argument for parameter value of JsonObject.add.
 [ERROR]   found   : @Initialized @Nullable JsonElement
 [ERROR]   required: @Initialized @NonNull JsonElement
@@ -213,30 +173,30 @@
 [ERROR]   cannot override method in @Initialized @NonNull TypeAdapterFactory
 [ERROR]     <T extends @Initialized @Nullable Object> @Initialized @NonNull TypeAdapter<T extends @Initialized @Nullable Object> create(@Initialized @NonNull TypeAdapterFactory this, @Initialized @NonNull Gson p0, @Initialized @NonNull TypeToken<T extends @Initialized @Nullable Object> p1)
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[124,10] error: [type.argument.inference.crashed] Type argument inference crashed for Streamed constructor
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#563 of ? extends T <: T extends Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#431 of ? extends T <: T extends Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[124,10] error: [type.argument.inference.crashed] Type argument inference crashed for Streamed constructor
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#718 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#34 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[198,11] error: [type.argument.inference.crashed] Type argument inference crashed for Factory constructor
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#158 of ? extends T <: T extends Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#468 of ? extends T <: T extends Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[198,11] error: [type.argument.inference.crashed] Type argument inference crashed for Factory constructor
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#469 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#906 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[212,31] error: [type.argument.inference.crashed] Type argument inference crashed for Streamed.getInstance
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#561 of ? extends T <: T extends Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#657 of ? extends T <: T extends Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[212,31] error: [type.argument.inference.crashed] Type argument inference crashed for Streamed.getInstance
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#351 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#345 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[239,10] error: [type.argument.inference.crashed] Type argument inference crashed for JsonTree constructor
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#360 of ? extends T <: T extends Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#411 of ? extends T <: T extends Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[239,10] error: [type.argument.inference.crashed] Type argument inference crashed for JsonTree constructor
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#658 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#832 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[257,9] error: [dereference.of.nullable] dereference of possibly-null reference jsonObjectWithDiscriminator
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[291,11] error: [type.argument.inference.crashed] Type argument inference crashed for Factory constructor
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#808 of ? extends T <: T extends Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#824 of ? extends T <: T extends Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[291,11] error: [type.argument.inference.crashed] Type argument inference crashed for Factory constructor
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#845 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#650 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[305,31] error: [type.argument.inference.crashed] Type argument inference crashed for JsonTree.getInstance
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#700 of ? extends T <: T extends Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#839 of ? extends T <: T extends Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/AbstractPolymorphicTypeAdapter.java:[305,31] error: [type.argument.inference.crashed] Type argument inference crashed for JsonTree.getInstance
-[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#405 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
+[ERROR]   error: An exception occurred:  False bound for: Constraint: inference type: capture#448 of ? extends T <: T extends @Initialized @Nullable Object Result: FALSE
 [ERROR] /home/lsh/repo/ext-gson/src/main/java/lsh/ext/gson/adapters/EncodedTypeTypeAdapter.java:[46,36] error: [argument] incompatible argument for parameter arg0 of Function.apply.
 [ERROR]   found   : T extends @Initialized @Nullable Object
 [ERROR]   required: @Initialized @NonNull Object
