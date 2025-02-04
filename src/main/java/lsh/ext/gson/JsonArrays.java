@@ -9,6 +9,8 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import lombok.experimental.UtilityClass;
+import org.checkerframework.checker.initialization.qual.Initialized;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 @UtilityClass
 public final class JsonArrays {
@@ -21,7 +23,7 @@ public final class JsonArrays {
 			@Nullable final JsonElement e1
 	) {
 		final JsonArray jsonArray = new JsonArray(1);
-		jsonArray.add(e1);
+		jsonArray.add((@Initialized @NonNull JsonArray) e1);
 		return jsonArray;
 	}
 
@@ -30,8 +32,8 @@ public final class JsonArrays {
 			@Nullable final JsonElement e2
 	) {
 		final JsonArray jsonArray = new JsonArray(2);
-		jsonArray.add(e1);
-		jsonArray.add(e2);
+		jsonArray.add((@Initialized @NonNull JsonArray) e1);
+		jsonArray.add((@Initialized @NonNull JsonArray) e2);
 		return jsonArray;
 	}
 
@@ -41,9 +43,9 @@ public final class JsonArrays {
 			@Nullable final JsonElement e3
 	) {
 		final JsonArray jsonArray = new JsonArray(3);
-		jsonArray.add(e1);
-		jsonArray.add(e2);
-		jsonArray.add(e3);
+		jsonArray.add((@Initialized @NonNull JsonArray) e1);
+		jsonArray.add((@Initialized @NonNull JsonArray) e2);
+		jsonArray.add((@Initialized @NonNull JsonArray) e3);
 		return jsonArray;
 	}
 
@@ -54,10 +56,10 @@ public final class JsonArrays {
 			@Nullable final JsonElement e4
 	) {
 		final JsonArray jsonArray = new JsonArray(4);
-		jsonArray.add(e1);
-		jsonArray.add(e2);
-		jsonArray.add(e3);
-		jsonArray.add(e4);
+		jsonArray.add((@Initialized @NonNull JsonArray) e1);
+		jsonArray.add((@Initialized @NonNull JsonArray) e2);
+		jsonArray.add((@Initialized @NonNull JsonArray) e3);
+		jsonArray.add((@Initialized @NonNull JsonArray) e4);
 		return jsonArray;
 	}
 
