@@ -1,7 +1,7 @@
 package lsh.ext.gson;
 
 @FunctionalInterface
-public interface TriConsumer<T, U, V> {
+public interface ITriConsumer<T, U, V> {
 
 	void accept(T t, U u, V v);
 

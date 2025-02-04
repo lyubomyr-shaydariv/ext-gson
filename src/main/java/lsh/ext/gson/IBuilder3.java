@@ -11,7 +11,7 @@ public interface IBuilder3<A1, A2, A3, R> {
 	R build();
 
 	static <A1, A2, A3, R> IBuilder3<A1, A2, A3, R> of(
-			final TriConsumer<? super A1, ? super A2, ? super A3> consume,
+			final ITriConsumer<? super A1, ? super A2, ? super A3> consume,
 			final Supplier<? extends R> build
 	) {
 		return new IBuilder3<>() {

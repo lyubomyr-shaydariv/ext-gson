@@ -35,7 +35,7 @@ public interface IBuilder2<A1, A2, R> {
 
 	static <A1, A2, R, AUX> IBuilder2<A1, A2, R> of(
 			final Supplier<? extends AUX> createAux,
-			final TriConsumer<? super AUX, ? super A1, ? super A2> consume,
+			final ITriConsumer<? super AUX, ? super A1, ? super A2> consume,
 			final Function<? super AUX, ? extends R> build
 	) {
 		return new IBuilder2<>() {
@@ -65,7 +65,7 @@ public interface IBuilder2<A1, A2, R> {
 
 	static <A1, A2, R> IBuilder2<A1, A2, R> of(
 			final Supplier<? extends R> createResult,
-			final TriConsumer<? super R, ? super A1, ? super A2> consume
+			final ITriConsumer<? super R, ? super A1, ? super A2> consume
 	) {
 		return of(createResult, consume, Function.identity());
 	}
