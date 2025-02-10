@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.internal.ParameterizedTypes;
 
 @SuppressWarnings("unused")
 public interface ITypeAdapterFactory<K>

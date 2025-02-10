@@ -1,4 +1,4 @@
-package lsh.ext.gson;
+package lsh.ext.gson.internal;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

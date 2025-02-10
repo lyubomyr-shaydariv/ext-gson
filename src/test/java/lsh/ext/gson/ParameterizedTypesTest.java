@@ -2,6 +2,7 @@ package lsh.ext.gson;
 
 import java.lang.reflect.Type;
 
+import lsh.ext.gson.internal.ParameterizedTypes;
 import lsh.ext.gson.test.MoreAssertions;
 import lsh.ext.gson.test.Types;
 import org.junit.jupiter.api.Assertions;
