@@ -22,13 +22,8 @@ public final class OptionalTypeAdapter<T>
 	}
 
 	@Override
-	@SuppressWarnings("OptionalAssignedToNull")
-	public void write(final JsonWriter out, @Nullable final Optional<T> optional)
+	public void write(final JsonWriter out, final Optional<T> optional)
 			throws IOException {
-		if ( optional == null ) {
-			out.nullValue();
-			return;
-		}
 		@Nullable
 		final T value = optional.orElse(null);
 		if ( value == null ) {
