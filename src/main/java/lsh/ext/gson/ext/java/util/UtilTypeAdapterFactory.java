@@ -3,15 +3,19 @@ package lsh.ext.gson.ext.java.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.google.gson.reflect.TypeToken;
 import lombok.experimental.UtilityClass;
 import lsh.ext.gson.IBuilder1;
+import lsh.ext.gson.IBuilder2;
 import lsh.ext.gson.ITypeAdapterFactory;
 
 @UtilityClass
@@ -40,6 +44,38 @@ public final class UtilTypeAdapterFactory {
 			return () -> IBuilder1.fromCollection(new HashSet<>());
 		}
 		return () -> IBuilder1.fromCollection(new ArrayList<>());
+	}
+
+	public static final ITypeAdapterFactory<Map<String, Object>> defaultForMap = forMap(
+			typeToken -> {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				final Class<? extends Map> rawType = (Class<? extends Map>) typeToken.getRawType();
+				if ( Map.class.isAssignableFrom(rawType) ) {
+					return () -> IBuilder2.fromMap(new HashMap<>());
+				}
+				return () -> {
+					throw new UnsupportedOperationException(String.format("The default builder for %s does not support %s", Map.class, typeToken));
+				};
+			}
+	);
+
+	public static <V> ITypeAdapterFactory<Map<String, V>> forMap(
+			final IBuilder2.ILookup<? super String, ? super V, ? extends Map<String, V>> lookup
+	) {
+		return forMap(lookup, Function.identity(), Function.identity());
+	}
+
+	public static <K, V> ITypeAdapterFactory<Map<K, V>> forMap(
+			final IBuilder2.ILookup<? super K, ? super V, ? extends Map<K, V>> lookup,
+			final Function<? super K, String> encodeKey,
+			final Function<? super String, ? extends K> decodeKey
+	) {
+		return ITypeAdapterFactory.forClassHierarchy(Map.class, provider -> UtilTypeAdapter.forMap(
+				provider.getTypeAdapter(1),
+				lookup.lookup(provider.getTypeToken()),
+				encodeKey,
+				decodeKey
+		));
 	}
 
 }
