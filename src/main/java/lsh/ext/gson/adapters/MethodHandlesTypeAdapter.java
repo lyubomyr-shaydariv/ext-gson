@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
 
@@ -97,7 +98,7 @@ public final class MethodHandlesTypeAdapter<T>
 
 	@SuppressWarnings("UnnecessaryCodeBlock")
 	private static Map<String, Item> createSetterIndex(final MethodHandles.Lookup lookup, final Class<?> klass, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
-		final Map<String, Item> itemIndex = new HashMap<>(); // TODO inject desired-order map
+		final Map<String, Item> itemIndex = new HashMap<>();
 		for ( final Iterator<Class<?>> classIterator = Classes.forHierarchyDown(klass); classIterator.hasNext(); ) {
 			final Class<?> c = classIterator.next();
 			final Method[] methods = c.getDeclaredMethods();
@@ -134,7 +135,7 @@ public final class MethodHandlesTypeAdapter<T>
 	}
 
 	private static Map<String, Item> createGetterIndex(final MethodHandles.Lookup lookup, final Class<?> klass, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
-		final Map<String, Item> itemIndex = new HashMap<>();
+		final Map<String, Item> itemIndex = new LinkedHashMap<>();
 		for ( final Iterator<Class<?>> classIterator = Classes.forHierarchyDown(klass); classIterator.hasNext(); ) {
 			final Class<?> c = classIterator.next();
 			final Method[] methods = c.getDeclaredMethods();
