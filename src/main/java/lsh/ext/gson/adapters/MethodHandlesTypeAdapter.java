@@ -27,7 +27,6 @@ import lsh.ext.gson.internal.Classes;
 public final class MethodHandlesTypeAdapter<T>
 		extends TypeAdapter<T> {
 
-	// TODO injectable?
 	private static final MethodHandles.Lookup lookup = MethodHandles.lookup();
 
 	private final Class<T> klass;
@@ -40,8 +39,8 @@ public final class MethodHandlesTypeAdapter<T>
 	}
 
 	public static <T> TypeAdapter<T> getInstance(final Class<T> klass, final InstanceCreator<T> instanceCreator, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
-		final Map<String, Item> setterIndex = createSetterIndex(klass, gson, typeAdapterFactory);
-		final Map<String, Item> getterIndex = createGetterIndex(klass, gson, typeAdapterFactory);
+		final Map<String, Item> setterIndex = createSetterIndex(lookup, klass, gson, typeAdapterFactory);
+		final Map<String, Item> getterIndex = createGetterIndex(lookup, klass, gson, typeAdapterFactory);
 		return new MethodHandlesTypeAdapter<T>(klass, instanceCreator, setterIndex, getterIndex)
 				.nullSafe();
 	}
@@ -97,7 +96,7 @@ public final class MethodHandlesTypeAdapter<T>
 	}
 
 	@SuppressWarnings("UnnecessaryCodeBlock")
-	private static Map<String, Item> createSetterIndex(final Class<?> klass, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
+	private static Map<String, Item> createSetterIndex(final MethodHandles.Lookup lookup, final Class<?> klass, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
 		final Map<String, Item> itemIndex = new HashMap<>(); // TODO inject desired-order map
 		for ( final Iterator<Class<?>> classIterator = Classes.forHierarchyDown(klass); classIterator.hasNext(); ) {
 			final Class<?> c = classIterator.next();
@@ -134,7 +133,7 @@ public final class MethodHandlesTypeAdapter<T>
 		return itemIndex;
 	}
 
-	private static Map<String, Item> createGetterIndex(final Class<?> klass, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
+	private static Map<String, Item> createGetterIndex(final MethodHandles.Lookup lookup, final Class<?> klass, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
 		final Map<String, Item> itemIndex = new HashMap<>();
 		for ( final Iterator<Class<?>> classIterator = Classes.forHierarchyDown(klass); classIterator.hasNext(); ) {
 			final Class<?> c = classIterator.next();
