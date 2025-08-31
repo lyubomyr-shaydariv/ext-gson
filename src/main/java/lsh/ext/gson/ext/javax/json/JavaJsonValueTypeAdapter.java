@@ -15,7 +15,7 @@ import javax.json.spi.JsonProvider;
 import com.google.gson.TypeAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lsh.ext.gson.x.jakarta.json.x.javax.json.AbstractJsonValueTypeAdapter;
+import lsh.ext.gson.extx.jakarta.json.x.javax.json.AbstractJsonValueTypeAdapter;
 
 @SuppressWarnings("CPD-START")
 public final class JavaJsonValueTypeAdapter

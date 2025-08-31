@@ -13,7 +13,7 @@ import jakarta.json.JsonString;
 import jakarta.json.JsonValue;
 import jakarta.json.spi.JsonProvider;
 import lombok.Getter;
-import lsh.ext.gson.x.jakarta.json.x.javax.json.AbstractJsonValueTypeAdapter;
+import lsh.ext.gson.extx.jakarta.json.x.javax.json.AbstractJsonValueTypeAdapter;
 
 @SuppressWarnings("CPD-START")
 public final class JakartaJsonValueTypeAdapter
