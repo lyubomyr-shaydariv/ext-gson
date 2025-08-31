@@ -28,7 +28,7 @@ import lsh.ext.gson.internal.Classes;
 public final class MethodHandlesTypeAdapter<T>
 		extends TypeAdapter<T> {
 
-	private static final MethodHandles.Lookup lookup = MethodHandles.lookup();
+	private static final MethodHandles.Lookup defaultLookup = MethodHandles.lookup();
 
 	private final Class<T> klass;
 	private final InstanceCreator<T> instanceCreator;
@@ -40,8 +40,8 @@ public final class MethodHandlesTypeAdapter<T>
 	}
 
 	public static <T> TypeAdapter<T> getInstance(final Class<T> klass, final InstanceCreator<T> instanceCreator, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
-		final Map<String, Item> setterIndex = createSetterIndex(lookup, klass, gson, typeAdapterFactory);
-		final Map<String, Item> getterIndex = createGetterIndex(lookup, klass, gson, typeAdapterFactory);
+		final Map<String, Item> setterIndex = createSetterIndex(defaultLookup, klass, gson, typeAdapterFactory);
+		final Map<String, Item> getterIndex = createGetterIndex(defaultLookup, klass, gson, typeAdapterFactory);
 		return new MethodHandlesTypeAdapter<T>(klass, instanceCreator, setterIndex, getterIndex)
 				.nullSafe();
 	}
@@ -88,15 +88,6 @@ public final class MethodHandlesTypeAdapter<T>
 		return object;
 	}
 
-	@AllArgsConstructor(access = AccessLevel.PRIVATE)
-	private static final class Item {
-
-		private final MethodHandle callSiteTarget;
-		private final TypeAdapter<Object> typeAdapter;
-
-	}
-
-	@SuppressWarnings("UnnecessaryCodeBlock")
 	private static Map<String, Item> createSetterIndex(final MethodHandles.Lookup lookup, final Class<?> klass, final Gson gson, final TypeAdapterFactory typeAdapterFactory) {
 		final Map<String, Item> itemIndex = new HashMap<>();
 		for ( final Iterator<Class<?>> classIterator = Classes.forHierarchyDown(klass); classIterator.hasNext(); ) {
@@ -119,10 +110,8 @@ public final class MethodHandlesTypeAdapter<T>
 					final TypeToken<Object> typeToken = (TypeToken<Object>) TypeToken.get(setterType);
 					final TypeAdapter<Object> typeAdapter = typeAdapterFactory.create(gson, typeToken);
 					final Item item = new Item(callSiteTarget, typeAdapter);
-					{
-						final String name = serializedName.value();
-						itemIndex.putIfAbsent(name, item);
-					}
+					final String name = serializedName.value();
+					itemIndex.putIfAbsent(name, item);
 					for ( final String alternateName : serializedName.alternate() ) {
 						itemIndex.putIfAbsent(alternateName, item);
 					}
@@ -160,6 +149,14 @@ public final class MethodHandlesTypeAdapter<T>
 			}
 		}
 		return itemIndex;
+	}
+
+	@AllArgsConstructor(access = AccessLevel.PRIVATE)
+	private static final class Item {
+
+		private final MethodHandle callSiteTarget;
+		private final TypeAdapter<Object> typeAdapter;
+
 	}
 
 }

@@ -201,7 +201,7 @@
 		<module name="MemberName"/>
 		<module name="MethodName"/>
 		<module name="MethodTypeParameterName">
-			<property name="format" value="^[A-Z]+[0-9]*$"/>
+			<property name="format" value="^[_A-Z]+[0-9]*$"/>
 		</module>
 		<module name="PackageName"/>
 		<module name="ParameterName"/>

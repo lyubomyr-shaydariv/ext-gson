@@ -11,6 +11,8 @@ import lsh.ext.gson.LiteralPrimitiveLongTypeAdapter;
 @UtilityClass
 public final class UnixTimeTypeAdapter {
 
+	private static final int MS_PER_S = 1000;
+
 	@SuppressWarnings("UseOfObsoleteDateTimeApi")
 	public static TypeAdapter<java.util.Date> defaultForJavaUtilDate = forJavaUtilDate(java.util.Date::new);
 
@@ -24,7 +26,7 @@ public final class UnixTimeTypeAdapter {
 
 	@SuppressWarnings("UseOfObsoleteDateTimeApi")
 	public static <T extends java.util.Date> TypeAdapter<T> forJavaUtilDate(final LongFunction<? extends T> construct) {
-		return LiteralPrimitiveLongTypeAdapter.getInstance(date -> date.getTime() / 1000, timestamp -> construct.apply(timestamp * 1000));
+		return LiteralPrimitiveLongTypeAdapter.getInstance(date -> date.getTime() / MS_PER_S, timestamp -> construct.apply(timestamp * MS_PER_S));
 	}
 
 	public static TypeAdapter<Instant> forJavaTimeInstant = LiteralPrimitiveLongTypeAdapter.getInstance(Instant::getEpochSecond, Instant::ofEpochSecond);

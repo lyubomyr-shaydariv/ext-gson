@@ -18,18 +18,6 @@ public interface ITypeAdapterFactory<K>
 	@Nullable
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	interface IProvider<K> {
-
-		TypeToken<K> getTypeToken();
-
-		TypeAdapter<K> getTypeAdapter(Class<K> klass);
-
-		<T> TypeAdapter<T> getTypeAdapter(int index);
-
-		<T> TypeAdapter<T> getTypeAdapterForClass(Class<T> klass);
-
-	}
-
 	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
 		return forClass(klass, provider -> typeAdapter);
@@ -126,6 +114,18 @@ public interface ITypeAdapterFactory<K>
 				return castTypeAdapter;
 			}
 		};
+	}
+
+	interface IProvider<K> {
+
+		TypeToken<K> getTypeToken();
+
+		TypeAdapter<K> getTypeAdapter(Class<K> klass);
+
+		<T> TypeAdapter<T> getTypeAdapter(int index);
+
+		<T> TypeAdapter<T> getTypeAdapterForClass(Class<T> klass);
+
 	}
 
 }

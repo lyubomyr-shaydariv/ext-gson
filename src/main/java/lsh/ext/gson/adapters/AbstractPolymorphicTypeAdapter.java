@@ -71,6 +71,23 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 		return read(in, property);
 	}
 
+	private static <T> void fill(
+			final Gson gson,
+			final TypeAdapterFactory skipPast,
+			final Iterable<Class<? extends T>> classes,
+			final Function<? super Class<? extends T>, String> classToDiscriminator,
+			final BiConsumer<? super Class<? extends T>, ? super TypeAdapter<? super T>> putClassToTypeAdapter,
+			final BiConsumer<? super String, ? super TypeAdapter<? extends T>> putDiscriminatorToTypeAdapter
+	) {
+		for ( final Class<? extends T> klass : classes ) {
+			@SuppressWarnings("unchecked")
+			final TypeAdapter<T> delegateTypeAdapter = (TypeAdapter<T>) gson.getDelegateAdapter(skipPast, TypeToken.get(klass));
+			putClassToTypeAdapter.accept(klass, delegateTypeAdapter);
+			final String discriminator = classToDiscriminator.apply(klass);
+			putDiscriminatorToTypeAdapter.accept(discriminator, delegateTypeAdapter);
+		}
+	}
+
 	@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 	public abstract static class AbstractFactory<K>
 			implements ITypeAdapterFactory<K> {
@@ -309,32 +326,17 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 
 	}
 
-	private static <T> void fill(
-			final Gson gson,
-			final TypeAdapterFactory skipPast,
-			final Iterable<Class<? extends T>> classes,
-			final Function<? super Class<? extends T>, String> classToDiscriminator,
-			final BiConsumer<? super Class<? extends T>, ? super TypeAdapter<? super T>> putClassToTypeAdapter,
-			final BiConsumer<? super String, ? super TypeAdapter<? extends T>> putDiscriminatorToTypeAdapter
-	) {
-		for ( final Class<? extends T> klass : classes ) {
-			@SuppressWarnings("unchecked")
-			final TypeAdapter<T> delegateTypeAdapter = (TypeAdapter<T>) gson.getDelegateAdapter(skipPast, TypeToken.get(klass));
-			putClassToTypeAdapter.accept(klass, delegateTypeAdapter);
-			final String discriminator = classToDiscriminator.apply(klass);
-			putDiscriminatorToTypeAdapter.accept(discriminator, delegateTypeAdapter);
-		}
-	}
-
 	@SuppressWarnings({ "AbstractClassExtendsConcreteClass", "AbstractClassWithOnlyOneDirectInheritor", "ClassWithoutNoArgConstructor" })
 	private abstract static class AbstractDelegateJsonReader
 			extends JsonReader {
 
 		private static final Reader neverReader = new Reader() {
+
 			// @formatter:off
 			@Override public int read(@Nonnull final char[] buffer, final int offset, final int length) { throw new AssertionError(); }
 			@Override public void close() { throw new AssertionError(); }
 			// @formatter:on
+
 		};
 
 		private final JsonReader in;
@@ -373,11 +375,13 @@ public abstract class AbstractPolymorphicTypeAdapter<T>
 			extends JsonWriter {
 
 		private static final Writer neverWriter = new Writer() {
+
 			// @formatter:off
 			@Override public void write(@Nonnull final char[] buffer, final int offset, final int length) { throw new AssertionError(); }
 			@Override public void flush() { throw new AssertionError(); }
 			@Override public void close() { throw new AssertionError(); }
 			// @formatter:on
+
 		};
 
 		private final JsonWriter out;

@@ -26,40 +26,6 @@ public final class RegexTypeAdapter {
 			Pattern.UNICODE_CHARACTER_CLASS //
 	};
 
-	public interface IFlagStrategy {
-
-		char encodeFlag(int flag);
-
-		int decodeFlag(char c);
-
-		IFlagStrategy defaultFlagStrategy = new IFlagStrategy() {
-			@Override
-			public char encodeFlag(final int flag) {
-				switch ( flag ) {
-				case Pattern.CASE_INSENSITIVE:
-					return 'i';
-				case Pattern.MULTILINE:
-					return 'm';
-				default:
-					throw new UnsupportedOperationException("Unsupported flag: " + flag);
-				}
-			}
-
-			@Override
-			public int decodeFlag(final char c) {
-				switch ( c ) {
-				case 'i':
-					return Pattern.CASE_INSENSITIVE;
-				case 'm':
-					return Pattern.MULTILINE;
-				default:
-					throw new UnsupportedOperationException("Unsupported flag: " + c);
-				}
-			}
-		};
-
-	}
-
 	public static TypeAdapter<Pattern> forEdStylePattern(final char delimiter, final IFlagStrategy flagStrategy) {
 		return forEdStylePattern(delimiter, flagStrategy, allKnownFlags);
 	}
@@ -145,10 +111,12 @@ public final class RegexTypeAdapter {
 		return Pattern.compile(regex, flags);
 	}
 
+	private static final int INT_SIZE = 32;
+
 	private static int countSetBits(final int mask) {
 		int count = 0;
 		int m = mask;
-		for ( int i = 0; i < 32 && m != 0; i++, m >>= 1 ) {
+		for ( int i = 0; i < INT_SIZE && m != 0; i++, m >>= 1 ) {
 			if ( (m & 1) == 0 ) {
 				continue;
 			}
@@ -166,6 +134,40 @@ public final class RegexTypeAdapter {
 			throw new UnsupportedOperationException("Pattern " + pattern + " has non-zero flags set: " + flags);
 		}
 		return pattern.pattern();
+	}
+
+	public interface IFlagStrategy {
+
+		char encodeFlag(int flag);
+
+		int decodeFlag(char c);
+
+		IFlagStrategy defaultFlagStrategy = new IFlagStrategy() {
+			@Override
+			public char encodeFlag(final int flag) {
+				switch ( flag ) {
+				case Pattern.CASE_INSENSITIVE:
+					return 'i';
+				case Pattern.MULTILINE:
+					return 'm';
+				default:
+					throw new UnsupportedOperationException("Unsupported flag: " + flag);
+				}
+			}
+
+			@Override
+			public int decodeFlag(final char c) {
+				switch ( c ) {
+				case 'i':
+					return Pattern.CASE_INSENSITIVE;
+				case 'm':
+					return Pattern.MULTILINE;
+				default:
+					throw new UnsupportedOperationException("Unsupported flag: " + c);
+				}
+			}
+		};
+
 	}
 
 }
