@@ -2,23 +2,14 @@ package lsh.ext.gson;
 
 import java.util.Map;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import lsh.ext.gson.test.Types;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public final class JsonObjectsTest {
-
-	private static final Class<?> modifiableMapClass = new JsonObject()
-			.asMap()
-			.getClass();
 
 	private static final String[] ks = {
 			"foo", "bar", "baz", "qux", "quux"
@@ -119,31 +110,6 @@ public final class JsonObjectsTest {
 		Assertions.assertSame(vs[0], jsonObject.get(ks[0]));
 		Assertions.assertSame(vs[1], jsonObject.get(ks[1]));
 		Assertions.assertSame(vs[2], jsonObject.get(ks[2]));
-	}
-
-	private static Stream<Arguments> testObjects() {
-		return Stream.of(
-						JsonObjects.of(),
-						JsonObjects.of(ks[0], l),
-						JsonObjects.of(ks[0], l, ks[1], r)
-				)
-				.map(Arguments::of);
-	}
-
-	@ParameterizedTest
-	@MethodSource("testObjects")
-	public void testAsModifiableMap(final JsonObject jsonObject) {
-		final Class<?> actualClass = JsonObjects.asModifiableMap(jsonObject)
-				.getClass();
-		Assertions.assertSame(modifiableMapClass, actualClass);
-	}
-
-	@ParameterizedTest
-	@MethodSource("testObjects")
-	public void testAsUnmodifiableMap(final JsonObject jsonObject) {
-		final Class<?> actualClass = JsonObjects.asUnmodifiableMap(jsonObject)
-				.getClass();
-		Assertions.assertSame(Types.jdkUnmodifiableMapClass, actualClass);
 	}
 
 	private static JsonObject generateNullJsonObject(final int size) {

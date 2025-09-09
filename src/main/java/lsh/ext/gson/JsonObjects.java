@@ -1,7 +1,5 @@
 package lsh.ext.gson;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
 
@@ -83,22 +81,6 @@ public final class JsonObjects {
 			jsonObject.add(e.getKey(), e.getValue());
 		}
 		return jsonObject;
-	}
-
-	public static Map<String, JsonElement> asUnmodifiableMap(final JsonObject jsonObject) {
-		return Collections.unmodifiableMap(jsonObject.asMap());
-	}
-
-	public static Map<String, JsonElement> asModifiableMap(final JsonObject jsonObject) {
-		return jsonObject.asMap();
-	}
-
-	public static Map<String, JsonElement> toUnmodifiableMap(final JsonObject jsonObject) {
-		return Collections.unmodifiableMap(new LinkedHashMap<>(jsonObject.asMap()));
-	}
-
-	public static Map<String, JsonElement> toImmutableMap(final JsonObject jsonObject) {
-		return Map.copyOf(jsonObject.asMap());
 	}
 
 }

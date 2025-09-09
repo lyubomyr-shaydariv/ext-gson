@@ -6,18 +6,10 @@ import java.util.stream.Stream;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
-import lsh.ext.gson.test.Types;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public final class JsonArraysTest {
-
-	private static final Class<?> modifiableListClass = new JsonArray()
-			.asList()
-			.getClass();
 
 	private static final String[] es = {
 			"foo", "bar", "baz", "qux", "quux"
@@ -91,32 +83,6 @@ public final class JsonArraysTest {
 		Assertions.assertSame(list.get(0), jsonArray.get(0));
 		Assertions.assertSame(list.get(1), jsonArray.get(1));
 		Assertions.assertSame(list.get(2), jsonArray.get(2));
-	}
-
-	private static Stream<Arguments> testArrays() {
-		return Stream.of(
-						JsonArrays.of(),
-						JsonArrays.of(primitives[0]),
-						JsonArrays.of(primitives[0], primitives[1]),
-						JsonArrays.of(primitives[0], primitives[1], primitives[2])
-				)
-				.map(Arguments::of);
-	}
-
-	@ParameterizedTest
-	@MethodSource("testArrays")
-	public void testAsModifiableList(final JsonArray jsonArray) {
-		final Class<?> actualClass = JsonArrays.asModifiableList(jsonArray)
-				.getClass();
-		Assertions.assertSame(modifiableListClass, actualClass);
-	}
-
-	@ParameterizedTest
-	@MethodSource("testArrays")
-	public void testAsUnmodifiableList(final JsonArray jsonArray) {
-		final Class<?> actualClass = JsonArrays.asUnmodifiableList(jsonArray)
-				.getClass();
-		Assertions.assertSame(Types.jdkUnmodifiableListClass, actualClass);
 	}
 
 	private static JsonArray generateNullJsonArray(final int length) {
