@@ -25,6 +25,19 @@ public final class LiteralStringTypeAdapter<T>
 				.nullSafe();
 	}
 
+	public static <T> TypeAdapter<T> getInstance(final TypeAdapter<T> typeAdapter) {
+		return getInstance(
+				typeAdapter::toJson,
+				json -> {
+					try {
+						return typeAdapter.fromJson(json);
+					} catch ( final IOException ex ) {
+						throw new RuntimeException(ex);
+					}
+				}
+		);
+	}
+
 	@Override
 	public void write(final JsonWriter out, final T value)
 			throws IOException {
