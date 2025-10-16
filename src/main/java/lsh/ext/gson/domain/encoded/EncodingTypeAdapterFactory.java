@@ -15,8 +15,4 @@ public final class EncodingTypeAdapterFactory {
 		return ITypeAdapterFactory.forClass(byte[].class, typeAdapter);
 	}
 
-	public static ITypeAdapterFactory<char[]> forPrimitiveCharArray(final TypeAdapter<char[]> typeAdapter) {
-		return ITypeAdapterFactory.forClass(char[].class, typeAdapter);
-	}
-
 }

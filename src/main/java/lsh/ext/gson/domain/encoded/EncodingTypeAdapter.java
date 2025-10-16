@@ -27,11 +27,4 @@ public final class EncodingTypeAdapter {
 		return LiteralStringTypeAdapter.getInstance(encode, decode);
 	}
 
-	public static TypeAdapter<char[]> forPrimitiveCharArray(
-			final Function<? super char[], String> encode,
-			final Function<? super String, char[]> decode
-	) {
-		return LiteralStringTypeAdapter.getInstance(encode, decode);
-	}
-
 }
