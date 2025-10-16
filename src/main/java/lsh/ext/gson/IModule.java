@@ -25,13 +25,7 @@ public interface IModule
 	}
 
 	static IModule from(final TypeAdapterFactory typeAdapterFactory) {
-		return new IModule() {
-			@Nullable
-			@Override
-			public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-				return typeAdapterFactory.create(gson, typeToken);
-			}
-		};
+		return typeAdapterFactory::create;
 	}
 
 	static IModule from(final TypeAdapterFactory... typeAdapterFactories) {

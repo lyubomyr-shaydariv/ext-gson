@@ -18,7 +18,7 @@ public interface ITypeAdapterFactory<K>
 	@Nullable
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
+	@SuppressWarnings("NewClassNamingConvention")
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
 		return forClass(klass, provider -> typeAdapter);
 	}
@@ -67,7 +67,7 @@ public interface ITypeAdapterFactory<K>
 		};
 	}
 
-	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
+	@SuppressWarnings("NewClassNamingConvention")
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
 		return forClassHierarchy(klass, provider -> typeAdapter);
 	}
