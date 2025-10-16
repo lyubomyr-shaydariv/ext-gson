@@ -408,7 +408,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.13</version>
+						<version>0.8.14</version>
 						<executions>
 							<execution>
 								<goals>
@@ -471,7 +471,7 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>12.1.6</version>
+						<version>12.1.8</version>
 						<executions>
 							<execution>
 								<phase>validate</phase>
@@ -502,7 +502,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-pmd-plugin</artifactId>
-						<version>3.27.0</version>
+						<version>3.28.0</version>
 						<executions>
 							<execution>
 								<id>cpd-check</id>
