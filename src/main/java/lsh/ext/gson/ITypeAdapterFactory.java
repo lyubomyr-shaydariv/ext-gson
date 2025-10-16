@@ -10,7 +10,7 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import lsh.ext.gson.internal.ParameterizedTypes;
 
-@SuppressWarnings("unused")
+@SuppressWarnings("NewClassNamingConvention")
 public interface ITypeAdapterFactory<K>
 		extends TypeAdapterFactory {
 
@@ -18,12 +18,11 @@ public interface ITypeAdapterFactory<K>
 	@Nullable
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
-	@SuppressWarnings("NewClassNamingConvention")
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
 		return forClass(klass, provider -> typeAdapter);
 	}
 
-	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
+	@SuppressWarnings("TypeParameterHidesVisibleType")
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClass(final Class<RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
@@ -35,16 +34,9 @@ public interface ITypeAdapterFactory<K>
 				@SuppressWarnings("unchecked")
 				final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
 				final IProvider<K> provider = new IProvider<>() {
-					private final Type type = castTypeToken.getType();
-
 					@Override
 					public TypeToken<K> getTypeToken() {
 						return castTypeToken;
-					}
-
-					@Override
-					public TypeAdapter<K> getTypeAdapter(final Class<K> klass) {
-						return gson.getAdapter(klass);
 					}
 
 					@Override
@@ -67,12 +59,11 @@ public interface ITypeAdapterFactory<K>
 		};
 	}
 
-	@SuppressWarnings("NewClassNamingConvention")
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<RAW_K> klass, final TypeAdapter<K> typeAdapter) {
 		return forClassHierarchy(klass, provider -> typeAdapter);
 	}
 
-	@SuppressWarnings({ "NewClassNamingConvention", "TypeParameterHidesVisibleType" })
+	@SuppressWarnings("TypeParameterHidesVisibleType")
 	static <K extends RAW_K, RAW_K> ITypeAdapterFactory<K> forClassHierarchy(final Class<RAW_K> klass, final Function<? super IProvider<K>, ? extends TypeAdapter<K>> createTypeAdapter) {
 		return new ITypeAdapterFactory<>() {
 			@Nullable
@@ -84,16 +75,9 @@ public interface ITypeAdapterFactory<K>
 				@SuppressWarnings("unchecked")
 				final TypeToken<K> castTypeToken = (TypeToken<K>) typeToken;
 				final IProvider<K> provider = new IProvider<>() {
-					private final Type type = castTypeToken.getType();
-
 					@Override
 					public TypeToken<K> getTypeToken() {
 						return castTypeToken;
-					}
-
-					@Override
-					public TypeAdapter<K> getTypeAdapter(final Class<K> klass) {
-						return gson.getAdapter(klass);
 					}
 
 					@Override
@@ -119,8 +103,6 @@ public interface ITypeAdapterFactory<K>
 	interface IProvider<K> {
 
 		TypeToken<K> getTypeToken();
-
-		TypeAdapter<K> getTypeAdapter(Class<K> klass);
 
 		<T> TypeAdapter<T> getTypeAdapter(int index);
 
