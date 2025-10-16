@@ -7,6 +7,6 @@ import lsh.ext.gson.ITypeAdapterFactory;
 @UtilityClass
 public final class OptionalTypeAdapterFactory {
 
-	public static ITypeAdapterFactory<Optional<Object>> defaultForOptional = ITypeAdapterFactory.forClassHierarchy(Optional.class, provider -> OptionalTypeAdapter.getInstance(provider.getTypeAdapter(0)));
+	public static final ITypeAdapterFactory<Optional<Object>> defaultForOptional = ITypeAdapterFactory.forClassHierarchy(Optional.class, provider -> OptionalTypeAdapter.getInstance(provider.getTypeAdapter(0)));
 
 }

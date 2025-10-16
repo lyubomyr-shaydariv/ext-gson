@@ -9,7 +9,7 @@ import lsh.ext.gson.ITypeAdapterFactory;
 @UtilityClass
 public final class JakartaJsonTypeAdapterFactory {
 
-	public static ITypeAdapterFactory<JsonValue> defaultForJsonValue = forJsonValue(JakartaJsonValueTypeAdapter.getInstance(JsonProvider.provider()));
+	public static final ITypeAdapterFactory<JsonValue> defaultForJsonValue = forJsonValue(JakartaJsonValueTypeAdapter.getInstance(JsonProvider.provider()));
 
 	public static ITypeAdapterFactory<JsonValue> forJsonValue(final TypeAdapter<JsonValue> typeAdapter) {
 		return ITypeAdapterFactory.forClassHierarchy(JsonValue.class, typeAdapter);

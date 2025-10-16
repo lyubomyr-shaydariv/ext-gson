@@ -14,24 +14,24 @@ public final class UnixTimeTypeAdapter {
 	private static final int MS_PER_S = 1000;
 
 	@SuppressWarnings("UseOfObsoleteDateTimeApi")
-	public static TypeAdapter<java.util.Date> defaultForJavaUtilDate = forJavaUtilDate(java.util.Date::new);
+	public static final TypeAdapter<java.util.Date> defaultForJavaUtilDate = forJavaUtilDate(java.util.Date::new);
 
-	public static TypeAdapter<java.sql.Date> defaultForJavaSqlDate = forJavaUtilDate(java.sql.Date::new);
-
-	@SuppressWarnings("UnnecessaryFullyQualifiedName")
-	public static TypeAdapter<java.sql.Time> defaultForJavaSqlTime = forJavaUtilDate(java.sql.Time::new);
+	public static final TypeAdapter<java.sql.Date> defaultForJavaSqlDate = forJavaUtilDate(java.sql.Date::new);
 
 	@SuppressWarnings("UnnecessaryFullyQualifiedName")
-	public static TypeAdapter<java.sql.Timestamp> defaultForJavaSqlTimestamp = forJavaUtilDate(java.sql.Timestamp::new);
+	public static final TypeAdapter<java.sql.Time> defaultForJavaSqlTime = forJavaUtilDate(java.sql.Time::new);
+
+	@SuppressWarnings("UnnecessaryFullyQualifiedName")
+	public static final TypeAdapter<java.sql.Timestamp> defaultForJavaSqlTimestamp = forJavaUtilDate(java.sql.Timestamp::new);
 
 	@SuppressWarnings("UseOfObsoleteDateTimeApi")
 	public static <T extends java.util.Date> TypeAdapter<T> forJavaUtilDate(final LongFunction<? extends T> construct) {
 		return LiteralPrimitiveLongTypeAdapter.getInstance(date -> date.getTime() / MS_PER_S, timestamp -> construct.apply(timestamp * MS_PER_S));
 	}
 
-	public static TypeAdapter<Instant> forJavaTimeInstant = LiteralPrimitiveLongTypeAdapter.getInstance(Instant::getEpochSecond, Instant::ofEpochSecond);
+	public static final TypeAdapter<Instant> forJavaTimeInstant = LiteralPrimitiveLongTypeAdapter.getInstance(Instant::getEpochSecond, Instant::ofEpochSecond);
 
-	public static TypeAdapter<OffsetDateTime> forJavaTimeOffsetDateTime = LiteralPrimitiveLongTypeAdapter.getInstance(
+	public static final TypeAdapter<OffsetDateTime> forJavaTimeOffsetDateTime = LiteralPrimitiveLongTypeAdapter.getInstance(
 			OffsetDateTime::toEpochSecond,
 			seconds -> {
 				throw new UnsupportedOperationException(String.valueOf(seconds));

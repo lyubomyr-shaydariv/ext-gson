@@ -31,7 +31,7 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 @UtilityClass
 public final class ApacheCommonsCollections4TypeAdapterFactory {
 
-	public static ITypeAdapterFactory<Bag<String>> defaultForBag = forBag(
+	public static final ITypeAdapterFactory<Bag<String>> defaultForBag = forBag(
 			typeToken -> {
 				@SuppressWarnings("unchecked")
 				final Class<? super Bag<?>> rawType = (Class<? super Bag<?>>) typeToken.getRawType();
@@ -85,7 +85,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		return ITypeAdapterFactory.forClassHierarchy(BidiMap.class, provider -> ApacheCommonsCollections4TypeAdapter.forBidiMap(provider.getTypeAdapter(1), lookup.lookup(provider.getTypeToken()), toKey, fromKey));
 	}
 
-	public static ITypeAdapterFactory<BoundedCollection<Object>> defaultForBoundedCollection = forBoundedCollection(
+	public static final ITypeAdapterFactory<BoundedCollection<Object>> defaultForBoundedCollection = forBoundedCollection(
 			typeToken -> {
 				@SuppressWarnings({ "rawtypes", "unchecked" })
 				final Class<? extends BoundedCollection> rawType = (Class<? extends BoundedCollection>) typeToken.getRawType();
@@ -150,7 +150,7 @@ public final class ApacheCommonsCollections4TypeAdapterFactory {
 		);
 	}
 
-	public static ITypeAdapterFactory<MultiSet<Object>> defaultForMultiSet = forMultiSet(
+	public static final ITypeAdapterFactory<MultiSet<Object>> defaultForMultiSet = forMultiSet(
 			typeToken -> {
 				@SuppressWarnings({ "unchecked", "rawtypes" })
 				final Class<? extends MultiSet> rawType = (Class<? extends MultiSet>) typeToken.getRawType();
