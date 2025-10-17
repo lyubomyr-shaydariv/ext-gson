@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import lsh.ext.gson.internal.Modules;
 
 public interface IModule
 		extends TypeAdapterFactory {
@@ -15,13 +16,7 @@ public interface IModule
 	<T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken);
 
 	static IModule empty() {
-		return new IModule() {
-			@Override
-			@Nullable
-			public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> typeToken) {
-				return null;
-			}
-		};
+		return Modules.empty;
 	}
 
 	static IModule from(final TypeAdapterFactory typeAdapterFactory) {
