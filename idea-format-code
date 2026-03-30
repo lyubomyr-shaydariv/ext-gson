@@ -1,10 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ -z "$IDEA_HOME" ]; then
-	echo "$0: fatal: IDEA_HOME is not set" >&2
-	exit 1
-fi
+set -TEeuo pipefail
 
-BASE_DIR="$(dirname "$(realpath "$0")")"
+BASE_DIR="$(readlink --canonicalize-existing -- "$0")"
+BASE_DIR="$(dirname -- "$BASE_DIR")"
+declare -r BASE_DIR
 
 "$IDEA_HOME/bin/idea.sh" format -s "$BASE_DIR/idea-code-style.xml" -r "$BASE_DIR/src" "$BASE_DIR/pom.xml"
